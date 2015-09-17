@@ -7,7 +7,6 @@ import threading
 import telnetlib
 import xlrd as xr
 import paramiko as pm
-
 import var as v
 
 
@@ -645,6 +644,68 @@ def setIwpriv(terminal, intf, arg, value, logname):
     command = 'iwpriv ' + intf + ' set ' + arg + '=' + value
     setConfig(terminal, command, logname)
 
+def setWl(terminal, intf, arg, value, logname):
+    command = 'wl -i ' + intf + ' ' + arg + ' ' + value
+    setConfig(terminal, command, logname)
+
+def setWifiMacfilterModel(terminal, enable, model=0, mac='none', logname=None):
+    if enable == 0:
+        if v.DUT_MODULE == 'R1D' or v.DUT_MODULE == 'R2D':
+            setWl(terminal, 'wl0', 'mac', 'none', logname)
+            setWl(terminal, 'wl1', 'mac', 'none', logname)
+            setWl(terminal, 'wl1.2', 'mac', 'none', logname)
+            setWl(terminal, 'wl0', 'macmode', '0', logname)
+            setWl(terminal, 'wl1', 'macmode', '0', logname)
+            setWl(terminal, 'wl1.2', 'macmode', '0', logname)
+        elif v.DUT_MODULE == 'R1CM':
+            setIwpriv(terminal, 'wl0', 'ACLClearAll', '1', logname)
+            setIwpriv(terminal, 'wl1', 'ACLClearAll', '1', logname)
+            setIwpriv(terminal, 'wl3', 'ACLClearAll', '1', logname)
+            setIwpriv(terminal, 'wl0', 'AccessPolicy', '0', logname)
+            setIwpriv(terminal, 'wl1', 'AccessPolicy', '0', logname)
+            setIwpriv(terminal, 'wl3', 'AccessPolicy', '0', logname)
+    else:
+        if v.DUT_MODULE == 'R1D' or v.DUT_MODULE == 'R2D':
+            setWl(terminal, 'wl0', 'mac', 'none', logname)
+            setWl(terminal, 'wl1', 'mac', 'none', logname)
+            setWl(terminal, 'wl1.2', 'mac', 'none', logname)
+            setWl(terminal, 'wl0', 'mac', mac, logname)
+            setWl(terminal, 'wl1', 'mac', mac, logname)
+            setWl(terminal, 'wl1.2', 'mac', mac, logname)
+            # blacklist
+            if model == 0:
+                setWl(terminal, 'wl0', 'macmode', '1', logname)
+                setWl(terminal, 'wl1', 'macmode', '1', logname)
+                setWl(terminal, 'wl1.2', 'macmode', '1', logname)
+                setWl(terminal, 'wl0', 'deauthenticate', mac, logname)
+                setWl(terminal, 'wl1', 'deauthenticate', mac, logname)
+                setWl(terminal, 'wl1.2', 'deauthenticate', mac, logname)
+            # whitelist
+            elif model == 1:
+                setWl(terminal, 'wl0', 'macmode', '2', logname)
+                setWl(terminal, 'wl1', 'macmode', '2', logname)
+                setWl(terminal, 'wl1.2', 'macmode', '2', logname)
+        elif v.DUT_MODULE == 'R1CM':
+            setIwpriv(terminal, 'wl0', 'ACLClearAll', '1', logname)
+            setIwpriv(terminal, 'wl1', 'ACLClearAll', '1', logname)
+            setIwpriv(terminal, 'wl3', 'ACLClearAll', '1', logname)
+            setIwpriv(terminal, 'wl0', 'ACLAddEntry', mac, logname)
+            setIwpriv(terminal, 'wl1', 'ACLAddEntry', mac, logname)
+            setIwpriv(terminal, 'wl3', 'ACLAddEntry', mac, logname)
+            # blacklist
+            if model == 0:
+                setIwpriv(terminal, 'wl0', 'AccessPolicy', '2', logname)
+                setIwpriv(terminal, 'wl1', 'AccessPolicy', '2', logname)
+                setIwpriv(terminal, 'wl3', 'AccessPolicy', '2', logname)
+                setIwpriv(terminal, 'wl0', 'DisConnectSta', mac, logname)
+                setIwpriv(terminal, 'wl1', 'DisConnectSta', mac, logname)
+                setIwpriv(terminal, 'wl3', 'DisConnectSta', mac, logname)
+            # whitelist
+            elif model == 1:
+                setIwpriv(terminal, 'wl0', 'AccessPolicy', '1', logname)
+                setIwpriv(terminal, 'wl1', 'AccessPolicy', '1', logname)
+                setIwpriv(terminal, 'wl3', 'AccessPolicy', '1', logname)
+
 def setAdbClearStaConn(device, ssid, radio, logname):
 
     if ssid == "normal":
@@ -901,8 +962,9 @@ def setIperfFlow(target, interval, time, logname):
 
 if __name__ == '__main__':
     ssh = SshCommand(2)
-    ssh.connect("192.168.31.1", "", "")
-    print ssh.getHardware()
+    ssh.connect("192.168.110.1", "", "")
+    setWifiMacfilterModel(ssh, 1, 1, logname='test')
+    setWifiMacfilterModel(ssh, 0, logname='test')
     # print ssh.outPidNameVSZDic
     # ret = setConfig(ssh, "uci set wireless.@wifi-iface[0].ssid='ÎÒµÄ10'", "a")
     # ret = setGet(ssh, "uci show wireless", "a")

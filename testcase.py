@@ -5284,6 +5284,7 @@ class AP_CLEAR_CHAN_WHITELIST(TestCase):
 
 class AP_CLEAR_CHAN_WHITELIST2(TestCase):
 
+    @classmethod
     def setUp(self):
         self.dut = SshClient(v.CONNECTION_TYPE)
         ret1 = self.dut.connect(v.HOST, v.USR, v.PASSWD)
@@ -5304,19 +5305,21 @@ class AP_CLEAR_CHAN_WHITELIST2(TestCase):
         wlanInfo = getAdbShellWlan(self.device[0], self.__class__.__name__)
         v.STA_MAC = wlanInfo["mac"]
 
+    @classmethod
     def tearDown(self):
         d = TestCommand(v.DUT_MODULE)
         for dutCommand in d.ap_tear_down():
             setConfig(self.dut, dutCommand, self.__class__.__name__)
 
+        setWifiMacfilterModel(self.dut, 0, logname=self.__class__.__name__)
         self.dut.close()
 
     def assoc_clear_sta_in_whitelist_2g(self):
 
-        setUCIWirelessIntf(self.dut, v.INTF_2G, "add_list", 'maclist', v.STA_MAC, self.__class__.__name__)
-        setUCIWirelessIntf(self.dut, v.INTF_5G, "add_list", 'maclist', v.STA_MAC, self.__class__.__name__)
-        setWifiRestart(self.dut, self.__class__.__name__)
-
+        # setUCIWirelessIntf(self.dut, v.INTF_2G, "add_list", 'maclist', v.STA_MAC, self.__class__.__name__)
+        # setUCIWirelessIntf(self.dut, v.INTF_5G, "add_list", 'maclist', v.STA_MAC, self.__class__.__name__)
+        # setWifiRestart(self.dut, self.__class__.__name__)
+        setWifiMacfilterModel(self.dut, 1, 1, v.STA_MAC, self.__class__.__name__)
         res2gConn = setAdbClearStaConn(self.device[0], "normal", "2g", self.__class__.__name__)
 
         if res2gConn:
@@ -5328,10 +5331,10 @@ class AP_CLEAR_CHAN_WHITELIST2(TestCase):
 
     def assoc_clear_sta_in_whitelist_5g(self):
 
-        setUCIWirelessIntf(self.dut, v.INTF_5G, "add_list", 'maclist', v.STA_MAC, self.__class__.__name__)
-        setUCIWirelessIntf(self.dut, v.INTF_2G, "add_list", 'maclist', v.STA_MAC, self.__class__.__name__)
-        setWifiRestart(self.dut, self.__class__.__name__)
-
+        # setUCIWirelessIntf(self.dut, v.INTF_5G, "add_list", 'maclist', v.STA_MAC, self.__class__.__name__)
+        # setUCIWirelessIntf(self.dut, v.INTF_2G, "add_list", 'maclist', v.STA_MAC, self.__class__.__name__)
+        # setWifiRestart(self.dut, self.__class__.__name__)
+        setWifiMacfilterModel(self.dut, 1, 1, v.STA_MAC, self.__class__.__name__)
         res5gConn = setAdbClearStaConn(self.device[0], "normal", "5g", self.__class__.__name__)
 
         if res5gConn:
@@ -5343,12 +5346,14 @@ class AP_CLEAR_CHAN_WHITELIST2(TestCase):
 
     def assoc_clear_sta_outof_whitelist_2g(self):
 
+        setWifiMacfilterModel(self.dut, 1, 1, logname=self.__class__.__name__)
         res2gConn = setAdbClearStaConn(self.device[0], "normal", "2g", self.__class__.__name__)
 
         self.assertFalse(res2gConn, "Association wasnot supposed to be successful.")
 
     def assoc_clear_sta_outof_whitelist_5g(self):
 
+        setWifiMacfilterModel(self.dut, 1, 1, logname=self.__class__.__name__)
         res5gConn = setAdbClearStaConn(self.device[0], "normal", "5g", self.__class__.__name__)
 
         self.assertFalse(res5gConn, "Association wasnot supposed to be successful.")
@@ -5483,6 +5488,7 @@ class AP_CLEAR_CHAN_BLACKLIST(TestCase):
 
 class AP_CLEAR_CHAN_BLACKLIST2(TestCase):
 
+    @classmethod
     def setUp(self):
         self.dut = SshClient(v.CONNECTION_TYPE)
         ret1 = self.dut.connect(v.HOST, v.USR, v.PASSWD)
@@ -5503,15 +5509,18 @@ class AP_CLEAR_CHAN_BLACKLIST2(TestCase):
         wlanInfo = getAdbShellWlan(self.device[0], self.__class__.__name__)
         v.STA_MAC = wlanInfo["mac"]
 
+    @classmethod
     def tearDown(self):
         d = TestCommand(v.DUT_MODULE)
         for dutCommand in d.ap_tear_down():
             setConfig(self.dut, dutCommand, self.__class__.__name__)
 
+        setWifiMacfilterModel(self.dut, 0, logname=self.__class__.__name__)
         self.dut.close()
 
     def assoc_clear_sta_outof_blacklist_2g(self):
 
+        setWifiMacfilterModel(self.dut, 1, 0, logname=self.__class__.__name__)
         res2gConn = setAdbClearStaConn(self.device[0], "normal", "2g", self.__class__.__name__)
 
         if res2gConn:
@@ -5523,6 +5532,7 @@ class AP_CLEAR_CHAN_BLACKLIST2(TestCase):
 
     def assoc_clear_sta_outof_blacklist_5g(self):
 
+        setWifiMacfilterModel(self.dut, 1, 0, logname=self.__class__.__name__)
         res5gConn = setAdbClearStaConn(self.device[0], "normal", "5g", self.__class__.__name__)
 
         if res5gConn:
@@ -5534,20 +5544,20 @@ class AP_CLEAR_CHAN_BLACKLIST2(TestCase):
 
     def assoc_clear_sta_in_blacklist_2g(self):
 
-        setUCIWirelessIntf(self.dut, v.INTF_2G, "add_list", 'maclist', v.STA_MAC, self.__class__.__name__)
-        setUCIWirelessIntf(self.dut, v.INTF_5G, "add_list", 'maclist', v.STA_MAC, self.__class__.__name__)
-        setWifiRestart(self.dut, self.__class__.__name__)
-
+        # setUCIWirelessIntf(self.dut, v.INTF_2G, "add_list", 'maclist', v.STA_MAC, self.__class__.__name__)
+        # setUCIWirelessIntf(self.dut, v.INTF_5G, "add_list", 'maclist', v.STA_MAC, self.__class__.__name__)
+        # setWifiRestart(self.dut, self.__class__.__name__)
+        setWifiMacfilterModel(self.dut, 1, 0, v.STA_MAC, self.__class__.__name__)
         res2gConn = setAdbClearStaConn(self.device[0], "normal", "2g", self.__class__.__name__)
 
         self.assertFalse(res2gConn, "Association wasnot supposed to be successful.")
 
     def assoc_clear_sta_in_blacklist_5g(self):
 
-        setUCIWirelessIntf(self.dut, v.INTF_5G, "add_list", 'maclist', v.STA_MAC, self.__class__.__name__)
-        setUCIWirelessIntf(self.dut, v.INTF_2G, "add_list", 'maclist', v.STA_MAC, self.__class__.__name__)
-        setWifiRestart(self.dut, self.__class__.__name__)
-
+        # setUCIWirelessIntf(self.dut, v.INTF_5G, "add_list", 'maclist', v.STA_MAC, self.__class__.__name__)
+        # setUCIWirelessIntf(self.dut, v.INTF_2G, "add_list", 'maclist', v.STA_MAC, self.__class__.__name__)
+        # setWifiRestart(self.dut, self.__class__.__name__)
+        setWifiMacfilterModel(self.dut, 1, 0, v.STA_MAC, self.__class__.__name__)
         res5gConn = setAdbClearStaConn(self.device[0], "normal", "5g", self.__class__.__name__)
 
         self.assertFalse(res5gConn, "Association wasnot supposed to be successful.")
@@ -5633,6 +5643,7 @@ class AP_GUEST_CLEAR_CHAN_WHITELIST(TestCase):
 
 class AP_GUEST_CLEAR_CHAN_WHITELIST2(TestCase):
 
+    @classmethod
     def setUp(self):
         self.dut = SshClient(v.CONNECTION_TYPE)
         ret1 = self.dut.connect(v.HOST, v.USR, v.PASSWD)
@@ -5653,18 +5664,20 @@ class AP_GUEST_CLEAR_CHAN_WHITELIST2(TestCase):
         wlanInfo = getAdbShellWlan(self.device[0], self.__class__.__name__)
         v.STA_MAC = wlanInfo["mac"]
 
+    @classmethod
     def tearDown(self):
         d = TestCommand(v.DUT_MODULE)
         for dutCommand in d.ap_guest_tear_down():
             setConfig(self.dut, dutCommand, self.__class__.__name__)
 
+        setWifiMacfilterModel(self.dut, 0, logname= self.__class__.__name__)
         self.dut.close()
 
     def assoc_clear_sta_in_whitelist_guest(self):
 
-        setUCIWirelessIntf(self.dut, v.INTF_GUEST, "add_list", 'maclist', v.STA_MAC, self.__class__.__name__)
-        setWifiRestart(self.dut, self.__class__.__name__)
-
+        # setUCIWirelessIntf(self.dut, v.INTF_GUEST, "add_list", 'maclist', v.STA_MAC, self.__class__.__name__)
+        # setWifiRestart(self.dut, self.__class__.__name__)
+        setWifiMacfilterModel(self.dut, 1, 1, v.STA_MAC, self.__class__.__name__)
         res2gConn = setAdbClearStaConn(self.device[0], "normal", "guest", self.__class__.__name__)
 
         if res2gConn:
@@ -5676,6 +5689,7 @@ class AP_GUEST_CLEAR_CHAN_WHITELIST2(TestCase):
 
     def assoc_clear_sta_outof_whitelist_guest(self):
 
+        setWifiMacfilterModel(self.dut, 1, 1, logname=self.__class__.__name__)
         res2gConn = setAdbClearStaConn(self.device[0], "normal", "guest", self.__class__.__name__)
 
         self.assertFalse(res2gConn, "Association wasnot supposed to be successful.")
@@ -5761,6 +5775,7 @@ class AP_GUEST_CLEAR_CHAN_BLACKLIST(TestCase):
 
 class AP_GUEST_CLEAR_CHAN_BLACKLIST2(TestCase):
 
+    @classmethod
     def setUp(self):
         self.dut = SshClient(v.CONNECTION_TYPE)
         ret1 = self.dut.connect(v.HOST, v.USR, v.PASSWD)
@@ -5781,15 +5796,18 @@ class AP_GUEST_CLEAR_CHAN_BLACKLIST2(TestCase):
         wlanInfo = getAdbShellWlan(self.device[0], self.__class__.__name__)
         v.STA_MAC = wlanInfo["mac"]
 
+    @classmethod
     def tearDown(self):
         d = TestCommand(v.DUT_MODULE)
         for dutCommand in d.ap_guest_tear_down():
             setConfig(self.dut, dutCommand, self.__class__.__name__)
 
+        setWifiMacfilterModel(self.dut, 0, logname=self.__class__.__name__)
         self.dut.close()
 
     def assoc_clear_sta_outof_blacklist_guest(self):
 
+        setWifiMacfilterModel(self.dut, 1, 0, logname=self.__class__.__name__)
         res2gConn = setAdbClearStaConn(self.device[0], "normal", "guest", self.__class__.__name__)
 
         if res2gConn:
@@ -5801,8 +5819,9 @@ class AP_GUEST_CLEAR_CHAN_BLACKLIST2(TestCase):
 
     def assoc_clear_sta_in_blacklist_guest(self):
 
-        setUCIWirelessIntf(self.dut, v.INTF_GUEST, "add_list", 'maclist', v.STA_MAC, self.__class__.__name__)
-        setWifiRestart(self.dut, self.__class__.__name__)
+        setWifiMacfilterModel(self.dut, 1, 0, v.STA_MAC, self.__class__.__name__)
+        # setUCIWirelessIntf(self.dut, v.INTF_GUEST, "add_list", 'maclist', v.STA_MAC, self.__class__.__name__)
+        # setWifiRestart(self.dut, self.__class__.__name__)
 
         res2gConn = setAdbClearStaConn(self.device[0], "normal", "guest", self.__class__.__name__)
 

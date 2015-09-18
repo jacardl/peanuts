@@ -319,7 +319,7 @@ def setAdbShell(device, command, logname):
             adb = "adb " + "-s " + device + " shell "
         else:
             adb = "adb shell "
-        command += adb
+        command = adb + command
         ret = os.popen(command).readlines()
         curTime = t.strftime('%Y.%m.%d %H:%M:%S', t.localtime())
         f = open(v.TEST_SUITE_LOG_PATH + logname + '.log', 'a')

@@ -1,6 +1,7 @@
 from var import *
 from common import *
 
+
 class TestCommand:
     def __init__(self, dut):
         if dut == "R1CM":
@@ -17,12 +18,12 @@ class TestCommand:
     # ------------common------------------
     def sta_tear_down(self):
         sta_tear_down = ['iwpriv apcli0 set ApCliAutoConnect=0',
-                             'iwpriv apcli0 set ApCliEnable=0',
-                             'ifconfig apcli0 down',
-                             'iwpriv apclii0 set ApCliAutoConnect=0',
-                             'iwpriv apclii0 set ApCliEnable=0',
-                             'ifconfig apclii0 down',
-                             ]
+                         'iwpriv apcli0 set ApCliEnable=0',
+                         'ifconfig apcli0 down',
+                         'iwpriv apclii0 set ApCliAutoConnect=0',
+                         'iwpriv apclii0 set ApCliEnable=0',
+                         'ifconfig apclii0 down',
+                         ]
         return sta_tear_down
 
     def ap_tear_down(self):
@@ -81,22 +82,22 @@ class TestCommand:
 
     def ap_clear_chan_set_up(self):
         ap_clear_chan_set_up = ['uci set wireless.@wifi-iface[0].encryption=none',
-                                    'uci set wireless.@wifi-iface[1].encryption=none',
-                                    'uci set wireless.@wifi-iface[0].ssid=' + SSID_5G,
-                                    'uci set wireless.@wifi-iface[1].ssid=' + SSID,
-                                    'uci set wireless.@wifi-iface[0].hidden=0',
-                                    'uci set wireless.@wifi-iface[1].hidden=0',
-                                    'uci set wireless.' + self.DEV_2G + '.channel=' + CHANNEL,
-                                    'uci set wireless.' + self.DEV_2G + '.autoch=0',
-                                    'uci set wireless.' + self.DEV_2G + '.disabled=0',
-                                    'uci set wireless.' + self.DEV_5G + '.channel=' + CHANNEL_5G,
-                                    'uci set wireless.' + self.DEV_5G + '.autoch=0',
-                                    'uci set wireless.' + self.DEV_5G + '.disabled=0',
-                                    'uci commit wireless',
-                                    'wifi; sleep 10'
-                                    ]
+                                'uci set wireless.@wifi-iface[1].encryption=none',
+                                'uci set wireless.@wifi-iface[0].ssid=' + SSID_5G,
+                                'uci set wireless.@wifi-iface[1].ssid=' + SSID,
+                                'uci set wireless.@wifi-iface[0].hidden=0',
+                                'uci set wireless.@wifi-iface[1].hidden=0',
+                                'uci set wireless.' + self.DEV_2G + '.channel=' + CHANNEL,
+                                'uci set wireless.' + self.DEV_2G + '.autoch=0',
+                                'uci set wireless.' + self.DEV_2G + '.disabled=0',
+                                'uci set wireless.' + self.DEV_5G + '.channel=' + CHANNEL_5G,
+                                'uci set wireless.' + self.DEV_5G + '.autoch=0',
+                                'uci set wireless.' + self.DEV_5G + '.disabled=0',
+                                'uci commit wireless',
+                                'wifi; sleep 10'
+                                ]
         return ap_clear_chan_set_up
-        
+
     def ap_clear_low_set_up(self):
         ap_clear_low_set_up = ['uci set wireless.@wifi-iface[0].encryption=none',
                                'uci set wireless.@wifi-iface[1].encryption=none',
@@ -458,6 +459,7 @@ class TestCommand:
         return ap_mixedpsk_chan_keyspec_set_up
 
         # -----------clear-------------
+
     def assoc_clear_sta_2g(self):
         assoc_clear_sta_2g = ['ifconfig apcli0 down',
                               'ifconfig apcli0 up',
@@ -481,16 +483,17 @@ class TestCommand:
         return assoc_clear_sta_guest
 
     def assoc_clear_sta_5g(self):
-        assoc_clear_sta_5g = [ 'ifconfig apclii0 up',
-                               'iwpriv apclii0 set ApCliAuthMode=OPEN',
-                               'iwpriv apclii0 set ApCliEncrypType=NONE',
-                               'iwpriv apclii0 set ApCliSsid=' + SSID_5G,
-                               'iwpriv apclii0 set ApCliAutoConnect=1;sleep 5',
-                               'udhcpc -q -i apclii0 -t 10'
-                               ]
+        assoc_clear_sta_5g = ['ifconfig apclii0 up',
+                              'iwpriv apclii0 set ApCliAuthMode=OPEN',
+                              'iwpriv apclii0 set ApCliEncrypType=NONE',
+                              'iwpriv apclii0 set ApCliSsid=' + SSID_5G,
+                              'iwpriv apclii0 set ApCliAutoConnect=1;sleep 5',
+                              'udhcpc -q -i apclii0 -t 10'
+                              ]
         return assoc_clear_sta_5g
 
         # --------------psk2-------------
+
     def assoc_psk2_sta_2g(self):
         assoc_psk2_sta_2g = ['ifconfig apcli0 down',
                              'ifconfig apcli0 up',
@@ -709,6 +712,7 @@ class TestCommand:
         return assoc_psk_sta_keyspec_5g
 
         # --------------tkip-psk2-------------
+
     def assoc_tkippsk2_sta_2g(self):
         assoc_tkippsk2_sta_2g = ['ifconfig apcli0 down',
                                  'ifconfig apcli0 up',
@@ -818,6 +822,7 @@ class TestCommand:
         return assoc_tkippsk2_sta_keyspec_5g
 
         # --------------tkip-psk-------------
+
     def assoc_tkippsk_sta_2g(self):
         assoc_tkippsk_sta_2g = ['ifconfig apcli0 down',
                                 'ifconfig apcli0 up',
@@ -925,6 +930,7 @@ class TestCommand:
                                         'udhcpc -q -i apclii0 -t 10'
                                         ]
         return assoc_tkippsk_sta_keyspec_5g
+
 
 if __name__ == '__main__':
     pass

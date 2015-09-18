@@ -124,7 +124,7 @@ class GeneralPage(wx.Panel):
         # DUT connection box
         connBox = wx.StaticBox(self, -1, 'DUT', size=(580, -1))
         connSizer = wx.StaticBoxSizer(connBox, wx.HORIZONTAL)
-        #left column
+        # left column
         connSizer2 = wx.BoxSizer(wx.VERTICAL)
         connSizer2.Add(typeLbl, 0,
                        wx.ALIGN_RIGHT | wx.TOP | wx.LEFT, 10)
@@ -145,23 +145,23 @@ class GeneralPage(wx.Panel):
         connSizer3.Add(self.sshPasswd, 0,
                        wx.ALIGN_LEFT | wx.TOP | wx.LEFT, 4)
 
-        #right column
+        # right column
         connSizer4 = wx.BoxSizer(wx.VERTICAL)
         connSizer4.Add(connLbl, 0,
                        wx.ALIGN_RIGHT | wx.TOP | wx.LEFT, 10)
 
-        connSizer5 =wx.BoxSizer(wx.VERTICAL)
+        connSizer5 = wx.BoxSizer(wx.VERTICAL)
         connSizer5.Add(self.conn, 0,
                        wx.ALIGN_LEFT | wx.TOP | wx.LEFT, 2)
 
         connSizer.Add(connSizer2, 0, wx.LEFT, 5)
         connSizer.Add(connSizer3, 0, wx.LEFT, 2)
-        connSizer.Add(connSizer4, 0, wx.LEFT,10)
+        connSizer.Add(connSizer4, 0, wx.LEFT, 10)
         connSizer.Add(connSizer5, 0, wx.LEFT, 2)
 
         # sta connection ctrl
         staTypeLbl = wx.StaticText(self, -1, 'Device:')
-        self.staType = wx.Choice(self, -1, choices=[ 'Android', 'R1CM & Android'])
+        self.staType = wx.Choice(self, -1, choices=['Android', 'R1CM & Android'])
         self.staType.SetSelection(0)
         self.Bind(wx.EVT_CHOICE, self.EvtChoice2, self.staType)
 
@@ -272,9 +272,10 @@ class GeneralPage(wx.Panel):
             v.STA_IP = self.staIp.GetValue()
             v.STA_USR = self.staSshUsr.GetValue()
             v.STA_PASSWD = self.staSshPasswd.GetValue()
-            staConn = threading.Thread(target=self.connectionCheckThread, kwargs={'connectiontype': v.STA_CONNECTION_TYPE,
-                                                                              'ip': v.STA_IP, 'user': v.STA_USR,
-                                                                              'password': v.STA_PASSWD})
+            staConn = threading.Thread(target=self.connectionCheckThread,
+                                       kwargs={'connectiontype': v.STA_CONNECTION_TYPE,
+                                               'ip': v.STA_IP, 'user': v.STA_USR,
+                                               'password': v.STA_PASSWD})
             staConn.start()
             staConn.join()
 
@@ -572,15 +573,15 @@ class LogCollectionPage(wx.Panel):
             dlg3.Destroy()
             return
 
-        # elif v.CONNECTION_TYPE == 2:
-        #     self.dlg2 = wx.MessageDialog(self, 'Serial-port is not supported now!',
-        #                                  'Info',
-        #                                  wx.OK | wx.ICON_INFORMATION | wx.STAY_ON_TOP
-        #                                  # wx.YES_NO | wx.NO_DEFAULT | wx.CANCEL | wx.ICON_INFORMATION
-        #                                  )
-        #     self.dlg2.ShowModal()
-        #     self.dlg2.Destroy()
-        #     return
+            # elif v.CONNECTION_TYPE == 2:
+            # self.dlg2 = wx.MessageDialog(self, 'Serial-port is not supported now!',
+            # 'Info',
+            # wx.OK | wx.ICON_INFORMATION | wx.STAY_ON_TOP
+            # # wx.YES_NO | wx.NO_DEFAULT | wx.CANCEL | wx.ICON_INFORMATION
+            # )
+            # self.dlg2.ShowModal()
+            #     self.dlg2.Destroy()
+            #     return
 
     def EvtClose(self, event):
         frame.Close(True)
@@ -731,7 +732,7 @@ class TestSuitePage(wx.Panel):
                                   wargs=(self.jobID, self.abortEvent, testcase, v.FAIL_RETRY),
                                   jobID=self.jobID)
 
-        #start memory monitor
+        # start memory monitor
         self.memMon = mm.memMonitor(v.MEM_MONITOR_INTERVAL)
         self.memMon.setDaemon(True)
         self.memMon.start()
@@ -744,7 +745,7 @@ class TestSuitePage(wx.Panel):
         # t.sleep(1.0)
         if v.SEND_MAIL == 1 and testKeepGoing:
             content = """<html><body><img src="cid:Total_memory_used.png" alt="Total_memory_used.png"></body></html><small>此为系统自动发送，请勿回复，详情查看附件。</small>"""
-            sm.sendMail(v.MAILTO_LIST, self.mailTitle, content, self.report,["Total_memory_used.png"])
+            sm.sendMail(v.MAILTO_LIST, self.mailTitle, content, self.report, ["Total_memory_used.png"])
 
         self.abortEvent.set()
         self.dlg.Destroy()
@@ -756,7 +757,7 @@ class TestSuitePage(wx.Panel):
         try:
             result = delayedResult.get()
             self.runFlag = False
-            self.memMon.stop() # stop memory monitor
+            self.memMon.stop()  # stop memory monitor
 
         except Exception:
             return

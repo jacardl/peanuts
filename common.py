@@ -5,8 +5,9 @@ import time as t
 import re
 import threading
 import telnetlib
-import xlrd as xr
+
 import paramiko as pm
+
 import var as v
 
 
@@ -15,7 +16,7 @@ class SshClient(object):
         self.connectionType = connection
 
     def connect(self, host, userid, password=None):
-        if self.connectionType == 1: # represent ssh
+        if self.connectionType == 1:  # represent ssh
             self.hostname = host
             self.client = pm.SSHClient()
             self.client.set_missing_host_key_policy(pm.AutoAddPolicy())
@@ -29,7 +30,7 @@ class SshClient(object):
                 print 'connection is failed. please check your remote settings.'
                 return False
                 # sys.exit(1)
-        elif self.connectionType == 2: # represent telnet
+        elif self.connectionType == 2:  # represent telnet
             self.hostname = host.encode("utf-8")
             self.username = userid.encode("utf-8")
             self.password = password.encode("utf-8")
@@ -38,7 +39,7 @@ class SshClient(object):
                 self.tn = telnetlib.Telnet(self.hostname, port=23, timeout=10)
                 # self.tn.set_debuglevel(2)
 
-                #login
+                # login
                 if self.username != "":
                     self.tn.read_until("XiaoQiang login: ", 10)
                     self.tn.write(self.username + "\n")
@@ -48,7 +49,7 @@ class SshClient(object):
                 self.tn.read_until("root@XiaoQiang:", 10)
                 return True
 
-            except Exception,e:
+            except Exception, e:
                 print 'connection is failed. please check your remote settings.'
                 return False
 
@@ -63,12 +64,12 @@ class SshClient(object):
             for index in range(len(self.out)):
                 try:
                     self.out[index] = self.out[index].encode("gbk")
-                except Exception,e:
+                except Exception, e:
                     self.out[index] = ""
                     pass
             return self.out
         elif self.connectionType == 2:
-            cmd = ";".join(args) # input and output are utf-8
+            cmd = ";".join(args)  # input and output are utf-8
             if checkContainChinese(cmd):
                 cmd = cmd.decode("gbk")
                 cmd = cmd.encode("utf-8")
@@ -76,7 +77,7 @@ class SshClient(object):
             self.tn.write(cmd + "\n")
             self.out = self.tn.read_until("root@XiaoQiang:", 60)
             self.out = self.out.split("\n")
-            del self.out[0] # del command and :~#
+            del self.out[0]  # del command and :~#
             del self.out[-1]
             return self.out
 
@@ -88,11 +89,11 @@ class SshClient(object):
 
             stdin, stdout, stderr = self.client.exec_command(cmd)
             err = stderr.readlines()
-            ##        keepGoing = 0
-            ##        while keepGoing < 3 and len(err) != 0:
-            ##          stdin, stdout, stderr = self.client.exec_command(arg)
-            ##          err = stderr.read()
-            ##            keepGoing += 1
+            # keepGoing = 0
+            # while keepGoing < 3 and len(err) != 0:
+            # stdin, stdout, stderr = self.client.exec_command(arg)
+            # err = stderr.read()
+            # keepGoing += 1
             return err
         elif self.connectionType == 2:
             cmd = arg
@@ -106,7 +107,7 @@ class SshClient(object):
             del self.out[0]
             del self.out[-1]
             # for index in range(len(self.out)):
-            #     self.out[index] = self.out[index].decode("utf-8").encode("gbk")
+            # self.out[index] = self.out[index].decode("utf-8").encode("gbk")
             return self.out
 
     def close(self):
@@ -188,8 +189,9 @@ class SshCommand(SshClient):
         outTitleResDic = {}
         for c in cmd:
             outTitleResDic['**********' + c + '**********\n' \
-                           '**********' + c + '**********\n**********' + c + '**********\n' \
-                           '**********' + c + '**********\n**********' + c + '**********\n'] = self.command(c)
+                                              '**********' + c + '**********\n**********' + c + '**********\n' \
+                                                                                                '**********' + c + '**********\n**********' + c + '**********\n'] = self.command(
+                c)
         return outTitleResDic
 
     def getHardware(self):
@@ -227,8 +229,10 @@ class SshCommand(SshClient):
         title = "【" + hardware + Rom["channel"] + Rom["version"] + "】自动化测试报告"
         return title
 
+
 class SerialClient(object):
     pass
+
 
 def connectionCheck(connectiontype, ip=None, port=None, user=None, password=None):
     client = SshClient(connectiontype)
@@ -243,6 +247,7 @@ def convertStrToBashStr(string):
         string = re.sub('"', '\\"', string)
         string = '"' + string + '"'
     return string
+
 
 def checkContainChinese(string):
     checkstr = unicode(string, 'gbk')
@@ -304,6 +309,7 @@ def setGet(terminal, command, logname):
         f.close()
         sys.exit(1)
 
+
 def setAdbShell(device, command, logname):
     if not os.path.exists(v.TEST_SUITE_LOG_PATH):
         os.makedirs(v.TEST_SUITE_LOG_PATH)
@@ -313,7 +319,7 @@ def setAdbShell(device, command, logname):
             adb = "adb " + "-s " + device + " shell "
         else:
             adb = "adb shell "
-        command = adb + command
+        command += adb
         ret = os.popen(command).readlines()
         curTime = t.strftime('%Y.%m.%d %H:%M:%S', t.localtime())
         f = open(v.TEST_SUITE_LOG_PATH + logname + '.log', 'a')
@@ -325,6 +331,7 @@ def setAdbShell(device, command, logname):
         return ret
     except Exception, e:
         sys.exit(1)
+
 
 def setShell(command, logname):
     if not os.path.exists(v.TEST_SUITE_LOG_PATH):
@@ -342,6 +349,7 @@ def setShell(command, logname):
         return ret
     except Exception, e:
         sys.exit(1)
+
 
 def getApcli0Conn(terminal, logname):
     """apcli0    Connstatus:
@@ -471,33 +479,34 @@ def getSiteSurvey(terminal, intf, logname):
             pass
     return result
 
+
 def getWlanTxPower(terminal, dut, intf, logname):
     if dut == "R1D" or dut == "R2D":
         commandDic = {"2g": "wl -i wl1 curpower | grep 'Maximum Power Target among all rates'",
-                      "5g": "wl -i wl0 curpower | grep 'Maximum Power Target among all rates'",}
+                      "5g": "wl -i wl0 curpower | grep 'Maximum Power Target among all rates'", }
         command = commandDic.get(intf)
         ret = setGet(terminal, command, logname)
         for line in ret:
-            m = re.search('\d*\.\d*.*',line)
+            m = re.search('\d*\.\d*.*', line)
             if m:
                 power = m.group(0)
                 powerList = power.split()
                 sum = 0.0
                 for c in range(len(powerList)):
                     sum += float(powerList[c])
-                result = sum/len(powerList)
+                result = sum / len(powerList)
                 return float(result)
             else:
                 result = 0
         return float(result)
 
     elif dut == "R1CM":
-        commandDic = {"2g":"iwconfig wl1 | grep 'Tx-Power='",
-                      "5g":"iwconfig wl0 | grep 'Tx-Power='",}
+        commandDic = {"2g": "iwconfig wl1 | grep 'Tx-Power='",
+                      "5g": "iwconfig wl0 | grep 'Tx-Power='", }
         command = commandDic.get(intf)
         ret = setGet(terminal, command, logname)
         for line in ret:
-            m = re.search('(\d*)\sdBm',line)
+            m = re.search('(\d*)\sdBm', line)
             if m:
                 result = m.group(1)
                 return float(result)
@@ -505,10 +514,11 @@ def getWlanTxPower(terminal, dut, intf, logname):
                 result = 0
         return float(result)
 
+
 def getWlanInfo(terminal, intf, logname):
     commandDic = {"2g": "iwinfo wl1 info",
                   "5g": "iwinfo wl0 info",
-                  "guest": "iwinfo wl1.2 info",}
+                  "guest": "iwinfo wl1.2 info", }
 
     command = commandDic.get(intf)
     ret = setGet(terminal, command, logname)
@@ -521,6 +531,7 @@ def getWlanInfo(terminal, intf, logname):
         else:
             result["channel"] = ""
     return result
+
 
 def getAdbDevices():
     """
@@ -537,8 +548,9 @@ def getAdbDevices():
     result = []
     for dev in m:
         result.append(dev[:-7])
-        count = count + 1
+        count += 1
     return result
+
 
 def getAdbShellWlan(device, logname):
     """
@@ -582,13 +594,13 @@ ip6tnl0  DOWN                                   0.0.0.0/0   0x00000080 00:00:00:
     return result
 
 
-
 def chkAdbDevicesCount(count):
     ret = getAdbDevices()
     if len(ret) >= count:
         return True
     else:
         return False
+
 
 def chkSiteSurvey(terminal, intf, chkbssid, logname):
     ret = getSiteSurvey(terminal, intf, logname)
@@ -602,6 +614,7 @@ def chkSiteSurvey(terminal, intf, chkbssid, logname):
               'bssid': ret['bssid'][index], 'sec': ret['sec'][index]}
     resultAll = (True, result)
     return resultAll
+
 
 def setUCIWirelessIntf(terminal, intf, type, name, value, logname):
     """
@@ -617,6 +630,7 @@ def setUCIWirelessIntf(terminal, intf, type, name, value, logname):
     setConfig(terminal, command, logname)
     setConfig(terminal, "uci commit wireless", logname)
 
+
 def setUCIWirelessDev(terminal, dut, intf, type, name, value, logname):
     """
     :param intf: 2g/5g
@@ -626,14 +640,15 @@ def setUCIWirelessDev(terminal, dut, intf, type, name, value, logname):
     """
     if dut == "R1D" or dut == "R2D":
         commandDic = {"2g": 'uci ' + type + ' wireless.wl1.' + name + '=' + value,
-                      "5g": 'uci ' + type + ' wireless.wl0.' + name + '=' + value,}
+                      "5g": 'uci ' + type + ' wireless.wl0.' + name + '=' + value, }
     elif dut == "R1CM":
         commandDic = {"2g": 'uci ' + type + ' wireless.mt7620.' + name + '=' + value,
-                      "5g": 'uci ' + type + ' wireless.mt7612.' + name + '=' + value,}
+                      "5g": 'uci ' + type + ' wireless.mt7612.' + name + '=' + value, }
 
     command = commandDic.get(intf)
     setConfig(terminal, command, logname)
     setConfig(terminal, "uci commit wireless", logname)
+
 
 def setWifiRestart(terminal, logname):
     command = 'wifi; sleep 10'
@@ -644,9 +659,11 @@ def setIwpriv(terminal, intf, arg, value, logname):
     command = 'iwpriv ' + intf + ' set ' + arg + '=' + value
     setConfig(terminal, command, logname)
 
+
 def setWl(terminal, intf, arg, value, logname):
     command = 'wl -i ' + intf + ' ' + arg + ' ' + value
     setConfig(terminal, command, logname)
+
 
 def setWifiMacfilterModel(terminal, enable, model=0, mac='none', logname=None):
     if enable == 0:
@@ -706,12 +723,13 @@ def setWifiMacfilterModel(terminal, enable, model=0, mac='none', logname=None):
                 setIwpriv(terminal, 'wl1', 'AccessPolicy', '1', logname)
                 setIwpriv(terminal, 'wl3', 'AccessPolicy', '1', logname)
 
-def setAdbClearStaConn(device, ssid, radio, logname):
 
+def setAdbClearStaConn(device, ssid, radio, logname):
     if ssid == "normal":
-        commandDic = {"2g": "am instrument -e class com.peanutswifi.ApplicationTest#test_assoc_clear_sta_2g -w com.peanutswifi.test/android.test.InstrumentationTestRunner",
-                      "5g": "am instrument -e class com.peanutswifi.ApplicationTest#test_assoc_clear_sta_5g -w com.peanutswifi.test/android.test.InstrumentationTestRunner",
-                      "guest":"am instrument -e class com.peanutswifi.ApplicationTest#test_assoc_clear_sta_guest -w com.peanutswifi.test/android.test.InstrumentationTestRunner",}
+        commandDic = {
+            "2g": "am instrument -e class com.peanutswifi.ApplicationTest#test_assoc_clear_sta_2g -w com.peanutswifi.test/android.test.InstrumentationTestRunner",
+            "5g": "am instrument -e class com.peanutswifi.ApplicationTest#test_assoc_clear_sta_5g -w com.peanutswifi.test/android.test.InstrumentationTestRunner",
+            "guest": "am instrument -e class com.peanutswifi.ApplicationTest#test_assoc_clear_sta_guest -w com.peanutswifi.test/android.test.InstrumentationTestRunner", }
 
     command = commandDic.get(radio)
     ret = setAdbShell(device, command, logname)
@@ -720,13 +738,14 @@ def setAdbClearStaConn(device, ssid, radio, logname):
         if m is not None:
             return True
     return False
+
 
 def setAdbClearStaConnRepeat(device, ssid, radio, logname):
-
     if ssid == "normal":
-        commandDic = {"2g": "am instrument -e class com.peanutswifi.ApplicationTest#test_repeat_assoc_clear_sta_2g -w com.peanutswifi.test/android.test.InstrumentationTestRunner",
-                      "5g": "am instrument -e class com.peanutswifi.ApplicationTest#test_repeat_assoc_clear_sta_5g -w com.peanutswifi.test/android.test.InstrumentationTestRunner",
-                      "guest":"am instrument -e class com.peanutswifi.ApplicationTest#test_repeat_assoc_clear_sta_guest -w com.peanutswifi.test/android.test.InstrumentationTestRunner",}
+        commandDic = {
+            "2g": "am instrument -e class com.peanutswifi.ApplicationTest#test_repeat_assoc_clear_sta_2g -w com.peanutswifi.test/android.test.InstrumentationTestRunner",
+            "5g": "am instrument -e class com.peanutswifi.ApplicationTest#test_repeat_assoc_clear_sta_5g -w com.peanutswifi.test/android.test.InstrumentationTestRunner",
+            "guest": "am instrument -e class com.peanutswifi.ApplicationTest#test_repeat_assoc_clear_sta_guest -w com.peanutswifi.test/android.test.InstrumentationTestRunner", }
 
     command = commandDic.get(radio)
     ret = setAdbShell(device, command, logname)
@@ -736,27 +755,31 @@ def setAdbClearStaConnRepeat(device, ssid, radio, logname):
             return True
     return False
 
-def setAdbPsk2StaConn(device, ssid, radio, logname, key=None,):
 
-    if ssid == "normal" and key == None:
-        commandDic = {"2g": "am instrument -e class com.peanutswifi.ApplicationTest#test_assoc_psk2_sta_2g -w com.peanutswifi.test/android.test.InstrumentationTestRunner",
-                      "5g": "am instrument -e class com.peanutswifi.ApplicationTest#test_assoc_psk2_sta_5g -w com.peanutswifi.test/android.test.InstrumentationTestRunner",
-                      "guest":"am instrument -e class com.peanutswifi.ApplicationTest#test_assoc_psk2_sta_guest -w com.peanutswifi.test/android.test.InstrumentationTestRunner",}
+def setAdbPsk2StaConn(device, ssid, radio, logname, key=None, ):
+    if ssid == "normal" and key is None:
+        commandDic = {
+            "2g": "am instrument -e class com.peanutswifi.ApplicationTest#test_assoc_psk2_sta_2g -w com.peanutswifi.test/android.test.InstrumentationTestRunner",
+            "5g": "am instrument -e class com.peanutswifi.ApplicationTest#test_assoc_psk2_sta_5g -w com.peanutswifi.test/android.test.InstrumentationTestRunner",
+            "guest": "am instrument -e class com.peanutswifi.ApplicationTest#test_assoc_psk2_sta_guest -w com.peanutswifi.test/android.test.InstrumentationTestRunner", }
 
-    elif ssid == "chinese" and key == None:
-        commandDic = {"2g": "am instrument -e class com.peanutswifi.ApplicationTest#test_assoc_psk2_sta_ssidchinese_2g -w com.peanutswifi.test/android.test.InstrumentationTestRunner",
-                      "5g": "am instrument -e class com.peanutswifi.ApplicationTest#test_assoc_psk2_sta_ssidchinese_5g -w com.peanutswifi.test/android.test.InstrumentationTestRunner",
-                      "guest":"am instrument -e class com.peanutswifi.ApplicationTest#test_assoc_psk2_sta_ssidchinese_guest -w com.peanutswifi.test/android.test.InstrumentationTestRunner",}
+    elif ssid == "chinese" and key is None:
+        commandDic = {
+            "2g": "am instrument -e class com.peanutswifi.ApplicationTest#test_assoc_psk2_sta_ssidchinese_2g -w com.peanutswifi.test/android.test.InstrumentationTestRunner",
+            "5g": "am instrument -e class com.peanutswifi.ApplicationTest#test_assoc_psk2_sta_ssidchinese_5g -w com.peanutswifi.test/android.test.InstrumentationTestRunner",
+            "guest": "am instrument -e class com.peanutswifi.ApplicationTest#test_assoc_psk2_sta_ssidchinese_guest -w com.peanutswifi.test/android.test.InstrumentationTestRunner", }
 
-    elif ssid == "spec" and key == None:
-        commandDic = {"2g": "am instrument -e class com.peanutswifi.ApplicationTest#test_assoc_psk2_sta_ssidspec_2g -w com.peanutswifi.test/android.test.InstrumentationTestRunner",
-                      "5g": "am instrument -e class com.peanutswifi.ApplicationTest#test_assoc_psk2_sta_ssidspec_5g -w com.peanutswifi.test/android.test.InstrumentationTestRunner",
-                      "guest":"am instrument -e class com.peanutswifi.ApplicationTest#test_assoc_psk2_sta_ssidspec_guest -w com.peanutswifi.test/android.test.InstrumentationTestRunner",}
+    elif ssid == "spec" and key is None:
+        commandDic = {
+            "2g": "am instrument -e class com.peanutswifi.ApplicationTest#test_assoc_psk2_sta_ssidspec_2g -w com.peanutswifi.test/android.test.InstrumentationTestRunner",
+            "5g": "am instrument -e class com.peanutswifi.ApplicationTest#test_assoc_psk2_sta_ssidspec_5g -w com.peanutswifi.test/android.test.InstrumentationTestRunner",
+            "guest": "am instrument -e class com.peanutswifi.ApplicationTest#test_assoc_psk2_sta_ssidspec_guest -w com.peanutswifi.test/android.test.InstrumentationTestRunner", }
 
     elif ssid == "normal" and key == "spec":
-        commandDic = {"2g": "am instrument -e class com.peanutswifi.ApplicationTest#test_assoc_psk2_sta_keyspec_2g -w com.peanutswifi.test/android.test.InstrumentationTestRunner",
-                      "5g": "am instrument -e class com.peanutswifi.ApplicationTest#test_assoc_psk2_sta_keyspec_5g -w com.peanutswifi.test/android.test.InstrumentationTestRunner",
-                      "guest":"am instrument -e class com.peanutswifi.ApplicationTest#test_assoc_psk2_sta_keyspec_guest -w com.peanutswifi.test/android.test.InstrumentationTestRunner",}
+        commandDic = {
+            "2g": "am instrument -e class com.peanutswifi.ApplicationTest#test_assoc_psk2_sta_keyspec_2g -w com.peanutswifi.test/android.test.InstrumentationTestRunner",
+            "5g": "am instrument -e class com.peanutswifi.ApplicationTest#test_assoc_psk2_sta_keyspec_5g -w com.peanutswifi.test/android.test.InstrumentationTestRunner",
+            "guest": "am instrument -e class com.peanutswifi.ApplicationTest#test_assoc_psk2_sta_keyspec_guest -w com.peanutswifi.test/android.test.InstrumentationTestRunner", }
 
     command = commandDic.get(radio)
     ret = setAdbShell(device, command, logname)
@@ -765,13 +788,14 @@ def setAdbPsk2StaConn(device, ssid, radio, logname, key=None,):
         if m is not None:
             return True
     return False
+
 
 def setAdbPsk2StaConnRepeat(device, ssid, radio, logname):
-
     if ssid == "normal":
-        commandDic = {"2g": "am instrument -e class com.peanutswifi.ApplicationTest#test_repeat_assoc_psk2_sta_2g -w com.peanutswifi.test/android.test.InstrumentationTestRunner",
-                      "5g": "am instrument -e class com.peanutswifi.ApplicationTest#test_repeat_assoc_psk2_sta_5g -w com.peanutswifi.test/android.test.InstrumentationTestRunner",
-                      "guest":"am instrument -e class com.peanutswifi.ApplicationTest#test_repeat_assoc_psk2_sta_guest -w com.peanutswifi.test/android.test.InstrumentationTestRunner",}
+        commandDic = {
+            "2g": "am instrument -e class com.peanutswifi.ApplicationTest#test_repeat_assoc_psk2_sta_2g -w com.peanutswifi.test/android.test.InstrumentationTestRunner",
+            "5g": "am instrument -e class com.peanutswifi.ApplicationTest#test_repeat_assoc_psk2_sta_5g -w com.peanutswifi.test/android.test.InstrumentationTestRunner",
+            "guest": "am instrument -e class com.peanutswifi.ApplicationTest#test_repeat_assoc_psk2_sta_guest -w com.peanutswifi.test/android.test.InstrumentationTestRunner", }
 
     command = commandDic.get(radio)
     ret = setAdbShell(device, command, logname)
@@ -780,26 +804,30 @@ def setAdbPsk2StaConnRepeat(device, ssid, radio, logname):
         if m is not None:
             return True
     return False
+
 
 def setAdbPskStaConn(device, ssid, radio, logname, key=None):
-
-    if ssid == "normal" and key == None:
-        commandDic = {"2g": "am instrument -e class com.peanutswifi.ApplicationTest#test_assoc_psk_sta_2g -w com.peanutswifi.test/android.test.InstrumentationTestRunner",
-                      "5g": "am instrument -e class com.peanutswifi.ApplicationTest#test_assoc_psk_sta_5g -w com.peanutswifi.test/android.test.InstrumentationTestRunner",
-                      "guest":"am instrument -e class com.peanutswifi.ApplicationTest#test_assoc_psk_sta_guest -w com.peanutswifi.test/android.test.InstrumentationTestRunner",}
-    elif ssid == "chinese" and key == None:
-        commandDic = {"2g": "am instrument -e class com.peanutswifi.ApplicationTest#test_assoc_psk_sta_ssidchinese_2g -w com.peanutswifi.test/android.test.InstrumentationTestRunner",
-                      "5g": "am instrument -e class com.peanutswifi.ApplicationTest#test_assoc_psk_sta_ssidchinese_5g -w com.peanutswifi.test/android.test.InstrumentationTestRunner",
-                      "guest":"am instrument -e class com.peanutswifi.ApplicationTest#test_assoc_psk_sta_ssidchinese_guest -w com.peanutswifi.test/android.test.InstrumentationTestRunner",}
-    elif ssid == "spec" and key == None:
-        commandDic = {"2g": "am instrument -e class com.peanutswifi.ApplicationTest#test_assoc_psk_sta_ssidspec_2g -w com.peanutswifi.test/android.test.InstrumentationTestRunner",
-                      "5g": "am instrument -e class com.peanutswifi.ApplicationTest#test_assoc_psk_sta_ssidspec_5g -w com.peanutswifi.test/android.test.InstrumentationTestRunner",
-                      "guest":"am instrument -e class com.peanutswifi.ApplicationTest#test_assoc_psk_sta_ssidspec_guest -w com.peanutswifi.test/android.test.InstrumentationTestRunner",}
+    if ssid == "normal" and key is None:
+        commandDic = {
+            "2g": "am instrument -e class com.peanutswifi.ApplicationTest#test_assoc_psk_sta_2g -w com.peanutswifi.test/android.test.InstrumentationTestRunner",
+            "5g": "am instrument -e class com.peanutswifi.ApplicationTest#test_assoc_psk_sta_5g -w com.peanutswifi.test/android.test.InstrumentationTestRunner",
+            "guest": "am instrument -e class com.peanutswifi.ApplicationTest#test_assoc_psk_sta_guest -w com.peanutswifi.test/android.test.InstrumentationTestRunner", }
+    elif ssid == "chinese" and key is None:
+        commandDic = {
+            "2g": "am instrument -e class com.peanutswifi.ApplicationTest#test_assoc_psk_sta_ssidchinese_2g -w com.peanutswifi.test/android.test.InstrumentationTestRunner",
+            "5g": "am instrument -e class com.peanutswifi.ApplicationTest#test_assoc_psk_sta_ssidchinese_5g -w com.peanutswifi.test/android.test.InstrumentationTestRunner",
+            "guest": "am instrument -e class com.peanutswifi.ApplicationTest#test_assoc_psk_sta_ssidchinese_guest -w com.peanutswifi.test/android.test.InstrumentationTestRunner", }
+    elif ssid == "spec" and key is None:
+        commandDic = {
+            "2g": "am instrument -e class com.peanutswifi.ApplicationTest#test_assoc_psk_sta_ssidspec_2g -w com.peanutswifi.test/android.test.InstrumentationTestRunner",
+            "5g": "am instrument -e class com.peanutswifi.ApplicationTest#test_assoc_psk_sta_ssidspec_5g -w com.peanutswifi.test/android.test.InstrumentationTestRunner",
+            "guest": "am instrument -e class com.peanutswifi.ApplicationTest#test_assoc_psk_sta_ssidspec_guest -w com.peanutswifi.test/android.test.InstrumentationTestRunner", }
 
     elif ssid == "normal" and key == "spec":
-        commandDic = {"2g": "am instrument -e class com.peanutswifi.ApplicationTest#test_assoc_psk_sta_keyspec_2g -w com.peanutswifi.test/android.test.InstrumentationTestRunner",
-                      "5g": "am instrument -e class com.peanutswifi.ApplicationTest#test_assoc_psk_sta_keyspec_5g -w com.peanutswifi.test/android.test.InstrumentationTestRunner",
-                      "guest":"am instrument -e class com.peanutswifi.ApplicationTest#test_assoc_psk_sta_keyspec_guest -w com.peanutswifi.test/android.test.InstrumentationTestRunner",}
+        commandDic = {
+            "2g": "am instrument -e class com.peanutswifi.ApplicationTest#test_assoc_psk_sta_keyspec_2g -w com.peanutswifi.test/android.test.InstrumentationTestRunner",
+            "5g": "am instrument -e class com.peanutswifi.ApplicationTest#test_assoc_psk_sta_keyspec_5g -w com.peanutswifi.test/android.test.InstrumentationTestRunner",
+            "guest": "am instrument -e class com.peanutswifi.ApplicationTest#test_assoc_psk_sta_keyspec_guest -w com.peanutswifi.test/android.test.InstrumentationTestRunner", }
 
     command = commandDic.get(radio)
     ret = setAdbShell(device, command, logname)
@@ -808,13 +836,14 @@ def setAdbPskStaConn(device, ssid, radio, logname, key=None):
         if m is not None:
             return True
     return False
+
 
 def setAdbPskStaConnRepeat(device, ssid, radio, logname):
-
     if ssid == "normal":
-        commandDic = {"2g": "am instrument -e class com.peanutswifi.ApplicationTest#test_repeat_assoc_psk_sta_2g -w com.peanutswifi.test/android.test.InstrumentationTestRunner",
-                      "5g": "am instrument -e class com.peanutswifi.ApplicationTest#test_repeat_assoc_psk_sta_5g -w com.peanutswifi.test/android.test.InstrumentationTestRunner",
-                      "guest":"am instrument -e class com.peanutswifi.ApplicationTest#test_repeat_assoc_psk_sta_guest -w com.peanutswifi.test/android.test.InstrumentationTestRunner",}
+        commandDic = {
+            "2g": "am instrument -e class com.peanutswifi.ApplicationTest#test_repeat_assoc_psk_sta_2g -w com.peanutswifi.test/android.test.InstrumentationTestRunner",
+            "5g": "am instrument -e class com.peanutswifi.ApplicationTest#test_repeat_assoc_psk_sta_5g -w com.peanutswifi.test/android.test.InstrumentationTestRunner",
+            "guest": "am instrument -e class com.peanutswifi.ApplicationTest#test_repeat_assoc_psk_sta_guest -w com.peanutswifi.test/android.test.InstrumentationTestRunner", }
 
     command = commandDic.get(radio)
     ret = setAdbShell(device, command, logname)
@@ -823,25 +852,29 @@ def setAdbPskStaConnRepeat(device, ssid, radio, logname):
         if m is not None:
             return True
     return False
+
 
 def setAdbTkipPsk2StaConn(device, ssid, radio, logname, key=None):
-
-    if ssid == "normal" and key == None:
-        commandDic = {"2g": "am instrument -e class com.peanutswifi.ApplicationTest#test_assoc_tkippsk2_sta_2g -w com.peanutswifi.test/android.test.InstrumentationTestRunner",
-                      "5g": "am instrument -e class com.peanutswifi.ApplicationTest#test_assoc_tkippsk2_sta_5g -w com.peanutswifi.test/android.test.InstrumentationTestRunner",
-                      "guest":"am instrument -e class com.peanutswifi.ApplicationTest#test_assoc_tkippsk2_sta_guest -w com.peanutswifi.test/android.test.InstrumentationTestRunner",}
-    elif ssid == "chinese" and key == None:
-        commandDic = {"2g": "am instrument -e class com.peanutswifi.ApplicationTest#test_assoc_tkippsk2_sta_ssidchinese_2g -w com.peanutswifi.test/android.test.InstrumentationTestRunner",
-                      "5g": "am instrument -e class com.peanutswifi.ApplicationTest#test_assoc_tkippsk2_sta_ssidchinese_5g -w com.peanutswifi.test/android.test.InstrumentationTestRunner",
-                      "guest":"am instrument -e class com.peanutswifi.ApplicationTest#test_assoc_tkippsk2_sta_ssidchinese_guest -w com.peanutswifi.test/android.test.InstrumentationTestRunner",}
-    elif ssid == "spec" and key == None:
-        commandDic = {"2g": "am instrument -e class com.peanutswifi.ApplicationTest#test_assoc_tkippsk2_sta_ssidspec_2g -w com.peanutswifi.test/android.test.InstrumentationTestRunner",
-                      "5g": "am instrument -e class com.peanutswifi.ApplicationTest#test_assoc_tkippsk2_sta_ssidspec_5g -w com.peanutswifi.test/android.test.InstrumentationTestRunner",
-                      "guest":"am instrument -e class com.peanutswifi.ApplicationTest#test_assoc_tkippsk2_sta_ssidspec_guest -w com.peanutswifi.test/android.test.InstrumentationTestRunner",}
+    if ssid == "normal" and key is None:
+        commandDic = {
+            "2g": "am instrument -e class com.peanutswifi.ApplicationTest#test_assoc_tkippsk2_sta_2g -w com.peanutswifi.test/android.test.InstrumentationTestRunner",
+            "5g": "am instrument -e class com.peanutswifi.ApplicationTest#test_assoc_tkippsk2_sta_5g -w com.peanutswifi.test/android.test.InstrumentationTestRunner",
+            "guest": "am instrument -e class com.peanutswifi.ApplicationTest#test_assoc_tkippsk2_sta_guest -w com.peanutswifi.test/android.test.InstrumentationTestRunner", }
+    elif ssid == "chinese" and key is None:
+        commandDic = {
+            "2g": "am instrument -e class com.peanutswifi.ApplicationTest#test_assoc_tkippsk2_sta_ssidchinese_2g -w com.peanutswifi.test/android.test.InstrumentationTestRunner",
+            "5g": "am instrument -e class com.peanutswifi.ApplicationTest#test_assoc_tkippsk2_sta_ssidchinese_5g -w com.peanutswifi.test/android.test.InstrumentationTestRunner",
+            "guest": "am instrument -e class com.peanutswifi.ApplicationTest#test_assoc_tkippsk2_sta_ssidchinese_guest -w com.peanutswifi.test/android.test.InstrumentationTestRunner", }
+    elif ssid == "spec" and key is None:
+        commandDic = {
+            "2g": "am instrument -e class com.peanutswifi.ApplicationTest#test_assoc_tkippsk2_sta_ssidspec_2g -w com.peanutswifi.test/android.test.InstrumentationTestRunner",
+            "5g": "am instrument -e class com.peanutswifi.ApplicationTest#test_assoc_tkippsk2_sta_ssidspec_5g -w com.peanutswifi.test/android.test.InstrumentationTestRunner",
+            "guest": "am instrument -e class com.peanutswifi.ApplicationTest#test_assoc_tkippsk2_sta_ssidspec_guest -w com.peanutswifi.test/android.test.InstrumentationTestRunner", }
     elif ssid == "normal" and key == "spec":
-        commandDic = {"2g": "am instrument -e class com.peanutswifi.ApplicationTest#test_assoc_psk_sta_keyspec_2g -w com.peanutswifi.test/android.test.InstrumentationTestRunner",
-                      "5g": "am instrument -e class com.peanutswifi.ApplicationTest#test_assoc_psk_sta_keyspec_5g -w com.peanutswifi.test/android.test.InstrumentationTestRunner",
-                      "guest":"am instrument -e class com.peanutswifi.ApplicationTest#test_assoc_psk_sta_keyspec_guest -w com.peanutswifi.test/android.test.InstrumentationTestRunner",}
+        commandDic = {
+            "2g": "am instrument -e class com.peanutswifi.ApplicationTest#test_assoc_psk_sta_keyspec_2g -w com.peanutswifi.test/android.test.InstrumentationTestRunner",
+            "5g": "am instrument -e class com.peanutswifi.ApplicationTest#test_assoc_psk_sta_keyspec_5g -w com.peanutswifi.test/android.test.InstrumentationTestRunner",
+            "guest": "am instrument -e class com.peanutswifi.ApplicationTest#test_assoc_psk_sta_keyspec_guest -w com.peanutswifi.test/android.test.InstrumentationTestRunner", }
 
     command = commandDic.get(radio)
     ret = setAdbShell(device, command, logname)
@@ -850,13 +883,14 @@ def setAdbTkipPsk2StaConn(device, ssid, radio, logname, key=None):
         if m is not None:
             return True
     return False
+
 
 def setAdbTkipPsk2StaConnRepeat(device, ssid, radio, logname):
-
     if ssid == "normal":
-        commandDic = {"2g": "am instrument -e class com.peanutswifi.ApplicationTest#test_repeat_assoc_tkippsk2_sta_2g -w com.peanutswifi.test/android.test.InstrumentationTestRunner",
-                      "5g": "am instrument -e class com.peanutswifi.ApplicationTest#test_repeat_assoc_tkippsk2_sta_5g -w com.peanutswifi.test/android.test.InstrumentationTestRunner",
-                      "guest":"am instrument -e class com.peanutswifi.ApplicationTest#test_repeat_assoc_tkippsk2_sta_guest -w com.peanutswifi.test/android.test.InstrumentationTestRunner",}
+        commandDic = {
+            "2g": "am instrument -e class com.peanutswifi.ApplicationTest#test_repeat_assoc_tkippsk2_sta_2g -w com.peanutswifi.test/android.test.InstrumentationTestRunner",
+            "5g": "am instrument -e class com.peanutswifi.ApplicationTest#test_repeat_assoc_tkippsk2_sta_5g -w com.peanutswifi.test/android.test.InstrumentationTestRunner",
+            "guest": "am instrument -e class com.peanutswifi.ApplicationTest#test_repeat_assoc_tkippsk2_sta_guest -w com.peanutswifi.test/android.test.InstrumentationTestRunner", }
 
     command = commandDic.get(radio)
     ret = setAdbShell(device, command, logname)
@@ -865,25 +899,29 @@ def setAdbTkipPsk2StaConnRepeat(device, ssid, radio, logname):
         if m is not None:
             return True
     return False
+
 
 def setAdbTkipPskStaConn(device, ssid, radio, logname, key=None):
-
-    if ssid == "normal" and key == None:
-        commandDic = {"2g": "am instrument -e class com.peanutswifi.ApplicationTest#test_assoc_tkippsk_sta_2g -w com.peanutswifi.test/android.test.InstrumentationTestRunner",
-                      "5g": "am instrument -e class com.peanutswifi.ApplicationTest#test_assoc_tkippsk_sta_5g -w com.peanutswifi.test/android.test.InstrumentationTestRunner",
-                      "guest":"am instrument -e class com.peanutswifi.ApplicationTest#test_assoc_tkippsk_sta_guest -w com.peanutswifi.test/android.test.InstrumentationTestRunner",}
-    elif ssid == "chinese" and key == None:
-        commandDic = {"2g": "am instrument -e class com.peanutswifi.ApplicationTest#test_assoc_tkippsk_sta_ssidchinese_2g -w com.peanutswifi.test/android.test.InstrumentationTestRunner",
-                      "5g": "am instrument -e class com.peanutswifi.ApplicationTest#test_assoc_tkippsk_sta_ssidchinese_5g -w com.peanutswifi.test/android.test.InstrumentationTestRunner",
-                      "guest":"am instrument -e class com.peanutswifi.ApplicationTest#test_assoc_tkippsk_sta_ssidchinese_guest -w com.peanutswifi.test/android.test.InstrumentationTestRunner",}
-    elif ssid == "spec" and key == None:
-        commandDic = {"2g": "am instrument -e class com.peanutswifi.ApplicationTest#test_assoc_tkippsk_sta_ssidspec_2g -w com.peanutswifi.test/android.test.InstrumentationTestRunner",
-                      "5g": "am instrument -e class com.peanutswifi.ApplicationTest#test_assoc_tkippsk_sta_ssidspec_5g -w com.peanutswifi.test/android.test.InstrumentationTestRunner",
-                      "guest":"am instrument -e class com.peanutswifi.ApplicationTest#test_assoc_tkippsk_sta_ssidspec_guest -w com.peanutswifi.test/android.test.InstrumentationTestRunner",}
+    if ssid == "normal" and key is None:
+        commandDic = {
+            "2g": "am instrument -e class com.peanutswifi.ApplicationTest#test_assoc_tkippsk_sta_2g -w com.peanutswifi.test/android.test.InstrumentationTestRunner",
+            "5g": "am instrument -e class com.peanutswifi.ApplicationTest#test_assoc_tkippsk_sta_5g -w com.peanutswifi.test/android.test.InstrumentationTestRunner",
+            "guest": "am instrument -e class com.peanutswifi.ApplicationTest#test_assoc_tkippsk_sta_guest -w com.peanutswifi.test/android.test.InstrumentationTestRunner", }
+    elif ssid == "chinese" and key is None:
+        commandDic = {
+            "2g": "am instrument -e class com.peanutswifi.ApplicationTest#test_assoc_tkippsk_sta_ssidchinese_2g -w com.peanutswifi.test/android.test.InstrumentationTestRunner",
+            "5g": "am instrument -e class com.peanutswifi.ApplicationTest#test_assoc_tkippsk_sta_ssidchinese_5g -w com.peanutswifi.test/android.test.InstrumentationTestRunner",
+            "guest": "am instrument -e class com.peanutswifi.ApplicationTest#test_assoc_tkippsk_sta_ssidchinese_guest -w com.peanutswifi.test/android.test.InstrumentationTestRunner", }
+    elif ssid == "spec" and key is None:
+        commandDic = {
+            "2g": "am instrument -e class com.peanutswifi.ApplicationTest#test_assoc_tkippsk_sta_ssidspec_2g -w com.peanutswifi.test/android.test.InstrumentationTestRunner",
+            "5g": "am instrument -e class com.peanutswifi.ApplicationTest#test_assoc_tkippsk_sta_ssidspec_5g -w com.peanutswifi.test/android.test.InstrumentationTestRunner",
+            "guest": "am instrument -e class com.peanutswifi.ApplicationTest#test_assoc_tkippsk_sta_ssidspec_guest -w com.peanutswifi.test/android.test.InstrumentationTestRunner", }
     elif ssid == "normal" and key == "spec":
-        commandDic = {"2g": "am instrument -e class com.peanutswifi.ApplicationTest#test_assoc_psk_sta_keyspec_2g -w com.peanutswifi.test/android.test.InstrumentationTestRunner",
-                      "5g": "am instrument -e class com.peanutswifi.ApplicationTest#test_assoc_psk_sta_keyspec_5g -w com.peanutswifi.test/android.test.InstrumentationTestRunner",
-                      "guest":"am instrument -e class com.peanutswifi.ApplicationTest#test_assoc_psk_sta_keyspec_guest -w com.peanutswifi.test/android.test.InstrumentationTestRunner",}
+        commandDic = {
+            "2g": "am instrument -e class com.peanutswifi.ApplicationTest#test_assoc_psk_sta_keyspec_2g -w com.peanutswifi.test/android.test.InstrumentationTestRunner",
+            "5g": "am instrument -e class com.peanutswifi.ApplicationTest#test_assoc_psk_sta_keyspec_5g -w com.peanutswifi.test/android.test.InstrumentationTestRunner",
+            "guest": "am instrument -e class com.peanutswifi.ApplicationTest#test_assoc_psk_sta_keyspec_guest -w com.peanutswifi.test/android.test.InstrumentationTestRunner", }
 
     command = commandDic.get(radio)
     ret = setAdbShell(device, command, logname)
@@ -892,13 +930,14 @@ def setAdbTkipPskStaConn(device, ssid, radio, logname, key=None):
         if m is not None:
             return True
     return False
+
 
 def setAdbTkipPskStaConnRepeat(device, ssid, radio, logname):
-
     if ssid == "normal":
-        commandDic = {"2g": "am instrument -e class com.peanutswifi.ApplicationTest#test_repeat_assoc_tkippsk_sta_2g -w com.peanutswifi.test/android.test.InstrumentationTestRunner",
-                      "5g": "am instrument -e class com.peanutswifi.ApplicationTest#test_repeat_assoc_tkippsk_sta_5g -w com.peanutswifi.test/android.test.InstrumentationTestRunner",
-                      "guest":"am instrument -e class com.peanutswifi.ApplicationTest#test_repeat_assoc_tkippsk_sta_guest -w com.peanutswifi.test/android.test.InstrumentationTestRunner",}
+        commandDic = {
+            "2g": "am instrument -e class com.peanutswifi.ApplicationTest#test_repeat_assoc_tkippsk_sta_2g -w com.peanutswifi.test/android.test.InstrumentationTestRunner",
+            "5g": "am instrument -e class com.peanutswifi.ApplicationTest#test_repeat_assoc_tkippsk_sta_5g -w com.peanutswifi.test/android.test.InstrumentationTestRunner",
+            "guest": "am instrument -e class com.peanutswifi.ApplicationTest#test_repeat_assoc_tkippsk_sta_guest -w com.peanutswifi.test/android.test.InstrumentationTestRunner", }
 
     command = commandDic.get(radio)
     ret = setAdbShell(device, command, logname)
@@ -907,11 +946,13 @@ def setAdbTkipPskStaConnRepeat(device, ssid, radio, logname):
         if m is not None:
             return True
     return False
+
 
 def setAdbScanSsidNoExist(device, ssid, radio, logname):
     if ssid == "normal":
-        commandDic = {"2g": "am instrument -e class com.peanutswifi.ApplicationTest#test_ssidhide_2g -w com.peanutswifi.test/android.test.InstrumentationTestRunner",
-                      "5g": "am instrument -e class com.peanutswifi.ApplicationTest#test_ssidhide_5g -w com.peanutswifi.test/android.test.InstrumentationTestRunner",}
+        commandDic = {
+            "2g": "am instrument -e class com.peanutswifi.ApplicationTest#test_ssidhide_2g -w com.peanutswifi.test/android.test.InstrumentationTestRunner",
+            "5g": "am instrument -e class com.peanutswifi.ApplicationTest#test_ssidhide_5g -w com.peanutswifi.test/android.test.InstrumentationTestRunner", }
 
     command = commandDic.get(radio)
     ret = setAdbShell(device, command, logname)
@@ -920,6 +961,7 @@ def setAdbScanSsidNoExist(device, ssid, radio, logname):
         if m:
             return True
     return False
+
 
 def setAdbIperfOn(device, logname):
     command = "am instrument -e class com.peanutswifi.ApplicationTest#test_iperf -w com.peanutswifi.test/android.test.InstrumentationTestRunner"
@@ -930,8 +972,9 @@ def setAdbIperfOn(device, logname):
             return True
     return False
 
+
 class SetAdbIperfOn(threading.Thread):
-    def __init__(self,device=None,logname=None):
+    def __init__(self, device=None, logname=None):
         threading.Thread.__init__(self)
         self.device = device
         self.logname = logname
@@ -948,16 +991,15 @@ def setIperfFlow(target, interval, time, logname):
 
     command = "iperf -c " + target
     if interval != "":
-        command = command +" -i " + interval
+        command = command + " -i " + interval
     if time != "":
         command = command + " -t " + time
 
-    command = command + " -r"
+    command += " -r"
     ret = setShell(command, logname)
     if len(ret) == 0:
         return False
     return True
-
 
 
 if __name__ == '__main__':
@@ -972,10 +1014,10 @@ if __name__ == '__main__':
     # a = [2,13]
     # ret = getWlanInfo(ssh, "2g", "a")
     # try:
-    #     a.index(int(ret["channel"]))
-    #     print 1
+    # a.index(int(ret["channel"]))
+    # print 1
     # except:
-    #     print 2
+    # print 2
     # ret = chkSiteSurvey(ssh, "apcli0", "64:09:80:73:75:3d" ,"a")
     # setWifiRestart(ssh,"a")
     # ret =getIntfHWAddr(ssh, "wl1", "a")

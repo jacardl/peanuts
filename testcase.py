@@ -1,6 +1,7 @@
 from unittest import *
 from tcdata import *
 
+
 class AP_CLEAR_CHAN(TestCase):
     @classmethod
     def setUpClass(self):
@@ -22,6 +23,7 @@ class AP_CLEAR_CHAN(TestCase):
         v.BSSID = v.BSSID['mac']
         v.BSSID_5G = getIntfHWAddr(self.dut, v.INTF_5G, self.__name__)
         v.BSSID_5G = v.BSSID_5G['mac']
+
     @classmethod
     def tearDownClass(self):
 
@@ -131,6 +133,7 @@ class AP_CLEAR_CHAN(TestCase):
             resPingPercent = getPingStatus(self.dut, res5gIp['ip'], v.PING_PERCENT_COUNT, self.__class__.__name__)
             self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS)
 
+
 class AP_CLEAR_CHAN2(TestCase):
     @classmethod
     def setUpClass(self):
@@ -167,7 +170,8 @@ class AP_CLEAR_CHAN2(TestCase):
                 self.fail(msg='no ip address got.')
             else:
                 resPingPercent = getPingStatus(self.dut, result['ip'], v.PING_PERCENT_COUNT, self.__class__.__name__)
-                self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS, "Ping responsed percent werenot good enough.")
+                self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
+                                        "Ping responsed percent werenot good enough.")
         else:
             self.assertTrue(res2gConn, "Association wasnot successful.")
 
@@ -180,9 +184,11 @@ class AP_CLEAR_CHAN2(TestCase):
                 self.fail(msg='no ip address got.')
             else:
                 resPingPercent = getPingStatus(self.dut, result['ip'], v.PING_PERCENT_COUNT, self.__class__.__name__)
-                self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS, "Ping responsed percent werenot good enough.")
+                self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
+                                        "Ping responsed percent werenot good enough.")
         else:
             self.assertTrue(res5gConn, "Association wasnot successful.")
+
 
 class AP_PSK2_CHAN(TestCase):
     @classmethod
@@ -309,6 +315,7 @@ class AP_PSK2_CHAN(TestCase):
             resPingPercent = getPingStatus(self.dut, res5gIp['ip'], v.PING_PERCENT_COUNT, self.__class__.__name__)
             self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS)
 
+
 class AP_PSK2_CHAN2(TestCase):
     @classmethod
     def setUpClass(self):
@@ -345,7 +352,8 @@ class AP_PSK2_CHAN2(TestCase):
                 self.fail(msg='no ip address got.')
             else:
                 resPingPercent = getPingStatus(self.dut, result['ip'], v.PING_PERCENT_COUNT, self.__class__.__name__)
-                self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS, "Ping responsed percent werenot good enough.")
+                self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
+                                        "Ping responsed percent werenot good enough.")
         else:
             self.assertTrue(res2gConn, "Association wasnot successful.")
 
@@ -358,9 +366,11 @@ class AP_PSK2_CHAN2(TestCase):
                 self.fail(msg='no ip address got.')
             else:
                 resPingPercent = getPingStatus(self.dut, result['ip'], v.PING_PERCENT_COUNT, self.__class__.__name__)
-                self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS, "Ping responsed percent werenot good enough.")
+                self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
+                                        "Ping responsed percent werenot good enough.")
         else:
             self.assertTrue(res5gConn, "Association wasnot successful.")
+
 
 class AP_MIXEDPSK_CHAN(TestCase):
     @classmethod
@@ -763,6 +773,7 @@ class AP_MIXEDPSK_CHAN(TestCase):
             resPingPercent = getPingStatus(self.dut, res5gIp['ip'], v.PING_PERCENT_COUNT, self.__class__.__name__)
             self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS)
 
+
 class AP_MIXEDPSK_CHAN2(TestCase):
     @classmethod
     def setUpClass(self):
@@ -799,7 +810,8 @@ class AP_MIXEDPSK_CHAN2(TestCase):
                 self.fail(msg='no ip address got.')
             else:
                 resPingPercent = getPingStatus(self.dut, result['ip'], v.PING_PERCENT_COUNT, self.__class__.__name__)
-                self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS, "Ping responsed percent werenot good enough.")
+                self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
+                                        "Ping responsed percent werenot good enough.")
         else:
             self.assertTrue(res2gConn, "Association wasnot successful.")
 
@@ -812,7 +824,8 @@ class AP_MIXEDPSK_CHAN2(TestCase):
                 self.fail(msg='no ip address got.')
             else:
                 resPingPercent = getPingStatus(self.dut, result['ip'], v.PING_PERCENT_COUNT, self.__class__.__name__)
-                self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS, "Ping responsed percent werenot good enough.")
+                self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
+                                        "Ping responsed percent werenot good enough.")
         else:
             self.assertTrue(res5gConn, "Association wasnot successful.")
 
@@ -825,7 +838,8 @@ class AP_MIXEDPSK_CHAN2(TestCase):
                 self.fail(msg='no ip address got.')
             else:
                 resPingPercent = getPingStatus(self.dut, result['ip'], v.PING_PERCENT_COUNT, self.__class__.__name__)
-                self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS, "Ping responsed percent werenot good enough.")
+                self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
+                                        "Ping responsed percent werenot good enough.")
         else:
             self.assertTrue(res2gConn, "Association wasnot successful.")
 
@@ -838,7 +852,8 @@ class AP_MIXEDPSK_CHAN2(TestCase):
                 self.fail(msg='no ip address got.')
             else:
                 resPingPercent = getPingStatus(self.dut, result['ip'], v.PING_PERCENT_COUNT, self.__class__.__name__)
-                self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS, "Ping responsed percent werenot good enough.")
+                self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
+                                        "Ping responsed percent werenot good enough.")
         else:
             self.assertTrue(res5gConn, "Association wasnot successful.")
 
@@ -851,7 +866,8 @@ class AP_MIXEDPSK_CHAN2(TestCase):
                 self.fail(msg='no ip address got.')
             else:
                 resPingPercent = getPingStatus(self.dut, result['ip'], v.PING_PERCENT_COUNT, self.__class__.__name__)
-                self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS, "Ping responsed percent werenot good enough.")
+                self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
+                                        "Ping responsed percent werenot good enough.")
         else:
             self.assertTrue(res2gConn, "Association wasnot successful.")
 
@@ -864,7 +880,8 @@ class AP_MIXEDPSK_CHAN2(TestCase):
                 self.fail(msg='no ip address got.')
             else:
                 resPingPercent = getPingStatus(self.dut, result['ip'], v.PING_PERCENT_COUNT, self.__class__.__name__)
-                self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS, "Ping responsed percent werenot good enough.")
+                self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
+                                        "Ping responsed percent werenot good enough.")
         else:
             self.assertTrue(res5gConn, "Association wasnot successful.")
 
@@ -877,7 +894,8 @@ class AP_MIXEDPSK_CHAN2(TestCase):
                 self.fail(msg='no ip address got.')
             else:
                 resPingPercent = getPingStatus(self.dut, result['ip'], v.PING_PERCENT_COUNT, self.__class__.__name__)
-                self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS, "Ping responsed percent werenot good enough.")
+                self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
+                                        "Ping responsed percent werenot good enough.")
         else:
             self.assertTrue(res2gConn, "Association wasnot successful.")
 
@@ -890,9 +908,11 @@ class AP_MIXEDPSK_CHAN2(TestCase):
                 self.fail(msg='no ip address got.')
             else:
                 resPingPercent = getPingStatus(self.dut, result['ip'], v.PING_PERCENT_COUNT, self.__class__.__name__)
-                self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS, "Ping responsed percent werenot good enough.")
+                self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
+                                        "Ping responsed percent werenot good enough.")
         else:
             self.assertTrue(res5gConn, "Association wasnot successful.")
+
 
 class AP_GUEST_CLEAR_CHAN(TestCase):
     @classmethod
@@ -972,6 +992,7 @@ class AP_GUEST_CLEAR_CHAN(TestCase):
             resPingPercent = getPingStatus(self.dut, res2gIp['ip'], v.PING_PERCENT_COUNT, self.__class__.__name__)
             self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS)
 
+
 class AP_GUEST_CLEAR_CHAN2(TestCase):
     @classmethod
     def setUpClass(self):
@@ -1008,9 +1029,11 @@ class AP_GUEST_CLEAR_CHAN2(TestCase):
                 self.fail(msg='no ip address got.')
             else:
                 resPingPercent = getPingStatus(self.dut, result['ip'], v.PING_PERCENT_COUNT, self.__class__.__name__)
-                self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS, "Ping responsed percent werenot good enough.")
+                self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
+                                        "Ping responsed percent werenot good enough.")
         else:
             self.assertTrue(res2gConn, "Association wasnot successful.")
+
 
 class AP_GUEST_PSK2_CHAN(TestCase):
     @classmethod
@@ -1089,6 +1112,7 @@ class AP_GUEST_PSK2_CHAN(TestCase):
             resPingPercent = getPingStatus(self.dut, res2gIp['ip'], v.PING_PERCENT_COUNT, self.__class__.__name__)
             self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS)
 
+
 class AP_GUEST_PSK2_CHAN2(TestCase):
     @classmethod
     def setUpClass(self):
@@ -1125,9 +1149,11 @@ class AP_GUEST_PSK2_CHAN2(TestCase):
                 self.fail(msg='no ip address got.')
             else:
                 resPingPercent = getPingStatus(self.dut, result['ip'], v.PING_PERCENT_COUNT, self.__class__.__name__)
-                self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS, "Ping responsed percent werenot good enough.")
+                self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
+                                        "Ping responsed percent werenot good enough.")
         else:
             self.assertTrue(res2gConn, "Association wasnot successful.")
+
 
 class AP_GUEST_MIXEDPSK_CHAN(TestCase):
     @classmethod
@@ -1344,6 +1370,7 @@ class AP_GUEST_MIXEDPSK_CHAN(TestCase):
             resPingPercent = getPingStatus(self.dut, res2gIp['ip'], v.PING_PERCENT_COUNT, self.__class__.__name__)
             self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS)
 
+
 class AP_GUEST_MIXEDPSK_CHAN2(TestCase):
     @classmethod
     def setUpClass(self):
@@ -1380,7 +1407,8 @@ class AP_GUEST_MIXEDPSK_CHAN2(TestCase):
                 self.fail(msg='no ip address got.')
             else:
                 resPingPercent = getPingStatus(self.dut, result['ip'], v.PING_PERCENT_COUNT, self.__class__.__name__)
-                self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS, "Ping responsed percent werenot good enough.")
+                self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
+                                        "Ping responsed percent werenot good enough.")
         else:
             self.assertTrue(res2gConn, "Association wasnot successful.")
 
@@ -1393,7 +1421,8 @@ class AP_GUEST_MIXEDPSK_CHAN2(TestCase):
                 self.fail(msg='no ip address got.')
             else:
                 resPingPercent = getPingStatus(self.dut, result['ip'], v.PING_PERCENT_COUNT, self.__class__.__name__)
-                self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS, "Ping responsed percent werenot good enough.")
+                self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
+                                        "Ping responsed percent werenot good enough.")
         else:
             self.assertTrue(res2gConn, "Association wasnot successful.")
 
@@ -1406,7 +1435,8 @@ class AP_GUEST_MIXEDPSK_CHAN2(TestCase):
                 self.fail(msg='no ip address got.')
             else:
                 resPingPercent = getPingStatus(self.dut, result['ip'], v.PING_PERCENT_COUNT, self.__class__.__name__)
-                self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS, "Ping responsed percent werenot good enough.")
+                self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
+                                        "Ping responsed percent werenot good enough.")
         else:
             self.assertTrue(res2gConn, "Association wasnot successful.")
 
@@ -1419,9 +1449,11 @@ class AP_GUEST_MIXEDPSK_CHAN2(TestCase):
                 self.fail(msg='no ip address got.')
             else:
                 resPingPercent = getPingStatus(self.dut, result['ip'], v.PING_PERCENT_COUNT, self.__class__.__name__)
-                self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS, "Ping responsed percent werenot good enough.")
+                self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
+                                        "Ping responsed percent werenot good enough.")
         else:
             self.assertTrue(res2gConn, "Association wasnot successful.")
+
 
 class AP_MIXEDPSK_CHAN_BW80(TestCase):
     @classmethod
@@ -1638,6 +1670,7 @@ class AP_MIXEDPSK_CHAN_BW80(TestCase):
             resPingPercent = getPingStatus(self.dut, res5gIp['ip'], v.PING_PERCENT_COUNT, self.__class__.__name__)
             self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS)
 
+
 class AP_MIXEDPSK_CHAN_BW802(TestCase):
     @classmethod
     def setUpClass(self):
@@ -1674,7 +1707,8 @@ class AP_MIXEDPSK_CHAN_BW802(TestCase):
                 self.fail(msg='no ip address got.')
             else:
                 resPingPercent = getPingStatus(self.dut, result['ip'], v.PING_PERCENT_COUNT, self.__class__.__name__)
-                self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS, "Ping responsed percent werenot good enough.")
+                self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
+                                        "Ping responsed percent werenot good enough.")
         else:
             self.assertTrue(res5gConn, "Association wasnot successful.")
 
@@ -1687,7 +1721,8 @@ class AP_MIXEDPSK_CHAN_BW802(TestCase):
                 self.fail(msg='no ip address got.')
             else:
                 resPingPercent = getPingStatus(self.dut, result['ip'], v.PING_PERCENT_COUNT, self.__class__.__name__)
-                self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS, "Ping responsed percent werenot good enough.")
+                self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
+                                        "Ping responsed percent werenot good enough.")
         else:
             self.assertTrue(res5gConn, "Association wasnot successful.")
 
@@ -1700,7 +1735,8 @@ class AP_MIXEDPSK_CHAN_BW802(TestCase):
                 self.fail(msg='no ip address got.')
             else:
                 resPingPercent = getPingStatus(self.dut, result['ip'], v.PING_PERCENT_COUNT, self.__class__.__name__)
-                self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS, "Ping responsed percent werenot good enough.")
+                self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
+                                        "Ping responsed percent werenot good enough.")
         else:
             self.assertTrue(res5gConn, "Association wasnot successful.")
 
@@ -1713,9 +1749,11 @@ class AP_MIXEDPSK_CHAN_BW802(TestCase):
                 self.fail(msg='no ip address got.')
             else:
                 resPingPercent = getPingStatus(self.dut, result['ip'], v.PING_PERCENT_COUNT, self.__class__.__name__)
-                self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS, "Ping responsed percent werenot good enough.")
+                self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
+                                        "Ping responsed percent werenot good enough.")
         else:
             self.assertTrue(res5gConn, "Association wasnot successful.")
+
 
 class AP_MIXEDPSK_CHAN_BW40(TestCase):
     @classmethod
@@ -2118,6 +2156,7 @@ class AP_MIXEDPSK_CHAN_BW40(TestCase):
             resPingPercent = getPingStatus(self.dut, res5gIp['ip'], v.PING_PERCENT_COUNT, self.__class__.__name__)
             self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS)
 
+
 class AP_MIXEDPSK_CHAN_BW402(TestCase):
     @classmethod
     def setUpClass(self):
@@ -2154,7 +2193,8 @@ class AP_MIXEDPSK_CHAN_BW402(TestCase):
                 self.fail(msg='no ip address got.')
             else:
                 resPingPercent = getPingStatus(self.dut, result['ip'], v.PING_PERCENT_COUNT, self.__class__.__name__)
-                self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS, "Ping responsed percent werenot good enough.")
+                self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
+                                        "Ping responsed percent werenot good enough.")
         else:
             self.assertTrue(res5gConn, "Association wasnot successful.")
 
@@ -2167,7 +2207,8 @@ class AP_MIXEDPSK_CHAN_BW402(TestCase):
                 self.fail(msg='no ip address got.')
             else:
                 resPingPercent = getPingStatus(self.dut, result['ip'], v.PING_PERCENT_COUNT, self.__class__.__name__)
-                self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS, "Ping responsed percent werenot good enough.")
+                self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
+                                        "Ping responsed percent werenot good enough.")
         else:
             self.assertTrue(res5gConn, "Association wasnot successful.")
 
@@ -2180,7 +2221,8 @@ class AP_MIXEDPSK_CHAN_BW402(TestCase):
                 self.fail(msg='no ip address got.')
             else:
                 resPingPercent = getPingStatus(self.dut, result['ip'], v.PING_PERCENT_COUNT, self.__class__.__name__)
-                self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS, "Ping responsed percent werenot good enough.")
+                self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
+                                        "Ping responsed percent werenot good enough.")
         else:
             self.assertTrue(res5gConn, "Association wasnot successful.")
 
@@ -2193,7 +2235,8 @@ class AP_MIXEDPSK_CHAN_BW402(TestCase):
                 self.fail(msg='no ip address got.')
             else:
                 resPingPercent = getPingStatus(self.dut, result['ip'], v.PING_PERCENT_COUNT, self.__class__.__name__)
-                self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS, "Ping responsed percent werenot good enough.")
+                self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
+                                        "Ping responsed percent werenot good enough.")
         else:
             self.assertTrue(res5gConn, "Association wasnot successful.")
 
@@ -2206,7 +2249,8 @@ class AP_MIXEDPSK_CHAN_BW402(TestCase):
                 self.fail(msg='no ip address got.')
             else:
                 resPingPercent = getPingStatus(self.dut, result['ip'], v.PING_PERCENT_COUNT, self.__class__.__name__)
-                self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS, "Ping responsed percent werenot good enough.")
+                self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
+                                        "Ping responsed percent werenot good enough.")
         else:
             self.assertTrue(res2gConn, "Association wasnot successful.")
 
@@ -2219,7 +2263,8 @@ class AP_MIXEDPSK_CHAN_BW402(TestCase):
                 self.fail(msg='no ip address got.')
             else:
                 resPingPercent = getPingStatus(self.dut, result['ip'], v.PING_PERCENT_COUNT, self.__class__.__name__)
-                self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS, "Ping responsed percent werenot good enough.")
+                self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
+                                        "Ping responsed percent werenot good enough.")
         else:
             self.assertTrue(res2gConn, "Association wasnot successful.")
 
@@ -2232,7 +2277,8 @@ class AP_MIXEDPSK_CHAN_BW402(TestCase):
                 self.fail(msg='no ip address got.')
             else:
                 resPingPercent = getPingStatus(self.dut, result['ip'], v.PING_PERCENT_COUNT, self.__class__.__name__)
-                self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS, "Ping responsed percent werenot good enough.")
+                self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
+                                        "Ping responsed percent werenot good enough.")
         else:
             self.assertTrue(res2gConn, "Association wasnot successful.")
 
@@ -2245,9 +2291,11 @@ class AP_MIXEDPSK_CHAN_BW402(TestCase):
                 self.fail(msg='no ip address got.')
             else:
                 resPingPercent = getPingStatus(self.dut, result['ip'], v.PING_PERCENT_COUNT, self.__class__.__name__)
-                self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS, "Ping responsed percent werenot good enough.")
+                self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
+                                        "Ping responsed percent werenot good enough.")
         else:
             self.assertTrue(res2gConn, "Association wasnot successful.")
+
 
 class AP_MIXEDPSK_CHAN_BW20(TestCase):
     @classmethod
@@ -2650,6 +2698,7 @@ class AP_MIXEDPSK_CHAN_BW20(TestCase):
             resPingPercent = getPingStatus(self.dut, res5gIp['ip'], v.PING_PERCENT_COUNT, self.__class__.__name__)
             self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS)
 
+
 class AP_MIXEDPSK_CHAN_BW202(TestCase):
     @classmethod
     def setUpClass(self):
@@ -2686,7 +2735,8 @@ class AP_MIXEDPSK_CHAN_BW202(TestCase):
                 self.fail(msg='no ip address got.')
             else:
                 resPingPercent = getPingStatus(self.dut, result['ip'], v.PING_PERCENT_COUNT, self.__class__.__name__)
-                self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS, "Ping responsed percent werenot good enough.")
+                self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
+                                        "Ping responsed percent werenot good enough.")
         else:
             self.assertTrue(res5gConn, "Association wasnot successful.")
 
@@ -2699,7 +2749,8 @@ class AP_MIXEDPSK_CHAN_BW202(TestCase):
                 self.fail(msg='no ip address got.')
             else:
                 resPingPercent = getPingStatus(self.dut, result['ip'], v.PING_PERCENT_COUNT, self.__class__.__name__)
-                self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS, "Ping responsed percent werenot good enough.")
+                self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
+                                        "Ping responsed percent werenot good enough.")
         else:
             self.assertTrue(res5gConn, "Association wasnot successful.")
 
@@ -2712,7 +2763,8 @@ class AP_MIXEDPSK_CHAN_BW202(TestCase):
                 self.fail(msg='no ip address got.')
             else:
                 resPingPercent = getPingStatus(self.dut, result['ip'], v.PING_PERCENT_COUNT, self.__class__.__name__)
-                self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS, "Ping responsed percent werenot good enough.")
+                self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
+                                        "Ping responsed percent werenot good enough.")
         else:
             self.assertTrue(res5gConn, "Association wasnot successful.")
 
@@ -2725,7 +2777,8 @@ class AP_MIXEDPSK_CHAN_BW202(TestCase):
                 self.fail(msg='no ip address got.')
             else:
                 resPingPercent = getPingStatus(self.dut, result['ip'], v.PING_PERCENT_COUNT, self.__class__.__name__)
-                self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS, "Ping responsed percent werenot good enough.")
+                self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
+                                        "Ping responsed percent werenot good enough.")
         else:
             self.assertTrue(res5gConn, "Association wasnot successful.")
 
@@ -2738,7 +2791,8 @@ class AP_MIXEDPSK_CHAN_BW202(TestCase):
                 self.fail(msg='no ip address got.')
             else:
                 resPingPercent = getPingStatus(self.dut, result['ip'], v.PING_PERCENT_COUNT, self.__class__.__name__)
-                self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS, "Ping responsed percent werenot good enough.")
+                self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
+                                        "Ping responsed percent werenot good enough.")
         else:
             self.assertTrue(res2gConn, "Association wasnot successful.")
 
@@ -2751,7 +2805,8 @@ class AP_MIXEDPSK_CHAN_BW202(TestCase):
                 self.fail(msg='no ip address got.')
             else:
                 resPingPercent = getPingStatus(self.dut, result['ip'], v.PING_PERCENT_COUNT, self.__class__.__name__)
-                self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS, "Ping responsed percent werenot good enough.")
+                self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
+                                        "Ping responsed percent werenot good enough.")
         else:
             self.assertTrue(res2gConn, "Association wasnot successful.")
 
@@ -2764,7 +2819,8 @@ class AP_MIXEDPSK_CHAN_BW202(TestCase):
                 self.fail(msg='no ip address got.')
             else:
                 resPingPercent = getPingStatus(self.dut, result['ip'], v.PING_PERCENT_COUNT, self.__class__.__name__)
-                self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS, "Ping responsed percent werenot good enough.")
+                self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
+                                        "Ping responsed percent werenot good enough.")
         else:
             self.assertTrue(res2gConn, "Association wasnot successful.")
 
@@ -2777,9 +2833,11 @@ class AP_MIXEDPSK_CHAN_BW202(TestCase):
                 self.fail(msg='no ip address got.')
             else:
                 resPingPercent = getPingStatus(self.dut, result['ip'], v.PING_PERCENT_COUNT, self.__class__.__name__)
-                self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS, "Ping responsed percent werenot good enough.")
+                self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
+                                        "Ping responsed percent werenot good enough.")
         else:
             self.assertTrue(res2gConn, "Association wasnot successful.")
+
 
 class AP_MIXEDPSK_CHAN_SSIDSPEC(TestCase):
     @classmethod
@@ -3182,6 +3240,7 @@ class AP_MIXEDPSK_CHAN_SSIDSPEC(TestCase):
             resPingPercent = getPingStatus(self.dut, res5gIp['ip'], v.PING_PERCENT_COUNT, self.__class__.__name__)
             self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS)
 
+
 class AP_MIXEDPSK_CHAN_SSIDSPEC2(TestCase):
     @classmethod
     def setUpClass(self):
@@ -3219,7 +3278,8 @@ class AP_MIXEDPSK_CHAN_SSIDSPEC2(TestCase):
                 self.fail(msg='no ip address got.')
             else:
                 resPingPercent = getPingStatus(self.dut, result['ip'], v.PING_PERCENT_COUNT, self.__class__.__name__)
-                self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS, "Ping responsed percent werenot good enough.")
+                self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
+                                        "Ping responsed percent werenot good enough.")
         else:
             self.assertTrue(res2gConn, "Association wasnot successful.")
 
@@ -3232,7 +3292,8 @@ class AP_MIXEDPSK_CHAN_SSIDSPEC2(TestCase):
                 self.fail(msg='no ip address got.')
             else:
                 resPingPercent = getPingStatus(self.dut, result['ip'], v.PING_PERCENT_COUNT, self.__class__.__name__)
-                self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS, "Ping responsed percent werenot good enough.")
+                self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
+                                        "Ping responsed percent werenot good enough.")
         else:
             self.assertTrue(res5gConn, "Association wasnot successful.")
 
@@ -3245,7 +3306,8 @@ class AP_MIXEDPSK_CHAN_SSIDSPEC2(TestCase):
                 self.fail(msg='no ip address got.')
             else:
                 resPingPercent = getPingStatus(self.dut, result['ip'], v.PING_PERCENT_COUNT, self.__class__.__name__)
-                self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS, "Ping responsed percent werenot good enough.")
+                self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
+                                        "Ping responsed percent werenot good enough.")
         else:
             self.assertTrue(res2gConn, "Association wasnot successful.")
 
@@ -3258,7 +3320,8 @@ class AP_MIXEDPSK_CHAN_SSIDSPEC2(TestCase):
                 self.fail(msg='no ip address got.')
             else:
                 resPingPercent = getPingStatus(self.dut, result['ip'], v.PING_PERCENT_COUNT, self.__class__.__name__)
-                self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS, "Ping responsed percent werenot good enough.")
+                self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
+                                        "Ping responsed percent werenot good enough.")
         else:
             self.assertTrue(res5gConn, "Association wasnot successful.")
 
@@ -3271,7 +3334,8 @@ class AP_MIXEDPSK_CHAN_SSIDSPEC2(TestCase):
                 self.fail(msg='no ip address got.')
             else:
                 resPingPercent = getPingStatus(self.dut, result['ip'], v.PING_PERCENT_COUNT, self.__class__.__name__)
-                self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS, "Ping responsed percent werenot good enough.")
+                self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
+                                        "Ping responsed percent werenot good enough.")
         else:
             self.assertTrue(res2gConn, "Association wasnot successful.")
 
@@ -3283,7 +3347,8 @@ class AP_MIXEDPSK_CHAN_SSIDSPEC2(TestCase):
                 self.fail(msg='no ip address got.')
             else:
                 resPingPercent = getPingStatus(self.dut, result['ip'], v.PING_PERCENT_COUNT, self.__class__.__name__)
-                self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS, "Ping responsed percent werenot good enough.")
+                self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
+                                        "Ping responsed percent werenot good enough.")
         else:
             self.assertTrue(res5gConn, "Association wasnot successful.")
 
@@ -3295,7 +3360,8 @@ class AP_MIXEDPSK_CHAN_SSIDSPEC2(TestCase):
                 self.fail(msg='no ip address got.')
             else:
                 resPingPercent = getPingStatus(self.dut, result['ip'], v.PING_PERCENT_COUNT, self.__class__.__name__)
-                self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS, "Ping responsed percent werenot good enough.")
+                self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
+                                        "Ping responsed percent werenot good enough.")
         else:
             self.assertTrue(res2gConn, "Association wasnot successful.")
 
@@ -3307,9 +3373,11 @@ class AP_MIXEDPSK_CHAN_SSIDSPEC2(TestCase):
                 self.fail(msg='no ip address got.')
             else:
                 resPingPercent = getPingStatus(self.dut, result['ip'], v.PING_PERCENT_COUNT, self.__class__.__name__)
-                self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS, "Ping responsed percent werenot good enough.")
+                self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
+                                        "Ping responsed percent werenot good enough.")
         else:
             self.assertTrue(res5gConn, "Association wasnot successful.")
+
 
 class AP_MIXEDPSK_CHAN_KEYSPEC(TestCase):
     @classmethod
@@ -3712,6 +3780,7 @@ class AP_MIXEDPSK_CHAN_KEYSPEC(TestCase):
             resPingPercent = getPingStatus(self.dut, res5gIp['ip'], v.PING_PERCENT_COUNT, self.__class__.__name__)
             self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS)
 
+
 class AP_MIXEDPSK_CHAN_KEYSPEC2(TestCase):
     @classmethod
     def setUpClass(self):
@@ -3749,7 +3818,8 @@ class AP_MIXEDPSK_CHAN_KEYSPEC2(TestCase):
                 self.fail(msg='no ip address got.')
             else:
                 resPingPercent = getPingStatus(self.dut, result['ip'], v.PING_PERCENT_COUNT, self.__class__.__name__)
-                self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS, "Ping responsed percent werenot good enough.")
+                self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
+                                        "Ping responsed percent werenot good enough.")
         else:
             self.assertTrue(res2gConn, "Association wasnot successful.")
 
@@ -3762,7 +3832,8 @@ class AP_MIXEDPSK_CHAN_KEYSPEC2(TestCase):
                 self.fail(msg='no ip address got.')
             else:
                 resPingPercent = getPingStatus(self.dut, result['ip'], v.PING_PERCENT_COUNT, self.__class__.__name__)
-                self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS, "Ping responsed percent werenot good enough.")
+                self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
+                                        "Ping responsed percent werenot good enough.")
         else:
             self.assertTrue(res2gConn, "Association wasnot successful.")
 
@@ -3775,7 +3846,8 @@ class AP_MIXEDPSK_CHAN_KEYSPEC2(TestCase):
                 self.fail(msg='no ip address got.')
             else:
                 resPingPercent = getPingStatus(self.dut, result['ip'], v.PING_PERCENT_COUNT, self.__class__.__name__)
-                self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS, "Ping responsed percent werenot good enough.")
+                self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
+                                        "Ping responsed percent werenot good enough.")
         else:
             self.assertTrue(res2gConn, "Association wasnot successful.")
 
@@ -3788,7 +3860,8 @@ class AP_MIXEDPSK_CHAN_KEYSPEC2(TestCase):
                 self.fail(msg='no ip address got.')
             else:
                 resPingPercent = getPingStatus(self.dut, result['ip'], v.PING_PERCENT_COUNT, self.__class__.__name__)
-                self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS, "Ping responsed percent werenot good enough.")
+                self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
+                                        "Ping responsed percent werenot good enough.")
         else:
             self.assertTrue(res2gConn, "Association wasnot successful.")
 
@@ -3801,7 +3874,8 @@ class AP_MIXEDPSK_CHAN_KEYSPEC2(TestCase):
                 self.fail(msg='no ip address got.')
             else:
                 resPingPercent = getPingStatus(self.dut, result['ip'], v.PING_PERCENT_COUNT, self.__class__.__name__)
-                self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS, "Ping responsed percent werenot good enough.")
+                self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
+                                        "Ping responsed percent werenot good enough.")
         else:
             self.assertTrue(res2gConn, "Association wasnot successful.")
 
@@ -3814,7 +3888,8 @@ class AP_MIXEDPSK_CHAN_KEYSPEC2(TestCase):
                 self.fail(msg='no ip address got.')
             else:
                 resPingPercent = getPingStatus(self.dut, result['ip'], v.PING_PERCENT_COUNT, self.__class__.__name__)
-                self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS, "Ping responsed percent werenot good enough.")
+                self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
+                                        "Ping responsed percent werenot good enough.")
         else:
             self.assertTrue(res2gConn, "Association wasnot successful.")
 
@@ -3827,7 +3902,8 @@ class AP_MIXEDPSK_CHAN_KEYSPEC2(TestCase):
                 self.fail(msg='no ip address got.')
             else:
                 resPingPercent = getPingStatus(self.dut, result['ip'], v.PING_PERCENT_COUNT, self.__class__.__name__)
-                self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS, "Ping responsed percent werenot good enough.")
+                self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
+                                        "Ping responsed percent werenot good enough.")
         else:
             self.assertTrue(res2gConn, "Association wasnot successful.")
 
@@ -3840,9 +3916,11 @@ class AP_MIXEDPSK_CHAN_KEYSPEC2(TestCase):
                 self.fail(msg='no ip address got.')
             else:
                 resPingPercent = getPingStatus(self.dut, result['ip'], v.PING_PERCENT_COUNT, self.__class__.__name__)
-                self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS, "Ping responsed percent werenot good enough.")
+                self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
+                                        "Ping responsed percent werenot good enough.")
         else:
             self.assertTrue(res2gConn, "Association wasnot successful.")
+
 
 class AP_MIXEDPSK_CHAN_SSIDCHINESE(TestCase):
     @classmethod
@@ -4245,6 +4323,7 @@ class AP_MIXEDPSK_CHAN_SSIDCHINESE(TestCase):
             resPingPercent = getPingStatus(self.dut, res5gIp['ip'], v.PING_PERCENT_COUNT, self.__class__.__name__)
             self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS)
 
+
 class AP_MIXEDPSK_CHAN_SSIDCHINESE2(TestCase):
     @classmethod
     def setUpClass(self):
@@ -4282,7 +4361,8 @@ class AP_MIXEDPSK_CHAN_SSIDCHINESE2(TestCase):
                 self.fail(msg='no ip address got.')
             else:
                 resPingPercent = getPingStatus(self.dut, result['ip'], v.PING_PERCENT_COUNT, self.__class__.__name__)
-                self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS, "Ping responsed percent werenot good enough.")
+                self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
+                                        "Ping responsed percent werenot good enough.")
         else:
             self.assertTrue(res2gConn, "Association wasnot successful.")
 
@@ -4295,7 +4375,8 @@ class AP_MIXEDPSK_CHAN_SSIDCHINESE2(TestCase):
                 self.fail(msg='no ip address got.')
             else:
                 resPingPercent = getPingStatus(self.dut, result['ip'], v.PING_PERCENT_COUNT, self.__class__.__name__)
-                self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS, "Ping responsed percent werenot good enough.")
+                self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
+                                        "Ping responsed percent werenot good enough.")
         else:
             self.assertTrue(res5gConn, "Association wasnot successful.")
 
@@ -4308,7 +4389,8 @@ class AP_MIXEDPSK_CHAN_SSIDCHINESE2(TestCase):
                 self.fail(msg='no ip address got.')
             else:
                 resPingPercent = getPingStatus(self.dut, result['ip'], v.PING_PERCENT_COUNT, self.__class__.__name__)
-                self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS, "Ping responsed percent werenot good enough.")
+                self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
+                                        "Ping responsed percent werenot good enough.")
         else:
             self.assertTrue(res2gConn, "Association wasnot successful.")
 
@@ -4321,7 +4403,8 @@ class AP_MIXEDPSK_CHAN_SSIDCHINESE2(TestCase):
                 self.fail(msg='no ip address got.')
             else:
                 resPingPercent = getPingStatus(self.dut, result['ip'], v.PING_PERCENT_COUNT, self.__class__.__name__)
-                self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS, "Ping responsed percent werenot good enough.")
+                self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
+                                        "Ping responsed percent werenot good enough.")
         else:
             self.assertTrue(res5gConn, "Association wasnot successful.")
 
@@ -4334,7 +4417,8 @@ class AP_MIXEDPSK_CHAN_SSIDCHINESE2(TestCase):
                 self.fail(msg='no ip address got.')
             else:
                 resPingPercent = getPingStatus(self.dut, result['ip'], v.PING_PERCENT_COUNT, self.__class__.__name__)
-                self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS, "Ping responsed percent werenot good enough.")
+                self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
+                                        "Ping responsed percent werenot good enough.")
         else:
             self.assertTrue(res2gConn, "Association wasnot successful.")
 
@@ -4346,7 +4430,8 @@ class AP_MIXEDPSK_CHAN_SSIDCHINESE2(TestCase):
                 self.fail(msg='no ip address got.')
             else:
                 resPingPercent = getPingStatus(self.dut, result['ip'], v.PING_PERCENT_COUNT, self.__class__.__name__)
-                self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS, "Ping responsed percent werenot good enough.")
+                self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
+                                        "Ping responsed percent werenot good enough.")
         else:
             self.assertTrue(res5gConn, "Association wasnot successful.")
 
@@ -4358,7 +4443,8 @@ class AP_MIXEDPSK_CHAN_SSIDCHINESE2(TestCase):
                 self.fail(msg='no ip address got.')
             else:
                 resPingPercent = getPingStatus(self.dut, result['ip'], v.PING_PERCENT_COUNT, self.__class__.__name__)
-                self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS, "Ping responsed percent werenot good enough.")
+                self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
+                                        "Ping responsed percent werenot good enough.")
         else:
             self.assertTrue(res2gConn, "Association wasnot successful.")
 
@@ -4370,9 +4456,11 @@ class AP_MIXEDPSK_CHAN_SSIDCHINESE2(TestCase):
                 self.fail(msg='no ip address got.')
             else:
                 resPingPercent = getPingStatus(self.dut, result['ip'], v.PING_PERCENT_COUNT, self.__class__.__name__)
-                self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS, "Ping responsed percent werenot good enough.")
+                self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
+                                        "Ping responsed percent werenot good enough.")
         else:
             self.assertTrue(res5gConn, "Association wasnot successful.")
+
 
 class AP_CLEAR_LOW(TestCase):
     @classmethod
@@ -4500,6 +4588,7 @@ class AP_CLEAR_LOW(TestCase):
             resPingPercent = getPingStatus(self.dut, res5gIp['ip'], v.PING_PERCENT_COUNT, self.__class__.__name__)
             self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS)
 
+
 class AP_CLEAR_LOW2(TestCase):
     @classmethod
     def setUpClass(self):
@@ -4536,7 +4625,8 @@ class AP_CLEAR_LOW2(TestCase):
                 self.fail(msg='no ip address got.')
             else:
                 resPingPercent = getPingStatus(self.dut, result['ip'], v.PING_PERCENT_COUNT, self.__class__.__name__)
-                self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS, "Ping responsed percent werenot good enough.")
+                self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
+                                        "Ping responsed percent werenot good enough.")
         else:
             self.assertTrue(res2gConn, "Association wasnot successful.")
 
@@ -4549,9 +4639,11 @@ class AP_CLEAR_LOW2(TestCase):
                 self.fail(msg='no ip address got.')
             else:
                 resPingPercent = getPingStatus(self.dut, result['ip'], v.PING_PERCENT_COUNT, self.__class__.__name__)
-                self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS, "Ping responsed percent werenot good enough.")
+                self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
+                                        "Ping responsed percent werenot good enough.")
         else:
             self.assertTrue(res5gConn, "Association wasnot successful.")
+
 
 class AP_CLEAR_HIGH(TestCase):
     @classmethod
@@ -4679,6 +4771,7 @@ class AP_CLEAR_HIGH(TestCase):
             resPingPercent = getPingStatus(self.dut, res5gIp['ip'], v.PING_PERCENT_COUNT, self.__class__.__name__)
             self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS)
 
+
 class AP_CLEAR_HIGH2(TestCase):
     @classmethod
     def setUpClass(self):
@@ -4715,7 +4808,8 @@ class AP_CLEAR_HIGH2(TestCase):
                 self.fail(msg='no ip address got.')
             else:
                 resPingPercent = getPingStatus(self.dut, result['ip'], v.PING_PERCENT_COUNT, self.__class__.__name__)
-                self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS, "Ping responsed percent werenot good enough.")
+                self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
+                                        "Ping responsed percent werenot good enough.")
         else:
             self.assertTrue(res2gConn, "Association wasnot successful.")
 
@@ -4728,9 +4822,11 @@ class AP_CLEAR_HIGH2(TestCase):
                 self.fail(msg='no ip address got.')
             else:
                 resPingPercent = getPingStatus(self.dut, result['ip'], v.PING_PERCENT_COUNT, self.__class__.__name__)
-                self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS, "Ping responsed percent werenot good enough.")
+                self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
+                                        "Ping responsed percent werenot good enough.")
         else:
             self.assertTrue(res5gConn, "Association wasnot successful.")
+
 
 class AP_CLEAR_LOW_TXPOWER(TestCase):
     @classmethod
@@ -4761,7 +4857,7 @@ class AP_CLEAR_LOW_TXPOWER(TestCase):
             """
             exactly 19.75
             """
-            if power >= 19.55 and power <= 19.95:
+            if 19.55 <= power <= 19.95:
                 pass
             else:
                 self.fail("R1D/R2D txpower isnot correct.")
@@ -4770,7 +4866,7 @@ class AP_CLEAR_LOW_TXPOWER(TestCase):
             """
             exactly 13
             """
-            if power >= 12.8 and power <= 13.2:
+            if 12.8 <= power <= 13.2:
                 pass
             else:
                 self.fail("R1CM txpower isnot correct.")
@@ -4785,7 +4881,7 @@ class AP_CLEAR_LOW_TXPOWER(TestCase):
             """
             exactly 16.25
             """
-            if power >= 16.0 and power <= 16.45:
+            if 16.0 <= power <= 16.45:
                 pass
             else:
                 self.fail("R1D/R2D txpower isnot correct.")
@@ -4794,7 +4890,7 @@ class AP_CLEAR_LOW_TXPOWER(TestCase):
             """
             exactly 13
             """
-            if power >= 12.8 and power <= 13.2:
+            if 12.8 <= power <= 13.2:
                 pass
             else:
                 self.fail("R1CM txpower isnot correct.")
@@ -4809,7 +4905,7 @@ class AP_CLEAR_LOW_TXPOWER(TestCase):
             """
             exactly 19.75
             """
-            if power >= 19.55 and power <= 19.95:
+            if 19.55 <= power <= 19.95:
                 pass
             else:
                 self.fail("R1D/R2D txpower isnot correct.")
@@ -4818,7 +4914,7 @@ class AP_CLEAR_LOW_TXPOWER(TestCase):
             """
             exactly 13
             """
-            if power >= 12.8 and power <= 13.2:
+            if 12.8 <= power <= 13.2:
                 pass
             else:
                 self.fail("R1CM txpower isnot correct.")
@@ -4833,7 +4929,7 @@ class AP_CLEAR_LOW_TXPOWER(TestCase):
             """
             exactly 15.5
             """
-            if power >= 15.3 and power <= 15.7:
+            if 15.3 <= power <= 15.7:
                 pass
             else:
                 self.fail("R1D/R2D txpower isnot correct.")
@@ -4842,10 +4938,11 @@ class AP_CLEAR_LOW_TXPOWER(TestCase):
             """
             exactly 13
             """
-            if power >= 12.8 and power <= 13.2:
+            if 12.8 <= power <= 13.2:
                 pass
             else:
                 self.fail("R1CM txpower isnot correct.")
+
 
 class AP_CLEAR_MID_TXPOWER(TestCase):
     @classmethod
@@ -4876,7 +4973,7 @@ class AP_CLEAR_MID_TXPOWER(TestCase):
             """
             exactly 23.25
             """
-            if power >= 23.0 and power <= 23.45:
+            if 23.0 <= power <= 23.45:
                 pass
             else:
                 self.fail("R1D/R2D txpower isnot correct.")
@@ -4885,7 +4982,7 @@ class AP_CLEAR_MID_TXPOWER(TestCase):
             """
             exactly 15
             """
-            if power >= 14.8 and power <= 15.2:
+            if 14.8 <= power <= 15.2:
                 pass
             else:
                 self.fail("R1CM txpower isnot correct.")
@@ -4900,7 +4997,7 @@ class AP_CLEAR_MID_TXPOWER(TestCase):
             """
             exactly 19
             """
-            if power >= 18.8 and power <= 19.2:
+            if 18.8 <= power <= 19.2:
                 pass
             else:
                 self.fail("R1D/R2D txpower isnot correct.")
@@ -4909,7 +5006,7 @@ class AP_CLEAR_MID_TXPOWER(TestCase):
             """
             exactly 15
             """
-            if power >= 14.8 and power <= 15.2:
+            if 14.8 <= power <= 15.2:
                 pass
             else:
                 self.fail("R1CM txpower isnot correct.")
@@ -4924,7 +5021,7 @@ class AP_CLEAR_MID_TXPOWER(TestCase):
             """
             exactly 23.25
             """
-            if power >= 23.0 and power <= 23.45:
+            if 23.0 <= power <= 23.45:
                 pass
             else:
                 self.fail("R1D/R2D txpower isnot correct.")
@@ -4933,7 +5030,7 @@ class AP_CLEAR_MID_TXPOWER(TestCase):
             """
             exactly 15
             """
-            if power >= 14.8 and power <= 15.2:
+            if 14.8 <= power <= 15.2:
                 pass
             else:
                 self.fail("R1CM txpower isnot correct.")
@@ -4948,7 +5045,7 @@ class AP_CLEAR_MID_TXPOWER(TestCase):
             """
             exactly 18.25
             """
-            if power >= 18 and power <= 18.45:
+            if 18 <= power <= 18.45:
                 pass
             else:
                 self.fail("R1D/R2D txpower isnot correct.")
@@ -4957,10 +5054,11 @@ class AP_CLEAR_MID_TXPOWER(TestCase):
             """
             exactly 15
             """
-            if power >= 14.8 and power <= 15.2:
+            if 14.8 <= power <= 15.2:
                 pass
             else:
                 self.fail("R1CM txpower isnot correct.")
+
 
 class AP_CLEAR_HIGH_TXPOWER(TestCase):
     @classmethod
@@ -4991,7 +5089,7 @@ class AP_CLEAR_HIGH_TXPOWER(TestCase):
             """
             exactly 27
             """
-            if power >= 26.8 and power <= 27.2:
+            if 26.8 <= power <= 27.2:
                 pass
             else:
                 self.fail("R1D/R2D txpower isnot correct.")
@@ -5000,7 +5098,7 @@ class AP_CLEAR_HIGH_TXPOWER(TestCase):
             """
             exactly 16
             """
-            if power >= 15.8 and power <= 16.2:
+            if 15.8 <= power <= 16.2:
                 pass
             else:
                 self.fail("R1CM txpower isnot correct.")
@@ -5015,7 +5113,7 @@ class AP_CLEAR_HIGH_TXPOWER(TestCase):
             """
             exactly 22
             """
-            if power >= 21.8 and power <= 22.2:
+            if 21.8 <= power <= 22.2:
                 pass
             else:
                 self.fail("R1D/R2D txpower isnot correct.")
@@ -5024,7 +5122,7 @@ class AP_CLEAR_HIGH_TXPOWER(TestCase):
             """
             exactly 16
             """
-            if power >= 15.8 and power <= 16.2:
+            if 15.8 <= power <= 16.2:
                 pass
             else:
                 self.fail("R1CM txpower isnot correct.")
@@ -5039,7 +5137,7 @@ class AP_CLEAR_HIGH_TXPOWER(TestCase):
             """
             exactly 27
             """
-            if power >= 26.8 and power <= 27.2:
+            if 26.8 <= power <= 27.2:
                 pass
             else:
                 self.fail("R1D/R2D txpower isnot correct.")
@@ -5048,7 +5146,7 @@ class AP_CLEAR_HIGH_TXPOWER(TestCase):
             """
             exactly 16
             """
-            if power >= 15.8 and power <= 16.2:
+            if 15.8 <= power <= 16.2:
                 pass
             else:
                 self.fail("R1CM txpower isnot correct.")
@@ -5063,7 +5161,7 @@ class AP_CLEAR_HIGH_TXPOWER(TestCase):
             """
             exactly 21
             """
-            if power >= 20.8 and power <= 21.2:
+            if 20.8 <= power <= 21.2:
                 pass
             else:
                 self.fail("R1D/R2D txpower isnot correct.")
@@ -5072,10 +5170,11 @@ class AP_CLEAR_HIGH_TXPOWER(TestCase):
             """
             exactly 16
             """
-            if power >= 15.8 and power <= 16.2:
+            if 15.8 <= power <= 16.2:
                 pass
             else:
                 self.fail("R1CM txpower isnot correct.")
+
 
 class AP_CLEAR_CHANSELECTION(TestCase):
     @classmethod
@@ -5104,7 +5203,7 @@ class AP_CLEAR_CHANSELECTION(TestCase):
             try:
                 chan_2g.index(int(result["channel"]))
                 setWifiRestart(self.dut, self.__class__.__name__)
-                count +=1
+                count += 1
             except:
                 self.fail("Current auto-selected channel isnot between 1 and 11.")
 
@@ -5116,9 +5215,10 @@ class AP_CLEAR_CHANSELECTION(TestCase):
             try:
                 chan_5g.index(int(result["channel"]))
                 setWifiRestart(self.dut, self.__class__.__name__)
-                count +=1
+                count += 1
             except:
                 self.fail("Current auto-selected channel isnot between 149 and 161.")
+
 
 class AP_SSIDHIDE(TestCase):
     @classmethod
@@ -5223,6 +5323,7 @@ class AP_SSIDHIDE(TestCase):
         elif result2['ssid'] != '':
             self.fail(msg='5g wifi is not hidden')
 
+
 class AP_SSIDHIDE2(TestCase):
     @classmethod
     def setUpClass(self):
@@ -5287,8 +5388,8 @@ class AP_SSIDHIDE2(TestCase):
         if ret5g is False:
             self.fail(msg='5g wifi is not hidden..')
 
-class AP_CLEAR_CHAN_WHITELIST(TestCase):
 
+class AP_CLEAR_CHAN_WHITELIST(TestCase):
     def setUp(self):
         self.dut = SshClient(v.CONNECTION_TYPE)
         ret1 = self.dut.connect(v.HOST, v.USR, v.PASSWD)
@@ -5412,9 +5513,9 @@ class AP_CLEAR_CHAN_WHITELIST(TestCase):
 
         res5gConn = getApclii0Conn(self.sta, self.__class__.__name__)
         self.assertDictEqual(res5gConn, {'ssid': '', 'bssid': ''})
+
 
 class AP_CLEAR_CHAN_WHITELIST2(TestCase):
-
     @classmethod
     def setUp(self):
         self.dut = SshClient(v.CONNECTION_TYPE)
@@ -5488,8 +5589,8 @@ class AP_CLEAR_CHAN_WHITELIST2(TestCase):
 
         self.assertFalse(res5gConn, "Association wasnot supposed to be successful.")
 
-class AP_CLEAR_CHAN_BLACKLIST(TestCase):
 
+class AP_CLEAR_CHAN_BLACKLIST(TestCase):
     def setUp(self):
         self.dut = SshClient(v.CONNECTION_TYPE)
         ret1 = self.dut.connect(v.HOST, v.USR, v.PASSWD)
@@ -5616,8 +5717,8 @@ class AP_CLEAR_CHAN_BLACKLIST(TestCase):
         res5gConn = getApclii0Conn(self.sta, self.__class__.__name__)
         self.assertDictEqual(res5gConn, {'ssid': '', 'bssid': ''})
 
-class AP_CLEAR_CHAN_BLACKLIST2(TestCase):
 
+class AP_CLEAR_CHAN_BLACKLIST2(TestCase):
     @classmethod
     def setUp(self):
         self.dut = SshClient(v.CONNECTION_TYPE)
@@ -5691,8 +5792,8 @@ class AP_CLEAR_CHAN_BLACKLIST2(TestCase):
 
         self.assertFalse(res5gConn, "Association wasnot supposed to be successful.")
 
-class AP_GUEST_CLEAR_CHAN_WHITELIST(TestCase):
 
+class AP_GUEST_CLEAR_CHAN_WHITELIST(TestCase):
     def setUp(self):
 
         self.dut = SshClient(v.CONNECTION_TYPE)
@@ -5770,8 +5871,8 @@ class AP_GUEST_CLEAR_CHAN_WHITELIST(TestCase):
 
         self.assertDictEqual(res2gConn, {'ssid': '', 'bssid': ''})
 
-class AP_GUEST_CLEAR_CHAN_WHITELIST2(TestCase):
 
+class AP_GUEST_CLEAR_CHAN_WHITELIST2(TestCase):
     @classmethod
     def setUp(self):
         self.dut = SshClient(v.CONNECTION_TYPE)
@@ -5822,8 +5923,8 @@ class AP_GUEST_CLEAR_CHAN_WHITELIST2(TestCase):
 
         self.assertFalse(res2gConn, "Association wasnot supposed to be successful.")
 
-class AP_GUEST_CLEAR_CHAN_BLACKLIST(TestCase):
 
+class AP_GUEST_CLEAR_CHAN_BLACKLIST(TestCase):
     def setUp(self):
 
         self.dut = SshClient(v.CONNECTION_TYPE)
@@ -5901,8 +6002,8 @@ class AP_GUEST_CLEAR_CHAN_BLACKLIST(TestCase):
 
         self.assertDictEqual(res2gConn, {'ssid': '', 'bssid': ''})
 
-class AP_GUEST_CLEAR_CHAN_BLACKLIST2(TestCase):
 
+class AP_GUEST_CLEAR_CHAN_BLACKLIST2(TestCase):
     @classmethod
     def setUp(self):
         self.dut = SshClient(v.CONNECTION_TYPE)
@@ -5953,6 +6054,7 @@ class AP_GUEST_CLEAR_CHAN_BLACKLIST2(TestCase):
         res2gConn = setAdbClearStaConn(self.device[0], "normal", "guest", self.__class__.__name__)
 
         self.assertFalse(res2gConn, "Association wasnot supposed to be successful.")
+
 
 class AP_CLEAR_CHAN_FLOW2(TestCase):
     @classmethod
@@ -5991,7 +6093,7 @@ class AP_CLEAR_CHAN_FLOW2(TestCase):
             iperfOn = SetAdbIperfOn(self.device[0], self.__class__.__name__)
             iperfOn.start()
             t.sleep(3.0)
-            ret = setIperfFlow(result["ip"], v.IPERF_INTERVAL, v.IPERF_TIME, self.__class__.__name__ )
+            ret = setIperfFlow(result["ip"], v.IPERF_INTERVAL, v.IPERF_TIME, self.__class__.__name__)
             self.assertTrue(ret, "Excute iperf flow error, connection refused.")
 
         else:
@@ -6006,11 +6108,12 @@ class AP_CLEAR_CHAN_FLOW2(TestCase):
             iperfOn = SetAdbIperfOn(self.device[0], self.__class__.__name__)
             iperfOn.start()
             t.sleep(3.0)
-            ret = setIperfFlow(result["ip"], v.IPERF_INTERVAL, v.IPERF_TIME, self.__class__.__name__ )
+            ret = setIperfFlow(result["ip"], v.IPERF_INTERVAL, v.IPERF_TIME, self.__class__.__name__)
             self.assertTrue(ret, "Excute iperf flow error, connection refused.")
 
         else:
             self.assertTrue(res2gConn, "Connecting wifi is failed.")
+
 
 class AP_CLEAR_CHAN_REPEAT2(TestCase):
     @classmethod
@@ -6031,6 +6134,7 @@ class AP_CLEAR_CHAN_REPEAT2(TestCase):
             setConfig(self.dut, dutCommand, self.__name__)
 
         self.device = getAdbDevices()
+
     @classmethod
     def tearDownClass(self):
         d = TestCommand(v.DUT_MODULE)
@@ -6050,6 +6154,7 @@ class AP_CLEAR_CHAN_REPEAT2(TestCase):
         res5gConn = setAdbClearStaConnRepeat(self.device[0], "normal", "5g", self.__class__.__name__)
 
         self.assertTrue(res5gConn, "Not all association were successful.")
+
 
 class AP_MIXEDPSK_CHAN_FLOW2(TestCase):
     @classmethod
@@ -6088,7 +6193,7 @@ class AP_MIXEDPSK_CHAN_FLOW2(TestCase):
             iperfOn = SetAdbIperfOn(self.device[0], self.__class__.__name__)
             iperfOn.start()
             t.sleep(3.0)
-            ret = setIperfFlow(result["ip"], v.IPERF_INTERVAL, v.IPERF_TIME, self.__class__.__name__ )
+            ret = setIperfFlow(result["ip"], v.IPERF_INTERVAL, v.IPERF_TIME, self.__class__.__name__)
             self.assertTrue(ret, "Excute iperf flow error, connection refused.")
 
         else:
@@ -6103,7 +6208,7 @@ class AP_MIXEDPSK_CHAN_FLOW2(TestCase):
             iperfOn = SetAdbIperfOn(self.device[0], self.__class__.__name__)
             iperfOn.start()
             t.sleep(3.0)
-            ret = setIperfFlow(result["ip"], v.IPERF_INTERVAL, v.IPERF_TIME, self.__class__.__name__ )
+            ret = setIperfFlow(result["ip"], v.IPERF_INTERVAL, v.IPERF_TIME, self.__class__.__name__)
             self.assertTrue(ret, "Excute iperf flow error, connection refused.")
 
         else:
@@ -6118,7 +6223,7 @@ class AP_MIXEDPSK_CHAN_FLOW2(TestCase):
             iperfOn = SetAdbIperfOn(self.device[0], self.__class__.__name__)
             iperfOn.start()
             t.sleep(3.0)
-            ret = setIperfFlow(result["ip"], v.IPERF_INTERVAL, v.IPERF_TIME, self.__class__.__name__ )
+            ret = setIperfFlow(result["ip"], v.IPERF_INTERVAL, v.IPERF_TIME, self.__class__.__name__)
             self.assertTrue(ret, "Excute iperf flow error, connection refused.")
 
         else:
@@ -6133,7 +6238,7 @@ class AP_MIXEDPSK_CHAN_FLOW2(TestCase):
             iperfOn = SetAdbIperfOn(self.device[0], self.__class__.__name__)
             iperfOn.start()
             t.sleep(3.0)
-            ret = setIperfFlow(result["ip"], v.IPERF_INTERVAL, v.IPERF_TIME, self.__class__.__name__ )
+            ret = setIperfFlow(result["ip"], v.IPERF_INTERVAL, v.IPERF_TIME, self.__class__.__name__)
             self.assertTrue(ret, "Excute iperf flow error, connection refused.")
 
         else:
@@ -6148,7 +6253,7 @@ class AP_MIXEDPSK_CHAN_FLOW2(TestCase):
             iperfOn = SetAdbIperfOn(self.device[0], self.__class__.__name__)
             iperfOn.start()
             t.sleep(3.0)
-            ret = setIperfFlow(result["ip"], v.IPERF_INTERVAL, v.IPERF_TIME, self.__class__.__name__ )
+            ret = setIperfFlow(result["ip"], v.IPERF_INTERVAL, v.IPERF_TIME, self.__class__.__name__)
             self.assertTrue(ret, "Excute iperf flow error, connection refused.")
 
         else:
@@ -6163,7 +6268,7 @@ class AP_MIXEDPSK_CHAN_FLOW2(TestCase):
             iperfOn = SetAdbIperfOn(self.device[0], self.__class__.__name__)
             iperfOn.start()
             t.sleep(3.0)
-            ret = setIperfFlow(result["ip"], v.IPERF_INTERVAL, v.IPERF_TIME, self.__class__.__name__ )
+            ret = setIperfFlow(result["ip"], v.IPERF_INTERVAL, v.IPERF_TIME, self.__class__.__name__)
             self.assertTrue(ret, "Excute iperf flow error, connection refused.")
 
         else:
@@ -6178,7 +6283,7 @@ class AP_MIXEDPSK_CHAN_FLOW2(TestCase):
             iperfOn = SetAdbIperfOn(self.device[0], self.__class__.__name__)
             iperfOn.start()
             t.sleep(3.0)
-            ret = setIperfFlow(result["ip"], v.IPERF_INTERVAL, v.IPERF_TIME, self.__class__.__name__ )
+            ret = setIperfFlow(result["ip"], v.IPERF_INTERVAL, v.IPERF_TIME, self.__class__.__name__)
             self.assertTrue(ret, "Excute iperf flow error, connection refused.")
 
         else:
@@ -6193,11 +6298,12 @@ class AP_MIXEDPSK_CHAN_FLOW2(TestCase):
             iperfOn = SetAdbIperfOn(self.device[0], self.__class__.__name__)
             iperfOn.start()
             t.sleep(3.0)
-            ret = setIperfFlow(result["ip"], v.IPERF_INTERVAL, v.IPERF_TIME, self.__class__.__name__ )
+            ret = setIperfFlow(result["ip"], v.IPERF_INTERVAL, v.IPERF_TIME, self.__class__.__name__)
             self.assertTrue(ret, "Excute iperf flow error, connection refused.")
 
         else:
             self.assertTrue(res2gConn, "Connecting wifi is failed.")
+
 
 class AP_MIXEDPSK_CHAN_REPEAT2(TestCase):
     @classmethod
@@ -6218,6 +6324,7 @@ class AP_MIXEDPSK_CHAN_REPEAT2(TestCase):
             setConfig(self.dut, dutCommand, self.__name__)
 
         self.device = getAdbDevices()
+
     @classmethod
     def tearDownClass(self):
         d = TestCommand(v.DUT_MODULE)
@@ -6274,6 +6381,7 @@ class AP_MIXEDPSK_CHAN_REPEAT2(TestCase):
 
         self.assertTrue(res5gConn, "Not all association were successful.")
 
+
 class AP_PSK2_CHAN_FLOW2(TestCase):
     @classmethod
     def setUpClass(self):
@@ -6293,6 +6401,7 @@ class AP_PSK2_CHAN_FLOW2(TestCase):
             setConfig(self.dut, dutCommand, self.__name__)
 
         self.device = getAdbDevices()
+
     @classmethod
     def tearDownClass(self):
         d = TestCommand(v.DUT_MODULE)
@@ -6310,7 +6419,7 @@ class AP_PSK2_CHAN_FLOW2(TestCase):
             iperfOn = SetAdbIperfOn(self.device[0], self.__class__.__name__)
             iperfOn.start()
             t.sleep(3.0)
-            ret = setIperfFlow(result["ip"], v.IPERF_INTERVAL, v.IPERF_TIME, self.__class__.__name__ )
+            ret = setIperfFlow(result["ip"], v.IPERF_INTERVAL, v.IPERF_TIME, self.__class__.__name__)
             self.assertTrue(ret, "Excute iperf flow error, connection refused.")
 
         else:
@@ -6325,11 +6434,12 @@ class AP_PSK2_CHAN_FLOW2(TestCase):
             iperfOn = SetAdbIperfOn(self.device[0], self.__class__.__name__)
             iperfOn.start()
             t.sleep(3.0)
-            ret = setIperfFlow(result["ip"], v.IPERF_INTERVAL, v.IPERF_TIME, self.__class__.__name__ )
+            ret = setIperfFlow(result["ip"], v.IPERF_INTERVAL, v.IPERF_TIME, self.__class__.__name__)
             self.assertTrue(ret, "Excute iperf flow error, connection refused.")
 
         else:
             self.assertTrue(res2gConn, "Connecting wifi is failed.")
+
 
 class AP_PSK2_CHAN_REPEAT2(TestCase):
     @classmethod
@@ -6371,6 +6481,7 @@ class AP_PSK2_CHAN_REPEAT2(TestCase):
 
         self.assertTrue(res5gConn, "Not all association were successful.")
 
+
 class AP_GUEST_CLEAR_CHAN_REPEAT2(TestCase):
     @classmethod
     def setUpClass(self):
@@ -6404,6 +6515,7 @@ class AP_GUEST_CLEAR_CHAN_REPEAT2(TestCase):
         res2gConn = setAdbClearStaConnRepeat(self.device[0], "normal", "guest", self.__class__.__name__)
 
         self.assertTrue(res2gConn, "Not all association were successful.")
+
 
 class AP_GUEST_MIXEDPSK_CHAN_REPEAT2(TestCase):
     @classmethod
@@ -6457,6 +6569,7 @@ class AP_GUEST_MIXEDPSK_CHAN_REPEAT2(TestCase):
 
         self.assertTrue(res2gConn, "Not all association were successful.")
 
+
 class AP_GUEST_PSK2_CHAN_REPEAT2(TestCase):
     @classmethod
     def setUpClass(self):
@@ -6491,8 +6604,8 @@ class AP_GUEST_PSK2_CHAN_REPEAT2(TestCase):
 
         self.assertTrue(res2gConn, "Not all association were successful.")
 
-class AP_TEST(TestCase):
 
+class AP_TEST(TestCase):
     @classmethod
     def setUpClass(self):
         print "setupclass" + self.__name__
@@ -6512,6 +6625,7 @@ class AP_TEST(TestCase):
     def test2(self):
         print "test2"
 
+
 if __name__ == '__main__':
     cases = [
         'assoc_psk2_sta_5g',
@@ -6520,7 +6634,7 @@ if __name__ == '__main__':
 
     suite = TestSuite(map(AP_MIXEDPSK_CHAN_BW402, cases))
     curTime = t.strftime('%Y.%m.%d %H.%M.%S', t.localtime())
-    f = open(curTime + '_RESULT.log','a')
-    runner = TextTestRunner(f, verbosity = 2)
+    f = open(curTime + '_RESULT.log', 'a')
+    runner = TextTestRunner(f, verbosity=2)
     runner.run(suite)
     f.close()

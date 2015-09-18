@@ -5307,11 +5307,10 @@ class AP_CLEAR_CHAN_WHITELIST2(TestCase):
 
     @classmethod
     def tearDown(self):
+        setWifiMacfilterModel(self.dut, 0, logname=self.__name__)
         d = TestCommand(v.DUT_MODULE)
         for dutCommand in d.ap_tear_down():
             setConfig(self.dut, dutCommand, self.__name__)
-
-        setWifiMacfilterModel(self.dut, 0, logname=self.__name__)
         self.dut.close()
 
     def assoc_clear_sta_in_whitelist_2g(self):
@@ -5511,11 +5510,10 @@ class AP_CLEAR_CHAN_BLACKLIST2(TestCase):
 
     @classmethod
     def tearDown(self):
+        setWifiMacfilterModel(self.dut, 0, logname=self.__name__)
         d = TestCommand(v.DUT_MODULE)
         for dutCommand in d.ap_tear_down():
             setConfig(self.dut, dutCommand, self.__name__)
-
-        setWifiMacfilterModel(self.dut, 0, logname=self.__name__)
         self.dut.close()
 
     def assoc_clear_sta_outof_blacklist_2g(self):
@@ -5666,11 +5664,10 @@ class AP_GUEST_CLEAR_CHAN_WHITELIST2(TestCase):
 
     @classmethod
     def tearDown(self):
+        setWifiMacfilterModel(self.dut, 0, logname=self.__name__)
         d = TestCommand(v.DUT_MODULE)
         for dutCommand in d.ap_guest_tear_down():
-            setConfig(self.dut, dutCommand, self.__class__.__name__)
-
-        setWifiMacfilterModel(self.dut, 0, logname= self.__name__)
+            setConfig(self.dut, dutCommand, self.__name__)
         self.dut.close()
 
     def assoc_clear_sta_in_whitelist_guest(self):
@@ -5798,11 +5795,10 @@ class AP_GUEST_CLEAR_CHAN_BLACKLIST2(TestCase):
 
     @classmethod
     def tearDown(self):
+        setWifiMacfilterModel(self.dut, 0, logname=self.__name__)
         d = TestCommand(v.DUT_MODULE)
         for dutCommand in d.ap_guest_tear_down():
             setConfig(self.dut, dutCommand, self.__name__)
-
-        setWifiMacfilterModel(self.dut, 0, logname=self.__name__)
         self.dut.close()
 
     def assoc_clear_sta_outof_blacklist_guest(self):

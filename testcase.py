@@ -5298,20 +5298,20 @@ class AP_CLEAR_CHAN_WHITELIST2(TestCase):
             raise Exception("USB devices arenot ready!")
         d = TestCommand(v.DUT_MODULE)
         for dutCommand in d.ap_clear_chan_whitelist_set_up():
-            setConfig(self.dut, dutCommand, self.__class__.__name__)
+            setConfig(self.dut, dutCommand, self.__name__)
 
         self.device = getAdbDevices()
 
-        wlanInfo = getAdbShellWlan(self.device[0], self.__class__.__name__)
+        wlanInfo = getAdbShellWlan(self.device[0], self.__name__)
         v.STA_MAC = wlanInfo["mac"]
 
     @classmethod
     def tearDown(self):
         d = TestCommand(v.DUT_MODULE)
         for dutCommand in d.ap_tear_down():
-            setConfig(self.dut, dutCommand, self.__class__.__name__)
+            setConfig(self.dut, dutCommand, self.__name__)
 
-        setWifiMacfilterModel(self.dut, 0, logname=self.__class__.__name__)
+        setWifiMacfilterModel(self.dut, 0, logname=self.__name__)
         self.dut.close()
 
     def assoc_clear_sta_in_whitelist_2g(self):
@@ -5502,20 +5502,20 @@ class AP_CLEAR_CHAN_BLACKLIST2(TestCase):
             raise Exception("USB devices arenot ready!")
         d = TestCommand(v.DUT_MODULE)
         for dutCommand in d.ap_clear_chan_blacklist_set_up():
-            setConfig(self.dut, dutCommand, self.__class__.__name__)
+            setConfig(self.dut, dutCommand, self.__name__)
 
         self.device = getAdbDevices()
 
-        wlanInfo = getAdbShellWlan(self.device[0], self.__class__.__name__)
+        wlanInfo = getAdbShellWlan(self.device[0], self.__name__)
         v.STA_MAC = wlanInfo["mac"]
 
     @classmethod
     def tearDown(self):
         d = TestCommand(v.DUT_MODULE)
         for dutCommand in d.ap_tear_down():
-            setConfig(self.dut, dutCommand, self.__class__.__name__)
+            setConfig(self.dut, dutCommand, self.__name__)
 
-        setWifiMacfilterModel(self.dut, 0, logname=self.__class__.__name__)
+        setWifiMacfilterModel(self.dut, 0, logname=self.__name__)
         self.dut.close()
 
     def assoc_clear_sta_outof_blacklist_2g(self):
@@ -5657,11 +5657,11 @@ class AP_GUEST_CLEAR_CHAN_WHITELIST2(TestCase):
             raise Exception("USB devices arenot ready!")
         d = TestCommand(v.DUT_MODULE)
         for dutCommand in d.ap_guest_clear_chan_whitelist_set_up():
-            setConfig(self.dut, dutCommand, self.__class__.__name__)
+            setConfig(self.dut, dutCommand, self.__name__)
 
         self.device = getAdbDevices()
 
-        wlanInfo = getAdbShellWlan(self.device[0], self.__class__.__name__)
+        wlanInfo = getAdbShellWlan(self.device[0], self.__name__)
         v.STA_MAC = wlanInfo["mac"]
 
     @classmethod
@@ -5670,7 +5670,7 @@ class AP_GUEST_CLEAR_CHAN_WHITELIST2(TestCase):
         for dutCommand in d.ap_guest_tear_down():
             setConfig(self.dut, dutCommand, self.__class__.__name__)
 
-        setWifiMacfilterModel(self.dut, 0, logname= self.__class__.__name__)
+        setWifiMacfilterModel(self.dut, 0, logname= self.__name__)
         self.dut.close()
 
     def assoc_clear_sta_in_whitelist_guest(self):
@@ -5789,20 +5789,20 @@ class AP_GUEST_CLEAR_CHAN_BLACKLIST2(TestCase):
             raise Exception("USB devices arenot ready!")
         d = TestCommand(v.DUT_MODULE)
         for dutCommand in d.ap_guest_clear_chan_blacklist_set_up():
-            setConfig(self.dut, dutCommand, self.__class__.__name__)
+            setConfig(self.dut, dutCommand, self.__name__)
 
         self.device = getAdbDevices()
 
-        wlanInfo = getAdbShellWlan(self.device[0], self.__class__.__name__)
+        wlanInfo = getAdbShellWlan(self.device[0], self.__name__)
         v.STA_MAC = wlanInfo["mac"]
 
     @classmethod
     def tearDown(self):
         d = TestCommand(v.DUT_MODULE)
         for dutCommand in d.ap_guest_tear_down():
-            setConfig(self.dut, dutCommand, self.__class__.__name__)
+            setConfig(self.dut, dutCommand, self.__name__)
 
-        setWifiMacfilterModel(self.dut, 0, logname=self.__class__.__name__)
+        setWifiMacfilterModel(self.dut, 0, logname=self.__name__)
         self.dut.close()
 
     def assoc_clear_sta_outof_blacklist_guest(self):

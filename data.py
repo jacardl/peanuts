@@ -249,7 +249,17 @@ treeAndroid = [
             "assoc_tkippsk2_sta_5g",
             "assoc_tkippsk_sta_5g",
          ],
-
+        'AP_MIXEDPSK_CHAN_BW202',
+        [
+            "assoc_psk2_sta_2g",
+            "assoc_psk_sta_2g",
+            "assoc_tkippsk2_sta_2g",
+            "assoc_tkippsk_sta_2g",
+            "assoc_psk2_sta_5g",
+            "assoc_psk_sta_5g",
+            "assoc_tkippsk2_sta_5g",
+            "assoc_tkippsk_sta_5g",
+         ],
         "AP_MIXEDPSK_CHAN_SSIDSPEC2",
         [
             'assoc_psk2_sta_ssidspec_2g',

@@ -88,7 +88,7 @@ CHINESE_SSID = '业界良心_花生自动化'
 CHINESE_SSID_5G = '业界良心_花生自动化-5G'
 GUEST_SSID = 'peanuts_guest'
 
-PING_PERCENT_PASS = 60
+PING_PERCENT_PASS = 100
 PING_PERCENT_COUNT = 5
 
 BSSID = ''

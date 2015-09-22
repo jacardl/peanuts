@@ -592,7 +592,7 @@ class TestSuitePage(wx.Panel):
         wx.Window.__init__(self, parent, -1, style=wx.BORDER_STATIC)
         ##        wx.StaticText(self, -1, "Test suite", wx.Point(10, 10))
         ##        self.tree = wx.TreeCtrl(self, size = (340,330))
-        self.tree = CT.CustomTreeCtrl(self, size=(340, 330),
+        self.tree = CT.CustomTreeCtrl(self, size=(340, 303),
                                       style=
                                       wx.BORDER_SIMPLE
                                       | wx.WANTS_CHARS,
@@ -606,18 +606,21 @@ class TestSuitePage(wx.Panel):
 
         self.root = self.tree.AddRoot('Test Cases', ct_type=1)
         self.rootAndroid = self.tree.AppendItem(self.root, 'Android-STA', ct_type=1)
-        self.rootR1CM = self.tree.AppendItem(self.root, 'R1CM-STA', ct_type=1)
+        # self.rootR1CM = self.tree.AppendItem(self.root, 'R1CM-STA', ct_type=1)
         self.rootNone = self.tree.AppendItem(self.root, 'None-STA', ct_type=1)
 
         self.AddTreeNodes(self.rootAndroid, data.treeAndroid)
-        self.AddTreeNodes(self.rootR1CM, data.treeR1CM)
+        # self.AddTreeNodes(self.rootR1CM, data.treeR1CM)
         self.AddTreeNodes(self.rootNone, data.treeNone)
-
         self.tree.Expand(self.root)
-
-        # self.Bind(CT.EVT_TREE_ITEM_CHECKED, self.EvtAddRemoveCase, self.tree)
-
         treeLbl = wx.StaticText(self, -1, 'Select cases supposed to excute:')
+
+        self.sel2gCheck = wx.CheckBox(self, -1, "2.4G")
+        self.sel5gCheck = wx.CheckBox(self, -1, "5G")
+        self.selGuestCheck = wx.CheckBox(self, -1, "Guest wifi")
+        self.Bind(wx.EVT_CHECKBOX, self.EvtSel2g, self.sel2gCheck)
+        self.Bind(wx.EVT_CHECKBOX, self.EvtSel5g, self.sel5gCheck)
+        self.Bind(wx.EVT_CHECKBOX, self.EvtSelGuest, self.selGuestCheck)
 
         self.applyBtn = wx.Button(self, -1, 'Apply')
         self.cancelBtn = wx.Button(self, -1, 'Cancel')
@@ -631,6 +634,7 @@ class TestSuitePage(wx.Panel):
         self.retry.SetValue(v.FAIL_RETRY)
 
         mainSizer = wx.BoxSizer(wx.VERTICAL)
+        selRadioSizer = wx.BoxSizer(wx.HORIZONTAL)
         btnSizer = wx.BoxSizer(wx.HORIZONTAL)
 
         btnSizer.Add(retryLbl, 0, wx.LEFT, 10)
@@ -639,7 +643,12 @@ class TestSuitePage(wx.Panel):
         btnSizer.Add(self.applyBtn, 0, wx.LEFT, 143)
         btnSizer.Add(self.cancelBtn, 0, wx.LEFT, 15)
 
+        selRadioSizer.Add(self.sel2gCheck, 0, wx.LEFT, 10)
+        selRadioSizer.Add(self.sel5gCheck, 0, wx.LEFT, 10)
+        selRadioSizer.Add(self.selGuestCheck, 0, wx.LEFT, 10)
+
         mainSizer.Add(treeLbl, 0, wx.ALIGN_LEFT | wx.TOP | wx.LEFT | wx.BOTTOM, 10)
+        mainSizer.Add(selRadioSizer, 0, wx.LEFT | wx.BOTTOM, 10)
         mainSizer.Add(self.tree, 0, wx.ALIGN_LEFT | wx.LEFT, 20)
         mainSizer.Add(btnSizer, 0, wx.TOP, 10)
 
@@ -788,6 +797,101 @@ class TestSuitePage(wx.Panel):
     def EvtClose(self, event):
         frame.Close(True)
 
+    def EvtSel2g(self, event):
+        import re
+        if self.sel2gCheck.IsChecked() is True:
+            for child in self.root.GetChildren():
+                for child2 in child.GetChildren():
+                    if child2.HasChildren():
+                        for child3 in child2.GetChildren():
+                            child3Name = self.tree.GetItemText(child3)
+                            m = re.search("2g", child3Name)
+                            if m:
+                                self.tree.CheckItem(child3)
+                    else:
+                        child2Name = self.tree.GetItemText(child2)
+                        m = re.search("2g", child2Name)
+                        if m:
+                            self.tree.SelectItem(child2)
+        elif self.sel2gCheck.IsChecked() is False:
+            for child in self.root.GetChildren():
+                for child2 in child.GetChildren():
+                    if child2.HasChildren():
+                        for child3 in child2.GetChildren():
+                            import re
+                            child3Name = self.tree.GetItemText(child3)
+                            m = re.search('2g', child3Name)
+                            if m:
+                                self.tree.CheckItem(child3, checked=False)
+                    else:
+                        child2Name = self.tree.GetItemText(child2)
+                        m = re.search('2g', child2Name)
+                        if m:
+                            self.tree.CheckItem(child2, checked=False)
+
+    def EvtSel5g(self, event):
+        import re
+        if self.sel5gCheck.IsChecked() is True:
+            for child in self.root.GetChildren():
+                for child2 in child.GetChildren():
+                    if child2.HasChildren():
+                        for child3 in child2.GetChildren():
+                            child3Name = self.tree.GetItemText(child3)
+                            m = re.search("5g", child3Name)
+                            if m:
+                                self.tree.CheckItem(child3)
+                    else:
+                        child2Name = self.tree.GetItemText(child2)
+                        m = re.search("5g", child2Name)
+                        if m:
+                            self.tree.SelectItem(child2)
+        elif self.sel5gCheck.IsChecked() is False:
+            for child in self.root.GetChildren():
+                for child2 in child.GetChildren():
+                    if child2.HasChildren():
+                        for child3 in child2.GetChildren():
+                            import re
+                            child3Name = self.tree.GetItemText(child3)
+                            m = re.search('5g', child3Name)
+                            if m:
+                                self.tree.CheckItem(child3, checked=False)
+                    else:
+                        child2Name = self.tree.GetItemText(child2)
+                        m = re.search('5g', child2Name)
+                        if m:
+                            self.tree.CheckItem(child2, checked=False)
+
+    def EvtSelGuest(self, event):
+        import re
+        if self.selGuestCheck.IsChecked() is True:
+            for child in self.root.GetChildren():
+                for child2 in child.GetChildren():
+                    if child2.HasChildren():
+                        for child3 in child2.GetChildren():
+                            child3Name = self.tree.GetItemText(child3)
+                            m = re.search("guest", child3Name)
+                            if m:
+                                self.tree.CheckItem(child3)
+                    else:
+                        child2Name = self.tree.GetItemText(child2)
+                        m = re.search("guest", child2Name)
+                        if m:
+                            self.tree.SelectItem(child2)
+        elif self.selGuestCheck.IsChecked() is False:
+            for child in self.root.GetChildren():
+                for child2 in child.GetChildren():
+                    if child2.HasChildren():
+                        for child3 in child2.GetChildren():
+                            import re
+                            child3Name = self.tree.GetItemText(child3)
+                            m = re.search('guest', child3Name)
+                            if m:
+                                self.tree.CheckItem(child3, checked=False)
+                    else:
+                        child2Name = self.tree.GetItemText(child2)
+                        m = re.search('guest', child2Name)
+                        if m:
+                            self.tree.CheckItem(child2, checked=False)
 
 class Frame(wx.Frame):
     def __init__(self):

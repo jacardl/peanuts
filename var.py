@@ -23,7 +23,7 @@ connection_type = 1 represent ssh
 CONNECTION_TYPE = 2
 STA_CONNECTION_TYPE = 1
 
-VER = '2.4.2'
+VER = '2.5.1'
 
 # ----------------Memory Tracking-----------------
 

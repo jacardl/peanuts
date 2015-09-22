@@ -69,6 +69,7 @@ STA_INTF_5G = 'apclii0'
 
 TEST_SUITE_LOG_PATH = os.getcwd() + os.sep + 'LOG_TEST_SUITE' + os.sep
 IPERF_PATH = os.getcwd() + os.sep + "iperf" + os.sep
+DEFAULT_PATH = os.getcwd() + os.sep
 
 SSID = 'peanuts_automatic_test_suite'
 SSID_5G = 'peanuts_automatic_test_suite-5G'
@@ -103,6 +104,8 @@ CHANNEL_5G = '149'
 
 IPERF_INTERVAL = "120"
 IPERF_TIME = "1800"
+# IPERF_INTERVAL = "1"
+# IPERF_TIME = "5"
 
 SEND_MAIL = 1
 MAILTO_LIST = ["liujia5@xiaomi.com","fengjiang@xiaomi.com", "hexiaoliang@xiaomi.com", "linli1@xiaomi.com",

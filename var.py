@@ -49,20 +49,9 @@ GET_MODEL = 'uci get /usr/share/xiaoqiang/xiaoqiang_version.version.HARDWARE'
 DUT_MODULE = 'R1D'
 STA_MODULE = 'Android'
 
-"""
-if DUT_MODULE == 'R1D' or DUT_MODULE == 'R2D':
-    DEV_2G = 'wl1'
-    DEV_5G = 'wl0'
-elif DUT_MODULE == 'R1CM':
-    DEV_2G = 'mt7620'
-    DEV_5G = 'mt7612'
-"""
-# DEV_2G = ""
-# DEV_5G = ""
-
 INTF_2G = 'wl1'
 INTF_5G = 'wl0'
-INTF_GUEST = 'wl1.2'
+INTF_GUEST = 'guest'
 
 STA_INTF_2G = 'apcli0'
 STA_INTF_5G = 'apclii0'

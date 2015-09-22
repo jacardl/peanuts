@@ -395,7 +395,20 @@ def getApclii0Conn(terminal, logname):
 
 
 def getIntfHWAddr(terminal, intf, logname):
-    command = 'ifconfig ' + intf
+    if v.DUT_MODULE == "R1D" or v.DUT_MODULE == "R2D":
+        commandDic = {
+            v.INTF_2G: "ifconfig wl1",
+            v.INTF_5G: "ifconfig wl0",
+            v.INTF_GUEST: "ifconfig wl1.2"
+        }
+    elif v.DUT_MODULE == "R1CM" or v.DUT_MODULE == "R1CL":
+        commandDic = {
+            v.INTF_2G: "ifconfig wl1",
+            v.INTF_5G: "ifconfig wl0",
+            v.INTF_GUEST: "ifconfig wl3"
+        }
+
+    command = commandDic.get(intf)
     ret = setGet(terminal, command, logname)
     result = {}
     for line in ret:
@@ -418,7 +431,19 @@ def getIntfIpAddr(terminal, intf, logname):
               collisions:0 txqueuelen:1000
               RX bytes:0 (0.0 B)  TX bytes:0 (0.0 B)"""
 
-    command = 'ifconfig ' + intf
+    if v.DUT_MODULE == "R1D" or v.DUT_MODULE == "R2D":
+        commandDic = {
+            v.INTF_2G: "ifconfig wl1",
+            v.INTF_5G: "ifconfig wl0",
+            v.INTF_GUEST: "ifconfig wl1.2"
+        }
+    elif v.DUT_MODULE == "R1CM" or v.DUT_MODULE == "R1CL":
+        commandDic = {
+            v.INTF_2G: "ifconfig wl1",
+            v.INTF_5G: "ifconfig wl0",
+            v.INTF_GUEST: "ifconfig wl3"
+        }
+    command = commandDic.get(intf)
     ret = setGet(terminal, command, logname)
     result = {}
     for line in ret:
@@ -622,10 +647,17 @@ def setUCIWirelessIntf(terminal, intf, type, name, value, logname):
     :param type: add/add_list/del_list_delete/set/del
     :param name: macfilter/maclist/key/mode...etc
     """
-    commandDic = {v.INTF_2G: 'uci ' + type + ' wireless.@wifi-iface[1].' + name + '=' + value,
-                  v.INTF_5G: 'uci ' + type + ' wireless.@wifi-iface[0].' + name + '=' + value,
-                  v.INTF_GUEST: 'uci ' + type + ' wireless.guest_2G.' + name + '=' + value}
-
+    if v.DUT_MODULE == "R1D" or v.DUT_MODULE == "R2D" or v.DUT_MODULE == "R1CM":
+        commandDic = {
+            v.INTF_2G: 'uci ' + type + ' wireless.@wifi-iface[1].' + name + '=' + value,
+            v.INTF_5G: 'uci ' + type + ' wireless.@wifi-iface[0].' + name + '=' + value,
+            v.INTF_GUEST: 'uci ' + type + ' wireless.guest_2G.' + name + '=' + value
+        }
+    elif v.DUT_MODULE == "R1CL":
+        commandDic = {
+            v.INTF_2G: "uci " + type + " wireless.@wifi-iface[0]." + name + "=" + value,
+            v.INTF_GUEST: "uci " + type + " wireless.guest_2G." + name + "=" + value
+        }
     command = commandDic.get(intf)
     setConfig(terminal, command, logname)
     setConfig(terminal, "uci commit wireless", logname)
@@ -639,11 +671,19 @@ def setUCIWirelessDev(terminal, dut, intf, type, name, value, logname):
     :param name: txpwr/hwmode/bw/channel/autoch
     """
     if dut == "R1D" or dut == "R2D":
-        commandDic = {"2g": 'uci ' + type + ' wireless.wl1.' + name + '=' + value,
-                      "5g": 'uci ' + type + ' wireless.wl0.' + name + '=' + value, }
+        commandDic = {
+            "2g": 'uci ' + type + ' wireless.wl1.' + name + '=' + value,
+            "5g": 'uci ' + type + ' wireless.wl0.' + name + '=' + value,
+            }
     elif dut == "R1CM":
-        commandDic = {"2g": 'uci ' + type + ' wireless.mt7620.' + name + '=' + value,
-                      "5g": 'uci ' + type + ' wireless.mt7612.' + name + '=' + value, }
+        commandDic = {
+            "2g": 'uci ' + type + ' wireless.mt7620.' + name + '=' + value,
+            "5g": 'uci ' + type + ' wireless.mt7612.' + name + '=' + value,
+            }
+    elif dut == "R1CL":
+        commandDic = {
+            "2g": "uci " + type + " wireless.mt7628." + name + "=" + value,
+            }
 
     command = commandDic.get(intf)
     setConfig(terminal, command, logname)
@@ -1005,9 +1045,14 @@ def setIperfFlow(target, interval, time, logname):
 
 if __name__ == '__main__':
     ssh = SshCommand(2)
-    ssh.connect("192.168.110.1", "", "")
-    setWifiMacfilterModel(ssh, 1, 1, logname='test')
-    setWifiMacfilterModel(ssh, 0, logname='test')
+    ssh.connect("192.168.120.1", "", "")
+    v.DUT_MODULE = "R1CL"
+    setUCIWirelessIntf(ssh, v.INTF_2G, "set", "key", "12345678", "log")
+    setUCIWirelessDev(ssh, v.DUT_MODULE, "2g", "set", "disabled", "0", "log")
+    # import tcdata
+    # dut = tcdata.TestCommand("R1CL")
+    # for dutCommand in dut.ap_tear_down():
+    #     setConfig(ssh, dutCommand, "log")
     # print ssh.outPidNameVSZDic
     # ret = setConfig(ssh, "uci set wireless.@wifi-iface[0].ssid='ÎÒµÄ10'", "a")
     # ret = setGet(ssh, "uci show wireless", "a")

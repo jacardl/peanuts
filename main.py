@@ -100,7 +100,7 @@ class GeneralPage(wx.Panel):
 
         # DUT connection ctrl
         typeLbl = wx.StaticText(self, -1, 'Device:')
-        self.type = wx.Choice(self, -1, choices=['R1D', 'R2D', 'R1CM'])
+        self.type = wx.Choice(self, -1, choices=['R1D', 'R2D', 'R1CM', "R1CL"])
         self.type.SetSelection(0)
         self.Bind(wx.EVT_CHOICE, self.EvtChoice, self.type)
 
@@ -256,7 +256,7 @@ class GeneralPage(wx.Panel):
         deviceNum = 0
         self.flag = 0
 
-        if v.DUT_MODULE == "R1D" or v.DUT_MODULE == "R2D" or v.DUT_MODULE == "R1CM":
+        if v.DUT_MODULE is not None:
             deviceNum += 1
             v.HOST = self.ip.GetValue()
             v.USR = self.sshUsr.GetValue()
@@ -267,7 +267,7 @@ class GeneralPage(wx.Panel):
             dutConn.start()
             dutConn.join()
 
-        if v.STA_MODULE == "R1CM":
+        if v.STA_MODULE is not "Android":
             deviceNum += 1
             v.STA_IP = self.staIp.GetValue()
             v.STA_USR = self.staSshUsr.GetValue()
@@ -481,9 +481,13 @@ class LogCollectionPage(wx.Panel):
                     logList.append('r1d_wifi2G_log')
                     logList.append('r1d_wifi5G_log')
 
-                elif v.DUT_MODULE == 'R1CM':
+                elif v.DUT_MODULE == "R1CM":
                     logList.append('r1c_wifi2G_log')
                     logList.append('r1c_wifi5G_log')
+
+                elif v.DUT_MODULE == "R1CL":
+                    logList.append("r1cl_wifi2G_log")
+
 
             if self.cfgCheck.IsChecked() is True:
                 # collect cfg
@@ -494,8 +498,11 @@ class LogCollectionPage(wx.Panel):
                 if v.DUT_MODULE == 'R1D' or v.DUT_MODULE == 'R2D':
                     logList.append('r1d_forward_statistic_log')
 
-                elif v.DUT_MODULE == 'R1CM':
+                elif v.DUT_MODULE == "R1CM":
                     logList.append('r1c_forward_statistic_log')
+
+                elif v.DUT_MODULE == "R1CL":
+                    logList.append("r1cl_forward_statistic_log")
 
             if len(logList) == 0:  # all checkboxs arenot selected
                 dlg4 = wx.MessageDialog(self, 'One item should be selected at least!',

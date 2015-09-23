@@ -1035,7 +1035,7 @@ def setIperfFlow(target, interval, time, logname):
     if time != "":
         command = command + " -t " + time
 
-    command += " -r"
+    command += " -r -w 2m"
     ret = setShell(command, logname)
     os.chdir(v.DEFAULT_PATH)
     if len(ret) == 0:

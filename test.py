@@ -15,14 +15,13 @@
 # with open(file_name, 'wb') as f:
 #     f.write(data.read())
 # os.system("D:\\Python\\\new peanuts\\24\\ez_setup.py")
-import datetime
 from openpyxl import Workbook
 
 wb = Workbook()
 ws = wb.active
 ws.title = "Mem tracking"
 time = 1.0/2.2
-time =  "{:.2%}".format(time)
+time = "{:.2%}".format(time)
 print time
 ws.cell(row=2, column=2).value = time
 

@@ -23,7 +23,7 @@ connection_type = 1 represent ssh
 CONNECTION_TYPE = 2
 STA_CONNECTION_TYPE = 1
 
-VER = '2.4.2'
+VER = '2.5.1'
 
 # ----------------Memory Tracking-----------------
 
@@ -49,26 +49,16 @@ GET_MODEL = 'uci get /usr/share/xiaoqiang/xiaoqiang_version.version.HARDWARE'
 DUT_MODULE = 'R1D'
 STA_MODULE = 'Android'
 
-"""
-if DUT_MODULE == 'R1D' or DUT_MODULE == 'R2D':
-    DEV_2G = 'wl1'
-    DEV_5G = 'wl0'
-elif DUT_MODULE == 'R1CM':
-    DEV_2G = 'mt7620'
-    DEV_5G = 'mt7612'
-"""
-# DEV_2G = ""
-# DEV_5G = ""
-
 INTF_2G = 'wl1'
 INTF_5G = 'wl0'
-INTF_GUEST = 'wl1.2'
+INTF_GUEST = 'guest'
 
 STA_INTF_2G = 'apcli0'
 STA_INTF_5G = 'apclii0'
 
 TEST_SUITE_LOG_PATH = os.getcwd() + os.sep + 'LOG_TEST_SUITE' + os.sep
 IPERF_PATH = os.getcwd() + os.sep + "iperf" + os.sep
+DEFAULT_PATH = os.getcwd() + os.sep
 
 SSID = 'peanuts_automatic_test_suite'
 SSID_5G = 'peanuts_automatic_test_suite-5G'
@@ -88,7 +78,7 @@ CHINESE_SSID = '业界良心_花生自动化'
 CHINESE_SSID_5G = '业界良心_花生自动化-5G'
 GUEST_SSID = 'peanuts_guest'
 
-PING_PERCENT_PASS = 60
+PING_PERCENT_PASS = 100
 PING_PERCENT_COUNT = 5
 
 BSSID = ''
@@ -103,6 +93,8 @@ CHANNEL_5G = '149'
 
 IPERF_INTERVAL = "120"
 IPERF_TIME = "1800"
+# IPERF_INTERVAL = "1"
+# IPERF_TIME = "5"
 
 SEND_MAIL = 1
 MAILTO_LIST = ["liujia5@xiaomi.com","fengjiang@xiaomi.com", "hexiaoliang@xiaomi.com", "linli1@xiaomi.com",

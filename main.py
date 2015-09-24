@@ -100,7 +100,7 @@ class GeneralPage(wx.Panel):
 
         # DUT connection ctrl
         typeLbl = wx.StaticText(self, -1, 'Device:')
-        self.type = wx.Choice(self, -1, choices=['R1D', 'R2D', 'R1CM'])
+        self.type = wx.Choice(self, -1, choices=['R1D', 'R2D', 'R1CM', "R1CL"])
         self.type.SetSelection(0)
         self.Bind(wx.EVT_CHOICE, self.EvtChoice, self.type)
 
@@ -124,7 +124,7 @@ class GeneralPage(wx.Panel):
         # DUT connection box
         connBox = wx.StaticBox(self, -1, 'DUT', size=(580, -1))
         connSizer = wx.StaticBoxSizer(connBox, wx.HORIZONTAL)
-        #left column
+        # left column
         connSizer2 = wx.BoxSizer(wx.VERTICAL)
         connSizer2.Add(typeLbl, 0,
                        wx.ALIGN_RIGHT | wx.TOP | wx.LEFT, 10)
@@ -145,23 +145,23 @@ class GeneralPage(wx.Panel):
         connSizer3.Add(self.sshPasswd, 0,
                        wx.ALIGN_LEFT | wx.TOP | wx.LEFT, 4)
 
-        #right column
+        # right column
         connSizer4 = wx.BoxSizer(wx.VERTICAL)
         connSizer4.Add(connLbl, 0,
                        wx.ALIGN_RIGHT | wx.TOP | wx.LEFT, 10)
 
-        connSizer5 =wx.BoxSizer(wx.VERTICAL)
+        connSizer5 = wx.BoxSizer(wx.VERTICAL)
         connSizer5.Add(self.conn, 0,
                        wx.ALIGN_LEFT | wx.TOP | wx.LEFT, 2)
 
         connSizer.Add(connSizer2, 0, wx.LEFT, 5)
         connSizer.Add(connSizer3, 0, wx.LEFT, 2)
-        connSizer.Add(connSizer4, 0, wx.LEFT,10)
+        connSizer.Add(connSizer4, 0, wx.LEFT, 10)
         connSizer.Add(connSizer5, 0, wx.LEFT, 2)
 
         # sta connection ctrl
         staTypeLbl = wx.StaticText(self, -1, 'Device:')
-        self.staType = wx.Choice(self, -1, choices=[ 'Android', 'R1CM & Android'])
+        self.staType = wx.Choice(self, -1, choices=['Android', 'R1CM & Android'])
         self.staType.SetSelection(0)
         self.Bind(wx.EVT_CHOICE, self.EvtChoice2, self.staType)
 
@@ -256,7 +256,7 @@ class GeneralPage(wx.Panel):
         deviceNum = 0
         self.flag = 0
 
-        if v.DUT_MODULE == "R1D" or v.DUT_MODULE == "R2D" or v.DUT_MODULE == "R1CM":
+        if v.DUT_MODULE is not None:
             deviceNum += 1
             v.HOST = self.ip.GetValue()
             v.USR = self.sshUsr.GetValue()
@@ -267,14 +267,15 @@ class GeneralPage(wx.Panel):
             dutConn.start()
             dutConn.join()
 
-        if v.STA_MODULE == "R1CM":
+        if v.STA_MODULE is not "Android":
             deviceNum += 1
             v.STA_IP = self.staIp.GetValue()
             v.STA_USR = self.staSshUsr.GetValue()
             v.STA_PASSWD = self.staSshPasswd.GetValue()
-            staConn = threading.Thread(target=self.connectionCheckThread, kwargs={'connectiontype': v.STA_CONNECTION_TYPE,
-                                                                              'ip': v.STA_IP, 'user': v.STA_USR,
-                                                                              'password': v.STA_PASSWD})
+            staConn = threading.Thread(target=self.connectionCheckThread,
+                                       kwargs={'connectiontype': v.STA_CONNECTION_TYPE,
+                                               'ip': v.STA_IP, 'user': v.STA_USR,
+                                               'password': v.STA_PASSWD})
             staConn.start()
             staConn.join()
 
@@ -480,9 +481,13 @@ class LogCollectionPage(wx.Panel):
                     logList.append('r1d_wifi2G_log')
                     logList.append('r1d_wifi5G_log')
 
-                elif v.DUT_MODULE == 'R1CM':
+                elif v.DUT_MODULE == "R1CM":
                     logList.append('r1c_wifi2G_log')
                     logList.append('r1c_wifi5G_log')
+
+                elif v.DUT_MODULE == "R1CL":
+                    logList.append("r1cl_wifi2G_log")
+
 
             if self.cfgCheck.IsChecked() is True:
                 # collect cfg
@@ -493,8 +498,11 @@ class LogCollectionPage(wx.Panel):
                 if v.DUT_MODULE == 'R1D' or v.DUT_MODULE == 'R2D':
                     logList.append('r1d_forward_statistic_log')
 
-                elif v.DUT_MODULE == 'R1CM':
+                elif v.DUT_MODULE == "R1CM":
                     logList.append('r1c_forward_statistic_log')
+
+                elif v.DUT_MODULE == "R1CL":
+                    logList.append("r1cl_forward_statistic_log")
 
             if len(logList) == 0:  # all checkboxs arenot selected
                 dlg4 = wx.MessageDialog(self, 'One item should be selected at least!',
@@ -572,15 +580,15 @@ class LogCollectionPage(wx.Panel):
             dlg3.Destroy()
             return
 
-        # elif v.CONNECTION_TYPE == 2:
-        #     self.dlg2 = wx.MessageDialog(self, 'Serial-port is not supported now!',
-        #                                  'Info',
-        #                                  wx.OK | wx.ICON_INFORMATION | wx.STAY_ON_TOP
-        #                                  # wx.YES_NO | wx.NO_DEFAULT | wx.CANCEL | wx.ICON_INFORMATION
-        #                                  )
-        #     self.dlg2.ShowModal()
-        #     self.dlg2.Destroy()
-        #     return
+            # elif v.CONNECTION_TYPE == 2:
+            # self.dlg2 = wx.MessageDialog(self, 'Serial-port is not supported now!',
+            # 'Info',
+            # wx.OK | wx.ICON_INFORMATION | wx.STAY_ON_TOP
+            # # wx.YES_NO | wx.NO_DEFAULT | wx.CANCEL | wx.ICON_INFORMATION
+            # )
+            # self.dlg2.ShowModal()
+            #     self.dlg2.Destroy()
+            #     return
 
     def EvtClose(self, event):
         frame.Close(True)
@@ -591,7 +599,7 @@ class TestSuitePage(wx.Panel):
         wx.Window.__init__(self, parent, -1, style=wx.BORDER_STATIC)
         ##        wx.StaticText(self, -1, "Test suite", wx.Point(10, 10))
         ##        self.tree = wx.TreeCtrl(self, size = (340,330))
-        self.tree = CT.CustomTreeCtrl(self, size=(340, 330),
+        self.tree = CT.CustomTreeCtrl(self, size=(340, 303),
                                       style=
                                       wx.BORDER_SIMPLE
                                       | wx.WANTS_CHARS,
@@ -605,18 +613,21 @@ class TestSuitePage(wx.Panel):
 
         self.root = self.tree.AddRoot('Test Cases', ct_type=1)
         self.rootAndroid = self.tree.AppendItem(self.root, 'Android-STA', ct_type=1)
-        self.rootR1CM = self.tree.AppendItem(self.root, 'R1CM-STA', ct_type=1)
+        # self.rootR1CM = self.tree.AppendItem(self.root, 'R1CM-STA', ct_type=1)
         self.rootNone = self.tree.AppendItem(self.root, 'None-STA', ct_type=1)
 
         self.AddTreeNodes(self.rootAndroid, data.treeAndroid)
-        self.AddTreeNodes(self.rootR1CM, data.treeR1CM)
+        # self.AddTreeNodes(self.rootR1CM, data.treeR1CM)
         self.AddTreeNodes(self.rootNone, data.treeNone)
-
         self.tree.Expand(self.root)
-
-        # self.Bind(CT.EVT_TREE_ITEM_CHECKED, self.EvtAddRemoveCase, self.tree)
-
         treeLbl = wx.StaticText(self, -1, 'Select cases supposed to excute:')
+
+        self.sel2gCheck = wx.CheckBox(self, -1, "2.4G")
+        self.sel5gCheck = wx.CheckBox(self, -1, "5G")
+        self.selGuestCheck = wx.CheckBox(self, -1, "Guest wifi")
+        self.Bind(wx.EVT_CHECKBOX, self.EvtSel2g, self.sel2gCheck)
+        self.Bind(wx.EVT_CHECKBOX, self.EvtSel5g, self.sel5gCheck)
+        self.Bind(wx.EVT_CHECKBOX, self.EvtSelGuest, self.selGuestCheck)
 
         self.applyBtn = wx.Button(self, -1, 'Apply')
         self.cancelBtn = wx.Button(self, -1, 'Cancel')
@@ -630,6 +641,7 @@ class TestSuitePage(wx.Panel):
         self.retry.SetValue(v.FAIL_RETRY)
 
         mainSizer = wx.BoxSizer(wx.VERTICAL)
+        selRadioSizer = wx.BoxSizer(wx.HORIZONTAL)
         btnSizer = wx.BoxSizer(wx.HORIZONTAL)
 
         btnSizer.Add(retryLbl, 0, wx.LEFT, 10)
@@ -638,7 +650,12 @@ class TestSuitePage(wx.Panel):
         btnSizer.Add(self.applyBtn, 0, wx.LEFT, 143)
         btnSizer.Add(self.cancelBtn, 0, wx.LEFT, 15)
 
+        selRadioSizer.Add(self.sel2gCheck, 0, wx.LEFT, 10)
+        selRadioSizer.Add(self.sel5gCheck, 0, wx.LEFT, 10)
+        selRadioSizer.Add(self.selGuestCheck, 0, wx.LEFT, 10)
+
         mainSizer.Add(treeLbl, 0, wx.ALIGN_LEFT | wx.TOP | wx.LEFT | wx.BOTTOM, 10)
+        mainSizer.Add(selRadioSizer, 0, wx.LEFT | wx.BOTTOM, 10)
         mainSizer.Add(self.tree, 0, wx.ALIGN_LEFT | wx.LEFT, 20)
         mainSizer.Add(btnSizer, 0, wx.TOP, 10)
 
@@ -731,7 +748,7 @@ class TestSuitePage(wx.Panel):
                                   wargs=(self.jobID, self.abortEvent, testcase, v.FAIL_RETRY),
                                   jobID=self.jobID)
 
-        #start memory monitor
+        # start memory monitor
         self.memMon = mm.memMonitor(v.MEM_MONITOR_INTERVAL)
         self.memMon.setDaemon(True)
         self.memMon.start()
@@ -744,7 +761,7 @@ class TestSuitePage(wx.Panel):
         # t.sleep(1.0)
         if v.SEND_MAIL == 1 and testKeepGoing:
             content = """<html><body><img src="cid:Total_memory_used.png" alt="Total_memory_used.png"></body></html><small>此为系统自动发送，请勿回复，详情查看附件。</small>"""
-            sm.sendMail(v.MAILTO_LIST, self.mailTitle, content, self.report,["Total_memory_used.png"])
+            sm.sendMail(v.MAILTO_LIST, self.mailTitle, content, self.report, ["Total_memory_used.png"])
 
         self.abortEvent.set()
         self.dlg.Destroy()
@@ -756,7 +773,7 @@ class TestSuitePage(wx.Panel):
         try:
             result = delayedResult.get()
             self.runFlag = False
-            self.memMon.stop() # stop memory monitor
+            self.memMon.stop()  # stop memory monitor
 
         except Exception:
             return
@@ -787,6 +804,101 @@ class TestSuitePage(wx.Panel):
     def EvtClose(self, event):
         frame.Close(True)
 
+    def EvtSel2g(self, event):
+        import re
+        if self.sel2gCheck.IsChecked() is True:
+            for child in self.root.GetChildren():
+                for child2 in child.GetChildren():
+                    if child2.HasChildren():
+                        for child3 in child2.GetChildren():
+                            child3Name = self.tree.GetItemText(child3)
+                            m = re.search("2g", child3Name)
+                            if m:
+                                self.tree.CheckItem(child3)
+                    else:
+                        child2Name = self.tree.GetItemText(child2)
+                        m = re.search("2g", child2Name)
+                        if m:
+                            self.tree.SelectItem(child2)
+        elif self.sel2gCheck.IsChecked() is False:
+            for child in self.root.GetChildren():
+                for child2 in child.GetChildren():
+                    if child2.HasChildren():
+                        for child3 in child2.GetChildren():
+                            import re
+                            child3Name = self.tree.GetItemText(child3)
+                            m = re.search('2g', child3Name)
+                            if m:
+                                self.tree.CheckItem(child3, checked=False)
+                    else:
+                        child2Name = self.tree.GetItemText(child2)
+                        m = re.search('2g', child2Name)
+                        if m:
+                            self.tree.CheckItem(child2, checked=False)
+
+    def EvtSel5g(self, event):
+        import re
+        if self.sel5gCheck.IsChecked() is True:
+            for child in self.root.GetChildren():
+                for child2 in child.GetChildren():
+                    if child2.HasChildren():
+                        for child3 in child2.GetChildren():
+                            child3Name = self.tree.GetItemText(child3)
+                            m = re.search("5g", child3Name)
+                            if m:
+                                self.tree.CheckItem(child3)
+                    else:
+                        child2Name = self.tree.GetItemText(child2)
+                        m = re.search("5g", child2Name)
+                        if m:
+                            self.tree.SelectItem(child2)
+        elif self.sel5gCheck.IsChecked() is False:
+            for child in self.root.GetChildren():
+                for child2 in child.GetChildren():
+                    if child2.HasChildren():
+                        for child3 in child2.GetChildren():
+                            import re
+                            child3Name = self.tree.GetItemText(child3)
+                            m = re.search('5g', child3Name)
+                            if m:
+                                self.tree.CheckItem(child3, checked=False)
+                    else:
+                        child2Name = self.tree.GetItemText(child2)
+                        m = re.search('5g', child2Name)
+                        if m:
+                            self.tree.CheckItem(child2, checked=False)
+
+    def EvtSelGuest(self, event):
+        import re
+        if self.selGuestCheck.IsChecked() is True:
+            for child in self.root.GetChildren():
+                for child2 in child.GetChildren():
+                    if child2.HasChildren():
+                        for child3 in child2.GetChildren():
+                            child3Name = self.tree.GetItemText(child3)
+                            m = re.search("guest", child3Name)
+                            if m:
+                                self.tree.CheckItem(child3)
+                    else:
+                        child2Name = self.tree.GetItemText(child2)
+                        m = re.search("guest", child2Name)
+                        if m:
+                            self.tree.SelectItem(child2)
+        elif self.selGuestCheck.IsChecked() is False:
+            for child in self.root.GetChildren():
+                for child2 in child.GetChildren():
+                    if child2.HasChildren():
+                        for child3 in child2.GetChildren():
+                            import re
+                            child3Name = self.tree.GetItemText(child3)
+                            m = re.search('guest', child3Name)
+                            if m:
+                                self.tree.CheckItem(child3, checked=False)
+                    else:
+                        child2Name = self.tree.GetItemText(child2)
+                        m = re.search('guest', child2Name)
+                        if m:
+                            self.tree.CheckItem(child2, checked=False)
 
 class Frame(wx.Frame):
     def __init__(self):

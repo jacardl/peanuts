@@ -29,17 +29,16 @@ def sendMail(to_list, sub, content, attach=None, pic_list=None):  #to_list：收件
 
     #attach3
     if pic_list is not None:
-        cnt = 0 ;
-        for pic in pic_list :
-            cnt = cnt + 1 ;
-            fp = open(pic,"rb");
+        cnt = 0
+        for pic in pic_list:
+            cnt += 1
+            fp = open(pic, "rb")
             att3 = MIMEImage(fp.read())
             fp.close()
             att3.add_header('Content-ID', '<'+pic+'>')
             att3["Content-Type"] = 'application/octet-stream'
             att3["Content-Disposition"] = 'attachment; filename="Total memory used.png"'
             msg.attach(att3)
-
 
     try:
         s = smtplib.SMTP()
@@ -55,7 +54,7 @@ def sendMail(to_list, sub, content, attach=None, pic_list=None):  #to_list：收件
 if __name__ == '__main__':
     cli = SshCommand(2)
     cli.connect("192.168.31.1", "", "")
-    content ="""<html><body><img src="cid:Total_memory_used.png" alt="Total_memory_used.png"></body></html><small>此为系统自动发送，请勿回复，详情查看附件。</small>"""
+    content = """<html><body><img src="cid:Total_memory_used.png" alt="Total_memory_used.png"></body></html><small>此为系统自动发送，请勿回复，详情查看附件。</small>"""
 
     if sendMail(["liujia5@xiaomi.com"], cli.setMailTitle(), content, "temp.xls", ["Total_memory_used.png"]):
         print "successful"

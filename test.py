@@ -15,15 +15,4 @@
 # with open(file_name, 'wb') as f:
 #     f.write(data.read())
 # os.system("D:\\Python\\\new peanuts\\24\\ez_setup.py")
-from openpyxl import Workbook
-
-wb = Workbook()
-ws = wb.active
-ws.title = "Mem tracking"
-time = 1.0/2.2
-time = "{:.2%}".format(time)
-print time
-ws.cell(row=2, column=2).value = time
-
-# save the file
-wb.save('new_big_file.xlsx')
+import var

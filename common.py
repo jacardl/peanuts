@@ -229,6 +229,11 @@ class SshCommand(SshClient):
         title = "【" + hardware + Rom["channel"] + Rom["version"] + "】自动化测试报告"
         return title
 
+    def setReportName(self):
+        hardware = self.getHardware()
+        Rom = self.getRomVersion()
+        name = hardware + Rom["channel"] + Rom["version"] + ".log"
+        return name
 
 class SerialClient(object):
     pass

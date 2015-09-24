@@ -697,9 +697,7 @@ class TestSuitePage(wx.Panel):
         # then add them to suitefailed and process it until count times
         ssh = co.SshCommand(v.CONNECTION_TYPE)
         ssh.connect(v.HOST, v.USR, v.PASSWD)
-        hardware = ssh.getHardware()
-        rom = ssh.getRomVersion()
-        self.report = hardware + rom["channel"] + rom["version"] + ".log"
+        self.report = ssh.setReportName()
         self.mailTitle = ssh.setMailTitle()
 
         # curTime = t.strftime('%Y.%m.%d %H.%M.%S', t.localtime())
@@ -757,6 +755,8 @@ class TestSuitePage(wx.Panel):
             wx.Yield()  # refresh progress
             (testKeepGoing, skip) = self.dlg.Pulse()
             t.sleep(0.1)
+
+        # ¥À¥¶≤Â»Îprocessreport
 
         # t.sleep(1.0)
         if v.SEND_MAIL == 1 and testKeepGoing:

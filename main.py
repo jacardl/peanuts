@@ -3,7 +3,7 @@ import threading
 from unittest import *
 import os
 import time as t
-
+from collections import *
 import wx
 import wx.lib.agw.customtreectrl as CT
 import wx.lib.delayedresult as delayedresult
@@ -536,7 +536,7 @@ class LogCollectionPage(wx.Panel):
                 os.makedirs(saveLogPath)
 
             while keepGoing and c < len(logList):
-                retDic = {}
+                retDic = OrderedDict()
                 ll = logList[c]
                 wx.Yield()  # refresh progress
                 (keepGoing, skip) = self.dlg.Update(c + 1, ll)

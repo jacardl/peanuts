@@ -16,3 +16,8 @@
 #     f.write(data.read())
 # os.system("D:\\Python\\\new peanuts\\24\\ez_setup.py")
 import var
+from collections import *
+cnt = Counter()
+for word in ['red', 'blue', 'red', 'green', 'blue', 'blue']:
+    cnt[word] += 1
+print cnt

@@ -714,7 +714,7 @@ def setWifiMacfilterModel(terminal, enable, model=0, mac='none', logname=None):
             setWl(terminal, 'wl0', 'macmode', '0', logname)
             setWl(terminal, 'wl1', 'macmode', '0', logname)
             setWl(terminal, 'wl1.2', 'macmode', '0', logname)
-        elif v.DUT_MODULE == 'R1CM':
+        elif v.DUT_MODULE == 'R1CM' or v.DUT_MODULE == "R1CL":
             setIwpriv(terminal, 'wl0', 'ACLClearAll', '1', logname)
             setIwpriv(terminal, 'wl1', 'ACLClearAll', '1', logname)
             setIwpriv(terminal, 'wl3', 'ACLClearAll', '1', logname)
@@ -742,7 +742,7 @@ def setWifiMacfilterModel(terminal, enable, model=0, mac='none', logname=None):
                 setWl(terminal, 'wl0', 'macmode', '2', logname)
                 setWl(terminal, 'wl1', 'macmode', '2', logname)
                 setWl(terminal, 'wl1.2', 'macmode', '2', logname)
-        elif v.DUT_MODULE == 'R1CM':
+        elif v.DUT_MODULE == 'R1CM' or v.DUT_MODULE == "R1CL":
             setIwpriv(terminal, 'wl0', 'ACLClearAll', '1', logname)
             setIwpriv(terminal, 'wl1', 'ACLClearAll', '1', logname)
             setIwpriv(terminal, 'wl3', 'ACLClearAll', '1', logname)

@@ -106,50 +106,90 @@ class GetTestResult(threading.Thread):
 
 
 class GetFlowLog(threading.Thread):
+    """
+    {'tx2gClear': 50.9, 'rx2gTkip': 17.7, 'tx5gAes': 93.27, 'rx2gClear': 42.4, 'tx5gTkip': 26.4, 'rx2gAes': 39.1,
+    'tx5gClear': 93.6, 'tx2gAes': 47.83, 'rx5gTkip': 19.8, 'rx5gAes': 52.2, 'tx2gTkip': 26.45, 'rx5gClear': 57.4}
+
+    """
     def __init__(self, report):
         threading.Thread.__init__(self)
         self.running = False
         self.reportName = report
         self.logPath = v.TEST_SUITE_LOG_PATH
-        self.tx2gAes = []
-        self.rx2gAes = []
-        self.tx2gTkip = []
-        self.rx2gTkip = []
-        self.tx2gClear = []
-        self.rx2gClear = []
-        self.tx5gAes = []
-        self.rx5gAes = []
-        self.tx5gTkip = []
-        self.rx5gTkip = []
-        self.tx5gClear = []
-        self.rx5gClear = []
+        self.result = {
+            "tx2gAes": [],
+            "rx2gAes": [],
+            "tx2gTkip": [],
+            "rx2gTkip": [],
+            "tx2gClear": [],
+            "rx2gClear": [],
+            "tx5gAes": [],
+            "rx5gAes": [],
+            "tx5gTkip": [],
+            "rx5gTkip": [],
+            "tx5gClear": [],
+            "rx5gClear": [],
+            }
 
     def run(self):
         self.running = True
         logFile = None
-        logName = None
+        logFileList = list()
         report = open(self.reportName)
         for line in report:
             if not line.isspace():
-                m = re.search('testcase\.(AP_.*_FLOW\d)', line)
+                m = re.search('testcase\.(AP_.*_FLOW\d?)', line)
                 if m:
-                    logName = m.group(1) + ".log"
-                    logName = self.logPath + logName
-                    if logName is not logFile:
-                        logFile = logName
-                        log = open(logFile)
-
-
-
+                    logFile = m.group(1) + ".log"
+                    logFile = self.logPath + logFile
+                    if logFile not in logFileList:
+                        logFileList.append(logFile)
         report.close()
+        for lf in logFileList:
+            ret = getFlowLogVerbose(lf)
+            sw = {
+                "2gpsk2tx": 'self.result["tx2gAes"].extend(ret["2gpsk2tx"])',
+                "2gpsk2rx": 'self.result["rx2gAes"].extend(ret["2gpsk2rx"])',
+                "5gpsk2tx": 'self.result["tx5gAes"].extend(ret["5gpsk2tx"])',
+                "5gpsk2rx": 'self.result["rx5gAes"].extend(ret["5gpsk2rx"])',
+                "2gpsktx": 'self.result["tx2gAes"].extend(ret["2gpsktx"])',
+                "2gpskrx": 'self.result["rx2gAes"].extend(ret["2gpskrx"])',
+                "5gpsktx": 'self.result["tx5gAes"].extend(ret["5gpsktx"])',
+                "5gpskrx": 'self.result["rx5gAes"].extend(ret["5gpskrx"])',
+                "2gtkippsk2tx": 'self.result["tx2gTkip"].extend(ret["2gtkippsk2tx"])',
+                "2gtkippsk2rx": 'self.result["rx2gTkip"].extend(ret["2gtkippsk2rx"])',
+                "5gtkippsk2tx": 'self.result["tx5gTkip"].extend(ret["5gtkippsk2tx"])',
+                "5gtkippsk2rx": 'self.result["rx5gTkip"].extend(ret["5gtkippsk2rx"])',
+                "2gtkippsktx": 'self.result["tx2gTkip"].extend(ret["2gtkippsktx"])',
+                "2gtkippskrx": 'self.result["rx2gTkip"].extend(ret["2gtkippskrx"])',
+                "5gtkippsktx": 'self.result["tx5gTkip"].extend(ret["5gtkippsktx"])',
+                "5gtkippskrx": 'self.result["rx5gTkip"].extend(ret["5gtkippskrx"])',
+                "2gcleartx": 'self.result["tx2gClear"].extend(ret["2gcleartx"])',
+                "2gclearrx": 'self.result["rx2gClear"].extend(ret["2gclearrx"])',
+                "5gcleartx": 'self.result["tx5gClear"].extend(ret["5gcleartx"])',
+                "5gclearrx": 'self.result["rx5gClear"].extend(ret["5gclearrx"])',
+                }
+            for key in ret.iterkeys():
+                eval(sw.get(key))
+        for key, value in self.result.iteritems():
+            if len(value) is not 0:
+                ave = round(float(reduce(lambda i, j: float(i)+float(j), value))/len(value), 2)
+                self.result[key] = ave
+            else:
+                self.result[key] = 0
         self.stop()
 
     def stop(self):
         self.running = False
+        return self.result
 
 def getFlowLogVerbose(logfile):
-    count1 = 0
-    count2 = 0
+    """
+    OrderedDict([('2gpsk2tx', ['47.7']), ('2gpsk2rx', ['38.8']), ('5gpsk2tx', ['92.8']), ('5gpsk2rx', ['47.0'])])
+    :param logfile:
+    :return:
+    """
+    rfEncrypto = None
     result = OrderedDict()
     try:
         log = open(logfile)
@@ -157,28 +197,78 @@ def getFlowLogVerbose(logfile):
             if not line.isspace():
                 m = re.search('#test_assoc_(.*)_sta_(\dg)', line)
                 if m:
-                    rfEncrpto = m.group(2) + m.group(1)
-                    count1 += 2
+                    rfEncrypto = m.group(2) + m.group(1)
+                    result[rfEncrypto + "tx"] = []
+                    result[rfEncrypto + "rx"] = []
+                    count1 = 2
+                    count2 = 0
                 n = re.search('\s0.0-\d{4}.*\s(\d{1,3}\.\d)\sMbits/sec', line)
                 if n:
                     count2 += 1
                     if count1 - count2 == 1:
                         tx = n.group(1)
-                        if rfEncrpto + "tx" in result:
-                            result[rfEncrpto + "tx"].append(tx)
-                        else:
-                            result[rfEncrpto + "tx"] = [tx]
+                        if rfEncrypto + "tx" in result:
+                            result[rfEncrypto + "tx"].append(tx)
                     elif count2 == count1:
                         rx = n.group(1)
-                        if rfEncrpto + "rx" in result:
-                            result[rfEncrpto + "rx"].append(rx)
-                        else:
-                            result[rfEncrpto + "rx"] = [rx]
+                        if rfEncrypto + "rx" in result:
+                            result[rfEncrypto + "rx"].append(rx)
         log.close()
     except IOError as e:
         raise e
-
     return result
+
+
+class GetOnlineLog(threading.Thread):
+    def __init__(self, report):
+        threading.Thread.__init__(self)
+        self.running = False
+        self.reportName = report
+        self.logPath = v.TEST_SUITE_LOG_PATH
+        self.result = {
+            "pass": 0,
+            "fail": 0,
+        }
+
+    def run(self):
+        self.running = True
+        logFileList = list()
+        report = open(self.reportName)
+        for line in report:
+            if not line.isspace():
+                m = re.search('assoc_repeat.*testcase\.(.*)\)', line)
+                if m:
+                    if line.endswith("ok\n"):
+                        self.result["pass"] += 100
+                    elif line.endswith("FAIL\n"):
+                        logFile = m.group(1) + ".log"
+                        logFile = self.logPath + logFile
+                        if logFile not in logFileList:
+                            logFileList.append(logFile)
+                else:
+                    n = re.search('assoc', line)
+                    if n:
+                        if line.endswith("ok\n"):
+                            self.result["pass"] += 1
+                        elif line.endswith("FAIL\n"):
+                            self.result["fail"] += 1
+        report.close()
+        for lf in logFileList:
+            log = open(lf)
+            for line in log:
+                if not line.isspace():
+                    m = re.search('Not all association were successful.*but was:<(\d+)>', line)
+                    if m:
+                        self.result["pass"] += int(m.group(1))
+                        self.result["fail"] += (100 - int(m.group(1)))
+            log.close()
+        self.stop()
+
+    def stop(self):
+        self.running = False
+        return self.result
+
+
 
 
 
@@ -189,8 +279,12 @@ if __name__ == '__main__':
     # while t.isAlive():
     #     print time.time()
     # print t.testSum, t.testFail, t.testPass
-    print getFlowLogVerbose("D:\python\peanuts\R1CM 开发版OTA 2.5.48\AP_MIXEDPSK_CHAN_FLOW2.log")
-
+    # r = getFlowLogVerbose("D:\python\peanuts\R1CM 开发版OTA 2.5.48\AP_CLEAR_CHAN_FLOW2.log")
+    # info = GetFlowLog("R1CM 开发版OTA 2.5.48.log")
+    info = GetOnlineLog("R1CM 开发版OTA 2.5.48.log")
+    info.start()
+    info.join()
+    print info.result
 
 
 

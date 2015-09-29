@@ -2,8 +2,9 @@
 import threading
 import re
 from collections import *
-import time
-import os
+import  numpy as np
+import matplotlib.pyplot as plt
+
 import common
 import var as v
 
@@ -44,35 +45,12 @@ class GetTimeUsed(threading.Thread):
         self.running = False
 
 
-class GetTimeUsed(threading.Thread):
-    def __init__(self, report):
-        threading.Thread.__init__(self)
-        self.running = False
-        self.reportName = report
-        self.timeUsed = 0
-
-    def run(self):
-        self.running = True
-        f = open(self.reportName)
-        for line in f:
-            if not line.isspace():
-                m = re.search('Ran\s+\d+\s+[tes]+\s+in\s+(\d+)', line)
-                if m:
-                    self.timeUsed += int(m.group(1))
-        f.close()
-        self.timeUsed = float(self.timeUsed/3600.0)
-        self.timeUsed = round(self.timeUsed, 2)
-        self.stop()
-
-    def stop(self):
-        self.running = False
-
-
 class GetTestResult(threading.Thread):
     def __init__(self, report):
         threading.Thread.__init__(self)
         self.running = False
         self.reportName = report
+        self.result = {}
         self.testSum = 0
         self.testPass = 0
         self.testFail = 0
@@ -84,21 +62,19 @@ class GetTestResult(threading.Thread):
             if not line.isspace():
                 m = re.search('Ran\s+(\d+)\s+[tes]+\s+in\s+\d+', line)
                 if m:
-                    self.testSum = m.group(1)
+                    self.result["testsum"] = int(m.group(1))
                     break
         for line in f:
             if not line.isspace():
                 m = re.search('FAILED \(failures=(\d+)\)', line)
                 n = re.search('OK', line)
                 if m:
-                    self.testFail = m.group(1)
+                    self.result["testfail"] = int(m.group(1))
                 if n:
-                    self.testFail = 0
+                    self.result["testfail"] = 0
                     break
         f.close()
-        self.testSum = int(self.testSum)
-        self.testFail = int(self.testFail)
-        self.testPass = self.testSum - self.testFail
+        self.result["testpass"] = self.result["testsum"] - self.result["testfail"]
         self.stop()
 
     def stop(self):
@@ -181,7 +157,7 @@ class GetFlowLog(threading.Thread):
 
     def stop(self):
         self.running = False
-        return self.result
+        drawFlowLog(self.result)
 
 def getFlowLogVerbose(logfile):
     """
@@ -217,6 +193,60 @@ def getFlowLogVerbose(logfile):
     except IOError as e:
         raise e
     return result
+
+def drawFlowLog(data):
+    bar_width = 0.42
+    opacity = 0.4
+    index = np.arange(6)
+    ret = data
+
+    tx = list()
+    rx = list()
+    tx.append(ret.get("tx2gClear"))
+    tx.append(ret.get("tx2gAes"))
+    tx.append(ret.get("tx2gTkip"))
+    tx.append(ret.get("tx5gClear"))
+    tx.append(ret.get("tx5gAes"))
+    tx.append(ret.get("tx5gTkip"))
+    rx.append(ret.get("rx2gClear"))
+    rx.append(ret.get("rx2gAes"))
+    rx.append(ret.get("rx2gTkip"))
+    rx.append(ret.get("rx5gClear"))
+    rx.append(ret.get("rx5gAes"))
+    rx.append(ret.get("rx5gTkip"))
+
+    fig, ax = plt.subplots()
+    rects1 = plt.bar(index, tx, bar_width,
+                     alpha=opacity,
+                     color='b',
+                     label='Tx'
+                     )
+
+    rects2 = plt.bar(index + bar_width, rx, bar_width,
+                     alpha=opacity,
+                     color='r',
+                     label='Rx'
+                     )
+
+    def autolabel(rects):
+        # attach some text labels
+        for rect in rects:
+            height = rect.get_height()
+            ax.text(rect.get_x()+rect.get_width()/2., 0.75*height, '%.1f'%float(height),
+                    ha='center', va='bottom')
+
+    autolabel(rects1)
+    autolabel(rects2)
+
+    plt.xlabel('Radio & cipher suite')
+    plt.ylabel('Mbps')
+    plt.title('Throughput')
+    plt.xticks(index + bar_width, ('2.4g_Clear', '2.4g_AES', '2.4g_TKIP', '5g_Clear', '5g_AES', '5g_TKIP',))
+    plt.legend()
+
+    # plt.show()
+    plt.savefig("Throughput")
+    plt.close()
 
 
 class GetOnlineLog(threading.Thread):
@@ -266,11 +296,6 @@ class GetOnlineLog(threading.Thread):
 
     def stop(self):
         self.running = False
-        return self.result
-
-
-
-
 
 
 if __name__ == '__main__':
@@ -278,10 +303,10 @@ if __name__ == '__main__':
     # t.start()
     # while t.isAlive():
     #     print time.time()
-    # print t.testSum, t.testFail, t.testPass
     # r = getFlowLogVerbose("D:\python\peanuts\R1CM 开发版OTA 2.5.48\AP_CLEAR_CHAN_FLOW2.log")
-    # info = GetFlowLog("R1CM 开发版OTA 2.5.48.log")
-    info = GetOnlineLog("R1CM 开发版OTA 2.5.48.log")
+    info = GetFlowLog("R1CM 开发版OTA 2.5.48.log")
+    # info = GetOnlineLog("R1CM 开发版OTA 2.5.48.log")
+    # info = GetTestResult("R1CM 开发版OTA 2.5.48.log")
     info.start()
     info.join()
     print info.result

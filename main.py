@@ -698,10 +698,11 @@ class TestSuitePage(wx.Panel):
         ssh = co.SshCommand(v.CONNECTION_TYPE)
         ssh.connect(v.HOST, v.USR, v.PASSWD)
         self.report = ssh.setReportName()
+        self.reportFile = ssh.setReportName() + ".log"
         self.mailTitle = ssh.setMailTitle()
 
         # curTime = t.strftime('%Y.%m.%d %H.%M.%S', t.localtime())
-        f = open(self.report, 'a')
+        f = open(self.reportFile, 'a')
         runner = TextTestRunner(f, verbosity=2)
         res = runner.run(testcase)
         errors = res.errors
@@ -761,7 +762,7 @@ class TestSuitePage(wx.Panel):
         # t.sleep(1.0)
         if v.SEND_MAIL == 1 and testKeepGoing:
             content = """<html><body><img src="cid:Total_memory_used.png" alt="Total_memory_used.png"></body></html><small>此为系统自动发送，请勿回复，详情查看附件。</small>"""
-            sm.sendMail(v.MAILTO_LIST, self.mailTitle, content, self.report, ["Total_memory_used.png"])
+            sm.sendMail(v.MAILTO_LIST, self.mailTitle, content, self.reportFile, ["Total_memory_used.png"])
 
         self.abortEvent.set()
         self.dlg.Destroy()
@@ -775,6 +776,11 @@ class TestSuitePage(wx.Panel):
             self.runFlag = False
             self.memMon.stop()  # stop memory monitor
 
+            #此处插入stop processlog
+
+            #意外情况关闭相关进程
+            os.system("taskkill /F /T /IM python.exe | taskkill /F /T /IM adb.exe")
+            os.rename(v.TEST_SUITE_LOG_PATH, self.report)
         except Exception:
             return
 

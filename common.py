@@ -232,7 +232,7 @@ class SshCommand(SshClient):
     def setReportName(self):
         hardware = self.getHardware()
         Rom = self.getRomVersion()
-        name = hardware + Rom["channel"] + Rom["version"] + ".log"
+        name = hardware + Rom["channel"] + Rom["version"]
         return name
 
 class SerialClient(object):

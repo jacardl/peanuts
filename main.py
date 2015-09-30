@@ -8,6 +8,7 @@ import wx
 import wx.lib.agw.customtreectrl as CT
 import wx.lib.delayedresult as delayedresult
 import shutil
+import random
 
 import var as v
 import common as co
@@ -760,20 +761,25 @@ class TestSuitePage(wx.Panel):
             t.sleep(0.1)
 
         # t.sleep(1.0)
+        #click cancel set testKeepGoing to False
         if v.SEND_MAIL == 1 and testKeepGoing:
+            self.memMon.stop()  # stop memory monitor and draw chart
             # 此处插入processreport
             self.procReport = pr.ProcessReport(self.reportFile)
             self.procReport.start()
             self.procReport.join()
             sm.generateMail(v.MAILTO_LIST, self.mailTitle, self.procReport.result, self.reportFile)
 
-        #关闭相关进程
-        os.system("taskkill /F /T /IM python.exe | taskkill /F /T /IM adb.exe")
-        # os.system("taskkill /F /T /IM adb.exe")
-        shutil.move(self.reportFile, v.TEST_SUITE_LOG_PATH)
-        shutil.move(v.MAIL_PIC1, v.TEST_SUITE_LOG_PATH)
-        shutil.move(v.MAIL_PIC2, v.TEST_SUITE_LOG_PATH)
-        os.rename(v.TEST_SUITE_LOG_PATH, self.report)
+        if os.path.exists(v.MAIL_PIC1):
+            shutil.move(v.MAIL_PIC1, v.TEST_SUITE_LOG_PATH)
+        if os.path.exists(v.MAIL_PIC2):
+            shutil.move(v.MAIL_PIC2, v.TEST_SUITE_LOG_PATH)
+        if not os.path.exists(self.report):
+            os.rename(v.TEST_SUITE_LOG_PATH, self.report)
+        else:
+            os.rename(v.TEST_SUITE_LOG_PATH, self.report + str(random.random()))
+        if testKeepGoing is False:
+            os.system("taskkill /F /IM python.exe | taskkill /F /T /IM adb.exe")
         self.abortEvent.set()
         self.dlg.Destroy()
 
@@ -784,7 +790,6 @@ class TestSuitePage(wx.Panel):
         try:
             result = delayedResult.get()
             self.runFlag = False
-            self.memMon.stop()  # stop memory monitor
 
         except Exception:
             return

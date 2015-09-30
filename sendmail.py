@@ -54,8 +54,8 @@ def sendMail(to_list, sub, content, attach=None, pic_list=None):  #to_list：收件
 
 def generateMail(maillist, title, argsdic, attach=None,):
     content1 = """
-        <p>本次自动化共执行用例 %(sum)d 个，pass %(pa)d 个，通过率 %(percent)0.4f，用时 %(time)0.2f 小时 </p>
-        <p>无线终端共尝试上线 %(onlinesum)d 次，成功上线 %(onlinepa)d 次，上线率 %(onlinepercent)0.4f。</p>
+        <p>本次自动化共执行用例 %(sum)d 个，pass %(pa)d 个，通过率 %(percent)0.2f%%，用时 %(time)0.2f 小时 </p>
+        <p>无线终端共尝试上线 %(onlinesum)d 次，成功上线 %(onlinepa)d 次，上线率 %(onlinepercent)0.2f%%。</p>
         """ % argsdic
         # {"sum": 120, "pa": 90, "percent": 20, "time": 36.66, "onlinesum": 3900, "onlinepa": 3000, "onlinepercent": 20}
 
@@ -78,11 +78,12 @@ def generateMail(maillist, title, argsdic, attach=None,):
 
 
 if __name__ == '__main__':
-    ret = pr.ProcessReport("R1CM 开发版OTA 2.5.48.log")
+    report = "R2D 稳定版OTA 2.8.2.log"
+    ret = pr.ProcessReport(report)
     ret.start()
     ret.join()
 
-    if generateMail(["liujia5@xiaomi.com"], "test", ret.result, "R1CM 开发版OTA 2.5.48.log"):
+    if generateMail(["liujia5@xiaomi.com"], "test", ret.result, report):
         print "successful"
     else:
         print "failed"

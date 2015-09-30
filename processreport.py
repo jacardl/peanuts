@@ -29,11 +29,11 @@ class ProcessReport(threading.Thread):
             pass
         self.result.update(sum=test.result["testsum"])
         self.result.update(pa=test.result["testpass"])
-        self.result.update(percent=test.result["testpass"]/float(test.result["testsum"]))
+        self.result.update(percent=test.result["testpass"]/float(test.result["testsum"])*100)
         self.result.update(time=time.timeUsed)
         self.result.update(onlinesum=online.result["pass"]+online.result["fail"])
         self.result.update(onlinepa=online.result["pass"])
-        self.result.update(onlinepercent=online.result["pass"]/(online.result["pass"]+float(online.result["fail"])))
+        self.result.update(onlinepercent=online.result["pass"]/(online.result["pass"]+float(online.result["fail"]))*100)
         self.stop()
 
     def stop(self):
@@ -198,7 +198,7 @@ def getFlowLogVerbose(logfile):
                     result[rfEncrypto + "rx"] = []
                     count1 = 2
                     count2 = 0
-                n = re.search('\s0.0-\d{4}.*\s(\d{1,3}\.\d)\sMbits/sec', line)
+                n = re.search('\s0.0-\d{4}.*\s(\d{1,3}\.?\d)?\sMbits/sec', line)
                 if n:
                     count2 += 1
                     if count1 - count2 == 1:
@@ -259,7 +259,7 @@ def drawFlowLog(data):
     autolabel(rects1)
     autolabel(rects2)
 
-    plt.xlabel('Radio & cipher suite')
+    plt.xlabel('Radio & Cipher Suite')
     plt.ylabel('Mbps')
     plt.title('Throughput')
     plt.xticks(index + bar_width, ('2.4g_Clear', '2.4g_AES', '2.4g_TKIP', '5g_Clear', '5g_AES', '5g_TKIP',))
@@ -324,11 +324,11 @@ if __name__ == '__main__':
     # t.start()
     # while t.isAlive():
     #     print time.time()
-    # r = getFlowLogVerbose("D:\python\peanuts\R1CM 开发版OTA 2.5.48\AP_CLEAR_CHAN_FLOW2.log")
-    # info = GetFlowLog("R1CM 开发版OTA 2.5.48.log")
+    # print getFlowLogVerbose("E:\peanuts\LOG_TEST_SUITE\AP_CLEAR_CHAN_FLOW2.log")
+    info = GetFlowLog("R2D 稳定版OTA 2.6.12.log")
     # info = GetOnlineLog("R1CM 开发版OTA 2.5.48.log")
     # info = GetTestResult("R1CM 开发版OTA 2.5.48.log")
-    info = ProcessReport("R1CM 开发版OTA 2.5.48.log")
+    # info = ProcessReport("R2D 稳定版OTA 2.6.12.log")
     info.start()
     info.join()
     print info.result

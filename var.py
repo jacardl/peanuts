@@ -107,4 +107,7 @@ MAIL_PASS = ""   #口令
 MAIL_POSTFIX="xiaomi.com"  #发件箱的后缀
 MAILFROM_LIST = "robot@xiaomi.com"
 
+MAIL_PIC1 = "total_memory_used.png"
+MAIL_PIC2 = "throughput.png"
+
 MEM_MONITOR_INTERVAL = 60

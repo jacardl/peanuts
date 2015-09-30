@@ -2,23 +2,43 @@
 import threading
 import re
 from collections import *
-import  numpy as np
+import numpy as np
 import matplotlib.pyplot as plt
 
-import common
 import var as v
 
-
 class ProcessReport(threading.Thread):
-    def __init__(self):
+    def __init__(self, report):
         threading.Thread.__init__(self)
-        pass
+        self.running = False
+        self.report = report
+        self.result = OrderedDict()
 
     def run(self):
-        pass
+        self.running = True
+        time = GetTimeUsed(self.report)
+        test = GetTestResult(self.report)
+        flow = GetFlowLog(self.report)
+        online = GetOnlineLog(self.report)
+        time.start()
+        test.start()
+        flow.start()
+        online.start()
+        while time.isAlive() or test.isAlive() or flow.isAlive() \
+                or online.isAlive():
+            pass
+        self.result.update(sum=test.result["testsum"])
+        self.result.update(pa=test.result["testpass"])
+        self.result.update(percent=test.result["testpass"]/float(test.result["testsum"]))
+        self.result.update(time=time.timeUsed)
+        self.result.update(onlinesum=online.result["pass"]+online.result["fail"])
+        self.result.update(onlinepa=online.result["pass"])
+        self.result.update(onlinepercent=online.result["pass"]/(online.result["pass"]+float(online.result["fail"])))
+        self.stop()
 
     def stop(self):
-        pass
+        self.running = False
+
 
 
 class GetTimeUsed(threading.Thread):
@@ -51,9 +71,6 @@ class GetTestResult(threading.Thread):
         self.running = False
         self.reportName = report
         self.result = {}
-        self.testSum = 0
-        self.testPass = 0
-        self.testFail = 0
 
     def run(self):
         self.running = True
@@ -121,8 +138,7 @@ class GetFlowLog(threading.Thread):
                     if logFile not in logFileList:
                         logFileList.append(logFile)
         report.close()
-        for lf in logFileList:
-            ret = getFlowLogVerbose(lf)
+        if len(logFileList) != 0:
             sw = {
                 "2gpsk2tx": 'self.result["tx2gAes"].extend(ret["2gpsk2tx"])',
                 "2gpsk2rx": 'self.result["rx2gAes"].extend(ret["2gpsk2rx"])',
@@ -145,19 +161,23 @@ class GetFlowLog(threading.Thread):
                 "5gcleartx": 'self.result["tx5gClear"].extend(ret["5gcleartx"])',
                 "5gclearrx": 'self.result["rx5gClear"].extend(ret["5gclearrx"])',
                 }
-            for key in ret.iterkeys():
-                eval(sw.get(key))
-        for key, value in self.result.iteritems():
-            if len(value) is not 0:
-                ave = round(float(reduce(lambda i, j: float(i)+float(j), value))/len(value), 2)
-                self.result[key] = ave
-            else:
-                self.result[key] = 0
-        self.stop()
+            for lf in logFileList:
+                ret = getFlowLogVerbose(lf)
+                for key in ret.iterkeys():
+                    eval(sw.get(key))
+            for key, value in self.result.iteritems():
+                if len(value) is not 0:
+                    ave = round(float(reduce(lambda i, j: float(i)+float(j), value))/len(value), 2)
+                    self.result[key] = ave
+                else:
+                    self.result[key] = 0
+            drawFlowLog(self.result)
+            self.stop()
+        else:
+            self.stop()
 
     def stop(self):
         self.running = False
-        drawFlowLog(self.result)
 
 def getFlowLogVerbose(logfile):
     """
@@ -193,6 +213,7 @@ def getFlowLogVerbose(logfile):
     except IOError as e:
         raise e
     return result
+
 
 def drawFlowLog(data):
     bar_width = 0.42
@@ -245,7 +266,7 @@ def drawFlowLog(data):
     plt.legend()
 
     # plt.show()
-    plt.savefig("Throughput")
+    plt.savefig(v.MAIL_PIC2)
     plt.close()
 
 
@@ -304,9 +325,10 @@ if __name__ == '__main__':
     # while t.isAlive():
     #     print time.time()
     # r = getFlowLogVerbose("D:\python\peanuts\R1CM 开发版OTA 2.5.48\AP_CLEAR_CHAN_FLOW2.log")
-    info = GetFlowLog("R1CM 开发版OTA 2.5.48.log")
+    # info = GetFlowLog("R1CM 开发版OTA 2.5.48.log")
     # info = GetOnlineLog("R1CM 开发版OTA 2.5.48.log")
     # info = GetTestResult("R1CM 开发版OTA 2.5.48.log")
+    info = ProcessReport("R1CM 开发版OTA 2.5.48.log")
     info.start()
     info.join()
     print info.result

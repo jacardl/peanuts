@@ -7,6 +7,7 @@ from collections import *
 import wx
 import wx.lib.agw.customtreectrl as CT
 import wx.lib.delayedresult as delayedresult
+import shutil
 
 import var as v
 import common as co
@@ -15,6 +16,7 @@ import data
 import testcase as tc
 import sendmail as sm
 import memmonitor as mm
+import processreport as pr
 # ----------------------------------------------------------------------------
 
 
@@ -757,13 +759,21 @@ class TestSuitePage(wx.Panel):
             (testKeepGoing, skip) = self.dlg.Pulse()
             t.sleep(0.1)
 
-        # 此处插入processreport
-
         # t.sleep(1.0)
         if v.SEND_MAIL == 1 and testKeepGoing:
-            content = """<html><body><img src="cid:Total_memory_used.png" alt="Total_memory_used.png"></body></html><small>此为系统自动发送，请勿回复，详情查看附件。</small>"""
-            sm.sendMail(v.MAILTO_LIST, self.mailTitle, content, self.reportFile, ["Total_memory_used.png"])
+            # 此处插入processreport
+            self.procReport = pr.ProcessReport(self.reportFile)
+            self.procReport.start()
+            self.procReport.join()
+            sm.generateMail(v.MAILTO_LIST, self.mailTitle, self.procReport.result, self.reportFile)
 
+        #关闭相关进程
+        os.system("taskkill /F /T /IM python.exe | taskkill /F /T /IM adb.exe")
+        # os.system("taskkill /F /T /IM adb.exe")
+        shutil.move(self.reportFile, v.TEST_SUITE_LOG_PATH)
+        shutil.move(v.MAIL_PIC1, v.TEST_SUITE_LOG_PATH)
+        shutil.move(v.MAIL_PIC2, v.TEST_SUITE_LOG_PATH)
+        os.rename(v.TEST_SUITE_LOG_PATH, self.report)
         self.abortEvent.set()
         self.dlg.Destroy()
 
@@ -776,11 +786,6 @@ class TestSuitePage(wx.Panel):
             self.runFlag = False
             self.memMon.stop()  # stop memory monitor
 
-            #此处插入stop processlog
-
-            #意外情况关闭相关进程
-            os.system("taskkill /F /T /IM python.exe | taskkill /F /T /IM adb.exe")
-            os.rename(v.TEST_SUITE_LOG_PATH, self.report)
         except Exception:
             return
 

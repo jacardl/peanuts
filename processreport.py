@@ -40,7 +40,6 @@ class ProcessReport(threading.Thread):
         self.running = False
 
 
-
 class GetTimeUsed(threading.Thread):
     def __init__(self, report):
         threading.Thread.__init__(self)

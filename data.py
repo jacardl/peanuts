@@ -463,7 +463,7 @@ treeAndroid = [
         "assoc_psk2_sta_flow_2g",
         "assoc_psk2_sta_flow_5g",
     ],
-    "AP_PSK2_CHAN5_52_FLOW2",
+    "AP_PSK2_CHAN6_52_FLOW2",
     [
         "assoc_psk2_sta_flow_2g",
         "assoc_psk2_sta_flow_5g",

@@ -232,7 +232,7 @@ class SshCommand(SshClient):
     def setReportName(self):
         hardware = self.getHardware()
         Rom = self.getRomVersion()
-        name = hardware + Rom["channel"] + Rom["version"] + ".log"
+        name = hardware + Rom["channel"] + Rom["version"]
         return name
 
 class SerialClient(object):
@@ -1009,7 +1009,7 @@ def setAdbScanSsidNoExist(device, ssid, radio, logname):
 
 
 def setAdbIperfOn(device, logname):
-    command = "am instrument -e class com.peanutswifi.ApplicationTest#test_iperf -w com.peanutswifi.test/android.test.InstrumentationTestRunner"
+    command = "am instrument -e class com.peanutswifi.ApplicationTest#test_iperf2 -w com.peanutswifi.test/android.test.InstrumentationTestRunner"
     ret = setAdbShell(device, command, logname)
     for line in ret:
         m = re.search('OK', line)

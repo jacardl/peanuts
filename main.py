@@ -3,10 +3,12 @@ import threading
 from unittest import *
 import os
 import time as t
-
+from collections import *
 import wx
 import wx.lib.agw.customtreectrl as CT
 import wx.lib.delayedresult as delayedresult
+import shutil
+import random
 
 import var as v
 import common as co
@@ -15,6 +17,7 @@ import data
 import testcase as tc
 import sendmail as sm
 import memmonitor as mm
+import processreport as pr
 # ----------------------------------------------------------------------------
 
 
@@ -536,7 +539,7 @@ class LogCollectionPage(wx.Panel):
                 os.makedirs(saveLogPath)
 
             while keepGoing and c < len(logList):
-                retDic = {}
+                retDic = OrderedDict()
                 ll = logList[c]
                 wx.Yield()  # refresh progress
                 (keepGoing, skip) = self.dlg.Update(c + 1, ll)
@@ -698,10 +701,11 @@ class TestSuitePage(wx.Panel):
         ssh = co.SshCommand(v.CONNECTION_TYPE)
         ssh.connect(v.HOST, v.USR, v.PASSWD)
         self.report = ssh.setReportName()
+        self.reportFile = ssh.setReportName() + ".log"
         self.mailTitle = ssh.setMailTitle()
 
         # curTime = t.strftime('%Y.%m.%d %H.%M.%S', t.localtime())
-        f = open(self.report, 'a')
+        f = open(self.reportFile, 'a')
         runner = TextTestRunner(f, verbosity=2)
         res = runner.run(testcase)
         errors = res.errors
@@ -756,13 +760,26 @@ class TestSuitePage(wx.Panel):
             (testKeepGoing, skip) = self.dlg.Pulse()
             t.sleep(0.1)
 
-        # 此处插入processreport
-
         # t.sleep(1.0)
+        #click cancel set testKeepGoing to False
         if v.SEND_MAIL == 1 and testKeepGoing:
-            content = """<html><body><img src="cid:Total_memory_used.png" alt="Total_memory_used.png"></body></html><small>此为系统自动发送，请勿回复，详情查看附件。</small>"""
-            sm.sendMail(v.MAILTO_LIST, self.mailTitle, content, self.report, ["Total_memory_used.png"])
+            self.memMon.stop()  # stop memory monitor and draw chart
+            # 此处插入processreport
+            self.procReport = pr.ProcessReport(self.reportFile)
+            self.procReport.start()
+            self.procReport.join()
+            sm.generateMail(v.MAILTO_LIST, self.mailTitle, self.procReport.result, self.reportFile)
 
+        if os.path.exists(v.MAIL_PIC1):
+            shutil.move(v.MAIL_PIC1, v.TEST_SUITE_LOG_PATH)
+        if os.path.exists(v.MAIL_PIC2):
+            shutil.move(v.MAIL_PIC2, v.TEST_SUITE_LOG_PATH)
+        if not os.path.exists(self.report):
+            os.rename(v.TEST_SUITE_LOG_PATH, self.report)
+        else:
+            os.rename(v.TEST_SUITE_LOG_PATH, self.report + str(random.random()))
+        if testKeepGoing is False:
+            os.system("taskkill /F /IM python.exe | taskkill /F /T /IM adb.exe")
         self.abortEvent.set()
         self.dlg.Destroy()
 
@@ -773,7 +790,6 @@ class TestSuitePage(wx.Panel):
         try:
             result = delayedResult.get()
             self.runFlag = False
-            self.memMon.stop()  # stop memory monitor
 
         except Exception:
             return

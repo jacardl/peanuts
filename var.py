@@ -91,8 +91,8 @@ FAIL_RETRY = 3
 CHANNEL = '13'
 CHANNEL_5G = '149'
 
-IPERF_INTERVAL = "120"
-IPERF_TIME = "1800"
+IPERF_INTERVAL = ""
+IPERF_TIME = "60"
 # IPERF_INTERVAL = "1"
 # IPERF_TIME = "5"
 
@@ -106,5 +106,8 @@ MAIL_USER = "robot"    #用户名
 MAIL_PASS = ""   #口令
 MAIL_POSTFIX="xiaomi.com"  #发件箱的后缀
 MAILFROM_LIST = "robot@xiaomi.com"
+
+MAIL_PIC1 = "total_memory_used.png"
+MAIL_PIC2 = "throughput.png"
 
 MEM_MONITOR_INTERVAL = 60

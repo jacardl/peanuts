@@ -6056,7 +6056,7 @@ class AP_GUEST_CLEAR_CHAN_BLACKLIST2(TestCase):
         self.assertFalse(res2gConn, "Association wasnot supposed to be successful.")
 
 
-class AP_CLEAR_CHAN_FLOW2(TestCase):
+class AP_CLEAR_CHAN11_149_FLOW2(TestCase):
     @classmethod
     def setUpClass(self):
 
@@ -6114,6 +6114,179 @@ class AP_CLEAR_CHAN_FLOW2(TestCase):
         else:
             self.assertTrue(res2gConn, "Connecting wifi is failed.")
 
+class AP_CLEAR_CHAN1_36_FLOW2(TestCase):
+    @classmethod
+    def setUpClass(self):
+
+        self.dut = SshClient(v.CONNECTION_TYPE)
+        ret1 = self.dut.connect(v.HOST, v.USR, v.PASSWD)
+
+        ret2 = chkAdbDevicesCount(1)
+
+        if ret1 is False:
+            raise Exception("Connection is failed. please check your remote settings.")
+
+        if ret2 is False:
+            raise Exception("USB devices arenot ready!")
+        d = TestCommand(v.DUT_MODULE)
+        for dutCommand in d.ap_clear_chan2_set_up():
+            setConfig(self.dut, dutCommand, self.__name__)
+
+        self.device = getAdbDevices()
+
+    @classmethod
+    def tearDownClass(self):
+        d = TestCommand(v.DUT_MODULE)
+        for dutCommand in d.ap_tear_down():
+            setConfig(self.dut, dutCommand, self.__name__)
+
+        self.dut.close()
+
+    def assoc_clear_sta_flow_2g(self):
+
+        res2gConn = setAdbClearStaConn(self.device[0], "normal", "2g", self.__class__.__name__)
+
+        if res2gConn is True:
+            result = getAdbShellWlan(self.device[0], self.__class__.__name__)
+            iperfOn = SetAdbIperfOn(self.device[0], self.__class__.__name__)
+            iperfOn.start()
+            t.sleep(3.0)
+            ret = setIperfFlow(result["ip"], v.IPERF_INTERVAL, v.IPERF_TIME, self.__class__.__name__)
+            self.assertTrue(ret, "Excute iperf flow error, connection refused.")
+
+        else:
+            self.assertTrue(res2gConn, "Connecting wifi is failed.")
+
+    def assoc_clear_sta_flow_5g(self):
+
+        res2gConn = setAdbClearStaConn(self.device[0], "normal", "5g", self.__class__.__name__)
+
+        if res2gConn is True:
+            result = getAdbShellWlan(self.device[0], self.__class__.__name__)
+            iperfOn = SetAdbIperfOn(self.device[0], self.__class__.__name__)
+            iperfOn.start()
+            t.sleep(3.0)
+            ret = setIperfFlow(result["ip"], v.IPERF_INTERVAL, v.IPERF_TIME, self.__class__.__name__)
+            self.assertTrue(ret, "Excute iperf flow error, connection refused.")
+
+        else:
+            self.assertTrue(res2gConn, "Connecting wifi is failed.")
+
+class AP_CLEAR_CHAN6_52_FLOW2(TestCase):
+    @classmethod
+    def setUpClass(self):
+
+        self.dut = SshClient(v.CONNECTION_TYPE)
+        ret1 = self.dut.connect(v.HOST, v.USR, v.PASSWD)
+
+        ret2 = chkAdbDevicesCount(1)
+
+        if ret1 is False:
+            raise Exception("Connection is failed. please check your remote settings.")
+
+        if ret2 is False:
+            raise Exception("USB devices arenot ready!")
+        d = TestCommand(v.DUT_MODULE)
+        for dutCommand in d.ap_clear_chan3_set_up():
+            setConfig(self.dut, dutCommand, self.__name__)
+
+        self.device = getAdbDevices()
+
+    @classmethod
+    def tearDownClass(self):
+        d = TestCommand(v.DUT_MODULE)
+        for dutCommand in d.ap_tear_down():
+            setConfig(self.dut, dutCommand, self.__name__)
+
+        self.dut.close()
+
+    def assoc_clear_sta_flow_2g(self):
+
+        res2gConn = setAdbClearStaConn(self.device[0], "normal", "2g", self.__class__.__name__)
+
+        if res2gConn is True:
+            result = getAdbShellWlan(self.device[0], self.__class__.__name__)
+            iperfOn = SetAdbIperfOn(self.device[0], self.__class__.__name__)
+            iperfOn.start()
+            t.sleep(3.0)
+            ret = setIperfFlow(result["ip"], v.IPERF_INTERVAL, v.IPERF_TIME, self.__class__.__name__)
+            self.assertTrue(ret, "Excute iperf flow error, connection refused.")
+
+        else:
+            self.assertTrue(res2gConn, "Connecting wifi is failed.")
+
+    def assoc_clear_sta_flow_5g(self):
+
+        res2gConn = setAdbClearStaConn(self.device[0], "normal", "5g", self.__class__.__name__)
+
+        if res2gConn is True:
+            result = getAdbShellWlan(self.device[0], self.__class__.__name__)
+            iperfOn = SetAdbIperfOn(self.device[0], self.__class__.__name__)
+            iperfOn.start()
+            t.sleep(3.0)
+            ret = setIperfFlow(result["ip"], v.IPERF_INTERVAL, v.IPERF_TIME, self.__class__.__name__)
+            self.assertTrue(ret, "Excute iperf flow error, connection refused.")
+
+        else:
+            self.assertTrue(res2gConn, "Connecting wifi is failed.")
+
+class AP_CLEAR_CHAN13_165_FLOW2(TestCase):
+    @classmethod
+    def setUpClass(self):
+
+        self.dut = SshClient(v.CONNECTION_TYPE)
+        ret1 = self.dut.connect(v.HOST, v.USR, v.PASSWD)
+
+        ret2 = chkAdbDevicesCount(1)
+
+        if ret1 is False:
+            raise Exception("Connection is failed. please check your remote settings.")
+
+        if ret2 is False:
+            raise Exception("USB devices arenot ready!")
+        d = TestCommand(v.DUT_MODULE)
+        for dutCommand in d.ap_clear_chan4_set_up():
+            setConfig(self.dut, dutCommand, self.__name__)
+
+        self.device = getAdbDevices()
+
+    @classmethod
+    def tearDownClass(self):
+        d = TestCommand(v.DUT_MODULE)
+        for dutCommand in d.ap_tear_down():
+            setConfig(self.dut, dutCommand, self.__name__)
+
+        self.dut.close()
+
+    def assoc_clear_sta_flow_2g(self):
+
+        res2gConn = setAdbClearStaConn(self.device[0], "normal", "2g", self.__class__.__name__)
+
+        if res2gConn is True:
+            result = getAdbShellWlan(self.device[0], self.__class__.__name__)
+            iperfOn = SetAdbIperfOn(self.device[0], self.__class__.__name__)
+            iperfOn.start()
+            t.sleep(3.0)
+            ret = setIperfFlow(result["ip"], v.IPERF_INTERVAL, v.IPERF_TIME, self.__class__.__name__)
+            self.assertTrue(ret, "Excute iperf flow error, connection refused.")
+
+        else:
+            self.assertTrue(res2gConn, "Connecting wifi is failed.")
+
+    def assoc_clear_sta_flow_5g(self):
+
+        res2gConn = setAdbClearStaConn(self.device[0], "normal", "5g", self.__class__.__name__)
+
+        if res2gConn is True:
+            result = getAdbShellWlan(self.device[0], self.__class__.__name__)
+            iperfOn = SetAdbIperfOn(self.device[0], self.__class__.__name__)
+            iperfOn.start()
+            t.sleep(3.0)
+            ret = setIperfFlow(result["ip"], v.IPERF_INTERVAL, v.IPERF_TIME, self.__class__.__name__)
+            self.assertTrue(ret, "Excute iperf flow error, connection refused.")
+
+        else:
+            self.assertTrue(res2gConn, "Connecting wifi is failed.")
 
 class AP_CLEAR_CHAN_REPEAT2(TestCase):
     @classmethod
@@ -6155,8 +6328,7 @@ class AP_CLEAR_CHAN_REPEAT2(TestCase):
 
         self.assertTrue(res5gConn, "Not all association were successful.")
 
-
-class AP_MIXEDPSK_CHAN_FLOW2(TestCase):
+class AP_MIXEDPSK_CHAN11_149_FLOW2(TestCase):
     @classmethod
     def setUpClass(self):
 
@@ -6304,6 +6476,449 @@ class AP_MIXEDPSK_CHAN_FLOW2(TestCase):
         else:
             self.assertTrue(res2gConn, "Connecting wifi is failed.")
 
+class AP_MIXEDPSK_CHAN1_36_FLOW2(TestCase):
+    @classmethod
+    def setUpClass(self):
+
+        self.dut = SshClient(v.CONNECTION_TYPE)
+        ret1 = self.dut.connect(v.HOST, v.USR, v.PASSWD)
+
+        ret2 = chkAdbDevicesCount(1)
+
+        if ret1 is False:
+            raise Exception("Connection is failed. please check your remote settings.")
+
+        if ret2 is False:
+            raise Exception("USB devices arenot ready!")
+        d = TestCommand(v.DUT_MODULE)
+        for dutCommand in d.ap_mixedpsk_chan2_set_up():
+            setConfig(self.dut, dutCommand, self.__name__)
+
+        self.device = getAdbDevices()
+
+    @classmethod
+    def tearDownClass(self):
+        d = TestCommand(v.DUT_MODULE)
+        for dutCommand in d.ap_tear_down():
+            setConfig(self.dut, dutCommand, self.__name__)
+
+        self.dut.close()
+
+    def assoc_psk2_sta_flow_2g(self):
+
+        res2gConn = setAdbPsk2StaConn(self.device[0], "normal", "2g", self.__class__.__name__)
+
+        if res2gConn is True:
+            result = getAdbShellWlan(self.device[0], self.__class__.__name__)
+            iperfOn = SetAdbIperfOn(self.device[0], self.__class__.__name__)
+            iperfOn.start()
+            t.sleep(3.0)
+            ret = setIperfFlow(result["ip"], v.IPERF_INTERVAL, v.IPERF_TIME, self.__class__.__name__)
+            self.assertTrue(ret, "Excute iperf flow error, connection refused.")
+
+        else:
+            self.assertTrue(res2gConn, "Connecting wifi is failed.")
+
+    def assoc_psk2_sta_flow_5g(self):
+
+        res2gConn = setAdbPsk2StaConn(self.device[0], "normal", "5g", self.__class__.__name__)
+
+        if res2gConn is True:
+            result = getAdbShellWlan(self.device[0], self.__class__.__name__)
+            iperfOn = SetAdbIperfOn(self.device[0], self.__class__.__name__)
+            iperfOn.start()
+            t.sleep(3.0)
+            ret = setIperfFlow(result["ip"], v.IPERF_INTERVAL, v.IPERF_TIME, self.__class__.__name__)
+            self.assertTrue(ret, "Excute iperf flow error, connection refused.")
+
+        else:
+            self.assertTrue(res2gConn, "Connecting wifi is failed.")
+
+    def assoc_psk_sta_flow_2g(self):
+
+        res2gConn = setAdbPskStaConn(self.device[0], "normal", "2g", self.__class__.__name__)
+
+        if res2gConn is True:
+            result = getAdbShellWlan(self.device[0], self.__class__.__name__)
+            iperfOn = SetAdbIperfOn(self.device[0], self.__class__.__name__)
+            iperfOn.start()
+            t.sleep(3.0)
+            ret = setIperfFlow(result["ip"], v.IPERF_INTERVAL, v.IPERF_TIME, self.__class__.__name__)
+            self.assertTrue(ret, "Excute iperf flow error, connection refused.")
+
+        else:
+            self.assertTrue(res2gConn, "Connecting wifi is failed.")
+
+    def assoc_psk_sta_flow_5g(self):
+
+        res2gConn = setAdbPskStaConn(self.device[0], "normal", "5g", self.__class__.__name__)
+
+        if res2gConn is True:
+            result = getAdbShellWlan(self.device[0], self.__class__.__name__)
+            iperfOn = SetAdbIperfOn(self.device[0], self.__class__.__name__)
+            iperfOn.start()
+            t.sleep(3.0)
+            ret = setIperfFlow(result["ip"], v.IPERF_INTERVAL, v.IPERF_TIME, self.__class__.__name__)
+            self.assertTrue(ret, "Excute iperf flow error, connection refused.")
+
+        else:
+            self.assertTrue(res2gConn, "Connecting wifi is failed.")
+
+    def assoc_tkippsk2_sta_flow_2g(self):
+
+        res2gConn = setAdbTkipPsk2StaConn(self.device[0], "normal", "2g", self.__class__.__name__)
+
+        if res2gConn is True:
+            result = getAdbShellWlan(self.device[0], self.__class__.__name__)
+            iperfOn = SetAdbIperfOn(self.device[0], self.__class__.__name__)
+            iperfOn.start()
+            t.sleep(3.0)
+            ret = setIperfFlow(result["ip"], v.IPERF_INTERVAL, v.IPERF_TIME, self.__class__.__name__)
+            self.assertTrue(ret, "Excute iperf flow error, connection refused.")
+
+        else:
+            self.assertTrue(res2gConn, "Connecting wifi is failed.")
+
+    def assoc_tkippsk2_sta_flow_5g(self):
+
+        res2gConn = setAdbTkipPsk2StaConn(self.device[0], "normal", "5g", self.__class__.__name__)
+
+        if res2gConn is True:
+            result = getAdbShellWlan(self.device[0], self.__class__.__name__)
+            iperfOn = SetAdbIperfOn(self.device[0], self.__class__.__name__)
+            iperfOn.start()
+            t.sleep(3.0)
+            ret = setIperfFlow(result["ip"], v.IPERF_INTERVAL, v.IPERF_TIME, self.__class__.__name__)
+            self.assertTrue(ret, "Excute iperf flow error, connection refused.")
+
+        else:
+            self.assertTrue(res2gConn, "Connecting wifi is failed.")
+
+    def assoc_tkippsk_sta_flow_2g(self):
+
+        res2gConn = setAdbTkipPskStaConn(self.device[0], "normal", "2g", self.__class__.__name__)
+
+        if res2gConn is True:
+            result = getAdbShellWlan(self.device[0], self.__class__.__name__)
+            iperfOn = SetAdbIperfOn(self.device[0], self.__class__.__name__)
+            iperfOn.start()
+            t.sleep(3.0)
+            ret = setIperfFlow(result["ip"], v.IPERF_INTERVAL, v.IPERF_TIME, self.__class__.__name__)
+            self.assertTrue(ret, "Excute iperf flow error, connection refused.")
+
+        else:
+            self.assertTrue(res2gConn, "Connecting wifi is failed.")
+
+    def assoc_tkippsk_sta_flow_5g(self):
+
+        res2gConn = setAdbTkipPskStaConn(self.device[0], "normal", "5g", self.__class__.__name__)
+
+        if res2gConn is True:
+            result = getAdbShellWlan(self.device[0], self.__class__.__name__)
+            iperfOn = SetAdbIperfOn(self.device[0], self.__class__.__name__)
+            iperfOn.start()
+            t.sleep(3.0)
+            ret = setIperfFlow(result["ip"], v.IPERF_INTERVAL, v.IPERF_TIME, self.__class__.__name__)
+            self.assertTrue(ret, "Excute iperf flow error, connection refused.")
+
+        else:
+            self.assertTrue(res2gConn, "Connecting wifi is failed.")
+
+class AP_MIXEDPSK_CHAN6_52_FLOW2(TestCase):
+    @classmethod
+    def setUpClass(self):
+
+        self.dut = SshClient(v.CONNECTION_TYPE)
+        ret1 = self.dut.connect(v.HOST, v.USR, v.PASSWD)
+
+        ret2 = chkAdbDevicesCount(1)
+
+        if ret1 is False:
+            raise Exception("Connection is failed. please check your remote settings.")
+
+        if ret2 is False:
+            raise Exception("USB devices arenot ready!")
+        d = TestCommand(v.DUT_MODULE)
+        for dutCommand in d.ap_mixedpsk_chan3_set_up():
+            setConfig(self.dut, dutCommand, self.__name__)
+
+        self.device = getAdbDevices()
+
+    @classmethod
+    def tearDownClass(self):
+        d = TestCommand(v.DUT_MODULE)
+        for dutCommand in d.ap_tear_down():
+            setConfig(self.dut, dutCommand, self.__name__)
+
+        self.dut.close()
+
+    def assoc_psk2_sta_flow_2g(self):
+
+        res2gConn = setAdbPsk2StaConn(self.device[0], "normal", "2g", self.__class__.__name__)
+
+        if res2gConn is True:
+            result = getAdbShellWlan(self.device[0], self.__class__.__name__)
+            iperfOn = SetAdbIperfOn(self.device[0], self.__class__.__name__)
+            iperfOn.start()
+            t.sleep(3.0)
+            ret = setIperfFlow(result["ip"], v.IPERF_INTERVAL, v.IPERF_TIME, self.__class__.__name__)
+            self.assertTrue(ret, "Excute iperf flow error, connection refused.")
+
+        else:
+            self.assertTrue(res2gConn, "Connecting wifi is failed.")
+
+    def assoc_psk2_sta_flow_5g(self):
+
+        res2gConn = setAdbPsk2StaConn(self.device[0], "normal", "5g", self.__class__.__name__)
+
+        if res2gConn is True:
+            result = getAdbShellWlan(self.device[0], self.__class__.__name__)
+            iperfOn = SetAdbIperfOn(self.device[0], self.__class__.__name__)
+            iperfOn.start()
+            t.sleep(3.0)
+            ret = setIperfFlow(result["ip"], v.IPERF_INTERVAL, v.IPERF_TIME, self.__class__.__name__)
+            self.assertTrue(ret, "Excute iperf flow error, connection refused.")
+
+        else:
+            self.assertTrue(res2gConn, "Connecting wifi is failed.")
+
+    def assoc_psk_sta_flow_2g(self):
+
+        res2gConn = setAdbPskStaConn(self.device[0], "normal", "2g", self.__class__.__name__)
+
+        if res2gConn is True:
+            result = getAdbShellWlan(self.device[0], self.__class__.__name__)
+            iperfOn = SetAdbIperfOn(self.device[0], self.__class__.__name__)
+            iperfOn.start()
+            t.sleep(3.0)
+            ret = setIperfFlow(result["ip"], v.IPERF_INTERVAL, v.IPERF_TIME, self.__class__.__name__)
+            self.assertTrue(ret, "Excute iperf flow error, connection refused.")
+
+        else:
+            self.assertTrue(res2gConn, "Connecting wifi is failed.")
+
+    def assoc_psk_sta_flow_5g(self):
+
+        res2gConn = setAdbPskStaConn(self.device[0], "normal", "5g", self.__class__.__name__)
+
+        if res2gConn is True:
+            result = getAdbShellWlan(self.device[0], self.__class__.__name__)
+            iperfOn = SetAdbIperfOn(self.device[0], self.__class__.__name__)
+            iperfOn.start()
+            t.sleep(3.0)
+            ret = setIperfFlow(result["ip"], v.IPERF_INTERVAL, v.IPERF_TIME, self.__class__.__name__)
+            self.assertTrue(ret, "Excute iperf flow error, connection refused.")
+
+        else:
+            self.assertTrue(res2gConn, "Connecting wifi is failed.")
+
+    def assoc_tkippsk2_sta_flow_2g(self):
+
+        res2gConn = setAdbTkipPsk2StaConn(self.device[0], "normal", "2g", self.__class__.__name__)
+
+        if res2gConn is True:
+            result = getAdbShellWlan(self.device[0], self.__class__.__name__)
+            iperfOn = SetAdbIperfOn(self.device[0], self.__class__.__name__)
+            iperfOn.start()
+            t.sleep(3.0)
+            ret = setIperfFlow(result["ip"], v.IPERF_INTERVAL, v.IPERF_TIME, self.__class__.__name__)
+            self.assertTrue(ret, "Excute iperf flow error, connection refused.")
+
+        else:
+            self.assertTrue(res2gConn, "Connecting wifi is failed.")
+
+    def assoc_tkippsk2_sta_flow_5g(self):
+
+        res2gConn = setAdbTkipPsk2StaConn(self.device[0], "normal", "5g", self.__class__.__name__)
+
+        if res2gConn is True:
+            result = getAdbShellWlan(self.device[0], self.__class__.__name__)
+            iperfOn = SetAdbIperfOn(self.device[0], self.__class__.__name__)
+            iperfOn.start()
+            t.sleep(3.0)
+            ret = setIperfFlow(result["ip"], v.IPERF_INTERVAL, v.IPERF_TIME, self.__class__.__name__)
+            self.assertTrue(ret, "Excute iperf flow error, connection refused.")
+
+        else:
+            self.assertTrue(res2gConn, "Connecting wifi is failed.")
+
+    def assoc_tkippsk_sta_flow_2g(self):
+
+        res2gConn = setAdbTkipPskStaConn(self.device[0], "normal", "2g", self.__class__.__name__)
+
+        if res2gConn is True:
+            result = getAdbShellWlan(self.device[0], self.__class__.__name__)
+            iperfOn = SetAdbIperfOn(self.device[0], self.__class__.__name__)
+            iperfOn.start()
+            t.sleep(3.0)
+            ret = setIperfFlow(result["ip"], v.IPERF_INTERVAL, v.IPERF_TIME, self.__class__.__name__)
+            self.assertTrue(ret, "Excute iperf flow error, connection refused.")
+
+        else:
+            self.assertTrue(res2gConn, "Connecting wifi is failed.")
+
+    def assoc_tkippsk_sta_flow_5g(self):
+
+        res2gConn = setAdbTkipPskStaConn(self.device[0], "normal", "5g", self.__class__.__name__)
+
+        if res2gConn is True:
+            result = getAdbShellWlan(self.device[0], self.__class__.__name__)
+            iperfOn = SetAdbIperfOn(self.device[0], self.__class__.__name__)
+            iperfOn.start()
+            t.sleep(3.0)
+            ret = setIperfFlow(result["ip"], v.IPERF_INTERVAL, v.IPERF_TIME, self.__class__.__name__)
+            self.assertTrue(ret, "Excute iperf flow error, connection refused.")
+
+        else:
+            self.assertTrue(res2gConn, "Connecting wifi is failed.")
+
+class AP_MIXEDPSK_CHAN13_165_FLOW2(TestCase):
+    @classmethod
+    def setUpClass(self):
+
+        self.dut = SshClient(v.CONNECTION_TYPE)
+        ret1 = self.dut.connect(v.HOST, v.USR, v.PASSWD)
+
+        ret2 = chkAdbDevicesCount(1)
+
+        if ret1 is False:
+            raise Exception("Connection is failed. please check your remote settings.")
+
+        if ret2 is False:
+            raise Exception("USB devices arenot ready!")
+        d = TestCommand(v.DUT_MODULE)
+        for dutCommand in d.ap_mixedpsk_chan4_set_up():
+            setConfig(self.dut, dutCommand, self.__name__)
+
+        self.device = getAdbDevices()
+
+    @classmethod
+    def tearDownClass(self):
+        d = TestCommand(v.DUT_MODULE)
+        for dutCommand in d.ap_tear_down():
+            setConfig(self.dut, dutCommand, self.__name__)
+
+        self.dut.close()
+
+    def assoc_psk2_sta_flow_2g(self):
+
+        res2gConn = setAdbPsk2StaConn(self.device[0], "normal", "2g", self.__class__.__name__)
+
+        if res2gConn is True:
+            result = getAdbShellWlan(self.device[0], self.__class__.__name__)
+            iperfOn = SetAdbIperfOn(self.device[0], self.__class__.__name__)
+            iperfOn.start()
+            t.sleep(3.0)
+            ret = setIperfFlow(result["ip"], v.IPERF_INTERVAL, v.IPERF_TIME, self.__class__.__name__)
+            self.assertTrue(ret, "Excute iperf flow error, connection refused.")
+
+        else:
+            self.assertTrue(res2gConn, "Connecting wifi is failed.")
+
+    def assoc_psk2_sta_flow_5g(self):
+
+        res2gConn = setAdbPsk2StaConn(self.device[0], "normal", "5g", self.__class__.__name__)
+
+        if res2gConn is True:
+            result = getAdbShellWlan(self.device[0], self.__class__.__name__)
+            iperfOn = SetAdbIperfOn(self.device[0], self.__class__.__name__)
+            iperfOn.start()
+            t.sleep(3.0)
+            ret = setIperfFlow(result["ip"], v.IPERF_INTERVAL, v.IPERF_TIME, self.__class__.__name__)
+            self.assertTrue(ret, "Excute iperf flow error, connection refused.")
+
+        else:
+            self.assertTrue(res2gConn, "Connecting wifi is failed.")
+
+    def assoc_psk_sta_flow_2g(self):
+
+        res2gConn = setAdbPskStaConn(self.device[0], "normal", "2g", self.__class__.__name__)
+
+        if res2gConn is True:
+            result = getAdbShellWlan(self.device[0], self.__class__.__name__)
+            iperfOn = SetAdbIperfOn(self.device[0], self.__class__.__name__)
+            iperfOn.start()
+            t.sleep(3.0)
+            ret = setIperfFlow(result["ip"], v.IPERF_INTERVAL, v.IPERF_TIME, self.__class__.__name__)
+            self.assertTrue(ret, "Excute iperf flow error, connection refused.")
+
+        else:
+            self.assertTrue(res2gConn, "Connecting wifi is failed.")
+
+    def assoc_psk_sta_flow_5g(self):
+
+        res2gConn = setAdbPskStaConn(self.device[0], "normal", "5g", self.__class__.__name__)
+
+        if res2gConn is True:
+            result = getAdbShellWlan(self.device[0], self.__class__.__name__)
+            iperfOn = SetAdbIperfOn(self.device[0], self.__class__.__name__)
+            iperfOn.start()
+            t.sleep(3.0)
+            ret = setIperfFlow(result["ip"], v.IPERF_INTERVAL, v.IPERF_TIME, self.__class__.__name__)
+            self.assertTrue(ret, "Excute iperf flow error, connection refused.")
+
+        else:
+            self.assertTrue(res2gConn, "Connecting wifi is failed.")
+
+    def assoc_tkippsk2_sta_flow_2g(self):
+
+        res2gConn = setAdbTkipPsk2StaConn(self.device[0], "normal", "2g", self.__class__.__name__)
+
+        if res2gConn is True:
+            result = getAdbShellWlan(self.device[0], self.__class__.__name__)
+            iperfOn = SetAdbIperfOn(self.device[0], self.__class__.__name__)
+            iperfOn.start()
+            t.sleep(3.0)
+            ret = setIperfFlow(result["ip"], v.IPERF_INTERVAL, v.IPERF_TIME, self.__class__.__name__)
+            self.assertTrue(ret, "Excute iperf flow error, connection refused.")
+
+        else:
+            self.assertTrue(res2gConn, "Connecting wifi is failed.")
+
+    def assoc_tkippsk2_sta_flow_5g(self):
+
+        res2gConn = setAdbTkipPsk2StaConn(self.device[0], "normal", "5g", self.__class__.__name__)
+
+        if res2gConn is True:
+            result = getAdbShellWlan(self.device[0], self.__class__.__name__)
+            iperfOn = SetAdbIperfOn(self.device[0], self.__class__.__name__)
+            iperfOn.start()
+            t.sleep(3.0)
+            ret = setIperfFlow(result["ip"], v.IPERF_INTERVAL, v.IPERF_TIME, self.__class__.__name__)
+            self.assertTrue(ret, "Excute iperf flow error, connection refused.")
+
+        else:
+            self.assertTrue(res2gConn, "Connecting wifi is failed.")
+
+    def assoc_tkippsk_sta_flow_2g(self):
+
+        res2gConn = setAdbTkipPskStaConn(self.device[0], "normal", "2g", self.__class__.__name__)
+
+        if res2gConn is True:
+            result = getAdbShellWlan(self.device[0], self.__class__.__name__)
+            iperfOn = SetAdbIperfOn(self.device[0], self.__class__.__name__)
+            iperfOn.start()
+            t.sleep(3.0)
+            ret = setIperfFlow(result["ip"], v.IPERF_INTERVAL, v.IPERF_TIME, self.__class__.__name__)
+            self.assertTrue(ret, "Excute iperf flow error, connection refused.")
+
+        else:
+            self.assertTrue(res2gConn, "Connecting wifi is failed.")
+
+    def assoc_tkippsk_sta_flow_5g(self):
+
+        res2gConn = setAdbTkipPskStaConn(self.device[0], "normal", "5g", self.__class__.__name__)
+
+        if res2gConn is True:
+            result = getAdbShellWlan(self.device[0], self.__class__.__name__)
+            iperfOn = SetAdbIperfOn(self.device[0], self.__class__.__name__)
+            iperfOn.start()
+            t.sleep(3.0)
+            ret = setIperfFlow(result["ip"], v.IPERF_INTERVAL, v.IPERF_TIME, self.__class__.__name__)
+            self.assertTrue(ret, "Excute iperf flow error, connection refused.")
+
+        else:
+            self.assertTrue(res2gConn, "Connecting wifi is failed.")
 
 class AP_MIXEDPSK_CHAN_REPEAT2(TestCase):
     @classmethod
@@ -6381,8 +6996,7 @@ class AP_MIXEDPSK_CHAN_REPEAT2(TestCase):
 
         self.assertTrue(res5gConn, "Not all association were successful.")
 
-
-class AP_PSK2_CHAN_FLOW2(TestCase):
+class AP_PSK2_CHAN11_149_FLOW2(TestCase):
     @classmethod
     def setUpClass(self):
 
@@ -6440,6 +7054,179 @@ class AP_PSK2_CHAN_FLOW2(TestCase):
         else:
             self.assertTrue(res2gConn, "Connecting wifi is failed.")
 
+class AP_PSK2_CHAN1_36_FLOW2(TestCase):
+    @classmethod
+    def setUpClass(self):
+
+        self.dut = SshClient(v.CONNECTION_TYPE)
+        ret1 = self.dut.connect(v.HOST, v.USR, v.PASSWD)
+
+        ret2 = chkAdbDevicesCount(1)
+
+        if ret1 is False:
+            raise Exception("Connection is failed. please check your remote settings.")
+
+        if ret2 is False:
+            raise Exception("USB devices arenot ready!")
+        d = TestCommand(v.DUT_MODULE)
+        for dutCommand in d.ap_psk2_chan2_set_up():
+            setConfig(self.dut, dutCommand, self.__name__)
+
+        self.device = getAdbDevices()
+
+    @classmethod
+    def tearDownClass(self):
+        d = TestCommand(v.DUT_MODULE)
+        for dutCommand in d.ap_tear_down():
+            setConfig(self.dut, dutCommand, self.__name__)
+
+        self.dut.close()
+
+    def assoc_psk2_sta_flow_2g(self):
+
+        res2gConn = setAdbPsk2StaConn(self.device[0], "normal", "2g", self.__class__.__name__)
+
+        if res2gConn is True:
+            result = getAdbShellWlan(self.device[0], self.__class__.__name__)
+            iperfOn = SetAdbIperfOn(self.device[0], self.__class__.__name__)
+            iperfOn.start()
+            t.sleep(3.0)
+            ret = setIperfFlow(result["ip"], v.IPERF_INTERVAL, v.IPERF_TIME, self.__class__.__name__)
+            self.assertTrue(ret, "Excute iperf flow error, connection refused.")
+
+        else:
+            self.assertTrue(res2gConn, "Connecting wifi is failed.")
+
+    def assoc_psk2_sta_flow_5g(self):
+
+        res2gConn = setAdbPsk2StaConn(self.device[0], "normal", "5g", self.__class__.__name__)
+
+        if res2gConn is True:
+            result = getAdbShellWlan(self.device[0], self.__class__.__name__)
+            iperfOn = SetAdbIperfOn(self.device[0], self.__class__.__name__)
+            iperfOn.start()
+            t.sleep(3.0)
+            ret = setIperfFlow(result["ip"], v.IPERF_INTERVAL, v.IPERF_TIME, self.__class__.__name__)
+            self.assertTrue(ret, "Excute iperf flow error, connection refused.")
+
+        else:
+            self.assertTrue(res2gConn, "Connecting wifi is failed.")
+
+class AP_PSK2_CHAN6_52_FLOW2(TestCase):
+    @classmethod
+    def setUpClass(self):
+
+        self.dut = SshClient(v.CONNECTION_TYPE)
+        ret1 = self.dut.connect(v.HOST, v.USR, v.PASSWD)
+
+        ret2 = chkAdbDevicesCount(1)
+
+        if ret1 is False:
+            raise Exception("Connection is failed. please check your remote settings.")
+
+        if ret2 is False:
+            raise Exception("USB devices arenot ready!")
+        d = TestCommand(v.DUT_MODULE)
+        for dutCommand in d.ap_psk2_chan3_set_up():
+            setConfig(self.dut, dutCommand, self.__name__)
+
+        self.device = getAdbDevices()
+
+    @classmethod
+    def tearDownClass(self):
+        d = TestCommand(v.DUT_MODULE)
+        for dutCommand in d.ap_tear_down():
+            setConfig(self.dut, dutCommand, self.__name__)
+
+        self.dut.close()
+
+    def assoc_psk2_sta_flow_2g(self):
+
+        res2gConn = setAdbPsk2StaConn(self.device[0], "normal", "2g", self.__class__.__name__)
+
+        if res2gConn is True:
+            result = getAdbShellWlan(self.device[0], self.__class__.__name__)
+            iperfOn = SetAdbIperfOn(self.device[0], self.__class__.__name__)
+            iperfOn.start()
+            t.sleep(3.0)
+            ret = setIperfFlow(result["ip"], v.IPERF_INTERVAL, v.IPERF_TIME, self.__class__.__name__)
+            self.assertTrue(ret, "Excute iperf flow error, connection refused.")
+
+        else:
+            self.assertTrue(res2gConn, "Connecting wifi is failed.")
+
+    def assoc_psk2_sta_flow_5g(self):
+
+        res2gConn = setAdbPsk2StaConn(self.device[0], "normal", "5g", self.__class__.__name__)
+
+        if res2gConn is True:
+            result = getAdbShellWlan(self.device[0], self.__class__.__name__)
+            iperfOn = SetAdbIperfOn(self.device[0], self.__class__.__name__)
+            iperfOn.start()
+            t.sleep(3.0)
+            ret = setIperfFlow(result["ip"], v.IPERF_INTERVAL, v.IPERF_TIME, self.__class__.__name__)
+            self.assertTrue(ret, "Excute iperf flow error, connection refused.")
+
+        else:
+            self.assertTrue(res2gConn, "Connecting wifi is failed.")
+
+class AP_PSK2_CHAN13_165_FLOW2(TestCase):
+    @classmethod
+    def setUpClass(self):
+
+        self.dut = SshClient(v.CONNECTION_TYPE)
+        ret1 = self.dut.connect(v.HOST, v.USR, v.PASSWD)
+
+        ret2 = chkAdbDevicesCount(1)
+
+        if ret1 is False:
+            raise Exception("Connection is failed. please check your remote settings.")
+
+        if ret2 is False:
+            raise Exception("USB devices arenot ready!")
+        d = TestCommand(v.DUT_MODULE)
+        for dutCommand in d.ap_psk2_chan4_set_up():
+            setConfig(self.dut, dutCommand, self.__name__)
+
+        self.device = getAdbDevices()
+
+    @classmethod
+    def tearDownClass(self):
+        d = TestCommand(v.DUT_MODULE)
+        for dutCommand in d.ap_tear_down():
+            setConfig(self.dut, dutCommand, self.__name__)
+
+        self.dut.close()
+
+    def assoc_psk2_sta_flow_2g(self):
+
+        res2gConn = setAdbPsk2StaConn(self.device[0], "normal", "2g", self.__class__.__name__)
+
+        if res2gConn is True:
+            result = getAdbShellWlan(self.device[0], self.__class__.__name__)
+            iperfOn = SetAdbIperfOn(self.device[0], self.__class__.__name__)
+            iperfOn.start()
+            t.sleep(3.0)
+            ret = setIperfFlow(result["ip"], v.IPERF_INTERVAL, v.IPERF_TIME, self.__class__.__name__)
+            self.assertTrue(ret, "Excute iperf flow error, connection refused.")
+
+        else:
+            self.assertTrue(res2gConn, "Connecting wifi is failed.")
+
+    def assoc_psk2_sta_flow_5g(self):
+
+        res2gConn = setAdbPsk2StaConn(self.device[0], "normal", "5g", self.__class__.__name__)
+
+        if res2gConn is True:
+            result = getAdbShellWlan(self.device[0], self.__class__.__name__)
+            iperfOn = SetAdbIperfOn(self.device[0], self.__class__.__name__)
+            iperfOn.start()
+            t.sleep(3.0)
+            ret = setIperfFlow(result["ip"], v.IPERF_INTERVAL, v.IPERF_TIME, self.__class__.__name__)
+            self.assertTrue(ret, "Excute iperf flow error, connection refused.")
+
+        else:
+            self.assertTrue(res2gConn, "Connecting wifi is failed.")
 
 class AP_PSK2_CHAN_REPEAT2(TestCase):
     @classmethod

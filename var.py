@@ -23,7 +23,7 @@ connection_type = 1 represent ssh
 CONNECTION_TYPE = 2
 STA_CONNECTION_TYPE = 1
 
-VER = '2.5.2'
+VER = '2.5.3'
 
 # ----------------Memory Tracking-----------------
 
@@ -88,8 +88,17 @@ STA_MAC_5G = ''
 
 FAIL_RETRY = 3
 
-CHANNEL = '13'
+CHANNEL = '11'
 CHANNEL_5G = '149'
+
+CHANNEL2 = '1'
+CHANNEL2_5G = '36'
+
+CHANNEL3 = '6'
+CHANNEL3_5G = '52'
+
+CHANNEL4 = '13'
+CHANNEL4_5G = '165'
 
 IPERF_INTERVAL = ""
 IPERF_TIME = "60"

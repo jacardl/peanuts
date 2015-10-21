@@ -249,7 +249,7 @@ class GeneralPage(wx.Panel):
             self.sshPasswd.SetValue("")
 
     def connectionCheckThread(self, connectiontype, ip=None, port=None, user=None, password=None):
-        result = co.connectionCheck(connectiontype, ip=ip, user=user, password=password)
+        result, self.hardware = co.connectionCheck(connectiontype, ip=ip, user=user, password=password)
         if result:
             self.flag += 1
         else:
@@ -293,7 +293,8 @@ class GeneralPage(wx.Panel):
         elif self.flag == deviceNum:
             self.saveBtn.Enable(False)
             v.SAVE_BTN_FLAG = True
-            dlgOk = wx.MessageDialog(self, 'Connection is OK!',
+            dlgOk = wx.MessageDialog(self, 'Connection is OK ! \n'
+                                           'DUT is %s !'%self.hardware,
                                      'Info',
                                      wx.OK | wx.ICON_INFORMATION | wx.STAY_ON_TOP
                                      )
@@ -770,10 +771,15 @@ class TestSuitePage(wx.Panel):
             self.procReport.join()
             sm.generateMail(v.MAILTO_LIST, self.mailTitle, self.procReport.result, self.reportFile)
 
-        if os.path.exists(v.MAIL_PIC1):
-            shutil.move(v.MAIL_PIC1, v.TEST_SUITE_LOG_PATH)
-        if os.path.exists(v.MAIL_PIC2):
-            shutil.move(v.MAIL_PIC2, v.TEST_SUITE_LOG_PATH)
+        # if os.path.exists(v.MAIL_PIC1):
+        #     shutil.move(v.MAIL_PIC1, v.TEST_SUITE_LOG_PATH)
+        # if os.path.exists(v.MAIL_PIC2):
+        #     shutil.move(v.MAIL_PIC2, v.TEST_SUITE_LOG_PATH)
+            files = os.listdir(v.DEFAULT_PATH)
+            for file in files:
+                if os.path.splitext(file)[1] == ".png":
+                    shutil.move(file, v.TEST_SUITE_LOG_PATH)
+
         if not os.path.exists(self.report):
             os.rename(v.TEST_SUITE_LOG_PATH, self.report)
         else:

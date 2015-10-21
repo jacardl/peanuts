@@ -118,5 +118,6 @@ MAILFROM_LIST = "robot@xiaomi.com"
 
 MAIL_PIC1 = "total_memory_used.png"
 MAIL_PIC2 = "throughput.png"
+MAIL_PIC3 = "throughput_in_%s.png"
 
 MEM_MONITOR_INTERVAL = 60

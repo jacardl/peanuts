@@ -240,10 +240,11 @@ class SerialClient(object):
 
 
 def connectionCheck(connectiontype, ip=None, port=None, user=None, password=None):
-    client = SshClient(connectiontype)
+    client = SshCommand(connectiontype)
     result = client.connect(ip, user, password)
+    hardware = client.getHardware()
     client.close()
-    return result
+    return result, hardware
 
 
 def convertStrToBashStr(string):

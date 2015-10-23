@@ -33,9 +33,11 @@ class memMonitor(threading.Thread):
 
     def stop(self):
         # draw a chart
+        # f, ax = plt.subplots(figsize=(12, 6))
         f, ax = plt.subplots()
         ax.plot(range(len(self.plot)), self.plot)
-        ax.set_title('Total Memory Used')
+        # ax.set_title('Total Memory Used')
+        plt.suptitle("Total Memory Used")
         plt.xlabel('Counts')
         plt.ylabel('KB')
         # plt.show()

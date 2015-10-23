@@ -62,6 +62,9 @@ def generateMail(maillist, title, argsdic, attach=None,):
     content2 = """
         <p>本次自动化覆盖wifi吞吐测试，具体结果请参看下图：</p>
         <p><img src="cid:throughput.png" alt="throughput.png" /></p>
+        <p><img src="cid:throughput_in_AES.png" alt="throughput_in_AES.png" /></p>
+        <p><img src="cid:throughput_in_Clear.png" alt="throughput_in_Clear.png" /></p>
+        <p><img src="cid:throughput_in_TKIP.png" alt="throughput_in_TKIP.png" /></p>
         """
     content3 = """
         <p><img src="cid:total_memory_used.png" alt="total_memory_used.png" /></p>
@@ -73,17 +76,24 @@ def generateMail(maillist, title, argsdic, attach=None,):
         contents = "{0}{1}".format(content1, content3)
         if os.path.isfile(v.MAIL_PIC2):
             piclist.append(v.MAIL_PIC2)
+            if os.path.isfile(v.MAIL_PIC3%"AES"):
+                piclist.append(v.MAIL_PIC3%"AES")
+            if os.path.isfile(v.MAIL_PIC3%"TKIP"):
+                piclist.append(v.MAIL_PIC3%"TKIP")
+            if os.path.isfile(v.MAIL_PIC3%"Clear"):
+                piclist.append(v.MAIL_PIC3%"Clear")
             contents = "{0}{1}{2}".format(content1, content2, content3)
         return sendMail(maillist, title, contents, attach, piclist)
 
 
 if __name__ == '__main__':
-    report = "R2D 稳定版OTA 2.8.2.log"
+    report = "R1CM 开发版OTA 2.7.8.log"
     ret = pr.ProcessReport(report)
     ret.start()
     ret.join()
 
-    if generateMail(["liujia5@xiaomi.com"], "test", ret.result, report):
+    # if generateMail(["liujia5@xiaomi.com"], "test", ret.result, report):
+    if generateMail(v.MAILTO_LIST, "【R1CM 开发版OTA 2.7.8】自动化测试报告", ret.result, report):
         print "successful"
     else:
         print "failed"

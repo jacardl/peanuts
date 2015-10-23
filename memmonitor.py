@@ -218,19 +218,23 @@ class memMonitorExcelXlsx(threading.Thread):
         for col in range(2, maxCol + 1):
             rowStart = None
             rowEnd = None
-            for row in range(2, maxRow):
+            for row in range(2, maxRow+1):
                 if rowStart is None:
                     rowStart = self.ws.cell(row=row, column=col).value
                 else:
                     rowStart = float(rowStart)
                     break
-            for row in reversed(range(2, maxRow)):
+            for row in reversed(range(2, maxRow+1)):
                 if rowEnd is None:
                     rowEnd = self.ws.cell(row=row, column=col).value
                 else:
                     rowEnd = float(rowEnd)
                     break
-            diff = (rowEnd - rowStart) / rowStart
+            try:
+                diff = (rowEnd - rowStart) / rowStart
+            except Exception, e:
+                print e, "rowStart=%s, rowEnd=%s"%rowStart,rowEnd
+
             if diff != 0:
                 # self.ws.write(maxRow, col, diff, stylePercent)
                 sum = self.ws.cell(row=maxRow + 1, column=col)

@@ -87,12 +87,13 @@ def generateMail(maillist, title, argsdic, attach=None,):
 
 
 if __name__ == '__main__':
-    report = "R2D 稳定版OTA 2.8.6.log"
+    report = "R1CM 开发版OTA 2.7.8.log"
     ret = pr.ProcessReport(report)
     ret.start()
     ret.join()
 
-    if generateMail(["liujia5@xiaomi.com"], "test", ret.result, report):
+    # if generateMail(["liujia5@xiaomi.com"], "test", ret.result, report):
+    if generateMail(v.MAILTO_LIST, "【R1CM 开发版OTA 2.7.8】自动化测试报告", ret.result, report):
         print "successful"
     else:
         print "failed"

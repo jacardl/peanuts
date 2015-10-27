@@ -760,25 +760,7 @@ class TestSuitePage(wx.Panel):
             wx.Yield()  # refresh progress
             (testKeepGoing, skip) = self.dlg.Pulse()
             t.sleep(0.1)
-
-        # t.sleep(1.0)
-        #click cancel set testKeepGoing to False
-        if v.SEND_MAIL == 1 and testKeepGoing:
-            self.memMon.stop()  # stop memory monitor and draw chart
-            # ¥À¥¶≤Â»Îprocessreport
-            self.procReport = pr.ProcessReport(self.reportFile)
-            self.procReport.start()
-            self.procReport.join()
-            sm.generateMail(v.MAILTO_LIST, self.mailTitle, self.procReport.result, self.reportFile)
-
-        # if os.path.exists(v.MAIL_PIC1):
-        #     shutil.move(v.MAIL_PIC1, v.TEST_SUITE_LOG_PATH)
-        # if os.path.exists(v.MAIL_PIC2):
-        #     shutil.move(v.MAIL_PIC2, v.TEST_SUITE_LOG_PATH)
-            files = os.listdir(v.DEFAULT_PATH)
-            for file in files:
-                if os.path.splitext(file)[1] == ".png":
-                    shutil.move(file, v.TEST_SUITE_LOG_PATH)
+        # set testKeepGoing to False when click cancel
 
         if not os.path.exists(self.report):
             os.rename(v.TEST_SUITE_LOG_PATH, self.report)
@@ -795,10 +777,24 @@ class TestSuitePage(wx.Panel):
         assert jobID == self.jobID
         try:
             result = delayedResult.get()
+            self.memMon.stop()  # stop memory monitor and draw chart
+            self.procReport = pr.ProcessReport(self.reportFile)
+            self.procReport.start()
+            self.procReport.join()
+
+            if v.SEND_MAIL == 1:
+                sm.generateMail(v.MAILTO_LIST, self.mailTitle, self.procReport.result, self.reportFile)
+
+            files = os.listdir(v.DEFAULT_PATH)
+            for file in files:
+                if os.path.splitext(file)[1] == ".png":
+                    shutil.move(file, v.TEST_SUITE_LOG_PATH)
+
+            # quit execution test dlg
             self.runFlag = False
 
-        except Exception:
-            return
+        except Exception, e:
+            return e
 
     def EvtTestExcute(self, event):
 

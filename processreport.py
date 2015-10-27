@@ -29,11 +29,20 @@ class ProcessReport(threading.Thread):
             pass
         self.result.update(sum=test.result["testsum"])
         self.result.update(pa=test.result["testpass"])
-        self.result.update(percent=test.result["testpass"]/float(test.result["testsum"])*100)
+        testSum = test.result["testsum"]
+        if testSum == 0:
+            self.result.update(percent=0)
+        else:
+            self.result.update(percent=test.result["testpass"]/float(test.result["testsum"])*100)
+
         self.result.update(time=time.timeUsed)
         self.result.update(onlinesum=online.result["pass"]+online.result["fail"])
         self.result.update(onlinepa=online.result["pass"])
-        self.result.update(onlinepercent=online.result["pass"]/(online.result["pass"]+float(online.result["fail"]))*100)
+        onlineSum = online.result["pass"]+online.result["fail"]
+        if onlineSum == 0:
+            self.result.update(onlinepercent=0)
+        else:
+            self.result.update(onlinepercent=online.result["pass"]/float(onlineSum)*100)
         self.stop()
 
     def stop(self):

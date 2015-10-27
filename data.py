@@ -485,22 +485,22 @@ treeNone = [
     [
         "autochan_txpower_2g",
         "autochan_txpower_5g",
-        "chan13_txpower_2g",
-        "chan36_txpower_5g",
+        "chan11_txpower_2g",
+        "chan149_txpower_5g",
     ],
     "AP_CLEAR_MID_TXPOWER",
     [
         "autochan_txpower_2g",
         "autochan_txpower_5g",
-        "chan13_txpower_2g",
-        "chan36_txpower_5g",
+        "chan11_txpower_2g",
+        "chan149_txpower_5g",
     ],
     "AP_CLEAR_HIGH_TXPOWER",
     [
         "autochan_txpower_2g",
         "autochan_txpower_5g",
-        "chan13_txpower_2g",
-        "chan36_txpower_5g",
+        "chan11_txpower_2g",
+        "chan149_txpower_5g",
     ],
     "AP_CLEAR_CHANSELECTION",
     [

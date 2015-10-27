@@ -74,10 +74,43 @@ import os
 # # plt.show()
 # plt.savefig("Throughput")
 # plt.close()
-import os
-import shutil
-import var as v
-files = os.listdir(v.DEFAULT_PATH)
-for file in files:
-    if os.path.splitext(file)[1] == ".png":
-        shutil.move(file, v.TEST_SUITE_LOG_PATH)
+from openpyxl import Workbook
+from openpyxl import load_workbook
+
+fileName = "MEM_2015.10.22 20.55.16.xlsx"
+wb = load_workbook(fileName)
+ws = wb.active
+maxRow = ws.get_highest_row()
+maxCol = ws.get_highest_column()
+
+for col in range(2, maxCol + 1):
+    rowStart = None
+    rowEnd = None
+    for row1 in range(2, maxRow+1):
+        if rowStart is None:
+            rowStart = ws.cell(row=row1, column=col).value
+        else:
+            rowStart = float(rowStart)
+            break
+    for row2 in reversed(range(2, maxRow+1)):
+        if rowEnd is None:
+            rowEnd = ws.cell(row=row2, column=col).value
+        else:
+            rowEnd = float(rowEnd)
+            break
+    try:
+        diff = (rowEnd - rowStart) / rowStart
+    except Exception, e:
+        print e, "rowStart=%s, rowEnd=%s"%rowStart,rowEnd
+
+    if diff != 0:
+        # self.ws.write(maxRow, col, diff, stylePercent)
+        sum = ws.cell(row=maxRow + 1, column=col)
+        diff = "{:.1%}".format(diff)
+        sum.value = diff
+        # else:
+        # # self.ws.write(maxRow, col, diff)
+        # sum = self.ws.cell(row=maxRow+1, column=col)
+        # sum.value = diff
+
+wb.save(fileName)

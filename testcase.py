@@ -4870,6 +4870,14 @@ class AP_CLEAR_LOW_TXPOWER(TestCase):
                 pass
             else:
                 self.fail("R1CM txpower isnot correct.")
+        elif v.DUT_MODULE == "R1CL":
+            """
+            exactly 14
+            """
+            if 13.8 <= power <= 14.2:
+                pass
+            else:
+                self.fail("R1CL txpower isnot correct")
 
     def autochan_txpower_5g(self):
         setUCIWirelessDev(self.dut, v.DUT_MODULE, "5g", "set", "channel", "0", self.__class__.__name__)
@@ -4895,7 +4903,7 @@ class AP_CLEAR_LOW_TXPOWER(TestCase):
             else:
                 self.fail("R1CM txpower isnot correct.")
 
-    def chan13_txpower_2g(self):
+    def chan11_txpower_2g(self):
         setUCIWirelessDev(self.dut, v.DUT_MODULE, "2g", "set", "channel", v.CHANNEL, self.__class__.__name__)
         setUCIWirelessDev(self.dut, v.DUT_MODULE, "2g", "set", "autoch", "0", self.__class__.__name__)
         setWifiRestart(self.dut, self.__class__.__name__)
@@ -4919,8 +4927,17 @@ class AP_CLEAR_LOW_TXPOWER(TestCase):
             else:
                 self.fail("R1CM txpower isnot correct.")
 
-    def chan36_txpower_5g(self):
-        setUCIWirelessDev(self.dut, v.DUT_MODULE, "5g", "set", "channel", "36", self.__class__.__name__)
+        elif v.DUT_MODULE == "R1CL":
+            """
+            exactly 14
+            """
+            if 13.8 <= power <= 14.2:
+                pass
+            else:
+                self.fail("R1CL txpower isnot correct")
+
+    def chan149_txpower_5g(self):
+        setUCIWirelessDev(self.dut, v.DUT_MODULE, "5g", "set", "channel", v.CHANNEL_5G, self.__class__.__name__)
         setUCIWirelessDev(self.dut, v.DUT_MODULE, "5g", "set", "autoch", "0", self.__class__.__name__)
         setWifiRestart(self.dut, self.__class__.__name__)
 
@@ -4987,6 +5004,15 @@ class AP_CLEAR_MID_TXPOWER(TestCase):
             else:
                 self.fail("R1CM txpower isnot correct.")
 
+        elif v.DUT_MODULE == "R1CL":
+            """
+            exactly 16
+            """
+            if 15.8 <= power <= 16.2:
+                pass
+            else:
+                self.fail("R1CL txpower isnot correct")
+
     def autochan_txpower_5g(self):
         setUCIWirelessDev(self.dut, v.DUT_MODULE, "5g", "set", "channel", "0", self.__class__.__name__)
         setUCIWirelessDev(self.dut, v.DUT_MODULE, "5g", "set", "autoch", "2", self.__class__.__name__)
@@ -5011,7 +5037,7 @@ class AP_CLEAR_MID_TXPOWER(TestCase):
             else:
                 self.fail("R1CM txpower isnot correct.")
 
-    def chan13_txpower_2g(self):
+    def chan11_txpower_2g(self):
         setUCIWirelessDev(self.dut, v.DUT_MODULE, "2g", "set", "channel", v.CHANNEL, self.__class__.__name__)
         setUCIWirelessDev(self.dut, v.DUT_MODULE, "2g", "set", "autoch", "0", self.__class__.__name__)
         setWifiRestart(self.dut, self.__class__.__name__)
@@ -5035,8 +5061,17 @@ class AP_CLEAR_MID_TXPOWER(TestCase):
             else:
                 self.fail("R1CM txpower isnot correct.")
 
-    def chan36_txpower_5g(self):
-        setUCIWirelessDev(self.dut, v.DUT_MODULE, "5g", "set", "channel", "36", self.__class__.__name__)
+        elif v.DUT_MODULE == "R1CL":
+            """
+            exactly 16
+            """
+            if 15.8 <= power <= 16.2:
+                pass
+            else:
+                self.fail("R1CL txpower isnot correct")
+
+    def chan149_txpower_5g(self):
+        setUCIWirelessDev(self.dut, v.DUT_MODULE, "5g", "set", "channel", v.CHANNEL_5G, self.__class__.__name__)
         setUCIWirelessDev(self.dut, v.DUT_MODULE, "5g", "set", "autoch", "0", self.__class__.__name__)
         setWifiRestart(self.dut, self.__class__.__name__)
 
@@ -5102,6 +5137,14 @@ class AP_CLEAR_HIGH_TXPOWER(TestCase):
                 pass
             else:
                 self.fail("R1CM txpower isnot correct.")
+        elif v.DUT_MODULE == "R1CL":
+            """
+            exactly 17
+            """
+            if 16.8 <= power <= 17.2:
+                pass
+            else:
+                self.fail("R1CL txpower isnot correct")
 
     def autochan_txpower_5g(self):
         setUCIWirelessDev(self.dut, v.DUT_MODULE, "5g", "set", "channel", "0", self.__class__.__name__)
@@ -5127,7 +5170,7 @@ class AP_CLEAR_HIGH_TXPOWER(TestCase):
             else:
                 self.fail("R1CM txpower isnot correct.")
 
-    def chan13_txpower_2g(self):
+    def chan11_txpower_2g(self):
         setUCIWirelessDev(self.dut, v.DUT_MODULE, "2g", "set", "channel", v.CHANNEL, self.__class__.__name__)
         setUCIWirelessDev(self.dut, v.DUT_MODULE, "2g", "set", "autoch", "0", self.__class__.__name__)
         setWifiRestart(self.dut, self.__class__.__name__)
@@ -5150,9 +5193,17 @@ class AP_CLEAR_HIGH_TXPOWER(TestCase):
                 pass
             else:
                 self.fail("R1CM txpower isnot correct.")
+        elif v.DUT_MODULE == "R1CL":
+            """
+            exactly 17
+            """
+            if 16.8 <= power <= 17.2:
+                pass
+            else:
+                self.fail("R1CL txpower isnot correct")
 
     def chan36_txpower_5g(self):
-        setUCIWirelessDev(self.dut, v.DUT_MODULE, "5g", "set", "channel", "36", self.__class__.__name__)
+        setUCIWirelessDev(self.dut, v.DUT_MODULE, "5g", "set", "channel", v.CHANNEL_5G, self.__class__.__name__)
         setUCIWirelessDev(self.dut, v.DUT_MODULE, "5g", "set", "autoch", "0", self.__class__.__name__)
         setWifiRestart(self.dut, self.__class__.__name__)
 
@@ -7391,6 +7442,8 @@ class AP_GUEST_PSK2_CHAN_REPEAT2(TestCase):
 
         self.assertTrue(res2gConn, "Not all association were successful.")
 
+
+# class AP_REBOOT_
 
 class AP_TEST(TestCase):
     @classmethod

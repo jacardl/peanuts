@@ -531,7 +531,7 @@ def getWlanTxPower(terminal, dut, intf, logname):
                 result = 0
         return float(result)
 
-    elif dut == "R1CM":
+    elif dut == "R1CM" or dut == "R1CL":
         commandDic = {"2g": "iwconfig wl1 | grep 'Tx-Power='",
                       "5g": "iwconfig wl0 | grep 'Tx-Power='", }
         command = commandDic.get(intf)
@@ -544,6 +544,8 @@ def getWlanTxPower(terminal, dut, intf, logname):
             else:
                 result = 0
         return float(result)
+
+# def  getWlanLastTxPower(terminal, dut, intf, logname):
 
 
 def getWlanInfo(terminal, intf, logname):

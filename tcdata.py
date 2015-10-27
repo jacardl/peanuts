@@ -361,6 +361,26 @@ class TestCommand:
                                    ]
         return ap_psk2_ssidhide_set_up
 
+    def ap_mixedpsk_set_up(self):
+        ap_mixedpsk_set_up = ['uci set wireless.' + self.WIFI_IF_5G + '.encryption=mixed-psk',
+                                   'uci set wireless.' + self.WIFI_IF_2G + '.encryption=mixed-psk',
+                                   'uci set wireless.' + self.WIFI_IF_5G + '.key=' + KEY,
+                                   'uci set wireless.' + self.WIFI_IF_2G + '.key=' + KEY,
+                                   'uci set wireless.' + self.WIFI_IF_5G + '.ssid=' + SSID_5G,
+                                   'uci set wireless.' + self.WIFI_IF_2G + '.ssid=' + SSID,
+                                   'uci set wireless.' + self.WIFI_IF_5G + '.hidden=0',
+                                   'uci set wireless.' + self.WIFI_IF_2G + '.hidden=0',
+                                   'uci set wireless.' + self.DEV_2G + '.channel=0',
+                                   'uci set wireless.' + self.DEV_2G + '.autoch=2',
+                                   'uci set wireless.' + self.DEV_5G + '.channel=0',
+                                   'uci set wireless.' + self.DEV_5G + '.autoch=2',
+                                   'uci set wireless.' + self.DEV_2G + '.disabled=0',
+                                   'uci set wireless.' + self.DEV_5G + '.disabled=0',
+                                   'uci commit wireless',
+                                   'wifi; sleep 10',
+                                   ]
+        return ap_mixedpsk_set_up
+
     def ap_mixedpsk_chan_set_up(self):
         ap_mixedpsk_chan_set_up = ['uci set wireless.' + self.WIFI_IF_5G + '.encryption=mixed-psk',
                                    'uci set wireless.' + self.WIFI_IF_2G + '.encryption=mixed-psk',

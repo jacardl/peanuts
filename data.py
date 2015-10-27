@@ -507,8 +507,15 @@ treeNone = [
         "chanselection_2g",
         "chanselection_5g",
     ],
-
 ]
+
+treeCheck = [
+    "AP_REBOOT",
+    [
+        "autochan_last_est_power"
+    ]
+]
+
 # -------------------------------------------------------
 
 # ---------------commands for log collect-----------------

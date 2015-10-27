@@ -7443,7 +7443,61 @@ class AP_GUEST_PSK2_CHAN_REPEAT2(TestCase):
         self.assertTrue(res2gConn, "Not all association were successful.")
 
 
-# class AP_REBOOT_
+class AP_REBOOT(TestCase):
+    @classmethod
+    def setUpClass(self):
+
+        self.dut = SshClient(v.CONNECTION_TYPE)
+        ret1 = self.dut.connect(v.HOST, v.USR, v.PASSWD)
+
+        # ret2 = chkAdbDevicesCount(1)
+
+        if ret1 is False:
+            raise Exception("Connection is failed. please check your remote settings.")
+
+        # if ret2 is False:
+        #     raise Exception("USB devices arenot ready!")
+        d = TestCommand(v.DUT_MODULE)
+        for dutCommand in d.ap_mixedpsk_set_up():
+            setConfig(self.dut, dutCommand, self.__name__)
+
+        self.device = getAdbDevices()
+
+    @classmethod
+    def tearDownClass(self):
+        d = TestCommand(v.DUT_MODULE)
+        for dutCommand in d.ap_tear_down():
+            setConfig(self.dut, dutCommand, self.__name__)
+
+        self.dut.close()
+
+    def autochan_last_est_power(self):
+        count = 0
+        while count <= 100:
+            power2g = getWlanLastEstPower(self.dut, v.DUT_MODULE, "2g", self.__class__.__name__)
+            power5g = getWlanLastEstPower(self.dut, v.DUT_MODULE, "5g", self.__class__.__name__)
+            txPower2g = getWlanTxPower(self.dut, v.DUT.MODULE, "2g", self.__class__.__name__)
+            txPower5g = getWlanTxPower(self.dut, v.DUT.MODULE, "5g", self.__class__.__name__)
+            if power2g <= txPower2g/2:
+                self.fail(msg='2.4g last est.power is far less than Tx Power!')
+            elif power5g <= txPower5g/2:
+                self.fail(msg='5g last est.power is far less than Tx Power!')
+            else:
+                setReboot(self.dut, self.__class__.__name__)
+
+            while True:
+                try:
+                    self.dut = SshClient(v.CONNECTION_TYPE)
+                    ret = self.dut.connect(v.HOST, v.USR, v.PASSWD)
+                    if ret is True:
+                        break
+                except Exception, e:
+                    t.sleep(30)
+                    pass
+        count += 1
+
+
+
 
 class AP_TEST(TestCase):
     @classmethod

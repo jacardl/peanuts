@@ -545,7 +545,35 @@ def getWlanTxPower(terminal, dut, intf, logname):
                 result = 0
         return float(result)
 
-# def  getWlanLastTxPower(terminal, dut, intf, logname):
+
+def  getWlanLastEstPower(terminal, dut, intf, logname):
+
+    if dut == "R1D" or dut == "R2D":
+        commandDic = {"2g": "wl -i wl1 curpower | grep 'Last est. power'",
+                      "5g": "wl -i wl0 curpower | grep 'Last est. power'", }
+        command = commandDic.get(intf)
+        ret = setGet(terminal, command, logname)
+        for line in ret:
+            m = re.search('\d*\.\d*.*', line)
+            if m:
+                power = m.group(0)
+                powerList = power.split(":")
+                powerList = powerList[1].split()
+                for i in xrange(len(powerList)):
+                    powerList[i] = float(powerList[i])
+                for j in powerList:
+                    if j == 0:
+                        powerList.remove(0)
+                if len(powerList) != 0:
+                    result = reduce(lambda i, j: i + j, powerList)/len(powerList)
+                else:
+                    result = 0
+            else:
+                result = 0
+        return float(result)
+
+    elif dut == "R1CM" or dut == "R1CL":
+        return 0
 
 
 def getWlanInfo(terminal, intf, logname):
@@ -770,6 +798,11 @@ def setWifiMacfilterModel(terminal, enable, model=0, mac='none', logname=None):
                 setIwpriv(terminal, 'wl0', 'AccessPolicy', '1', logname)
                 setIwpriv(terminal, 'wl1', 'AccessPolicy', '1', logname)
                 setIwpriv(terminal, 'wl3', 'AccessPolicy', '1', logname)
+
+
+def setReboot(terminal, logname):
+    command = 'reboot'
+    setConfig(terminal, command, logname)
 
 
 def setAdbClearStaConn(device, ssid, radio, logname):
@@ -1053,10 +1086,12 @@ def setIperfFlow(target, interval, time, logname):
 
 if __name__ == '__main__':
     ssh = SshCommand(2)
-    ssh.connect("192.168.120.1", "", "")
-    v.DUT_MODULE = "R1CL"
-    setUCIWirelessIntf(ssh, v.INTF_2G, "set", "key", "12345678", "log")
-    setUCIWirelessDev(ssh, v.DUT_MODULE, "2g", "set", "disabled", "0", "log")
+    ssh.connect("192.168.111.1", "", "")
+    v.DUT_MODULE = "R2D"
+    # setUCIWirelessIntf(ssh, v.INTF_2G, "set", "key", "12345678", "log")
+    # setUCIWirelessDev(ssh, v.DUT_MODULE, "2g", "set", "disabled", "0", "log")
+    # print getWlanTxPower(ssh, v.DUT_MODULE, "2g", "log")
+    print getWlanLastEstPower(ssh, v.DUT_MODULE, "5g", "log")
     # import tcdata
     # dut = tcdata.TestCommand("R1CL")
     # for dutCommand in dut.ap_tear_down():

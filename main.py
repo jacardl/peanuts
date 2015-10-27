@@ -619,10 +619,12 @@ class TestSuitePage(wx.Panel):
         self.rootAndroid = self.tree.AppendItem(self.root, 'Android-STA', ct_type=1)
         # self.rootR1CM = self.tree.AppendItem(self.root, 'R1CM-STA', ct_type=1)
         self.rootNone = self.tree.AppendItem(self.root, 'None-STA', ct_type=1)
+        self.rootCheck = self.tree.AppendItem(self.root, 'Check', ct_type=1)
 
         self.AddTreeNodes(self.rootAndroid, data.treeAndroid)
         # self.AddTreeNodes(self.rootR1CM, data.treeR1CM)
         self.AddTreeNodes(self.rootNone, data.treeNone)
+        self.AddTreeNodes(self.rootCheck, data.treeCheck)
         self.tree.Expand(self.root)
         treeLbl = wx.StaticText(self, -1, 'Select cases supposed to excute:')
 

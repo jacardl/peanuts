@@ -7458,43 +7458,47 @@ class AP_REBOOT(TestCase):
         # if ret2 is False:
         #     raise Exception("USB devices arenot ready!")
         d = TestCommand(v.DUT_MODULE)
-        for dutCommand in d.ap_mixedpsk_set_up():
+        for dutCommand in d.ap_mixedpsk_set_up2(ssid="peanuts_check"):
             setConfig(self.dut, dutCommand, self.__name__)
 
-        self.device = getAdbDevices()
+        # self.device = getAdbDevices()
 
     @classmethod
     def tearDownClass(self):
-        d = TestCommand(v.DUT_MODULE)
-        for dutCommand in d.ap_tear_down():
-            setConfig(self.dut, dutCommand, self.__name__)
-
-        self.dut.close()
+        # when bug occurs, reservation site
+        pass
+        # d = TestCommand(v.DUT_MODULE)
+        # for dutCommand in d.ap_tear_down():
+        #     setConfig(self.dut, dutCommand, self.__name__)
+        #
+        # self.dut.close()
 
     def autochan_last_est_power(self):
         count = 0
         while count <= 100:
             power2g = getWlanLastEstPower(self.dut, v.DUT_MODULE, "2g", self.__class__.__name__)
+            txPower2g = getWlanTxPower(self.dut, v.DUT_MODULE, "2g", self.__class__.__name__)
             power5g = getWlanLastEstPower(self.dut, v.DUT_MODULE, "5g", self.__class__.__name__)
-            txPower2g = getWlanTxPower(self.dut, v.DUT.MODULE, "2g", self.__class__.__name__)
-            txPower5g = getWlanTxPower(self.dut, v.DUT.MODULE, "5g", self.__class__.__name__)
+            txPower5g = getWlanTxPower(self.dut, v.DUT_MODULE, "5g", self.__class__.__name__)
             if power2g <= txPower2g/2:
                 self.fail(msg='2.4g last est.power is far less than Tx Power!')
             elif power5g <= txPower5g/2:
                 self.fail(msg='5g last est.power is far less than Tx Power!')
             else:
                 setReboot(self.dut, self.__class__.__name__)
-
+                t.sleep(60)
             while True:
                 try:
                     self.dut = SshClient(v.CONNECTION_TYPE)
                     ret = self.dut.connect(v.HOST, v.USR, v.PASSWD)
                     if ret is True:
                         break
+                    else:
+                        t.sleep(10)
                 except Exception, e:
-                    t.sleep(30)
+                    t.sleep(10)
                     pass
-        count += 1
+            count += 1
 
 
 class AP_TEST(TestCase):

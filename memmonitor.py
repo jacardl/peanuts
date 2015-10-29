@@ -25,7 +25,11 @@ class memMonitor(threading.Thread):
             curr_time = t.time()
             if curr_time - last_time >= self.interval:
                 last_time = curr_time
-                res = self.terminal.getTotalMemInfo()
+                try:
+                    res = self.terminal.getTotalMemInfo()
+                except Exception, e:
+                    res = dict()
+                    res["used"] = 0
                 memUsed = res["used"]
                 self.plot.append(memUsed)
                 if self.callback is not None:

@@ -59,16 +59,16 @@ class TestCommand:
 
     def ap_guest_tear_down(self):
         ap_guest_tear_down = [
-                              # 'uci set wireless.guest_2G.open=0',
-                              'uci set wireless.guest_2G.disabled=1',
-                              'uci set wireless.' + self.DEV_2G + '.channel=0',
-                              'uci set wireless.' + self.DEV_2G + '.autoch=2',
-                              'uci set wireless.' + self.DEV_2G + '.disabled=1',
-                              'uci set wireless.guest_2G.macfilter=disabled',
-                              'uci del wireless.guest_2G.maclist=',
-                              'uci commit wireless',
-                              "wifi; sleep 10",
-                              ]
+            # 'uci set wireless.guest_2G.open=0',
+            'uci set wireless.guest_2G.disabled=1',
+            'uci set wireless.' + self.DEV_2G + '.channel=0',
+            'uci set wireless.' + self.DEV_2G + '.autoch=2',
+            'uci set wireless.' + self.DEV_2G + '.disabled=1',
+            'uci set wireless.guest_2G.macfilter=disabled',
+            'uci del wireless.guest_2G.maclist=',
+            'uci commit wireless',
+            "wifi; sleep 10",
+            ]
         return ap_guest_tear_down
 
     # ---------------setup--------------------
@@ -110,56 +110,56 @@ class TestCommand:
 
     def ap_clear_chan2_set_up(self):
         ap_clear_chan2_set_up = ['uci set wireless.' + self.WIFI_IF_5G + '.encryption=none',
-                                'uci set wireless.' + self.WIFI_IF_2G + '.encryption=none',
-                                'uci set wireless.' + self.WIFI_IF_5G + '.ssid=' + SSID_5G,
-                                'uci set wireless.' + self.WIFI_IF_2G + '.ssid=' + SSID,
-                                'uci set wireless.' + self.WIFI_IF_5G + '.hidden=0',
-                                'uci set wireless.' + self.WIFI_IF_2G + '.hidden=0',
-                                'uci set wireless.' + self.DEV_2G + '.channel=' + CHANNEL2,
-                                'uci set wireless.' + self.DEV_2G + '.autoch=0',
-                                'uci set wireless.' + self.DEV_2G + '.disabled=0',
-                                'uci set wireless.' + self.DEV_5G + '.channel=' + CHANNEL2_5G,
-                                'uci set wireless.' + self.DEV_5G + '.autoch=0',
-                                'uci set wireless.' + self.DEV_5G + '.disabled=0',
-                                'uci commit wireless',
-                                'wifi; sleep 10'
-                                ]
+                                 'uci set wireless.' + self.WIFI_IF_2G + '.encryption=none',
+                                 'uci set wireless.' + self.WIFI_IF_5G + '.ssid=' + SSID_5G,
+                                 'uci set wireless.' + self.WIFI_IF_2G + '.ssid=' + SSID,
+                                 'uci set wireless.' + self.WIFI_IF_5G + '.hidden=0',
+                                 'uci set wireless.' + self.WIFI_IF_2G + '.hidden=0',
+                                 'uci set wireless.' + self.DEV_2G + '.channel=' + CHANNEL2,
+                                 'uci set wireless.' + self.DEV_2G + '.autoch=0',
+                                 'uci set wireless.' + self.DEV_2G + '.disabled=0',
+                                 'uci set wireless.' + self.DEV_5G + '.channel=' + CHANNEL2_5G,
+                                 'uci set wireless.' + self.DEV_5G + '.autoch=0',
+                                 'uci set wireless.' + self.DEV_5G + '.disabled=0',
+                                 'uci commit wireless',
+                                 'wifi; sleep 10'
+                                 ]
         return ap_clear_chan2_set_up
 
     def ap_clear_chan3_set_up(self):
         ap_clear_chan3_set_up = ['uci set wireless.' + self.WIFI_IF_5G + '.encryption=none',
-                                'uci set wireless.' + self.WIFI_IF_2G + '.encryption=none',
-                                'uci set wireless.' + self.WIFI_IF_5G + '.ssid=' + SSID_5G,
-                                'uci set wireless.' + self.WIFI_IF_2G + '.ssid=' + SSID,
-                                'uci set wireless.' + self.WIFI_IF_5G + '.hidden=0',
-                                'uci set wireless.' + self.WIFI_IF_2G + '.hidden=0',
-                                'uci set wireless.' + self.DEV_2G + '.channel=' + CHANNEL3,
-                                'uci set wireless.' + self.DEV_2G + '.autoch=0',
-                                'uci set wireless.' + self.DEV_2G + '.disabled=0',
-                                'uci set wireless.' + self.DEV_5G + '.channel=' + CHANNEL3_5G,
-                                'uci set wireless.' + self.DEV_5G + '.autoch=0',
-                                'uci set wireless.' + self.DEV_5G + '.disabled=0',
-                                'uci commit wireless',
-                                'wifi; sleep 10'
-                                ]
+                                 'uci set wireless.' + self.WIFI_IF_2G + '.encryption=none',
+                                 'uci set wireless.' + self.WIFI_IF_5G + '.ssid=' + SSID_5G,
+                                 'uci set wireless.' + self.WIFI_IF_2G + '.ssid=' + SSID,
+                                 'uci set wireless.' + self.WIFI_IF_5G + '.hidden=0',
+                                 'uci set wireless.' + self.WIFI_IF_2G + '.hidden=0',
+                                 'uci set wireless.' + self.DEV_2G + '.channel=' + CHANNEL3,
+                                 'uci set wireless.' + self.DEV_2G + '.autoch=0',
+                                 'uci set wireless.' + self.DEV_2G + '.disabled=0',
+                                 'uci set wireless.' + self.DEV_5G + '.channel=' + CHANNEL3_5G,
+                                 'uci set wireless.' + self.DEV_5G + '.autoch=0',
+                                 'uci set wireless.' + self.DEV_5G + '.disabled=0',
+                                 'uci commit wireless',
+                                 'wifi; sleep 10'
+                                 ]
         return ap_clear_chan3_set_up
 
     def ap_clear_chan4_set_up(self):
         ap_clear_chan4_set_up = ['uci set wireless.' + self.WIFI_IF_5G + '.encryption=none',
-                                'uci set wireless.' + self.WIFI_IF_2G + '.encryption=none',
-                                'uci set wireless.' + self.WIFI_IF_5G + '.ssid=' + SSID_5G,
-                                'uci set wireless.' + self.WIFI_IF_2G + '.ssid=' + SSID,
-                                'uci set wireless.' + self.WIFI_IF_5G + '.hidden=0',
-                                'uci set wireless.' + self.WIFI_IF_2G + '.hidden=0',
-                                'uci set wireless.' + self.DEV_2G + '.channel=' + CHANNEL4,
-                                'uci set wireless.' + self.DEV_2G + '.autoch=0',
-                                'uci set wireless.' + self.DEV_2G + '.disabled=0',
-                                'uci set wireless.' + self.DEV_5G + '.channel=' + CHANNEL4_5G,
-                                'uci set wireless.' + self.DEV_5G + '.autoch=0',
-                                'uci set wireless.' + self.DEV_5G + '.disabled=0',
-                                'uci commit wireless',
-                                'wifi; sleep 10'
-                                ]
+                                 'uci set wireless.' + self.WIFI_IF_2G + '.encryption=none',
+                                 'uci set wireless.' + self.WIFI_IF_5G + '.ssid=' + SSID_5G,
+                                 'uci set wireless.' + self.WIFI_IF_2G + '.ssid=' + SSID,
+                                 'uci set wireless.' + self.WIFI_IF_5G + '.hidden=0',
+                                 'uci set wireless.' + self.WIFI_IF_2G + '.hidden=0',
+                                 'uci set wireless.' + self.DEV_2G + '.channel=' + CHANNEL4,
+                                 'uci set wireless.' + self.DEV_2G + '.autoch=0',
+                                 'uci set wireless.' + self.DEV_2G + '.disabled=0',
+                                 'uci set wireless.' + self.DEV_5G + '.channel=' + CHANNEL4_5G,
+                                 'uci set wireless.' + self.DEV_5G + '.autoch=0',
+                                 'uci set wireless.' + self.DEV_5G + '.disabled=0',
+                                 'uci commit wireless',
+                                 'wifi; sleep 10'
+                                 ]
         return ap_clear_chan4_set_up
 
     def ap_clear_low_set_up(self):
@@ -285,62 +285,62 @@ class TestCommand:
 
     def ap_psk2_chan2_set_up(self):
         ap_psk2_chan2_set_up = ['uci set wireless.' + self.WIFI_IF_5G + '.encryption=psk2',
-                               'uci set wireless.' + self.WIFI_IF_2G + '.encryption=psk2',
-                               'uci set wireless.' + self.WIFI_IF_5G + '.key=' + KEY,
-                               'uci set wireless.' + self.WIFI_IF_2G + '.key=' + KEY,
-                               'uci set wireless.' + self.WIFI_IF_5G + '.ssid=' + SSID_5G,
-                               'uci set wireless.' + self.WIFI_IF_2G + '.ssid=' + SSID,
-                               'uci set wireless.' + self.WIFI_IF_5G + '.hidden=0',
-                               'uci set wireless.' + self.WIFI_IF_2G + '.hidden=0',
-                               'uci set wireless.' + self.DEV_2G + '.channel=' + CHANNEL2,
-                               'uci set wireless.' + self.DEV_2G + '.autoch=0',
-                               'uci set wireless.' + self.DEV_5G + '.channel=' + CHANNEL2_5G,
-                               'uci set wireless.' + self.DEV_5G + '.autoch=0',
-                               'uci set wireless.' + self.DEV_2G + '.disabled=0',
-                               'uci set wireless.' + self.DEV_5G + '.disabled=0',
-                               'uci commit wireless',
-                               'wifi; sleep 10'
-                               ]
+                                'uci set wireless.' + self.WIFI_IF_2G + '.encryption=psk2',
+                                'uci set wireless.' + self.WIFI_IF_5G + '.key=' + KEY,
+                                'uci set wireless.' + self.WIFI_IF_2G + '.key=' + KEY,
+                                'uci set wireless.' + self.WIFI_IF_5G + '.ssid=' + SSID_5G,
+                                'uci set wireless.' + self.WIFI_IF_2G + '.ssid=' + SSID,
+                                'uci set wireless.' + self.WIFI_IF_5G + '.hidden=0',
+                                'uci set wireless.' + self.WIFI_IF_2G + '.hidden=0',
+                                'uci set wireless.' + self.DEV_2G + '.channel=' + CHANNEL2,
+                                'uci set wireless.' + self.DEV_2G + '.autoch=0',
+                                'uci set wireless.' + self.DEV_5G + '.channel=' + CHANNEL2_5G,
+                                'uci set wireless.' + self.DEV_5G + '.autoch=0',
+                                'uci set wireless.' + self.DEV_2G + '.disabled=0',
+                                'uci set wireless.' + self.DEV_5G + '.disabled=0',
+                                'uci commit wireless',
+                                'wifi; sleep 10'
+                                ]
         return ap_psk2_chan2_set_up
 
     def ap_psk2_chan3_set_up(self):
         ap_psk2_chan3_set_up = ['uci set wireless.' + self.WIFI_IF_5G + '.encryption=psk2',
-                               'uci set wireless.' + self.WIFI_IF_2G + '.encryption=psk2',
-                               'uci set wireless.' + self.WIFI_IF_5G + '.key=' + KEY,
-                               'uci set wireless.' + self.WIFI_IF_2G + '.key=' + KEY,
-                               'uci set wireless.' + self.WIFI_IF_5G + '.ssid=' + SSID_5G,
-                               'uci set wireless.' + self.WIFI_IF_2G + '.ssid=' + SSID,
-                               'uci set wireless.' + self.WIFI_IF_5G + '.hidden=0',
-                               'uci set wireless.' + self.WIFI_IF_2G + '.hidden=0',
-                               'uci set wireless.' + self.DEV_2G + '.channel=' + CHANNEL3,
-                               'uci set wireless.' + self.DEV_2G + '.autoch=0',
-                               'uci set wireless.' + self.DEV_5G + '.channel=' + CHANNEL3_5G,
-                               'uci set wireless.' + self.DEV_5G + '.autoch=0',
-                               'uci set wireless.' + self.DEV_2G + '.disabled=0',
-                               'uci set wireless.' + self.DEV_5G + '.disabled=0',
-                               'uci commit wireless',
-                               'wifi; sleep 10'
-                               ]
+                                'uci set wireless.' + self.WIFI_IF_2G + '.encryption=psk2',
+                                'uci set wireless.' + self.WIFI_IF_5G + '.key=' + KEY,
+                                'uci set wireless.' + self.WIFI_IF_2G + '.key=' + KEY,
+                                'uci set wireless.' + self.WIFI_IF_5G + '.ssid=' + SSID_5G,
+                                'uci set wireless.' + self.WIFI_IF_2G + '.ssid=' + SSID,
+                                'uci set wireless.' + self.WIFI_IF_5G + '.hidden=0',
+                                'uci set wireless.' + self.WIFI_IF_2G + '.hidden=0',
+                                'uci set wireless.' + self.DEV_2G + '.channel=' + CHANNEL3,
+                                'uci set wireless.' + self.DEV_2G + '.autoch=0',
+                                'uci set wireless.' + self.DEV_5G + '.channel=' + CHANNEL3_5G,
+                                'uci set wireless.' + self.DEV_5G + '.autoch=0',
+                                'uci set wireless.' + self.DEV_2G + '.disabled=0',
+                                'uci set wireless.' + self.DEV_5G + '.disabled=0',
+                                'uci commit wireless',
+                                'wifi; sleep 10'
+                                ]
         return ap_psk2_chan3_set_up
 
     def ap_psk2_chan4_set_up(self):
         ap_psk2_chan4_set_up = ['uci set wireless.' + self.WIFI_IF_5G + '.encryption=psk2',
-                               'uci set wireless.' + self.WIFI_IF_2G + '.encryption=psk2',
-                               'uci set wireless.' + self.WIFI_IF_5G + '.key=' + KEY,
-                               'uci set wireless.' + self.WIFI_IF_2G + '.key=' + KEY,
-                               'uci set wireless.' + self.WIFI_IF_5G + '.ssid=' + SSID_5G,
-                               'uci set wireless.' + self.WIFI_IF_2G + '.ssid=' + SSID,
-                               'uci set wireless.' + self.WIFI_IF_5G + '.hidden=0',
-                               'uci set wireless.' + self.WIFI_IF_2G + '.hidden=0',
-                               'uci set wireless.' + self.DEV_2G + '.channel=' + CHANNEL4,
-                               'uci set wireless.' + self.DEV_2G + '.autoch=0',
-                               'uci set wireless.' + self.DEV_5G + '.channel=' + CHANNEL4_5G,
-                               'uci set wireless.' + self.DEV_5G + '.autoch=0',
-                               'uci set wireless.' + self.DEV_2G + '.disabled=0',
-                               'uci set wireless.' + self.DEV_5G + '.disabled=0',
-                               'uci commit wireless',
-                               'wifi; sleep 10'
-                               ]
+                                'uci set wireless.' + self.WIFI_IF_2G + '.encryption=psk2',
+                                'uci set wireless.' + self.WIFI_IF_5G + '.key=' + KEY,
+                                'uci set wireless.' + self.WIFI_IF_2G + '.key=' + KEY,
+                                'uci set wireless.' + self.WIFI_IF_5G + '.ssid=' + SSID_5G,
+                                'uci set wireless.' + self.WIFI_IF_2G + '.ssid=' + SSID,
+                                'uci set wireless.' + self.WIFI_IF_5G + '.hidden=0',
+                                'uci set wireless.' + self.WIFI_IF_2G + '.hidden=0',
+                                'uci set wireless.' + self.DEV_2G + '.channel=' + CHANNEL4,
+                                'uci set wireless.' + self.DEV_2G + '.autoch=0',
+                                'uci set wireless.' + self.DEV_5G + '.channel=' + CHANNEL4_5G,
+                                'uci set wireless.' + self.DEV_5G + '.autoch=0',
+                                'uci set wireless.' + self.DEV_2G + '.disabled=0',
+                                'uci set wireless.' + self.DEV_5G + '.disabled=0',
+                                'uci commit wireless',
+                                'wifi; sleep 10'
+                                ]
         return ap_psk2_chan4_set_up
 
     def ap_psk2_ssidhide_set_up(self):
@@ -363,23 +363,43 @@ class TestCommand:
 
     def ap_mixedpsk_set_up(self):
         ap_mixedpsk_set_up = ['uci set wireless.' + self.WIFI_IF_5G + '.encryption=mixed-psk',
-                                   'uci set wireless.' + self.WIFI_IF_2G + '.encryption=mixed-psk',
-                                   'uci set wireless.' + self.WIFI_IF_5G + '.key=' + KEY,
-                                   'uci set wireless.' + self.WIFI_IF_2G + '.key=' + KEY,
-                                   'uci set wireless.' + self.WIFI_IF_5G + '.ssid=' + SSID_5G,
-                                   'uci set wireless.' + self.WIFI_IF_2G + '.ssid=' + SSID,
-                                   'uci set wireless.' + self.WIFI_IF_5G + '.hidden=0',
-                                   'uci set wireless.' + self.WIFI_IF_2G + '.hidden=0',
-                                   'uci set wireless.' + self.DEV_2G + '.channel=0',
-                                   'uci set wireless.' + self.DEV_2G + '.autoch=2',
-                                   'uci set wireless.' + self.DEV_5G + '.channel=0',
-                                   'uci set wireless.' + self.DEV_5G + '.autoch=2',
-                                   'uci set wireless.' + self.DEV_2G + '.disabled=0',
-                                   'uci set wireless.' + self.DEV_5G + '.disabled=0',
-                                   'uci commit wireless',
-                                   'wifi; sleep 10',
-                                   ]
+                              'uci set wireless.' + self.WIFI_IF_2G + '.encryption=mixed-psk',
+                              'uci set wireless.' + self.WIFI_IF_5G + '.key=' + KEY,
+                              'uci set wireless.' + self.WIFI_IF_2G + '.key=' + KEY,
+                              'uci set wireless.' + self.WIFI_IF_5G + '.ssid=' + SSID_5G,
+                              'uci set wireless.' + self.WIFI_IF_2G + '.ssid=' + SSID,
+                              'uci set wireless.' + self.WIFI_IF_5G + '.hidden=0',
+                              'uci set wireless.' + self.WIFI_IF_2G + '.hidden=0',
+                              'uci set wireless.' + self.DEV_2G + '.channel=0',
+                              'uci set wireless.' + self.DEV_2G + '.autoch=2',
+                              'uci set wireless.' + self.DEV_5G + '.channel=0',
+                              'uci set wireless.' + self.DEV_5G + '.autoch=2',
+                              'uci set wireless.' + self.DEV_2G + '.disabled=0',
+                              'uci set wireless.' + self.DEV_5G + '.disabled=0',
+                              'uci commit wireless',
+                              'wifi; sleep 10',
+                              ]
         return ap_mixedpsk_set_up
+
+    def ap_mixedpsk_set_up2(self, ssid):
+        ap_mixedpsk_set_up2 = ['uci set wireless.' + self.WIFI_IF_5G + '.encryption=mixed-psk',
+                               'uci set wireless.' + self.WIFI_IF_2G + '.encryption=mixed-psk',
+                               'uci set wireless.' + self.WIFI_IF_5G + '.key=' + KEY,
+                               'uci set wireless.' + self.WIFI_IF_2G + '.key=' + KEY,
+                               'uci set wireless.' + self.WIFI_IF_5G + '.ssid=' + ssid + '-5G',
+                               'uci set wireless.' + self.WIFI_IF_2G + '.ssid=' + ssid,
+                               'uci set wireless.' + self.WIFI_IF_5G + '.hidden=0',
+                               'uci set wireless.' + self.WIFI_IF_2G + '.hidden=0',
+                               'uci set wireless.' + self.DEV_2G + '.channel=0',
+                               'uci set wireless.' + self.DEV_2G + '.autoch=2',
+                               'uci set wireless.' + self.DEV_5G + '.channel=0',
+                               'uci set wireless.' + self.DEV_5G + '.autoch=2',
+                               'uci set wireless.' + self.DEV_2G + '.disabled=0',
+                               'uci set wireless.' + self.DEV_5G + '.disabled=0',
+                               'uci commit wireless',
+                               'wifi; sleep 10',
+                               ]
+        return ap_mixedpsk_set_up2
 
     def ap_mixedpsk_chan_set_up(self):
         ap_mixedpsk_chan_set_up = ['uci set wireless.' + self.WIFI_IF_5G + '.encryption=mixed-psk',
@@ -403,62 +423,62 @@ class TestCommand:
 
     def ap_mixedpsk_chan2_set_up(self):
         ap_mixedpsk_chan2_set_up = ['uci set wireless.' + self.WIFI_IF_5G + '.encryption=mixed-psk',
-                                   'uci set wireless.' + self.WIFI_IF_2G + '.encryption=mixed-psk',
-                                   'uci set wireless.' + self.WIFI_IF_5G + '.key=' + KEY,
-                                   'uci set wireless.' + self.WIFI_IF_2G + '.key=' + KEY,
-                                   'uci set wireless.' + self.WIFI_IF_5G + '.ssid=' + SSID_5G,
-                                   'uci set wireless.' + self.WIFI_IF_2G + '.ssid=' + SSID,
-                                   'uci set wireless.' + self.WIFI_IF_5G + '.hidden=0',
-                                   'uci set wireless.' + self.WIFI_IF_2G + '.hidden=0',
-                                   'uci set wireless.' + self.DEV_2G + '.channel=' + CHANNEL2,
-                                   'uci set wireless.' + self.DEV_2G + '.autoch=0',
-                                   'uci set wireless.' + self.DEV_5G + '.channel=' + CHANNEL2_5G,
-                                   'uci set wireless.' + self.DEV_5G + '.autoch=0',
-                                   'uci set wireless.' + self.DEV_2G + '.disabled=0',
-                                   'uci set wireless.' + self.DEV_5G + '.disabled=0',
-                                   'uci commit wireless',
-                                   'wifi; sleep 10'
-                                   ]
+                                    'uci set wireless.' + self.WIFI_IF_2G + '.encryption=mixed-psk',
+                                    'uci set wireless.' + self.WIFI_IF_5G + '.key=' + KEY,
+                                    'uci set wireless.' + self.WIFI_IF_2G + '.key=' + KEY,
+                                    'uci set wireless.' + self.WIFI_IF_5G + '.ssid=' + SSID_5G,
+                                    'uci set wireless.' + self.WIFI_IF_2G + '.ssid=' + SSID,
+                                    'uci set wireless.' + self.WIFI_IF_5G + '.hidden=0',
+                                    'uci set wireless.' + self.WIFI_IF_2G + '.hidden=0',
+                                    'uci set wireless.' + self.DEV_2G + '.channel=' + CHANNEL2,
+                                    'uci set wireless.' + self.DEV_2G + '.autoch=0',
+                                    'uci set wireless.' + self.DEV_5G + '.channel=' + CHANNEL2_5G,
+                                    'uci set wireless.' + self.DEV_5G + '.autoch=0',
+                                    'uci set wireless.' + self.DEV_2G + '.disabled=0',
+                                    'uci set wireless.' + self.DEV_5G + '.disabled=0',
+                                    'uci commit wireless',
+                                    'wifi; sleep 10'
+                                    ]
         return ap_mixedpsk_chan2_set_up
 
     def ap_mixedpsk_chan3_set_up(self):
         ap_mixedpsk_chan3_set_up = ['uci set wireless.' + self.WIFI_IF_5G + '.encryption=mixed-psk',
-                                   'uci set wireless.' + self.WIFI_IF_2G + '.encryption=mixed-psk',
-                                   'uci set wireless.' + self.WIFI_IF_5G + '.key=' + KEY,
-                                   'uci set wireless.' + self.WIFI_IF_2G + '.key=' + KEY,
-                                   'uci set wireless.' + self.WIFI_IF_5G + '.ssid=' + SSID_5G,
-                                   'uci set wireless.' + self.WIFI_IF_2G + '.ssid=' + SSID,
-                                   'uci set wireless.' + self.WIFI_IF_5G + '.hidden=0',
-                                   'uci set wireless.' + self.WIFI_IF_2G + '.hidden=0',
-                                   'uci set wireless.' + self.DEV_2G + '.channel=' + CHANNEL3,
-                                   'uci set wireless.' + self.DEV_2G + '.autoch=0',
-                                   'uci set wireless.' + self.DEV_5G + '.channel=' + CHANNEL3_5G,
-                                   'uci set wireless.' + self.DEV_5G + '.autoch=0',
-                                   'uci set wireless.' + self.DEV_2G + '.disabled=0',
-                                   'uci set wireless.' + self.DEV_5G + '.disabled=0',
-                                   'uci commit wireless',
-                                   'wifi; sleep 10'
-                                   ]
+                                    'uci set wireless.' + self.WIFI_IF_2G + '.encryption=mixed-psk',
+                                    'uci set wireless.' + self.WIFI_IF_5G + '.key=' + KEY,
+                                    'uci set wireless.' + self.WIFI_IF_2G + '.key=' + KEY,
+                                    'uci set wireless.' + self.WIFI_IF_5G + '.ssid=' + SSID_5G,
+                                    'uci set wireless.' + self.WIFI_IF_2G + '.ssid=' + SSID,
+                                    'uci set wireless.' + self.WIFI_IF_5G + '.hidden=0',
+                                    'uci set wireless.' + self.WIFI_IF_2G + '.hidden=0',
+                                    'uci set wireless.' + self.DEV_2G + '.channel=' + CHANNEL3,
+                                    'uci set wireless.' + self.DEV_2G + '.autoch=0',
+                                    'uci set wireless.' + self.DEV_5G + '.channel=' + CHANNEL3_5G,
+                                    'uci set wireless.' + self.DEV_5G + '.autoch=0',
+                                    'uci set wireless.' + self.DEV_2G + '.disabled=0',
+                                    'uci set wireless.' + self.DEV_5G + '.disabled=0',
+                                    'uci commit wireless',
+                                    'wifi; sleep 10'
+                                    ]
         return ap_mixedpsk_chan3_set_up
 
     def ap_mixedpsk_chan4_set_up(self):
         ap_mixedpsk_chan4_set_up = ['uci set wireless.' + self.WIFI_IF_5G + '.encryption=mixed-psk',
-                                   'uci set wireless.' + self.WIFI_IF_2G + '.encryption=mixed-psk',
-                                   'uci set wireless.' + self.WIFI_IF_5G + '.key=' + KEY,
-                                   'uci set wireless.' + self.WIFI_IF_2G + '.key=' + KEY,
-                                   'uci set wireless.' + self.WIFI_IF_5G + '.ssid=' + SSID_5G,
-                                   'uci set wireless.' + self.WIFI_IF_2G + '.ssid=' + SSID,
-                                   'uci set wireless.' + self.WIFI_IF_5G + '.hidden=0',
-                                   'uci set wireless.' + self.WIFI_IF_2G + '.hidden=0',
-                                   'uci set wireless.' + self.DEV_2G + '.channel=' + CHANNEL4,
-                                   'uci set wireless.' + self.DEV_2G + '.autoch=0',
-                                   'uci set wireless.' + self.DEV_5G + '.channel=' + CHANNEL4_5G,
-                                   'uci set wireless.' + self.DEV_5G + '.autoch=0',
-                                   'uci set wireless.' + self.DEV_2G + '.disabled=0',
-                                   'uci set wireless.' + self.DEV_5G + '.disabled=0',
-                                   'uci commit wireless',
-                                   'wifi; sleep 10'
-                                   ]
+                                    'uci set wireless.' + self.WIFI_IF_2G + '.encryption=mixed-psk',
+                                    'uci set wireless.' + self.WIFI_IF_5G + '.key=' + KEY,
+                                    'uci set wireless.' + self.WIFI_IF_2G + '.key=' + KEY,
+                                    'uci set wireless.' + self.WIFI_IF_5G + '.ssid=' + SSID_5G,
+                                    'uci set wireless.' + self.WIFI_IF_2G + '.ssid=' + SSID,
+                                    'uci set wireless.' + self.WIFI_IF_5G + '.hidden=0',
+                                    'uci set wireless.' + self.WIFI_IF_2G + '.hidden=0',
+                                    'uci set wireless.' + self.DEV_2G + '.channel=' + CHANNEL4,
+                                    'uci set wireless.' + self.DEV_2G + '.autoch=0',
+                                    'uci set wireless.' + self.DEV_5G + '.channel=' + CHANNEL4_5G,
+                                    'uci set wireless.' + self.DEV_5G + '.autoch=0',
+                                    'uci set wireless.' + self.DEV_2G + '.disabled=0',
+                                    'uci set wireless.' + self.DEV_5G + '.disabled=0',
+                                    'uci commit wireless',
+                                    'wifi; sleep 10'
+                                    ]
         return ap_mixedpsk_chan4_set_up
 
     def ap_mixedpsk_ssidhide_set_up(self):

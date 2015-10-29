@@ -9,6 +9,7 @@ import wx.lib.agw.customtreectrl as CT
 import wx.lib.delayedresult as delayedresult
 import shutil
 import random
+import multiprocessing as mp
 
 import var as v
 import common as co
@@ -763,11 +764,11 @@ class TestSuitePage(wx.Panel):
             (testKeepGoing, skip) = self.dlg.Pulse()
             t.sleep(0.1)
         # set testKeepGoing to False when click cancel
-
-        if not os.path.exists(self.report):
-            os.rename(v.TEST_SUITE_LOG_PATH, self.report)
-        else:
-            os.rename(v.TEST_SUITE_LOG_PATH, self.report + str(random.random()))
+        if os.path.exists(v.TEST_SUITE_LOG_PATH):
+            if not os.path.exists(self.report):
+                os.rename(v.TEST_SUITE_LOG_PATH, self.report)
+            else:
+                os.rename(v.TEST_SUITE_LOG_PATH, self.report + str(random.random()))
         if testKeepGoing is False:
             os.system("taskkill /F /IM python.exe | taskkill /F /T /IM adb.exe")
         self.abortEvent.set()
@@ -780,23 +781,30 @@ class TestSuitePage(wx.Panel):
         try:
             result = delayedResult.get()
             self.memMon.stop()  # stop memory monitor and draw chart
-            self.procReport = pr.ProcessReport(self.reportFile)
+            # self.memMon.join()
+            q = mp.Queue()
+            self.procReport = pr.ProcessReport(self.reportFile, q)
             self.procReport.start()
             self.procReport.join()
 
             if v.SEND_MAIL == 1:
-                sm.generateMail(v.MAILTO_LIST, self.mailTitle, self.procReport.result, self.reportFile)
+                # sm.generateMail(v.MAILTO_LIST, self.mailTitle, self.procReport.result, self.reportFile)
+                # add Queue to communicate with processreport process
+                sm.generateMail(v.MAILTO_LIST, self.mailTitle, q, self.reportFile)
 
             files = os.listdir(v.DEFAULT_PATH)
             for file in files:
                 if os.path.splitext(file)[1] == ".png":
-                    shutil.move(file, v.TEST_SUITE_LOG_PATH)
+                    try:
+                        shutil.move(file, v.TEST_SUITE_LOG_PATH)
+                    except Exception, e:
+                        raise "shutil.move" + e
 
             # quit execution test dlg
             self.runFlag = False
 
         except Exception, e:
-            return e
+            raise e
 
     def EvtTestExcute(self, event):
 
@@ -934,7 +942,9 @@ class Frame(wx.Frame):
 
 ##        wx.StaticBitmap(bookFrame, -1, images.logo.GetBitmap(), (520,5))
 
-app = wx.App()
-frame = Frame()
-frame.Show()
-app.MainLoop()
+# when use multiprocess module on windows platform, " 'if __name__ == '__main__' "should be added
+if __name__ == '__main__':
+    app = wx.App()
+    frame = Frame()
+    frame.Show()
+    app.MainLoop()

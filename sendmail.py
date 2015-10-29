@@ -52,7 +52,11 @@ def sendMail(to_list, sub, content, attach=None, pic_list=None):  #to_list：收件
         return False
 
 
-def generateMail(maillist, title, argsdic, attach=None,):
+def generateMail(maillist, title, queue=None, attach=None):
+    if queue is not None:
+        argsdic = queue.get(True)
+    else:
+        raise Exception
     content1 = """
         <p>本次自动化共执行用例 %(sum)d 个，pass %(pa)d 个，通过率 %(percent)0.2f%%，用时 %(time)0.2f 小时 </p>
         <p>无线终端共尝试上线 %(onlinesum)d 次，成功上线 %(onlinepa)d 次，上线率 %(onlinepercent)0.2f%%。</p>
@@ -87,13 +91,13 @@ def generateMail(maillist, title, argsdic, attach=None,):
 
 
 if __name__ == '__main__':
-    report = "R2D 稳定版OTA 2.8.9.log"
+    report = "R1CM 开发版OTA 2.7.10.log"
     ret = pr.ProcessReport(report)
     ret.start()
     ret.join()
 
     # if generateMail(["liujia5@xiaomi.com"], "test", ret.result, report):
-    if generateMail(v.MAILTO_LIST, "【R2D 稳定版OTA 2.8.9】自动化测试报告", ret.result, report):
+    if generateMail(v.MAILTO_LIST, "【R2D 开发版OTA 2.9.35】自动化测试报告", ret.result, report):
         print "successful"
     else:
         print "failed"

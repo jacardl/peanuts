@@ -1,6 +1,7 @@
 import matplotlib.pyplot as plt
 import xlwt as x
 from openpyxl import Workbook
+import multiprocessing as mp
 
 from common import *
 import var as v
@@ -30,22 +31,27 @@ class memMonitor(threading.Thread):
                 if self.callback is not None:
                     self.callback.after_read_res(res, t)
             t.sleep(self.period)
+        self.terminal.close()
 
     def stop(self):
-        # draw a chart
-        f, ax = plt.subplots(figsize=(12, 6))
-        # f, ax = plt.subplots()
-        ax.plot(range(len(self.plot)), self.plot)
-        # ax.set_title('Total Memory Used')
-        plt.suptitle("Total Memory Used")
-        plt.xlabel('Counts')
-        plt.ylabel('KB')
-        # plt.show()
-        plt.savefig(v.MAIL_PIC1)
-        plt.close()
-
-        self.terminal.close()
         self.running = False
+        p = mp.Process(target=drawMem, args=(self.plot,))
+        p.start()
+        p.join()
+
+
+def drawMem(data):
+    # draw a chart
+    fig, ax = plt.subplots(figsize=(12, 6))
+    print "draw memory chart"
+    ax.plot(xrange(len(data)), data)
+    # ax.set_title('Total Memory Used')
+    plt.suptitle("Total Memory Used")
+    plt.xlabel('Counts')
+    plt.ylabel('KB')
+    # plt.show()
+    plt.savefig(v.MAIL_PIC1)
+    plt.close()
 
 
 class memMonitorXls(threading.Thread):
@@ -252,13 +258,16 @@ class memMonitorExcelXlsx(threading.Thread):
         self.running = False
 
 
-if __name__ == "__main__":
-    interval = 1
-    memMon = memMonitorExcelXlsx(interval, 5)
-    memMon.setDaemon(True)
+if __name__ == '__main__':
+
+    v.CONNECTION_TYPE = 2
+    v.HOST = "192.168.110.1"
+    v.USR = ""
+    v.PASSWD = ""
+    memMon = memMonitor(interval=1, period=1)
+    # memMon.daemon = True
     memMon.start()
-    c = 0
-    while c <= 7:
-        print memMon.curr_count
-        c += 1
-        t.sleep(1.2)
+    t.sleep(10)
+    memMon.stop()
+    print "over"
+

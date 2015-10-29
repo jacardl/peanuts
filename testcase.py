@@ -5202,7 +5202,7 @@ class AP_CLEAR_HIGH_TXPOWER(TestCase):
             else:
                 self.fail("R1CL txpower isnot correct")
 
-    def chan36_txpower_5g(self):
+    def chan149_txpower_5g(self):
         setUCIWirelessDev(self.dut, v.DUT_MODULE, "5g", "set", "channel", v.CHANNEL_5G, self.__class__.__name__)
         setUCIWirelessDev(self.dut, v.DUT_MODULE, "5g", "set", "autoch", "0", self.__class__.__name__)
         setWifiRestart(self.dut, self.__class__.__name__)
@@ -7497,8 +7497,6 @@ class AP_REBOOT(TestCase):
         count += 1
 
 
-
-
 class AP_TEST(TestCase):
     @classmethod
     def setUpClass(self):
@@ -7509,14 +7507,11 @@ class AP_TEST(TestCase):
         print "teardownclass" + self.__name__
 
     def test1(self):
-        print "test1" + self.__class__.__name__
-        self.dut = SshClient(v.CONNECTION_TYPE)
-        self.dut.connect("192.168.108.1", v.USR, v.PASSWD)
-        d = TestCommand(v.DUT_MODULE)
-        for dutCommand in d.ap_clear_chan_set_up():
-            setConfig(self.dut, dutCommand, self.__class__.__name__)
+        t.sleep(5)
+        print "test1"
 
     def test2(self):
+        t.sleep(5)
         print "test2"
 
 

@@ -512,7 +512,12 @@ treeNone = [
 treeCheck = [
     "AP_REBOOT",
     [
-        "autochan_last_est_power"
+        "autochan_last_est_power",
+    ],
+    "AP_TEST",
+    [
+        "test1",
+        "test2",
     ]
 ]
 

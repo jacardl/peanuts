@@ -532,6 +532,10 @@ treeCheck = [
     [
         "autochan_last_est_power",
     ],
+    "AP_UPGRADE",
+    [
+        "autochan_last_est_power",
+    ],
     "AP_TEST",
     [
         "test1",

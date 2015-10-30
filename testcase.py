@@ -7996,7 +7996,7 @@ class AP_REBOOT(TestCase):
                 self.fail(msg='5g last est.power is far less than Tx Power!')
             else:
                 setReboot(self.dut, self.__class__.__name__)
-                t.sleep(60)
+                t.sleep(100)
             while True:
                 try:
                     self.dut = SshClient(v.CONNECTION_TYPE)
@@ -8006,10 +8006,77 @@ class AP_REBOOT(TestCase):
                     else:
                         t.sleep(10)
                 except Exception, e:
-                    t.sleep(10)
-                    pass
+                    raise e
+            uptime = getUptime(self.dut, self.__class__.__name__)
+            if uptime > 2:
+                self.fail(msg='device reboot failed!')
             count += 1
 
+
+class AP_UPGRADE(TestCase):
+    @classmethod
+    def setUpClass(self):
+
+        self.dut = SshClient(v.CONNECTION_TYPE)
+        ret1 = self.dut.connect(v.HOST, v.USR, v.PASSWD)
+
+        # ret2 = chkAdbDevicesCount(1)
+
+        if ret1 is False:
+            raise Exception("Connection is failed. please check your remote settings.")
+
+        # if ret2 is False:
+        #     raise Exception("USB devices arenot ready!")
+        d = TestCommand(v.DUT_MODULE)
+        for dutCommand in d.ap_mixedpsk_set_up2(ssid="peanuts_check"):
+            setConfig(self.dut, dutCommand, self.__name__)
+
+        # self.device = getAdbDevices()
+
+    @classmethod
+    def tearDownClass(self):
+        # when bug occurs, reservation site
+        pass
+        # d = TestCommand(v.DUT_MODULE)
+        # for dutCommand in d.ap_tear_down():
+        #     setConfig(self.dut, dutCommand, self.__name__)
+        #
+        # self.dut.close()
+
+    def autochan_last_est_power(self):
+        count = 0
+        while count <= 480:
+            upgradefile = getFilePath(self.dut, self.__class__.__name__, path='/extdisks', pattern='brcm4709*')
+            if len(upgradefile) is not 0:
+                setCopyFile(self.dut, self.__class__.__name__, src=upgradefile, dst='/tmp/upgrade.bin')
+                while not getFilePath(self.dut, self.__class__.__name__, path='/tmp', pattern='upgrade.bin'):
+                    t.sleep(1)
+                setUpgradeSystem(self.dut, '/tmp/upgrade.bin', self.__class__.__name__)
+                t.sleep(100)
+                while True:
+                    try:
+                        self.dut = SshClient(v.CONNECTION_TYPE)
+                        ret = self.dut.connect(v.HOST, v.USR, v.PASSWD)
+                        if ret is True:
+                            break
+                        else:
+                            t.sleep(10)
+                    except Exception, e:
+                        raise e
+                uptime = getUptime(self.dut, self.__class__.__name__)
+                if uptime > 2:
+                    self.fail(msg='device reboot failed!')
+                power2g = getWlanLastEstPower(self.dut, v.DUT_MODULE, "2g", self.__class__.__name__)
+                txPower2g = getWlanTxPower(self.dut, v.DUT_MODULE, "2g", self.__class__.__name__)
+                power5g = getWlanLastEstPower(self.dut, v.DUT_MODULE, "5g", self.__class__.__name__)
+                txPower5g = getWlanTxPower(self.dut, v.DUT_MODULE, "5g", self.__class__.__name__)
+                if power2g <= txPower2g/2:
+                    self.fail(msg='2.4g last est.power is far less than Tx Power!')
+                elif power5g <= txPower5g/2:
+                    self.fail(msg='5g last est.power is far less than Tx Power!')
+            else:
+                self.fail(msg='fail to find upgrade file!')
+        count += 1
 
 class AP_TEST(TestCase):
     @classmethod
@@ -8030,12 +8097,16 @@ class AP_TEST(TestCase):
 
 
 if __name__ == '__main__':
+    v.HOST = "192.168.111.1"
+    v.USR = ""
+    v.PASSWD = ""
+    v.DUT_MODULE = "R2D"
     cases = [
-        'assoc_psk2_sta_5g',
+        'autochan_last_est_power',
         ##            'ap_clear_ping_clear_sta_2g',
     ]
 
-    suite = TestSuite(map(AP_MIXEDPSK_CHAN_BW402, cases))
+    suite = TestSuite(map(AP_UPGRADE, cases))
     curTime = t.strftime('%Y.%m.%d %H.%M.%S', t.localtime())
     f = open(curTime + '_RESULT.log', 'a')
     runner = TextTestRunner(f, verbosity=2)

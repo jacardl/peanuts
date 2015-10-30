@@ -594,6 +594,27 @@ def getWlanInfo(terminal, intf, logname):
     return result
 
 
+def getFilePath(terminal, logname, **kargs):
+    command = "find %s -name %s"%(kargs["path"], kargs["pattern"])
+    ret = setGet(terminal, command, logname)
+    for line in ret:
+        if len(line) is not 0:
+            return line[:-1]
+    return ""
+
+
+def getUptime(terminal, logname):
+    command = 'uptime'
+    ret = setGet(terminal, command, logname)
+    for line in ret:
+        m = re.search('up\s(\d{1,})[\s:](\w*),', line)
+        if m:
+            if m.group(2) == 'min':
+                return int(m.group(1))
+            elif m.group(2).isdigit():
+                time = int(m.group(1)) * 60 + int(m.group(2))
+                return time
+
 def getAdbDevices():
     """
     C:\Users\Jac>adb devices
@@ -802,6 +823,15 @@ def setWifiMacfilterModel(terminal, enable, model=0, mac='none', logname=None):
 
 def setReboot(terminal, logname):
     command = 'reboot'
+    setConfig(terminal, command, logname)
+
+
+def setUpgradeSystem(terminal, file, logname):
+    command = "flash.sh " + file
+    setConfig(terminal, command, logname)
+
+def setCopyFile(terminal, logname, **kargs):
+    command = 'cp %s %s'%(kargs['src'], kargs['dst'])
     setConfig(terminal, command, logname)
 
 
@@ -1091,25 +1121,11 @@ if __name__ == '__main__':
     # setUCIWirelessIntf(ssh, v.INTF_2G, "set", "key", "12345678", "log")
     # setUCIWirelessDev(ssh, v.DUT_MODULE, "2g", "set", "disabled", "0", "log")
     # print getWlanTxPower(ssh, v.DUT_MODULE, "2g", "log")
-    print getWlanLastEstPower(ssh, v.DUT_MODULE, "5g", "log")
-    # import tcdata
-    # dut = tcdata.TestCommand("R1CL")
-    # for dutCommand in dut.ap_tear_down():
-    #     setConfig(ssh, dutCommand, "log")
-    # print ssh.outPidNameVSZDic
-    # ret = setConfig(ssh, "uci set wireless.@wifi-iface[0].ssid='ÎÒµÄ10'", "a")
-    # ret = setGet(ssh, "uci show wireless", "a")
-    # ret = getSiteSurvey(ssh, "apcli0", "a")
-    # a = [2,13]
-    # ret = getWlanInfo(ssh, "2g", "a")
-    # try:
-    # a.index(int(ret["channel"]))
-    # print 1
-    # except:
-    # print 2
-    # ret = chkSiteSurvey(ssh, "apcli0", "64:09:80:73:75:3d" ,"a")
-    # setWifiRestart(ssh,"a")
-    # ret =getIntfHWAddr(ssh, "wl1", "a")
-    # print ret["mac"]
+    # print getWlanLastEstPower(ssh, v.DUT_MODULE, "5g", "log")
+    # setCopyFile(ssh, "log", src="/extdisks/sdb1/brcm4709_r2d_all_2.9.38.bin", dst='/tmp/upgrade.bin')
+    # print getFilePath(ssh, "log", path='/tmp', pattern='upgrade.bin')
+    print getUptime(ssh, "log")
+    # ret = getFilePath(ssh, "log", path='/extdisks', pattern='brcm4709*')
+    # print ret
+    # print ret + "123"
     ssh.close()
-    # setIperfFlow("192.168.31.218", "1", "2", "a")

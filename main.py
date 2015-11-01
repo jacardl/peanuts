@@ -376,7 +376,7 @@ class MemoryTrackPage(wx.Panel):
         v.COUNT = self.count.GetValue()
         keepGoing = True
         fileCreateTime = t.strftime('_%Y.%m.%d %H.%M.%S', t.localtime())
-        memMon = mm.memMonitorExcelXlsx(v.INTERVAL, v.COUNT, 'MEM' + fileCreateTime + '.xlsx')
+        memMon = mm.MemMonitorXlsx(v.INTERVAL, v.COUNT, 'MEM' + fileCreateTime + '.xlsx')
 
         if memMon.ret:
 
@@ -396,10 +396,14 @@ class MemoryTrackPage(wx.Panel):
             memMon.setDaemon(True)
             memMon.start()
 
-            while keepGoing and memMon.curr_count <= v.COUNT:
+            # while keepGoing and memMon.curr_count <= v.COUNT:
+            while keepGoing and memMon.isAlive():
+                # wx.Yield()  # refresh progress
+                # (keepGoing, skip) = self.dlg.Update(memMon.curr_count, str(memMon.curr_count) + '/' + str(v.COUNT))
+                # t.sleep(1)
                 wx.Yield()  # refresh progress
-                (keepGoing, skip) = self.dlg.Update(memMon.curr_count, str(memMon.curr_count) + '/' + str(v.COUNT))
-                t.sleep(1)
+                (testKeepGoing, skip) = self.dlg.Pulse()
+                t.sleep(0.1)
 
             self.dlg.Destroy()
 
@@ -755,9 +759,12 @@ class TestSuitePage(wx.Panel):
                                   jobID=self.jobID)
 
         # start memory monitor
-        self.memMon = mm.memMonitor(v.MEM_MONITOR_INTERVAL)
+        self.memMon = mm.MemMonitor(v.MEM_MONITOR_INTERVAL)
+        self.memMonXlsx = mm.MemMonitorXlsx(v.MEM_MONITOR_INTERVAL, file=v.MAIL_XLSX)
         self.memMon.setDaemon(True)
+        self.memMonXlsx.setDaemon(True)
         self.memMon.start()
+        self.memMonXlsx.start()
 
         while testKeepGoing and self.runFlag:
             wx.Yield()  # refresh progress
@@ -781,11 +788,16 @@ class TestSuitePage(wx.Panel):
         try:
             result = delayedResult.get()
             self.memMon.stop()  # stop memory monitor and draw chart
+            self.memMonXlsx.stop() # stop tracing daemon and kernel memory
             # self.memMon.join()
-            q = mp.Queue()
+            q = mp.Queue() # tranlate test result to generateMail
             self.procReport = pr.ProcessReport(self.reportFile, q)
             self.procReport.start()
             self.procReport.join()
+
+            while not os.path.exists(v.DEFAULT_PATH + v.MAIL_PIC1):
+                print "wait for draw memory chart"
+                t.sleep(1)
 
             if v.SEND_MAIL == 1:
                 # sm.generateMail(v.MAILTO_LIST, self.mailTitle, self.procReport.result, self.reportFile)
@@ -798,8 +810,12 @@ class TestSuitePage(wx.Panel):
                     try:
                         shutil.move(file, v.TEST_SUITE_LOG_PATH)
                     except Exception, e:
-                        raise "shutil.move" + e
-
+                        raise "shutil.move " + file + e
+                elif os.path.splitext(file)[1] == ".xlsx":
+                    try:
+                        shutil.move(file, v.TEST_SUITE_LOG_PATH)
+                    except Exception, e:
+                        raise "shutil.move" + file + e
             # quit execution test dlg
             self.runFlag = False
 

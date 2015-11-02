@@ -802,7 +802,7 @@ class TestSuitePage(wx.Panel):
             if v.SEND_MAIL == 1:
                 # sm.generateMail(v.MAILTO_LIST, self.mailTitle, self.procReport.result, self.reportFile)
                 # add Queue to communicate with processreport process
-                sm.generateMail(v.MAILTO_LIST, self.mailTitle, q, self.reportFile)
+                sm.generateMail(v.MAILTO_LIST, self.mailTitle, q, self.reportFile, v.MAIL_XLSX)
 
             files = os.listdir(v.DEFAULT_PATH)
             for file in files:
@@ -810,12 +810,12 @@ class TestSuitePage(wx.Panel):
                     try:
                         shutil.move(file, v.TEST_SUITE_LOG_PATH)
                     except Exception, e:
-                        raise "shutil.move " + file + e
+                        print "shutil.move " + file + str(e)
                 elif os.path.splitext(file)[1] == ".xlsx":
                     try:
                         shutil.move(file, v.TEST_SUITE_LOG_PATH)
                     except Exception, e:
-                        raise "shutil.move" + file + e
+                        print "shutil.move" + file + str(e)
             # quit execution test dlg
             self.runFlag = False
 

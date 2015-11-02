@@ -5241,7 +5241,7 @@ class AP_CLEAR_MID_TXPOWER(TestCase):
             else:
                 self.fail("R1CL txpower isnot correct")
 
-    def cha6_txpower_2g(self):
+    def chan6_txpower_2g(self):
         setUCIWirelessDev(self.dut, v.DUT_MODULE, "2g", "set", "channel", v.CHANNEL3, self.__class__.__name__)
         setUCIWirelessDev(self.dut, v.DUT_MODULE, "2g", "set", "autoch", "0", self.__class__.__name__)
         setWifiRestart(self.dut, self.__class__.__name__)

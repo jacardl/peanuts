@@ -110,10 +110,10 @@ def daemonMonitor(terminal, interval, count, filename, sheetname):
             if curr_time - last_time >= interval:
                 last_time = curr_time
                 try:
-                    terminal.getPidNameVSZDic()
+                    # terminal.getPidNameVSZDic()
                     totalmem = terminal.getTotalMemInfo()
                     time = terminal.getTimeStr()
-                    newDic = terminal.outPidNameVSZDic
+                    newDic = getDaemonRss(terminal)
                 except Exception, e:
                     curr_count += 1
                     continue
@@ -154,10 +154,9 @@ def daemonMonitor(terminal, interval, count, filename, sheetname):
             if curr_time - last_time >= interval:
                 last_time = curr_time
                 try:
-                    terminal.getPidNameVSZDic()
                     totalmem = terminal.getTotalMemInfo()
                     time = terminal.getTimeStr()
-                    newDic = terminal.outPidNameVSZDic
+                    newDic = getDaemonRss(terminal)
                 except Exception, e:
                     curr_count += 1
                     continue
@@ -227,6 +226,7 @@ def memDiffCalc(filename, sheetname):
             diff = (rowEnd - rowStart) / rowStart
         except Exception, e:
             print e, "rowStart=%s, rowEnd=%s"%(rowStart, rowEnd)
+            diff = 0
 
         if diff != 0:
             # self.ws.write(maxRow, col, diff, stylePercent)
@@ -237,13 +237,13 @@ def memDiffCalc(filename, sheetname):
 
 if __name__ == '__main__':
 
-    v.CONNECTION_TYPE = 1
-    v.HOST = "192.168.31.1"
-    v.USR = "root"
-    v.PASSWD = "admin"
-    memMon = MemMonitorXlsx(interval=5, count=0, file="temp.xlsx")
+    v.CONNECTION_TYPE = 2
+    v.HOST = "192.168.110.1"
+    v.USR = ""
+    v.PASSWD = ""
+    memMon = MemMonitorXlsx(interval=1, count=0, file="temp.xlsx")
     # memDiffCalc("temp.xlsx")
     memMon.start()
-    t.sleep(20)
+    t.sleep(10)
     memMon.stop()
 

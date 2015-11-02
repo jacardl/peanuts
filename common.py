@@ -5,8 +5,8 @@ import time as t
 import re
 import threading
 import telnetlib
-
 import paramiko as pm
+from collections import *
 
 import var as v
 
@@ -594,26 +594,26 @@ def getWlanInfo(terminal, intf, logname):
     return result
 
 
-def getFilePath(terminal, logname, **kargs):
-    command = "find %s -name %s"%(kargs["path"], kargs["pattern"])
-    ret = setGet(terminal, command, logname)
+def getDaemonRss(terminal):
+    pidNameRss = OrderedDict()
+    ret = terminal.command('ps w | grep -v [[]')
+    del ret[0]
     for line in ret:
-        if len(line) is not 0:
-            return line[:-1]
-    return ""
+        pid = line[:5].strip()
+        name = line[26:].strip()
+        rss = getDaemonPidRss(terminal, pid)
+        pidNameRss['#'.join([name, pid])] = rss
+    return pidNameRss
 
 
-def getUptime(terminal, logname):
-    command = 'uptime'
-    ret = setGet(terminal, command, logname)
+def getDaemonPidRss(terminal, pid):
+    cmd = "cat /proc/%s/status"%pid
+    ret = terminal.command(cmd)
     for line in ret:
-        m = re.search('up\s(\d{1,})[\s:](\w*),', line)
-        if m:
-            if m.group(2) == 'min':
+        if not line.isspace():
+            m = re.search('VmRSS:\s*(\d+)\D*', line)
+            if m:
                 return int(m.group(1))
-            elif m.group(2).isdigit():
-                time = int(m.group(1)) * 60 + int(m.group(2))
-                return time
 
 def getAdbDevices():
     """
@@ -823,15 +823,6 @@ def setWifiMacfilterModel(terminal, enable, model=0, mac='none', logname=None):
 
 def setReboot(terminal, logname):
     command = 'reboot'
-    setConfig(terminal, command, logname)
-
-
-def setUpgradeSystem(terminal, file, logname):
-    command = "flash.sh " + file
-    setConfig(terminal, command, logname)
-
-def setCopyFile(terminal, logname, **kargs):
-    command = 'cp %s %s'%(kargs['src'], kargs['dst'])
     setConfig(terminal, command, logname)
 
 
@@ -1116,16 +1107,9 @@ def setIperfFlow(target, interval, time, logname):
 
 if __name__ == '__main__':
     ssh = SshCommand(2)
-    ssh.connect("192.168.111.1", "", "")
+    ssh.connect("192.168.110.1", "", "")
     v.DUT_MODULE = "R2D"
-    # setUCIWirelessIntf(ssh, v.INTF_2G, "set", "key", "12345678", "log")
-    # setUCIWirelessDev(ssh, v.DUT_MODULE, "2g", "set", "disabled", "0", "log")
-    # print getWlanTxPower(ssh, v.DUT_MODULE, "2g", "log")
-    # print getWlanLastEstPower(ssh, v.DUT_MODULE, "5g", "log")
-    # setCopyFile(ssh, "log", src="/extdisks/sdb1/brcm4709_r2d_all_2.9.38.bin", dst='/tmp/upgrade.bin')
-    # print getFilePath(ssh, "log", path='/tmp', pattern='upgrade.bin')
-    print getUptime(ssh, "log")
-    # ret = getFilePath(ssh, "log", path='/extdisks', pattern='brcm4709*')
-    # print ret
-    # print ret + "123"
+
+    print getDaemonRss(ssh)
+    # print getDaemonPidRss(ssh, "13222")
     ssh.close()

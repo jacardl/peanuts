@@ -615,6 +615,18 @@ def getDaemonPidRss(terminal, pid):
             if m:
                 return int(m.group(1))
 
+
+def getKernelSlab(terminal):
+    result = OrderedDict()
+    cmd = 'cat /proc/slabinfo'
+    ret = terminal.command(cmd)
+    for line in ret[2:]:
+        cacheList = line.split()
+        result[cacheList[0]] = round(float(cacheList[2]) * float(cacheList[3])/1024, 2)
+    result["Total Cache"] = reduce(lambda x, y: x + y, result.itervalues())
+    return result
+
+
 def getAdbDevices():
     """
     C:\Users\Jac>adb devices
@@ -1110,6 +1122,7 @@ if __name__ == '__main__':
     ssh.connect("192.168.110.1", "", "")
     v.DUT_MODULE = "R2D"
 
-    print getDaemonRss(ssh)
+    # print getDaemonRss(ssh)
     # print getDaemonPidRss(ssh, "13222")
+    print getKernelSlab(ssh)
     ssh.close()

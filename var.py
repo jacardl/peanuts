@@ -39,6 +39,7 @@ COUNT = 10
 ps w
 """
 EXCEPTIONS = ['ps', 'awk', 'sleep', 'mpstat', 'cpulimit_daemon']
+KERNEL_EXCEPTIONS = []
 
 # ----------------Log Collection-----------------
 
@@ -106,10 +107,10 @@ IPERF_TIME = "60"
 # IPERF_TIME = "5"
 
 SEND_MAIL = 1
-# MAILTO_LIST = ["liujia5@xiaomi.com","fengjiang@xiaomi.com", "hexiaoliang@xiaomi.com", "linli1@xiaomi.com",
-#                "wangchunxuan@xiaomi.com", "wangyue3@xiaomi.com", "youguidong@xiaomi.com", "zhangjunjie@xiaomi.com",
-#                "zhaoziqiang@xiaomi.com"]
-MAILTO_LIST = ["liujia5@xiaomi.com"]
+MAILTO_LIST = ["liujia5@xiaomi.com", "fengjiang@xiaomi.com", "hexiaoliang@xiaomi.com", "linli1@xiaomi.com",
+               "wangchunxuan@xiaomi.com", "wangyue3@xiaomi.com", "youguidong@xiaomi.com", "zhangjunjie@xiaomi.com",
+               "zhaoziqiang@xiaomi.com", ]
+# MAILTO_LIST = ["liujia5@xiaomi.com"]
 MAIL_HOST = "mail.srv"  #设置服务器
 MAIL_USER = "robot"    #用户名
 MAIL_PASS = ""   #口令

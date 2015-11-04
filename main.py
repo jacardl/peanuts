@@ -788,12 +788,13 @@ class TestSuitePage(wx.Panel):
         try:
             result = delayedResult.get()
             self.memMon.stop()  # stop memory monitor and draw chart
-            self.memMonXlsx.stop() # stop tracing daemon and kernel memory
+            self.memMonXlsx.stop()  # stop tracing daemon and kernel memory
             # self.memMon.join()
             q = mp.Queue() # tranlate test result to generateMail
             self.procReport = pr.ProcessReport(self.reportFile, q)
             self.procReport.start()
             self.procReport.join()
+            self.memMonXlsx.join()
 
             while not os.path.exists(v.DEFAULT_PATH + v.MAIL_PIC1):
                 print "wait for draw memory chart"

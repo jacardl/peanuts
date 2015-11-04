@@ -4847,6 +4847,8 @@ class AP_CLEAR_LOW_TXPOWER(TestCase):
         for dutCommand in d.ap_tear_down():
             setConfig(self.dut, dutCommand, self.__name__)
 
+        self.dut.close()
+
     def autochan_txpower_2g(self):
         setUCIWirelessDev(self.dut, v.DUT_MODULE, "2g", "set", "channel", "0", self.__class__.__name__)
         setUCIWirelessDev(self.dut, v.DUT_MODULE, "2g", "set", "autoch", "2", self.__class__.__name__)
@@ -5150,6 +5152,8 @@ class AP_CLEAR_MID_TXPOWER(TestCase):
         d = TestCommand(v.DUT_MODULE)
         for dutCommand in d.ap_tear_down():
             setConfig(self.dut, dutCommand, self.__name__)
+
+        self.dut.close()
 
     def autochan_txpower_2g(self):
         setUCIWirelessDev(self.dut, v.DUT_MODULE, "2g", "set", "channel", "0", self.__class__.__name__)
@@ -5456,6 +5460,8 @@ class AP_CLEAR_HIGH_TXPOWER(TestCase):
         for dutCommand in d.ap_tear_down():
             setConfig(self.dut, dutCommand, self.__name__)
 
+        self.dut.close()
+
     def autochan_txpower_2g(self):
         setUCIWirelessDev(self.dut, v.DUT_MODULE, "2g", "set", "channel", "0", self.__class__.__name__)
         setUCIWirelessDev(self.dut, v.DUT_MODULE, "2g", "set", "autoch", "2", self.__class__.__name__)
@@ -5755,6 +5761,8 @@ class AP_CLEAR_CHANSELECTION(TestCase):
         d = TestCommand(v.DUT_MODULE)
         for dutCommand in d.ap_tear_down():
             setConfig(self.dut, dutCommand, self.__name__)
+
+        self.dut.close()
 
     def chanselection_2g(self):
         count = 0
@@ -8081,10 +8089,14 @@ class AP_UPGRADE(TestCase):
 class AP_TEST(TestCase):
     @classmethod
     def setUpClass(self):
+        self.dut = SshClient(v.CONNECTION_TYPE)
+        self.dut.connect(v.HOST, v.USR, v.PASSWD)
+        setConfig(self.dut, "free", self.__name__)
         print "setupclass" + self.__name__
 
     @classmethod
     def tearDownClass(self):
+        self.dut.close()
         print "teardownclass" + self.__name__
 
     def test1(self):

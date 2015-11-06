@@ -812,7 +812,7 @@ class TestSuitePage(wx.Panel):
                         shutil.move(file, v.TEST_SUITE_LOG_PATH)
                     except Exception, e:
                         print "shutil.move " + file + str(e)
-                elif os.path.splitext(file)[1] == ".xlsx":
+                elif file == v.MAIL_XLSX:
                     try:
                         shutil.move(file, v.TEST_SUITE_LOG_PATH)
                     except Exception, e:

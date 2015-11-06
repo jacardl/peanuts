@@ -1,12 +1,11 @@
 # -*- coding: gbk -*-
-import sys
 import os
 import time as t
 import re
 import threading
 import telnetlib
+
 import paramiko as pm
-from collections import *
 
 import var as v
 
@@ -29,7 +28,7 @@ class SshClient(object):
             except:
                 print 'connection is failed. please check your remote settings.'
                 return False
-                # sys.exit(1)
+
         elif self.connectionType == 2:  # represent telnet
             self.hostname = host.encode("utf-8")
             self.username = userid.encode("utf-8")
@@ -73,7 +72,6 @@ class SshClient(object):
             if checkContainChinese(cmd):
                 cmd = cmd.decode("gbk")
                 cmd = cmd.encode("utf-8")
-
             self.tn.write(cmd + "\n")
             self.out = self.tn.read_until("root@XiaoQiang:", 60)
             self.out = self.out.split("\n")
@@ -286,7 +284,6 @@ def setConfig(terminal, command, logname):
         f.write('\n')
         terminal.close()
         f.close()
-        sys.exit(1)
 
 
 def setGet(terminal, command, logname):
@@ -313,19 +310,17 @@ def setGet(terminal, command, logname):
         f.write('\n')
         terminal.close()
         f.close()
-        sys.exit(1)
 
 
 def setAdbShell(device, command, logname):
     if not os.path.exists(v.TEST_SUITE_LOG_PATH):
         os.makedirs(v.TEST_SUITE_LOG_PATH)
-
+    if device != "":
+        adb = "adb " + "-s " + device + " shell "
+    else:
+        adb = "adb shell "
+    command = adb + command
     try:
-        if device != "":
-            adb = "adb " + "-s " + device + " shell "
-        else:
-            adb = "adb shell "
-        command = adb + command
         ret = os.popen(command).readlines()
         curTime = t.strftime('%Y.%m.%d %H:%M:%S', t.localtime())
         f = open(v.TEST_SUITE_LOG_PATH + logname + '.log', 'a')
@@ -334,9 +329,15 @@ def setAdbShell(device, command, logname):
         f.writelines(ret)
         f.write('\n')
         f.close()
-        return ret
+
     except Exception, e:
-        sys.exit(1)
+        curTime = t.strftime('%Y.%m.%d %H:%M:%S', t.localtime())
+        f = open(v.TEST_SUITE_LOG_PATH + logname + '.log', 'a')
+        f.write(curTime + '~#ADB failed#')
+        f.write(command + '\n')
+        f.writelines(str(e))
+        f.write('\n')
+        f.close()
 
 
 def setShell(command, logname):
@@ -352,9 +353,15 @@ def setShell(command, logname):
         f.writelines(ret)
         f.write('\n')
         f.close()
-        return ret
+
     except Exception, e:
-        sys.exit(1)
+        curTime = t.strftime('%Y.%m.%d %H:%M:%S', t.localtime())
+        f = open(v.TEST_SUITE_LOG_PATH + logname + '.log', 'a')
+        f.write(curTime + '~#OS failed#')
+        f.write(command + '\n')
+        f.writelines(str(e))
+        f.write('\n')
+        f.close()
 
 
 def getApcli0Conn(terminal, logname):
@@ -594,38 +601,26 @@ def getWlanInfo(terminal, intf, logname):
     return result
 
 
-def getDaemonRss(terminal):
-    pidNameRss = OrderedDict()
-    ret = terminal.command('ps w | grep -v [[]')
-    del ret[0]
+def getFilePath(terminal, logname, **kargs):
+    command = "find %s -name %s"%(kargs["path"], kargs["pattern"])
+    ret = setGet(terminal, command, logname)
     for line in ret:
-        pid = line[:5].strip()
-        name = line[26:].strip()
-        rss = getDaemonPidRss(terminal, pid)
-        pidNameRss['#'.join([name, pid])] = rss
-    return pidNameRss
+        if len(line) is not 0:
+            return line[:-1]
+    return ""
 
 
-def getDaemonPidRss(terminal, pid):
-    cmd = "cat /proc/%s/status"%pid
-    ret = terminal.command(cmd)
+def getUptime(terminal, logname):
+    command = 'uptime'
+    ret = setGet(terminal, command, logname)
     for line in ret:
-        if not line.isspace():
-            m = re.search('VmRSS:\s*(\d+)\D*', line)
-            if m:
+        m = re.search('up\s(\d{1,})[\s:](\w*),', line)
+        if m:
+            if m.group(2) == 'min':
                 return int(m.group(1))
-
-
-def getKernelSlab(terminal):
-    result = OrderedDict()
-    cmd = 'cat /proc/slabinfo'
-    ret = terminal.command(cmd)
-    for line in ret[2:]:
-        cacheList = line.split()
-        result[cacheList[0]] = round(float(cacheList[2]) * float(cacheList[3])/1024, 2)
-    result["Total Cache"] = reduce(lambda x, y: x + y, result.itervalues())
-    return result
-
+            elif m.group(2).isdigit():
+                time = int(m.group(1)) * 60 + int(m.group(2))
+                return time
 
 def getAdbDevices():
     """
@@ -709,6 +704,16 @@ def chkSiteSurvey(terminal, intf, chkbssid, logname):
     resultAll = (True, result)
     return resultAll
 
+
+def chkBootingUpFinished(terminal, logname):
+    precmd = "touch /tmp/messages"
+    command = "cat /tmp/messages | grep 'Booting up finished'"
+    setGet(terminal, precmd, logname)
+    ret = setGet(terminal, command, logname)
+    if len(ret) is not 0:
+        return True
+    else:
+        return False
 
 def setUCIWirelessIntf(terminal, intf, type, name, value, logname):
     """
@@ -835,6 +840,21 @@ def setWifiMacfilterModel(terminal, enable, model=0, mac='none', logname=None):
 
 def setReboot(terminal, logname):
     command = 'reboot'
+    setConfig(terminal, command, logname)
+
+
+def setUpgradeSystem(terminal, file, logname):
+    command = "flash.sh " + file
+    setGet(terminal, command, logname)
+
+
+def setCopyFile(terminal, logname, **kargs):
+    command = 'cp %s %s'%(kargs['src'], kargs['dst'])
+    setConfig(terminal, command, logname)
+
+
+def setMvFile(terminal, logname, **kargs):
+    command = 'mv %s %s'%(kargs['src'], kargs['dst'])
     setConfig(terminal, command, logname)
 
 
@@ -1119,10 +1139,16 @@ def setIperfFlow(target, interval, time, logname):
 
 if __name__ == '__main__':
     ssh = SshCommand(2)
-    ssh.connect("192.168.110.1", "", "")
+    ssh.connect("192.168.111.1", "", "")
     v.DUT_MODULE = "R2D"
-
-    # print getDaemonRss(ssh)
-    # print getDaemonPidRss(ssh, "13222")
-    print getKernelSlab(ssh)
+    # setUCIWirelessIntf(ssh, v.INTF_2G, "set", "key", "12345678", "log")
+    # setUCIWirelessDev(ssh, v.DUT_MODULE, "2g", "set", "disabled", "0", "log")
+    # print getWlanTxPower(ssh, v.DUT_MODULE, "2g", "log")
+    # print getWlanLastEstPower(ssh, v.DUT_MODULE, "5g", "log")
+    # setCopyFile(ssh, "log", src="/extdisks/sdb1/brcm4709_r2d_all_2.9.38.bin", dst='/tmp/upgrade.bin')
+    # print getFilePath(ssh, "log", path='/tmp', pattern='upgrade.bin')
+    print chkBootingUpFinished(ssh, "log")
+    # ret = getFilePath(ssh, "log", path='/extdisks', pattern='brcm4709*')
+    # print ret
+    # print ret + "123"
     ssh.close()

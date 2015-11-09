@@ -329,7 +329,7 @@ def setAdbShell(device, command, logname):
         f.writelines(ret)
         f.write('\n')
         f.close()
-
+        return ret
     except Exception, e:
         curTime = t.strftime('%Y.%m.%d %H:%M:%S', t.localtime())
         f = open(v.TEST_SUITE_LOG_PATH + logname + '.log', 'a')
@@ -353,7 +353,7 @@ def setShell(command, logname):
         f.writelines(ret)
         f.write('\n')
         f.close()
-
+        return ret
     except Exception, e:
         curTime = t.strftime('%Y.%m.%d %H:%M:%S', t.localtime())
         f = open(v.TEST_SUITE_LOG_PATH + logname + '.log', 'a')
@@ -1181,7 +1181,7 @@ if __name__ == '__main__':
     # print getWlanLastEstPower(ssh, v.DUT_MODULE, "5g", "log")
     # setCopyFile(ssh, "log", src="/extdisks/sdb1/brcm4709_r2d_all_2.9.38.bin", dst='/tmp/upgrade.bin')
     # print getFilePath(ssh, "log", path='/tmp', pattern='upgrade.bin')
-    print chkBootingUpFinished(ssh, "log")
+    # print chkBootingUpFinished(ssh, "log")
     # ret = getFilePath(ssh, "log", path='/extdisks', pattern='brcm4709*')
     # print ret
     # print ret + "123"

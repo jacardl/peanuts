@@ -1,5 +1,4 @@
 import multiprocessing as mp
-
 import matplotlib.pyplot as plt
 import xlwt as x
 from openpyxl import Workbook, load_workbook
@@ -289,6 +288,7 @@ def daemonKernelMonitor(terminal, interval, count, filename, sheet1, sheet2):
     ws1 = wb.active
     ws1.title = sheet1
     ws2 = wb.create_sheet(title=sheet2)
+    wb.save(filename)
     keys1 = list()
     keys2 = list()
     daemonNameCol = 3  # col 1 write time, col 2 write total mem, so vsz begin with 3

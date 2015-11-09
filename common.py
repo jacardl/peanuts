@@ -4,7 +4,7 @@ import time as t
 import re
 import threading
 import telnetlib
-
+from collections import *
 import paramiko as pm
 
 import var as v
@@ -622,6 +622,40 @@ def getUptime(terminal, logname):
                 time = int(m.group(1)) * 60 + int(m.group(2))
                 return time
 
+
+def getDaemonRss(terminal):
+    pidNameRss = OrderedDict()
+    ret = terminal.command('ps w | grep -v [[]')
+    del ret[0]
+    for line in ret:
+        pid = line[:5].strip()
+        name = line[26:].strip()
+        rss = getDaemonPidRss(terminal, pid)
+        pidNameRss['#'.join([name, pid])] = rss
+    return pidNameRss
+
+
+def getDaemonPidRss(terminal, pid):
+    cmd = "cat /proc/%s/status"%pid
+    ret = terminal.command(cmd)
+    for line in ret:
+        if not line.isspace():
+            m = re.search('VmRSS:\s*(\d+)\D*', line)
+            if m:
+                return int(m.group(1))
+
+
+def getKernelSlab(terminal):
+    result = OrderedDict()
+    cmd = 'cat /proc/slabinfo'
+    ret = terminal.command(cmd)
+    for line in ret[2:]:
+        cacheList = line.split()
+        result[cacheList[0]] = round(float(cacheList[2]) * float(cacheList[3])/1024, 2)
+    result["Total Cache"] = reduce(lambda x, y: x + y, result.itervalues())
+    return result
+
+
 def getAdbDevices():
     """
     C:\Users\Jac>adb devices
@@ -1138,7 +1172,7 @@ def setIperfFlow(target, interval, time, logname):
 
 
 if __name__ == '__main__':
-    ssh = SshCommand(2)
+    ssh = SshClient(2)
     ssh.connect("192.168.111.1", "", "")
     v.DUT_MODULE = "R2D"
     # setUCIWirelessIntf(ssh, v.INTF_2G, "set", "key", "12345678", "log")

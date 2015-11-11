@@ -6,7 +6,7 @@ import threading
 import telnetlib
 from collections import *
 import paramiko as pm
-
+import subprocess
 import var as v
 
 
@@ -240,9 +240,12 @@ class SerialClient(object):
 def connectionCheck(connectiontype, ip=None, port=None, user=None, password=None):
     client = SshCommand(connectiontype)
     result = client.connect(ip, user, password)
-    hardware = client.getHardware()
-    client.close()
-    return result, hardware
+    if result is True:
+        hardware = client.getHardware()
+        client.close()
+        return result, hardware
+    elif result is False:
+        return result, ""
 
 
 def convertStrToBashStr(string):
@@ -340,12 +343,26 @@ def setAdbShell(device, command, logname):
         f.close()
 
 
-def setShell(command, logname):
+def setShell(command, cwd=None, timeout=30, logname=None):
     if not os.path.exists(v.TEST_SUITE_LOG_PATH):
         os.makedirs(v.TEST_SUITE_LOG_PATH)
 
     try:
-        ret = os.popen(command).readlines()
+        if cwd is not None:
+            pipe = subprocess.Popen(command, stdout=subprocess.PIPE, shell=True, cwd=cwd)
+        else:
+            pipe = subprocess.Popen(command, stdout=subprocess.PIPE, shell=True)
+
+        def killproc(p1, p2):
+            p1.kill()
+            subprocess.call('taskkill /F /IM ' + p2)
+
+        timer = threading.Timer(timeout, killproc, [pipe, command.split()[0]])
+        try:
+            timer.start()
+            ret = pipe.stdout.readlines()
+        finally:
+            timer.cancel()
         curTime = t.strftime('%Y.%m.%d %H:%M:%S', t.localtime())
         f = open(v.TEST_SUITE_LOG_PATH + logname + '.log', 'a')
         f.write(curTime + '~#OS#')
@@ -1153,36 +1170,27 @@ class SetAdbIperfOn(threading.Thread):
 
 def setIperfFlow(target, interval, time, logname):
     if os.path.exists(v.IPERF_PATH):
-        os.chdir(v.IPERF_PATH)
+        pass
     else:
         raise Exception("iperf doesnot exist! please copy iperf dir to the path same as peanuts.")
 
-    command = "iperf -c " + target
+    command = "iperf.exe -c " + target
     if interval != "":
         command = command + " -i " + interval
     if time != "":
         command = command + " -t " + time
 
-    command += " -r -w 2m"
-    ret = setShell(command, logname)
-    os.chdir(v.DEFAULT_PATH)
+    command += " -r -w 2m -f m"
+    ret = setShell(command, cwd=v.IPERF_PATH, timeout=3*int(time), logname=logname)
+    # os.chdir(v.DEFAULT_PATH)
     if len(ret) == 0:
         return False
     return True
 
 
 if __name__ == '__main__':
-    ssh = SshClient(2)
-    ssh.connect("192.168.111.1", "", "")
-    v.DUT_MODULE = "R2D"
-    # setUCIWirelessIntf(ssh, v.INTF_2G, "set", "key", "12345678", "log")
-    # setUCIWirelessDev(ssh, v.DUT_MODULE, "2g", "set", "disabled", "0", "log")
-    # print getWlanTxPower(ssh, v.DUT_MODULE, "2g", "log")
-    # print getWlanLastEstPower(ssh, v.DUT_MODULE, "5g", "log")
-    # setCopyFile(ssh, "log", src="/extdisks/sdb1/brcm4709_r2d_all_2.9.38.bin", dst='/tmp/upgrade.bin')
-    # print getFilePath(ssh, "log", path='/tmp', pattern='upgrade.bin')
-    # print chkBootingUpFinished(ssh, "log")
-    # ret = getFilePath(ssh, "log", path='/extdisks', pattern='brcm4709*')
-    # print ret
-    # print ret + "123"
-    ssh.close()
+    # ssh = SshClient(2)
+    # ssh.connect("192.168.111.1", "", "")
+    # v.DUT_MODULE = "R2D"
+    setIperfFlow(target="192.168.140.211", interval="", time="20", logname="log")
+    # ssh.close()

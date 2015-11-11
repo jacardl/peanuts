@@ -10,7 +10,7 @@ import wx.lib.delayedresult as delayedresult
 import shutil
 import random
 import multiprocessing as mp
-
+import subprocess
 import var as v
 import common as co
 import images
@@ -252,47 +252,6 @@ class GeneralPage(wx.Panel):
     def connectionCheckThread(self, connectiontype, ip=None, port=None, user=None, password=None):
         result, self.hardware = co.connectionCheck(connectiontype, ip=ip, user=user, password=password)
         if result:
-            self.flag += 1
-        else:
-            return
-
-    def EvtSave(self, event):
-        deviceNum = 0
-        self.flag = 0
-
-        if v.DUT_MODULE is not None:
-            deviceNum += 1
-            v.HOST = self.ip.GetValue()
-            v.USR = self.sshUsr.GetValue()
-            v.PASSWD = self.sshPasswd.GetValue()
-            dutConn = threading.Thread(target=self.connectionCheckThread, kwargs={'connectiontype': v.CONNECTION_TYPE,
-                                                                                  'ip': v.HOST, 'user': v.USR,
-                                                                                  'password': v.PASSWD})
-            dutConn.start()
-            dutConn.join()
-
-        if v.STA_MODULE is not "Android":
-            deviceNum += 1
-            v.STA_IP = self.staIp.GetValue()
-            v.STA_USR = self.staSshUsr.GetValue()
-            v.STA_PASSWD = self.staSshPasswd.GetValue()
-            staConn = threading.Thread(target=self.connectionCheckThread,
-                                       kwargs={'connectiontype': v.STA_CONNECTION_TYPE,
-                                               'ip': v.STA_IP, 'user': v.STA_USR,
-                                               'password': v.STA_PASSWD})
-            staConn.start()
-            staConn.join()
-
-        if self.flag < deviceNum:
-            dlgErr = wx.MessageDialog(self, 'Connection is failed, please check your network!',
-                                      'Info',
-                                      wx.OK | wx.ICON_INFORMATION | wx.STAY_ON_TOP
-                                      )
-
-            dlgErr.ShowModal()
-            dlgErr.Destroy()
-        elif self.flag == deviceNum:
-            self.saveBtn.Enable(False)
             v.SAVE_BTN_FLAG = True
             dlgOk = wx.MessageDialog(self, 'Connection is OK ! \n'
                                            'DUT is %s !'%self.hardware,
@@ -302,6 +261,38 @@ class GeneralPage(wx.Panel):
 
             dlgOk.ShowModal()
             dlgOk.Destroy()
+        else:
+            self.saveBtn.Enable(True)
+            dlgErr = wx.MessageDialog(self, 'Connection is failed, please check your network!',
+                                      'Info',
+                                      wx.OK | wx.ICON_INFORMATION | wx.STAY_ON_TOP
+                                      )
+
+            dlgErr.ShowModal()
+            dlgErr.Destroy()
+
+    def EvtSave(self, event):
+        self.saveBtn.Enable(False)
+        if v.DUT_MODULE is not None:
+            v.HOST = self.ip.GetValue()
+            v.USR = self.sshUsr.GetValue()
+            v.PASSWD = self.sshPasswd.GetValue()
+            dutConn = threading.Thread(target=self.connectionCheckThread, kwargs={'connectiontype': v.CONNECTION_TYPE,
+                                                                                  'ip': v.HOST, 'user': v.USR,
+                                                                                  'password': v.PASSWD})
+            dutConn.start()
+            # dutConn.join()
+
+        if v.STA_MODULE is not "Android":
+            v.STA_IP = self.staIp.GetValue()
+            v.STA_USR = self.staSshUsr.GetValue()
+            v.STA_PASSWD = self.staSshPasswd.GetValue()
+            staConn = threading.Thread(target=self.connectionCheckThread,
+                                       kwargs={'connectiontype': v.STA_CONNECTION_TYPE,
+                                               'ip': v.STA_IP, 'user': v.STA_USR,
+                                               'password': v.STA_PASSWD})
+            staConn.start()
+            # staConn.join()
 
     def EvtTextChange(self, event):
         self.saveBtn.Enable(True)
@@ -777,7 +768,7 @@ class TestSuitePage(wx.Panel):
             else:
                 os.rename(v.TEST_SUITE_LOG_PATH, self.report + str(random.random()))
         if testKeepGoing is False:
-            os.system("taskkill /F /IM python.exe | taskkill /F /T /IM adb.exe")
+            subprocess.call("taskkill /F /IM python.exe | taskkill /F /T /IM adb.exe")
         self.abortEvent.set()
         self.dlg.Destroy()
 
@@ -801,7 +792,6 @@ class TestSuitePage(wx.Panel):
                 t.sleep(1)
 
             if v.SEND_MAIL == 1:
-                # sm.generateMail(v.MAILTO_LIST, self.mailTitle, self.procReport.result, self.reportFile)
                 # add Queue to communicate with processreport process
                 sm.generateMail(v.MAILTO_LIST, self.mailTitle, q, self.reportFile, v.MAIL_XLSX)
 

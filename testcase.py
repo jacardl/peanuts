@@ -6683,6 +6683,7 @@ class AP_CLEAR_CHAN11_149_FLOW2(TestCase):
         else:
             self.assertTrue(res2gConn, "Connecting wifi is failed.")
 
+
 class AP_CLEAR_CHAN1_36_FLOW2(TestCase):
     @classmethod
     def setUpClass(self):
@@ -6740,6 +6741,7 @@ class AP_CLEAR_CHAN1_36_FLOW2(TestCase):
 
         else:
             self.assertTrue(res2gConn, "Connecting wifi is failed.")
+
 
 class AP_CLEAR_CHAN6_52_FLOW2(TestCase):
     @classmethod
@@ -6799,6 +6801,7 @@ class AP_CLEAR_CHAN6_52_FLOW2(TestCase):
         else:
             self.assertTrue(res2gConn, "Connecting wifi is failed.")
 
+
 class AP_CLEAR_CHAN13_165_FLOW2(TestCase):
     @classmethod
     def setUpClass(self):
@@ -6857,6 +6860,7 @@ class AP_CLEAR_CHAN13_165_FLOW2(TestCase):
         else:
             self.assertTrue(res2gConn, "Connecting wifi is failed.")
 
+
 class AP_CLEAR_CHAN_REPEAT2(TestCase):
     @classmethod
     def setUpClass(self):
@@ -6896,6 +6900,7 @@ class AP_CLEAR_CHAN_REPEAT2(TestCase):
         res5gConn = setAdbClearStaConnRepeat(self.device[0], "normal", "5g", self.__class__.__name__)
 
         self.assertTrue(res5gConn, "Not all association were successful.")
+
 
 class AP_MIXEDPSK_CHAN11_149_FLOW2(TestCase):
     @classmethod
@@ -7045,6 +7050,7 @@ class AP_MIXEDPSK_CHAN11_149_FLOW2(TestCase):
         else:
             self.assertTrue(res2gConn, "Connecting wifi is failed.")
 
+
 class AP_MIXEDPSK_CHAN1_36_FLOW2(TestCase):
     @classmethod
     def setUpClass(self):
@@ -7192,6 +7198,7 @@ class AP_MIXEDPSK_CHAN1_36_FLOW2(TestCase):
 
         else:
             self.assertTrue(res2gConn, "Connecting wifi is failed.")
+
 
 class AP_MIXEDPSK_CHAN6_52_FLOW2(TestCase):
     @classmethod
@@ -7341,6 +7348,7 @@ class AP_MIXEDPSK_CHAN6_52_FLOW2(TestCase):
         else:
             self.assertTrue(res2gConn, "Connecting wifi is failed.")
 
+
 class AP_MIXEDPSK_CHAN13_165_FLOW2(TestCase):
     @classmethod
     def setUpClass(self):
@@ -7489,6 +7497,7 @@ class AP_MIXEDPSK_CHAN13_165_FLOW2(TestCase):
         else:
             self.assertTrue(res2gConn, "Connecting wifi is failed.")
 
+
 class AP_MIXEDPSK_CHAN_REPEAT2(TestCase):
     @classmethod
     def setUpClass(self):
@@ -7565,6 +7574,7 @@ class AP_MIXEDPSK_CHAN_REPEAT2(TestCase):
 
         self.assertTrue(res5gConn, "Not all association were successful.")
 
+
 class AP_PSK2_CHAN11_149_FLOW2(TestCase):
     @classmethod
     def setUpClass(self):
@@ -7622,6 +7632,7 @@ class AP_PSK2_CHAN11_149_FLOW2(TestCase):
 
         else:
             self.assertTrue(res2gConn, "Connecting wifi is failed.")
+
 
 class AP_PSK2_CHAN1_36_FLOW2(TestCase):
     @classmethod
@@ -7681,6 +7692,7 @@ class AP_PSK2_CHAN1_36_FLOW2(TestCase):
         else:
             self.assertTrue(res2gConn, "Connecting wifi is failed.")
 
+
 class AP_PSK2_CHAN6_52_FLOW2(TestCase):
     @classmethod
     def setUpClass(self):
@@ -7739,6 +7751,7 @@ class AP_PSK2_CHAN6_52_FLOW2(TestCase):
         else:
             self.assertTrue(res2gConn, "Connecting wifi is failed.")
 
+
 class AP_PSK2_CHAN13_165_FLOW2(TestCase):
     @classmethod
     def setUpClass(self):
@@ -7796,6 +7809,7 @@ class AP_PSK2_CHAN13_165_FLOW2(TestCase):
 
         else:
             self.assertTrue(res2gConn, "Connecting wifi is failed.")
+
 
 class AP_PSK2_CHAN_REPEAT2(TestCase):
     @classmethod
@@ -8090,6 +8104,7 @@ class AP_UPGRADE(TestCase):
             else:
                 self.fail(msg='fail to find upgrade file!')
             count += 1
+
 
 class AP_TEST(TestCase):
     @classmethod

@@ -1,6 +1,5 @@
 import multiprocessing as mp
 import matplotlib.pyplot as plt
-import xlwt as x
 from openpyxl import Workbook, load_workbook
 
 from common import *
@@ -98,7 +97,6 @@ def daemonMonitor(terminal, interval, count, filename, sheetname):
     keys = []
     row1Col = 3  # col 1 write time, col 2 write total mem, so vsz begin with 3
     vszRow = 2  # Row 1 write title, value begin with Row 2
-    style1 = x.easyxf(num_format_str='h:mm:ss')
     ws.cell(row=1, column=2).value = "Total Used"  # write Total used title
 
     if count >= 1:
@@ -479,7 +477,7 @@ if __name__ == '__main__':
     # v.DUT_MODULE = "R2D"
     # daemonMonitor(ssh, interval=1, count=10, filename="temp.xlsx", sheetname="sheet1")
     # kernelMonitor(ssh, interval=1, count=10, filename="temp1.xlsx", sheetname="sheet1")
-    memDiffCalc("temp.xlsx", ["sheet1", "sheet2"])
+    memDiffCalc("MEM_2015.11.12 10.31.54.xlsx", ["User Mem Tracking", "Kernel Mem Tracking"])
     # memMon = MemMonitorXlsx(interval=5, count=0, file="temp.xlsx")
     # memMon.start()
     # t.sleep(30)

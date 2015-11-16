@@ -75,8 +75,8 @@ original spec key  `~!@#$%^&*() =+\|]}[{'";:/?.>,<`~!@#$%^&*() =+\|]}[{'";:/?.>,
 """
 SPECIAL_KEY = '`~!@#$%^&*() =+\|]}[{\'";:/?.>,<`~!@#$%^&*() =+\|]}[{\'";:/?.>,<1'
 
-CHINESE_SSID = 'ä¸šç•Œè‰¯å¿ƒ_èŠ±ç”Ÿè‡ªåŠ¨åŒ–'
-CHINESE_SSID_5G = 'ä¸šç•Œè‰¯å¿ƒ_èŠ±ç”Ÿè‡ªåŠ¨åŒ–-5G'
+CHINESE_SSID = 'Òµ½çÁ¼ÐÄ_»¨Éú×Ô¶¯»¯'
+CHINESE_SSID_5G = 'Òµ½çÁ¼ÐÄ_»¨Éú×Ô¶¯»¯-5G'
 GUEST_SSID = 'peanuts_guest'
 
 PING_PERCENT_PASS = 100
@@ -111,10 +111,10 @@ MAILTO_LIST = ["liujia5@xiaomi.com", "fengjiang@xiaomi.com", "hexiaoliang@xiaomi
                "wangchunxuan@xiaomi.com", "wangyue3@xiaomi.com", "youguidong@xiaomi.com", "zhangjunjie@xiaomi.com",
                "zhaoziqiang@xiaomi.com", ]
 # MAILTO_LIST = ["liujia5@xiaomi.com"]
-MAIL_HOST = "mail.srv"  #è®¾ç½®æœåŠ¡å™¨
-MAIL_USER = "robot"    #ç”¨æˆ·å
-MAIL_PASS = ""   #å£ä»¤
-MAIL_POSTFIX="xiaomi.com"  #å‘ä»¶ç®±çš„åŽç¼€
+MAIL_HOST = "mail.srv"  #ÉèÖÃ·þÎñÆ÷
+MAIL_USER = "robot"    #ÓÃ»§Ãû
+MAIL_PASS = ""   #¿ÚÁî
+MAIL_POSTFIX="xiaomi.com"  #·¢¼þÏäµÄºó×º
 MAILFROM_LIST = "robot@xiaomi.com"
 
 MAIL_PIC1 = "total_memory_used.png"

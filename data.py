@@ -485,30 +485,64 @@ treeNone = [
     [
         "autochan_txpower_2g",
         "autochan_txpower_5g",
+        "chan1_txpower_2g",
+        "chan6_txpower_2g",
+        "chan11_txpower_2g",
         "chan13_txpower_2g",
         "chan36_txpower_5g",
+        "chan52_txpower_5g",
+        "chan149_txpower_5g",
+        "chan165_txpower_5g",
     ],
     "AP_CLEAR_MID_TXPOWER",
     [
         "autochan_txpower_2g",
         "autochan_txpower_5g",
+        "chan1_txpower_2g",
+        "chan6_txpower_2g",
+        "chan11_txpower_2g",
         "chan13_txpower_2g",
         "chan36_txpower_5g",
+        "chan52_txpower_5g",
+        "chan149_txpower_5g",
+        "chan165_txpower_5g",
     ],
     "AP_CLEAR_HIGH_TXPOWER",
     [
         "autochan_txpower_2g",
         "autochan_txpower_5g",
+        "chan1_txpower_2g",
+        "chan6_txpower_2g",
+        "chan11_txpower_2g",
         "chan13_txpower_2g",
         "chan36_txpower_5g",
+        "chan52_txpower_5g",
+        "chan149_txpower_5g",
+        "chan165_txpower_5g",
     ],
     "AP_CLEAR_CHANSELECTION",
     [
         "chanselection_2g",
         "chanselection_5g",
     ],
-
 ]
+
+treeCheck = [
+    "AP_REBOOT",
+    [
+        "autochan_last_est_power",
+    ],
+    "AP_UPGRADE",
+    [
+        "autochan_last_est_power",
+    ],
+    "AP_TEST",
+    [
+        "test1",
+        "test2",
+    ]
+]
+
 # -------------------------------------------------------
 
 # ---------------commands for log collect-----------------

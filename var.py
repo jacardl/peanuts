@@ -23,7 +23,7 @@ connection_type = 1 represent ssh
 CONNECTION_TYPE = 2
 STA_CONNECTION_TYPE = 1
 
-VER = '2.5.3'
+VER = '2.5.4'
 
 # ----------------Memory Tracking-----------------
 
@@ -39,6 +39,7 @@ COUNT = 10
 ps w
 """
 EXCEPTIONS = ['ps', 'awk', 'sleep', 'mpstat', 'cpulimit_daemon']
+KERNEL_EXCEPTIONS = []
 
 # ----------------Log Collection-----------------
 
@@ -106,9 +107,9 @@ IPERF_TIME = "60"
 # IPERF_TIME = "5"
 
 SEND_MAIL = 1
-MAILTO_LIST = ["liujia5@xiaomi.com","fengjiang@xiaomi.com", "hexiaoliang@xiaomi.com", "linli1@xiaomi.com",
+MAILTO_LIST = ["liujia5@xiaomi.com", "fengjiang@xiaomi.com", "hexiaoliang@xiaomi.com", "linli1@xiaomi.com",
                "wangchunxuan@xiaomi.com", "wangyue3@xiaomi.com", "youguidong@xiaomi.com", "zhangjunjie@xiaomi.com",
-               "zhaoziqiang@xiaomi.com"]
+               "zhaoziqiang@xiaomi.com", ]
 # MAILTO_LIST = ["liujia5@xiaomi.com"]
 MAIL_HOST = "mail.srv"  #设置服务器
 MAIL_USER = "robot"    #用户名
@@ -119,5 +120,6 @@ MAILFROM_LIST = "robot@xiaomi.com"
 MAIL_PIC1 = "total_memory_used.png"
 MAIL_PIC2 = "throughput.png"
 MAIL_PIC3 = "throughput_in_%s.png"
+MAIL_XLSX = "memory_tracking.xlsx"
 
 MEM_MONITOR_INTERVAL = 60

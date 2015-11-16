@@ -9,7 +9,8 @@ import wx.lib.agw.customtreectrl as CT
 import wx.lib.delayedresult as delayedresult
 import shutil
 import random
-
+import multiprocessing as mp
+import subprocess
 import var as v
 import common as co
 import images
@@ -251,47 +252,6 @@ class GeneralPage(wx.Panel):
     def connectionCheckThread(self, connectiontype, ip=None, port=None, user=None, password=None):
         result, self.hardware = co.connectionCheck(connectiontype, ip=ip, user=user, password=password)
         if result:
-            self.flag += 1
-        else:
-            return
-
-    def EvtSave(self, event):
-        deviceNum = 0
-        self.flag = 0
-
-        if v.DUT_MODULE is not None:
-            deviceNum += 1
-            v.HOST = self.ip.GetValue()
-            v.USR = self.sshUsr.GetValue()
-            v.PASSWD = self.sshPasswd.GetValue()
-            dutConn = threading.Thread(target=self.connectionCheckThread, kwargs={'connectiontype': v.CONNECTION_TYPE,
-                                                                                  'ip': v.HOST, 'user': v.USR,
-                                                                                  'password': v.PASSWD})
-            dutConn.start()
-            dutConn.join()
-
-        if v.STA_MODULE is not "Android":
-            deviceNum += 1
-            v.STA_IP = self.staIp.GetValue()
-            v.STA_USR = self.staSshUsr.GetValue()
-            v.STA_PASSWD = self.staSshPasswd.GetValue()
-            staConn = threading.Thread(target=self.connectionCheckThread,
-                                       kwargs={'connectiontype': v.STA_CONNECTION_TYPE,
-                                               'ip': v.STA_IP, 'user': v.STA_USR,
-                                               'password': v.STA_PASSWD})
-            staConn.start()
-            staConn.join()
-
-        if self.flag < deviceNum:
-            dlgErr = wx.MessageDialog(self, 'Connection is failed, please check your network!',
-                                      'Info',
-                                      wx.OK | wx.ICON_INFORMATION | wx.STAY_ON_TOP
-                                      )
-
-            dlgErr.ShowModal()
-            dlgErr.Destroy()
-        elif self.flag == deviceNum:
-            self.saveBtn.Enable(False)
             v.SAVE_BTN_FLAG = True
             dlgOk = wx.MessageDialog(self, 'Connection is OK ! \n'
                                            'DUT is %s !'%self.hardware,
@@ -301,6 +261,38 @@ class GeneralPage(wx.Panel):
 
             dlgOk.ShowModal()
             dlgOk.Destroy()
+        else:
+            self.saveBtn.Enable(True)
+            dlgErr = wx.MessageDialog(self, 'Connection is failed, please check your network!',
+                                      'Info',
+                                      wx.OK | wx.ICON_INFORMATION | wx.STAY_ON_TOP
+                                      )
+
+            dlgErr.ShowModal()
+            dlgErr.Destroy()
+
+    def EvtSave(self, event):
+        self.saveBtn.Enable(False)
+        if v.DUT_MODULE is not None:
+            v.HOST = self.ip.GetValue()
+            v.USR = self.sshUsr.GetValue()
+            v.PASSWD = self.sshPasswd.GetValue()
+            dutConn = threading.Thread(target=self.connectionCheckThread, kwargs={'connectiontype': v.CONNECTION_TYPE,
+                                                                                  'ip': v.HOST, 'user': v.USR,
+                                                                                  'password': v.PASSWD})
+            dutConn.start()
+            # dutConn.join()
+
+        if v.STA_MODULE is not "Android":
+            v.STA_IP = self.staIp.GetValue()
+            v.STA_USR = self.staSshUsr.GetValue()
+            v.STA_PASSWD = self.staSshPasswd.GetValue()
+            staConn = threading.Thread(target=self.connectionCheckThread,
+                                       kwargs={'connectiontype': v.STA_CONNECTION_TYPE,
+                                               'ip': v.STA_IP, 'user': v.STA_USR,
+                                               'password': v.STA_PASSWD})
+            staConn.start()
+            # staConn.join()
 
     def EvtTextChange(self, event):
         self.saveBtn.Enable(True)
@@ -375,7 +367,7 @@ class MemoryTrackPage(wx.Panel):
         v.COUNT = self.count.GetValue()
         keepGoing = True
         fileCreateTime = t.strftime('_%Y.%m.%d %H.%M.%S', t.localtime())
-        memMon = mm.memMonitorExcelXlsx(v.INTERVAL, v.COUNT, 'MEM' + fileCreateTime + '.xlsx')
+        memMon = mm.MemMonitorXlsx(v.INTERVAL, v.COUNT, 'MEM' + fileCreateTime + '.xlsx')
 
         if memMon.ret:
 
@@ -395,10 +387,14 @@ class MemoryTrackPage(wx.Panel):
             memMon.setDaemon(True)
             memMon.start()
 
-            while keepGoing and memMon.curr_count <= v.COUNT:
+            # while keepGoing and memMon.curr_count <= v.COUNT:
+            while keepGoing and memMon.isAlive():
+                # wx.Yield()  # refresh progress
+                # (keepGoing, skip) = self.dlg.Update(memMon.curr_count, str(memMon.curr_count) + '/' + str(v.COUNT))
+                # t.sleep(1)
                 wx.Yield()  # refresh progress
-                (keepGoing, skip) = self.dlg.Update(memMon.curr_count, str(memMon.curr_count) + '/' + str(v.COUNT))
-                t.sleep(1)
+                (testKeepGoing, skip) = self.dlg.Pulse()
+                t.sleep(0.1)
 
             self.dlg.Destroy()
 
@@ -619,10 +615,12 @@ class TestSuitePage(wx.Panel):
         self.rootAndroid = self.tree.AppendItem(self.root, 'Android-STA', ct_type=1)
         # self.rootR1CM = self.tree.AppendItem(self.root, 'R1CM-STA', ct_type=1)
         self.rootNone = self.tree.AppendItem(self.root, 'None-STA', ct_type=1)
+        self.rootCheck = self.tree.AppendItem(self.root, 'Check', ct_type=1)
 
         self.AddTreeNodes(self.rootAndroid, data.treeAndroid)
         # self.AddTreeNodes(self.rootR1CM, data.treeR1CM)
         self.AddTreeNodes(self.rootNone, data.treeNone)
+        self.AddTreeNodes(self.rootCheck, data.treeCheck)
         self.tree.Expand(self.root)
         treeLbl = wx.StaticText(self, -1, 'Select cases supposed to excute:')
 
@@ -752,40 +750,25 @@ class TestSuitePage(wx.Panel):
                                   jobID=self.jobID)
 
         # start memory monitor
-        self.memMon = mm.memMonitor(v.MEM_MONITOR_INTERVAL)
+        self.memMon = mm.MemMonitor(v.MEM_MONITOR_INTERVAL)
+        self.memMonXlsx = mm.MemMonitorXlsx(v.MEM_MONITOR_INTERVAL, file=v.MAIL_XLSX)
         self.memMon.setDaemon(True)
+        self.memMonXlsx.setDaemon(True)
         self.memMon.start()
+        self.memMonXlsx.start()
 
         while testKeepGoing and self.runFlag:
             wx.Yield()  # refresh progress
             (testKeepGoing, skip) = self.dlg.Pulse()
             t.sleep(0.1)
-
-        # t.sleep(1.0)
-        #click cancel set testKeepGoing to False
-        if v.SEND_MAIL == 1 and testKeepGoing:
-            self.memMon.stop()  # stop memory monitor and draw chart
-            # ´Ë´¦²åÈëprocessreport
-            self.procReport = pr.ProcessReport(self.reportFile)
-            self.procReport.start()
-            self.procReport.join()
-            sm.generateMail(v.MAILTO_LIST, self.mailTitle, self.procReport.result, self.reportFile)
-
-        # if os.path.exists(v.MAIL_PIC1):
-        #     shutil.move(v.MAIL_PIC1, v.TEST_SUITE_LOG_PATH)
-        # if os.path.exists(v.MAIL_PIC2):
-        #     shutil.move(v.MAIL_PIC2, v.TEST_SUITE_LOG_PATH)
-            files = os.listdir(v.DEFAULT_PATH)
-            for file in files:
-                if os.path.splitext(file)[1] == ".png":
-                    shutil.move(file, v.TEST_SUITE_LOG_PATH)
-
-        if not os.path.exists(self.report):
-            os.rename(v.TEST_SUITE_LOG_PATH, self.report)
-        else:
-            os.rename(v.TEST_SUITE_LOG_PATH, self.report + str(random.random()))
+        # set testKeepGoing to False when click cancel
+        if os.path.exists(v.TEST_SUITE_LOG_PATH):
+            if not os.path.exists(self.report):
+                os.rename(v.TEST_SUITE_LOG_PATH, self.report)
+            else:
+                os.rename(v.TEST_SUITE_LOG_PATH, self.report + str(random.random()))
         if testKeepGoing is False:
-            os.system("taskkill /F /IM python.exe | taskkill /F /T /IM adb.exe")
+            subprocess.call("taskkill /F /IM python.exe | taskkill /F /T /IM adb.exe")
         self.abortEvent.set()
         self.dlg.Destroy()
 
@@ -795,10 +778,40 @@ class TestSuitePage(wx.Panel):
         assert jobID == self.jobID
         try:
             result = delayedResult.get()
+            self.memMon.stop()  # stop memory monitor and draw chart
+            self.memMonXlsx.stop()  # stop tracing daemon and kernel memory
+            # self.memMon.join()
+            q = mp.Queue() # tranlate test result to generateMail
+            self.procReport = pr.ProcessReport(self.reportFile, q)
+            self.procReport.start()
+            self.procReport.join()
+            self.memMonXlsx.join()
+
+            while not os.path.exists(v.DEFAULT_PATH + v.MAIL_PIC1):
+                print "wait for draw memory chart"
+                t.sleep(1)
+
+            if v.SEND_MAIL == 1:
+                # add Queue to communicate with processreport process
+                sm.generateMail(v.MAILTO_LIST, self.mailTitle, q, self.reportFile, v.MAIL_XLSX)
+
+            files = os.listdir(v.DEFAULT_PATH)
+            for file in files:
+                if os.path.splitext(file)[1] == ".png":
+                    try:
+                        shutil.move(file, v.TEST_SUITE_LOG_PATH)
+                    except Exception, e:
+                        print "shutil.move " + file + str(e)
+                elif file == v.MAIL_XLSX:
+                    try:
+                        shutil.move(file, v.TEST_SUITE_LOG_PATH)
+                    except Exception, e:
+                        print "shutil.move" + file + str(e)
+            # quit execution test dlg
             self.runFlag = False
 
-        except Exception:
-            return
+        except Exception, e:
+            raise e
 
     def EvtTestExcute(self, event):
 
@@ -936,7 +949,9 @@ class Frame(wx.Frame):
 
 ##        wx.StaticBitmap(bookFrame, -1, images.logo.GetBitmap(), (520,5))
 
-app = wx.App()
-frame = Frame()
-frame.Show()
-app.MainLoop()
+# when use multiprocess module on windows platform, " 'if __name__ == '__main__' "should be added
+if __name__ == '__main__':
+    app = wx.App()
+    frame = Frame()
+    frame.Show()
+    app.MainLoop()

@@ -1,13 +1,12 @@
 # -*- coding: gbk -*-
-import sys
 import os
 import time as t
 import re
 import threading
 import telnetlib
-
+from collections import *
 import paramiko as pm
-
+import subprocess
 import var as v
 
 
@@ -29,7 +28,7 @@ class SshClient(object):
             except:
                 print 'connection is failed. please check your remote settings.'
                 return False
-                # sys.exit(1)
+
         elif self.connectionType == 2:  # represent telnet
             self.hostname = host.encode("utf-8")
             self.username = userid.encode("utf-8")
@@ -73,7 +72,6 @@ class SshClient(object):
             if checkContainChinese(cmd):
                 cmd = cmd.decode("gbk")
                 cmd = cmd.encode("utf-8")
-
             self.tn.write(cmd + "\n")
             self.out = self.tn.read_until("root@XiaoQiang:", 60)
             self.out = self.out.split("\n")
@@ -242,9 +240,12 @@ class SerialClient(object):
 def connectionCheck(connectiontype, ip=None, port=None, user=None, password=None):
     client = SshCommand(connectiontype)
     result = client.connect(ip, user, password)
-    hardware = client.getHardware()
-    client.close()
-    return result, hardware
+    if result is True:
+        hardware = client.getHardware()
+        client.close()
+        return result, hardware
+    elif result is False:
+        return result, ""
 
 
 def convertStrToBashStr(string):
@@ -286,7 +287,6 @@ def setConfig(terminal, command, logname):
         f.write('\n')
         terminal.close()
         f.close()
-        sys.exit(1)
 
 
 def setGet(terminal, command, logname):
@@ -313,19 +313,17 @@ def setGet(terminal, command, logname):
         f.write('\n')
         terminal.close()
         f.close()
-        sys.exit(1)
 
 
 def setAdbShell(device, command, logname):
     if not os.path.exists(v.TEST_SUITE_LOG_PATH):
         os.makedirs(v.TEST_SUITE_LOG_PATH)
-
+    if device != "":
+        adb = "adb " + "-s " + device + " shell "
+    else:
+        adb = "adb shell "
+    command = adb + command
     try:
-        if device != "":
-            adb = "adb " + "-s " + device + " shell "
-        else:
-            adb = "adb shell "
-        command = adb + command
         ret = os.popen(command).readlines()
         curTime = t.strftime('%Y.%m.%d %H:%M:%S', t.localtime())
         f = open(v.TEST_SUITE_LOG_PATH + logname + '.log', 'a')
@@ -336,15 +334,35 @@ def setAdbShell(device, command, logname):
         f.close()
         return ret
     except Exception, e:
-        sys.exit(1)
+        curTime = t.strftime('%Y.%m.%d %H:%M:%S', t.localtime())
+        f = open(v.TEST_SUITE_LOG_PATH + logname + '.log', 'a')
+        f.write(curTime + '~#ADB failed#')
+        f.write(command + '\n')
+        f.writelines(str(e))
+        f.write('\n')
+        f.close()
 
 
-def setShell(command, logname):
+def setShell(command, cwd=None, timeout=30, logname=None):
     if not os.path.exists(v.TEST_SUITE_LOG_PATH):
         os.makedirs(v.TEST_SUITE_LOG_PATH)
 
     try:
-        ret = os.popen(command).readlines()
+        if cwd is not None:
+            pipe = subprocess.Popen(command, stdout=subprocess.PIPE, shell=True, cwd=cwd)
+        else:
+            pipe = subprocess.Popen(command, stdout=subprocess.PIPE, shell=True)
+
+        def killproc(p1, p2):
+            p1.kill()
+            subprocess.call('taskkill /F /IM ' + p2)
+
+        timer = threading.Timer(timeout, killproc, [pipe, command.split()[0]])
+        try:
+            timer.start()
+            ret = pipe.stdout.readlines()
+        finally:
+            timer.cancel()
         curTime = t.strftime('%Y.%m.%d %H:%M:%S', t.localtime())
         f = open(v.TEST_SUITE_LOG_PATH + logname + '.log', 'a')
         f.write(curTime + '~#OS#')
@@ -354,7 +372,13 @@ def setShell(command, logname):
         f.close()
         return ret
     except Exception, e:
-        sys.exit(1)
+        curTime = t.strftime('%Y.%m.%d %H:%M:%S', t.localtime())
+        f = open(v.TEST_SUITE_LOG_PATH + logname + '.log', 'a')
+        f.write(curTime + '~#OS failed#')
+        f.write(command + '\n')
+        f.writelines(str(e))
+        f.write('\n')
+        f.close()
 
 
 def getApcli0Conn(terminal, logname):
@@ -531,7 +555,7 @@ def getWlanTxPower(terminal, dut, intf, logname):
                 result = 0
         return float(result)
 
-    elif dut == "R1CM":
+    elif dut == "R1CM" or dut == "R1CL":
         commandDic = {"2g": "iwconfig wl1 | grep 'Tx-Power='",
                       "5g": "iwconfig wl0 | grep 'Tx-Power='", }
         command = commandDic.get(intf)
@@ -544,6 +568,36 @@ def getWlanTxPower(terminal, dut, intf, logname):
             else:
                 result = 0
         return float(result)
+
+
+def  getWlanLastEstPower(terminal, dut, intf, logname):
+
+    if dut == "R1D" or dut == "R2D":
+        commandDic = {"2g": "wl -i wl1 curpower | grep 'Last est. power'",
+                      "5g": "wl -i wl0 curpower | grep 'Last est. power'", }
+        command = commandDic.get(intf)
+        ret = setGet(terminal, command, logname)
+        for line in ret:
+            m = re.search('\d*\.\d*.*', line)
+            if m:
+                power = m.group(0)
+                powerList = power.split(":")
+                powerList = powerList[1].split()
+                for i in xrange(len(powerList)):
+                    powerList[i] = float(powerList[i])
+                for j in powerList:
+                    if j == 0:
+                        powerList.remove(0)
+                if len(powerList) != 0:
+                    result = reduce(lambda i, j: i + j, powerList)/len(powerList)
+                else:
+                    result = 0
+            else:
+                result = 0
+        return float(result)
+
+    elif dut == "R1CM" or dut == "R1CL":
+        return 0
 
 
 def getWlanInfo(terminal, intf, logname):
@@ -561,6 +615,61 @@ def getWlanInfo(terminal, intf, logname):
             return result
         else:
             result["channel"] = ""
+    return result
+
+
+def getFilePath(terminal, logname, **kargs):
+    command = "find %s -name %s"%(kargs["path"], kargs["pattern"])
+    ret = setGet(terminal, command, logname)
+    for line in ret:
+        if len(line) is not 0:
+            return line[:-1]
+    return ""
+
+
+def getUptime(terminal, logname):
+    command = 'uptime'
+    ret = setGet(terminal, command, logname)
+    for line in ret:
+        m = re.search('up\s(\d{1,})[\s:](\w*),', line)
+        if m:
+            if m.group(2) == 'min':
+                return int(m.group(1))
+            elif m.group(2).isdigit():
+                time = int(m.group(1)) * 60 + int(m.group(2))
+                return time
+
+
+def getDaemonRss(terminal):
+    pidNameRss = OrderedDict()
+    ret = terminal.command('ps w | grep -v [[]')
+    del ret[0]
+    for line in ret:
+        pid = line[:5].strip()
+        name = line[26:].strip()
+        rss = getDaemonPidRss(terminal, pid)
+        pidNameRss['#'.join([name, pid])] = rss
+    return pidNameRss
+
+
+def getDaemonPidRss(terminal, pid):
+    cmd = "cat /proc/%s/status"%pid
+    ret = terminal.command(cmd)
+    for line in ret:
+        if not line.isspace():
+            m = re.search('VmRSS:\s*(\d+)\D*', line)
+            if m:
+                return int(m.group(1))
+
+
+def getKernelSlab(terminal):
+    result = OrderedDict()
+    cmd = 'cat /proc/slabinfo'
+    ret = terminal.command(cmd)
+    for line in ret[2:]:
+        cacheList = line.split()
+        result[cacheList[0]] = round(float(cacheList[2]) * float(cacheList[3])/1024, 2)
+    result["Total Cache"] = reduce(lambda x, y: x + y, result.itervalues())
     return result
 
 
@@ -646,6 +755,16 @@ def chkSiteSurvey(terminal, intf, chkbssid, logname):
     resultAll = (True, result)
     return resultAll
 
+
+def chkBootingUpFinished(terminal, logname):
+    precmd = "touch /tmp/messages"
+    command = "cat /tmp/messages | grep 'Booting up finished'"
+    setGet(terminal, precmd, logname)
+    ret = setGet(terminal, command, logname)
+    if len(ret) is not 0:
+        return True
+    else:
+        return False
 
 def setUCIWirelessIntf(terminal, intf, type, name, value, logname):
     """
@@ -768,6 +887,26 @@ def setWifiMacfilterModel(terminal, enable, model=0, mac='none', logname=None):
                 setIwpriv(terminal, 'wl0', 'AccessPolicy', '1', logname)
                 setIwpriv(terminal, 'wl1', 'AccessPolicy', '1', logname)
                 setIwpriv(terminal, 'wl3', 'AccessPolicy', '1', logname)
+
+
+def setReboot(terminal, logname):
+    command = 'reboot'
+    setConfig(terminal, command, logname)
+
+
+def setUpgradeSystem(terminal, file, logname):
+    command = "flash.sh " + file
+    setGet(terminal, command, logname)
+
+
+def setCopyFile(terminal, logname, **kargs):
+    command = 'cp %s %s'%(kargs['src'], kargs['dst'])
+    setConfig(terminal, command, logname)
+
+
+def setMvFile(terminal, logname, **kargs):
+    command = 'mv %s %s'%(kargs['src'], kargs['dst'])
+    setConfig(terminal, command, logname)
 
 
 def setAdbClearStaConn(device, ssid, radio, logname):
@@ -1031,48 +1170,27 @@ class SetAdbIperfOn(threading.Thread):
 
 def setIperfFlow(target, interval, time, logname):
     if os.path.exists(v.IPERF_PATH):
-        os.chdir(v.IPERF_PATH)
+        pass
     else:
         raise Exception("iperf doesnot exist! please copy iperf dir to the path same as peanuts.")
 
-    command = "iperf -c " + target
+    command = "iperf.exe -c " + target
     if interval != "":
         command = command + " -i " + interval
     if time != "":
         command = command + " -t " + time
 
-    command += " -r -w 2m"
-    ret = setShell(command, logname)
-    os.chdir(v.DEFAULT_PATH)
+    command += " -r -w 2m -f m"
+    ret = setShell(command, cwd=v.IPERF_PATH, timeout=3*int(time), logname=logname)
+    # os.chdir(v.DEFAULT_PATH)
     if len(ret) == 0:
         return False
     return True
 
 
 if __name__ == '__main__':
-    ssh = SshCommand(2)
-    ssh.connect("192.168.120.1", "", "")
-    v.DUT_MODULE = "R1CL"
-    setUCIWirelessIntf(ssh, v.INTF_2G, "set", "key", "12345678", "log")
-    setUCIWirelessDev(ssh, v.DUT_MODULE, "2g", "set", "disabled", "0", "log")
-    # import tcdata
-    # dut = tcdata.TestCommand("R1CL")
-    # for dutCommand in dut.ap_tear_down():
-    #     setConfig(ssh, dutCommand, "log")
-    # print ssh.outPidNameVSZDic
-    # ret = setConfig(ssh, "uci set wireless.@wifi-iface[0].ssid='我的10'", "a")
-    # ret = setGet(ssh, "uci show wireless", "a")
-    # ret = getSiteSurvey(ssh, "apcli0", "a")
-    # a = [2,13]
-    # ret = getWlanInfo(ssh, "2g", "a")
-    # try:
-    # a.index(int(ret["channel"]))
-    # print 1
-    # except:
-    # print 2
-    # ret = chkSiteSurvey(ssh, "apcli0", "64:09:80:73:75:3d" ,"a")
-    # setWifiRestart(ssh,"a")
-    # ret =getIntfHWAddr(ssh, "wl1", "a")
-    # print ret["mac"]
-    ssh.close()
-    # setIperfFlow("192.168.31.218", "1", "2", "a")
+    # ssh = SshClient(2)
+    # ssh.connect("192.168.111.1", "", "")
+    # v.DUT_MODULE = "R2D"
+    setIperfFlow(target="192.168.140.211", interval="", time="20", logname="log")
+    # ssh.close()

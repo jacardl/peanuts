@@ -1,12 +1,12 @@
+import multiprocessing as mp
 import matplotlib.pyplot as plt
-import xlwt as x
-from openpyxl import Workbook
+from openpyxl import Workbook, load_workbook
 
 from common import *
 import var as v
 
 
-class memMonitor(threading.Thread):
+class MemMonitor(threading.Thread):
     def __init__(self, interval=5, period=1):
         threading.Thread.__init__(self)
         self.interval = interval
@@ -24,170 +24,102 @@ class memMonitor(threading.Thread):
             curr_time = t.time()
             if curr_time - last_time >= self.interval:
                 last_time = curr_time
-                res = self.terminal.getTotalMemInfo()
+                try:
+                    res = self.terminal.getTotalMemInfo()
+                except Exception, e:
+                    continue
+                    # res = dict()
+                    # res["used"] = 0
                 memUsed = res["used"]
                 self.plot.append(memUsed)
                 if self.callback is not None:
                     self.callback.after_read_res(res, t)
             t.sleep(self.period)
+        self.terminal.close()
+        p = mp.Process(target=drawMem, args=(self.plot,))
+        p.start()
+        p.join()
 
     def stop(self):
-        # draw a chart
-        # f, ax = plt.subplots(figsize=(12, 6))
-        f, ax = plt.subplots()
-        ax.plot(range(len(self.plot)), self.plot)
-        # ax.set_title('Total Memory Used')
-        plt.suptitle("Total Memory Used")
-        plt.xlabel('Counts')
-        plt.ylabel('KB')
-        # plt.show()
-        plt.savefig(v.MAIL_PIC1)
-        plt.close()
-
-        self.terminal.close()
         self.running = False
 
 
-class memMonitorXls(threading.Thread):
-    def __init__(self, interval, count, file="temp.xls"):
+def drawMem(data):
+    # draw a chart
+    fig, ax = plt.subplots(figsize=(12, 6))
+    print "draw memory chart"
+    ax.plot(xrange(len(data)), data)
+    # ax.set_title('Total Memory Used')
+    plt.suptitle("Total Memory Used")
+    plt.xlabel('Counts')
+    plt.ylabel('KB')
+    # plt.show()
+    plt.savefig(v.MAIL_PIC1)
+    plt.close()
+
+
+class MemMonitorXlsx(threading.Thread):
+    def __init__(self, interval, count=0, file="temp.xlsx"):
         threading.Thread.__init__(self)
         self.interval = interval
         self.count = count
         self.running = False
         self.callback = None
-        self.curr_count = 1
         self.file = file
-
+        self.sheetDaemon = "User Mem Tracking"
+        self.sheetKernel = "Kernel Mem Tracking"
         self.terminal = SshCommand(v.CONNECTION_TYPE)
         self.ret = self.terminal.connect(v.HOST, v.USR, v.PASSWD)
 
     def run(self):
         self.running = True
-        last_time = t.time()
-        self.book = x.Workbook()
-        self.memSheet = self.book.add_sheet('memery tracking')
-        row0 = self.memSheet.row(0)
-        col0 = self.memSheet.col(0)
-        col0.width = v.WIDTH2
-        keys = []
-        row0Col = 2  # col 0 write time, col 1 write total mem, so vsz begin with 2
-        vszRow = 1
-        style1 = x.easyxf(num_format_str='h:mm:ss')
-        self.memSheet.write(0, 1, "Total used")  # write Total used title
+        daemon = threading.Thread(target=daemonKernelMonitor, args=(self.terminal, self.interval, self.count,
+                                                                    self.file, self.sheetDaemon, self.sheetKernel))
+        daemon.setDaemon(True)
+        daemon.start()
+        while self.running and daemon.isAlive():
+            daemon.join(1)
+        memDiffCalc(self.file, [self.sheetDaemon, self.sheetKernel])
 
-        while self.running and self.curr_count <= self.count:
-            curr_time = t.time()
-            if curr_time - last_time >= self.interval:
-                last_time = curr_time
-                self.terminal.getPidNameVSZDic()
-                totalmem = self.terminal.getTotalMemInfo()
-                time = self.terminal.getTimeStr()
-                newDic = self.terminal.outPidNameVSZDic
-                newKeys = newDic.keys()
-
-                self.memSheet.write(vszRow, 0, time, style1)  # write time
-                self.memSheet.write(vszRow, 1, totalmem["used"])
-                for i in newKeys:
-                    try:
-                        vszCol = keys.index(i) + 2  # begin from col 2
-                        self.memSheet.write(vszRow, vszCol, newDic[i])  # write daemon vsz
-
-                    except:
-                        flag = 0
-                        for e in v.EXCEPTIONS:  # exclude some daemons
-                            if e not in i:
-                                pass
-                            else:
-                                flag = 1
-                                break
-                        if flag == 0:
-                            row0.write(row0Col, i)  # write new daemon title
-                            self.memSheet.col(row0Col).width = v.WIDTH
-                            self.memSheet.write(vszRow, row0Col, newDic[i])  # write new daemon vsz
-                            keys.append(i)
-                            row0Col += 1
-                vszRow += 1
-                self.curr_count += 1
-                try:
-                    self.book.save(self.file)
-                except:
-                    self.terminal.close()
-                    break
-            t.sleep(1)
         self.stop()
 
     def stop(self):
-        memData = xr.open_workbook(self.file)
-        memTable = memData.sheet_by_name('memery tracking')
-        maxRow = memTable.nrows
-        maxCol = memTable.ncols
-        stylePercent = x.easyxf('font: name Calibri, bold on, height 250, underline on;', num_format_str="0.00%")
-        for col in range(1, maxCol):
-            rowStart = ""
-            rowEnd = ""
-            for row in range(1, maxRow):
-                if rowStart == "":
-                    rowStart = memTable.cell(row, col).value
-                else:
-                    break
-            for row in reversed(range(1, maxRow)):
-                if rowEnd == "":
-                    rowEnd = memTable.cell(row, col).value
-                else:
-                    break
-            diff = (rowEnd - rowStart) / rowStart
-            if diff != 0:
-                self.memSheet.write(maxRow, col, diff, stylePercent)
-            else:
-                self.memSheet.write(maxRow, col, diff)
-        self.book.save(self.file)
-
+        self.running = False
         self.terminal.close()
-        self.running = False
 
 
-class memMonitorExcelXlsx(threading.Thread):
-    def __init__(self, interval, count, file="temp.xlsx"):
-        threading.Thread.__init__(self)
-        self.interval = interval
-        self.count = count
-        self.running = False
-        self.callback = None
-        self.curr_count = 1
-        self.file = file
+def daemonMonitor(terminal, interval, count, filename, sheetname):
+    curr_count = 1
+    last_time = t.time()
+    wb = Workbook()
+    ws = wb.active
+    ws.title = sheetname
+    keys = []
+    row1Col = 3  # col 1 write time, col 2 write total mem, so vsz begin with 3
+    vszRow = 2  # Row 1 write title, value begin with Row 2
+    ws.cell(row=1, column=2).value = "Total Used"  # write Total used title
 
-        self.terminal = SshCommand(v.CONNECTION_TYPE)
-        self.ret = self.terminal.connect(v.HOST, v.USR, v.PASSWD)
-
-    def run(self):
-        self.running = True
-        last_time = t.time()
-        self.wb = Workbook()
-        self.ws = self.wb.active
-        self.ws.title = "Mem tracking"
-        # col0.width = v.WIDTH2
-        keys = []
-        row1Col = 3  # col 1 write time, col 2 write total mem, so vsz begin with 3
-        vszRow = 2  # Row 1 write title, value begin with Row 2
-        style1 = x.easyxf(num_format_str='h:mm:ss')
-        self.ws.cell(row=1, column=2).value = "Total used"  # write Total used title
-
-        while self.running and self.curr_count <= self.count:
+    if count >= 1:
+        while curr_count <= count:
             curr_time = t.time()
-            if curr_time - last_time >= self.interval:
+            if curr_time - last_time >= interval:
                 last_time = curr_time
-                self.terminal.getPidNameVSZDic()
-                totalmem = self.terminal.getTotalMemInfo()
-                time = self.terminal.getTimeStr()
-                newDic = self.terminal.outPidNameVSZDic
+                try:
+                    # terminal.getPidNameVSZDic()
+                    totalmem = terminal.getTotalMemInfo()
+                    time = terminal.getTimeStr()
+                    newDic = getDaemonRss(terminal)
+                except Exception, e:
+                    curr_count += 1
+                    continue
                 newKeys = newDic.keys()
 
-                self.ws.cell(row=vszRow, column=1).value = time  # write time
-                self.ws.cell(row=vszRow, column=2).value = totalmem["used"]  # write total mem
+                ws.cell(row=vszRow, column=1).value = time  # write time
+                ws.cell(row=vszRow, column=2).value = totalmem["used"]  # write total mem
                 for i in newKeys:
                     try:
                         vszCol = keys.index(i) + 3  # begin from col 3
-                        self.ws.cell(row=vszRow, column=vszCol).value = newDic[i]  # write daemon vsz
+                        ws.cell(row=vszRow, column=vszCol).value = newDic[i]  # write daemon vsz
 
                     except:
                         flag = 0
@@ -198,67 +130,356 @@ class memMonitorExcelXlsx(threading.Thread):
                                 flag = 1
                                 break
                         if flag == 0:
-                            self.ws.cell(row=1, column=row1Col).value = i  # write new daemon title
+                            ws.cell(row=1, column=row1Col).value = i  # write new daemon title
                             # self.ws.col(row0Col).width = v.WIDTH
-                            self.ws.cell(row=vszRow, column=row1Col).value = newDic[i]  # write new daemon vsz
+                            ws.cell(row=vszRow, column=row1Col).value = newDic[i]  # write new daemon vsz
                             keys.append(i)
                             row1Col += 1
                 vszRow += 1
-                self.curr_count += 1
+                curr_count += 1
                 try:
-                    self.wb.save(self.file)
+                    wb.save(filename)
                 except:
-                    self.terminal.close()
+                    terminal.close()
                     break
             t.sleep(1)
-        self.stop()
+    elif count is 0:
+        while True:
+            curr_time = t.time()
+            if curr_time - last_time >= interval:
+                last_time = curr_time
+                try:
+                    totalmem = terminal.getTotalMemInfo()
+                    time = terminal.getTimeStr()
+                    newDic = getDaemonRss(terminal)
+                except Exception, e:
+                    curr_count += 1
+                    continue
+                newKeys = newDic.keys()
 
-    def stop(self):
-        maxRow = self.ws.get_highest_row()
-        maxCol = self.ws.get_highest_column()
+                ws.cell(row=vszRow, column=1).value = time  # write time
+                ws.cell(row=vszRow, column=2).value = totalmem["used"]  # write total mem
+                for i in newKeys:
+                    try:
+                        vszCol = keys.index(i) + 3  # begin from col 3
+                        ws.cell(row=vszRow, column=vszCol).value = newDic[i]  # write daemon vsz
+
+                    except:
+                        flag = 0
+                        for e in v.EXCEPTIONS:  # exclude some daemons
+                            if e not in i:
+                                pass
+                            else:
+                                flag = 1
+                                break
+                        if flag == 0:
+                            ws.cell(row=1, column=row1Col).value = i  # write new daemon title
+                            # self.ws.col(row0Col).width = v.WIDTH
+                            ws.cell(row=vszRow, column=row1Col).value = newDic[i]  # write new daemon vsz
+                            keys.append(i)
+                            row1Col += 1
+                vszRow += 1
+                curr_count += 1
+                try:
+                    wb.save(filename)
+                except:
+                    terminal.close()
+                    break
+            t.sleep(1)
+
+
+def kernelMonitor(terminal, interval, count, filename, sheetname):
+    curr_count = 1
+    last_time = t.time()
+    wb = Workbook()
+    ws = wb.create_sheet(title=sheetname)
+    keys = [] # repersent cache name has been written
+    row1Col = 3  # col 1 write time, col 2 write total cache
+    vszRow = 2  # Row 1 write title, value begin with Row 2
+    ws.cell(row=1, column=2).value = "Total Cache"  # write Total cache title
+    keys.append("Total Cache")
+
+    if count >= 1:
+        while curr_count <= count:
+            curr_time = t.time()
+            if curr_time - last_time >= interval:
+                last_time = curr_time
+                try:
+                    time = terminal.getTimeStr()
+                    newDic = getKernelSlab(terminal)
+                except Exception, e:
+                    curr_count += 1
+                    continue
+                newKeys = newDic.keys()
+
+                ws.cell(row=vszRow, column=1).value = time  # write time
+
+                for i in newKeys:
+                    try:
+                        vszCol = keys.index(i) + 2  # begin from col 2
+                        ws.cell(row=vszRow, column=vszCol).value = newDic[i]  # write kernel cache size
+
+                    except:
+                        flag = 0
+                        for e in v.KERNEL_EXCEPTIONS:  # exclude some kernel cache name
+                            if e not in i:
+                                pass
+                            else:
+                                flag = 1
+                                break
+                        if flag == 0:
+                            ws.cell(row=1, column=row1Col).value = i  # write new cache name
+                            ws.cell(row=vszRow, column=row1Col).value = newDic[i]  # write new cache size
+                            keys.append(i)
+                            row1Col += 1
+                vszRow += 1
+                curr_count += 1
+                try:
+                    wb.save(filename)
+                except:
+                    terminal.close()
+                    break
+            t.sleep(1)
+    elif count is 0:
+        while True:
+            curr_time = t.time()
+            if curr_time - last_time >= interval:
+                last_time = curr_time
+                try:
+                    time = terminal.getTimeStr()
+                    newDic = getKernelSlab(terminal)
+                except Exception, e:
+                    continue
+                newKeys = newDic.keys()
+
+                ws.cell(row=vszRow, column=1).value = time  # write time
+                for i in newKeys:
+                    try:
+                        vszCol = keys.index(i) + 2  # begin from col 3
+                        ws.cell(row=vszRow, column=vszCol).value = newDic[i]  # write daemon vsz
+
+                    except:
+                        flag = 0
+                        for e in v.EXCEPTIONS:  # exclude some daemons
+                            if e not in i:
+                                pass
+                            else:
+                                flag = 1
+                                break
+                        if flag == 0:
+                            ws.cell(row=1, column=row1Col).value = i  # write new cache name
+                            ws.cell(row=vszRow, column=row1Col).value = newDic[i]  # write new cache size
+                            keys.append(i)
+                            row1Col += 1
+                vszRow += 1
+                try:
+                    wb.save(filename)
+                except:
+                    terminal.close()
+                    break
+            t.sleep(1)
+
+
+def daemonKernelMonitor(terminal, interval, count, filename, sheet1, sheet2):
+    last_time = t.time()
+    wb = Workbook()
+    ws1 = wb.active
+    ws1.title = sheet1
+    ws2 = wb.create_sheet(title=sheet2)
+    wb.save(filename)
+    keys1 = list()
+    keys2 = list()
+    daemonNameCol = 3  # col 1 write time, col 2 write total mem, so vsz begin with 3
+    kernelCacheNameCol = 3
+    vszRow = 2  # Row 1 write title, value begin with Row 2
+    ws1.cell(row=1, column=2).value = "Total Used"  # write Total used title
+    ws2.cell(row=1, column=2).value = "Total Cache"  # write Total cache title
+    keys2.append("Total Cache")
+    if count >= 1:
+        curr_count = 1
+        while curr_count <= count:
+            curr_time = t.time()
+            if curr_time - last_time >= interval:
+                last_time = curr_time
+                try:
+                    totalmem = terminal.getTotalMemInfo()
+                    time = terminal.getTimeStr()
+                    newDic1 = getDaemonRss(terminal)
+                    newDic2 = getKernelSlab(terminal)
+                except Exception, e:
+                    curr_count += 1
+                    continue
+                newKeys1 = newDic1.keys()
+                newKeys2 = newDic2.keys()
+
+                ws1.cell(row=vszRow, column=1).value = time  # write time
+                ws1.cell(row=vszRow, column=2).value = totalmem["used"]  # write total mem
+                ws2.cell(row=vszRow, column=1).value = time
+                for i in newKeys1:
+                    try:
+                        vszCol = keys1.index(i) + 3  # begin from col 3
+                        ws1.cell(row=vszRow, column=vszCol).value = newDic1[i]  # write daemon vsz
+
+                    except:
+                        flag = 0
+                        for e in v.EXCEPTIONS:  # exclude some daemons
+                            if e not in i:
+                                pass
+                            else:
+                                flag = 1
+                                break
+                        if flag == 0:
+                            ws1.cell(row=1, column=daemonNameCol).value = i  # write new daemon title
+                            ws1.cell(row=vszRow, column=daemonNameCol).value = newDic1[i]  # write new daemon vsz
+                            keys1.append(i)
+                            daemonNameCol += 1
+
+                for j in newKeys2:
+                    try:
+                        vszCol = keys2.index(j) + 2  # begin from col 3
+                        ws2.cell(row=vszRow, column=vszCol).value = newDic2[j]  # write kernel cache size
+
+                    except:
+                        flag = 0
+                        for e in v.KERNEL_EXCEPTIONS:  # exclude some daemons
+                            if e not in j:
+                                pass
+                            else:
+                                flag = 1
+                                break
+                        if flag == 0:
+                            ws2.cell(row=1, column=kernelCacheNameCol).value = j  # write new cache name
+                            ws2.cell(row=vszRow, column=kernelCacheNameCol).value = newDic2[j]  # write new cache size
+                            keys2.append(j)
+                            kernelCacheNameCol += 1
+
+                vszRow += 1
+                curr_count += 1
+                try:
+                    wb.save(filename)
+                except:
+                    terminal.close()
+                    break
+            t.sleep(1)
+    elif count is 0:
+        while True:
+            curr_time = t.time()
+            if curr_time - last_time >= interval:
+                last_time = curr_time
+                try:
+                    totalmem = terminal.getTotalMemInfo()
+                    time = terminal.getTimeStr()
+                    newDic1 = getDaemonRss(terminal)
+                    newDic2 = getKernelSlab(terminal)
+                except Exception, e:
+                    continue
+                newKeys1 = newDic1.keys()
+                newKeys2 = newDic2.keys()
+
+                ws1.cell(row=vszRow, column=1).value = time  # write time
+                ws1.cell(row=vszRow, column=2).value = totalmem["used"]  # write total mem
+                ws2.cell(row=vszRow, column=1).value = time
+                for i in newKeys1:
+                    try:
+                        vszCol = keys1.index(i) + 3  # begin from col 3
+                        ws1.cell(row=vszRow, column=vszCol).value = newDic1[i]  # write daemon vsz
+
+                    except:
+                        flag = 0
+                        for e in v.EXCEPTIONS:  # exclude some daemons
+                            if e not in i:
+                                pass
+                            else:
+                                flag = 1
+                                break
+                        if flag == 0:
+                            ws1.cell(row=1, column=daemonNameCol).value = i  # write new daemon title
+                            ws1.cell(row=vszRow, column=daemonNameCol).value = newDic1[i]  # write new daemon vsz
+                            keys1.append(i)
+                            daemonNameCol += 1
+
+                for j in newKeys2:
+                    try:
+                        vszCol = keys2.index(j) + 2  # begin from col 3
+                        ws2.cell(row=vszRow, column=vszCol).value = newDic2[j]  # write kernel cache size
+
+                    except:
+                        flag = 0
+                        for e in v.KERNEL_EXCEPTIONS:  # exclude some daemons
+                            if e not in j:
+                                pass
+                            else:
+                                flag = 1
+                                break
+                        if flag == 0:
+                            ws2.cell(row=1, column=kernelCacheNameCol).value = j  # write new cache name
+                            ws2.cell(row=vszRow, column=kernelCacheNameCol).value = newDic2[j]  # write new cache size
+                            keys2.append(j)
+                            kernelCacheNameCol += 1
+
+                vszRow += 1
+                try:
+                    wb.save(filename)
+                except:
+                    terminal.close()
+                    break
+            t.sleep(1)
+
+
+def memDiffCalc(filename, sheetname):
+    try:
+        wb = load_workbook(filename)
+    except:
+        print "specified file no exists!"
+        return
+    # ws = wb.active
+    for sheet in sheetname:
+        ws = wb[sheet]
+        maxRow = ws.get_highest_row()
+        maxCol = ws.get_highest_column()
 
         for col in range(2, maxCol + 1):
             rowStart = None
             rowEnd = None
             for row in range(2, maxRow+1):
                 if rowStart is None:
-                    rowStart = self.ws.cell(row=row, column=col).value
+                    rowStart = ws.cell(row=row, column=col).value
                 else:
                     rowStart = float(rowStart)
                     break
             for row in reversed(range(2, maxRow+1)):
                 if rowEnd is None:
-                    rowEnd = self.ws.cell(row=row, column=col).value
+                    rowEnd = ws.cell(row=row, column=col).value
                 else:
                     rowEnd = float(rowEnd)
                     break
             try:
                 diff = (rowEnd - rowStart) / rowStart
             except Exception, e:
-                print e, "rowStart=%s, rowEnd=%s"%rowStart,rowEnd
+                print e, "rowStart=%s, rowEnd=%s"%(rowStart, rowEnd)
+                diff = 0
 
             if diff != 0:
                 # self.ws.write(maxRow, col, diff, stylePercent)
-                sum = self.ws.cell(row=maxRow + 1, column=col)
+                sum = ws.cell(row=maxRow + 1, column=col)
                 diff = "{:.1%}".format(diff)
                 sum.value = diff
-                # else:
-                # # self.ws.write(maxRow, col, diff)
-                # sum = self.ws.cell(row=maxRow+1, column=col)
-                # sum.value = diff
+        wb.save(filename)
 
-        self.wb.save(self.file)
-        self.terminal.close()
-        self.running = False
+if __name__ == '__main__':
 
+    v.CONNECTION_TYPE = 2
+    v.HOST = "192.168.110.1"
+    v.USR = ""
+    v.PASSWD = ""
+    # ssh = SshCommand(2)
+    # ssh.connect("192.168.110.1", "", "")
+    # v.DUT_MODULE = "R2D"
+    # daemonMonitor(ssh, interval=1, count=10, filename="temp.xlsx", sheetname="sheet1")
+    # kernelMonitor(ssh, interval=1, count=10, filename="temp1.xlsx", sheetname="sheet1")
+    memDiffCalc("MEM_2015.11.12 10.31.54.xlsx", ["User Mem Tracking", "Kernel Mem Tracking"])
+    # memMon = MemMonitorXlsx(interval=5, count=0, file="temp.xlsx")
+    # memMon.start()
+    # t.sleep(30)
+    # memMon.stop()
 
-if __name__ == "__main__":
-    interval = 1
-    memMon = memMonitorExcelXlsx(interval, 5)
-    memMon.setDaemon(True)
-    memMon.start()
-    c = 0
-    while c <= 7:
-        print memMon.curr_count
-        c += 1
-        t.sleep(1.2)

@@ -1,4 +1,5 @@
 # -*- coding: gbk -*-
+import multiprocessing as mp
 import threading
 import re
 from collections import *
@@ -7,12 +8,14 @@ import matplotlib.pyplot as plt
 
 import var as v
 
-class ProcessReport(threading.Thread):
-    def __init__(self, report):
-        threading.Thread.__init__(self)
+
+class ProcessReport(mp.Process):
+    def __init__(self, report, q):
+        mp.Process.__init__(self)
         self.running = False
         self.report = report
         self.result = OrderedDict()
+        self.qu = q
 
     def run(self):
         self.running = True
@@ -24,16 +27,26 @@ class ProcessReport(threading.Thread):
         test.start()
         flow.start()
         online.start()
-        while time.isAlive() or test.isAlive() or flow.isAlive() \
-                or online.isAlive():
+        while time.is_alive() or test.is_alive() or flow.is_alive() \
+                or online.is_alive():
             pass
         self.result.update(sum=test.result["testsum"])
         self.result.update(pa=test.result["testpass"])
-        self.result.update(percent=test.result["testpass"]/float(test.result["testsum"])*100)
+        testSum = test.result["testsum"]
+        if testSum == 0:
+            self.result.update(percent=0)
+        else:
+            self.result.update(percent=test.result["testpass"]/float(test.result["testsum"])*100)
+
         self.result.update(time=time.timeUsed)
         self.result.update(onlinesum=online.result["pass"]+online.result["fail"])
         self.result.update(onlinepa=online.result["pass"])
-        self.result.update(onlinepercent=online.result["pass"]/(online.result["pass"]+float(online.result["fail"]))*100)
+        onlineSum = online.result["pass"]+online.result["fail"]
+        if onlineSum == 0:
+            self.result.update(onlinepercent=0)
+        else:
+            self.result.update(onlinepercent=online.result["pass"]/float(onlineSum)*100)
+        self.qu.put(self.result)
         self.stop()
 
     def stop(self):
@@ -460,8 +473,8 @@ def drawFlowLog(data):
     rx.append(ret.get("rx2gClear"))
     rx.append(ret.get("rx2gTkip"))
 
-
     fig, ax = plt.subplots(figsize=(12, 6))
+    print "draw flow chart"
     # plt.subplots_adjust(left=0.08, right=0.95)
     rects1 = plt.bar(index, tx, bar_width,
                      alpha=opacity,
@@ -523,6 +536,7 @@ def drawChannelFlowLog(data, encrypto):
     rx.append(ret.get("rx13"))
 
     fig, ax = plt.subplots(figsize=(12, 6))
+    print "draw channel flow in %s"%encrypto
     # plt.subplots_adjust(left=0.08, right=0.95)
     rects1 = plt.bar(index, tx, bar_width,
                      alpha=opacity,
@@ -568,7 +582,7 @@ class GetOnlineLog(threading.Thread):
         self.result = {
             "pass": 0,
             "fail": 0,
-        }
+            }
 
     def run(self):
         self.running = True
@@ -609,21 +623,20 @@ class GetOnlineLog(threading.Thread):
 
 
 if __name__ == '__main__':
-    # t = GetTestResult("R1CM 开发版OTA 2.5.48.log")
     # t.start()
     # while t.isAlive():
     #     print time.time()
     # print getFlowLogVerbose("E:\peanuts\LOG_TEST_SUITE\AP_CLEAR_CHAN_FLOW2.log")
-    info = GetFlowLog("R2D 稳定版OTA 2.8.6.log")
+    # info = GetFlowLog("R1CM 开发版OTA 2.7.10.log")
     # info = GetOnlineLog("R1CM 开发版OTA 2.5.48.log")
     # info = GetTestResult("R1CM 开发版OTA 2.5.48.log")
-    # info = ProcessReport("R2D 稳定版OTA 2.6.12.log")
+    info = ProcessReport("R1CM 开发版OTA 2.7.10.log")
     info.start()
     info.join()
     print info.result
-    print info.resultAes
-    print info.resultTkip
-    print info.resultClear
+    # print info.resultAes
+    # print info.resultTkip
+    # print info.resultClear
     # print getChannelFlowLogVerbose("R2D 稳定版OTA 2.8.6\AP_MIXEDPSK_CHAN11_149_FLOW2.log")
     # print getFlowLogVerbose("R2D 稳定版OTA 2.8.6\AP_MIXEDPSK_CHAN11_149_FLOW2.log")
 

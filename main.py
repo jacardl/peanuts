@@ -10,7 +10,6 @@ import wx.lib.delayedresult as delayedresult
 import shutil
 import random
 import multiprocessing as mp
-import subprocess
 import var as v
 import common as co
 import images
@@ -768,7 +767,7 @@ class TestSuitePage(wx.Panel):
             else:
                 os.rename(v.TEST_SUITE_LOG_PATH, self.report + str(random.random()))
         if testKeepGoing is False:
-            subprocess.call("taskkill /F /IM python.exe | taskkill /F /T /IM adb.exe")
+            os.system("taskkill /F /IM python.exe | taskkill /F /T /IM adb.exe")
         self.abortEvent.set()
         self.dlg.Destroy()
 

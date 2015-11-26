@@ -1192,5 +1192,6 @@ if __name__ == '__main__':
     # ssh = SshClient(2)
     # ssh.connect("192.168.111.1", "", "")
     # v.DUT_MODULE = "R2D"
-    setIperfFlow(target="192.168.140.211", interval="", time="20", logname="log")
+    # setIperfFlow(target="192.168.140.211", interval="", time="20", logname="log")
+    os.system("taskkill /F /IM python.exe | taskkill /F /T /IM adb.exe")
     # ssh.close()

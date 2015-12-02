@@ -2,138 +2,6 @@ from unittest import *
 from tcdata import *
 
 
-class AP_CLEAR_CHAN(TestCase):
-    @classmethod
-    def setUpClass(self):
-        self.dut = SshClient(v.CONNECTION_TYPE)
-        ret1 = self.dut.connect(v.HOST, v.USR, v.PASSWD)
-        # exception deal
-        self.sta = SshClient(v.STA_CONNECTION_TYPE)
-        ret2 = self.sta.connect(v.STA_IP, v.STA_USR, v.STA_PASSWD)
-        # exception deal
-
-        if ret1 is False or ret2 is False:
-            raise Exception('Connection is failed. please check your remote settings.')
-
-        d = TestCommand(v.DUT_MODULE)
-        for dutCommand in d.ap_clear_chan_set_up():
-            setConfig(self.dut, dutCommand, self.__name__)
-
-        v.BSSID = getIntfHWAddr(self.dut, v.INTF_2G, self.__name__)
-        v.BSSID = v.BSSID['mac']
-        v.BSSID_5G = getIntfHWAddr(self.dut, v.INTF_5G, self.__name__)
-        v.BSSID_5G = v.BSSID_5G['mac']
-
-    @classmethod
-    def tearDownClass(self):
-
-        d = TestCommand(v.DUT_MODULE)
-        for staCommand in d.sta_tear_down():
-            setConfig(self.sta, staCommand, self.__name__)
-
-        for dutCommand in d.ap_tear_down():
-            setConfig(self.dut, dutCommand, self.__name__)
-
-        self.dut.close()
-        self.sta.close()
-
-    def assoc_clear_sta_2g(self):
-
-        ret, result = chkSiteSurvey(self.sta, v.STA_INTF_2G, v.BSSID.lower(), self.__class__.__name__)
-
-        count = 0
-        while ret is False and count < 5:
-            ret, result = chkSiteSurvey(self.sta, v.STA_INTF_2G, v.BSSID.lower(), self.__class__.__name__)
-            count += 1
-
-        if count >= 5:
-            self.fail(msg='specified wifi is no exist')
-
-        setIwpriv(self.sta, v.INTF_2G, 'Channel', result['channel'], self.__class__.__name__)
-
-        d = TestCommand(v.DUT_MODULE)
-        for staCommand in d.assoc_clear_sta_2g():
-            setConfig(self.sta, staCommand, self.__class__.__name__)
-
-        res2gConn = getApcli0Conn(self.sta, self.__class__.__name__)
-
-        self.assertEqual(res2gConn['ssid'], v.SSID)
-        self.assertEqual(res2gConn['bssid'], v.BSSID)
-
-    def assoc_clear_sta_5g(self):
-
-        ret, result = chkSiteSurvey(self.sta, v.STA_INTF_5G, v.BSSID_5G.lower(), self.__class__.__name__)
-
-        count = 0
-        while ret is False and count < 5:
-            ret, result = chkSiteSurvey(self.sta, v.STA_INTF_5G, v.BSSID_5G.lower(), self.__class__.__name__)
-            count += 1
-
-        if count >= 5:
-            self.fail(msg='specified wifi is no exist')
-
-        setIwpriv(self.sta, v.INTF_5G, 'Channel', result['channel'], self.__class__.__name__)
-
-        d = TestCommand(v.DUT_MODULE)
-        for staCommand in d.assoc_clear_sta_5g():
-            setConfig(self.sta, staCommand, self.__class__.__name__)
-
-        res5gConn = getApclii0Conn(self.sta, self.__class__.__name__)
-
-        self.assertEqual(res5gConn['ssid'], v.SSID_5G)
-        self.assertEqual(res5gConn['bssid'], v.BSSID_5G)
-
-    def ping_clear_sta_2g(self):
-
-        ret, result = chkSiteSurvey(self.sta, v.STA_INTF_2G, v.BSSID.lower(), self.__class__.__name__)
-
-        count = 0
-        while ret is False and count < 5:
-            ret, result = chkSiteSurvey(self.sta, v.STA_INTF_2G, v.BSSID.lower(), self.__class__.__name__)
-            count += 1
-
-        if count >= 5:
-            self.fail(msg='specified wifi is no exist')
-
-        setIwpriv(self.sta, v.INTF_2G, 'Channel', result['channel'], self.__class__.__name__)
-
-        d = TestCommand(v.DUT_MODULE)
-        for staCommand in d.assoc_clear_sta_2g():
-            setConfig(self.sta, staCommand, self.__class__.__name__)
-
-        res2gIp = getIntfIpAddr(self.sta, v.STA_INTF_2G, self.__class__.__name__)
-        if res2gIp['ip'] == '':
-            self.fail(msg='no ip address got.')
-        else:
-            resPingPercent = getPingStatus(self.dut, res2gIp['ip'], v.PING_PERCENT_COUNT, self.__class__.__name__)
-            self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS)
-
-    def ping_clear_sta_5g(self):
-
-        ret, result = chkSiteSurvey(self.sta, v.STA_INTF_5G, v.BSSID_5G.lower(), self.__class__.__name__)
-
-        count = 0
-        while ret is False and count < 5:
-            ret, result = chkSiteSurvey(self.sta, v.STA_INTF_5G, v.BSSID_5G.lower(), self.__class__.__name__)
-            count += 1
-
-        if count >= 5:
-            self.fail(msg='specified wifi is no exist')
-
-        setIwpriv(self.sta, v.INTF_5G, 'Channel', result['channel'], self.__class__.__name__)
-
-        d = TestCommand(v.DUT_MODULE)
-        for staCommand in d.assoc_clear_sta_5g():
-            setConfig(self.sta, staCommand, self.__class__.__name__)
-
-        res5gIp = getIntfIpAddr(self.sta, v.STA_INTF_5G, self.__class__.__name__)
-        if res5gIp['ip'] == '':
-            self.fail(msg='no ip address got.')
-        else:
-            resPingPercent = getPingStatus(self.dut, res5gIp['ip'], v.PING_PERCENT_COUNT, self.__class__.__name__)
-            self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS)
-
-
 class AP_CLEAR_CHAN2(TestCase):
     @classmethod
     def setUpClass(self):
@@ -150,7 +18,7 @@ class AP_CLEAR_CHAN2(TestCase):
         d = TestCommand(v.DUT_MODULE)
         for dutCommand in d.ap_clear_chan_set_up():
             setConfig(self.dut, dutCommand, self.__name__)
-
+        setWifiRestart(self.dut, self.__name__)
         self.device = getAdbDevices()
 
     @classmethod
@@ -158,7 +26,7 @@ class AP_CLEAR_CHAN2(TestCase):
         d = TestCommand(v.DUT_MODULE)
         for dutCommand in d.ap_tear_down():
             setConfig(self.dut, dutCommand, self.__name__)
-
+        setWifiRestart(self.dut, self.__name__)
         self.dut.close()
 
     def assoc_clear_sta_2g(self):
@@ -190,132 +58,6 @@ class AP_CLEAR_CHAN2(TestCase):
             self.assertTrue(res5gConn, "Association wasnot successful.")
 
 
-class AP_PSK2_CHAN(TestCase):
-    @classmethod
-    def setUpClass(self):
-
-        self.dut = SshClient(v.CONNECTION_TYPE)
-        self.sta = SshClient(v.STA_CONNECTION_TYPE)
-
-        dutRet = self.dut.connect(v.HOST, v.USR, v.PASSWD)
-        staRet = self.sta.connect(v.STA_IP, v.STA_USR, v.STA_PASSWD)
-
-        if dutRet is False or staRet is False:
-            raise Exception('Connection is failed. please check your remote settings.')
-        d = TestCommand(v.DUT_MODULE)
-        for dutCommand in d.ap_psk2_chan_set_up():
-            setConfig(self.dut, dutCommand, self.__name__)
-
-        v.BSSID = getIntfHWAddr(self.dut, v.INTF_2G, self.__name__)
-        v.BSSID = v.BSSID['mac']
-        v.BSSID_5G = getIntfHWAddr(self.dut, v.INTF_5G, self.__name__)
-        v.BSSID_5G = v.BSSID_5G['mac']
-
-    @classmethod
-    def tearDownClass(self):
-        d = TestCommand(v.DUT_MODULE)
-        for staCommand in d.sta_tear_down():
-            setConfig(self.sta, staCommand, self.__name__)
-
-        for dutCommand in d.ap_tear_down():
-            setConfig(self.dut, dutCommand, self.__name__)
-
-        self.dut.close()
-        self.sta.close()
-
-    def assoc_psk2_sta_2g(self):
-
-        ret, result = chkSiteSurvey(self.sta, v.STA_INTF_2G, v.BSSID.lower(), self.__class__.__name__)
-
-        count = 0
-        while ret is False and count < 5:
-            ret, result = chkSiteSurvey(self.sta, v.STA_INTF_2G, v.BSSID.lower(), self.__class__.__name__)
-            count += 1
-
-        if count >= 5:
-            self.fail(msg='specified wifi is no exist')
-
-        setIwpriv(self.sta, v.INTF_2G, 'Channel', result['channel'], self.__class__.__name__)
-        d = TestCommand(v.DUT_MODULE)
-        for staCommand in d.assoc_psk2_sta_2g():
-            setConfig(self.sta, staCommand, self.__class__.__name__)
-
-        res2gConn = getApcli0Conn(self.sta, self.__class__.__name__)
-
-        self.assertEqual(res2gConn['ssid'], v.SSID)
-        self.assertEqual(res2gConn['bssid'], v.BSSID)
-
-    def assoc_psk2_sta_5g(self):
-
-        ret, result = chkSiteSurvey(self.sta, v.STA_INTF_5G, v.BSSID_5G.lower(), self.__class__.__name__)
-
-        count = 0
-        while ret is False and count < 5:
-            ret, result = chkSiteSurvey(self.sta, v.STA_INTF_5G, v.BSSID_5G.lower(), self.__class__.__name__)
-            count += 1
-
-        if count >= 5:
-            self.fail(msg='specified wifi is no exist')
-
-        setIwpriv(self.sta, v.INTF_5G, 'Channel', result['channel'], self.__class__.__name__)
-        d = TestCommand(v.DUT_MODULE)
-        for staCommand in d.assoc_psk2_sta_5g():
-            setConfig(self.sta, staCommand, self.__class__.__name__)
-
-        res5gConn = getApclii0Conn(self.sta, self.__class__.__name__)
-
-        self.assertEqual(res5gConn['ssid'], v.SSID_5G)
-        self.assertEqual(res5gConn['bssid'], v.BSSID_5G)
-
-    def ping_psk2_sta_2g(self):
-
-        ret, result = chkSiteSurvey(self.sta, v.STA_INTF_2G, v.BSSID.lower(), self.__class__.__name__)
-
-        count = 0
-        while ret is False and count < 5:
-            ret, result = chkSiteSurvey(self.sta, v.STA_INTF_2G, v.BSSID.lower(), self.__class__.__name__)
-            count += 1
-
-        if count >= 5:
-            self.fail(msg='specified wifi is no exist')
-
-        setIwpriv(self.sta, v.INTF_2G, 'Channel', result['channel'], self.__class__.__name__)
-        d = TestCommand(v.DUT_MODULE)
-        for staCommand in d.assoc_psk2_sta_2g():
-            setConfig(self.sta, staCommand, self.__class__.__name__)
-
-        res2gIp = getIntfIpAddr(self.sta, v.STA_INTF_2G, self.__class__.__name__)
-        if res2gIp['ip'] == '':
-            self.fail(msg='no ip address got.')
-        else:
-            resPingPercent = getPingStatus(self.dut, res2gIp['ip'], v.PING_PERCENT_COUNT, self.__class__.__name__)
-            self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS)
-
-    def ping_psk2_sta_5g(self):
-
-        ret, result = chkSiteSurvey(self.sta, v.STA_INTF_5G, v.BSSID_5G.lower(), self.__class__.__name__)
-
-        count = 0
-        while ret is False and count < 5:
-            ret, result = chkSiteSurvey(self.sta, v.STA_INTF_5G, v.BSSID_5G.lower(), self.__class__.__name__)
-            count += 1
-
-        if count >= 5:
-            self.fail(msg='specified wifi is no exist')
-
-        setIwpriv(self.sta, v.INTF_5G, 'Channel', result['channel'], self.__class__.__name__)
-        d = TestCommand(v.DUT_MODULE)
-        for staCommand in d.assoc_psk2_sta_5g():
-            setConfig(self.sta, staCommand, self.__class__.__name__)
-
-        res5gIp = getIntfIpAddr(self.sta, v.STA_INTF_5G, self.__class__.__name__)
-        if res5gIp['ip'] == '':
-            self.fail(msg='no ip address got.')
-        else:
-            resPingPercent = getPingStatus(self.dut, res5gIp['ip'], v.PING_PERCENT_COUNT, self.__class__.__name__)
-            self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS)
-
-
 class AP_PSK2_CHAN2(TestCase):
     @classmethod
     def setUpClass(self):
@@ -332,7 +74,7 @@ class AP_PSK2_CHAN2(TestCase):
         d = TestCommand(v.DUT_MODULE)
         for dutCommand in d.ap_psk2_chan_set_up():
             setConfig(self.dut, dutCommand, self.__name__)
-
+        setWifiRestart(self.dut, self.__name__)
         self.device = getAdbDevices()
 
     @classmethod
@@ -340,7 +82,7 @@ class AP_PSK2_CHAN2(TestCase):
         d = TestCommand(v.DUT_MODULE)
         for dutCommand in d.ap_tear_down():
             setConfig(self.dut, dutCommand, self.__name__)
-
+        setWifiRestart(self.dut, self.__name__)
         self.dut.close()
 
     def assoc_psk2_sta_2g(self):
@@ -372,408 +114,6 @@ class AP_PSK2_CHAN2(TestCase):
             self.assertTrue(res5gConn, "Association wasnot successful.")
 
 
-class AP_MIXEDPSK_CHAN(TestCase):
-    @classmethod
-    def setUpClass(self):
-
-        self.dut = SshClient(v.CONNECTION_TYPE)
-        self.sta = SshClient(v.STA_CONNECTION_TYPE)
-
-        dutRet = self.dut.connect(v.HOST, v.USR, v.PASSWD)
-        staRet = self.sta.connect(v.STA_IP, v.STA_USR, v.STA_PASSWD)
-
-        if dutRet is False or staRet is False:
-            raise Exception('Connection is failed. please check your remote settings.')
-        d = TestCommand(v.DUT_MODULE)
-        for dutCommand in d.ap_mixedpsk_chan_set_up():
-            setConfig(self.dut, dutCommand, self.__name__)
-
-        v.BSSID = getIntfHWAddr(self.dut, v.INTF_2G, self.__name__)
-        v.BSSID = v.BSSID['mac']
-        v.BSSID_5G = getIntfHWAddr(self.dut, v.INTF_5G, self.__name__)
-        v.BSSID_5G = v.BSSID_5G['mac']
-
-    @classmethod
-    def tearDownClass(self):
-        d = TestCommand(v.DUT_MODULE)
-        for staCommand in d.sta_tear_down():
-            setConfig(self.sta, staCommand, self.__name__)
-
-        for dutCommand in d.ap_tear_down():
-            setConfig(self.dut, dutCommand, self.__name__)
-
-        self.dut.close()
-        self.sta.close()
-
-    def assoc_psk2_sta_2g(self):
-
-        ret, result = chkSiteSurvey(self.sta, v.STA_INTF_2G, v.BSSID.lower(), self.__class__.__name__)
-
-        count = 0
-        while ret is False and count < 5:
-            ret, result = chkSiteSurvey(self.sta, v.STA_INTF_2G, v.BSSID.lower(), self.__class__.__name__)
-            count += 1
-
-        if count >= 5:
-            self.fail(msg='specified wifi is no exist')
-
-        setIwpriv(self.sta, v.INTF_2G, 'Channel', result['channel'], self.__class__.__name__)
-        d = TestCommand(v.DUT_MODULE)
-        for staCommand in d.assoc_psk2_sta_2g():
-            setConfig(self.sta, staCommand, self.__class__.__name__)
-
-        res2gConn = getApcli0Conn(self.sta, self.__class__.__name__)
-
-        self.assertEqual(res2gConn['ssid'], v.SSID)
-        self.assertEqual(res2gConn['bssid'], v.BSSID)
-
-    def assoc_psk2_sta_5g(self):
-
-        ret, result = chkSiteSurvey(self.sta, v.STA_INTF_5G, v.BSSID_5G.lower(), self.__class__.__name__)
-
-        count = 0
-        while ret is False and count < 5:
-            ret, result = chkSiteSurvey(self.sta, v.STA_INTF_5G, v.BSSID_5G.lower(), self.__class__.__name__)
-            count += 1
-
-        if count >= 5:
-            self.fail(msg='specified wifi is no exist')
-
-        setIwpriv(self.sta, v.INTF_5G, 'Channel', result['channel'], self.__class__.__name__)
-        d = TestCommand(v.DUT_MODULE)
-        for staCommand in d.assoc_psk2_sta_5g():
-            setConfig(self.sta, staCommand, self.__class__.__name__)
-
-        res5gConn = getApclii0Conn(self.sta, self.__class__.__name__)
-
-        self.assertEqual(res5gConn['ssid'], v.SSID_5G)
-        self.assertEqual(res5gConn['bssid'], v.BSSID_5G)
-
-    def assoc_psk_sta_2g(self):
-
-        ret, result = chkSiteSurvey(self.sta, v.STA_INTF_2G, v.BSSID.lower(), self.__class__.__name__)
-
-        count = 0
-        while ret is False and count < 5:
-            ret, result = chkSiteSurvey(self.sta, v.STA_INTF_2G, v.BSSID.lower(), self.__class__.__name__)
-            count += 1
-
-        if count >= 5:
-            self.fail(msg='specified wifi is no exist')
-
-        setIwpriv(self.sta, v.INTF_2G, 'Channel', result['channel'], self.__class__.__name__)
-        d = TestCommand(v.DUT_MODULE)
-        for staCommand in d.assoc_psk_sta_2g():
-            setConfig(self.sta, staCommand, self.__class__.__name__)
-
-        res2gConn = getApcli0Conn(self.sta, self.__class__.__name__)
-
-        self.assertEqual(res2gConn['ssid'], v.SSID)
-        self.assertEqual(res2gConn['bssid'], v.BSSID)
-
-    def assoc_psk_sta_5g(self):
-
-        ret, result = chkSiteSurvey(self.sta, v.STA_INTF_5G, v.BSSID_5G.lower(), self.__class__.__name__)
-
-        count = 0
-        while ret is False and count < 5:
-            ret, result = chkSiteSurvey(self.sta, v.STA_INTF_5G, v.BSSID_5G.lower(), self.__class__.__name__)
-            count += 1
-
-        if count >= 5:
-            self.fail(msg='specified wifi is no exist')
-
-        setIwpriv(self.sta, v.INTF_5G, 'Channel', result['channel'], self.__class__.__name__)
-        d = TestCommand(v.DUT_MODULE)
-        for staCommand in d.assoc_psk_sta_5g():
-            setConfig(self.sta, staCommand, self.__class__.__name__)
-
-        res5gConn = getApclii0Conn(self.sta, self.__class__.__name__)
-
-        self.assertEqual(res5gConn['ssid'], v.SSID_5G)
-        self.assertEqual(res5gConn['bssid'], v.BSSID_5G)
-
-    def assoc_tkippsk2_sta_2g(self):
-
-        ret, result = chkSiteSurvey(self.sta, v.STA_INTF_2G, v.BSSID.lower(), self.__class__.__name__)
-
-        count = 0
-        while ret is False and count < 5:
-            ret, result = chkSiteSurvey(self.sta, v.STA_INTF_2G, v.BSSID.lower(), self.__class__.__name__)
-            count += 1
-
-        if count >= 5:
-            self.fail(msg='specified wifi is no exist')
-
-        setIwpriv(self.sta, v.INTF_2G, 'Channel', result['channel'], self.__class__.__name__)
-        d = TestCommand(v.DUT_MODULE)
-        for staCommand in d.assoc_tkippsk2_sta_2g():
-            setConfig(self.sta, staCommand, self.__class__.__name__)
-
-        res2gConn = getApcli0Conn(self.sta, self.__class__.__name__)
-
-        self.assertEqual(res2gConn['ssid'], v.SSID)
-        self.assertEqual(res2gConn['bssid'], v.BSSID)
-
-    def assoc_tkippsk2_sta_5g(self):
-
-        ret, result = chkSiteSurvey(self.sta, v.STA_INTF_5G, v.BSSID_5G.lower(), self.__class__.__name__)
-
-        count = 0
-        while ret is False and count < 5:
-            ret, result = chkSiteSurvey(self.sta, v.STA_INTF_5G, v.BSSID_5G.lower(), self.__class__.__name__)
-            count += 1
-
-        if count >= 5:
-            self.fail(msg='specified wifi is no exist')
-
-        setIwpriv(self.sta, v.INTF_5G, 'Channel', result['channel'], self.__class__.__name__)
-        d = TestCommand(v.DUT_MODULE)
-        for staCommand in d.assoc_tkippsk2_sta_5g():
-            setConfig(self.sta, staCommand, self.__class__.__name__)
-
-        res5gConn = getApclii0Conn(self.sta, self.__class__.__name__)
-
-        self.assertEqual(res5gConn['ssid'], v.SSID_5G)
-        self.assertEqual(res5gConn['bssid'], v.BSSID_5G)
-
-    def assoc_tkippsk_sta_2g(self):
-
-        ret, result = chkSiteSurvey(self.sta, v.STA_INTF_2G, v.BSSID.lower(), self.__class__.__name__)
-
-        count = 0
-        while ret is False and count < 5:
-            ret, result = chkSiteSurvey(self.sta, v.STA_INTF_2G, v.BSSID.lower(), self.__class__.__name__)
-            count += 1
-
-        if count >= 5:
-            self.fail(msg='specified wifi is no exist')
-
-        setIwpriv(self.sta, v.INTF_2G, 'Channel', result['channel'], self.__class__.__name__)
-        d = TestCommand(v.DUT_MODULE)
-        for staCommand in d.assoc_tkippsk_sta_2g():
-            setConfig(self.sta, staCommand, self.__class__.__name__)
-
-        res2gConn = getApcli0Conn(self.sta, self.__class__.__name__)
-
-        self.assertEqual(res2gConn['ssid'], v.SSID)
-        self.assertEqual(res2gConn['bssid'], v.BSSID)
-
-    def assoc_tkippsk_sta_5g(self):
-
-        ret, result = chkSiteSurvey(self.sta, v.STA_INTF_5G, v.BSSID_5G.lower(), self.__class__.__name__)
-
-        count = 0
-        while ret is False and count < 5:
-            ret, result = chkSiteSurvey(self.sta, v.STA_INTF_5G, v.BSSID_5G.lower(), self.__class__.__name__)
-            count += 1
-
-        if count >= 5:
-            self.fail(msg='specified wifi is no exist')
-
-        setIwpriv(self.sta, v.INTF_5G, 'Channel', result['channel'], self.__class__.__name__)
-        d = TestCommand(v.DUT_MODULE)
-        for staCommand in d.assoc_tkippsk_sta_5g():
-            setConfig(self.sta, staCommand, self.__class__.__name__)
-
-        res5gConn = getApclii0Conn(self.sta, self.__class__.__name__)
-
-        self.assertEqual(res5gConn['ssid'], v.SSID_5G)
-        self.assertEqual(res5gConn['bssid'], v.BSSID_5G)
-
-    def ping_psk2_sta_2g(self):
-
-        ret, result = chkSiteSurvey(self.sta, v.STA_INTF_2G, v.BSSID.lower(), self.__class__.__name__)
-
-        count = 0
-        while ret is False and count < 5:
-            ret, result = chkSiteSurvey(self.sta, v.STA_INTF_2G, v.BSSID.lower(), self.__class__.__name__)
-            count += 1
-
-        if count >= 5:
-            self.fail(msg='specified wifi is no exist')
-
-        setIwpriv(self.sta, v.INTF_2G, 'Channel', result['channel'], self.__class__.__name__)
-        d = TestCommand(v.DUT_MODULE)
-        for staCommand in d.assoc_psk2_sta_2g():
-            setConfig(self.sta, staCommand, self.__class__.__name__)
-
-        res2gIp = getIntfIpAddr(self.sta, v.STA_INTF_2G, self.__class__.__name__)
-        if res2gIp['ip'] == '':
-            self.fail(msg='no ip address got.')
-        else:
-            resPingPercent = getPingStatus(self.dut, res2gIp['ip'], v.PING_PERCENT_COUNT, self.__class__.__name__)
-            self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS)
-
-    def ping_psk2_sta_5g(self):
-
-        ret, result = chkSiteSurvey(self.sta, v.STA_INTF_5G, v.BSSID_5G.lower(), self.__class__.__name__)
-
-        count = 0
-        while ret is False and count < 5:
-            ret, result = chkSiteSurvey(self.sta, v.STA_INTF_5G, v.BSSID_5G.lower(), self.__class__.__name__)
-            count += 1
-
-        if count >= 5:
-            self.fail(msg='specified wifi is no exist')
-
-        setIwpriv(self.sta, v.INTF_5G, 'Channel', result['channel'], self.__class__.__name__)
-        d = TestCommand(v.DUT_MODULE)
-        for staCommand in d.assoc_psk2_sta_5g():
-            setConfig(self.sta, staCommand, self.__class__.__name__)
-
-        res5gIp = getIntfIpAddr(self.sta, v.STA_INTF_5G, self.__class__.__name__)
-        if res5gIp['ip'] == '':
-            self.fail(msg='no ip address got.')
-        else:
-            resPingPercent = getPingStatus(self.dut, res5gIp['ip'], v.PING_PERCENT_COUNT, self.__class__.__name__)
-            self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS)
-
-    def ping_psk_sta_2g(self):
-
-        ret, result = chkSiteSurvey(self.sta, v.STA_INTF_2G, v.BSSID.lower(), self.__class__.__name__)
-
-        count = 0
-        while ret is False and count < 5:
-            ret, result = chkSiteSurvey(self.sta, v.STA_INTF_2G, v.BSSID.lower(), self.__class__.__name__)
-            count += 1
-
-        if count >= 5:
-            self.fail(msg='specified wifi is no exist')
-
-        setIwpriv(self.sta, v.INTF_2G, 'Channel', result['channel'], self.__class__.__name__)
-        d = TestCommand(v.DUT_MODULE)
-        for staCommand in d.assoc_psk_sta_2g():
-            setConfig(self.sta, staCommand, self.__class__.__name__)
-
-        res2gIp = getIntfIpAddr(self.sta, v.STA_INTF_2G, self.__class__.__name__)
-        if res2gIp['ip'] == '':
-            self.fail(msg='no ip address got.')
-        else:
-            resPingPercent = getPingStatus(self.dut, res2gIp['ip'], v.PING_PERCENT_COUNT, self.__class__.__name__)
-            self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS)
-
-    def ping_psk_sta_5g(self):
-
-        ret, result = chkSiteSurvey(self.sta, v.STA_INTF_5G, v.BSSID_5G.lower(), self.__class__.__name__)
-
-        count = 0
-        while ret is False and count < 5:
-            ret, result = chkSiteSurvey(self.sta, v.STA_INTF_5G, v.BSSID_5G.lower(), self.__class__.__name__)
-            count += 1
-
-        if count >= 5:
-            self.fail(msg='specified wifi is no exist')
-
-        setIwpriv(self.sta, v.INTF_5G, 'Channel', result['channel'], self.__class__.__name__)
-        d = TestCommand(v.DUT_MODULE)
-        for staCommand in d.assoc_psk_sta_5g():
-            setConfig(self.sta, staCommand, self.__class__.__name__)
-
-        res5gIp = getIntfIpAddr(self.sta, v.STA_INTF_5G, self.__class__.__name__)
-        if res5gIp['ip'] == '':
-            self.fail(msg='no ip address got.')
-        else:
-            resPingPercent = getPingStatus(self.dut, res5gIp['ip'], v.PING_PERCENT_COUNT, self.__class__.__name__)
-            self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS)
-
-    def ping_tkippsk2_sta_2g(self):
-
-        ret, result = chkSiteSurvey(self.sta, v.STA_INTF_2G, v.BSSID.lower(), self.__class__.__name__)
-
-        count = 0
-        while ret is False and count < 5:
-            ret, result = chkSiteSurvey(self.sta, v.STA_INTF_2G, v.BSSID.lower(), self.__class__.__name__)
-            count += 1
-
-        if count >= 5:
-            self.fail(msg='specified wifi is no exist')
-
-        setIwpriv(self.sta, v.INTF_2G, 'Channel', result['channel'], self.__class__.__name__)
-        d = TestCommand(v.DUT_MODULE)
-        for staCommand in d.assoc_tkippsk2_sta_2g():
-            setConfig(self.sta, staCommand, self.__class__.__name__)
-
-        res2gIp = getIntfIpAddr(self.sta, v.STA_INTF_2G, self.__class__.__name__)
-        if res2gIp['ip'] == '':
-            self.fail(msg='no ip address got.')
-        else:
-            resPingPercent = getPingStatus(self.dut, res2gIp['ip'], v.PING_PERCENT_COUNT, self.__class__.__name__)
-            self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS)
-
-    def ping_tkippsk2_sta_5g(self):
-
-        ret, result = chkSiteSurvey(self.sta, v.STA_INTF_5G, v.BSSID_5G.lower(), self.__class__.__name__)
-
-        count = 0
-        while ret is False and count < 5:
-            ret, result = chkSiteSurvey(self.sta, v.STA_INTF_5G, v.BSSID_5G.lower(), self.__class__.__name__)
-            count += 1
-
-        if count >= 5:
-            self.fail(msg='specified wifi is no exist')
-
-        setIwpriv(self.sta, v.INTF_5G, 'Channel', result['channel'], self.__class__.__name__)
-        d = TestCommand(v.DUT_MODULE)
-        for staCommand in d.assoc_tkippsk2_sta_5g():
-            setConfig(self.sta, staCommand, self.__class__.__name__)
-
-        res5gIp = getIntfIpAddr(self.sta, v.STA_INTF_5G, self.__class__.__name__)
-        if res5gIp['ip'] == '':
-            self.fail(msg='no ip address got.')
-        else:
-            resPingPercent = getPingStatus(self.dut, res5gIp['ip'], v.PING_PERCENT_COUNT, self.__class__.__name__)
-            self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS)
-
-    def ping_tkippsk_sta_2g(self):
-
-        ret, result = chkSiteSurvey(self.sta, v.STA_INTF_2G, v.BSSID.lower(), self.__class__.__name__)
-
-        count = 0
-        while ret is False and count < 5:
-            ret, result = chkSiteSurvey(self.sta, v.STA_INTF_2G, v.BSSID.lower(), self.__class__.__name__)
-            count += 1
-
-        if count >= 5:
-            self.fail(msg='specified wifi is no exist')
-
-        setIwpriv(self.sta, v.INTF_2G, 'Channel', result['channel'], self.__class__.__name__)
-        d = TestCommand(v.DUT_MODULE)
-        for staCommand in d.assoc_tkippsk_sta_2g():
-            setConfig(self.sta, staCommand, self.__class__.__name__)
-
-        res2gIp = getIntfIpAddr(self.sta, v.STA_INTF_2G, self.__class__.__name__)
-        if res2gIp['ip'] == '':
-            self.fail(msg='no ip address got.')
-        else:
-            resPingPercent = getPingStatus(self.dut, res2gIp['ip'], v.PING_PERCENT_COUNT, self.__class__.__name__)
-            self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS)
-
-    def ping_tkippsk_sta_5g(self):
-
-        ret, result = chkSiteSurvey(self.sta, v.STA_INTF_5G, v.BSSID_5G.lower(), self.__class__.__name__)
-
-        count = 0
-        while ret is False and count < 5:
-            ret, result = chkSiteSurvey(self.sta, v.STA_INTF_5G, v.BSSID_5G.lower(), self.__class__.__name__)
-            count += 1
-
-        if count >= 5:
-            self.fail(msg='specified wifi is no exist')
-
-        setIwpriv(self.sta, v.INTF_5G, 'Channel', result['channel'], self.__class__.__name__)
-        d = TestCommand(v.DUT_MODULE)
-        for staCommand in d.assoc_tkippsk_sta_5g():
-            setConfig(self.sta, staCommand, self.__class__.__name__)
-
-        res5gIp = getIntfIpAddr(self.sta, v.STA_INTF_5G, self.__class__.__name__)
-        if res5gIp['ip'] == '':
-            self.fail(msg='no ip address got.')
-        else:
-            resPingPercent = getPingStatus(self.dut, res5gIp['ip'], v.PING_PERCENT_COUNT, self.__class__.__name__)
-            self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS)
-
-
 class AP_MIXEDPSK_CHAN2(TestCase):
     @classmethod
     def setUpClass(self):
@@ -790,7 +130,7 @@ class AP_MIXEDPSK_CHAN2(TestCase):
         d = TestCommand(v.DUT_MODULE)
         for dutCommand in d.ap_mixedpsk_chan_set_up():
             setConfig(self.dut, dutCommand, self.__name__)
-
+        setWifiRestart(self.dut, self.__name__)
         self.device = getAdbDevices()
 
     @classmethod
@@ -798,7 +138,7 @@ class AP_MIXEDPSK_CHAN2(TestCase):
         d = TestCommand(v.DUT_MODULE)
         for dutCommand in d.ap_tear_down():
             setConfig(self.dut, dutCommand, self.__name__)
-
+        setWifiRestart(self.dut, self.__name__)
         self.dut.close()
 
     def assoc_psk2_sta_2g(self):
@@ -914,85 +254,6 @@ class AP_MIXEDPSK_CHAN2(TestCase):
             self.assertTrue(res5gConn, "Association wasnot successful.")
 
 
-class AP_GUEST_CLEAR_CHAN(TestCase):
-    @classmethod
-    def setUpClass(self):
-
-        self.dut = SshClient(v.CONNECTION_TYPE)
-        ret1 = self.dut.connect(v.HOST, v.USR, v.PASSWD)
-        # exception deal
-        self.sta = SshClient(v.STA_CONNECTION_TYPE)
-        ret2 = self.sta.connect(v.STA_IP, v.STA_USR, v.STA_PASSWD)
-        # exception deal
-
-        if ret1 is False or ret2 is False:
-            raise Exception('Connection is failed. please check your remote settings.')
-        d = TestCommand(v.DUT_MODULE)
-        for dutCommand in d.ap_guest_clear_chan_set_up():
-            setConfig(self.dut, dutCommand, self.__name__)
-
-        v.BSSID = getIntfHWAddr(self.dut, v.INTF_GUEST, self.__name__)
-        v.BSSID = v.BSSID['mac']
-
-    @classmethod
-    def tearDownClass(self):
-        d = TestCommand(v.DUT_MODULE)
-        for staCommand in d.sta_tear_down():
-            setConfig(self.sta, staCommand, self.__name__)
-
-        for dutCommand in d.ap_guest_tear_down():
-            setConfig(self.dut, dutCommand, self.__name__)
-
-        self.dut.close()
-        self.sta.close()
-
-    def assoc_clear_sta_guest(self):
-
-        ret, result = chkSiteSurvey(self.sta, v.STA_INTF_2G, v.BSSID.lower(), self.__class__.__name__)
-
-        count = 0
-        while ret is False and count < 5:
-            ret, result = chkSiteSurvey(self.sta, v.STA_INTF_2G, v.BSSID.lower(), self.__class__.__name__)
-            count += 1
-
-        if count >= 5:
-            self.fail(msg='specified wifi is no exist')
-
-        setIwpriv(self.sta, v.INTF_2G, 'Channel', result['channel'], self.__class__.__name__)
-        d = TestCommand(v.DUT_MODULE)
-        for staCommand in d.assoc_clear_sta_guest():
-            setConfig(self.sta, staCommand, self.__class__.__name__)
-
-        res2gConn = getApcli0Conn(self.sta, self.__class__.__name__)
-
-        self.assertEqual(res2gConn['ssid'], v.GUEST_SSID)
-        self.assertEqual(res2gConn['bssid'], v.BSSID)
-
-    def ping_clear_sta_guest(self):
-
-        ret, result = chkSiteSurvey(self.sta, v.STA_INTF_2G, v.BSSID.lower(), self.__class__.__name__)
-
-        count = 0
-        while ret is False and count < 5:
-            ret, result = chkSiteSurvey(self.sta, v.STA_INTF_2G, v.BSSID.lower(), self.__class__.__name__)
-            count += 1
-
-        if count >= 5:
-            self.fail(msg='specified wifi is no exist')
-
-        setIwpriv(self.sta, v.INTF_2G, 'Channel', result['channel'], self.__class__.__name__)
-        d = TestCommand(v.DUT_MODULE)
-        for staCommand in d.assoc_clear_sta_guest():
-            setConfig(self.sta, staCommand, self.__class__.__name__)
-
-        res2gIp = getIntfIpAddr(self.sta, v.STA_INTF_2G, self.__class__.__name__)
-        if res2gIp['ip'] == '':
-            self.fail(msg='no ip address got.')
-        else:
-            resPingPercent = getPingStatus(self.dut, res2gIp['ip'], v.PING_PERCENT_COUNT, self.__class__.__name__)
-            self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS)
-
-
 class AP_GUEST_CLEAR_CHAN2(TestCase):
     @classmethod
     def setUpClass(self):
@@ -1009,7 +270,7 @@ class AP_GUEST_CLEAR_CHAN2(TestCase):
         d = TestCommand(v.DUT_MODULE)
         for dutCommand in d.ap_guest_clear_chan_set_up():
             setConfig(self.dut, dutCommand, self.__name__)
-
+        setWifiRestart(self.dut, self.__name__)
         self.device = getAdbDevices()
 
     @classmethod
@@ -1017,7 +278,7 @@ class AP_GUEST_CLEAR_CHAN2(TestCase):
         d = TestCommand(v.DUT_MODULE)
         for dutCommand in d.ap_guest_tear_down():
             setConfig(self.dut, dutCommand, self.__name__)
-
+        setWifiRestart(self.dut, self.__name__)
         self.dut.close()
 
     def assoc_clear_sta_guest(self):
@@ -1033,84 +294,6 @@ class AP_GUEST_CLEAR_CHAN2(TestCase):
                                         "Ping responsed percent werenot good enough.")
         else:
             self.assertTrue(res2gConn, "Association wasnot successful.")
-
-
-class AP_GUEST_PSK2_CHAN(TestCase):
-    @classmethod
-    def setUpClass(self):
-
-        self.dut = SshClient(v.CONNECTION_TYPE)
-        self.sta = SshClient(v.STA_CONNECTION_TYPE)
-
-        dutRet = self.dut.connect(v.HOST, v.USR, v.PASSWD)
-        staRet = self.sta.connect(v.STA_IP, v.STA_USR, v.STA_PASSWD)
-
-        if dutRet is False or staRet is False:
-            raise Exception('Connection is failed. please check your remote settings.')
-        d = TestCommand(v.DUT_MODULE)
-        for dutCommand in d.ap_guest_psk2_chan_set_up():
-            setConfig(self.dut, dutCommand, self.__name__)
-
-        v.BSSID = getIntfHWAddr(self.dut, v.INTF_GUEST, self.__name__)
-        v.BSSID = v.BSSID['mac']
-
-    @classmethod
-    def tearDownClass(self):
-        d = TestCommand(v.DUT_MODULE)
-        for staCommand in d.sta_tear_down():
-            setConfig(self.sta, staCommand, self.__name__)
-
-        for dutCommand in d.ap_guest_tear_down():
-            setConfig(self.dut, dutCommand, self.__name__)
-
-        self.dut.close()
-        self.sta.close()
-
-    def assoc_psk2_sta_guest(self):
-
-        ret, result = chkSiteSurvey(self.sta, v.STA_INTF_2G, v.BSSID.lower(), self.__class__.__name__)
-
-        count = 0
-        while ret is False and count < 5:
-            ret, result = chkSiteSurvey(self.sta, v.STA_INTF_2G, v.BSSID.lower(), self.__class__.__name__)
-            count += 1
-
-        if count >= 5:
-            self.fail(msg='specified wifi is no exist')
-
-        setIwpriv(self.sta, v.INTF_2G, 'Channel', result['channel'], self.__class__.__name__)
-        d = TestCommand(v.DUT_MODULE)
-        for staCommand in d.assoc_psk2_sta_guest():
-            setConfig(self.sta, staCommand, self.__class__.__name__)
-
-        res2gConn = getApcli0Conn(self.sta, self.__class__.__name__)
-
-        self.assertEqual(res2gConn['ssid'], v.GUEST_SSID)
-        self.assertEqual(res2gConn['bssid'], v.BSSID)
-
-    def ping_psk2_sta_guest(self):
-
-        ret, result = chkSiteSurvey(self.sta, v.STA_INTF_2G, v.BSSID.lower(), self.__class__.__name__)
-
-        count = 0
-        while ret is False and count < 5:
-            ret, result = chkSiteSurvey(self.sta, v.STA_INTF_2G, v.BSSID.lower(), self.__class__.__name__)
-            count += 1
-
-        if count >= 5:
-            self.fail(msg='specified wifi is no exist')
-
-        setIwpriv(self.sta, v.INTF_2G, 'Channel', result['channel'], self.__class__.__name__)
-        d = TestCommand(v.DUT_MODULE)
-        for staCommand in d.assoc_psk2_sta_guest():
-            setConfig(self.sta, staCommand, self.__class__.__name__)
-
-        res2gIp = getIntfIpAddr(self.sta, v.STA_INTF_2G, self.__class__.__name__)
-        if res2gIp['ip'] == '':
-            self.fail(msg='no ip address got.')
-        else:
-            resPingPercent = getPingStatus(self.dut, res2gIp['ip'], v.PING_PERCENT_COUNT, self.__class__.__name__)
-            self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS)
 
 
 class AP_GUEST_PSK2_CHAN2(TestCase):
@@ -1129,7 +312,7 @@ class AP_GUEST_PSK2_CHAN2(TestCase):
         d = TestCommand(v.DUT_MODULE)
         for dutCommand in d.ap_guest_psk2_chan_set_up():
             setConfig(self.dut, dutCommand, self.__name__)
-
+        setWifiRestart(self.dut, self.__name__)
         self.device = getAdbDevices()
 
     @classmethod
@@ -1137,7 +320,7 @@ class AP_GUEST_PSK2_CHAN2(TestCase):
         d = TestCommand(v.DUT_MODULE)
         for dutCommand in d.ap_guest_tear_down():
             setConfig(self.dut, dutCommand, self.__name__)
-
+        setWifiRestart(self.dut, self.__name__)
         self.dut.close()
 
     def assoc_psk2_sta_guest(self):
@@ -1153,222 +336,6 @@ class AP_GUEST_PSK2_CHAN2(TestCase):
                                         "Ping responsed percent werenot good enough.")
         else:
             self.assertTrue(res2gConn, "Association wasnot successful.")
-
-
-class AP_GUEST_MIXEDPSK_CHAN(TestCase):
-    @classmethod
-    def setUpClass(self):
-
-        self.dut = SshClient(v.CONNECTION_TYPE)
-        self.sta = SshClient(v.STA_CONNECTION_TYPE)
-
-        dutRet = self.dut.connect(v.HOST, v.USR, v.PASSWD)
-        staRet = self.sta.connect(v.STA_IP, v.STA_USR, v.STA_PASSWD)
-
-        if dutRet is False or staRet is False:
-            raise Exception('Connection is failed. please check your remote settings.')
-        d = TestCommand(v.DUT_MODULE)
-        for dutCommand in d.ap_guest_mixedpsk_chan_set_up():
-            setConfig(self.dut, dutCommand, self.__name__)
-
-        v.BSSID = getIntfHWAddr(self.dut, v.INTF_GUEST, self.__name__)
-        v.BSSID = v.BSSID['mac']
-
-    @classmethod
-    def tearDownClass(self):
-        d = TestCommand(v.DUT_MODULE)
-        for staCommand in d.sta_tear_down():
-            setConfig(self.sta, staCommand, self.__name__)
-
-        for dutCommand in d.ap_guest_tear_down():
-            setConfig(self.dut, dutCommand, self.__name__)
-
-        self.dut.close()
-        self.sta.close()
-
-    def assoc_psk2_sta_guest(self):
-
-        ret, result = chkSiteSurvey(self.sta, v.STA_INTF_2G, v.BSSID.lower(), self.__class__.__name__)
-
-        count = 0
-        while ret is False and count < 5:
-            ret, result = chkSiteSurvey(self.sta, v.STA_INTF_2G, v.BSSID.lower(), self.__class__.__name__)
-            count += 1
-
-        if count >= 5:
-            self.fail(msg='specified wifi is no exist')
-
-        setIwpriv(self.sta, v.INTF_2G, 'Channel', result['channel'], self.__class__.__name__)
-        d = TestCommand(v.DUT_MODULE)
-        for staCommand in d.assoc_psk2_sta_guest():
-            setConfig(self.sta, staCommand, self.__class__.__name__)
-
-        res2gConn = getApcli0Conn(self.sta, self.__class__.__name__)
-
-        self.assertEqual(res2gConn['ssid'], v.GUEST_SSID)
-        self.assertEqual(res2gConn['bssid'], v.BSSID)
-
-    def assoc_psk_sta_guest(self):
-
-        ret, result = chkSiteSurvey(self.sta, v.STA_INTF_2G, v.BSSID.lower(), self.__class__.__name__)
-
-        count = 0
-        while ret is False and count < 5:
-            ret, result = chkSiteSurvey(self.sta, v.STA_INTF_2G, v.BSSID.lower(), self.__class__.__name__)
-            count += 1
-
-        if count >= 5:
-            self.fail(msg='specified wifi is no exist')
-
-        setIwpriv(self.sta, v.INTF_2G, 'Channel', result['channel'], self.__class__.__name__)
-        d = TestCommand(v.DUT_MODULE)
-        for staCommand in d.assoc_psk_sta_guest():
-            setConfig(self.sta, staCommand, self.__class__.__name__)
-
-        res2gConn = getApcli0Conn(self.sta, self.__class__.__name__)
-
-        self.assertEqual(res2gConn['ssid'], v.GUEST_SSID)
-        self.assertEqual(res2gConn['bssid'], v.BSSID)
-
-    def assoc_tkippsk2_sta_guest(self):
-
-        ret, result = chkSiteSurvey(self.sta, v.STA_INTF_2G, v.BSSID.lower(), self.__class__.__name__)
-
-        count = 0
-        while ret is False and count < 5:
-            ret, result = chkSiteSurvey(self.sta, v.STA_INTF_2G, v.BSSID.lower(), self.__class__.__name__)
-            count += 1
-
-        if count >= 5:
-            self.fail(msg='specified wifi is no exist')
-
-        setIwpriv(self.sta, v.INTF_2G, 'Channel', result['channel'], self.__class__.__name__)
-        d = TestCommand(v.DUT_MODULE)
-        for staCommand in d.assoc_tkippsk2_sta_guest():
-            setConfig(self.sta, staCommand, self.__class__.__name__)
-
-        res2gConn = getApcli0Conn(self.sta, self.__class__.__name__)
-
-        self.assertEqual(res2gConn['ssid'], v.GUEST_SSID)
-        self.assertEqual(res2gConn['bssid'], v.BSSID)
-
-    def assoc_tkippsk_sta_guest(self):
-
-        ret, result = chkSiteSurvey(self.sta, v.STA_INTF_2G, v.BSSID.lower(), self.__class__.__name__)
-
-        count = 0
-        while ret is False and count < 5:
-            ret, result = chkSiteSurvey(self.sta, v.STA_INTF_2G, v.BSSID.lower(), self.__class__.__name__)
-            count += 1
-
-        if count >= 5:
-            self.fail(msg='specified wifi is no exist')
-
-        setIwpriv(self.sta, v.INTF_2G, 'Channel', result['channel'], self.__class__.__name__)
-        d = TestCommand(v.DUT_MODULE)
-        for staCommand in d.assoc_tkippsk_sta_guest():
-            setConfig(self.sta, staCommand, self.__class__.__name__)
-
-        res2gConn = getApcli0Conn(self.sta, self.__class__.__name__)
-
-        self.assertEqual(res2gConn['ssid'], v.GUEST_SSID)
-        self.assertEqual(res2gConn['bssid'], v.BSSID)
-
-    def ping_psk2_sta_guest(self):
-
-        ret, result = chkSiteSurvey(self.sta, v.STA_INTF_2G, v.BSSID.lower(), self.__class__.__name__)
-
-        count = 0
-        while ret is False and count < 5:
-            ret, result = chkSiteSurvey(self.sta, v.STA_INTF_2G, v.BSSID.lower(), self.__class__.__name__)
-            count += 1
-
-        if count >= 5:
-            self.fail(msg='specified wifi is no exist')
-
-        setIwpriv(self.sta, v.INTF_2G, 'Channel', result['channel'], self.__class__.__name__)
-        d = TestCommand(v.DUT_MODULE)
-        for staCommand in d.assoc_psk2_sta_guest():
-            setConfig(self.sta, staCommand, self.__class__.__name__)
-
-        res2gIp = getIntfIpAddr(self.sta, v.STA_INTF_2G, self.__class__.__name__)
-        if res2gIp['ip'] == '':
-            self.fail(msg='no ip address got.')
-        else:
-            resPingPercent = getPingStatus(self.dut, res2gIp['ip'], v.PING_PERCENT_COUNT, self.__class__.__name__)
-            self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS)
-
-    def ping_psk_sta_guest(self):
-
-        ret, result = chkSiteSurvey(self.sta, v.STA_INTF_2G, v.BSSID.lower(), self.__class__.__name__)
-
-        count = 0
-        while ret is False and count < 5:
-            ret, result = chkSiteSurvey(self.sta, v.STA_INTF_2G, v.BSSID.lower(), self.__class__.__name__)
-            count += 1
-
-        if count >= 5:
-            self.fail(msg='specified wifi is no exist')
-
-        setIwpriv(self.sta, v.INTF_2G, 'Channel', result['channel'], self.__class__.__name__)
-        d = TestCommand(v.DUT_MODULE)
-        for staCommand in d.assoc_psk_sta_guest():
-            setConfig(self.sta, staCommand, self.__class__.__name__)
-
-        res2gIp = getIntfIpAddr(self.sta, v.STA_INTF_2G, self.__class__.__name__)
-        if res2gIp['ip'] == '':
-            self.fail(msg='no ip address got.')
-        else:
-            resPingPercent = getPingStatus(self.dut, res2gIp['ip'], v.PING_PERCENT_COUNT, self.__class__.__name__)
-            self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS)
-
-    def ping_tkippsk2_sta_guest(self):
-
-        ret, result = chkSiteSurvey(self.sta, v.STA_INTF_2G, v.BSSID.lower(), self.__class__.__name__)
-
-        count = 0
-        while ret is False and count < 5:
-            ret, result = chkSiteSurvey(self.sta, v.STA_INTF_2G, v.BSSID.lower(), self.__class__.__name__)
-            count += 1
-
-        if count >= 5:
-            self.fail(msg='specified wifi is no exist')
-
-        setIwpriv(self.sta, v.INTF_2G, 'Channel', result['channel'], self.__class__.__name__)
-        d = TestCommand(v.DUT_MODULE)
-        for staCommand in d.assoc_tkippsk2_sta_guest():
-            setConfig(self.sta, staCommand, self.__class__.__name__)
-
-        res2gIp = getIntfIpAddr(self.sta, v.STA_INTF_2G, self.__class__.__name__)
-        if res2gIp['ip'] == '':
-            self.fail(msg='no ip address got.')
-        else:
-            resPingPercent = getPingStatus(self.dut, res2gIp['ip'], v.PING_PERCENT_COUNT, self.__class__.__name__)
-            self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS)
-
-    def ping_tkippsk_sta_guest(self):
-
-        ret, result = chkSiteSurvey(self.sta, v.STA_INTF_2G, v.BSSID.lower(), self.__class__.__name__)
-
-        count = 0
-        while ret is False and count < 5:
-            ret, result = chkSiteSurvey(self.sta, v.STA_INTF_2G, v.BSSID.lower(), self.__class__.__name__)
-            count += 1
-
-        if count >= 5:
-            self.fail(msg='specified wifi is no exist')
-
-        setIwpriv(self.sta, v.INTF_2G, 'Channel', result['channel'], self.__class__.__name__)
-        d = TestCommand(v.DUT_MODULE)
-        for staCommand in d.assoc_tkippsk_sta_guest():
-            setConfig(self.sta, staCommand, self.__class__.__name__)
-
-        res2gIp = getIntfIpAddr(self.sta, v.STA_INTF_2G, self.__class__.__name__)
-        if res2gIp['ip'] == '':
-            self.fail(msg='no ip address got.')
-        else:
-            resPingPercent = getPingStatus(self.dut, res2gIp['ip'], v.PING_PERCENT_COUNT, self.__class__.__name__)
-            self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS)
 
 
 class AP_GUEST_MIXEDPSK_CHAN2(TestCase):
@@ -1387,7 +354,7 @@ class AP_GUEST_MIXEDPSK_CHAN2(TestCase):
         d = TestCommand(v.DUT_MODULE)
         for dutCommand in d.ap_guest_mixedpsk_chan_set_up():
             setConfig(self.dut, dutCommand, self.__name__)
-
+        setWifiRestart(self.dut, self.__name__)
         self.device = getAdbDevices()
 
     @classmethod
@@ -1395,7 +362,7 @@ class AP_GUEST_MIXEDPSK_CHAN2(TestCase):
         d = TestCommand(v.DUT_MODULE)
         for dutCommand in d.ap_guest_tear_down():
             setConfig(self.dut, dutCommand, self.__name__)
-
+        setWifiRestart(self.dut, self.__name__)
         self.dut.close()
 
     def assoc_psk2_sta_guest(self):
@@ -1455,222 +422,6 @@ class AP_GUEST_MIXEDPSK_CHAN2(TestCase):
             self.assertTrue(res2gConn, "Association wasnot successful.")
 
 
-class AP_MIXEDPSK_CHAN_BW80(TestCase):
-    @classmethod
-    def setUpClass(self):
-
-        self.dut = SshClient(v.CONNECTION_TYPE)
-        self.sta = SshClient(v.STA_CONNECTION_TYPE)
-
-        dutRet = self.dut.connect(v.HOST, v.USR, v.PASSWD)
-        staRet = self.sta.connect(v.STA_IP, v.STA_USR, v.STA_PASSWD)
-
-        if dutRet is False or staRet is False:
-            raise Exception('Connection is failed. please check your remote settings.')
-        d = TestCommand(v.DUT_MODULE)
-        for dutCommand in d.ap_mixedpsk_chan_bw80_set_up():
-            setConfig(self.dut, dutCommand, self.__name__)
-
-        v.BSSID_5G = getIntfHWAddr(self.dut, v.INTF_5G, self.__name__)
-        v.BSSID_5G = v.BSSID_5G['mac']
-
-    @classmethod
-    def tearDownClass(self):
-        d = TestCommand(v.DUT_MODULE)
-        for staCommand in d.sta_tear_down():
-            setConfig(self.sta, staCommand, self.__name__)
-
-        for dutCommand in d.ap_tear_down():
-            setConfig(self.dut, dutCommand, self.__name__)
-
-        self.dut.close()
-        self.sta.close()
-
-    def assoc_psk2_sta_5g(self):
-
-        ret, result = chkSiteSurvey(self.sta, v.STA_INTF_5G, v.BSSID_5G.lower(), self.__class__.__name__)
-
-        count = 0
-        while ret is False and count < 5:
-            ret, result = chkSiteSurvey(self.sta, v.STA_INTF_5G, v.BSSID_5G.lower(), self.__class__.__name__)
-            count += 1
-
-        if count >= 5:
-            self.fail(msg='specified wifi is no exist')
-
-        setIwpriv(self.sta, v.INTF_5G, 'Channel', result['channel'], self.__class__.__name__)
-        d = TestCommand(v.DUT_MODULE)
-        for staCommand in d.assoc_psk2_sta_5g():
-            setConfig(self.sta, staCommand, self.__class__.__name__)
-
-        res5gConn = getApclii0Conn(self.sta, self.__class__.__name__)
-
-        self.assertEqual(res5gConn['ssid'], v.SSID_5G)
-        self.assertEqual(res5gConn['bssid'], v.BSSID_5G)
-
-    def assoc_psk_sta_5g(self):
-
-        ret, result = chkSiteSurvey(self.sta, v.STA_INTF_5G, v.BSSID_5G.lower(), self.__class__.__name__)
-
-        count = 0
-        while ret is False and count < 5:
-            ret, result = chkSiteSurvey(self.sta, v.STA_INTF_5G, v.BSSID_5G.lower(), self.__class__.__name__)
-            count += 1
-
-        if count >= 5:
-            self.fail(msg='specified wifi is no exist')
-
-        setIwpriv(self.sta, v.INTF_5G, 'Channel', result['channel'], self.__class__.__name__)
-        d = TestCommand(v.DUT_MODULE)
-        for staCommand in d.assoc_psk_sta_5g():
-            setConfig(self.sta, staCommand, self.__class__.__name__)
-
-        res5gConn = getApclii0Conn(self.sta, self.__class__.__name__)
-
-        self.assertEqual(res5gConn['ssid'], v.SSID_5G)
-        self.assertEqual(res5gConn['bssid'], v.BSSID_5G)
-
-    def assoc_tkippsk2_sta_5g(self):
-
-        ret, result = chkSiteSurvey(self.sta, v.STA_INTF_5G, v.BSSID_5G.lower(), self.__class__.__name__)
-
-        count = 0
-        while ret is False and count < 5:
-            ret, result = chkSiteSurvey(self.sta, v.STA_INTF_5G, v.BSSID_5G.lower(), self.__class__.__name__)
-            count += 1
-
-        if count >= 5:
-            self.fail(msg='specified wifi is no exist')
-
-        setIwpriv(self.sta, v.INTF_5G, 'Channel', result['channel'], self.__class__.__name__)
-        d = TestCommand(v.DUT_MODULE)
-        for staCommand in d.assoc_tkippsk2_sta_5g():
-            setConfig(self.sta, staCommand, self.__class__.__name__)
-
-        res5gConn = getApclii0Conn(self.sta, self.__class__.__name__)
-
-        self.assertEqual(res5gConn['ssid'], v.SSID_5G)
-        self.assertEqual(res5gConn['bssid'], v.BSSID_5G)
-
-    def assoc_tkippsk_sta_5g(self):
-
-        ret, result = chkSiteSurvey(self.sta, v.STA_INTF_5G, v.BSSID_5G.lower(), self.__class__.__name__)
-
-        count = 0
-        while ret is False and count < 5:
-            ret, result = chkSiteSurvey(self.sta, v.STA_INTF_5G, v.BSSID_5G.lower(), self.__class__.__name__)
-            count += 1
-
-        if count >= 5:
-            self.fail(msg='specified wifi is no exist')
-
-        setIwpriv(self.sta, v.INTF_5G, 'Channel', result['channel'], self.__class__.__name__)
-        d = TestCommand(v.DUT_MODULE)
-        for staCommand in d.assoc_tkippsk_sta_5g():
-            setConfig(self.sta, staCommand, self.__class__.__name__)
-
-        res5gConn = getApclii0Conn(self.sta, self.__class__.__name__)
-
-        self.assertEqual(res5gConn['ssid'], v.SSID_5G)
-        self.assertEqual(res5gConn['bssid'], v.BSSID_5G)
-
-    def ping_psk2_sta_5g(self):
-
-        ret, result = chkSiteSurvey(self.sta, v.STA_INTF_5G, v.BSSID_5G.lower(), self.__class__.__name__)
-
-        count = 0
-        while ret is False and count < 5:
-            ret, result = chkSiteSurvey(self.sta, v.STA_INTF_5G, v.BSSID_5G.lower(), self.__class__.__name__)
-            count += 1
-
-        if count >= 5:
-            self.fail(msg='specified wifi is no exist')
-
-        setIwpriv(self.sta, v.INTF_5G, 'Channel', result['channel'], self.__class__.__name__)
-        d = TestCommand(v.DUT_MODULE)
-        for staCommand in d.assoc_psk2_sta_5g():
-            setConfig(self.sta, staCommand, self.__class__.__name__)
-
-        res5gIp = getIntfIpAddr(self.sta, v.STA_INTF_5G, self.__class__.__name__)
-        if res5gIp['ip'] == '':
-            self.fail(msg='no ip address got.')
-        else:
-            resPingPercent = getPingStatus(self.dut, res5gIp['ip'], v.PING_PERCENT_COUNT, self.__class__.__name__)
-            self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS)
-
-    def ping_psk_sta_5g(self):
-
-        ret, result = chkSiteSurvey(self.sta, v.STA_INTF_5G, v.BSSID_5G.lower(), self.__class__.__name__)
-
-        count = 0
-        while ret is False and count < 5:
-            ret, result = chkSiteSurvey(self.sta, v.STA_INTF_5G, v.BSSID_5G.lower(), self.__class__.__name__)
-            count += 1
-
-        if count >= 5:
-            self.fail(msg='specified wifi is no exist')
-
-        setIwpriv(self.sta, v.INTF_5G, 'Channel', result['channel'], self.__class__.__name__)
-        d = TestCommand(v.DUT_MODULE)
-        for staCommand in d.assoc_psk_sta_5g():
-            setConfig(self.sta, staCommand, self.__class__.__name__)
-
-        res5gIp = getIntfIpAddr(self.sta, v.STA_INTF_5G, self.__class__.__name__)
-        if res5gIp['ip'] == '':
-            self.fail(msg='no ip address got.')
-        else:
-            resPingPercent = getPingStatus(self.dut, res5gIp['ip'], v.PING_PERCENT_COUNT, self.__class__.__name__)
-            self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS)
-
-    def ping_tkippsk2_sta_5g(self):
-
-        ret, result = chkSiteSurvey(self.sta, v.STA_INTF_5G, v.BSSID_5G.lower(), self.__class__.__name__)
-
-        count = 0
-        while ret is False and count < 5:
-            ret, result = chkSiteSurvey(self.sta, v.STA_INTF_5G, v.BSSID_5G.lower(), self.__class__.__name__)
-            count += 1
-
-        if count >= 5:
-            self.fail(msg='specified wifi is no exist')
-
-        setIwpriv(self.sta, v.INTF_5G, 'Channel', result['channel'], self.__class__.__name__)
-        d = TestCommand(v.DUT_MODULE)
-        for staCommand in d.assoc_tkippsk2_sta_5g():
-            setConfig(self.sta, staCommand, self.__class__.__name__)
-
-        res5gIp = getIntfIpAddr(self.sta, v.STA_INTF_5G, self.__class__.__name__)
-        if res5gIp['ip'] == '':
-            self.fail(msg='no ip address got.')
-        else:
-            resPingPercent = getPingStatus(self.dut, res5gIp['ip'], v.PING_PERCENT_COUNT, self.__class__.__name__)
-            self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS)
-
-    def ping_tkippsk_sta_5g(self):
-
-        ret, result = chkSiteSurvey(self.sta, v.STA_INTF_5G, v.BSSID_5G.lower(), self.__class__.__name__)
-
-        count = 0
-        while ret is False and count < 5:
-            ret, result = chkSiteSurvey(self.sta, v.STA_INTF_5G, v.BSSID_5G.lower(), self.__class__.__name__)
-            count += 1
-
-        if count >= 5:
-            self.fail(msg='specified wifi is no exist')
-
-        setIwpriv(self.sta, v.INTF_5G, 'Channel', result['channel'], self.__class__.__name__)
-        d = TestCommand(v.DUT_MODULE)
-        for staCommand in d.assoc_tkippsk_sta_5g():
-            setConfig(self.sta, staCommand, self.__class__.__name__)
-
-        res5gIp = getIntfIpAddr(self.sta, v.STA_INTF_5G, self.__class__.__name__)
-        if res5gIp['ip'] == '':
-            self.fail(msg='no ip address got.')
-        else:
-            resPingPercent = getPingStatus(self.dut, res5gIp['ip'], v.PING_PERCENT_COUNT, self.__class__.__name__)
-            self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS)
-
-
 class AP_MIXEDPSK_CHAN_BW802(TestCase):
     @classmethod
     def setUpClass(self):
@@ -1687,7 +438,7 @@ class AP_MIXEDPSK_CHAN_BW802(TestCase):
         d = TestCommand(v.DUT_MODULE)
         for dutCommand in d.ap_mixedpsk_chan_bw80_set_up():
             setConfig(self.dut, dutCommand, self.__name__)
-
+        setWifiRestart(self.dut, self.__name__)
         self.device = getAdbDevices()
 
     @classmethod
@@ -1695,7 +446,7 @@ class AP_MIXEDPSK_CHAN_BW802(TestCase):
         d = TestCommand(v.DUT_MODULE)
         for dutCommand in d.ap_tear_down():
             setConfig(self.dut, dutCommand, self.__name__)
-
+        setWifiRestart(self.dut, self.__name__)
         self.dut.close()
 
     def assoc_psk2_sta_5g(self):
@@ -1753,408 +504,6 @@ class AP_MIXEDPSK_CHAN_BW802(TestCase):
                                         "Ping responsed percent werenot good enough.")
         else:
             self.assertTrue(res5gConn, "Association wasnot successful.")
-
-
-class AP_MIXEDPSK_CHAN_BW40(TestCase):
-    @classmethod
-    def setUpClass(self):
-
-        self.dut = SshClient(v.CONNECTION_TYPE)
-        self.sta = SshClient(v.STA_CONNECTION_TYPE)
-
-        dutRet = self.dut.connect(v.HOST, v.USR, v.PASSWD)
-        staRet = self.sta.connect(v.STA_IP, v.STA_USR, v.STA_PASSWD)
-
-        if dutRet is False or staRet is False:
-            raise Exception('Connection is failed. please check your remote settings.')
-        d = TestCommand(v.DUT_MODULE)
-        for dutCommand in d.ap_mixedpsk_chan_bw40_set_up():
-            setConfig(self.dut, dutCommand, self.__name__)
-
-        v.BSSID = getIntfHWAddr(self.dut, v.INTF_2G, self.__name__)
-        v.BSSID = v.BSSID['mac']
-        v.BSSID_5G = getIntfHWAddr(self.dut, v.INTF_5G, self.__name__)
-        v.BSSID_5G = v.BSSID_5G['mac']
-
-    @classmethod
-    def tearDownClass(self):
-        d = TestCommand(v.DUT_MODULE)
-        for staCommand in d.sta_tear_down():
-            setConfig(self.sta, staCommand, self.__name__)
-
-        for dutCommand in d.ap_tear_down():
-            setConfig(self.dut, dutCommand, self.__name__)
-
-        self.dut.close()
-        self.sta.close()
-
-    def assoc_psk2_sta_2g(self):
-
-        ret, result = chkSiteSurvey(self.sta, v.STA_INTF_2G, v.BSSID.lower(), self.__class__.__name__)
-
-        count = 0
-        while ret is False and count < 5:
-            ret, result = chkSiteSurvey(self.sta, v.STA_INTF_2G, v.BSSID.lower(), self.__class__.__name__)
-            count += 1
-
-        if count >= 5:
-            self.fail(msg='specified wifi is no exist')
-
-        setIwpriv(self.sta, v.INTF_2G, 'Channel', result['channel'], self.__class__.__name__)
-        d = TestCommand(v.DUT_MODULE)
-        for staCommand in d.assoc_psk2_sta_2g():
-            setConfig(self.sta, staCommand, self.__class__.__name__)
-
-        res2gConn = getApcli0Conn(self.sta, self.__class__.__name__)
-
-        self.assertEqual(res2gConn['ssid'], v.SSID)
-        self.assertEqual(res2gConn['bssid'], v.BSSID)
-
-    def assoc_psk2_sta_5g(self):
-
-        ret, result = chkSiteSurvey(self.sta, v.STA_INTF_5G, v.BSSID_5G.lower(), self.__class__.__name__)
-
-        count = 0
-        while ret is False and count < 5:
-            ret, result = chkSiteSurvey(self.sta, v.STA_INTF_5G, v.BSSID_5G.lower(), self.__class__.__name__)
-            count += 1
-
-        if count >= 5:
-            self.fail(msg='specified wifi is no exist')
-
-        setIwpriv(self.sta, v.INTF_5G, 'Channel', result['channel'], self.__class__.__name__)
-        d = TestCommand(v.DUT_MODULE)
-        for staCommand in d.assoc_psk2_sta_5g():
-            setConfig(self.sta, staCommand, self.__class__.__name__)
-
-        res5gConn = getApclii0Conn(self.sta, self.__class__.__name__)
-
-        self.assertEqual(res5gConn['ssid'], v.SSID_5G)
-        self.assertEqual(res5gConn['bssid'], v.BSSID_5G)
-
-    def assoc_psk_sta_2g(self):
-
-        ret, result = chkSiteSurvey(self.sta, v.STA_INTF_2G, v.BSSID.lower(), self.__class__.__name__)
-
-        count = 0
-        while ret is False and count < 5:
-            ret, result = chkSiteSurvey(self.sta, v.STA_INTF_2G, v.BSSID.lower(), self.__class__.__name__)
-            count += 1
-
-        if count >= 5:
-            self.fail(msg='specified wifi is no exist')
-
-        setIwpriv(self.sta, v.INTF_2G, 'Channel', result['channel'], self.__class__.__name__)
-        d = TestCommand(v.DUT_MODULE)
-        for staCommand in d.assoc_psk_sta_2g():
-            setConfig(self.sta, staCommand, self.__class__.__name__)
-
-        res2gConn = getApcli0Conn(self.sta, self.__class__.__name__)
-
-        self.assertEqual(res2gConn['ssid'], v.SSID)
-        self.assertEqual(res2gConn['bssid'], v.BSSID)
-
-    def assoc_psk_sta_5g(self):
-
-        ret, result = chkSiteSurvey(self.sta, v.STA_INTF_5G, v.BSSID_5G.lower(), self.__class__.__name__)
-
-        count = 0
-        while ret is False and count < 5:
-            ret, result = chkSiteSurvey(self.sta, v.STA_INTF_5G, v.BSSID_5G.lower(), self.__class__.__name__)
-            count += 1
-
-        if count >= 5:
-            self.fail(msg='specified wifi is no exist')
-
-        setIwpriv(self.sta, v.INTF_5G, 'Channel', result['channel'], self.__class__.__name__)
-        d = TestCommand(v.DUT_MODULE)
-        for staCommand in d.assoc_psk_sta_5g():
-            setConfig(self.sta, staCommand, self.__class__.__name__)
-
-        res5gConn = getApclii0Conn(self.sta, self.__class__.__name__)
-
-        self.assertEqual(res5gConn['ssid'], v.SSID_5G)
-        self.assertEqual(res5gConn['bssid'], v.BSSID_5G)
-
-    def assoc_tkippsk2_sta_2g(self):
-
-        ret, result = chkSiteSurvey(self.sta, v.STA_INTF_2G, v.BSSID.lower(), self.__class__.__name__)
-
-        count = 0
-        while ret is False and count < 5:
-            ret, result = chkSiteSurvey(self.sta, v.STA_INTF_2G, v.BSSID.lower(), self.__class__.__name__)
-            count += 1
-
-        if count >= 5:
-            self.fail(msg='specified wifi is no exist')
-
-        setIwpriv(self.sta, v.INTF_2G, 'Channel', result['channel'], self.__class__.__name__)
-        d = TestCommand(v.DUT_MODULE)
-        for staCommand in d.assoc_tkippsk2_sta_2g():
-            setConfig(self.sta, staCommand, self.__class__.__name__)
-
-        res2gConn = getApcli0Conn(self.sta, self.__class__.__name__)
-
-        self.assertEqual(res2gConn['ssid'], v.SSID)
-        self.assertEqual(res2gConn['bssid'], v.BSSID)
-
-    def assoc_tkippsk2_sta_5g(self):
-
-        ret, result = chkSiteSurvey(self.sta, v.STA_INTF_5G, v.BSSID_5G.lower(), self.__class__.__name__)
-
-        count = 0
-        while ret is False and count < 5:
-            ret, result = chkSiteSurvey(self.sta, v.STA_INTF_5G, v.BSSID_5G.lower(), self.__class__.__name__)
-            count += 1
-
-        if count >= 5:
-            self.fail(msg='specified wifi is no exist')
-
-        setIwpriv(self.sta, v.INTF_5G, 'Channel', result['channel'], self.__class__.__name__)
-        d = TestCommand(v.DUT_MODULE)
-        for staCommand in d.assoc_tkippsk2_sta_5g():
-            setConfig(self.sta, staCommand, self.__class__.__name__)
-
-        res5gConn = getApclii0Conn(self.sta, self.__class__.__name__)
-
-        self.assertEqual(res5gConn['ssid'], v.SSID_5G)
-        self.assertEqual(res5gConn['bssid'], v.BSSID_5G)
-
-    def assoc_tkippsk_sta_2g(self):
-
-        ret, result = chkSiteSurvey(self.sta, v.STA_INTF_2G, v.BSSID.lower(), self.__class__.__name__)
-
-        count = 0
-        while ret is False and count < 5:
-            ret, result = chkSiteSurvey(self.sta, v.STA_INTF_2G, v.BSSID.lower(), self.__class__.__name__)
-            count += 1
-
-        if count >= 5:
-            self.fail(msg='specified wifi is no exist')
-
-        setIwpriv(self.sta, v.INTF_2G, 'Channel', result['channel'], self.__class__.__name__)
-        d = TestCommand(v.DUT_MODULE)
-        for staCommand in d.assoc_tkippsk_sta_2g():
-            setConfig(self.sta, staCommand, self.__class__.__name__)
-
-        res2gConn = getApcli0Conn(self.sta, self.__class__.__name__)
-
-        self.assertEqual(res2gConn['ssid'], v.SSID)
-        self.assertEqual(res2gConn['bssid'], v.BSSID)
-
-    def assoc_tkippsk_sta_5g(self):
-
-        ret, result = chkSiteSurvey(self.sta, v.STA_INTF_5G, v.BSSID_5G.lower(), self.__class__.__name__)
-
-        count = 0
-        while ret is False and count < 5:
-            ret, result = chkSiteSurvey(self.sta, v.STA_INTF_5G, v.BSSID_5G.lower(), self.__class__.__name__)
-            count += 1
-
-        if count >= 5:
-            self.fail(msg='specified wifi is no exist')
-
-        setIwpriv(self.sta, v.INTF_5G, 'Channel', result['channel'], self.__class__.__name__)
-        d = TestCommand(v.DUT_MODULE)
-        for staCommand in d.assoc_tkippsk_sta_5g():
-            setConfig(self.sta, staCommand, self.__class__.__name__)
-
-        res5gConn = getApclii0Conn(self.sta, self.__class__.__name__)
-
-        self.assertEqual(res5gConn['ssid'], v.SSID_5G)
-        self.assertEqual(res5gConn['bssid'], v.BSSID_5G)
-
-    def ping_psk2_sta_2g(self):
-
-        ret, result = chkSiteSurvey(self.sta, v.STA_INTF_2G, v.BSSID.lower(), self.__class__.__name__)
-
-        count = 0
-        while ret is False and count < 5:
-            ret, result = chkSiteSurvey(self.sta, v.STA_INTF_2G, v.BSSID.lower(), self.__class__.__name__)
-            count += 1
-
-        if count >= 5:
-            self.fail(msg='specified wifi is no exist')
-
-        setIwpriv(self.sta, v.INTF_2G, 'Channel', result['channel'], self.__class__.__name__)
-        d = TestCommand(v.DUT_MODULE)
-        for staCommand in d.assoc_psk2_sta_2g():
-            setConfig(self.sta, staCommand, self.__class__.__name__)
-
-        res2gIp = getIntfIpAddr(self.sta, v.STA_INTF_2G, self.__class__.__name__)
-        if res2gIp['ip'] == '':
-            self.fail(msg='no ip address got.')
-        else:
-            resPingPercent = getPingStatus(self.dut, res2gIp['ip'], v.PING_PERCENT_COUNT, self.__class__.__name__)
-            self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS)
-
-    def ping_psk2_sta_5g(self):
-
-        ret, result = chkSiteSurvey(self.sta, v.STA_INTF_5G, v.BSSID_5G.lower(), self.__class__.__name__)
-
-        count = 0
-        while ret is False and count < 5:
-            ret, result = chkSiteSurvey(self.sta, v.STA_INTF_5G, v.BSSID_5G.lower(), self.__class__.__name__)
-            count += 1
-
-        if count >= 5:
-            self.fail(msg='specified wifi is no exist')
-
-        setIwpriv(self.sta, v.INTF_5G, 'Channel', result['channel'], self.__class__.__name__)
-        d = TestCommand(v.DUT_MODULE)
-        for staCommand in d.assoc_psk2_sta_5g():
-            setConfig(self.sta, staCommand, self.__class__.__name__)
-
-        res5gIp = getIntfIpAddr(self.sta, v.STA_INTF_5G, self.__class__.__name__)
-        if res5gIp['ip'] == '':
-            self.fail(msg='no ip address got.')
-        else:
-            resPingPercent = getPingStatus(self.dut, res5gIp['ip'], v.PING_PERCENT_COUNT, self.__class__.__name__)
-            self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS)
-
-    def ping_psk_sta_2g(self):
-
-        ret, result = chkSiteSurvey(self.sta, v.STA_INTF_2G, v.BSSID.lower(), self.__class__.__name__)
-
-        count = 0
-        while ret is False and count < 5:
-            ret, result = chkSiteSurvey(self.sta, v.STA_INTF_2G, v.BSSID.lower(), self.__class__.__name__)
-            count += 1
-
-        if count >= 5:
-            self.fail(msg='specified wifi is no exist')
-
-        setIwpriv(self.sta, v.INTF_2G, 'Channel', result['channel'], self.__class__.__name__)
-        d = TestCommand(v.DUT_MODULE)
-        for staCommand in d.assoc_psk_sta_2g():
-            setConfig(self.sta, staCommand, self.__class__.__name__)
-
-        res2gIp = getIntfIpAddr(self.sta, v.STA_INTF_2G, self.__class__.__name__)
-        if res2gIp['ip'] == '':
-            self.fail(msg='no ip address got.')
-        else:
-            resPingPercent = getPingStatus(self.dut, res2gIp['ip'], v.PING_PERCENT_COUNT, self.__class__.__name__)
-            self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS)
-
-    def ping_psk_sta_5g(self):
-
-        ret, result = chkSiteSurvey(self.sta, v.STA_INTF_5G, v.BSSID_5G.lower(), self.__class__.__name__)
-
-        count = 0
-        while ret is False and count < 5:
-            ret, result = chkSiteSurvey(self.sta, v.STA_INTF_5G, v.BSSID_5G.lower(), self.__class__.__name__)
-            count += 1
-
-        if count >= 5:
-            self.fail(msg='specified wifi is no exist')
-
-        setIwpriv(self.sta, v.INTF_5G, 'Channel', result['channel'], self.__class__.__name__)
-        d = TestCommand(v.DUT_MODULE)
-        for staCommand in d.assoc_psk_sta_5g():
-            setConfig(self.sta, staCommand, self.__class__.__name__)
-
-        res5gIp = getIntfIpAddr(self.sta, v.STA_INTF_5G, self.__class__.__name__)
-        if res5gIp['ip'] == '':
-            self.fail(msg='no ip address got.')
-        else:
-            resPingPercent = getPingStatus(self.dut, res5gIp['ip'], v.PING_PERCENT_COUNT, self.__class__.__name__)
-            self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS)
-
-    def ping_tkippsk2_sta_2g(self):
-
-        ret, result = chkSiteSurvey(self.sta, v.STA_INTF_2G, v.BSSID.lower(), self.__class__.__name__)
-
-        count = 0
-        while ret is False and count < 5:
-            ret, result = chkSiteSurvey(self.sta, v.STA_INTF_2G, v.BSSID.lower(), self.__class__.__name__)
-            count += 1
-
-        if count >= 5:
-            self.fail(msg='specified wifi is no exist')
-
-        setIwpriv(self.sta, v.INTF_2G, 'Channel', result['channel'], self.__class__.__name__)
-        d = TestCommand(v.DUT_MODULE)
-        for staCommand in d.assoc_tkippsk2_sta_2g():
-            setConfig(self.sta, staCommand, self.__class__.__name__)
-
-        res2gIp = getIntfIpAddr(self.sta, v.STA_INTF_2G, self.__class__.__name__)
-        if res2gIp['ip'] == '':
-            self.fail(msg='no ip address got.')
-        else:
-            resPingPercent = getPingStatus(self.dut, res2gIp['ip'], v.PING_PERCENT_COUNT, self.__class__.__name__)
-            self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS)
-
-    def ping_tkippsk2_sta_5g(self):
-
-        ret, result = chkSiteSurvey(self.sta, v.STA_INTF_5G, v.BSSID_5G.lower(), self.__class__.__name__)
-
-        count = 0
-        while ret is False and count < 5:
-            ret, result = chkSiteSurvey(self.sta, v.STA_INTF_5G, v.BSSID_5G.lower(), self.__class__.__name__)
-            count += 1
-
-        if count >= 5:
-            self.fail(msg='specified wifi is no exist')
-
-        setIwpriv(self.sta, v.INTF_5G, 'Channel', result['channel'], self.__class__.__name__)
-        d = TestCommand(v.DUT_MODULE)
-        for staCommand in d.assoc_tkippsk2_sta_5g():
-            setConfig(self.sta, staCommand, self.__class__.__name__)
-
-        res5gIp = getIntfIpAddr(self.sta, v.STA_INTF_5G, self.__class__.__name__)
-        if res5gIp['ip'] == '':
-            self.fail(msg='no ip address got.')
-        else:
-            resPingPercent = getPingStatus(self.dut, res5gIp['ip'], v.PING_PERCENT_COUNT, self.__class__.__name__)
-            self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS)
-
-    def ping_tkippsk_sta_2g(self):
-
-        ret, result = chkSiteSurvey(self.sta, v.STA_INTF_2G, v.BSSID.lower(), self.__class__.__name__)
-
-        count = 0
-        while ret is False and count < 5:
-            ret, result = chkSiteSurvey(self.sta, v.STA_INTF_2G, v.BSSID.lower(), self.__class__.__name__)
-            count += 1
-
-        if count >= 5:
-            self.fail(msg='specified wifi is no exist')
-
-        setIwpriv(self.sta, v.INTF_2G, 'Channel', result['channel'], self.__class__.__name__)
-        d = TestCommand(v.DUT_MODULE)
-        for staCommand in d.assoc_tkippsk_sta_2g():
-            setConfig(self.sta, staCommand, self.__class__.__name__)
-
-        res2gIp = getIntfIpAddr(self.sta, v.STA_INTF_2G, self.__class__.__name__)
-        if res2gIp['ip'] == '':
-            self.fail(msg='no ip address got.')
-        else:
-            resPingPercent = getPingStatus(self.dut, res2gIp['ip'], v.PING_PERCENT_COUNT, self.__class__.__name__)
-            self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS)
-
-    def ping_tkippsk_sta_5g(self):
-
-        ret, result = chkSiteSurvey(self.sta, v.STA_INTF_5G, v.BSSID_5G.lower(), self.__class__.__name__)
-
-        count = 0
-        while ret is False and count < 5:
-            ret, result = chkSiteSurvey(self.sta, v.STA_INTF_5G, v.BSSID_5G.lower(), self.__class__.__name__)
-            count += 1
-
-        if count >= 5:
-            self.fail(msg='specified wifi is no exist')
-
-        setIwpriv(self.sta, v.INTF_5G, 'Channel', result['channel'], self.__class__.__name__)
-        d = TestCommand(v.DUT_MODULE)
-        for staCommand in d.assoc_tkippsk_sta_5g():
-            setConfig(self.sta, staCommand, self.__class__.__name__)
-
-        res5gIp = getIntfIpAddr(self.sta, v.STA_INTF_5G, self.__class__.__name__)
-        if res5gIp['ip'] == '':
-            self.fail(msg='no ip address got.')
-        else:
-            resPingPercent = getPingStatus(self.dut, res5gIp['ip'], v.PING_PERCENT_COUNT, self.__class__.__name__)
-            self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS)
 
 
 class AP_MIXEDPSK_CHAN_BW402(TestCase):
@@ -2173,7 +522,7 @@ class AP_MIXEDPSK_CHAN_BW402(TestCase):
         d = TestCommand(v.DUT_MODULE)
         for dutCommand in d.ap_mixedpsk_chan_bw40_set_up():
             setConfig(self.dut, dutCommand, self.__name__)
-
+        setWifiRestart(self.dut, self.__name__)
         self.device = getAdbDevices()
 
     @classmethod
@@ -2181,7 +530,7 @@ class AP_MIXEDPSK_CHAN_BW402(TestCase):
         d = TestCommand(v.DUT_MODULE)
         for dutCommand in d.ap_tear_down():
             setConfig(self.dut, dutCommand, self.__name__)
-
+        setWifiRestart(self.dut, self.__name__)
         self.dut.close()
 
     def assoc_psk2_sta_5g(self):
@@ -2295,408 +644,6 @@ class AP_MIXEDPSK_CHAN_BW402(TestCase):
                                         "Ping responsed percent werenot good enough.")
         else:
             self.assertTrue(res2gConn, "Association wasnot successful.")
-
-
-class AP_MIXEDPSK_CHAN_BW20(TestCase):
-    @classmethod
-    def setUpClass(self):
-
-        self.dut = SshClient(v.CONNECTION_TYPE)
-        self.sta = SshClient(v.STA_CONNECTION_TYPE)
-
-        dutRet = self.dut.connect(v.HOST, v.USR, v.PASSWD)
-        staRet = self.sta.connect(v.STA_IP, v.STA_USR, v.STA_PASSWD)
-
-        if dutRet is False or staRet is False:
-            raise Exception('Connection is failed. please check your remote settings.')
-        d = TestCommand(v.DUT_MODULE)
-        for dutCommand in d.ap_mixedpsk_chan_bw20_set_up():
-            setConfig(self.dut, dutCommand, self.__name__)
-
-        v.BSSID = getIntfHWAddr(self.dut, v.INTF_2G, self.__name__)
-        v.BSSID = v.BSSID['mac']
-        v.BSSID_5G = getIntfHWAddr(self.dut, v.INTF_5G, self.__name__)
-        v.BSSID_5G = v.BSSID_5G['mac']
-
-    @classmethod
-    def tearDownClass(self):
-        d = TestCommand(v.DUT_MODULE)
-        for staCommand in d.sta_tear_down():
-            setConfig(self.sta, staCommand, self.__name__)
-
-        for dutCommand in d.ap_tear_down():
-            setConfig(self.dut, dutCommand, self.__name__)
-
-        self.dut.close()
-        self.sta.close()
-
-    def assoc_psk2_sta_2g(self):
-
-        ret, result = chkSiteSurvey(self.sta, v.STA_INTF_2G, v.BSSID.lower(), self.__class__.__name__)
-
-        count = 0
-        while ret is False and count < 5:
-            ret, result = chkSiteSurvey(self.sta, v.STA_INTF_2G, v.BSSID.lower(), self.__class__.__name__)
-            count += 1
-
-        if count >= 5:
-            self.fail(msg='specified wifi is no exist')
-
-        setIwpriv(self.sta, v.INTF_2G, 'Channel', result['channel'], self.__class__.__name__)
-        d = TestCommand(v.DUT_MODULE)
-        for staCommand in d.assoc_psk2_sta_2g():
-            setConfig(self.sta, staCommand, self.__class__.__name__)
-
-        res2gConn = getApcli0Conn(self.sta, self.__class__.__name__)
-
-        self.assertEqual(res2gConn['ssid'], v.SSID)
-        self.assertEqual(res2gConn['bssid'], v.BSSID)
-
-    def assoc_psk2_sta_5g(self):
-
-        ret, result = chkSiteSurvey(self.sta, v.STA_INTF_5G, v.BSSID_5G.lower(), self.__class__.__name__)
-
-        count = 0
-        while ret is False and count < 5:
-            ret, result = chkSiteSurvey(self.sta, v.STA_INTF_5G, v.BSSID_5G.lower(), self.__class__.__name__)
-            count += 1
-
-        if count >= 5:
-            self.fail(msg='specified wifi is no exist')
-
-        setIwpriv(self.sta, v.INTF_5G, 'Channel', result['channel'], self.__class__.__name__)
-        d = TestCommand(v.DUT_MODULE)
-        for staCommand in d.assoc_psk2_sta_5g():
-            setConfig(self.sta, staCommand, self.__class__.__name__)
-
-        res5gConn = getApclii0Conn(self.sta, self.__class__.__name__)
-
-        self.assertEqual(res5gConn['ssid'], v.SSID_5G)
-        self.assertEqual(res5gConn['bssid'], v.BSSID_5G)
-
-    def assoc_psk_sta_2g(self):
-
-        ret, result = chkSiteSurvey(self.sta, v.STA_INTF_2G, v.BSSID.lower(), self.__class__.__name__)
-
-        count = 0
-        while ret is False and count < 5:
-            ret, result = chkSiteSurvey(self.sta, v.STA_INTF_2G, v.BSSID.lower(), self.__class__.__name__)
-            count += 1
-
-        if count >= 5:
-            self.fail(msg='specified wifi is no exist')
-
-        setIwpriv(self.sta, v.INTF_2G, 'Channel', result['channel'], self.__class__.__name__)
-        d = TestCommand(v.DUT_MODULE)
-        for staCommand in d.assoc_psk_sta_2g():
-            setConfig(self.sta, staCommand, self.__class__.__name__)
-
-        res2gConn = getApcli0Conn(self.sta, self.__class__.__name__)
-
-        self.assertEqual(res2gConn['ssid'], v.SSID)
-        self.assertEqual(res2gConn['bssid'], v.BSSID)
-
-    def assoc_psk_sta_5g(self):
-
-        ret, result = chkSiteSurvey(self.sta, v.STA_INTF_5G, v.BSSID_5G.lower(), self.__class__.__name__)
-
-        count = 0
-        while ret is False and count < 5:
-            ret, result = chkSiteSurvey(self.sta, v.STA_INTF_5G, v.BSSID_5G.lower(), self.__class__.__name__)
-            count += 1
-
-        if count >= 5:
-            self.fail(msg='specified wifi is no exist')
-
-        setIwpriv(self.sta, v.INTF_5G, 'Channel', result['channel'], self.__class__.__name__)
-        d = TestCommand(v.DUT_MODULE)
-        for staCommand in d.assoc_psk_sta_5g():
-            setConfig(self.sta, staCommand, self.__class__.__name__)
-
-        res5gConn = getApclii0Conn(self.sta, self.__class__.__name__)
-
-        self.assertEqual(res5gConn['ssid'], v.SSID_5G)
-        self.assertEqual(res5gConn['bssid'], v.BSSID_5G)
-
-    def assoc_tkippsk2_sta_2g(self):
-
-        ret, result = chkSiteSurvey(self.sta, v.STA_INTF_2G, v.BSSID.lower(), self.__class__.__name__)
-
-        count = 0
-        while ret is False and count < 5:
-            ret, result = chkSiteSurvey(self.sta, v.STA_INTF_2G, v.BSSID.lower(), self.__class__.__name__)
-            count += 1
-
-        if count >= 5:
-            self.fail(msg='specified wifi is no exist')
-
-        setIwpriv(self.sta, v.INTF_2G, 'Channel', result['channel'], self.__class__.__name__)
-        d = TestCommand(v.DUT_MODULE)
-        for staCommand in d.assoc_tkippsk2_sta_2g():
-            setConfig(self.sta, staCommand, self.__class__.__name__)
-
-        res2gConn = getApcli0Conn(self.sta, self.__class__.__name__)
-
-        self.assertEqual(res2gConn['ssid'], v.SSID)
-        self.assertEqual(res2gConn['bssid'], v.BSSID)
-
-    def assoc_tkippsk2_sta_5g(self):
-
-        ret, result = chkSiteSurvey(self.sta, v.STA_INTF_5G, v.BSSID_5G.lower(), self.__class__.__name__)
-
-        count = 0
-        while ret is False and count < 5:
-            ret, result = chkSiteSurvey(self.sta, v.STA_INTF_5G, v.BSSID_5G.lower(), self.__class__.__name__)
-            count += 1
-
-        if count >= 5:
-            self.fail(msg='specified wifi is no exist')
-
-        setIwpriv(self.sta, v.INTF_5G, 'Channel', result['channel'], self.__class__.__name__)
-        d = TestCommand(v.DUT_MODULE)
-        for staCommand in d.assoc_tkippsk2_sta_5g():
-            setConfig(self.sta, staCommand, self.__class__.__name__)
-
-        res5gConn = getApclii0Conn(self.sta, self.__class__.__name__)
-
-        self.assertEqual(res5gConn['ssid'], v.SSID_5G)
-        self.assertEqual(res5gConn['bssid'], v.BSSID_5G)
-
-    def assoc_tkippsk_sta_2g(self):
-
-        ret, result = chkSiteSurvey(self.sta, v.STA_INTF_2G, v.BSSID.lower(), self.__class__.__name__)
-
-        count = 0
-        while ret is False and count < 5:
-            ret, result = chkSiteSurvey(self.sta, v.STA_INTF_2G, v.BSSID.lower(), self.__class__.__name__)
-            count += 1
-
-        if count >= 5:
-            self.fail(msg='specified wifi is no exist')
-
-        setIwpriv(self.sta, v.INTF_2G, 'Channel', result['channel'], self.__class__.__name__)
-        d = TestCommand(v.DUT_MODULE)
-        for staCommand in d.assoc_tkippsk_sta_2g():
-            setConfig(self.sta, staCommand, self.__class__.__name__)
-
-        res2gConn = getApcli0Conn(self.sta, self.__class__.__name__)
-
-        self.assertEqual(res2gConn['ssid'], v.SSID)
-        self.assertEqual(res2gConn['bssid'], v.BSSID)
-
-    def assoc_tkippsk_sta_5g(self):
-
-        ret, result = chkSiteSurvey(self.sta, v.STA_INTF_5G, v.BSSID_5G.lower(), self.__class__.__name__)
-
-        count = 0
-        while ret is False and count < 5:
-            ret, result = chkSiteSurvey(self.sta, v.STA_INTF_5G, v.BSSID_5G.lower(), self.__class__.__name__)
-            count += 1
-
-        if count >= 5:
-            self.fail(msg='specified wifi is no exist')
-
-        setIwpriv(self.sta, v.INTF_5G, 'Channel', result['channel'], self.__class__.__name__)
-        d = TestCommand(v.DUT_MODULE)
-        for staCommand in d.assoc_tkippsk_sta_5g():
-            setConfig(self.sta, staCommand, self.__class__.__name__)
-
-        res5gConn = getApclii0Conn(self.sta, self.__class__.__name__)
-
-        self.assertEqual(res5gConn['ssid'], v.SSID_5G)
-        self.assertEqual(res5gConn['bssid'], v.BSSID_5G)
-
-    def ping_psk2_sta_2g(self):
-
-        ret, result = chkSiteSurvey(self.sta, v.STA_INTF_2G, v.BSSID.lower(), self.__class__.__name__)
-
-        count = 0
-        while ret is False and count < 5:
-            ret, result = chkSiteSurvey(self.sta, v.STA_INTF_2G, v.BSSID.lower(), self.__class__.__name__)
-            count += 1
-
-        if count >= 5:
-            self.fail(msg='specified wifi is no exist')
-
-        setIwpriv(self.sta, v.INTF_2G, 'Channel', result['channel'], self.__class__.__name__)
-        d = TestCommand(v.DUT_MODULE)
-        for staCommand in d.assoc_psk2_sta_2g():
-            setConfig(self.sta, staCommand, self.__class__.__name__)
-
-        res2gIp = getIntfIpAddr(self.sta, v.STA_INTF_2G, self.__class__.__name__)
-        if res2gIp['ip'] == '':
-            self.fail(msg='no ip address got.')
-        else:
-            resPingPercent = getPingStatus(self.dut, res2gIp['ip'], v.PING_PERCENT_COUNT, self.__class__.__name__)
-            self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS)
-
-    def ping_psk2_sta_5g(self):
-
-        ret, result = chkSiteSurvey(self.sta, v.STA_INTF_5G, v.BSSID_5G.lower(), self.__class__.__name__)
-
-        count = 0
-        while ret is False and count < 5:
-            ret, result = chkSiteSurvey(self.sta, v.STA_INTF_5G, v.BSSID_5G.lower(), self.__class__.__name__)
-            count += 1
-
-        if count >= 5:
-            self.fail(msg='specified wifi is no exist')
-
-        setIwpriv(self.sta, v.INTF_5G, 'Channel', result['channel'], self.__class__.__name__)
-        d = TestCommand(v.DUT_MODULE)
-        for staCommand in d.assoc_psk2_sta_5g():
-            setConfig(self.sta, staCommand, self.__class__.__name__)
-
-        res5gIp = getIntfIpAddr(self.sta, v.STA_INTF_5G, self.__class__.__name__)
-        if res5gIp['ip'] == '':
-            self.fail(msg='no ip address got.')
-        else:
-            resPingPercent = getPingStatus(self.dut, res5gIp['ip'], v.PING_PERCENT_COUNT, self.__class__.__name__)
-            self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS)
-
-    def ping_psk_sta_2g(self):
-
-        ret, result = chkSiteSurvey(self.sta, v.STA_INTF_2G, v.BSSID.lower(), self.__class__.__name__)
-
-        count = 0
-        while ret is False and count < 5:
-            ret, result = chkSiteSurvey(self.sta, v.STA_INTF_2G, v.BSSID.lower(), self.__class__.__name__)
-            count += 1
-
-        if count >= 5:
-            self.fail(msg='specified wifi is no exist')
-
-        setIwpriv(self.sta, v.INTF_2G, 'Channel', result['channel'], self.__class__.__name__)
-        d = TestCommand(v.DUT_MODULE)
-        for staCommand in d.assoc_psk_sta_2g():
-            setConfig(self.sta, staCommand, self.__class__.__name__)
-
-        res2gIp = getIntfIpAddr(self.sta, v.STA_INTF_2G, self.__class__.__name__)
-        if res2gIp['ip'] == '':
-            self.fail(msg='no ip address got.')
-        else:
-            resPingPercent = getPingStatus(self.dut, res2gIp['ip'], v.PING_PERCENT_COUNT, self.__class__.__name__)
-            self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS)
-
-    def ping_psk_sta_5g(self):
-
-        ret, result = chkSiteSurvey(self.sta, v.STA_INTF_5G, v.BSSID_5G.lower(), self.__class__.__name__)
-
-        count = 0
-        while ret is False and count < 5:
-            ret, result = chkSiteSurvey(self.sta, v.STA_INTF_5G, v.BSSID_5G.lower(), self.__class__.__name__)
-            count += 1
-
-        if count >= 5:
-            self.fail(msg='specified wifi is no exist')
-
-        setIwpriv(self.sta, v.INTF_5G, 'Channel', result['channel'], self.__class__.__name__)
-        d = TestCommand(v.DUT_MODULE)
-        for staCommand in d.assoc_psk_sta_5g():
-            setConfig(self.sta, staCommand, self.__class__.__name__)
-
-        res5gIp = getIntfIpAddr(self.sta, v.STA_INTF_5G, self.__class__.__name__)
-        if res5gIp['ip'] == '':
-            self.fail(msg='no ip address got.')
-        else:
-            resPingPercent = getPingStatus(self.dut, res5gIp['ip'], v.PING_PERCENT_COUNT, self.__class__.__name__)
-            self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS)
-
-    def ping_tkippsk2_sta_2g(self):
-
-        ret, result = chkSiteSurvey(self.sta, v.STA_INTF_2G, v.BSSID.lower(), self.__class__.__name__)
-
-        count = 0
-        while ret is False and count < 5:
-            ret, result = chkSiteSurvey(self.sta, v.STA_INTF_2G, v.BSSID.lower(), self.__class__.__name__)
-            count += 1
-
-        if count >= 5:
-            self.fail(msg='specified wifi is no exist')
-
-        setIwpriv(self.sta, v.INTF_2G, 'Channel', result['channel'], self.__class__.__name__)
-        d = TestCommand(v.DUT_MODULE)
-        for staCommand in d.assoc_tkippsk2_sta_2g():
-            setConfig(self.sta, staCommand, self.__class__.__name__)
-
-        res2gIp = getIntfIpAddr(self.sta, v.STA_INTF_2G, self.__class__.__name__)
-        if res2gIp['ip'] == '':
-            self.fail(msg='no ip address got.')
-        else:
-            resPingPercent = getPingStatus(self.dut, res2gIp['ip'], v.PING_PERCENT_COUNT, self.__class__.__name__)
-            self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS)
-
-    def ping_tkippsk2_sta_5g(self):
-
-        ret, result = chkSiteSurvey(self.sta, v.STA_INTF_5G, v.BSSID_5G.lower(), self.__class__.__name__)
-
-        count = 0
-        while ret is False and count < 5:
-            ret, result = chkSiteSurvey(self.sta, v.STA_INTF_5G, v.BSSID_5G.lower(), self.__class__.__name__)
-            count += 1
-
-        if count >= 5:
-            self.fail(msg='specified wifi is no exist')
-
-        setIwpriv(self.sta, v.INTF_5G, 'Channel', result['channel'], self.__class__.__name__)
-        d = TestCommand(v.DUT_MODULE)
-        for staCommand in d.assoc_tkippsk2_sta_5g():
-            setConfig(self.sta, staCommand, self.__class__.__name__)
-
-        res5gIp = getIntfIpAddr(self.sta, v.STA_INTF_5G, self.__class__.__name__)
-        if res5gIp['ip'] == '':
-            self.fail(msg='no ip address got.')
-        else:
-            resPingPercent = getPingStatus(self.dut, res5gIp['ip'], v.PING_PERCENT_COUNT, self.__class__.__name__)
-            self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS)
-
-    def ping_tkippsk_sta_2g(self):
-
-        ret, result = chkSiteSurvey(self.sta, v.STA_INTF_2G, v.BSSID.lower(), self.__class__.__name__)
-
-        count = 0
-        while ret is False and count < 5:
-            ret, result = chkSiteSurvey(self.sta, v.STA_INTF_2G, v.BSSID.lower(), self.__class__.__name__)
-            count += 1
-
-        if count >= 5:
-            self.fail(msg='specified wifi is no exist')
-
-        setIwpriv(self.sta, v.INTF_2G, 'Channel', result['channel'], self.__class__.__name__)
-        d = TestCommand(v.DUT_MODULE)
-        for staCommand in d.assoc_tkippsk_sta_2g():
-            setConfig(self.sta, staCommand, self.__class__.__name__)
-
-        res2gIp = getIntfIpAddr(self.sta, v.STA_INTF_2G, self.__class__.__name__)
-        if res2gIp['ip'] == '':
-            self.fail(msg='no ip address got.')
-        else:
-            resPingPercent = getPingStatus(self.dut, res2gIp['ip'], v.PING_PERCENT_COUNT, self.__class__.__name__)
-            self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS)
-
-    def ping_tkippsk_sta_5g(self):
-
-        ret, result = chkSiteSurvey(self.sta, v.STA_INTF_5G, v.BSSID_5G.lower(), self.__class__.__name__)
-
-        count = 0
-        while ret is False and count < 5:
-            ret, result = chkSiteSurvey(self.sta, v.STA_INTF_5G, v.BSSID_5G.lower(), self.__class__.__name__)
-            count += 1
-
-        if count >= 5:
-            self.fail(msg='specified wifi is no exist')
-
-        setIwpriv(self.sta, v.INTF_5G, 'Channel', result['channel'], self.__class__.__name__)
-        d = TestCommand(v.DUT_MODULE)
-        for staCommand in d.assoc_tkippsk_sta_5g():
-            setConfig(self.sta, staCommand, self.__class__.__name__)
-
-        res5gIp = getIntfIpAddr(self.sta, v.STA_INTF_5G, self.__class__.__name__)
-        if res5gIp['ip'] == '':
-            self.fail(msg='no ip address got.')
-        else:
-            resPingPercent = getPingStatus(self.dut, res5gIp['ip'], v.PING_PERCENT_COUNT, self.__class__.__name__)
-            self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS)
 
 
 class AP_MIXEDPSK_CHAN_BW202(TestCase):
@@ -2715,7 +662,7 @@ class AP_MIXEDPSK_CHAN_BW202(TestCase):
         d = TestCommand(v.DUT_MODULE)
         for dutCommand in d.ap_mixedpsk_chan_bw20_set_up():
             setConfig(self.dut, dutCommand, self.__name__)
-
+        setWifiRestart(self.dut, self.__name__)
         self.device = getAdbDevices()
 
     @classmethod
@@ -2723,7 +670,7 @@ class AP_MIXEDPSK_CHAN_BW202(TestCase):
         d = TestCommand(v.DUT_MODULE)
         for dutCommand in d.ap_tear_down():
             setConfig(self.dut, dutCommand, self.__name__)
-
+        setWifiRestart(self.dut, self.__name__)
         self.dut.close()
 
     def assoc_psk2_sta_5g(self):
@@ -2837,408 +784,6 @@ class AP_MIXEDPSK_CHAN_BW202(TestCase):
                                         "Ping responsed percent werenot good enough.")
         else:
             self.assertTrue(res2gConn, "Association wasnot successful.")
-
-
-class AP_MIXEDPSK_CHAN_SSIDSPEC(TestCase):
-    @classmethod
-    def setUpClass(self):
-
-        self.dut = SshClient(v.CONNECTION_TYPE)
-        self.sta = SshClient(v.STA_CONNECTION_TYPE)
-
-        dutRet = self.dut.connect(v.HOST, v.USR, v.PASSWD)
-        staRet = self.sta.connect(v.STA_IP, v.STA_USR, v.STA_PASSWD)
-
-        if dutRet is False or staRet is False:
-            raise Exception('Connection is failed. please check your remote settings.')
-        d = TestCommand(v.DUT_MODULE)
-        for dutCommand in d.ap_mixedpsk_chan_ssidspec_set_up():
-            setConfig(self.dut, dutCommand, self.__name__)
-
-        v.BSSID = getIntfHWAddr(self.dut, v.INTF_2G, self.__name__)
-        v.BSSID = v.BSSID['mac']
-        v.BSSID_5G = getIntfHWAddr(self.dut, v.INTF_5G, self.__name__)
-        v.BSSID_5G = v.BSSID_5G['mac']
-
-    @classmethod
-    def tearDownClass(self):
-        d = TestCommand(v.DUT_MODULE)
-        for staCommand in d.sta_tear_down():
-            setConfig(self.sta, staCommand, self.__name__)
-
-        for dutCommand in d.ap_tear_down():
-            setConfig(self.dut, dutCommand, self.__name__)
-
-        self.dut.close()
-        self.sta.close()
-
-    def assoc_psk2_sta_ssidspec_2g(self):
-
-        ret, result = chkSiteSurvey(self.sta, v.STA_INTF_2G, v.BSSID.lower(), self.__class__.__name__)
-
-        count = 0
-        while ret is False and count < 5:
-            ret, result = chkSiteSurvey(self.sta, v.STA_INTF_2G, v.BSSID.lower(), self.__class__.__name__)
-            count += 1
-
-        if count >= 5:
-            self.fail(msg='specified wifi is no exist')
-
-        setIwpriv(self.sta, v.INTF_2G, 'Channel', result['channel'], self.__class__.__name__)
-        d = TestCommand(v.DUT_MODULE)
-        for staCommand in d.assoc_psk2_sta_ssidspec_2g():
-            setConfig(self.sta, staCommand, self.__class__.__name__)
-
-        res2gConn = getApcli0Conn(self.sta, self.__class__.__name__)
-
-        self.assertEqual(res2gConn['ssid'], v.SPECIAL_SSID)
-        self.assertEqual(res2gConn['bssid'], v.BSSID)
-
-    def assoc_psk2_sta_ssidspec_5g(self):
-
-        ret, result = chkSiteSurvey(self.sta, v.STA_INTF_5G, v.BSSID_5G.lower(), self.__class__.__name__)
-
-        count = 0
-        while ret is False and count < 5:
-            ret, result = chkSiteSurvey(self.sta, v.STA_INTF_5G, v.BSSID_5G.lower(), self.__class__.__name__)
-            count += 1
-
-        if count >= 5:
-            self.fail(msg='specified wifi is no exist')
-
-        setIwpriv(self.sta, v.INTF_5G, 'Channel', result['channel'], self.__class__.__name__)
-        d = TestCommand(v.DUT_MODULE)
-        for staCommand in d.assoc_psk2_sta_ssidspec_5g():
-            setConfig(self.sta, staCommand, self.__class__.__name__)
-
-        res5gConn = getApclii0Conn(self.sta, self.__class__.__name__)
-
-        self.assertEqual(res5gConn['ssid'], v.SPECIAL_SSID_5G)
-        self.assertEqual(res5gConn['bssid'], v.BSSID_5G)
-
-    def assoc_psk_sta_ssidspec_2g(self):
-
-        ret, result = chkSiteSurvey(self.sta, v.STA_INTF_2G, v.BSSID.lower(), self.__class__.__name__)
-
-        count = 0
-        while ret is False and count < 5:
-            ret, result = chkSiteSurvey(self.sta, v.STA_INTF_2G, v.BSSID.lower(), self.__class__.__name__)
-            count += 1
-
-        if count >= 5:
-            self.fail(msg='specified wifi is no exist')
-
-        setIwpriv(self.sta, v.INTF_2G, 'Channel', result['channel'], self.__class__.__name__)
-        d = TestCommand(v.DUT_MODULE)
-        for staCommand in d.assoc_psk_sta_ssidspec_2g():
-            setConfig(self.sta, staCommand, self.__class__.__name__)
-
-        res2gConn = getApcli0Conn(self.sta, self.__class__.__name__)
-
-        self.assertEqual(res2gConn['ssid'], v.SPECIAL_SSID)
-        self.assertEqual(res2gConn['bssid'], v.BSSID)
-
-    def assoc_psk_sta_ssidspec_5g(self):
-
-        ret, result = chkSiteSurvey(self.sta, v.STA_INTF_5G, v.BSSID_5G.lower(), self.__class__.__name__)
-
-        count = 0
-        while ret is False and count < 5:
-            ret, result = chkSiteSurvey(self.sta, v.STA_INTF_5G, v.BSSID_5G.lower(), self.__class__.__name__)
-            count += 1
-
-        if count >= 5:
-            self.fail(msg='specified wifi is no exist')
-
-        setIwpriv(self.sta, v.INTF_5G, 'Channel', result['channel'], self.__class__.__name__)
-        d = TestCommand(v.DUT_MODULE)
-        for staCommand in d.assoc_psk_sta_ssidspec_5g():
-            setConfig(self.sta, staCommand, self.__class__.__name__)
-
-        res5gConn = getApclii0Conn(self.sta, self.__class__.__name__)
-
-        self.assertEqual(res5gConn['ssid'], v.SPECIAL_SSID_5G)
-        self.assertEqual(res5gConn['bssid'], v.BSSID_5G)
-
-    def assoc_tkippsk2_sta_ssidspec_2g(self):
-
-        ret, result = chkSiteSurvey(self.sta, v.STA_INTF_2G, v.BSSID.lower(), self.__class__.__name__)
-
-        count = 0
-        while ret is False and count < 5:
-            ret, result = chkSiteSurvey(self.sta, v.STA_INTF_2G, v.BSSID.lower(), self.__class__.__name__)
-            count += 1
-
-        if count >= 5:
-            self.fail(msg='specified wifi is no exist')
-
-        setIwpriv(self.sta, v.INTF_2G, 'Channel', result['channel'], self.__class__.__name__)
-        d = TestCommand(v.DUT_MODULE)
-        for staCommand in d.assoc_tkippsk2_sta_ssidspec_2g():
-            setConfig(self.sta, staCommand, self.__class__.__name__)
-
-        res2gConn = getApcli0Conn(self.sta, self.__class__.__name__)
-
-        self.assertEqual(res2gConn['ssid'], v.SPECIAL_SSID)
-        self.assertEqual(res2gConn['bssid'], v.BSSID)
-
-    def assoc_tkippsk2_sta_ssidspec_5g(self):
-
-        ret, result = chkSiteSurvey(self.sta, v.STA_INTF_5G, v.BSSID_5G.lower(), self.__class__.__name__)
-
-        count = 0
-        while ret is False and count < 5:
-            ret, result = chkSiteSurvey(self.sta, v.STA_INTF_5G, v.BSSID_5G.lower(), self.__class__.__name__)
-            count += 1
-
-        if count >= 5:
-            self.fail(msg='specified wifi is no exist')
-
-        setIwpriv(self.sta, v.INTF_5G, 'Channel', result['channel'], self.__class__.__name__)
-        d = TestCommand(v.DUT_MODULE)
-        for staCommand in d.assoc_tkippsk2_sta_ssidspec_5g():
-            setConfig(self.sta, staCommand, self.__class__.__name__)
-
-        res5gConn = getApclii0Conn(self.sta, self.__class__.__name__)
-
-        self.assertEqual(res5gConn['ssid'], v.SPECIAL_SSID_5G)
-        self.assertEqual(res5gConn['bssid'], v.BSSID_5G)
-
-    def assoc_tkippsk_sta_ssidspec_2g(self):
-
-        ret, result = chkSiteSurvey(self.sta, v.STA_INTF_2G, v.BSSID.lower(), self.__class__.__name__)
-
-        count = 0
-        while ret is False and count < 5:
-            ret, result = chkSiteSurvey(self.sta, v.STA_INTF_2G, v.BSSID.lower(), self.__class__.__name__)
-            count += 1
-
-        if count >= 5:
-            self.fail(msg='specified wifi is no exist')
-
-        setIwpriv(self.sta, v.INTF_2G, 'Channel', result['channel'], self.__class__.__name__)
-        d = TestCommand(v.DUT_MODULE)
-        for staCommand in d.assoc_tkippsk_sta_ssidspec_2g():
-            setConfig(self.sta, staCommand, self.__class__.__name__)
-
-        res2gConn = getApcli0Conn(self.sta, self.__class__.__name__)
-
-        self.assertEqual(res2gConn['ssid'], v.SPECIAL_SSID)
-        self.assertEqual(res2gConn['bssid'], v.BSSID)
-
-    def assoc_tkippsk_sta_ssidspec_5g(self):
-
-        ret, result = chkSiteSurvey(self.sta, v.STA_INTF_5G, v.BSSID_5G.lower(), self.__class__.__name__)
-
-        count = 0
-        while ret is False and count < 5:
-            ret, result = chkSiteSurvey(self.sta, v.STA_INTF_5G, v.BSSID_5G.lower(), self.__class__.__name__)
-            count += 1
-
-        if count >= 5:
-            self.fail(msg='specified wifi is no exist')
-
-        setIwpriv(self.sta, v.INTF_5G, 'Channel', result['channel'], self.__class__.__name__)
-        d = TestCommand(v.DUT_MODULE)
-        for staCommand in d.assoc_tkippsk_sta_ssidspec_5g():
-            setConfig(self.sta, staCommand, self.__class__.__name__)
-
-        res5gConn = getApclii0Conn(self.sta, self.__class__.__name__)
-
-        self.assertEqual(res5gConn['ssid'], v.SPECIAL_SSID_5G)
-        self.assertEqual(res5gConn['bssid'], v.BSSID_5G)
-
-    def ping_psk2_sta_ssidspec_2g(self):
-
-        ret, result = chkSiteSurvey(self.sta, v.STA_INTF_2G, v.BSSID.lower(), self.__class__.__name__)
-
-        count = 0
-        while ret is False and count < 5:
-            ret, result = chkSiteSurvey(self.sta, v.STA_INTF_2G, v.BSSID.lower(), self.__class__.__name__)
-            count += 1
-
-        if count >= 5:
-            self.fail(msg='specified wifi is no exist')
-
-        setIwpriv(self.sta, v.INTF_2G, 'Channel', result['channel'], self.__class__.__name__)
-        d = TestCommand(v.DUT_MODULE)
-        for staCommand in d.assoc_psk2_sta_ssidspec_2g():
-            setConfig(self.sta, staCommand, self.__class__.__name__)
-
-        res2gIp = getIntfIpAddr(self.sta, v.STA_INTF_2G, self.__class__.__name__)
-        if res2gIp['ip'] == '':
-            self.fail(msg='no ip address got.')
-        else:
-            resPingPercent = getPingStatus(self.dut, res2gIp['ip'], v.PING_PERCENT_COUNT, self.__class__.__name__)
-            self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS)
-
-    def ping_psk2_sta_ssidspec_5g(self):
-
-        ret, result = chkSiteSurvey(self.sta, v.STA_INTF_5G, v.BSSID_5G.lower(), self.__class__.__name__)
-
-        count = 0
-        while ret is False and count < 5:
-            ret, result = chkSiteSurvey(self.sta, v.STA_INTF_5G, v.BSSID_5G.lower(), self.__class__.__name__)
-            count += 1
-
-        if count >= 5:
-            self.fail(msg='specified wifi is no exist')
-
-        setIwpriv(self.sta, v.INTF_5G, 'Channel', result['channel'], self.__class__.__name__)
-        d = TestCommand(v.DUT_MODULE)
-        for staCommand in d.assoc_psk2_sta_ssidspec_5g():
-            setConfig(self.sta, staCommand, self.__class__.__name__)
-
-        res5gIp = getIntfIpAddr(self.sta, v.STA_INTF_5G, self.__class__.__name__)
-        if res5gIp['ip'] == '':
-            self.fail(msg='no ip address got.')
-        else:
-            resPingPercent = getPingStatus(self.dut, res5gIp['ip'], v.PING_PERCENT_COUNT, self.__class__.__name__)
-            self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS)
-
-    def ping_psk_sta_ssidspec_2g(self):
-
-        ret, result = chkSiteSurvey(self.sta, v.STA_INTF_2G, v.BSSID.lower(), self.__class__.__name__)
-
-        count = 0
-        while ret is False and count < 5:
-            ret, result = chkSiteSurvey(self.sta, v.STA_INTF_2G, v.BSSID.lower(), self.__class__.__name__)
-            count += 1
-
-        if count >= 5:
-            self.fail(msg='specified wifi is no exist')
-
-        setIwpriv(self.sta, v.INTF_2G, 'Channel', result['channel'], self.__class__.__name__)
-        d = TestCommand(v.DUT_MODULE)
-        for staCommand in d.assoc_psk_sta_ssidspec_2g():
-            setConfig(self.sta, staCommand, self.__class__.__name__)
-
-        res2gIp = getIntfIpAddr(self.sta, v.STA_INTF_2G, self.__class__.__name__)
-        if res2gIp['ip'] == '':
-            self.fail(msg='no ip address got.')
-        else:
-            resPingPercent = getPingStatus(self.dut, res2gIp['ip'], v.PING_PERCENT_COUNT, self.__class__.__name__)
-            self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS)
-
-    def ping_psk_sta_ssidspec_5g(self):
-
-        ret, result = chkSiteSurvey(self.sta, v.STA_INTF_5G, v.BSSID_5G.lower(), self.__class__.__name__)
-
-        count = 0
-        while ret is False and count < 5:
-            ret, result = chkSiteSurvey(self.sta, v.STA_INTF_5G, v.BSSID_5G.lower(), self.__class__.__name__)
-            count += 1
-
-        if count >= 5:
-            self.fail(msg='specified wifi is no exist')
-
-        setIwpriv(self.sta, v.INTF_5G, 'Channel', result['channel'], self.__class__.__name__)
-        d = TestCommand(v.DUT_MODULE)
-        for staCommand in d.assoc_psk_sta_ssidspec_5g():
-            setConfig(self.sta, staCommand, self.__class__.__name__)
-
-        res5gIp = getIntfIpAddr(self.sta, v.STA_INTF_5G, self.__class__.__name__)
-        if res5gIp['ip'] == '':
-            self.fail(msg='no ip address got.')
-        else:
-            resPingPercent = getPingStatus(self.dut, res5gIp['ip'], v.PING_PERCENT_COUNT, self.__class__.__name__)
-            self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS)
-
-    def ping_tkippsk2_sta_ssidspec_2g(self):
-
-        ret, result = chkSiteSurvey(self.sta, v.STA_INTF_2G, v.BSSID.lower(), self.__class__.__name__)
-
-        count = 0
-        while ret is False and count < 5:
-            ret, result = chkSiteSurvey(self.sta, v.STA_INTF_2G, v.BSSID.lower(), self.__class__.__name__)
-            count += 1
-
-        if count >= 5:
-            self.fail(msg='specified wifi is no exist')
-
-        setIwpriv(self.sta, v.INTF_2G, 'Channel', result['channel'], self.__class__.__name__)
-        d = TestCommand(v.DUT_MODULE)
-        for staCommand in d.assoc_tkippsk2_sta_ssidspec_2g():
-            setConfig(self.sta, staCommand, self.__class__.__name__)
-
-        res2gIp = getIntfIpAddr(self.sta, v.STA_INTF_2G, self.__class__.__name__)
-        if res2gIp['ip'] == '':
-            self.fail(msg='no ip address got.')
-        else:
-            resPingPercent = getPingStatus(self.dut, res2gIp['ip'], v.PING_PERCENT_COUNT, self.__class__.__name__)
-            self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS)
-
-    def ping_tkippsk2_sta_ssidspec_5g(self):
-
-        ret, result = chkSiteSurvey(self.sta, v.STA_INTF_5G, v.BSSID_5G.lower(), self.__class__.__name__)
-
-        count = 0
-        while ret is False and count < 5:
-            ret, result = chkSiteSurvey(self.sta, v.STA_INTF_5G, v.BSSID_5G.lower(), self.__class__.__name__)
-            count += 1
-
-        if count >= 5:
-            self.fail(msg='specified wifi is no exist')
-
-        setIwpriv(self.sta, v.INTF_5G, 'Channel', result['channel'], self.__class__.__name__)
-        d = TestCommand(v.DUT_MODULE)
-        for staCommand in d.assoc_tkippsk2_sta_ssidspec_5g():
-            setConfig(self.sta, staCommand, self.__class__.__name__)
-
-        res5gIp = getIntfIpAddr(self.sta, v.STA_INTF_5G, self.__class__.__name__)
-        if res5gIp['ip'] == '':
-            self.fail(msg='no ip address got.')
-        else:
-            resPingPercent = getPingStatus(self.dut, res5gIp['ip'], v.PING_PERCENT_COUNT, self.__class__.__name__)
-            self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS)
-
-    def ping_tkippsk_sta_ssidspec_2g(self):
-
-        ret, result = chkSiteSurvey(self.sta, v.STA_INTF_2G, v.BSSID.lower(), self.__class__.__name__)
-
-        count = 0
-        while ret is False and count < 5:
-            ret, result = chkSiteSurvey(self.sta, v.STA_INTF_2G, v.BSSID.lower(), self.__class__.__name__)
-            count += 1
-
-        if count >= 5:
-            self.fail(msg='specified wifi is no exist')
-
-        setIwpriv(self.sta, v.INTF_2G, 'Channel', result['channel'], self.__class__.__name__)
-        d = TestCommand(v.DUT_MODULE)
-        for staCommand in d.assoc_tkippsk_sta_ssidspec_2g():
-            setConfig(self.sta, staCommand, self.__class__.__name__)
-
-        res2gIp = getIntfIpAddr(self.sta, v.STA_INTF_2G, self.__class__.__name__)
-        if res2gIp['ip'] == '':
-            self.fail(msg='no ip address got.')
-        else:
-            resPingPercent = getPingStatus(self.dut, res2gIp['ip'], v.PING_PERCENT_COUNT, self.__class__.__name__)
-            self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS)
-
-    def ping_tkippsk_sta_ssidspec_5g(self):
-
-        ret, result = chkSiteSurvey(self.sta, v.STA_INTF_5G, v.BSSID_5G.lower(), self.__class__.__name__)
-
-        count = 0
-        while ret is False and count < 5:
-            ret, result = chkSiteSurvey(self.sta, v.STA_INTF_5G, v.BSSID_5G.lower(), self.__class__.__name__)
-            count += 1
-
-        if count >= 5:
-            self.fail(msg='specified wifi is no exist')
-
-        setIwpriv(self.sta, v.INTF_5G, 'Channel', result['channel'], self.__class__.__name__)
-        d = TestCommand(v.DUT_MODULE)
-        for staCommand in d.assoc_tkippsk_sta_ssidspec_5g():
-            setConfig(self.sta, staCommand, self.__class__.__name__)
-
-        res5gIp = getIntfIpAddr(self.sta, v.STA_INTF_5G, self.__class__.__name__)
-        if res5gIp['ip'] == '':
-            self.fail(msg='no ip address got.')
-        else:
-            resPingPercent = getPingStatus(self.dut, res5gIp['ip'], v.PING_PERCENT_COUNT, self.__class__.__name__)
-            self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS)
 
 
 class AP_MIXEDPSK_CHAN_SSIDSPEC2(TestCase):
@@ -3258,7 +803,7 @@ class AP_MIXEDPSK_CHAN_SSIDSPEC2(TestCase):
         d = TestCommand(v.DUT_MODULE)
         for dutCommand in d.ap_mixedpsk_chan_ssidspec_set_up():
             setConfig(self.dut, dutCommand, self.__name__)
-
+        setWifiRestart(self.dut, self.__name__)
         self.device = getAdbDevices()
 
     @classmethod
@@ -3266,7 +811,7 @@ class AP_MIXEDPSK_CHAN_SSIDSPEC2(TestCase):
         d = TestCommand(v.DUT_MODULE)
         for dutCommand in d.ap_tear_down():
             setConfig(self.dut, dutCommand, self.__name__)
-
+        setWifiRestart(self.dut, self.__name__)
         self.dut.close()
 
     def assoc_psk2_sta_ssidspec_2g(self):
@@ -3379,408 +924,6 @@ class AP_MIXEDPSK_CHAN_SSIDSPEC2(TestCase):
             self.assertTrue(res5gConn, "Association wasnot successful.")
 
 
-class AP_MIXEDPSK_CHAN_KEYSPEC(TestCase):
-    @classmethod
-    def setUpClass(self):
-
-        self.dut = SshClient(v.CONNECTION_TYPE)
-        self.sta = SshClient(v.STA_CONNECTION_TYPE)
-
-        dutRet = self.dut.connect(v.HOST, v.USR, v.PASSWD)
-        staRet = self.sta.connect(v.STA_IP, v.STA_USR, v.STA_PASSWD)
-
-        if dutRet is False or staRet is False:
-            raise Exception('Connection is failed. please check your remote settings.')
-        d = TestCommand(v.DUT_MODULE)
-        for dutCommand in d.ap_mixedpsk_chan_keyspec_set_up():
-            setConfig(self.dut, dutCommand, self.__name__)
-
-        v.BSSID = getIntfHWAddr(self.dut, v.INTF_2G, self.__name__)
-        v.BSSID = v.BSSID['mac']
-        v.BSSID_5G = getIntfHWAddr(self.dut, v.INTF_5G, self.__name__)
-        v.BSSID_5G = v.BSSID_5G['mac']
-
-    @classmethod
-    def tearDownClass(self):
-        d = TestCommand(v.DUT_MODULE)
-        for staCommand in d.sta_tear_down():
-            setConfig(self.sta, staCommand, self.__name__)
-
-        for dutCommand in d.ap_tear_down():
-            setConfig(self.dut, dutCommand, self.__name__)
-
-        self.dut.close()
-        self.sta.close()
-
-    def assoc_psk2_sta_keyspec_2g(self):
-
-        ret, result = chkSiteSurvey(self.sta, v.STA_INTF_2G, v.BSSID.lower(), self.__class__.__name__)
-
-        count = 0
-        while ret is False and count < 5:
-            ret, result = chkSiteSurvey(self.sta, v.STA_INTF_2G, v.BSSID.lower(), self.__class__.__name__)
-            count += 1
-
-        if count >= 5:
-            self.fail(msg='specified wifi is no exist')
-
-        setIwpriv(self.sta, v.INTF_2G, 'Channel', result['channel'], self.__class__.__name__)
-        d = TestCommand(v.DUT_MODULE)
-        for staCommand in d.assoc_psk2_sta_keyspec_2g():
-            setConfig(self.sta, staCommand, self.__class__.__name__)
-
-        res2gConn = getApcli0Conn(self.sta, self.__class__.__name__)
-
-        self.assertEqual(res2gConn['ssid'], v.SSID)
-        self.assertEqual(res2gConn['bssid'], v.BSSID)
-
-    def assoc_psk2_sta_keyspec_5g(self):
-
-        ret, result = chkSiteSurvey(self.sta, v.STA_INTF_5G, v.BSSID_5G.lower(), self.__class__.__name__)
-
-        count = 0
-        while ret is False and count < 5:
-            ret, result = chkSiteSurvey(self.sta, v.STA_INTF_5G, v.BSSID_5G.lower(), self.__class__.__name__)
-            count += 1
-
-        if count >= 5:
-            self.fail(msg='specified wifi is no exist')
-
-        setIwpriv(self.sta, v.INTF_5G, 'Channel', result['channel'], self.__class__.__name__)
-        d = TestCommand(v.DUT_MODULE)
-        for staCommand in d.assoc_psk2_sta_keyspec_5g():
-            setConfig(self.sta, staCommand, self.__class__.__name__)
-
-        res5gConn = getApclii0Conn(self.sta, self.__class__.__name__)
-
-        self.assertEqual(res5gConn['ssid'], v.SSID_5G)
-        self.assertEqual(res5gConn['bssid'], v.BSSID_5G)
-
-    def assoc_psk_sta_keyspec_2g(self):
-
-        ret, result = chkSiteSurvey(self.sta, v.STA_INTF_2G, v.BSSID.lower(), self.__class__.__name__)
-
-        count = 0
-        while ret is False and count < 5:
-            ret, result = chkSiteSurvey(self.sta, v.STA_INTF_2G, v.BSSID.lower(), self.__class__.__name__)
-            count += 1
-
-        if count >= 5:
-            self.fail(msg='specified wifi is no exist')
-
-        setIwpriv(self.sta, v.INTF_2G, 'Channel', result['channel'], self.__class__.__name__)
-        d = TestCommand(v.DUT_MODULE)
-        for staCommand in d.assoc_psk_sta_keyspec_2g():
-            setConfig(self.sta, staCommand, self.__class__.__name__)
-
-        res2gConn = getApcli0Conn(self.sta, self.__class__.__name__)
-
-        self.assertEqual(res2gConn['ssid'], v.SSID)
-        self.assertEqual(res2gConn['bssid'], v.BSSID)
-
-    def assoc_psk_sta_keyspec_5g(self):
-
-        ret, result = chkSiteSurvey(self.sta, v.STA_INTF_5G, v.BSSID_5G.lower(), self.__class__.__name__)
-
-        count = 0
-        while ret is False and count < 5:
-            ret, result = chkSiteSurvey(self.sta, v.STA_INTF_5G, v.BSSID_5G.lower(), self.__class__.__name__)
-            count += 1
-
-        if count >= 5:
-            self.fail(msg='specified wifi is no exist')
-
-        setIwpriv(self.sta, v.INTF_5G, 'Channel', result['channel'], self.__class__.__name__)
-        d = TestCommand(v.DUT_MODULE)
-        for staCommand in d.assoc_psk_sta_keyspec_5g():
-            setConfig(self.sta, staCommand, self.__class__.__name__)
-
-        res5gConn = getApclii0Conn(self.sta, self.__class__.__name__)
-
-        self.assertEqual(res5gConn['ssid'], v.SSID_5G)
-        self.assertEqual(res5gConn['bssid'], v.BSSID_5G)
-
-    def assoc_tkippsk2_sta_keyspec_2g(self):
-
-        ret, result = chkSiteSurvey(self.sta, v.STA_INTF_2G, v.BSSID.lower(), self.__class__.__name__)
-
-        count = 0
-        while ret is False and count < 5:
-            ret, result = chkSiteSurvey(self.sta, v.STA_INTF_2G, v.BSSID.lower(), self.__class__.__name__)
-            count += 1
-
-        if count >= 5:
-            self.fail(msg='specified wifi is no exist')
-
-        setIwpriv(self.sta, v.INTF_2G, 'Channel', result['channel'], self.__class__.__name__)
-        d = TestCommand(v.DUT_MODULE)
-        for staCommand in d.assoc_tkippsk2_sta_keyspec_2g():
-            setConfig(self.sta, staCommand, self.__class__.__name__)
-
-        res2gConn = getApcli0Conn(self.sta, self.__class__.__name__)
-
-        self.assertEqual(res2gConn['ssid'], v.SSID)
-        self.assertEqual(res2gConn['bssid'], v.BSSID)
-
-    def assoc_tkippsk2_sta_keyspec_5g(self):
-
-        ret, result = chkSiteSurvey(self.sta, v.STA_INTF_5G, v.BSSID_5G.lower(), self.__class__.__name__)
-
-        count = 0
-        while ret is False and count < 5:
-            ret, result = chkSiteSurvey(self.sta, v.STA_INTF_5G, v.BSSID_5G.lower(), self.__class__.__name__)
-            count += 1
-
-        if count >= 5:
-            self.fail(msg='specified wifi is no exist')
-
-        setIwpriv(self.sta, v.INTF_5G, 'Channel', result['channel'], self.__class__.__name__)
-        d = TestCommand(v.DUT_MODULE)
-        for staCommand in d.assoc_tkippsk2_sta_keyspec_5g():
-            setConfig(self.sta, staCommand, self.__class__.__name__)
-
-        res5gConn = getApclii0Conn(self.sta, self.__class__.__name__)
-
-        self.assertEqual(res5gConn['ssid'], v.SSID_5G)
-        self.assertEqual(res5gConn['bssid'], v.BSSID_5G)
-
-    def assoc_tkippsk_sta_keyspec_2g(self):
-
-        ret, result = chkSiteSurvey(self.sta, v.STA_INTF_2G, v.BSSID.lower(), self.__class__.__name__)
-
-        count = 0
-        while ret is False and count < 5:
-            ret, result = chkSiteSurvey(self.sta, v.STA_INTF_2G, v.BSSID.lower(), self.__class__.__name__)
-            count += 1
-
-        if count >= 5:
-            self.fail(msg='specified wifi is no exist')
-
-        setIwpriv(self.sta, v.INTF_2G, 'Channel', result['channel'], self.__class__.__name__)
-        d = TestCommand(v.DUT_MODULE)
-        for staCommand in d.assoc_tkippsk_sta_keyspec_2g():
-            setConfig(self.sta, staCommand, self.__class__.__name__)
-
-        res2gConn = getApcli0Conn(self.sta, self.__class__.__name__)
-
-        self.assertEqual(res2gConn['ssid'], v.SSID)
-        self.assertEqual(res2gConn['bssid'], v.BSSID)
-
-    def assoc_tkippsk_sta_keyspec_5g(self):
-
-        ret, result = chkSiteSurvey(self.sta, v.STA_INTF_5G, v.BSSID_5G.lower(), self.__class__.__name__)
-
-        count = 0
-        while ret is False and count < 5:
-            ret, result = chkSiteSurvey(self.sta, v.STA_INTF_5G, v.BSSID_5G.lower(), self.__class__.__name__)
-            count += 1
-
-        if count >= 5:
-            self.fail(msg='specified wifi is no exist')
-
-        setIwpriv(self.sta, v.INTF_5G, 'Channel', result['channel'], self.__class__.__name__)
-        d = TestCommand(v.DUT_MODULE)
-        for staCommand in d.assoc_tkippsk_sta_keyspec_5g():
-            setConfig(self.sta, staCommand, self.__class__.__name__)
-
-        res5gConn = getApclii0Conn(self.sta, self.__class__.__name__)
-
-        self.assertEqual(res5gConn['ssid'], v.SSID_5G)
-        self.assertEqual(res5gConn['bssid'], v.BSSID_5G)
-
-    def ping_psk2_sta_keyspec_2g(self):
-
-        ret, result = chkSiteSurvey(self.sta, v.STA_INTF_2G, v.BSSID.lower(), self.__class__.__name__)
-
-        count = 0
-        while ret is False and count < 5:
-            ret, result = chkSiteSurvey(self.sta, v.STA_INTF_2G, v.BSSID.lower(), self.__class__.__name__)
-            count += 1
-
-        if count >= 5:
-            self.fail(msg='specified wifi is no exist')
-
-        setIwpriv(self.sta, v.INTF_2G, 'Channel', result['channel'], self.__class__.__name__)
-        d = TestCommand(v.DUT_MODULE)
-        for staCommand in d.assoc_psk2_sta_keyspec_2g():
-            setConfig(self.sta, staCommand, self.__class__.__name__)
-
-        res2gIp = getIntfIpAddr(self.sta, v.STA_INTF_2G, self.__class__.__name__)
-        if res2gIp['ip'] == '':
-            self.fail(msg='no ip address got.')
-        else:
-            resPingPercent = getPingStatus(self.dut, res2gIp['ip'], v.PING_PERCENT_COUNT, self.__class__.__name__)
-            self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS)
-
-    def ping_psk2_sta_keyspec_5g(self):
-
-        ret, result = chkSiteSurvey(self.sta, v.STA_INTF_5G, v.BSSID_5G.lower(), self.__class__.__name__)
-
-        count = 0
-        while ret is False and count < 5:
-            ret, result = chkSiteSurvey(self.sta, v.STA_INTF_5G, v.BSSID_5G.lower(), self.__class__.__name__)
-            count += 1
-
-        if count >= 5:
-            self.fail(msg='specified wifi is no exist')
-
-        setIwpriv(self.sta, v.INTF_5G, 'Channel', result['channel'], self.__class__.__name__)
-        d = TestCommand(v.DUT_MODULE)
-        for staCommand in d.assoc_psk2_sta_keyspec_5g():
-            setConfig(self.sta, staCommand, self.__class__.__name__)
-
-        res5gIp = getIntfIpAddr(self.sta, v.STA_INTF_5G, self.__class__.__name__)
-        if res5gIp['ip'] == '':
-            self.fail(msg='no ip address got.')
-        else:
-            resPingPercent = getPingStatus(self.dut, res5gIp['ip'], v.PING_PERCENT_COUNT, self.__class__.__name__)
-            self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS)
-
-    def ping_psk_sta_keyspec_2g(self):
-
-        ret, result = chkSiteSurvey(self.sta, v.STA_INTF_2G, v.BSSID.lower(), self.__class__.__name__)
-
-        count = 0
-        while ret is False and count < 5:
-            ret, result = chkSiteSurvey(self.sta, v.STA_INTF_2G, v.BSSID.lower(), self.__class__.__name__)
-            count += 1
-
-        if count >= 5:
-            self.fail(msg='specified wifi is no exist')
-
-        setIwpriv(self.sta, v.INTF_2G, 'Channel', result['channel'], self.__class__.__name__)
-        d = TestCommand(v.DUT_MODULE)
-        for staCommand in d.assoc_psk_sta_keyspec_2g():
-            setConfig(self.sta, staCommand, self.__class__.__name__)
-
-        res2gIp = getIntfIpAddr(self.sta, v.STA_INTF_2G, self.__class__.__name__)
-        if res2gIp['ip'] == '':
-            self.fail(msg='no ip address got.')
-        else:
-            resPingPercent = getPingStatus(self.dut, res2gIp['ip'], v.PING_PERCENT_COUNT, self.__class__.__name__)
-            self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS)
-
-    def ping_psk_sta_keyspec_5g(self):
-
-        ret, result = chkSiteSurvey(self.sta, v.STA_INTF_5G, v.BSSID_5G.lower(), self.__class__.__name__)
-
-        count = 0
-        while ret is False and count < 5:
-            ret, result = chkSiteSurvey(self.sta, v.STA_INTF_5G, v.BSSID_5G.lower(), self.__class__.__name__)
-            count += 1
-
-        if count >= 5:
-            self.fail(msg='specified wifi is no exist')
-
-        setIwpriv(self.sta, v.INTF_5G, 'Channel', result['channel'], self.__class__.__name__)
-        d = TestCommand(v.DUT_MODULE)
-        for staCommand in d.assoc_psk_sta_keyspec_5g():
-            setConfig(self.sta, staCommand, self.__class__.__name__)
-
-        res5gIp = getIntfIpAddr(self.sta, v.STA_INTF_5G, self.__class__.__name__)
-        if res5gIp['ip'] == '':
-            self.fail(msg='no ip address got.')
-        else:
-            resPingPercent = getPingStatus(self.dut, res5gIp['ip'], v.PING_PERCENT_COUNT, self.__class__.__name__)
-            self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS)
-
-    def ping_tkippsk2_sta_keyspec_2g(self):
-
-        ret, result = chkSiteSurvey(self.sta, v.STA_INTF_2G, v.BSSID.lower(), self.__class__.__name__)
-
-        count = 0
-        while ret is False and count < 5:
-            ret, result = chkSiteSurvey(self.sta, v.STA_INTF_2G, v.BSSID.lower(), self.__class__.__name__)
-            count += 1
-
-        if count >= 5:
-            self.fail(msg='specified wifi is no exist')
-
-        setIwpriv(self.sta, v.INTF_2G, 'Channel', result['channel'], self.__class__.__name__)
-        d = TestCommand(v.DUT_MODULE)
-        for staCommand in d.assoc_tkippsk2_sta_keyspec_2g():
-            setConfig(self.sta, staCommand, self.__class__.__name__)
-
-        res2gIp = getIntfIpAddr(self.sta, v.STA_INTF_2G, self.__class__.__name__)
-        if res2gIp['ip'] == '':
-            self.fail(msg='no ip address got.')
-        else:
-            resPingPercent = getPingStatus(self.dut, res2gIp['ip'], v.PING_PERCENT_COUNT, self.__class__.__name__)
-            self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS)
-
-    def ping_tkippsk2_sta_keyspec_5g(self):
-
-        ret, result = chkSiteSurvey(self.sta, v.STA_INTF_5G, v.BSSID_5G.lower(), self.__class__.__name__)
-
-        count = 0
-        while ret is False and count < 5:
-            ret, result = chkSiteSurvey(self.sta, v.STA_INTF_5G, v.BSSID_5G.lower(), self.__class__.__name__)
-            count += 1
-
-        if count >= 5:
-            self.fail(msg='specified wifi is no exist')
-
-        setIwpriv(self.sta, v.INTF_5G, 'Channel', result['channel'], self.__class__.__name__)
-        d = TestCommand(v.DUT_MODULE)
-        for staCommand in d.assoc_tkippsk2_sta_keyspec_5g():
-            setConfig(self.sta, staCommand, self.__class__.__name__)
-
-        res5gIp = getIntfIpAddr(self.sta, v.STA_INTF_5G, self.__class__.__name__)
-        if res5gIp['ip'] == '':
-            self.fail(msg='no ip address got.')
-        else:
-            resPingPercent = getPingStatus(self.dut, res5gIp['ip'], v.PING_PERCENT_COUNT, self.__class__.__name__)
-            self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS)
-
-    def ping_tkippsk_sta_keyspec_2g(self):
-
-        ret, result = chkSiteSurvey(self.sta, v.STA_INTF_2G, v.BSSID.lower(), self.__class__.__name__)
-
-        count = 0
-        while ret is False and count < 5:
-            ret, result = chkSiteSurvey(self.sta, v.STA_INTF_2G, v.BSSID.lower(), self.__class__.__name__)
-            count += 1
-
-        if count >= 5:
-            self.fail(msg='specified wifi is no exist')
-
-        setIwpriv(self.sta, v.INTF_2G, 'Channel', result['channel'], self.__class__.__name__)
-        d = TestCommand(v.DUT_MODULE)
-        for staCommand in d.assoc_tkippsk_sta_keyspec_2g():
-            setConfig(self.sta, staCommand, self.__class__.__name__)
-
-        res2gIp = getIntfIpAddr(self.sta, v.STA_INTF_2G, self.__class__.__name__)
-        if res2gIp['ip'] == '':
-            self.fail(msg='no ip address got.')
-        else:
-            resPingPercent = getPingStatus(self.dut, res2gIp['ip'], v.PING_PERCENT_COUNT, self.__class__.__name__)
-            self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS)
-
-    def ping_tkippsk_sta_keyspec_5g(self):
-
-        ret, result = chkSiteSurvey(self.sta, v.STA_INTF_5G, v.BSSID_5G.lower(), self.__class__.__name__)
-
-        count = 0
-        while ret is False and count < 5:
-            ret, result = chkSiteSurvey(self.sta, v.STA_INTF_5G, v.BSSID_5G.lower(), self.__class__.__name__)
-            count += 1
-
-        if count >= 5:
-            self.fail(msg='specified wifi is no exist')
-
-        setIwpriv(self.sta, v.INTF_5G, 'Channel', result['channel'], self.__class__.__name__)
-        d = TestCommand(v.DUT_MODULE)
-        for staCommand in d.assoc_tkippsk_sta_keyspec_5g():
-            setConfig(self.sta, staCommand, self.__class__.__name__)
-
-        res5gIp = getIntfIpAddr(self.sta, v.STA_INTF_5G, self.__class__.__name__)
-        if res5gIp['ip'] == '':
-            self.fail(msg='no ip address got.')
-        else:
-            resPingPercent = getPingStatus(self.dut, res5gIp['ip'], v.PING_PERCENT_COUNT, self.__class__.__name__)
-            self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS)
-
-
 class AP_MIXEDPSK_CHAN_KEYSPEC2(TestCase):
     @classmethod
     def setUpClass(self):
@@ -3798,7 +941,7 @@ class AP_MIXEDPSK_CHAN_KEYSPEC2(TestCase):
         d = TestCommand(v.DUT_MODULE)
         for dutCommand in d.ap_mixedpsk_chan_keyspec_set_up():
             setConfig(self.dut, dutCommand, self.__name__)
-
+        setWifiRestart(self.dut, self.__name__)
         self.device = getAdbDevices()
 
     @classmethod
@@ -3806,7 +949,7 @@ class AP_MIXEDPSK_CHAN_KEYSPEC2(TestCase):
         d = TestCommand(v.DUT_MODULE)
         for dutCommand in d.ap_tear_down():
             setConfig(self.dut, dutCommand, self.__name__)
-
+        setWifiRestart(self.dut, self.__name__)
         self.dut.close()
 
     def assoc_psk2_sta_keyspec_2g(self):
@@ -3922,408 +1065,6 @@ class AP_MIXEDPSK_CHAN_KEYSPEC2(TestCase):
             self.assertTrue(res2gConn, "Association wasnot successful.")
 
 
-class AP_MIXEDPSK_CHAN_SSIDCHINESE(TestCase):
-    @classmethod
-    def setUpClass(self):
-
-        self.dut = SshClient(v.CONNECTION_TYPE)
-        self.sta = SshClient(v.STA_CONNECTION_TYPE)
-
-        dutRet = self.dut.connect(v.HOST, v.USR, v.PASSWD)
-        staRet = self.sta.connect(v.STA_IP, v.STA_USR, v.STA_PASSWD)
-
-        if dutRet is False or staRet is False:
-            raise Exception('Connection is failed. please check your remote settings.')
-        d = TestCommand(v.DUT_MODULE)
-        for dutCommand in d.ap_mixedpsk_chan_ssidchinese_set_up():
-            setConfig(self.dut, dutCommand, self.__name__)
-
-        v.BSSID = getIntfHWAddr(self.dut, v.INTF_2G, self.__name__)
-        v.BSSID = v.BSSID['mac']
-        v.BSSID_5G = getIntfHWAddr(self.dut, v.INTF_5G, self.__name__)
-        v.BSSID_5G = v.BSSID_5G['mac']
-
-    @classmethod
-    def tearDownClass(self):
-        d = TestCommand(v.DUT_MODULE)
-        for staCommand in d.sta_tear_down():
-            setConfig(self.sta, staCommand, self.__name__)
-
-        for dutCommand in d.ap_tear_down():
-            setConfig(self.dut, dutCommand, self.__name__)
-
-        self.dut.close()
-        self.sta.close()
-
-    def assoc_psk2_sta_ssidchinese_2g(self):
-
-        ret, result = chkSiteSurvey(self.sta, v.STA_INTF_2G, v.BSSID.lower(), self.__class__.__name__)
-
-        count = 0
-        while ret is False and count < 5:
-            ret, result = chkSiteSurvey(self.sta, v.STA_INTF_2G, v.BSSID.lower(), self.__class__.__name__)
-            count += 1
-
-        if count >= 5:
-            self.fail(msg='specified wifi is no exist')
-
-        setIwpriv(self.sta, v.INTF_2G, 'Channel', result['channel'], self.__class__.__name__)
-        d = TestCommand(v.DUT_MODULE)
-        for staCommand in d.assoc_psk2_sta_ssidchinese_2g():
-            setConfig(self.sta, staCommand, self.__class__.__name__)
-
-        res2gConn = getApcli0Conn(self.sta, self.__class__.__name__)
-
-        self.assertEqual(res2gConn['ssid'], v.CHINESE_SSID.decode('GB2312').encode('utf-8'))
-        self.assertEqual(res2gConn['bssid'], v.BSSID)
-
-    def assoc_psk2_sta_ssidchinese_5g(self):
-
-        ret, result = chkSiteSurvey(self.sta, v.STA_INTF_5G, v.BSSID_5G.lower(), self.__class__.__name__)
-
-        count = 0
-        while ret is False and count < 5:
-            ret, result = chkSiteSurvey(self.sta, v.STA_INTF_5G, v.BSSID_5G.lower(), self.__class__.__name__)
-            count += 1
-
-        if count >= 5:
-            self.fail(msg='specified wifi is no exist')
-
-        setIwpriv(self.sta, v.INTF_5G, 'Channel', result['channel'], self.__class__.__name__)
-        d = TestCommand(v.DUT_MODULE)
-        for staCommand in d.assoc_psk2_sta_ssidchinese_5g():
-            setConfig(self.sta, staCommand, self.__class__.__name__)
-
-        res5gConn = getApclii0Conn(self.sta, self.__class__.__name__)
-
-        self.assertEqual(res5gConn['ssid'], v.CHINESE_SSID_5G.decode('GB2312').encode('utf-8'))
-        self.assertEqual(res5gConn['bssid'], v.BSSID_5G)
-
-    def assoc_psk_sta_ssidchinese_2g(self):
-
-        ret, result = chkSiteSurvey(self.sta, v.STA_INTF_2G, v.BSSID.lower(), self.__class__.__name__)
-
-        count = 0
-        while ret is False and count < 5:
-            ret, result = chkSiteSurvey(self.sta, v.STA_INTF_2G, v.BSSID.lower(), self.__class__.__name__)
-            count += 1
-
-        if count >= 5:
-            self.fail(msg='specified wifi is no exist')
-
-        setIwpriv(self.sta, v.INTF_2G, 'Channel', result['channel'], self.__class__.__name__)
-        d = TestCommand(v.DUT_MODULE)
-        for staCommand in d.assoc_psk_sta_ssidchinese_2g():
-            setConfig(self.sta, staCommand, self.__class__.__name__)
-
-        res2gConn = getApcli0Conn(self.sta, self.__class__.__name__)
-
-        self.assertEqual(res2gConn['ssid'], v.CHINESE_SSID.decode('GB2312').encode('utf-8'))
-        self.assertEqual(res2gConn['bssid'], v.BSSID)
-
-    def assoc_psk_sta_ssidchinese_5g(self):
-
-        ret, result = chkSiteSurvey(self.sta, v.STA_INTF_5G, v.BSSID_5G.lower(), self.__class__.__name__)
-
-        count = 0
-        while ret is False and count < 5:
-            ret, result = chkSiteSurvey(self.sta, v.STA_INTF_5G, v.BSSID_5G.lower(), self.__class__.__name__)
-            count += 1
-
-        if count >= 5:
-            self.fail(msg='specified wifi is no exist')
-
-        setIwpriv(self.sta, v.INTF_5G, 'Channel', result['channel'], self.__class__.__name__)
-        d = TestCommand(v.DUT_MODULE)
-        for staCommand in d.assoc_psk_sta_ssidchinese_5g():
-            setConfig(self.sta, staCommand, self.__class__.__name__)
-
-        res5gConn = getApclii0Conn(self.sta, self.__class__.__name__)
-
-        self.assertEqual(res5gConn['ssid'], v.CHINESE_SSID_5G.decode('GB2312').encode('utf-8'))
-        self.assertEqual(res5gConn['bssid'], v.BSSID_5G)
-
-    def assoc_tkippsk2_sta_ssidchinese_2g(self):
-
-        ret, result = chkSiteSurvey(self.sta, v.STA_INTF_2G, v.BSSID.lower(), self.__class__.__name__)
-
-        count = 0
-        while ret is False and count < 5:
-            ret, result = chkSiteSurvey(self.sta, v.STA_INTF_2G, v.BSSID.lower(), self.__class__.__name__)
-            count += 1
-
-        if count >= 5:
-            self.fail(msg='specified wifi is no exist')
-
-        setIwpriv(self.sta, v.INTF_2G, 'Channel', result['channel'], self.__class__.__name__)
-        d = TestCommand(v.DUT_MODULE)
-        for staCommand in d.assoc_tkippsk2_sta_ssidchinese_2g():
-            setConfig(self.sta, staCommand, self.__class__.__name__)
-
-        res2gConn = getApcli0Conn(self.sta, self.__class__.__name__)
-
-        self.assertEqual(res2gConn['ssid'], v.CHINESE_SSID.decode('GB2312').encode('utf-8'))
-        self.assertEqual(res2gConn['bssid'], v.BSSID)
-
-    def assoc_tkippsk2_sta_ssidchinese_5g(self):
-
-        ret, result = chkSiteSurvey(self.sta, v.STA_INTF_5G, v.BSSID_5G.lower(), self.__class__.__name__)
-
-        count = 0
-        while ret is False and count < 5:
-            ret, result = chkSiteSurvey(self.sta, v.STA_INTF_5G, v.BSSID_5G.lower(), self.__class__.__name__)
-            count += 1
-
-        if count >= 5:
-            self.fail(msg='specified wifi is no exist')
-
-        setIwpriv(self.sta, v.INTF_5G, 'Channel', result['channel'], self.__class__.__name__)
-        d = TestCommand(v.DUT_MODULE)
-        for staCommand in d.assoc_tkippsk2_sta_ssidchinese_5g():
-            setConfig(self.sta, staCommand, self.__class__.__name__)
-
-        res5gConn = getApclii0Conn(self.sta, self.__class__.__name__)
-
-        self.assertEqual(res5gConn['ssid'], v.CHINESE_SSID_5G.decode('GB2312').encode('utf-8'))
-        self.assertEqual(res5gConn['bssid'], v.BSSID_5G)
-
-    def assoc_tkippsk_sta_ssidchinese_2g(self):
-
-        ret, result = chkSiteSurvey(self.sta, v.STA_INTF_2G, v.BSSID.lower(), self.__class__.__name__)
-
-        count = 0
-        while ret is False and count < 5:
-            ret, result = chkSiteSurvey(self.sta, v.STA_INTF_2G, v.BSSID.lower(), self.__class__.__name__)
-            count += 1
-
-        if count >= 5:
-            self.fail(msg='specified wifi is no exist')
-
-        setIwpriv(self.sta, v.INTF_2G, 'Channel', result['channel'], self.__class__.__name__)
-        d = TestCommand(v.DUT_MODULE)
-        for staCommand in d.assoc_tkippsk_sta_ssidchinese_2g():
-            setConfig(self.sta, staCommand, self.__class__.__name__)
-
-        res2gConn = getApcli0Conn(self.sta, self.__class__.__name__)
-
-        self.assertEqual(res2gConn['ssid'], v.CHINESE_SSID.decode('GB2312').encode('utf-8'))
-        self.assertEqual(res2gConn['bssid'], v.BSSID)
-
-    def assoc_tkippsk_sta_ssidchinese_5g(self):
-
-        ret, result = chkSiteSurvey(self.sta, v.STA_INTF_5G, v.BSSID_5G.lower(), self.__class__.__name__)
-
-        count = 0
-        while ret is False and count < 5:
-            ret, result = chkSiteSurvey(self.sta, v.STA_INTF_5G, v.BSSID_5G.lower(), self.__class__.__name__)
-            count += 1
-
-        if count >= 5:
-            self.fail(msg='specified wifi is no exist')
-
-        setIwpriv(self.sta, v.INTF_5G, 'Channel', result['channel'], self.__class__.__name__)
-        d = TestCommand(v.DUT_MODULE)
-        for staCommand in d.assoc_tkippsk_sta_ssidchinese_5g():
-            setConfig(self.sta, staCommand, self.__class__.__name__)
-
-        res5gConn = getApclii0Conn(self.sta, self.__class__.__name__)
-
-        self.assertEqual(res5gConn['ssid'], v.CHINESE_SSID_5G.decode('GB2312').encode('utf-8'))
-        self.assertEqual(res5gConn['bssid'], v.BSSID_5G)
-
-    def ping_psk2_sta_ssidchinese_2g(self):
-
-        ret, result = chkSiteSurvey(self.sta, v.STA_INTF_2G, v.BSSID.lower(), self.__class__.__name__)
-
-        count = 0
-        while ret is False and count < 5:
-            ret, result = chkSiteSurvey(self.sta, v.STA_INTF_2G, v.BSSID.lower(), self.__class__.__name__)
-            count += 1
-
-        if count >= 5:
-            self.fail(msg='specified wifi is no exist')
-
-        setIwpriv(self.sta, v.INTF_2G, 'Channel', result['channel'], self.__class__.__name__)
-        d = TestCommand(v.DUT_MODULE)
-        for staCommand in d.assoc_psk2_sta_ssidchinese_2g():
-            setConfig(self.sta, staCommand, self.__class__.__name__)
-
-        res2gIp = getIntfIpAddr(self.sta, v.STA_INTF_2G, self.__class__.__name__)
-        if res2gIp['ip'] == '':
-            self.fail(msg='no ip address got.')
-        else:
-            resPingPercent = getPingStatus(self.dut, res2gIp['ip'], v.PING_PERCENT_COUNT, self.__class__.__name__)
-            self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS)
-
-    def ping_psk2_sta_ssidchinese_5g(self):
-
-        ret, result = chkSiteSurvey(self.sta, v.STA_INTF_5G, v.BSSID_5G.lower(), self.__class__.__name__)
-
-        count = 0
-        while ret is False and count < 5:
-            ret, result = chkSiteSurvey(self.sta, v.STA_INTF_5G, v.BSSID_5G.lower(), self.__class__.__name__)
-            count += 1
-
-        if count >= 5:
-            self.fail(msg='specified wifi is no exist')
-
-        setIwpriv(self.sta, v.INTF_5G, 'Channel', result['channel'], self.__class__.__name__)
-        d = TestCommand(v.DUT_MODULE)
-        for staCommand in d.assoc_psk2_sta_ssidchinese_5g():
-            setConfig(self.sta, staCommand, self.__class__.__name__)
-
-        res5gIp = getIntfIpAddr(self.sta, v.STA_INTF_5G, self.__class__.__name__)
-        if res5gIp['ip'] == '':
-            self.fail(msg='no ip address got.')
-        else:
-            resPingPercent = getPingStatus(self.dut, res5gIp['ip'], v.PING_PERCENT_COUNT, self.__class__.__name__)
-            self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS)
-
-    def ping_psk_sta_ssidchinese_2g(self):
-
-        ret, result = chkSiteSurvey(self.sta, v.STA_INTF_2G, v.BSSID.lower(), self.__class__.__name__)
-
-        count = 0
-        while ret is False and count < 5:
-            ret, result = chkSiteSurvey(self.sta, v.STA_INTF_2G, v.BSSID.lower(), self.__class__.__name__)
-            count += 1
-
-        if count >= 5:
-            self.fail(msg='specified wifi is no exist')
-
-        setIwpriv(self.sta, v.INTF_2G, 'Channel', result['channel'], self.__class__.__name__)
-        d = TestCommand(v.DUT_MODULE)
-        for staCommand in d.assoc_psk_sta_ssidchinese_2g():
-            setConfig(self.sta, staCommand, self.__class__.__name__)
-
-        res2gIp = getIntfIpAddr(self.sta, v.STA_INTF_2G, self.__class__.__name__)
-        if res2gIp['ip'] == '':
-            self.fail(msg='no ip address got.')
-        else:
-            resPingPercent = getPingStatus(self.dut, res2gIp['ip'], v.PING_PERCENT_COUNT, self.__class__.__name__)
-            self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS)
-
-    def ping_psk_sta_ssidchinese_5g(self):
-
-        ret, result = chkSiteSurvey(self.sta, v.STA_INTF_5G, v.BSSID_5G.lower(), self.__class__.__name__)
-
-        count = 0
-        while ret is False and count < 5:
-            ret, result = chkSiteSurvey(self.sta, v.STA_INTF_5G, v.BSSID_5G.lower(), self.__class__.__name__)
-            count += 1
-
-        if count >= 5:
-            self.fail(msg='specified wifi is no exist')
-
-        setIwpriv(self.sta, v.INTF_5G, 'Channel', result['channel'], self.__class__.__name__)
-        d = TestCommand(v.DUT_MODULE)
-        for staCommand in d.assoc_psk_sta_ssidchinese_5g():
-            setConfig(self.sta, staCommand, self.__class__.__name__)
-
-        res5gIp = getIntfIpAddr(self.sta, v.STA_INTF_5G, self.__class__.__name__)
-        if res5gIp['ip'] == '':
-            self.fail(msg='no ip address got.')
-        else:
-            resPingPercent = getPingStatus(self.dut, res5gIp['ip'], v.PING_PERCENT_COUNT, self.__class__.__name__)
-            self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS)
-
-    def ping_tkippsk2_sta_ssidchinese_2g(self):
-
-        ret, result = chkSiteSurvey(self.sta, v.STA_INTF_2G, v.BSSID.lower(), self.__class__.__name__)
-
-        count = 0
-        while ret is False and count < 5:
-            ret, result = chkSiteSurvey(self.sta, v.STA_INTF_2G, v.BSSID.lower(), self.__class__.__name__)
-            count += 1
-
-        if count >= 5:
-            self.fail(msg='specified wifi is no exist')
-
-        setIwpriv(self.sta, v.INTF_2G, 'Channel', result['channel'], self.__class__.__name__)
-        d = TestCommand(v.DUT_MODULE)
-        for staCommand in d.assoc_tkippsk2_sta_ssidchinese_2g():
-            setConfig(self.sta, staCommand, self.__class__.__name__)
-
-        res2gIp = getIntfIpAddr(self.sta, v.STA_INTF_2G, self.__class__.__name__)
-        if res2gIp['ip'] == '':
-            self.fail(msg='no ip address got.')
-        else:
-            resPingPercent = getPingStatus(self.dut, res2gIp['ip'], v.PING_PERCENT_COUNT, self.__class__.__name__)
-            self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS)
-
-    def ping_tkippsk2_sta_ssidchinese_5g(self):
-
-        ret, result = chkSiteSurvey(self.sta, v.STA_INTF_5G, v.BSSID_5G.lower(), self.__class__.__name__)
-
-        count = 0
-        while ret is False and count < 5:
-            ret, result = chkSiteSurvey(self.sta, v.STA_INTF_5G, v.BSSID_5G.lower(), self.__class__.__name__)
-            count += 1
-
-        if count >= 5:
-            self.fail(msg='specified wifi is no exist')
-
-        setIwpriv(self.sta, v.INTF_5G, 'Channel', result['channel'], self.__class__.__name__)
-        d = TestCommand(v.DUT_MODULE)
-        for staCommand in d.assoc_tkippsk2_sta_ssidchinese_5g():
-            setConfig(self.sta, staCommand, self.__class__.__name__)
-
-        res5gIp = getIntfIpAddr(self.sta, v.STA_INTF_5G, self.__class__.__name__)
-        if res5gIp['ip'] == '':
-            self.fail(msg='no ip address got.')
-        else:
-            resPingPercent = getPingStatus(self.dut, res5gIp['ip'], v.PING_PERCENT_COUNT, self.__class__.__name__)
-            self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS)
-
-    def ping_tkippsk_sta_ssidchinese_2g(self):
-
-        ret, result = chkSiteSurvey(self.sta, v.STA_INTF_2G, v.BSSID.lower(), self.__class__.__name__)
-
-        count = 0
-        while ret is False and count < 5:
-            ret, result = chkSiteSurvey(self.sta, v.STA_INTF_2G, v.BSSID.lower(), self.__class__.__name__)
-            count += 1
-
-        if count >= 5:
-            self.fail(msg='specified wifi is no exist')
-
-        setIwpriv(self.sta, v.INTF_2G, 'Channel', result['channel'], self.__class__.__name__)
-        d = TestCommand(v.DUT_MODULE)
-        for staCommand in d.assoc_tkippsk_sta_ssidchinese_2g():
-            setConfig(self.sta, staCommand, self.__class__.__name__)
-
-        res2gIp = getIntfIpAddr(self.sta, v.STA_INTF_2G, self.__class__.__name__)
-        if res2gIp['ip'] == '':
-            self.fail(msg='no ip address got.')
-        else:
-            resPingPercent = getPingStatus(self.dut, res2gIp['ip'], v.PING_PERCENT_COUNT, self.__class__.__name__)
-            self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS)
-
-    def ping_tkippsk_sta_ssidchinese_5g(self):
-
-        ret, result = chkSiteSurvey(self.sta, v.STA_INTF_5G, v.BSSID_5G.lower(), self.__class__.__name__)
-
-        count = 0
-        while ret is False and count < 5:
-            ret, result = chkSiteSurvey(self.sta, v.STA_INTF_5G, v.BSSID_5G.lower(), self.__class__.__name__)
-            count += 1
-
-        if count >= 5:
-            self.fail(msg='specified wifi is no exist')
-
-        setIwpriv(self.sta, v.INTF_5G, 'Channel', result['channel'], self.__class__.__name__)
-        d = TestCommand(v.DUT_MODULE)
-        for staCommand in d.assoc_tkippsk_sta_ssidchinese_5g():
-            setConfig(self.sta, staCommand, self.__class__.__name__)
-
-        res5gIp = getIntfIpAddr(self.sta, v.STA_INTF_5G, self.__class__.__name__)
-        if res5gIp['ip'] == '':
-            self.fail(msg='no ip address got.')
-        else:
-            resPingPercent = getPingStatus(self.dut, res5gIp['ip'], v.PING_PERCENT_COUNT, self.__class__.__name__)
-            self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS)
-
-
 class AP_MIXEDPSK_CHAN_SSIDCHINESE2(TestCase):
     @classmethod
     def setUpClass(self):
@@ -4341,7 +1082,7 @@ class AP_MIXEDPSK_CHAN_SSIDCHINESE2(TestCase):
         d = TestCommand(v.DUT_MODULE)
         for dutCommand in d.ap_mixedpsk_chan_ssidchinese_set_up():
             setConfig(self.dut, dutCommand, self.__name__)
-
+        setWifiRestart(self.dut, self.__name__)
         self.device = getAdbDevices()
 
     @classmethod
@@ -4349,7 +1090,7 @@ class AP_MIXEDPSK_CHAN_SSIDCHINESE2(TestCase):
         d = TestCommand(v.DUT_MODULE)
         for dutCommand in d.ap_tear_down():
             setConfig(self.dut, dutCommand, self.__name__)
-
+        setWifiRestart(self.dut, self.__name__)
         self.dut.close()
 
     def assoc_psk2_sta_ssidchinese_2g(self):
@@ -4462,133 +1203,6 @@ class AP_MIXEDPSK_CHAN_SSIDCHINESE2(TestCase):
             self.assertTrue(res5gConn, "Association wasnot successful.")
 
 
-class AP_CLEAR_LOW(TestCase):
-    @classmethod
-    def setUpClass(self):
-
-        self.dut = SshClient(v.CONNECTION_TYPE)
-        ret1 = self.dut.connect(v.HOST, v.USR, v.PASSWD)
-        # exception deal
-        self.sta = SshClient(v.STA_CONNECTION_TYPE)
-        ret2 = self.sta.connect(v.STA_IP, v.STA_USR, v.STA_PASSWD)
-        # exception deal
-
-        if ret1 is False or ret2 is False:
-            raise Exception('Connection is failed. please check your remote settings.')
-        d = TestCommand(v.DUT_MODULE)
-        for dutCommand in d.ap_clear_low_set_up():
-            setConfig(self.dut, dutCommand, self.__name__)
-
-        v.BSSID = getIntfHWAddr(self.dut, v.INTF_2G, self.__name__)
-        v.BSSID = v.BSSID['mac']
-        v.BSSID_5G = getIntfHWAddr(self.dut, v.INTF_5G, self.__name__)
-        v.BSSID_5G = v.BSSID_5G['mac']
-
-    @classmethod
-    def tearDownClass(self):
-        d = TestCommand(v.DUT_MODULE)
-        for staCommand in d.sta_tear_down():
-            setConfig(self.sta, staCommand, self.__name__)
-
-        for dutCommand in d.ap_tear_down():
-            setConfig(self.dut, dutCommand, self.__name__)
-
-        self.dut.close()
-        self.sta.close()
-
-    def assoc_clear_sta_2g(self):
-
-        ret, result = chkSiteSurvey(self.sta, v.STA_INTF_2G, v.BSSID.lower(), self.__class__.__name__)
-
-        count = 0
-        while ret is False and count < 5:
-            ret, result = chkSiteSurvey(self.sta, v.STA_INTF_2G, v.BSSID.lower(), self.__class__.__name__)
-            count += 1
-
-        if count >= 5:
-            self.fail(msg='specified wifi is no exist')
-
-        setIwpriv(self.sta, v.INTF_2G, 'Channel', result['channel'], self.__class__.__name__)
-        d = TestCommand(v.DUT_MODULE)
-        for staCommand in d.assoc_clear_sta_2g():
-            setConfig(self.sta, staCommand, self.__class__.__name__)
-
-        res2gConn = getApcli0Conn(self.sta, self.__class__.__name__)
-
-        self.assertEqual(res2gConn['ssid'], v.SSID)
-        self.assertEqual(res2gConn['bssid'], v.BSSID)
-
-    def assoc_clear_sta_5g(self):
-
-        ret, result = chkSiteSurvey(self.sta, v.STA_INTF_5G, v.BSSID_5G.lower(), self.__class__.__name__)
-
-        count = 0
-        while ret is False and count < 5:
-            ret, result = chkSiteSurvey(self.sta, v.STA_INTF_5G, v.BSSID_5G.lower(), self.__class__.__name__)
-            count += 1
-
-        if count >= 5:
-            self.fail(msg='specified wifi is no exist')
-
-        setIwpriv(self.sta, v.INTF_5G, 'Channel', result['channel'], self.__class__.__name__)
-        d = TestCommand(v.DUT_MODULE)
-        for staCommand in d.assoc_clear_sta_5g():
-            setConfig(self.sta, staCommand, self.__class__.__name__)
-
-        res5gConn = getApclii0Conn(self.sta, self.__class__.__name__)
-
-        self.assertEqual(res5gConn['ssid'], v.SSID_5G)
-        self.assertEqual(res5gConn['bssid'], v.BSSID_5G)
-
-    def ping_clear_sta_2g(self):
-
-        ret, result = chkSiteSurvey(self.sta, v.STA_INTF_2G, v.BSSID.lower(), self.__class__.__name__)
-
-        count = 0
-        while ret is False and count < 5:
-            ret, result = chkSiteSurvey(self.sta, v.STA_INTF_2G, v.BSSID.lower(), self.__class__.__name__)
-            count += 1
-
-        if count >= 5:
-            self.fail(msg='specified wifi is no exist')
-
-        setIwpriv(self.sta, v.INTF_2G, 'Channel', result['channel'], self.__class__.__name__)
-        d = TestCommand(v.DUT_MODULE)
-        for staCommand in d.assoc_clear_sta_2g():
-            setConfig(self.sta, staCommand, self.__class__.__name__)
-
-        res2gIp = getIntfIpAddr(self.sta, v.STA_INTF_2G, self.__class__.__name__)
-        if res2gIp['ip'] == '':
-            self.fail(msg='no ip address got.')
-        else:
-            resPingPercent = getPingStatus(self.dut, res2gIp['ip'], v.PING_PERCENT_COUNT, self.__class__.__name__)
-            self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS)
-
-    def ping_clear_sta_5g(self):
-
-        ret, result = chkSiteSurvey(self.sta, v.STA_INTF_5G, v.BSSID_5G.lower(), self.__class__.__name__)
-
-        count = 0
-        while ret is False and count < 5:
-            ret, result = chkSiteSurvey(self.sta, v.STA_INTF_5G, v.BSSID_5G.lower(), self.__class__.__name__)
-            count += 1
-
-        if count >= 5:
-            self.fail(msg='specified wifi is no exist')
-
-        setIwpriv(self.sta, v.INTF_5G, 'Channel', result['channel'], self.__class__.__name__)
-        d = TestCommand(v.DUT_MODULE)
-        for staCommand in d.assoc_clear_sta_5g():
-            setConfig(self.sta, staCommand, self.__class__.__name__)
-
-        res5gIp = getIntfIpAddr(self.sta, v.STA_INTF_5G, self.__class__.__name__)
-        if res5gIp['ip'] == '':
-            self.fail(msg='no ip address got.')
-        else:
-            resPingPercent = getPingStatus(self.dut, res5gIp['ip'], v.PING_PERCENT_COUNT, self.__class__.__name__)
-            self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS)
-
-
 class AP_CLEAR_LOW2(TestCase):
     @classmethod
     def setUpClass(self):
@@ -4605,7 +1219,7 @@ class AP_CLEAR_LOW2(TestCase):
         d = TestCommand(v.DUT_MODULE)
         for dutCommand in d.ap_clear_low_set_up():
             setConfig(self.dut, dutCommand, self.__name__)
-
+        setWifiRestart(self.dut, self.__name__)
         self.device = getAdbDevices()
 
     @classmethod
@@ -4613,7 +1227,7 @@ class AP_CLEAR_LOW2(TestCase):
         d = TestCommand(v.DUT_MODULE)
         for dutCommand in d.ap_tear_down():
             setConfig(self.dut, dutCommand, self.__name__)
-
+        setWifiRestart(self.dut, self.__name__)
         self.dut.close()
 
     def assoc_clear_sta_2g(self):
@@ -4645,133 +1259,6 @@ class AP_CLEAR_LOW2(TestCase):
             self.assertTrue(res5gConn, "Association wasnot successful.")
 
 
-class AP_CLEAR_HIGH(TestCase):
-    @classmethod
-    def setUpClass(self):
-
-        self.dut = SshClient(v.CONNECTION_TYPE)
-        ret1 = self.dut.connect(v.HOST, v.USR, v.PASSWD)
-        # exception deal
-        self.sta = SshClient(v.STA_CONNECTION_TYPE)
-        ret2 = self.sta.connect(v.STA_IP, v.STA_USR, v.STA_PASSWD)
-        # exception deal
-
-        if ret1 is False or ret2 is False:
-            raise Exception('Connection is failed. please check your remote settings.')
-        d = TestCommand(v.DUT_MODULE)
-        for dutCommand in d.ap_clear_high_set_up():
-            setConfig(self.dut, dutCommand, self.__name__)
-
-        v.BSSID = getIntfHWAddr(self.dut, v.INTF_2G, self.__name__)
-        v.BSSID = v.BSSID['mac']
-        v.BSSID_5G = getIntfHWAddr(self.dut, v.INTF_5G, self.__name__)
-        v.BSSID_5G = v.BSSID_5G['mac']
-
-    @classmethod
-    def tearDownClass(self):
-        d = TestCommand(v.DUT_MODULE)
-        for staCommand in d.sta_tear_down():
-            setConfig(self.sta, staCommand, self.__name__)
-
-        for dutCommand in d.ap_tear_down():
-            setConfig(self.dut, dutCommand, self.__name__)
-
-        self.dut.close()
-        self.sta.close()
-
-    def assoc_clear_sta_2g(self):
-
-        ret, result = chkSiteSurvey(self.sta, v.STA_INTF_2G, v.BSSID.lower(), self.__class__.__name__)
-
-        count = 0
-        while ret is False and count < 5:
-            ret, result = chkSiteSurvey(self.sta, v.STA_INTF_2G, v.BSSID.lower(), self.__class__.__name__)
-            count += 1
-
-        if count >= 5:
-            self.fail(msg='specified wifi is no exist')
-
-        setIwpriv(self.sta, v.INTF_2G, 'Channel', result['channel'], self.__class__.__name__)
-        d = TestCommand(v.DUT_MODULE)
-        for staCommand in d.assoc_clear_sta_2g():
-            setConfig(self.sta, staCommand, self.__class__.__name__)
-
-        res2gConn = getApcli0Conn(self.sta, self.__class__.__name__)
-
-        self.assertEqual(res2gConn['ssid'], v.SSID)
-        self.assertEqual(res2gConn['bssid'], v.BSSID)
-
-    def assoc_clear_sta_5g(self):
-
-        ret, result = chkSiteSurvey(self.sta, v.STA_INTF_5G, v.BSSID_5G.lower(), self.__class__.__name__)
-
-        count = 0
-        while ret is False and count < 5:
-            ret, result = chkSiteSurvey(self.sta, v.STA_INTF_5G, v.BSSID_5G.lower(), self.__class__.__name__)
-            count += 1
-
-        if count >= 5:
-            self.fail(msg='specified wifi is no exist')
-
-        setIwpriv(self.sta, v.INTF_5G, 'Channel', result['channel'], self.__class__.__name__)
-        d = TestCommand(v.DUT_MODULE)
-        for staCommand in d.assoc_clear_sta_5g():
-            setConfig(self.sta, staCommand, self.__class__.__name__)
-
-        res5gConn = getApclii0Conn(self.sta, self.__class__.__name__)
-
-        self.assertEqual(res5gConn['ssid'], v.SSID_5G)
-        self.assertEqual(res5gConn['bssid'], v.BSSID_5G)
-
-    def ping_clear_sta_2g(self):
-
-        ret, result = chkSiteSurvey(self.sta, v.STA_INTF_2G, v.BSSID.lower(), self.__class__.__name__)
-
-        count = 0
-        while ret is False and count < 5:
-            ret, result = chkSiteSurvey(self.sta, v.STA_INTF_2G, v.BSSID.lower(), self.__class__.__name__)
-            count += 1
-
-        if count >= 5:
-            self.fail(msg='specified wifi is no exist')
-
-        setIwpriv(self.sta, v.INTF_2G, 'Channel', result['channel'], self.__class__.__name__)
-        d = TestCommand(v.DUT_MODULE)
-        for staCommand in d.assoc_clear_sta_2g():
-            setConfig(self.sta, staCommand, self.__class__.__name__)
-
-        res2gIp = getIntfIpAddr(self.sta, v.STA_INTF_2G, self.__class__.__name__)
-        if res2gIp['ip'] == '':
-            self.fail(msg='no ip address got.')
-        else:
-            resPingPercent = getPingStatus(self.dut, res2gIp['ip'], v.PING_PERCENT_COUNT, self.__class__.__name__)
-            self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS)
-
-    def ping_clear_sta_5g(self):
-
-        ret, result = chkSiteSurvey(self.sta, v.STA_INTF_5G, v.BSSID_5G.lower(), self.__class__.__name__)
-
-        count = 0
-        while ret is False and count < 5:
-            ret, result = chkSiteSurvey(self.sta, v.STA_INTF_5G, v.BSSID_5G.lower(), self.__class__.__name__)
-            count += 1
-
-        if count >= 5:
-            self.fail(msg='specified wifi is no exist')
-
-        setIwpriv(self.sta, v.INTF_5G, 'Channel', result['channel'], self.__class__.__name__)
-        d = TestCommand(v.DUT_MODULE)
-        for staCommand in d.assoc_clear_sta_5g():
-            setConfig(self.sta, staCommand, self.__class__.__name__)
-
-        res5gIp = getIntfIpAddr(self.sta, v.STA_INTF_5G, self.__class__.__name__)
-        if res5gIp['ip'] == '':
-            self.fail(msg='no ip address got.')
-        else:
-            resPingPercent = getPingStatus(self.dut, res5gIp['ip'], v.PING_PERCENT_COUNT, self.__class__.__name__)
-            self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS)
-
-
 class AP_CLEAR_HIGH2(TestCase):
     @classmethod
     def setUpClass(self):
@@ -4788,7 +1275,7 @@ class AP_CLEAR_HIGH2(TestCase):
         d = TestCommand(v.DUT_MODULE)
         for dutCommand in d.ap_clear_high_set_up():
             setConfig(self.dut, dutCommand, self.__name__)
-
+        setWifiRestart(self.dut, self.__name__)
         self.device = getAdbDevices()
 
     @classmethod
@@ -4796,7 +1283,7 @@ class AP_CLEAR_HIGH2(TestCase):
         d = TestCommand(v.DUT_MODULE)
         for dutCommand in d.ap_tear_down():
             setConfig(self.dut, dutCommand, self.__name__)
-
+        setWifiRestart(self.dut, self.__name__)
         self.dut.close()
 
     def assoc_clear_sta_2g(self):
@@ -4840,13 +1327,13 @@ class AP_CLEAR_LOW_TXPOWER(TestCase):
         d = TestCommand(v.DUT_MODULE)
         for dutCommand in d.ap_clear_low_set_up():
             setConfig(self.dut, dutCommand, self.__name__)
-
+        setWifiRestart(self.dut, self.__name__)
     @classmethod
     def tearDownClass(self):
         d = TestCommand(v.DUT_MODULE)
         for dutCommand in d.ap_tear_down():
             setConfig(self.dut, dutCommand, self.__name__)
-
+        setWifiRestart(self.dut, self.__name__)
         self.dut.close()
 
     def autochan_txpower_2g(self):
@@ -5146,13 +1633,13 @@ class AP_CLEAR_MID_TXPOWER(TestCase):
         d = TestCommand(v.DUT_MODULE)
         for dutCommand in d.ap_clear_mid_set_up():
             setConfig(self.dut, dutCommand, self.__name__)
-
+        setWifiRestart(self.dut, self.__name__)
     @classmethod
     def tearDownClass(self):
         d = TestCommand(v.DUT_MODULE)
         for dutCommand in d.ap_tear_down():
             setConfig(self.dut, dutCommand, self.__name__)
-
+        setWifiRestart(self.dut, self.__name__)
         self.dut.close()
 
     def autochan_txpower_2g(self):
@@ -5453,13 +1940,13 @@ class AP_CLEAR_HIGH_TXPOWER(TestCase):
         d = TestCommand(v.DUT_MODULE)
         for dutCommand in d.ap_clear_high_set_up():
             setConfig(self.dut, dutCommand, self.__name__)
-
+        setWifiRestart(self.dut, self.__name__)
     @classmethod
     def tearDownClass(self):
         d = TestCommand(v.DUT_MODULE)
         for dutCommand in d.ap_tear_down():
             setConfig(self.dut, dutCommand, self.__name__)
-
+        setWifiRestart(self.dut, self.__name__)
         self.dut.close()
 
     def autochan_txpower_2g(self):
@@ -5755,13 +2242,13 @@ class AP_CLEAR_CHANSELECTION(TestCase):
         d = TestCommand(v.DUT_MODULE)
         for dutCommand in d.ap_clear_set_up():
             setConfig(self.dut, dutCommand, self.__name__)
-
+        setWifiRestart(self.dut, self.__name__)
     @classmethod
     def tearDownClass(self):
         d = TestCommand(v.DUT_MODULE)
         for dutCommand in d.ap_tear_down():
             setConfig(self.dut, dutCommand, self.__name__)
-
+        setWifiRestart(self.dut, self.__name__)
         self.dut.close()
 
     def chanselection_2g(self):
@@ -5789,110 +2276,6 @@ class AP_CLEAR_CHANSELECTION(TestCase):
                 self.fail("Current auto-selected channel isnot between 149 and 161.")
 
 
-class AP_SSIDHIDE(TestCase):
-    @classmethod
-    def setUpClass(self):
-
-        self.dut = SshClient(v.CONNECTION_TYPE)
-        ret1 = self.dut.connect(v.HOST, v.USR, v.PASSWD)
-        # exception deal
-        self.sta = SshClient(v.STA_CONNECTION_TYPE)
-        ret2 = self.sta.connect(v.STA_IP, v.STA_USR, v.STA_PASSWD)
-        # exception deal
-
-        if ret1 is False or ret2 is False:
-            raise Exception('Connection is failed. please check your remote settings.')
-
-        v.BSSID = getIntfHWAddr(self.dut, v.INTF_2G, self.__name__)
-        v.BSSID = v.BSSID['mac']
-        v.BSSID_5G = getIntfHWAddr(self.dut, v.INTF_5G, self.__name__)
-        v.BSSID_5G = v.BSSID_5G['mac']
-
-    @classmethod
-    def tearDownClass(self):
-        d = TestCommand(v.DUT_MODULE)
-        for dutCommand in d.ap_tear_down():
-            setConfig(self.dut, dutCommand, self.__name__)
-
-        self.dut.close()
-        self.sta.close()
-
-    def ap_clear_ssidhide(self):
-        d = TestCommand(v.DUT_MODULE)
-        for dutCommand in d.ap_clear_ssidhide_set_up():
-            setConfig(self.dut, dutCommand, self.__class__.__name__)
-
-        ret1, result1 = chkSiteSurvey(self.sta, v.STA_INTF_2G, v.BSSID.lower(), self.__class__.__name__)
-        count = 0
-        while ret1 is False and count < 5:
-            ret1, result1 = chkSiteSurvey(self.sta, v.STA_INTF_2G, v.BSSID.lower(), self.__class__.__name__)
-            count += 1
-        if not ret1:
-            self.fail(msg='specified wifi is no exist.')
-        elif result1['ssid'] != '':
-            self.fail(msg='2.4g wifi is not hidden.')
-
-        ret2, result2 = chkSiteSurvey(self.sta, v.STA_INTF_5G, v.BSSID_5G.lower(), self.__class__.__name__)
-        count = 0
-        while ret2 is False and count < 5:
-            ret2, result2 = chkSiteSurvey(self.sta, v.STA_INTF_2G, v.BSSID.lower(), self.__class__.__name__)
-            count += 1
-        if not ret2:
-            self.fail(msg='specified wifi is no exist.')
-        elif result2['ssid'] != '':
-            self.fail(msg='5g wifi is not hidden')
-
-    def ap_psk2_ssidhide(self):
-        d = TestCommand(v.DUT_MODULE)
-        for dutCommand in d.ap_psk2_ssidhide_set_up():
-            setConfig(self.dut, dutCommand, self.__class__.__name__)
-
-        ret1, result1 = chkSiteSurvey(self.sta, v.STA_INTF_2G, v.BSSID.lower(), self.__class__.__name__)
-        count = 0
-        while ret1 is False and count < 5:
-            ret1, result1 = chkSiteSurvey(self.sta, v.STA_INTF_2G, v.BSSID.lower(), self.__class__.__name__)
-            count += 1
-        if not ret1:
-            self.fail(msg='specified wifi is no exist.')
-        elif result1['ssid'] != '':
-            self.fail(msg='2.4g wifi is not hidden.')
-
-        ret2, result2 = chkSiteSurvey(self.sta, v.STA_INTF_5G, v.BSSID_5G.lower(), self.__class__.__name__)
-        count = 0
-        while ret2 is False and count < 5:
-            ret2, result2 = chkSiteSurvey(self.sta, v.STA_INTF_2G, v.BSSID.lower(), self.__class__.__name__)
-            count += 1
-        if not ret2:
-            self.fail(msg='specified wifi is no exist.')
-        elif result2['ssid'] != '':
-            self.fail(msg='5g wifi is not hidden')
-
-    def ap_mixedpsk_ssidhide(self):
-        d = TestCommand(v.DUT_MODULE)
-        for dutCommand in d.ap_mixedpsk_ssidhide_set_up():
-            setConfig(self.dut, dutCommand, self.__class__.__name__)
-
-        ret1, result1 = chkSiteSurvey(self.sta, v.STA_INTF_2G, v.BSSID.lower(), self.__class__.__name__)
-        count = 0
-        while ret1 is False and count < 5:
-            ret1, result1 = chkSiteSurvey(self.sta, v.STA_INTF_2G, v.BSSID.lower(), self.__class__.__name__)
-            count += 1
-        if not ret1:
-            self.fail(msg='specified wifi is no exist.')
-        elif result1['ssid'] != '':
-            self.fail(msg='2.4g wifi is not hidden.')
-
-        ret2, result2 = chkSiteSurvey(self.sta, v.STA_INTF_5G, v.BSSID_5G.lower(), self.__class__.__name__)
-        count = 0
-        while ret2 is False and count < 5:
-            ret2, result2 = chkSiteSurvey(self.sta, v.STA_INTF_2G, v.BSSID.lower(), self.__class__.__name__)
-            count += 1
-        if not ret2:
-            self.fail(msg='specified wifi is no exist.')
-        elif result2['ssid'] != '':
-            self.fail(msg='5g wifi is not hidden')
-
-
 class AP_SSIDHIDE2(TestCase):
     @classmethod
     def setUpClass(self):
@@ -5915,14 +2298,14 @@ class AP_SSIDHIDE2(TestCase):
         d = TestCommand(v.DUT_MODULE)
         for dutCommand in d.ap_tear_down():
             setConfig(self.dut, dutCommand, self.__name__)
-
+        setWifiRestart(self.dut, self.__name__)
         self.dut.close()
 
     def ap_clear_ssidhide(self):
         d = TestCommand(v.DUT_MODULE)
         for dutCommand in d.ap_clear_ssidhide_set_up():
             setConfig(self.dut, dutCommand, self.__class__.__name__)
-
+        setWifiRestart(self.dut, self.__class__.__name__)
         ret2g = setAdbScanSsidNoExist(self.device[0], "normal", "2g", self.__class__.__name__)
         if ret2g is False:
             self.fail(msg='2.4g wifi is not hidden..')
@@ -5935,7 +2318,7 @@ class AP_SSIDHIDE2(TestCase):
         d = TestCommand(v.DUT_MODULE)
         for dutCommand in d.ap_psk2_ssidhide_set_up():
             setConfig(self.dut, dutCommand, self.__class__.__name__)
-
+        setWifiRestart(self.dut, self.__class__.__name__)
         ret2g = setAdbScanSsidNoExist(self.device[0], "normal", "2g", self.__class__.__name__)
         if ret2g is False:
             self.fail(msg='2.4g wifi is not hidden..')
@@ -5948,7 +2331,7 @@ class AP_SSIDHIDE2(TestCase):
         d = TestCommand(v.DUT_MODULE)
         for dutCommand in d.ap_mixedpsk_ssidhide_set_up():
             setConfig(self.dut, dutCommand, self.__class__.__name__)
-
+        setWifiRestart(self.dut, self.__class__.__name__)
         ret2g = setAdbScanSsidNoExist(self.device[0], "normal", "2g", self.__class__.__name__)
         if ret2g is False:
             self.fail(msg='2.4g wifi is not hidden..')
@@ -5956,132 +2339,6 @@ class AP_SSIDHIDE2(TestCase):
         ret5g = setAdbScanSsidNoExist(self.device[0], "normal", "5g", self.__class__.__name__)
         if ret5g is False:
             self.fail(msg='5g wifi is not hidden..')
-
-
-class AP_CLEAR_CHAN_WHITELIST(TestCase):
-    def setUp(self):
-        self.dut = SshClient(v.CONNECTION_TYPE)
-        ret1 = self.dut.connect(v.HOST, v.USR, v.PASSWD)
-        # exception deal
-        self.sta = SshClient(v.STA_CONNECTION_TYPE)
-        ret2 = self.sta.connect(v.STA_IP, v.STA_USR, v.STA_PASSWD)
-        # exception deal
-
-        if ret1 is False or ret2 is False:
-            raise Exception('Connection is failed. please check your remote settings.')
-        d = TestCommand(v.DUT_MODULE)
-        for dutCommand in d.ap_clear_chan_whitelist_set_up():
-            setConfig(self.dut, dutCommand, self.__class__.__name__)
-
-        v.BSSID = getIntfHWAddr(self.dut, v.INTF_2G, self.__class__.__name__)
-        v.BSSID = v.BSSID['mac']
-        v.BSSID_5G = getIntfHWAddr(self.dut, v.INTF_5G, self.__class__.__name__)
-        v.BSSID_5G = v.BSSID_5G['mac']
-        v.STA_MAC = getIntfHWAddr(self.sta, v.STA_INTF_2G, self.__class__.__name__)
-        v.STA_MAC = v.STA_MAC['mac']
-        v.STA_MAC_5G = getIntfHWAddr(self.sta, v.STA_INTF_5G, self.__class__.__name__)
-        v.STA_MAC_5G = v.STA_MAC_5G['mac']
-
-    def tearDown(self):
-        d = TestCommand(v.DUT_MODULE)
-        for staCommand in d.sta_tear_down():
-            setConfig(self.sta, staCommand, self.__class__.__name__)
-
-        for dutCommand in d.ap_tear_down():
-            setConfig(self.dut, dutCommand, self.__class__.__name__)
-
-        self.dut.close()
-        self.sta.close()
-
-    def assoc_clear_sta_in_whitelist_2g(self):
-
-        setUCIWirelessIntf(self.dut, v.INTF_2G, "add_list", 'maclist', v.STA_MAC, self.__class__.__name__)
-        setUCIWirelessIntf(self.dut, v.INTF_5G, "add_list", 'maclist', v.STA_MAC, self.__class__.__name__)
-        setWifiRestart(self.dut, self.__class__.__name__)
-
-        ret, result = chkSiteSurvey(self.sta, v.STA_INTF_2G, v.BSSID.lower(), self.__class__.__name__)
-
-        count = 0
-        while ret is False and count < 5:
-            ret, result = chkSiteSurvey(self.sta, v.STA_INTF_2G, v.BSSID.lower(), self.__class__.__name__)
-            count += 1
-
-        if count >= 5:
-            self.fail(msg='specified wifi is no exist')
-
-        setIwpriv(self.sta, v.INTF_2G, 'Channel', result['channel'], self.__class__.__name__)
-        d = TestCommand(v.DUT_MODULE)
-        for staCommand in d.assoc_clear_sta_2g():
-            setConfig(self.sta, staCommand, self.__class__.__name__)
-
-        res2gConn = getApcli0Conn(self.sta, self.__class__.__name__)
-
-        self.assertEqual(res2gConn['ssid'], v.SSID)
-        self.assertEqual(res2gConn['bssid'], v.BSSID)
-
-    def assoc_clear_sta_in_whitelist_5g(self):
-
-        setUCIWirelessIntf(self.dut, v.INTF_5G, "add_list", 'maclist', v.STA_MAC_5G, self.__class__.__name__)
-        setUCIWirelessIntf(self.dut, v.INTF_2G, "add_list", 'maclist', v.STA_MAC_5G, self.__class__.__name__)
-        setWifiRestart(self.dut, self.__class__.__name__)
-
-        ret, result = chkSiteSurvey(self.sta, v.STA_INTF_5G, v.BSSID_5G.lower(), self.__class__.__name__)
-
-        count = 0
-        while ret is False and count < 5:
-            ret, result = chkSiteSurvey(self.sta, v.STA_INTF_5G, v.BSSID_5G.lower(), self.__class__.__name__)
-            count += 1
-
-        if count >= 5:
-            self.fail(msg='specified wifi is no exist')
-
-        setIwpriv(self.sta, v.INTF_5G, 'Channel', result['channel'], self.__class__.__name__)
-        d = TestCommand(v.DUT_MODULE)
-        for staCommand in d.assoc_clear_sta_5g():
-            setConfig(self.sta, staCommand, self.__class__.__name__)
-
-        res5gConn = getApclii0Conn(self.sta, self.__class__.__name__)
-
-        self.assertEqual(res5gConn['ssid'], v.SSID_5G)
-        self.assertEqual(res5gConn['bssid'], v.BSSID_5G)
-
-    def assoc_clear_sta_outof_whitelist_2g(self):
-        ret, result = chkSiteSurvey(self.sta, v.STA_INTF_2G, v.BSSID.lower(), self.__class__.__name__)
-
-        count = 0
-        while ret is False and count < 5:
-            ret, result = chkSiteSurvey(self.sta, v.STA_INTF_2G, v.BSSID.lower(), self.__class__.__name__)
-            count += 1
-
-        if count >= 5:
-            self.fail(msg='specified wifi is no exist')
-
-        setIwpriv(self.sta, v.INTF_2G, 'Channel', result['channel'], self.__class__.__name__)
-        d = TestCommand(v.DUT_MODULE)
-        for staCommand in d.assoc_clear_sta_2g():
-            setConfig(self.sta, staCommand, self.__class__.__name__)
-
-        res2gConn = getApcli0Conn(self.sta, self.__class__.__name__)
-        self.assertDictEqual(res2gConn, {'ssid': '', 'bssid': ''})
-
-    def assoc_clear_sta_outof_whitelist_5g(self):
-        ret, result = chkSiteSurvey(self.sta, v.STA_INTF_5G, v.BSSID_5G.lower(), self.__class__.__name__)
-
-        count = 0
-        while ret is False and count < 5:
-            ret, result = chkSiteSurvey(self.sta, v.STA_INTF_5G, v.BSSID_5G.lower(), self.__class__.__name__)
-            count += 1
-
-        if count >= 5:
-            self.fail(msg='specified wifi is no exist')
-
-        setIwpriv(self.sta, v.INTF_5G, 'Channel', result['channel'], self.__class__.__name__)
-        d = TestCommand(v.DUT_MODULE)
-        for staCommand in d.assoc_clear_sta_5g():
-            setConfig(self.sta, staCommand, self.__class__.__name__)
-
-        res5gConn = getApclii0Conn(self.sta, self.__class__.__name__)
-        self.assertDictEqual(res5gConn, {'ssid': '', 'bssid': ''})
 
 
 class AP_CLEAR_CHAN_WHITELIST2(TestCase):
@@ -6100,7 +2357,7 @@ class AP_CLEAR_CHAN_WHITELIST2(TestCase):
         d = TestCommand(v.DUT_MODULE)
         for dutCommand in d.ap_clear_chan_whitelist_set_up():
             setConfig(self.dut, dutCommand, self.__name__)
-
+        setWifiRestart(self.dut, self.__name__)
         self.device = getAdbDevices()
 
         wlanInfo = getAdbShellWlan(self.device[0], self.__name__)
@@ -6112,6 +2369,7 @@ class AP_CLEAR_CHAN_WHITELIST2(TestCase):
         d = TestCommand(v.DUT_MODULE)
         for dutCommand in d.ap_tear_down():
             setConfig(self.dut, dutCommand, self.__name__)
+        setWifiRestart(self.dut, self.__name__)
         self.dut.close()
 
     def assoc_clear_sta_in_whitelist_2g(self):
@@ -6159,134 +2417,6 @@ class AP_CLEAR_CHAN_WHITELIST2(TestCase):
         self.assertFalse(res5gConn, "Association wasnot supposed to be successful.")
 
 
-class AP_CLEAR_CHAN_BLACKLIST(TestCase):
-    def setUp(self):
-        self.dut = SshClient(v.CONNECTION_TYPE)
-        ret1 = self.dut.connect(v.HOST, v.USR, v.PASSWD)
-        # exception deal
-        self.sta = SshClient(v.STA_CONNECTION_TYPE)
-        ret2 = self.sta.connect(v.STA_IP, v.STA_USR, v.STA_PASSWD)
-        # exception deal
-
-        if ret1 is False or ret2 is False:
-            raise Exception('Connection is failed. please check your remote settings.')
-        d = TestCommand(v.DUT_MODULE)
-        for dutCommand in d.ap_clear_chan_blacklist_set_up():
-            setConfig(self.dut, dutCommand, self.__class__.__name__)
-
-        v.BSSID = getIntfHWAddr(self.dut, v.INTF_2G, self.__class__.__name__)
-        v.BSSID = v.BSSID['mac']
-        v.BSSID_5G = getIntfHWAddr(self.dut, v.INTF_5G, self.__class__.__name__)
-        v.BSSID_5G = v.BSSID_5G['mac']
-        v.STA_MAC = getIntfHWAddr(self.sta, v.STA_INTF_2G, self.__class__.__name__)
-        v.STA_MAC = v.STA_MAC['mac']
-        v.STA_MAC_5G = getIntfHWAddr(self.sta, v.STA_INTF_5G, self.__class__.__name__)
-        v.STA_MAC_5G = v.STA_MAC_5G['mac']
-
-    def tearDown(self):
-        d = TestCommand(v.DUT_MODULE)
-        for staCommand in d.sta_tear_down():
-            setConfig(self.sta, staCommand, self.__class__.__name__)
-
-        for dutCommand in d.ap_tear_down():
-            setConfig(self.dut, dutCommand, self.__class__.__name__)
-
-        self.dut.close()
-        self.sta.close()
-
-    def assoc_clear_sta_outof_blacklist_2g(self):
-
-        ret, result = chkSiteSurvey(self.sta, v.STA_INTF_2G, v.BSSID.lower(), self.__class__.__name__)
-
-        count = 0
-        while ret is False and count < 5:
-            ret, result = chkSiteSurvey(self.sta, v.STA_INTF_2G, v.BSSID.lower(), self.__class__.__name__)
-            count += 1
-
-        if count >= 5:
-            self.fail(msg='specified wifi is no exist')
-
-        setIwpriv(self.sta, v.INTF_2G, 'Channel', result['channel'], self.__class__.__name__)
-        d = TestCommand(v.DUT_MODULE)
-        for staCommand in d.assoc_clear_sta_2g():
-            setConfig(self.sta, staCommand, self.__class__.__name__)
-
-        res2gConn = getApcli0Conn(self.sta, self.__class__.__name__)
-
-        self.assertEqual(res2gConn['ssid'], v.SSID)
-        self.assertEqual(res2gConn['bssid'], v.BSSID)
-
-    def assoc_clear_sta_outof_blacklist_5g(self):
-
-        ret, result = chkSiteSurvey(self.sta, v.STA_INTF_5G, v.BSSID_5G.lower(), self.__class__.__name__)
-
-        count = 0
-        while ret is False and count < 5:
-            ret, result = chkSiteSurvey(self.sta, v.STA_INTF_5G, v.BSSID_5G.lower(), self.__class__.__name__)
-            count += 1
-
-        if count >= 5:
-            self.fail(msg='specified wifi is no exist')
-
-        setIwpriv(self.sta, v.INTF_5G, 'Channel', result['channel'], self.__class__.__name__)
-        d = TestCommand(v.DUT_MODULE)
-        for staCommand in d.assoc_clear_sta_5g():
-            setConfig(self.sta, staCommand, self.__class__.__name__)
-
-        res5gConn = getApclii0Conn(self.sta, self.__class__.__name__)
-
-        self.assertEqual(res5gConn['ssid'], v.SSID_5G)
-        self.assertEqual(res5gConn['bssid'], v.BSSID_5G)
-
-    def assoc_clear_sta_in_blacklist_2g(self):
-
-        setUCIWirelessIntf(self.dut, v.INTF_2G, "add_list", 'maclist', v.STA_MAC, self.__class__.__name__)
-        setUCIWirelessIntf(self.dut, v.INTF_5G, "add_list", 'maclist', v.STA_MAC, self.__class__.__name__)
-        setWifiRestart(self.dut, self.__class__.__name__)
-
-        ret, result = chkSiteSurvey(self.sta, v.STA_INTF_2G, v.BSSID.lower(), self.__class__.__name__)
-
-        count = 0
-        while ret is False and count < 5:
-            ret, result = chkSiteSurvey(self.sta, v.STA_INTF_2G, v.BSSID.lower(), self.__class__.__name__)
-            count += 1
-
-        if count >= 5:
-            self.fail(msg='specified wifi is no exist')
-
-        setIwpriv(self.sta, v.INTF_2G, 'Channel', result['channel'], self.__class__.__name__)
-        d = TestCommand(v.DUT_MODULE)
-        for staCommand in d.assoc_clear_sta_2g():
-            setConfig(self.sta, staCommand, self.__class__.__name__)
-
-        res2gConn = getApcli0Conn(self.sta, self.__class__.__name__)
-        self.assertDictEqual(res2gConn, {'ssid': '', 'bssid': ''})
-
-    def assoc_clear_sta_in_blacklist_5g(self):
-
-        setUCIWirelessIntf(self.dut, v.INTF_5G, "add_list", 'maclist', v.STA_MAC_5G, self.__class__.__name__)
-        setUCIWirelessIntf(self.dut, v.INTF_2G, "add_list", 'maclist', v.STA_MAC_5G, self.__class__.__name__)
-        setWifiRestart(self.dut, self.__class__.__name__)
-
-        ret, result = chkSiteSurvey(self.sta, v.STA_INTF_5G, v.BSSID_5G.lower(), self.__class__.__name__)
-
-        count = 0
-        while ret is False and count < 5:
-            ret, result = chkSiteSurvey(self.sta, v.STA_INTF_5G, v.BSSID_5G.lower(), self.__class__.__name__)
-            count += 1
-
-        if count >= 5:
-            self.fail(msg='specified wifi is no exist')
-
-        setIwpriv(self.sta, v.INTF_5G, 'Channel', result['channel'], self.__class__.__name__)
-        d = TestCommand(v.DUT_MODULE)
-        for staCommand in d.assoc_clear_sta_5g():
-            setConfig(self.sta, staCommand, self.__class__.__name__)
-
-        res5gConn = getApclii0Conn(self.sta, self.__class__.__name__)
-        self.assertDictEqual(res5gConn, {'ssid': '', 'bssid': ''})
-
-
 class AP_CLEAR_CHAN_BLACKLIST2(TestCase):
     @classmethod
     def setUp(self):
@@ -6303,7 +2433,7 @@ class AP_CLEAR_CHAN_BLACKLIST2(TestCase):
         d = TestCommand(v.DUT_MODULE)
         for dutCommand in d.ap_clear_chan_blacklist_set_up():
             setConfig(self.dut, dutCommand, self.__name__)
-
+        setWifiRestart(self.dut, self.__name__)
         self.device = getAdbDevices()
 
         wlanInfo = getAdbShellWlan(self.device[0], self.__name__)
@@ -6315,6 +2445,7 @@ class AP_CLEAR_CHAN_BLACKLIST2(TestCase):
         d = TestCommand(v.DUT_MODULE)
         for dutCommand in d.ap_tear_down():
             setConfig(self.dut, dutCommand, self.__name__)
+        setWifiRestart(self.dut, self.__name__)
         self.dut.close()
 
     def assoc_clear_sta_outof_blacklist_2g(self):
@@ -6362,85 +2493,6 @@ class AP_CLEAR_CHAN_BLACKLIST2(TestCase):
         self.assertFalse(res5gConn, "Association wasnot supposed to be successful.")
 
 
-class AP_GUEST_CLEAR_CHAN_WHITELIST(TestCase):
-    def setUp(self):
-
-        self.dut = SshClient(v.CONNECTION_TYPE)
-        ret1 = self.dut.connect(v.HOST, v.USR, v.PASSWD)
-        # exception deal
-        self.sta = SshClient(v.STA_CONNECTION_TYPE)
-        ret2 = self.sta.connect(v.STA_IP, v.STA_USR, v.STA_PASSWD)
-        # exception deal
-
-        if ret1 is False or ret2 is False:
-            raise Exception('Connection is failed. please check your remote settings.')
-        d = TestCommand(v.DUT_MODULE)
-        for dutCommand in d.ap_guest_clear_chan_whitelist_set_up():
-            setConfig(self.dut, dutCommand, self.__class__.__name__)
-
-        v.BSSID = getIntfHWAddr(self.dut, v.INTF_GUEST, self.__class__.__name__)
-        v.BSSID = v.BSSID['mac']
-        v.STA_MAC = getIntfHWAddr(self.sta, v.STA_INTF_2G, self.__class__.__name__)
-        v.STA_MAC = v.STA_MAC['mac']
-
-    def tearDown(self):
-        d = TestCommand(v.DUT_MODULE)
-        for staCommand in d.sta_tear_down():
-            setConfig(self.sta, staCommand, self.__class__.__name__)
-
-        for dutCommand in d.ap_guest_tear_down():
-            setConfig(self.dut, dutCommand, self.__class__.__name__)
-
-        self.dut.close()
-        self.sta.close()
-
-    def assoc_clear_sta_in_whitelist_guest(self):
-
-        setUCIWirelessIntf(self.dut, v.INTF_GUEST, "add_list", 'maclist', v.STA_MAC, self.__class__.__name__)
-        setWifiRestart(self.dut, self.__class__.__name__)
-
-        ret, result = chkSiteSurvey(self.sta, v.STA_INTF_2G, v.BSSID.lower(), self.__class__.__name__)
-
-        count = 0
-        while ret is False and count < 5:
-            ret, result = chkSiteSurvey(self.sta, v.STA_INTF_2G, v.BSSID.lower(), self.__class__.__name__)
-            count += 1
-
-        if count >= 5:
-            self.fail(msg='specified wifi is no exist')
-
-        setIwpriv(self.sta, v.INTF_2G, 'Channel', result['channel'], self.__class__.__name__)
-        d = TestCommand(v.DUT_MODULE)
-        for staCommand in d.assoc_clear_sta_guest():
-            setConfig(self.sta, staCommand, self.__class__.__name__)
-
-        res2gConn = getApcli0Conn(self.sta, self.__class__.__name__)
-
-        self.assertEqual(res2gConn['ssid'], v.GUEST_SSID)
-        self.assertEqual(res2gConn['bssid'], v.BSSID)
-
-    def assoc_clear_sta_outof_whitelist_guest(self):
-
-        ret, result = chkSiteSurvey(self.sta, v.STA_INTF_2G, v.BSSID.lower(), self.__class__.__name__)
-
-        count = 0
-        while ret is False and count < 5:
-            ret, result = chkSiteSurvey(self.sta, v.STA_INTF_2G, v.BSSID.lower(), self.__class__.__name__)
-            count += 1
-
-        if count >= 5:
-            self.fail(msg='specified wifi is no exist')
-
-        setIwpriv(self.sta, v.INTF_2G, 'Channel', result['channel'], self.__class__.__name__)
-        d = TestCommand(v.DUT_MODULE)
-        for staCommand in d.assoc_clear_sta_guest():
-            setConfig(self.sta, staCommand, self.__class__.__name__)
-
-        res2gConn = getApcli0Conn(self.sta, self.__class__.__name__)
-
-        self.assertDictEqual(res2gConn, {'ssid': '', 'bssid': ''})
-
-
 class AP_GUEST_CLEAR_CHAN_WHITELIST2(TestCase):
     @classmethod
     def setUp(self):
@@ -6457,7 +2509,7 @@ class AP_GUEST_CLEAR_CHAN_WHITELIST2(TestCase):
         d = TestCommand(v.DUT_MODULE)
         for dutCommand in d.ap_guest_clear_chan_whitelist_set_up():
             setConfig(self.dut, dutCommand, self.__name__)
-
+        setWifiRestart(self.dut, self.__name__)
         self.device = getAdbDevices()
 
         wlanInfo = getAdbShellWlan(self.device[0], self.__name__)
@@ -6469,6 +2521,7 @@ class AP_GUEST_CLEAR_CHAN_WHITELIST2(TestCase):
         d = TestCommand(v.DUT_MODULE)
         for dutCommand in d.ap_guest_tear_down():
             setConfig(self.dut, dutCommand, self.__name__)
+        setWifiRestart(self.dut, self.__name__)
         self.dut.close()
 
     def assoc_clear_sta_in_whitelist_guest(self):
@@ -6493,85 +2546,6 @@ class AP_GUEST_CLEAR_CHAN_WHITELIST2(TestCase):
         self.assertFalse(res2gConn, "Association wasnot supposed to be successful.")
 
 
-class AP_GUEST_CLEAR_CHAN_BLACKLIST(TestCase):
-    def setUp(self):
-
-        self.dut = SshClient(v.CONNECTION_TYPE)
-        ret1 = self.dut.connect(v.HOST, v.USR, v.PASSWD)
-        # exception deal
-        self.sta = SshClient(v.STA_CONNECTION_TYPE)
-        ret2 = self.sta.connect(v.STA_IP, v.STA_USR, v.STA_PASSWD)
-        # exception deal
-
-        if ret1 is False or ret2 is False:
-            raise Exception('Connection is failed. please check your remote settings.')
-        d = TestCommand(v.DUT_MODULE)
-        for dutCommand in d.ap_guest_clear_chan_blacklist_set_up():
-            setConfig(self.dut, dutCommand, self.__class__.__name__)
-
-        v.BSSID = getIntfHWAddr(self.dut, v.INTF_GUEST, self.__class__.__name__)
-        v.BSSID = v.BSSID['mac']
-        v.STA_MAC = getIntfHWAddr(self.sta, v.STA_INTF_2G, self.__class__.__name__)
-        v.STA_MAC = v.STA_MAC['mac']
-
-    def tearDown(self):
-        d = TestCommand(v.DUT_MODULE)
-        for staCommand in d.sta_tear_down():
-            setConfig(self.sta, staCommand, self.__class__.__name__)
-
-        for dutCommand in d.ap_guest_tear_down():
-            setConfig(self.dut, dutCommand, self.__class__.__name__)
-
-        self.dut.close()
-        self.sta.close()
-
-    def assoc_clear_sta_outof_blacklist_guest(self):
-
-        ret, result = chkSiteSurvey(self.sta, v.STA_INTF_2G, v.BSSID.lower(), self.__class__.__name__)
-
-        count = 0
-        while ret is False and count < 5:
-            ret, result = chkSiteSurvey(self.sta, v.STA_INTF_2G, v.BSSID.lower(), self.__class__.__name__)
-            count += 1
-
-        if count >= 5:
-            self.fail(msg='specified wifi is no exist')
-
-        setIwpriv(self.sta, v.INTF_2G, 'Channel', result['channel'], self.__class__.__name__)
-        d = TestCommand(v.DUT_MODULE)
-        for staCommand in d.assoc_clear_sta_guest():
-            setConfig(self.sta, staCommand, self.__class__.__name__)
-
-        res2gConn = getApcli0Conn(self.sta, self.__class__.__name__)
-
-        self.assertEqual(res2gConn['ssid'], v.GUEST_SSID)
-        self.assertEqual(res2gConn['bssid'], v.BSSID)
-
-    def assoc_clear_sta_in_blacklist_guest(self):
-
-        setUCIWirelessIntf(self.dut, v.INTF_GUEST, "add_list", 'maclist', v.STA_MAC, self.__class__.__name__)
-        setWifiRestart(self.dut, self.__class__.__name__)
-
-        ret, result = chkSiteSurvey(self.sta, v.STA_INTF_2G, v.BSSID.lower(), self.__class__.__name__)
-
-        count = 0
-        while ret is False and count < 5:
-            ret, result = chkSiteSurvey(self.sta, v.STA_INTF_2G, v.BSSID.lower(), self.__class__.__name__)
-            count += 1
-
-        if count >= 5:
-            self.fail(msg='specified wifi is no exist')
-
-        setIwpriv(self.sta, v.INTF_2G, 'Channel', result['channel'], self.__class__.__name__)
-        d = TestCommand(v.DUT_MODULE)
-        for staCommand in d.assoc_clear_sta_guest():
-            setConfig(self.sta, staCommand, self.__class__.__name__)
-
-        res2gConn = getApcli0Conn(self.sta, self.__class__.__name__)
-
-        self.assertDictEqual(res2gConn, {'ssid': '', 'bssid': ''})
-
-
 class AP_GUEST_CLEAR_CHAN_BLACKLIST2(TestCase):
     @classmethod
     def setUp(self):
@@ -6588,7 +2562,7 @@ class AP_GUEST_CLEAR_CHAN_BLACKLIST2(TestCase):
         d = TestCommand(v.DUT_MODULE)
         for dutCommand in d.ap_guest_clear_chan_blacklist_set_up():
             setConfig(self.dut, dutCommand, self.__name__)
-
+        setWifiRestart(self.dut, self.__name__)
         self.device = getAdbDevices()
 
         wlanInfo = getAdbShellWlan(self.device[0], self.__name__)
@@ -6600,6 +2574,7 @@ class AP_GUEST_CLEAR_CHAN_BLACKLIST2(TestCase):
         d = TestCommand(v.DUT_MODULE)
         for dutCommand in d.ap_guest_tear_down():
             setConfig(self.dut, dutCommand, self.__name__)
+        setWifiRestart(self.dut, self.__name__)
         self.dut.close()
 
     def assoc_clear_sta_outof_blacklist_guest(self):
@@ -6642,7 +2617,7 @@ class AP_CLEAR_CHAN11_149_FLOW2(TestCase):
         d = TestCommand(v.DUT_MODULE)
         for dutCommand in d.ap_clear_chan_set_up():
             setConfig(self.dut, dutCommand, self.__name__)
-
+        setWifiRestart(self.dut, self.__name__)
         self.device = getAdbDevices()
 
     @classmethod
@@ -6650,7 +2625,7 @@ class AP_CLEAR_CHAN11_149_FLOW2(TestCase):
         d = TestCommand(v.DUT_MODULE)
         for dutCommand in d.ap_tear_down():
             setConfig(self.dut, dutCommand, self.__name__)
-
+        setWifiRestart(self.dut, self.__name__)
         self.dut.close()
 
     def assoc_clear_sta_flow_2g(self):
@@ -6701,7 +2676,7 @@ class AP_CLEAR_CHAN1_36_FLOW2(TestCase):
         d = TestCommand(v.DUT_MODULE)
         for dutCommand in d.ap_clear_chan2_set_up():
             setConfig(self.dut, dutCommand, self.__name__)
-
+        setWifiRestart(self.dut, self.__name__)
         self.device = getAdbDevices()
 
     @classmethod
@@ -6709,7 +2684,7 @@ class AP_CLEAR_CHAN1_36_FLOW2(TestCase):
         d = TestCommand(v.DUT_MODULE)
         for dutCommand in d.ap_tear_down():
             setConfig(self.dut, dutCommand, self.__name__)
-
+        setWifiRestart(self.dut, self.__name__)
         self.dut.close()
 
     def assoc_clear_sta_flow_2g(self):
@@ -6760,7 +2735,7 @@ class AP_CLEAR_CHAN6_52_FLOW2(TestCase):
         d = TestCommand(v.DUT_MODULE)
         for dutCommand in d.ap_clear_chan3_set_up():
             setConfig(self.dut, dutCommand, self.__name__)
-
+        setWifiRestart(self.dut, self.__name__)
         self.device = getAdbDevices()
 
     @classmethod
@@ -6768,7 +2743,7 @@ class AP_CLEAR_CHAN6_52_FLOW2(TestCase):
         d = TestCommand(v.DUT_MODULE)
         for dutCommand in d.ap_tear_down():
             setConfig(self.dut, dutCommand, self.__name__)
-
+        setWifiRestart(self.dut, self.__name__)
         self.dut.close()
 
     def assoc_clear_sta_flow_2g(self):
@@ -6819,7 +2794,7 @@ class AP_CLEAR_CHAN13_165_FLOW2(TestCase):
         d = TestCommand(v.DUT_MODULE)
         for dutCommand in d.ap_clear_chan4_set_up():
             setConfig(self.dut, dutCommand, self.__name__)
-
+        setWifiRestart(self.dut, self.__name__)
         self.device = getAdbDevices()
 
     @classmethod
@@ -6827,7 +2802,7 @@ class AP_CLEAR_CHAN13_165_FLOW2(TestCase):
         d = TestCommand(v.DUT_MODULE)
         for dutCommand in d.ap_tear_down():
             setConfig(self.dut, dutCommand, self.__name__)
-
+        setWifiRestart(self.dut, self.__name__)
         self.dut.close()
 
     def assoc_clear_sta_flow_2g(self):
@@ -6878,7 +2853,7 @@ class AP_CLEAR_CHAN_REPEAT2(TestCase):
         d = TestCommand(v.DUT_MODULE)
         for dutCommand in d.ap_clear_chan_set_up():
             setConfig(self.dut, dutCommand, self.__name__)
-
+        setWifiRestart(self.dut, self.__name__)
         self.device = getAdbDevices()
 
     @classmethod
@@ -6886,7 +2861,7 @@ class AP_CLEAR_CHAN_REPEAT2(TestCase):
         d = TestCommand(v.DUT_MODULE)
         for dutCommand in d.ap_tear_down():
             setConfig(self.dut, dutCommand, self.__name__)
-
+        setWifiRestart(self.dut, self.__name__)
         self.dut.close()
 
     def assoc_repeat_clear_sta_2g(self):
@@ -6919,7 +2894,7 @@ class AP_MIXEDPSK_CHAN11_149_FLOW2(TestCase):
         d = TestCommand(v.DUT_MODULE)
         for dutCommand in d.ap_mixedpsk_chan_set_up():
             setConfig(self.dut, dutCommand, self.__name__)
-
+        setWifiRestart(self.dut, self.__name__)
         self.device = getAdbDevices()
 
     @classmethod
@@ -6927,7 +2902,7 @@ class AP_MIXEDPSK_CHAN11_149_FLOW2(TestCase):
         d = TestCommand(v.DUT_MODULE)
         for dutCommand in d.ap_tear_down():
             setConfig(self.dut, dutCommand, self.__name__)
-
+        setWifiRestart(self.dut, self.__name__)
         self.dut.close()
 
     def assoc_psk2_sta_flow_2g(self):
@@ -7068,7 +3043,7 @@ class AP_MIXEDPSK_CHAN1_36_FLOW2(TestCase):
         d = TestCommand(v.DUT_MODULE)
         for dutCommand in d.ap_mixedpsk_chan2_set_up():
             setConfig(self.dut, dutCommand, self.__name__)
-
+        setWifiRestart(self.dut, self.__name__)
         self.device = getAdbDevices()
 
     @classmethod
@@ -7076,7 +3051,7 @@ class AP_MIXEDPSK_CHAN1_36_FLOW2(TestCase):
         d = TestCommand(v.DUT_MODULE)
         for dutCommand in d.ap_tear_down():
             setConfig(self.dut, dutCommand, self.__name__)
-
+        setWifiRestart(self.dut, self.__name__)
         self.dut.close()
 
     def assoc_psk2_sta_flow_2g(self):
@@ -7217,7 +3192,7 @@ class AP_MIXEDPSK_CHAN6_52_FLOW2(TestCase):
         d = TestCommand(v.DUT_MODULE)
         for dutCommand in d.ap_mixedpsk_chan3_set_up():
             setConfig(self.dut, dutCommand, self.__name__)
-
+        setWifiRestart(self.dut, self.__name__)
         self.device = getAdbDevices()
 
     @classmethod
@@ -7225,7 +3200,7 @@ class AP_MIXEDPSK_CHAN6_52_FLOW2(TestCase):
         d = TestCommand(v.DUT_MODULE)
         for dutCommand in d.ap_tear_down():
             setConfig(self.dut, dutCommand, self.__name__)
-
+        setWifiRestart(self.dut, self.__name__)
         self.dut.close()
 
     def assoc_psk2_sta_flow_2g(self):
@@ -7366,7 +3341,7 @@ class AP_MIXEDPSK_CHAN13_165_FLOW2(TestCase):
         d = TestCommand(v.DUT_MODULE)
         for dutCommand in d.ap_mixedpsk_chan4_set_up():
             setConfig(self.dut, dutCommand, self.__name__)
-
+        setWifiRestart(self.dut, self.__name__)
         self.device = getAdbDevices()
 
     @classmethod
@@ -7374,7 +3349,7 @@ class AP_MIXEDPSK_CHAN13_165_FLOW2(TestCase):
         d = TestCommand(v.DUT_MODULE)
         for dutCommand in d.ap_tear_down():
             setConfig(self.dut, dutCommand, self.__name__)
-
+        setWifiRestart(self.dut, self.__name__)
         self.dut.close()
 
     def assoc_psk2_sta_flow_2g(self):
@@ -7515,7 +3490,7 @@ class AP_MIXEDPSK_CHAN_REPEAT2(TestCase):
         d = TestCommand(v.DUT_MODULE)
         for dutCommand in d.ap_mixedpsk_chan_set_up():
             setConfig(self.dut, dutCommand, self.__name__)
-
+        setWifiRestart(self.dut, self.__name__)
         self.device = getAdbDevices()
 
     @classmethod
@@ -7523,7 +3498,7 @@ class AP_MIXEDPSK_CHAN_REPEAT2(TestCase):
         d = TestCommand(v.DUT_MODULE)
         for dutCommand in d.ap_tear_down():
             setConfig(self.dut, dutCommand, self.__name__)
-
+        setWifiRestart(self.dut, self.__name__)
         self.dut.close()
 
     def assoc_repeat_psk2_sta_2g(self):
@@ -7592,7 +3567,7 @@ class AP_PSK2_CHAN11_149_FLOW2(TestCase):
         d = TestCommand(v.DUT_MODULE)
         for dutCommand in d.ap_psk2_chan_set_up():
             setConfig(self.dut, dutCommand, self.__name__)
-
+        setWifiRestart(self.dut, self.__name__)
         self.device = getAdbDevices()
 
     @classmethod
@@ -7600,7 +3575,7 @@ class AP_PSK2_CHAN11_149_FLOW2(TestCase):
         d = TestCommand(v.DUT_MODULE)
         for dutCommand in d.ap_tear_down():
             setConfig(self.dut, dutCommand, self.__name__)
-
+        setWifiRestart(self.dut, self.__name__)
         self.dut.close()
 
     def assoc_psk2_sta_flow_2g(self):
@@ -7651,7 +3626,7 @@ class AP_PSK2_CHAN1_36_FLOW2(TestCase):
         d = TestCommand(v.DUT_MODULE)
         for dutCommand in d.ap_psk2_chan2_set_up():
             setConfig(self.dut, dutCommand, self.__name__)
-
+        setWifiRestart(self.dut, self.__name__)
         self.device = getAdbDevices()
 
     @classmethod
@@ -7659,7 +3634,7 @@ class AP_PSK2_CHAN1_36_FLOW2(TestCase):
         d = TestCommand(v.DUT_MODULE)
         for dutCommand in d.ap_tear_down():
             setConfig(self.dut, dutCommand, self.__name__)
-
+        setWifiRestart(self.dut, self.__name__)
         self.dut.close()
 
     def assoc_psk2_sta_flow_2g(self):
@@ -7710,7 +3685,7 @@ class AP_PSK2_CHAN6_52_FLOW2(TestCase):
         d = TestCommand(v.DUT_MODULE)
         for dutCommand in d.ap_psk2_chan3_set_up():
             setConfig(self.dut, dutCommand, self.__name__)
-
+        setWifiRestart(self.dut, self.__name__)
         self.device = getAdbDevices()
 
     @classmethod
@@ -7718,7 +3693,7 @@ class AP_PSK2_CHAN6_52_FLOW2(TestCase):
         d = TestCommand(v.DUT_MODULE)
         for dutCommand in d.ap_tear_down():
             setConfig(self.dut, dutCommand, self.__name__)
-
+        setWifiRestart(self.dut, self.__name__)
         self.dut.close()
 
     def assoc_psk2_sta_flow_2g(self):
@@ -7769,7 +3744,7 @@ class AP_PSK2_CHAN13_165_FLOW2(TestCase):
         d = TestCommand(v.DUT_MODULE)
         for dutCommand in d.ap_psk2_chan4_set_up():
             setConfig(self.dut, dutCommand, self.__name__)
-
+        setWifiRestart(self.dut, self.__name__)
         self.device = getAdbDevices()
 
     @classmethod
@@ -7777,7 +3752,7 @@ class AP_PSK2_CHAN13_165_FLOW2(TestCase):
         d = TestCommand(v.DUT_MODULE)
         for dutCommand in d.ap_tear_down():
             setConfig(self.dut, dutCommand, self.__name__)
-
+        setWifiRestart(self.dut, self.__name__)
         self.dut.close()
 
     def assoc_psk2_sta_flow_2g(self):
@@ -7828,7 +3803,7 @@ class AP_PSK2_CHAN_REPEAT2(TestCase):
         d = TestCommand(v.DUT_MODULE)
         for dutCommand in d.ap_psk2_chan_set_up():
             setConfig(self.dut, dutCommand, self.__name__)
-
+        setWifiRestart(self.dut, self.__name__)
         self.device = getAdbDevices()
 
     @classmethod
@@ -7836,7 +3811,7 @@ class AP_PSK2_CHAN_REPEAT2(TestCase):
         d = TestCommand(v.DUT_MODULE)
         for dutCommand in d.ap_tear_down():
             setConfig(self.dut, dutCommand, self.__name__)
-
+        setWifiRestart(self.dut, self.__name__)
         self.dut.close()
 
     def assoc_repeat_psk2_sta_2g(self):
@@ -7869,7 +3844,7 @@ class AP_GUEST_CLEAR_CHAN_REPEAT2(TestCase):
         d = TestCommand(v.DUT_MODULE)
         for dutCommand in d.ap_guest_clear_chan_set_up():
             setConfig(self.dut, dutCommand, self.__name__)
-
+        setWifiRestart(self.dut, self.__name__)
         self.device = getAdbDevices()
 
     @classmethod
@@ -7877,7 +3852,7 @@ class AP_GUEST_CLEAR_CHAN_REPEAT2(TestCase):
         d = TestCommand(v.DUT_MODULE)
         for dutCommand in d.ap_guest_tear_down():
             setConfig(self.dut, dutCommand, self.__name__)
-
+        setWifiRestart(self.dut, self.__name__)
         self.dut.close()
 
     def assoc_repeat_clear_sta_guest(self):
@@ -7904,7 +3879,7 @@ class AP_GUEST_MIXEDPSK_CHAN_REPEAT2(TestCase):
         d = TestCommand(v.DUT_MODULE)
         for dutCommand in d.ap_guest_mixedpsk_chan_set_up():
             setConfig(self.dut, dutCommand, self.__name__)
-
+        setWifiRestart(self.dut, self.__name__)
         self.device = getAdbDevices()
 
     @classmethod
@@ -7912,7 +3887,7 @@ class AP_GUEST_MIXEDPSK_CHAN_REPEAT2(TestCase):
         d = TestCommand(v.DUT_MODULE)
         for dutCommand in d.ap_guest_tear_down():
             setConfig(self.dut, dutCommand, self.__name__)
-
+        setWifiRestart(self.dut, self.__name__)
         self.dut.close()
 
     def assoc_repeat_psk2_sta_guest(self):
@@ -7957,7 +3932,7 @@ class AP_GUEST_PSK2_CHAN_REPEAT2(TestCase):
         d = TestCommand(v.DUT_MODULE)
         for dutCommand in d.ap_guest_psk2_chan_set_up():
             setConfig(self.dut, dutCommand, self.__name__)
-
+        setWifiRestart(self.dut, self.__name__)
         self.device = getAdbDevices()
 
     @classmethod
@@ -7965,7 +3940,7 @@ class AP_GUEST_PSK2_CHAN_REPEAT2(TestCase):
         d = TestCommand(v.DUT_MODULE)
         for dutCommand in d.ap_guest_tear_down():
             setConfig(self.dut, dutCommand, self.__name__)
-
+        setWifiRestart(self.dut, self.__name__)
         self.dut.close()
 
     def assoc_repeat_psk2_sta_guest(self):
@@ -7987,7 +3962,7 @@ class AP_REBOOT(TestCase):
         d = TestCommand(v.DUT_MODULE)
         for dutCommand in d.ap_mixedpsk_set_up2(ssid="peanuts_check"):
             setConfig(self.dut, dutCommand, self.__name__)
-
+        setWifiRestart(self.dut, self.__name__)
     @classmethod
     def tearDownClass(self):
         pass
@@ -8043,7 +4018,7 @@ class AP_UPGRADE(TestCase):
         d = TestCommand(v.DUT_MODULE)
         for dutCommand in d.ap_mixedpsk_set_up2(ssid="peanuts_check"):
             setConfig(self.dut, dutCommand, self.__name__)
-
+        setWifiRestart(self.dut, self.__name__)
     @classmethod
     def tearDownClass(self):
         pass
@@ -8105,6 +4080,105 @@ class AP_UPGRADE(TestCase):
                 self.fail(msg='fail to find upgrade file!')
             count += 1
 
+
+class AP_MIXEDPSK_BSD(TestCase):
+    @classmethod
+    def setUpClass(self):
+        self.dut = SshClient(v.CONNECTION_TYPE)
+        ret1 = self.dut.connect(v.HOST, v.USR, v.PASSWD)
+
+        ret2 = chkAdbDevicesCount(1)
+
+        if ret1 is False:
+            raise Exception("Connection is failed. please check your remote settings.")
+
+        if ret2 is False:
+            raise Exception("USB devices arenot ready!")
+        d = TestCommand(v.DUT_MODULE)
+        for dutCommand in d.ap_mixedpsk_bsd_set_up():
+            setConfig(self.dut, dutCommand, self.__name__)
+        setWifiRestart(self.dut, self.__name__)
+        self.device = getAdbDevices()
+
+    @classmethod
+    def tearDownClass(self):
+        d = TestCommand(v.DUT_MODULE)
+        for dutCommand in d.ap_tear_down():
+            setConfig(self.dut, dutCommand, self.__name__)
+        setWifiRestart(self.dut, self.__name__)
+        self.dut.close()
+
+    def assoc_psk2_near_field_sta(self):
+
+        resConn = setAdbPsk2StaConn(self.device[0], "normal", "2g", self.__class__.__name__)
+
+        if resConn:
+            result = getAdbShellWlan(self.device[0], self.__class__.__name__)
+            if result['ip'] == '':
+                self.fail(msg='no ip address got.')
+            else:
+                resPingPercent = getPingStatus(self.dut, result['ip'], v.PING_PERCENT_COUNT, self.__class__.__name__)
+                self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
+                                        "Ping responsed percent werenot good enough.")
+        else:
+            self.assertTrue(resConn, "Association wasnot successful.")
+
+        resConn2 = chkStaOnline(self.dut, "5g", result['mac'], self.__class__.__name__)
+        self.assertTrue(resConn2, msg="STA doesnot associate with 5g")
+
+    def assoc_psk_near_field_sta(self):
+
+        resConn = setAdbPskStaConn(self.device[0], "normal", "2g", self.__class__.__name__)
+
+        if resConn:
+            result = getAdbShellWlan(self.device[0], self.__class__.__name__)
+            if result['ip'] == '':
+                self.fail(msg='no ip address got.')
+            else:
+                resPingPercent = getPingStatus(self.dut, result['ip'], v.PING_PERCENT_COUNT, self.__class__.__name__)
+                self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
+                                        "Ping responsed percent werenot good enough.")
+        else:
+            self.assertTrue(resConn, "Association wasnot successful.")
+
+        resConn2 = chkStaOnline(self.dut, "5g", result['mac'], self.__class__.__name__)
+        self.assertTrue(resConn2, msg="STA doesnot associate with 5g")
+
+    def assoc_tkippsk2_near_field_sta(self):
+
+        resConn = setAdbTkipPsk2StaConn(self.device[0], "normal", "2g", self.__class__.__name__)
+
+        if resConn:
+            result = getAdbShellWlan(self.device[0], self.__class__.__name__)
+            if result['ip'] == '':
+                self.fail(msg='no ip address got.')
+            else:
+                resPingPercent = getPingStatus(self.dut, result['ip'], v.PING_PERCENT_COUNT, self.__class__.__name__)
+                self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
+                                        "Ping responsed percent werenot good enough.")
+        else:
+            self.assertTrue(resConn, "Association wasnot successful.")
+
+        resConn2 = chkStaOnline(self.dut, "5g", result['mac'], self.__class__.__name__)
+        self.assertTrue(resConn2, msg="STA doesnot associate with 5g")
+
+    def assoc_tkippsk_near_field_sta(self):
+
+        resConn = setAdbTkipPskStaConn(self.device[0], "normal", "2g", self.__class__.__name__)
+
+        if resConn:
+            result = getAdbShellWlan(self.device[0], self.__class__.__name__)
+            if result['ip'] == '':
+                self.fail(msg='no ip address got.')
+            else:
+                resPingPercent = getPingStatus(self.dut, result['ip'], v.PING_PERCENT_COUNT, self.__class__.__name__)
+                self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
+                                        "Ping responsed percent werenot good enough.")
+        else:
+            self.assertTrue(resConn, "Association wasnot successful.")
+
+        resConn2 = chkStaOnline(self.dut, "5g", result['mac'], self.__class__.__name__)
+        self.assertTrue(resConn2, msg="STA doesnot associate with 5g")
 
 class AP_TEST(TestCase):
     @classmethod

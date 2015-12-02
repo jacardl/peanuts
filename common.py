@@ -766,6 +766,18 @@ def chkBootingUpFinished(terminal, logname):
     else:
         return False
 
+
+def chkStaOnline(terminal, intf, stamac, logname):
+    commandDic = {"2g": "iwinfo wl1 assoclist | grep -i " + stamac,
+                  "5g": "iwinfo wl0 assoclist | grep -i " + stamac,}
+    command = commandDic.get(intf)
+    ret = setGet(terminal, command, logname)
+    if len(ret) is not 0:
+        return True
+    else:
+        return False
+
+
 def setUCIWirelessIntf(terminal, intf, type, name, value, logname):
     """
     :param intf: wl1/wl0/wl1.2
@@ -816,7 +828,10 @@ def setUCIWirelessDev(terminal, dut, intf, type, name, value, logname):
 
 
 def setWifiRestart(terminal, logname):
-    command = 'wifi; sleep 10'
+    command = '/sbin/wifi >/dev/null 2>/dev/null; ' \
+              '/etc/init.d/minidlna restart; ' \
+              '/etc/init.d/samba restart; ' \
+              '/usr/bin/gettraffic flush_wl_dev >/dev/null 2>/dev/null'
     setConfig(terminal, command, logname)
 
 
@@ -1189,9 +1204,8 @@ def setIperfFlow(target, interval, time, logname):
 
 
 if __name__ == '__main__':
-    # ssh = SshClient(2)
-    # ssh.connect("192.168.111.1", "", "")
-    # v.DUT_MODULE = "R2D"
-    # setIperfFlow(target="192.168.140.211", interval="", time="20", logname="log")
-    os.system("taskkill /F /IM python.exe | taskkill /F /T /IM adb.exe")
-    # ssh.close()
+    ssh = SshClient(2)
+    ssh.connect("192.168.140.1", "", "")
+    v.DUT_MODULE = "R1CM"
+    setWifiRestart(ssh, "log")
+    ssh.close()

@@ -4109,76 +4109,60 @@ class AP_MIXEDPSK_BSD(TestCase):
         self.dut.close()
 
     def assoc_psk2_near_field_sta(self):
-
-        resConn = setAdbPsk2StaConn(self.device[0], "normal", "2g", self.__class__.__name__)
-
-        if resConn:
+        count = 0
+        while count <= 5:
+            resConn = setAdbPsk2StaConn(self.device[0], "normal", "2g", self.__class__.__name__)
             result = getAdbShellWlan(self.device[0], self.__class__.__name__)
-            if result['ip'] == '':
-                self.fail(msg='no ip address got.')
-            else:
-                resPingPercent = getPingStatus(self.dut, result['ip'], v.PING_PERCENT_COUNT, self.__class__.__name__)
-                self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
-                                        "Ping responsed percent werenot good enough.")
-        else:
-            self.assertTrue(resConn, "Association wasnot successful.")
+            resConn2 = chkStaOnline(self.dut, "5g", result['mac'], self.__class__.__name__)
+            if resConn and resConn2 and result['ip'] != '':
+                break
+            count += 1
 
-        resConn2 = chkStaOnline(self.dut, "5g", result['mac'], self.__class__.__name__)
+        self.assertTrue(resConn, msg="Association wasnot successful.")
         self.assertTrue(resConn2, msg="STA doesnot associate with 5g")
+        self.assertIsNot(result['ip'], "", msg='no ip address got.')
 
     def assoc_psk_near_field_sta(self):
-
-        resConn = setAdbPskStaConn(self.device[0], "normal", "2g", self.__class__.__name__)
-
-        if resConn:
+        count = 0
+        while count <= 5:
+            resConn = setAdbPskStaConn(self.device[0], "normal", "2g", self.__class__.__name__)
             result = getAdbShellWlan(self.device[0], self.__class__.__name__)
-            if result['ip'] == '':
-                self.fail(msg='no ip address got.')
-            else:
-                resPingPercent = getPingStatus(self.dut, result['ip'], v.PING_PERCENT_COUNT, self.__class__.__name__)
-                self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
-                                        "Ping responsed percent werenot good enough.")
-        else:
-            self.assertTrue(resConn, "Association wasnot successful.")
+            resConn2 = chkStaOnline(self.dut, "5g", result['mac'], self.__class__.__name__)
+            if resConn and resConn2 and result['ip'] != '':
+                break
+            count += 1
 
-        resConn2 = chkStaOnline(self.dut, "5g", result['mac'], self.__class__.__name__)
+        self.assertTrue(resConn, msg="Association wasnot successful.")
         self.assertTrue(resConn2, msg="STA doesnot associate with 5g")
+        self.assertIsNot(result['ip'], "", msg='no ip address got.')
 
     def assoc_tkippsk2_near_field_sta(self):
-
-        resConn = setAdbTkipPsk2StaConn(self.device[0], "normal", "2g", self.__class__.__name__)
-
-        if resConn:
+        count = 0
+        while count <= 5:
+            resConn = setAdbTkipPsk2StaConn(self.device[0], "normal", "2g", self.__class__.__name__)
             result = getAdbShellWlan(self.device[0], self.__class__.__name__)
-            if result['ip'] == '':
-                self.fail(msg='no ip address got.')
-            else:
-                resPingPercent = getPingStatus(self.dut, result['ip'], v.PING_PERCENT_COUNT, self.__class__.__name__)
-                self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
-                                        "Ping responsed percent werenot good enough.")
-        else:
-            self.assertTrue(resConn, "Association wasnot successful.")
+            resConn2 = chkStaOnline(self.dut, "5g", result['mac'], self.__class__.__name__)
+            if resConn and resConn2 and result['ip'] != '':
+                break
+            count += 1
 
-        resConn2 = chkStaOnline(self.dut, "5g", result['mac'], self.__class__.__name__)
+        self.assertTrue(resConn, msg="Association wasnot successful.")
         self.assertTrue(resConn2, msg="STA doesnot associate with 5g")
+        self.assertIsNot(result['ip'], "", msg='no ip address got.')
 
     def assoc_tkippsk_near_field_sta(self):
-
-        resConn = setAdbTkipPskStaConn(self.device[0], "normal", "2g", self.__class__.__name__)
-
-        if resConn:
+        count = 0
+        while count <= 5:
+            resConn = setAdbTkipPskStaConn(self.device[0], "normal", "2g", self.__class__.__name__)
             result = getAdbShellWlan(self.device[0], self.__class__.__name__)
-            if result['ip'] == '':
-                self.fail(msg='no ip address got.')
-            else:
-                resPingPercent = getPingStatus(self.dut, result['ip'], v.PING_PERCENT_COUNT, self.__class__.__name__)
-                self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
-                                        "Ping responsed percent werenot good enough.")
-        else:
-            self.assertTrue(resConn, "Association wasnot successful.")
+            resConn2 = chkStaOnline(self.dut, "5g", result['mac'], self.__class__.__name__)
+            if resConn and resConn2 and result['ip'] != '':
+                break
+            count += 1
 
-        resConn2 = chkStaOnline(self.dut, "5g", result['mac'], self.__class__.__name__)
+        self.assertTrue(resConn, msg="Association wasnot successful.")
         self.assertTrue(resConn2, msg="STA doesnot associate with 5g")
+        self.assertIsNot(result['ip'], "", msg='no ip address got.')
 
 class AP_TEST(TestCase):
     @classmethod

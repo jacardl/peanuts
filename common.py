@@ -512,8 +512,8 @@ def getPingStatus(terminal, target, count, logname):
             result['pass'] = 100 - int(m.group(1))
             return result
         else:
-            result['loss'] = ''
-            result['pass'] = ''
+            result['loss'] = 100
+            result['pass'] = 0
     return result
 
 
@@ -695,24 +695,24 @@ def getAdbDevices():
 def getAdbShellWlan(device, logname):
     """
     D:\Python\new peanuts\22\iperf-2.0.5-3-win32>adb shell netcfg
-lo       UP                                   127.0.0.1/8   0x00000049 00:00:00:
-00:00:00
-mhi0     DOWN                                   0.0.0.0/0   0x00000090 26:00:00:
-00:00:00
-p2p0     UP                                     0.0.0.0/0   0x00001003 16:f6:5a:
-8f:c7:c1
-sit0     DOWN                                   0.0.0.0/0   0x00000080 00:00:00:
-00:00:00
-wlan0    UP                              192.168.31.103/24  0x00001043 14:f6:5a:
-8f:c7:c1
-rmnetctl DOWN                                   0.0.0.0/0   0x00000080 00:00:00:
-00:00:00
-dummy0   DOWN                                   0.0.0.0/0   0x00000082 a2:ef:9e:
-78:79:f2
-usbnet0  DOWN                                 10.0.2.15/24  0x00001002 0e:f7:11:
-b7:75:b6
-ip6tnl0  DOWN                                   0.0.0.0/0   0x00000080 00:00:00:
-00:00:00
+    lo       UP                                   127.0.0.1/8   0x00000049 00:00:00:
+    00:00:00
+    mhi0     DOWN                                   0.0.0.0/0   0x00000090 26:00:00:
+    00:00:00
+    p2p0     UP                                     0.0.0.0/0   0x00001003 16:f6:5a:
+    8f:c7:c1
+    sit0     DOWN                                   0.0.0.0/0   0x00000080 00:00:00:
+    00:00:00
+    wlan0    UP                              192.168.31.103/24  0x00001043 14:f6:5a:
+    8f:c7:c1
+    rmnetctl DOWN                                   0.0.0.0/0   0x00000080 00:00:00:
+    00:00:00
+    dummy0   DOWN                                   0.0.0.0/0   0x00000082 a2:ef:9e:
+    78:79:f2
+    usbnet0  DOWN                                 10.0.2.15/24  0x00001002 0e:f7:11:
+    b7:75:b6
+    ip6tnl0  DOWN                                   0.0.0.0/0   0x00000080 00:00:00:
+    00:00:00
     """
     command = "netcfg"
     ret = setAdbShell(device, command, logname)
@@ -731,6 +731,36 @@ ip6tnl0  DOWN                                   0.0.0.0/0   0x00000080 00:00:00:
         else:
             result['mac'] = ""
             result['ip'] = ""
+    return result
+
+
+def getAdbPingStatus(terminal, target, count, logname):
+    """
+    C:\Users\Administrator>adb shell ping -c 5 www.baidu.com
+    PING www.a.shifen.com (61.135.169.125) 56(84) bytes of data.
+    64 bytes from 61.135.169.125: icmp_seq=1 ttl=54 time=19.7 ms
+    64 bytes from 61.135.169.125: icmp_seq=2 ttl=54 time=16.1 ms
+    64 bytes from 61.135.169.125: icmp_seq=3 ttl=54 time=16.6 ms
+    64 bytes from 61.135.169.125: icmp_seq=4 ttl=54 time=18.6 ms
+    64 bytes from 61.135.169.125: icmp_seq=5 ttl=54 time=15.6 ms
+
+    --- www.a.shifen.com ping statistics ---
+    5 packets transmitted, 5 received, 0% packet loss, time 4006ms
+    rtt min/avg/max/mdev = 15.669/17.374/19.774/1.563 ms
+    """
+    command = 'ping -c ' + str(count) + ' ' + target
+    ret = setAdbShell(terminal, command, logname)
+    result = {}
+    for line in ret:
+        m = re.search('(\d{1,3})%\spacket\sloss', line)
+
+        if m:
+            result['loss'] = int(m.group(1))
+            result['pass'] = 100 - int(m.group(1))
+            return result
+        else:
+            result['loss'] = 100
+            result['pass'] = 0
     return result
 
 

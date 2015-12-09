@@ -37,7 +37,7 @@ class AP_CLEAR_CHAN2(TestCase):
             if result['ip'] == '':
                 self.fail(msg='no ip address got.')
             else:
-                resPingPercent = getPingStatus(self.dut, result['ip'], v.PING_PERCENT_COUNT, self.__class__.__name__)
+                resPingPercent = getAdbPingStatus(self.device[0], v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
                 self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
                                         "Ping responsed percent werenot good enough.")
         else:
@@ -51,7 +51,7 @@ class AP_CLEAR_CHAN2(TestCase):
             if result['ip'] == '':
                 self.fail(msg='no ip address got.')
             else:
-                resPingPercent = getPingStatus(self.dut, result['ip'], v.PING_PERCENT_COUNT, self.__class__.__name__)
+                resPingPercent = getAdbPingStatus(self.device[0], v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
                 self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
                                         "Ping responsed percent werenot good enough.")
         else:
@@ -93,7 +93,7 @@ class AP_PSK2_CHAN2(TestCase):
             if result['ip'] == '':
                 self.fail(msg='no ip address got.')
             else:
-                resPingPercent = getPingStatus(self.dut, result['ip'], v.PING_PERCENT_COUNT, self.__class__.__name__)
+                resPingPercent = getAdbPingStatus(self.device[0], v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
                 self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
                                         "Ping responsed percent werenot good enough.")
         else:
@@ -107,7 +107,7 @@ class AP_PSK2_CHAN2(TestCase):
             if result['ip'] == '':
                 self.fail(msg='no ip address got.')
             else:
-                resPingPercent = getPingStatus(self.dut, result['ip'], v.PING_PERCENT_COUNT, self.__class__.__name__)
+                resPingPercent = getAdbPingStatus(self.device[0], v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
                 self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
                                         "Ping responsed percent werenot good enough.")
         else:
@@ -149,7 +149,7 @@ class AP_MIXEDPSK_CHAN2(TestCase):
             if result['ip'] == '':
                 self.fail(msg='no ip address got.')
             else:
-                resPingPercent = getPingStatus(self.dut, result['ip'], v.PING_PERCENT_COUNT, self.__class__.__name__)
+                resPingPercent = getAdbPingStatus(self.device[0], v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
                 self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
                                         "Ping responsed percent werenot good enough.")
         else:
@@ -163,7 +163,7 @@ class AP_MIXEDPSK_CHAN2(TestCase):
             if result['ip'] == '':
                 self.fail(msg='no ip address got.')
             else:
-                resPingPercent = getPingStatus(self.dut, result['ip'], v.PING_PERCENT_COUNT, self.__class__.__name__)
+                resPingPercent = getAdbPingStatus(self.device[0], v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
                 self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
                                         "Ping responsed percent werenot good enough.")
         else:
@@ -177,7 +177,7 @@ class AP_MIXEDPSK_CHAN2(TestCase):
             if result['ip'] == '':
                 self.fail(msg='no ip address got.')
             else:
-                resPingPercent = getPingStatus(self.dut, result['ip'], v.PING_PERCENT_COUNT, self.__class__.__name__)
+                resPingPercent = getAdbPingStatus(self.device[0], v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
                 self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
                                         "Ping responsed percent werenot good enough.")
         else:
@@ -191,7 +191,7 @@ class AP_MIXEDPSK_CHAN2(TestCase):
             if result['ip'] == '':
                 self.fail(msg='no ip address got.')
             else:
-                resPingPercent = getPingStatus(self.dut, result['ip'], v.PING_PERCENT_COUNT, self.__class__.__name__)
+                resPingPercent = getAdbPingStatus(self.device[0], v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
                 self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
                                         "Ping responsed percent werenot good enough.")
         else:
@@ -205,7 +205,7 @@ class AP_MIXEDPSK_CHAN2(TestCase):
             if result['ip'] == '':
                 self.fail(msg='no ip address got.')
             else:
-                resPingPercent = getPingStatus(self.dut, result['ip'], v.PING_PERCENT_COUNT, self.__class__.__name__)
+                resPingPercent = getAdbPingStatus(self.device[0], v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
                 self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
                                         "Ping responsed percent werenot good enough.")
         else:
@@ -219,7 +219,7 @@ class AP_MIXEDPSK_CHAN2(TestCase):
             if result['ip'] == '':
                 self.fail(msg='no ip address got.')
             else:
-                resPingPercent = getPingStatus(self.dut, result['ip'], v.PING_PERCENT_COUNT, self.__class__.__name__)
+                resPingPercent = getAdbPingStatus(self.device[0], v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
                 self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
                                         "Ping responsed percent werenot good enough.")
         else:
@@ -233,7 +233,7 @@ class AP_MIXEDPSK_CHAN2(TestCase):
             if result['ip'] == '':
                 self.fail(msg='no ip address got.')
             else:
-                resPingPercent = getPingStatus(self.dut, result['ip'], v.PING_PERCENT_COUNT, self.__class__.__name__)
+                resPingPercent = getAdbPingStatus(self.device[0], v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
                 self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
                                         "Ping responsed percent werenot good enough.")
         else:
@@ -247,7 +247,7 @@ class AP_MIXEDPSK_CHAN2(TestCase):
             if result['ip'] == '':
                 self.fail(msg='no ip address got.')
             else:
-                resPingPercent = getPingStatus(self.dut, result['ip'], v.PING_PERCENT_COUNT, self.__class__.__name__)
+                resPingPercent = getAdbPingStatus(self.device[0], v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
                 self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
                                         "Ping responsed percent werenot good enough.")
         else:
@@ -289,7 +289,7 @@ class AP_GUEST_CLEAR_CHAN2(TestCase):
             if result['ip'] == '':
                 self.fail(msg='no ip address got.')
             else:
-                resPingPercent = getPingStatus(self.dut, result['ip'], v.PING_PERCENT_COUNT, self.__class__.__name__)
+                resPingPercent = getAdbPingStatus(self.device[0], v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
                 self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
                                         "Ping responsed percent werenot good enough.")
         else:
@@ -331,7 +331,7 @@ class AP_GUEST_PSK2_CHAN2(TestCase):
             if result['ip'] == '':
                 self.fail(msg='no ip address got.')
             else:
-                resPingPercent = getPingStatus(self.dut, result['ip'], v.PING_PERCENT_COUNT, self.__class__.__name__)
+                resPingPercent = getAdbPingStatus(self.device[0], v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
                 self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
                                         "Ping responsed percent werenot good enough.")
         else:
@@ -373,7 +373,7 @@ class AP_GUEST_MIXEDPSK_CHAN2(TestCase):
             if result['ip'] == '':
                 self.fail(msg='no ip address got.')
             else:
-                resPingPercent = getPingStatus(self.dut, result['ip'], v.PING_PERCENT_COUNT, self.__class__.__name__)
+                resPingPercent = getAdbPingStatus(self.device[0], v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
                 self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
                                         "Ping responsed percent werenot good enough.")
         else:
@@ -387,7 +387,7 @@ class AP_GUEST_MIXEDPSK_CHAN2(TestCase):
             if result['ip'] == '':
                 self.fail(msg='no ip address got.')
             else:
-                resPingPercent = getPingStatus(self.dut, result['ip'], v.PING_PERCENT_COUNT, self.__class__.__name__)
+                resPingPercent = getAdbPingStatus(self.device[0], v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
                 self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
                                         "Ping responsed percent werenot good enough.")
         else:
@@ -401,7 +401,7 @@ class AP_GUEST_MIXEDPSK_CHAN2(TestCase):
             if result['ip'] == '':
                 self.fail(msg='no ip address got.')
             else:
-                resPingPercent = getPingStatus(self.dut, result['ip'], v.PING_PERCENT_COUNT, self.__class__.__name__)
+                resPingPercent = getAdbPingStatus(self.device[0], v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
                 self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
                                         "Ping responsed percent werenot good enough.")
         else:
@@ -415,7 +415,7 @@ class AP_GUEST_MIXEDPSK_CHAN2(TestCase):
             if result['ip'] == '':
                 self.fail(msg='no ip address got.')
             else:
-                resPingPercent = getPingStatus(self.dut, result['ip'], v.PING_PERCENT_COUNT, self.__class__.__name__)
+                resPingPercent = getAdbPingStatus(self.device[0], v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
                 self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
                                         "Ping responsed percent werenot good enough.")
         else:
@@ -457,7 +457,7 @@ class AP_MIXEDPSK_CHAN_BW802(TestCase):
             if result['ip'] == '':
                 self.fail(msg='no ip address got.')
             else:
-                resPingPercent = getPingStatus(self.dut, result['ip'], v.PING_PERCENT_COUNT, self.__class__.__name__)
+                resPingPercent = getAdbPingStatus(self.device[0], v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
                 self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
                                         "Ping responsed percent werenot good enough.")
         else:
@@ -471,7 +471,7 @@ class AP_MIXEDPSK_CHAN_BW802(TestCase):
             if result['ip'] == '':
                 self.fail(msg='no ip address got.')
             else:
-                resPingPercent = getPingStatus(self.dut, result['ip'], v.PING_PERCENT_COUNT, self.__class__.__name__)
+                resPingPercent = getAdbPingStatus(self.device[0], v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
                 self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
                                         "Ping responsed percent werenot good enough.")
         else:
@@ -485,7 +485,7 @@ class AP_MIXEDPSK_CHAN_BW802(TestCase):
             if result['ip'] == '':
                 self.fail(msg='no ip address got.')
             else:
-                resPingPercent = getPingStatus(self.dut, result['ip'], v.PING_PERCENT_COUNT, self.__class__.__name__)
+                resPingPercent = getAdbPingStatus(self.device[0], v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
                 self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
                                         "Ping responsed percent werenot good enough.")
         else:
@@ -499,7 +499,7 @@ class AP_MIXEDPSK_CHAN_BW802(TestCase):
             if result['ip'] == '':
                 self.fail(msg='no ip address got.')
             else:
-                resPingPercent = getPingStatus(self.dut, result['ip'], v.PING_PERCENT_COUNT, self.__class__.__name__)
+                resPingPercent = getAdbPingStatus(self.device[0], v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
                 self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
                                         "Ping responsed percent werenot good enough.")
         else:
@@ -541,7 +541,7 @@ class AP_MIXEDPSK_CHAN_BW402(TestCase):
             if result['ip'] == '':
                 self.fail(msg='no ip address got.')
             else:
-                resPingPercent = getPingStatus(self.dut, result['ip'], v.PING_PERCENT_COUNT, self.__class__.__name__)
+                resPingPercent = getAdbPingStatus(self.device[0], v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
                 self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
                                         "Ping responsed percent werenot good enough.")
         else:
@@ -555,7 +555,7 @@ class AP_MIXEDPSK_CHAN_BW402(TestCase):
             if result['ip'] == '':
                 self.fail(msg='no ip address got.')
             else:
-                resPingPercent = getPingStatus(self.dut, result['ip'], v.PING_PERCENT_COUNT, self.__class__.__name__)
+                resPingPercent = getAdbPingStatus(self.device[0], v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
                 self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
                                         "Ping responsed percent werenot good enough.")
         else:
@@ -569,7 +569,7 @@ class AP_MIXEDPSK_CHAN_BW402(TestCase):
             if result['ip'] == '':
                 self.fail(msg='no ip address got.')
             else:
-                resPingPercent = getPingStatus(self.dut, result['ip'], v.PING_PERCENT_COUNT, self.__class__.__name__)
+                resPingPercent = getAdbPingStatus(self.device[0], v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
                 self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
                                         "Ping responsed percent werenot good enough.")
         else:
@@ -583,7 +583,7 @@ class AP_MIXEDPSK_CHAN_BW402(TestCase):
             if result['ip'] == '':
                 self.fail(msg='no ip address got.')
             else:
-                resPingPercent = getPingStatus(self.dut, result['ip'], v.PING_PERCENT_COUNT, self.__class__.__name__)
+                resPingPercent = getAdbPingStatus(self.device[0], v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
                 self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
                                         "Ping responsed percent werenot good enough.")
         else:
@@ -597,7 +597,7 @@ class AP_MIXEDPSK_CHAN_BW402(TestCase):
             if result['ip'] == '':
                 self.fail(msg='no ip address got.')
             else:
-                resPingPercent = getPingStatus(self.dut, result['ip'], v.PING_PERCENT_COUNT, self.__class__.__name__)
+                resPingPercent = getAdbPingStatus(self.device[0], v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
                 self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
                                         "Ping responsed percent werenot good enough.")
         else:
@@ -611,7 +611,7 @@ class AP_MIXEDPSK_CHAN_BW402(TestCase):
             if result['ip'] == '':
                 self.fail(msg='no ip address got.')
             else:
-                resPingPercent = getPingStatus(self.dut, result['ip'], v.PING_PERCENT_COUNT, self.__class__.__name__)
+                resPingPercent = getAdbPingStatus(self.device[0], v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
                 self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
                                         "Ping responsed percent werenot good enough.")
         else:
@@ -625,7 +625,7 @@ class AP_MIXEDPSK_CHAN_BW402(TestCase):
             if result['ip'] == '':
                 self.fail(msg='no ip address got.')
             else:
-                resPingPercent = getPingStatus(self.dut, result['ip'], v.PING_PERCENT_COUNT, self.__class__.__name__)
+                resPingPercent = getAdbPingStatus(self.device[0], v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
                 self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
                                         "Ping responsed percent werenot good enough.")
         else:
@@ -639,7 +639,7 @@ class AP_MIXEDPSK_CHAN_BW402(TestCase):
             if result['ip'] == '':
                 self.fail(msg='no ip address got.')
             else:
-                resPingPercent = getPingStatus(self.dut, result['ip'], v.PING_PERCENT_COUNT, self.__class__.__name__)
+                resPingPercent = getAdbPingStatus(self.device[0], v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
                 self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
                                         "Ping responsed percent werenot good enough.")
         else:
@@ -681,7 +681,7 @@ class AP_MIXEDPSK_CHAN_BW202(TestCase):
             if result['ip'] == '':
                 self.fail(msg='no ip address got.')
             else:
-                resPingPercent = getPingStatus(self.dut, result['ip'], v.PING_PERCENT_COUNT, self.__class__.__name__)
+                resPingPercent = getAdbPingStatus(self.device[0], v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
                 self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
                                         "Ping responsed percent werenot good enough.")
         else:
@@ -695,7 +695,7 @@ class AP_MIXEDPSK_CHAN_BW202(TestCase):
             if result['ip'] == '':
                 self.fail(msg='no ip address got.')
             else:
-                resPingPercent = getPingStatus(self.dut, result['ip'], v.PING_PERCENT_COUNT, self.__class__.__name__)
+                resPingPercent = getAdbPingStatus(self.device[0], v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
                 self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
                                         "Ping responsed percent werenot good enough.")
         else:
@@ -709,7 +709,7 @@ class AP_MIXEDPSK_CHAN_BW202(TestCase):
             if result['ip'] == '':
                 self.fail(msg='no ip address got.')
             else:
-                resPingPercent = getPingStatus(self.dut, result['ip'], v.PING_PERCENT_COUNT, self.__class__.__name__)
+                resPingPercent = getAdbPingStatus(self.device[0], v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
                 self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
                                         "Ping responsed percent werenot good enough.")
         else:
@@ -723,7 +723,7 @@ class AP_MIXEDPSK_CHAN_BW202(TestCase):
             if result['ip'] == '':
                 self.fail(msg='no ip address got.')
             else:
-                resPingPercent = getPingStatus(self.dut, result['ip'], v.PING_PERCENT_COUNT, self.__class__.__name__)
+                resPingPercent = getAdbPingStatus(self.device[0], v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
                 self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
                                         "Ping responsed percent werenot good enough.")
         else:
@@ -737,7 +737,7 @@ class AP_MIXEDPSK_CHAN_BW202(TestCase):
             if result['ip'] == '':
                 self.fail(msg='no ip address got.')
             else:
-                resPingPercent = getPingStatus(self.dut, result['ip'], v.PING_PERCENT_COUNT, self.__class__.__name__)
+                resPingPercent = getAdbPingStatus(self.device[0], v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
                 self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
                                         "Ping responsed percent werenot good enough.")
         else:
@@ -751,7 +751,7 @@ class AP_MIXEDPSK_CHAN_BW202(TestCase):
             if result['ip'] == '':
                 self.fail(msg='no ip address got.')
             else:
-                resPingPercent = getPingStatus(self.dut, result['ip'], v.PING_PERCENT_COUNT, self.__class__.__name__)
+                resPingPercent = getAdbPingStatus(self.device[0], v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
                 self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
                                         "Ping responsed percent werenot good enough.")
         else:
@@ -765,7 +765,7 @@ class AP_MIXEDPSK_CHAN_BW202(TestCase):
             if result['ip'] == '':
                 self.fail(msg='no ip address got.')
             else:
-                resPingPercent = getPingStatus(self.dut, result['ip'], v.PING_PERCENT_COUNT, self.__class__.__name__)
+                resPingPercent = getAdbPingStatus(self.device[0], v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
                 self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
                                         "Ping responsed percent werenot good enough.")
         else:
@@ -779,7 +779,7 @@ class AP_MIXEDPSK_CHAN_BW202(TestCase):
             if result['ip'] == '':
                 self.fail(msg='no ip address got.')
             else:
-                resPingPercent = getPingStatus(self.dut, result['ip'], v.PING_PERCENT_COUNT, self.__class__.__name__)
+                resPingPercent = getAdbPingStatus(self.device[0], v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
                 self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
                                         "Ping responsed percent werenot good enough.")
         else:
@@ -822,7 +822,7 @@ class AP_MIXEDPSK_CHAN_SSIDSPEC2(TestCase):
             if result['ip'] == '':
                 self.fail(msg='no ip address got.')
             else:
-                resPingPercent = getPingStatus(self.dut, result['ip'], v.PING_PERCENT_COUNT, self.__class__.__name__)
+                resPingPercent = getAdbPingStatus(self.device[0], v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
                 self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
                                         "Ping responsed percent werenot good enough.")
         else:
@@ -836,7 +836,7 @@ class AP_MIXEDPSK_CHAN_SSIDSPEC2(TestCase):
             if result['ip'] == '':
                 self.fail(msg='no ip address got.')
             else:
-                resPingPercent = getPingStatus(self.dut, result['ip'], v.PING_PERCENT_COUNT, self.__class__.__name__)
+                resPingPercent = getAdbPingStatus(self.device[0], v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
                 self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
                                         "Ping responsed percent werenot good enough.")
         else:
@@ -850,7 +850,7 @@ class AP_MIXEDPSK_CHAN_SSIDSPEC2(TestCase):
             if result['ip'] == '':
                 self.fail(msg='no ip address got.')
             else:
-                resPingPercent = getPingStatus(self.dut, result['ip'], v.PING_PERCENT_COUNT, self.__class__.__name__)
+                resPingPercent = getAdbPingStatus(self.device[0], v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
                 self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
                                         "Ping responsed percent werenot good enough.")
         else:
@@ -864,7 +864,7 @@ class AP_MIXEDPSK_CHAN_SSIDSPEC2(TestCase):
             if result['ip'] == '':
                 self.fail(msg='no ip address got.')
             else:
-                resPingPercent = getPingStatus(self.dut, result['ip'], v.PING_PERCENT_COUNT, self.__class__.__name__)
+                resPingPercent = getAdbPingStatus(self.device[0], v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
                 self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
                                         "Ping responsed percent werenot good enough.")
         else:
@@ -878,7 +878,7 @@ class AP_MIXEDPSK_CHAN_SSIDSPEC2(TestCase):
             if result['ip'] == '':
                 self.fail(msg='no ip address got.')
             else:
-                resPingPercent = getPingStatus(self.dut, result['ip'], v.PING_PERCENT_COUNT, self.__class__.__name__)
+                resPingPercent = getAdbPingStatus(self.device[0], v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
                 self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
                                         "Ping responsed percent werenot good enough.")
         else:
@@ -891,7 +891,7 @@ class AP_MIXEDPSK_CHAN_SSIDSPEC2(TestCase):
             if result['ip'] == '':
                 self.fail(msg='no ip address got.')
             else:
-                resPingPercent = getPingStatus(self.dut, result['ip'], v.PING_PERCENT_COUNT, self.__class__.__name__)
+                resPingPercent = getAdbPingStatus(self.device[0], v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
                 self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
                                         "Ping responsed percent werenot good enough.")
         else:
@@ -904,7 +904,7 @@ class AP_MIXEDPSK_CHAN_SSIDSPEC2(TestCase):
             if result['ip'] == '':
                 self.fail(msg='no ip address got.')
             else:
-                resPingPercent = getPingStatus(self.dut, result['ip'], v.PING_PERCENT_COUNT, self.__class__.__name__)
+                resPingPercent = getAdbPingStatus(self.device[0], v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
                 self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
                                         "Ping responsed percent werenot good enough.")
         else:
@@ -917,7 +917,7 @@ class AP_MIXEDPSK_CHAN_SSIDSPEC2(TestCase):
             if result['ip'] == '':
                 self.fail(msg='no ip address got.')
             else:
-                resPingPercent = getPingStatus(self.dut, result['ip'], v.PING_PERCENT_COUNT, self.__class__.__name__)
+                resPingPercent = getAdbPingStatus(self.device[0], v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
                 self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
                                         "Ping responsed percent werenot good enough.")
         else:
@@ -960,7 +960,7 @@ class AP_MIXEDPSK_CHAN_KEYSPEC2(TestCase):
             if result['ip'] == '':
                 self.fail(msg='no ip address got.')
             else:
-                resPingPercent = getPingStatus(self.dut, result['ip'], v.PING_PERCENT_COUNT, self.__class__.__name__)
+                resPingPercent = getAdbPingStatus(self.device[0], v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
                 self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
                                         "Ping responsed percent werenot good enough.")
         else:
@@ -974,7 +974,7 @@ class AP_MIXEDPSK_CHAN_KEYSPEC2(TestCase):
             if result['ip'] == '':
                 self.fail(msg='no ip address got.')
             else:
-                resPingPercent = getPingStatus(self.dut, result['ip'], v.PING_PERCENT_COUNT, self.__class__.__name__)
+                resPingPercent = getAdbPingStatus(self.device[0], v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
                 self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
                                         "Ping responsed percent werenot good enough.")
         else:
@@ -988,7 +988,7 @@ class AP_MIXEDPSK_CHAN_KEYSPEC2(TestCase):
             if result['ip'] == '':
                 self.fail(msg='no ip address got.')
             else:
-                resPingPercent = getPingStatus(self.dut, result['ip'], v.PING_PERCENT_COUNT, self.__class__.__name__)
+                resPingPercent = getAdbPingStatus(self.device[0], v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
                 self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
                                         "Ping responsed percent werenot good enough.")
         else:
@@ -1002,7 +1002,7 @@ class AP_MIXEDPSK_CHAN_KEYSPEC2(TestCase):
             if result['ip'] == '':
                 self.fail(msg='no ip address got.')
             else:
-                resPingPercent = getPingStatus(self.dut, result['ip'], v.PING_PERCENT_COUNT, self.__class__.__name__)
+                resPingPercent = getAdbPingStatus(self.device[0], v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
                 self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
                                         "Ping responsed percent werenot good enough.")
         else:
@@ -1016,7 +1016,7 @@ class AP_MIXEDPSK_CHAN_KEYSPEC2(TestCase):
             if result['ip'] == '':
                 self.fail(msg='no ip address got.')
             else:
-                resPingPercent = getPingStatus(self.dut, result['ip'], v.PING_PERCENT_COUNT, self.__class__.__name__)
+                resPingPercent = getAdbPingStatus(self.device[0], v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
                 self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
                                         "Ping responsed percent werenot good enough.")
         else:
@@ -1030,7 +1030,7 @@ class AP_MIXEDPSK_CHAN_KEYSPEC2(TestCase):
             if result['ip'] == '':
                 self.fail(msg='no ip address got.')
             else:
-                resPingPercent = getPingStatus(self.dut, result['ip'], v.PING_PERCENT_COUNT, self.__class__.__name__)
+                resPingPercent = getAdbPingStatus(self.device[0], v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
                 self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
                                         "Ping responsed percent werenot good enough.")
         else:
@@ -1044,7 +1044,7 @@ class AP_MIXEDPSK_CHAN_KEYSPEC2(TestCase):
             if result['ip'] == '':
                 self.fail(msg='no ip address got.')
             else:
-                resPingPercent = getPingStatus(self.dut, result['ip'], v.PING_PERCENT_COUNT, self.__class__.__name__)
+                resPingPercent = getAdbPingStatus(self.device[0], v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
                 self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
                                         "Ping responsed percent werenot good enough.")
         else:
@@ -1058,7 +1058,7 @@ class AP_MIXEDPSK_CHAN_KEYSPEC2(TestCase):
             if result['ip'] == '':
                 self.fail(msg='no ip address got.')
             else:
-                resPingPercent = getPingStatus(self.dut, result['ip'], v.PING_PERCENT_COUNT, self.__class__.__name__)
+                resPingPercent = getAdbPingStatus(self.device[0], v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
                 self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
                                         "Ping responsed percent werenot good enough.")
         else:
@@ -1101,7 +1101,7 @@ class AP_MIXEDPSK_CHAN_SSIDCHINESE2(TestCase):
             if result['ip'] == '':
                 self.fail(msg='no ip address got.')
             else:
-                resPingPercent = getPingStatus(self.dut, result['ip'], v.PING_PERCENT_COUNT, self.__class__.__name__)
+                resPingPercent = getAdbPingStatus(self.device[0], v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
                 self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
                                         "Ping responsed percent werenot good enough.")
         else:
@@ -1115,7 +1115,7 @@ class AP_MIXEDPSK_CHAN_SSIDCHINESE2(TestCase):
             if result['ip'] == '':
                 self.fail(msg='no ip address got.')
             else:
-                resPingPercent = getPingStatus(self.dut, result['ip'], v.PING_PERCENT_COUNT, self.__class__.__name__)
+                resPingPercent = getAdbPingStatus(self.device[0], v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
                 self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
                                         "Ping responsed percent werenot good enough.")
         else:
@@ -1129,7 +1129,7 @@ class AP_MIXEDPSK_CHAN_SSIDCHINESE2(TestCase):
             if result['ip'] == '':
                 self.fail(msg='no ip address got.')
             else:
-                resPingPercent = getPingStatus(self.dut, result['ip'], v.PING_PERCENT_COUNT, self.__class__.__name__)
+                resPingPercent = getAdbPingStatus(self.device[0], v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
                 self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
                                         "Ping responsed percent werenot good enough.")
         else:
@@ -1143,7 +1143,7 @@ class AP_MIXEDPSK_CHAN_SSIDCHINESE2(TestCase):
             if result['ip'] == '':
                 self.fail(msg='no ip address got.')
             else:
-                resPingPercent = getPingStatus(self.dut, result['ip'], v.PING_PERCENT_COUNT, self.__class__.__name__)
+                resPingPercent = getAdbPingStatus(self.device[0], v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
                 self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
                                         "Ping responsed percent werenot good enough.")
         else:
@@ -1157,7 +1157,7 @@ class AP_MIXEDPSK_CHAN_SSIDCHINESE2(TestCase):
             if result['ip'] == '':
                 self.fail(msg='no ip address got.')
             else:
-                resPingPercent = getPingStatus(self.dut, result['ip'], v.PING_PERCENT_COUNT, self.__class__.__name__)
+                resPingPercent = getAdbPingStatus(self.device[0], v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
                 self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
                                         "Ping responsed percent werenot good enough.")
         else:
@@ -1170,7 +1170,7 @@ class AP_MIXEDPSK_CHAN_SSIDCHINESE2(TestCase):
             if result['ip'] == '':
                 self.fail(msg='no ip address got.')
             else:
-                resPingPercent = getPingStatus(self.dut, result['ip'], v.PING_PERCENT_COUNT, self.__class__.__name__)
+                resPingPercent = getAdbPingStatus(self.device[0], v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
                 self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
                                         "Ping responsed percent werenot good enough.")
         else:
@@ -1183,7 +1183,7 @@ class AP_MIXEDPSK_CHAN_SSIDCHINESE2(TestCase):
             if result['ip'] == '':
                 self.fail(msg='no ip address got.')
             else:
-                resPingPercent = getPingStatus(self.dut, result['ip'], v.PING_PERCENT_COUNT, self.__class__.__name__)
+                resPingPercent = getAdbPingStatus(self.device[0], v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
                 self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
                                         "Ping responsed percent werenot good enough.")
         else:
@@ -1196,7 +1196,7 @@ class AP_MIXEDPSK_CHAN_SSIDCHINESE2(TestCase):
             if result['ip'] == '':
                 self.fail(msg='no ip address got.')
             else:
-                resPingPercent = getPingStatus(self.dut, result['ip'], v.PING_PERCENT_COUNT, self.__class__.__name__)
+                resPingPercent = getAdbPingStatus(self.device[0], v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
                 self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
                                         "Ping responsed percent werenot good enough.")
         else:
@@ -1238,7 +1238,7 @@ class AP_CLEAR_LOW2(TestCase):
             if result['ip'] == '':
                 self.fail(msg='no ip address got.')
             else:
-                resPingPercent = getPingStatus(self.dut, result['ip'], v.PING_PERCENT_COUNT, self.__class__.__name__)
+                resPingPercent = getAdbPingStatus(self.device[0], v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
                 self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
                                         "Ping responsed percent werenot good enough.")
         else:
@@ -1252,7 +1252,7 @@ class AP_CLEAR_LOW2(TestCase):
             if result['ip'] == '':
                 self.fail(msg='no ip address got.')
             else:
-                resPingPercent = getPingStatus(self.dut, result['ip'], v.PING_PERCENT_COUNT, self.__class__.__name__)
+                resPingPercent = getAdbPingStatus(self.device[0], v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
                 self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
                                         "Ping responsed percent werenot good enough.")
         else:
@@ -1294,7 +1294,7 @@ class AP_CLEAR_HIGH2(TestCase):
             if result['ip'] == '':
                 self.fail(msg='no ip address got.')
             else:
-                resPingPercent = getPingStatus(self.dut, result['ip'], v.PING_PERCENT_COUNT, self.__class__.__name__)
+                resPingPercent = getAdbPingStatus(self.device[0], v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
                 self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
                                         "Ping responsed percent werenot good enough.")
         else:
@@ -1308,7 +1308,7 @@ class AP_CLEAR_HIGH2(TestCase):
             if result['ip'] == '':
                 self.fail(msg='no ip address got.')
             else:
-                resPingPercent = getPingStatus(self.dut, result['ip'], v.PING_PERCENT_COUNT, self.__class__.__name__)
+                resPingPercent = getAdbPingStatus(self.device[0], v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
                 self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
                                         "Ping responsed percent werenot good enough.")
         else:
@@ -2384,8 +2384,12 @@ class AP_CLEAR_CHAN_WHITELIST2(TestCase):
             result = getAdbShellWlan(self.device[0], self.__class__.__name__)
             if result['ip'] == '':
                 self.fail(msg='no ip address got.')
-
-        self.assertTrue(res2gConn, "Association wasnot successful.")
+            else:
+                resPingPercent = getAdbPingStatus(self.device[0], v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
+                self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
+                                        "Ping responsed percent werenot good enough.")
+        else:
+            self.assertTrue(res2gConn, "Association wasnot successful.")
 
     def assoc_clear_sta_in_whitelist_5g(self):
 
@@ -2399,8 +2403,12 @@ class AP_CLEAR_CHAN_WHITELIST2(TestCase):
             result = getAdbShellWlan(self.device[0], self.__class__.__name__)
             if result['ip'] == '':
                 self.fail(msg='no ip address got.')
-
-        self.assertTrue(res5gConn, "Association wasnot successful.")
+            else:
+                resPingPercent = getAdbPingStatus(self.device[0], v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
+                self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
+                                        "Ping responsed percent werenot good enough.")
+        else:
+            self.assertTrue(res5gConn, "Association wasnot successful.")
 
     def assoc_clear_sta_outof_whitelist_2g(self):
 
@@ -2457,8 +2465,12 @@ class AP_CLEAR_CHAN_BLACKLIST2(TestCase):
             result = getAdbShellWlan(self.device[0], self.__class__.__name__)
             if result['ip'] == '':
                 self.fail(msg='no ip address got.')
-
-        self.assertTrue(res2gConn, "Association wasnot successful.")
+            else:
+                resPingPercent = getAdbPingStatus(self.device[0], v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
+                self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
+                                        "Ping responsed percent werenot good enough.")
+        else:
+            self.assertTrue(res2gConn, "Association wasnot successful.")
 
     def assoc_clear_sta_outof_blacklist_5g(self):
 
@@ -2469,8 +2481,12 @@ class AP_CLEAR_CHAN_BLACKLIST2(TestCase):
             result = getAdbShellWlan(self.device[0], self.__class__.__name__)
             if result['ip'] == '':
                 self.fail(msg='no ip address got.')
-
-        self.assertTrue(res5gConn, "Association wasnot successful.")
+            else:
+                resPingPercent = getAdbPingStatus(self.device[0], v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
+                self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
+                                        "Ping responsed percent werenot good enough.")
+        else:
+            self.assertTrue(res5gConn, "Association wasnot successful.")
 
     def assoc_clear_sta_in_blacklist_2g(self):
 
@@ -2535,8 +2551,12 @@ class AP_GUEST_CLEAR_CHAN_WHITELIST2(TestCase):
             result = getAdbShellWlan(self.device[0], self.__class__.__name__)
             if result['ip'] == '':
                 self.fail(msg='no ip address got.')
-
-        self.assertTrue(res2gConn, "Association wasnot successful.")
+            else:
+                resPingPercent = getAdbPingStatus(self.device[0], v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
+                self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
+                                        "Ping responsed percent werenot good enough.")
+        else:
+            self.assertTrue(res2gConn, "Association wasnot successful.")
 
     def assoc_clear_sta_outof_whitelist_guest(self):
 
@@ -2586,8 +2606,12 @@ class AP_GUEST_CLEAR_CHAN_BLACKLIST2(TestCase):
             result = getAdbShellWlan(self.device[0], self.__class__.__name__)
             if result['ip'] == '':
                 self.fail(msg='no ip address got.')
-
-        self.assertTrue(res2gConn, "Association wasnot successful.")
+            else:
+                resPingPercent = getAdbPingStatus(self.device[0], v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
+                self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
+                                        "Ping responsed percent werenot good enough.")
+        else:
+            self.assertTrue(res2gConn, "Association wasnot successful.")
 
     def assoc_clear_sta_in_blacklist_guest(self):
 
@@ -4099,6 +4123,7 @@ class AP_MIXEDPSK_BSD(TestCase):
             setConfig(self.dut, dutCommand, self.__name__)
         setWifiRestart(self.dut, self.__name__)
         self.device = getAdbDevices()
+        self.wlanInfo = getAdbShellWlan(self.device[0], self.__class__.__name__)
 
     @classmethod
     def tearDownClass(self):
@@ -4112,57 +4137,69 @@ class AP_MIXEDPSK_BSD(TestCase):
         count = 0
         while count <= 5:
             resConn = setAdbPsk2StaConn(self.device[0], "normal", "2g", self.__class__.__name__)
-            result = getAdbShellWlan(self.device[0], self.__class__.__name__)
-            resConn2 = chkStaOnline(self.dut, "5g", result['mac'], self.__class__.__name__)
-            if resConn and resConn2 and result['ip'] != '':
+            resConn2 = chkStaOnline(self.dut, "5g", self.wlanInfo['mac'], self.__class__.__name__)
+            if resConn and resConn2:
                 break
             count += 1
 
         self.assertTrue(resConn, msg="Association wasnot successful.")
         self.assertTrue(resConn2, msg="STA doesnot associate with 5g")
+        result = getAdbShellWlan(self.device[0], self.__class__.__name__)
         self.assertIsNot(result['ip'], "", msg='no ip address got.')
+        resPingPercent = getAdbPingStatus(self.device[0], v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
+        self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
+                                "Ping responsed percent werenot good enough.")
 
     def assoc_psk_near_field_sta(self):
         count = 0
         while count <= 5:
             resConn = setAdbPskStaConn(self.device[0], "normal", "2g", self.__class__.__name__)
-            result = getAdbShellWlan(self.device[0], self.__class__.__name__)
-            resConn2 = chkStaOnline(self.dut, "5g", result['mac'], self.__class__.__name__)
-            if resConn and resConn2 and result['ip'] != '':
+            resConn2 = chkStaOnline(self.dut, "5g", self.wlanInfo['mac'], self.__class__.__name__)
+            if resConn and resConn2:
                 break
             count += 1
 
         self.assertTrue(resConn, msg="Association wasnot successful.")
         self.assertTrue(resConn2, msg="STA doesnot associate with 5g")
+        result = getAdbShellWlan(self.device[0], self.__class__.__name__)
         self.assertIsNot(result['ip'], "", msg='no ip address got.')
+        resPingPercent = getAdbPingStatus(self.device[0], v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
+        self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
+                                "Ping responsed percent werenot good enough.")
 
     def assoc_tkippsk2_near_field_sta(self):
         count = 0
         while count <= 5:
             resConn = setAdbTkipPsk2StaConn(self.device[0], "normal", "2g", self.__class__.__name__)
-            result = getAdbShellWlan(self.device[0], self.__class__.__name__)
-            resConn2 = chkStaOnline(self.dut, "5g", result['mac'], self.__class__.__name__)
-            if resConn and resConn2 and result['ip'] != '':
+            resConn2 = chkStaOnline(self.dut, "5g", self.wlanInfo['mac'], self.__class__.__name__)
+            if resConn and resConn2:
                 break
             count += 1
 
         self.assertTrue(resConn, msg="Association wasnot successful.")
         self.assertTrue(resConn2, msg="STA doesnot associate with 5g")
+        result = getAdbShellWlan(self.device[0], self.__class__.__name__)
         self.assertIsNot(result['ip'], "", msg='no ip address got.')
+        resPingPercent = getAdbPingStatus(self.device[0], v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
+        self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
+                                "Ping responsed percent werenot good enough.")
 
     def assoc_tkippsk_near_field_sta(self):
         count = 0
         while count <= 5:
             resConn = setAdbTkipPskStaConn(self.device[0], "normal", "2g", self.__class__.__name__)
-            result = getAdbShellWlan(self.device[0], self.__class__.__name__)
-            resConn2 = chkStaOnline(self.dut, "5g", result['mac'], self.__class__.__name__)
-            if resConn and resConn2 and result['ip'] != '':
+            resConn2 = chkStaOnline(self.dut, "5g", self.wlanInfo['mac'], self.__class__.__name__)
+            if resConn and resConn2:
                 break
             count += 1
 
         self.assertTrue(resConn, msg="Association wasnot successful.")
         self.assertTrue(resConn2, msg="STA doesnot associate with 5g")
+        result = getAdbShellWlan(self.device[0], self.__class__.__name__)
         self.assertIsNot(result['ip'], "", msg='no ip address got.')
+        resPingPercent = getAdbPingStatus(self.device[0], v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
+        self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
+                                "Ping responsed percent werenot good enough.")
 
 class AP_TEST(TestCase):
     @classmethod

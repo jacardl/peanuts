@@ -8050,7 +8050,7 @@ class AP_UPGRADE(TestCase):
 
     def autochan_last_est_power(self):
         count = 0
-        while count <= 300:
+        while count <= 800:
             upgradefile = getFilePath(self.dut, self.__class__.__name__, path='/extdisks', pattern='brcm4709*')
             if len(upgradefile) is not 0:
                 setCopyFile(self.dut, self.__class__.__name__, src=upgradefile, dst='/tmp/upgrade.bin')
@@ -8088,16 +8088,16 @@ class AP_UPGRADE(TestCase):
                 if power2g <= txPower2g/2:
                     loop = 0
                     while loop < 120:
-                        getWlanTxPower(self.dut, v.DUT_MODULE, "2g", self.__class__.__name__)
-                        getWlanTxPower(self.dut, v.DUT_MODULE, "5g", self.__class__.__name__)
+                        getWlanLastEstPower(self.dut, v.DUT_MODULE, "2g", self.__class__.__name__)
+                        getWlanLastEstPower(self.dut, v.DUT_MODULE, "5g", self.__class__.__name__)
                         loop += 1
                         t.sleep(300)
                     # self.fail(msg='2.4g last est.power is far less than Tx Power!')
                 elif power5g <= txPower5g/2:
                     loop = 0
                     while loop < 120:
-                        getWlanTxPower(self.dut, v.DUT_MODULE, "2g", self.__class__.__name__)
-                        getWlanTxPower(self.dut, v.DUT_MODULE, "5g", self.__class__.__name__)
+                        getWlanLastEstPower(self.dut, v.DUT_MODULE, "2g", self.__class__.__name__)
+                        getWlanLastEstPower(self.dut, v.DUT_MODULE, "5g", self.__class__.__name__)
                         loop += 1
                         t.sleep(300)
                     # self.fail(msg='5g last est.power is far less than Tx Power!')

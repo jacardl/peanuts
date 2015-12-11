@@ -4123,7 +4123,7 @@ class AP_MIXEDPSK_BSD(TestCase):
             setConfig(self.dut, dutCommand, self.__name__)
         setWifiRestart(self.dut, self.__name__)
         self.device = getAdbDevices()
-        self.wlanInfo = getAdbShellWlan(self.device[0], self.__class__.__name__)
+        self.wlanInfo = getAdbShellWlan(self.device[0], self.__name__)
 
     @classmethod
     def tearDownClass(self):

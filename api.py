@@ -6,6 +6,8 @@ import time
 import random
 import var as v
 import re
+import time as t
+import os
 
 
 def getWebLoginNonce():
@@ -42,9 +44,10 @@ class HttpClient(object):
         self.token = None
         self.headers = {"Content-type": "application/x-www-form-urlencoded", "Accept": "text/plain"}
 
-    def connect(self, host, port=80):
+    def connect(self, hostname, port=80):
+        self.hostname = hostname
         try:
-            self.httpClient = httplib.HTTPConnection(host, port, timeout=30)
+            self.httpClient = httplib.HTTPConnection(self.hostname, port, timeout=30)
             return True
         except:
             print 'connection is failed. please check your network.'
@@ -76,31 +79,117 @@ class HttpClient(object):
             return self.token
 
     def getApi(self, path, **kwargs):
-        subpath = re.sub('stok=token', self.token, path)
-        print subpath
+        apipath = re.sub('stok=token', self.token, path)
         if len(kwargs) is 0:
-            self.httpClient.request('GET', subpath, headers=self.headers)
+            self.httpClient.request('GET', apipath, headers=self.headers)
             response = self.httpClient.getresponse().read()
             responsedict = eval(response)
             return responsedict
         else:
             params = urllib.urlencode(kwargs)
-            self.httpClient.request('POST', subpath, params, self.headers)
+            self.httpClient.request('POST', apipath, params, self.headers)
             response = self.httpClient.getresponse().read()
             responsedict = eval(response)
             return responsedict
 
 
-if __name__ == '__main__':
-    webclient = HttpClient()
-    webclient.connect('192.168.15.1')
-    print webclient.getToken(password=v.WEB_PWD)
-    # print webclient.getApi('/cgi-bin/luci/;stok=token/api/xqsystem/main_status_for_app')
-    # print webclient.getApi('/cgi-bin/luci/;stok=token/api/xqsystem/detection_ts')
-    print webclient.getApi('/cgi-bin/luci/;stok=token/api/xqnetwork/set_wifi', wifiIndex=1, on=1, ssid='peanuts_mu', pwd='12345678',
-                                                                                encryption='mixed-psk', channel='11', bandwidth='20',
-                                                                                hidden='0', txpower='mid')
+def setGet(terminal, logname, apipath, **kwargs):
+    if not os.path.exists(v.TEST_SUITE_LOG_PATH):
+        os.makedirs(v.TEST_SUITE_LOG_PATH)
 
+    try:
+        token = terminal.getToken(v.WEB_PWD)
+        if token is not False:
+            ret = terminal.getApi(apipath, **kwargs)
+        else:
+            ret = 'get token failed!'
+        curTime = t.strftime('%Y.%m.%d %H:%M:%S', t.localtime())
+        f = open(v.TEST_SUITE_LOG_PATH + logname + '.log', 'a')
+        f.write(curTime + '~#API request to ' + terminal.hostname + '#')
+        f.write(apipath + '\n')
+        f.writelines(str(ret))
+        f.write('\n\n')
+        f.close()
+        return ret
+
+    except Exception, e:
+        curTime = t.strftime('%Y.%m.%d %H:%M:%S', t.localtime())
+        f = open(v.TEST_SUITE_LOG_PATH + logname + '.log', 'a')
+        f.write(curTime + '~#API request to ' + terminal.hostname + ' failed#')
+        f.write(apipath + '\n')
+        print e
+        f.write(str(e))
+        f.write('\n\n')
+        terminal.close()
+        f.close()
+
+
+def setCheck(terminal, logname, apipath, **kwargs):
+    if not os.path.exists(v.TEST_SUITE_LOG_PATH):
+        os.makedirs(v.TEST_SUITE_LOG_PATH)
+
+    try:
+        token = terminal.getToken(v.WEB_PWD)
+        if token is not False:
+            ret = terminal.getApi(apipath, **kwargs)
+        else:
+            ret = 'get token failed!'
+        curTime = t.strftime('%Y.%m.%d %H:%M:%S', t.localtime())
+        f = open(v.TEST_SUITE_LOG_PATH + logname + '.log', 'a')
+        f.write(curTime + '~#API request to ' + terminal.hostname + '#')
+        f.write(apipath + '\n')
+        f.writelines(str(ret))
+        f.write('\n')
+        if ret['code'] == 0:
+            f.write('api processes PASS\n\n')
+            f.close()
+            return True
+        else:
+            f.write('api processes FAIL\n\n')
+            f.close()
+            return False
+
+    except Exception, e:
+        curTime = t.strftime('%Y.%m.%d %H:%M:%S', t.localtime())
+        f = open(v.TEST_SUITE_LOG_PATH + logname + '.log', 'a')
+        f.write(curTime + '~#API request to ' + terminal.hostname + ' failed#')
+        f.write(apipath + '\n')
+        f.write(str(e))
+        f.write('\n\n')
+        terminal.close()
+        f.close()
+        return False
+
+
+def setCheckFromFile(terminal, file, logname):
+    # ignore lines start with '#' in file
+    if os.path.exists(file):
+        apifile = open(file)
+    else:
+        print 'file isnot exists.'
+        return
+    for line in apifile:
+        if not line.isspace() and re.match('^#', line) is None:
+            api = line.strip('\n').split(',')
+            print api
+            if len(api) > 1:
+                api[1] = eval(api[1])
+                setCheck(terminal, logname, api[0], **api[1])
+            elif len(api) == 1:
+                setCheck(terminal, logname, api[0])
+    apifile.close()
+
+
+if __name__ == '__main__':
+
+    host = '192.168.15.1'
+    # api = '/cgi-bin/luci/;stok=token/api/xqnetwork/set_wifi'
+    # dictx = {'wifiIndex':1, 'on':1, 'ssid':'peanuts_mu', 'pwd':'12345678','encryption':'mixed-psk', 'channel':'11',
+    #         'bandwidth':'20','hidden':'0', 'txpower':'mid'}
+    webclient = HttpClient()
+    webclient.connect(host)
+    setCheckFromFile(webclient, 'api.data', 'aaa')
+    webclient.close()
 
 
 

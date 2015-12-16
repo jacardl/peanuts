@@ -124,3 +124,9 @@ MAIL_PIC3 = "throughput_in_%s.png"
 MAIL_XLSX = "memory_tracking.xlsx"
 
 MEM_MONITOR_INTERVAL = 60
+
+# -------------api test------------------#
+WEB_NONCE = '0_08:9e:01:d0:f1:f4_1449649511_9171'
+WEB_USERNAME = 'admin'
+WEB_PWD = '12345678'
+WEB_KEY = 'a2ffa5c9be07488bbb04a3a47d3c5f6a'

@@ -858,7 +858,9 @@ def setUCIWirelessDev(terminal, dut, intf, type, name, value, logname):
 
 
 def setWifiRestart(terminal, logname):
-    command = '/sbin/wifi >/dev/null 2>/dev/null; ' \
+    command = 'miio_notify -t 5 -u;' \
+              '/sbin/notice_tbus_device.sh; ' \
+              '/sbin/wifi >/dev/null 2>/dev/null; ' \
               '/etc/init.d/minidlna restart; ' \
               '/etc/init.d/samba restart; ' \
               '/usr/bin/gettraffic flush_wl_dev >/dev/null 2>/dev/null'

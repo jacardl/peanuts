@@ -327,13 +327,11 @@ treeNone = [
 ]
 
 treeCheck = [
-    "AP_REBOOT",
+    "CHECK_AP_LASTESTPOWER",
     [
-        "autochan_last_est_power",
-    ],
-    "AP_UPGRADE",
-    [
-        "autochan_last_est_power",
+        "ap_reboot",
+        "ap_upgrade",
+        "ap_reset",
     ],
     "AP_TEST",
     [

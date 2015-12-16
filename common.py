@@ -944,6 +944,10 @@ def setUpgradeSystem(terminal, file, logname):
     setGet(terminal, command, logname)
 
 
+def setReset(terminal, logname):
+    command = "env -i sleep 4 && nvram set restore_defaults=1 && nvram commit && reboot & >/dev/null 2>/dev/null"
+    setConfig(terminal, command, logname)
+
 def setCopyFile(terminal, logname, **kargs):
     command = 'cp %s %s'%(kargs['src'], kargs['dst'])
     setConfig(terminal, command, logname)

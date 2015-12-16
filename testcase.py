@@ -3974,7 +3974,7 @@ class AP_GUEST_PSK2_CHAN_REPEAT2(TestCase):
         self.assertTrue(res2gConn, "Not all association were successful.")
 
 
-class AP_REBOOT(TestCase):
+class CHECK_AP_LASTESTPOWER(TestCase):
     @classmethod
     def setUpClass(self):
 
@@ -3991,17 +3991,9 @@ class AP_REBOOT(TestCase):
     def tearDownClass(self):
         pass
 
-    def autochan_last_est_power(self):
+    def ap_reboot(self):
         count = 0
-        while count <= 500:
-            power2g = getWlanLastEstPower(self.dut, v.DUT_MODULE, "2g", self.__class__.__name__)
-            txPower2g = getWlanTxPower(self.dut, v.DUT_MODULE, "2g", self.__class__.__name__)
-            power5g = getWlanLastEstPower(self.dut, v.DUT_MODULE, "5g", self.__class__.__name__)
-            txPower5g = getWlanTxPower(self.dut, v.DUT_MODULE, "5g", self.__class__.__name__)
-            if power2g <= txPower2g/2:
-                self.fail(msg='2.4g last est.power is far less than Tx Power!')
-            elif power5g <= txPower5g/2:
-                self.fail(msg='5g last est.power is far less than Tx Power!')
+        while count <= 800:
             setMvFile(self.dut, self.__class__.__name__, src='/tmp/messages', dst='/tmp/message1')
             setReboot(self.dut, self.__class__.__name__)
             t.sleep(60)
@@ -4026,28 +4018,21 @@ class AP_REBOOT(TestCase):
                         t.sleep(10)
                 except Exception, e:
                     raise e
+
+            power2g = getWlanLastEstPower(self.dut, v.DUT_MODULE, "2g", self.__class__.__name__)
+            txPower2g = getWlanTxPower(self.dut, v.DUT_MODULE, "2g", self.__class__.__name__)
+            power5g = getWlanLastEstPower(self.dut, v.DUT_MODULE, "5g", self.__class__.__name__)
+            txPower5g = getWlanTxPower(self.dut, v.DUT_MODULE, "5g", self.__class__.__name__)
+            if power2g <= txPower2g/2 or power5g <= txPower5g/2:
+                loop = 0
+                while loop < 120:
+                    getWlanLastEstPower(self.dut, v.DUT_MODULE, "2g", self.__class__.__name__)
+                    getWlanLastEstPower(self.dut, v.DUT_MODULE, "5g", self.__class__.__name__)
+                    loop += 1
+                    t.sleep(300)
             count += 1
 
-
-class AP_UPGRADE(TestCase):
-    @classmethod
-    def setUpClass(self):
-
-        self.dut = SshClient(v.CONNECTION_TYPE)
-        ret1 = self.dut.connect(v.HOST, v.USR, v.PASSWD)
-
-        if ret1 is False:
-            raise Exception("Connection is failed. please check your remote settings.")
-
-        d = TestCommand(v.DUT_MODULE)
-        for dutCommand in d.ap_mixedpsk_set_up2(ssid="peanuts_check"):
-            setConfig(self.dut, dutCommand, self.__name__)
-        setWifiRestart(self.dut, self.__name__)
-    @classmethod
-    def tearDownClass(self):
-        pass
-
-    def autochan_last_est_power(self):
+    def ap_upgrade(self):
         count = 0
         while count <= 800:
             upgradefile = getFilePath(self.dut, self.__class__.__name__, path='/extdisks', pattern='brcm4709*')
@@ -4084,24 +4069,56 @@ class AP_UPGRADE(TestCase):
                 txPower2g = getWlanTxPower(self.dut, v.DUT_MODULE, "2g", self.__class__.__name__)
                 power5g = getWlanLastEstPower(self.dut, v.DUT_MODULE, "5g", self.__class__.__name__)
                 txPower5g = getWlanTxPower(self.dut, v.DUT_MODULE, "5g", self.__class__.__name__)
-                if power2g <= txPower2g/2:
+                if power2g <= txPower2g/2 or power5g <= txPower5g/2:
                     loop = 0
                     while loop < 120:
                         getWlanLastEstPower(self.dut, v.DUT_MODULE, "2g", self.__class__.__name__)
                         getWlanLastEstPower(self.dut, v.DUT_MODULE, "5g", self.__class__.__name__)
                         loop += 1
                         t.sleep(300)
-                    # self.fail(msg='2.4g last est.power is far less than Tx Power!')
-                elif power5g <= txPower5g/2:
-                    loop = 0
-                    while loop < 120:
-                        getWlanLastEstPower(self.dut, v.DUT_MODULE, "2g", self.__class__.__name__)
-                        getWlanLastEstPower(self.dut, v.DUT_MODULE, "5g", self.__class__.__name__)
-                        loop += 1
-                        t.sleep(300)
-                    # self.fail(msg='5g last est.power is far less than Tx Power!')
             else:
                 self.fail(msg='fail to find upgrade file!')
+            count += 1
+
+    def ap_reset(self):
+        count = 0
+        while count <= 800:
+            setMvFile(self.dut, self.__class__.__name__, src='/tmp/messages', dst='/tmp/message1')
+            setReset(self.dut, self.__class__.__name__)
+            t.sleep(60)
+            while 1:
+                try:
+                    self.dut = SshClient(v.CONNECTION_TYPE)
+                    ret = self.dut.connect(v.HOST, v.USR, v.PASSWD)
+                    if ret is True:
+                        chkCount = 0
+                        while 1:
+                            if chkCount < 20:
+                                result = chkBootingUpFinished(self.dut, self.__class__.__name__)
+                                if result is True:
+                                    break
+                                else:
+                                    chkCount += 1
+                                    t.sleep(10)
+                            else:
+                                self.fail(msg='reboot is failed')
+                        break
+                    else:
+                        t.sleep(10)
+                except Exception, e:
+                    raise e
+
+            power2g = getWlanLastEstPower(self.dut, v.DUT_MODULE, "2g", self.__class__.__name__)
+            txPower2g = getWlanTxPower(self.dut, v.DUT_MODULE, "2g", self.__class__.__name__)
+            power5g = getWlanLastEstPower(self.dut, v.DUT_MODULE, "5g", self.__class__.__name__)
+            txPower5g = getWlanTxPower(self.dut, v.DUT_MODULE, "5g", self.__class__.__name__)
+            if power2g <= txPower2g/2 or power5g <= txPower5g/2:
+                loop = 0
+                while loop < 120:
+                    getWlanLastEstPower(self.dut, v.DUT_MODULE, "2g", self.__class__.__name__)
+                    getWlanLastEstPower(self.dut, v.DUT_MODULE, "5g", self.__class__.__name__)
+                    loop += 1
+                    t.sleep(300)
             count += 1
 
 

@@ -4,11 +4,11 @@ import urllib
 import hashlib
 import time
 import random
-import var as v
 import re
 import time as t
 import os
 
+import var as v
 
 def getWebLoginNonce():
     """
@@ -106,7 +106,7 @@ def setGet(terminal, logname, apipath, **kwargs):
         curTime = t.strftime('%Y.%m.%d %H:%M:%S', t.localtime())
         f = open(v.TEST_SUITE_LOG_PATH + logname + '.log', 'a')
         f.write(curTime + '~#API request to ' + terminal.hostname + '#')
-        f.write(apipath + '\n')
+        f.write(apipath + '?' + str(kwargs) + '\n')
         f.writelines(str(ret))
         f.write('\n\n')
         f.close()
@@ -116,7 +116,7 @@ def setGet(terminal, logname, apipath, **kwargs):
         curTime = t.strftime('%Y.%m.%d %H:%M:%S', t.localtime())
         f = open(v.TEST_SUITE_LOG_PATH + logname + '.log', 'a')
         f.write(curTime + '~#API request to ' + terminal.hostname + ' failed#')
-        f.write(apipath + '\n')
+        f.write(apipath + '?' + str(kwargs) + '\n')
         print e
         f.write(str(e))
         f.write('\n\n')
@@ -137,7 +137,7 @@ def setCheck(terminal, logname, apipath, **kwargs):
         curTime = t.strftime('%Y.%m.%d %H:%M:%S', t.localtime())
         f = open(v.TEST_SUITE_LOG_PATH + logname + '.log', 'a')
         f.write(curTime + '~#API request to ' + terminal.hostname + '#')
-        f.write(apipath + '\n')
+        f.write(apipath + '?' + str(kwargs) + '\n')
         f.writelines(str(ret))
         f.write('\n')
         if ret['code'] == 0:
@@ -153,7 +153,7 @@ def setCheck(terminal, logname, apipath, **kwargs):
         curTime = t.strftime('%Y.%m.%d %H:%M:%S', t.localtime())
         f = open(v.TEST_SUITE_LOG_PATH + logname + '.log', 'a')
         f.write(curTime + '~#API request to ' + terminal.hostname + ' failed#')
-        f.write(apipath + '\n')
+        f.write(apipath + '?' + str(kwargs) + '\n')
         f.write(str(e))
         f.write('\n\n')
         terminal.close()
@@ -170,7 +170,7 @@ def setCheckFromFile(terminal, file, logname):
         return
     for line in apifile:
         if not line.isspace() and re.match('^#', line) is None:
-            api = line.strip('\n').split(',')
+            api = line.strip('\n').split('?')
             print api
             if len(api) > 1:
                 api[1] = eval(api[1])
@@ -180,15 +180,253 @@ def setCheckFromFile(terminal, file, logname):
     apifile.close()
 
 
+def setWifi(terminal, logname, **kwargs):
+    """
+    wifiIndex (1/2)
+    on (0/1)
+    ssid
+    pwd
+    encryption (none,mixed-psk,psk2)
+    channel
+    bandwidth
+    hidden (0/1)
+    txpwr (max/mid/min)
+
+    :param terminal:
+    :param logname:
+    :param kwargs:
+    :return:
+    """
+    option = {
+        'wifiIndex':1,
+        'on': 1,
+        'ssid': 'peanuts',
+        'pwd': '',
+        'encryption': 'none',
+        'channel': '0',
+        'bandwidth': '0',
+        'hidden': 0,
+        'txpwr': 'mid'
+    }
+
+    option.update(kwargs)
+    api = '/cgi-bin/luci/;stok=token/api/xqnetwork/set_wifi'
+    ret = setCheck(terminal, logname, api, **option)
+    time.sleep(10)
+    return ret
+
+
+def setAllWifi(terminal, logname, **kwargs):
+    """
+    bsd (0/1)
+    on1 (0/1)
+    ssid1
+    pwd1
+    encryption1 (none,mixed-psk,psk2)
+    channel1
+    bandwidth1
+    hidden1 (0/1)
+    txpwr1 (max/mid/min)
+    on2 (0/1)
+    ssid2
+    pwd2
+    encryption2 (none,mixed-psk,psk2)
+    channel2
+    bandwidth2
+    hidden2 (0/1)
+    txpwr2 (max/mid/min)
+
+    :param terminal:
+    :param logname:
+    :param kwargs:
+    :return:
+    """
+    option = {
+        'bsd': 0,
+        'on1': 1,
+        'ssid1': 'peanuts',
+        'pwd1': '',
+        'encryption1': 'none',
+        'channel1': '0',
+        'bandwidth1': '0',
+        'hidden1': 0,
+        'txpwr1': 'mid',
+        'on2': 1,
+        'ssid2': 'peanuts',
+        'pwd2': '',
+        'encryption2': 'none',
+        'channel2': '0',
+        'bandwidth2': '0',
+        'hidden2': 0,
+        'txpwr2': 'mid',
+    }
+    option.update(kwargs)
+    api = '/cgi-bin/luci/;stok=token/api/xqnetwork/set_all_wifi'
+    ret = setCheck(terminal, logname, api, **option)
+    time.sleep(10)
+    return ret
+
+def setEditDevice(terminal, logname, **kwargs):
+    """
+    model : (0/1 黑名单/白名单)
+    mac: (AA:BB:CC:DD:EE:FF or AA:BB:CC:DD:EE:FF;AA:BB:CC:DD:EE:FF...)
+    option: (0/1 添加/删除)
+
+    :param terminal:
+    :param logname:
+    :param kwargs:
+    :return:
+    """
+    """
+    :param terminal:
+    :param logname:
+    :param kwargs:
+    :return:
+    """
+    option = {
+        'model': 0,
+        'mac': '11:22:33:44:55:66',
+        'option': 0
+    }
+    option.update(kwargs)
+    api = '/cgi-bin/luci/;stok=token/api/xqnetwork/edit_device'
+    ret = setCheck(terminal, logname, api, **option)
+    return ret
+
+
+def setWifiMacFilter(terminal, logname, **kwargs):
+    """
+    model: (0/1 黑名单/白名单)
+    enable: (0/1 关闭/开启)
+    :param terminal:
+    :param logname:
+    :param kwargs:
+    :return:
+    """
+    option = {
+        'model' : 0,
+        'enable': 0
+    }
+    option.update(kwargs)
+    api = '/cgi-bin/luci/;stok=token/api/xqnetwork/set_wifi_macfilter'
+    return setCheck(terminal, logname, api, **option)
+
+
+def setReboot(terminal, logname):
+    api = '/cgi-bin/luci/;stok=token/api/xqsystem/reboot'
+    return setCheck(terminal, logname, api)
+
+
+def setReset(terminal, logname, **kwargs):
+    """
+    format (0/1 是否格式化磁盘，默认0 不格式化)
+    :param terminal:
+    :param logname:
+    :param kwargs:
+    :return:
+    """
+    option = {
+        'format': 0,
+    }
+    option.update(kwargs)
+    api = '/cgi-bin/luci/;stok=token/api/xqsystem/reset'
+    return setCheck(terminal, logname, **option)
+
+
+def getWifiDetailAll(terminal, logname):
+
+    api = '/cgi-bin/luci/;stok=token/api/xqnetwork/wifi_detail_all'
+    ret = setGet(terminal, logname, api)
+    if ret['code'] is 0:
+        return ret
+    else:
+        return None
+
+
+def getDeviceDetail(terminal, logname, **kwargs):
+    """
+    mac: '11:22:33:44:55:66'
+    :param terminal:
+    :param logname:
+    :param kwargs:
+    :return:
+    """
+    option = {
+        'mac': '11:22:33:44:55:66'
+    }
+    option.update(kwargs)
+    api = '/cgi-bin/luci/;stok=token/api/misystem/device_detail'
+    ret = setGet(terminal, logname, api, **option)
+    if ret['code'] is 0:
+        return ret
+    else:
+        return None
+
+
+def getDeviceList(terminal, logname, **kwargs):
+    """
+    online:0/1 (在线+离线/ 在线)
+    withbrlan:0/1 (无线/有线+无线)
+    :return
+    "isap": 0,       (0/1/2  正常设备/无线中继/有线中继)
+    "parent": "",    (当该设备是通过中继路由连入该字段内容为中继路由器的MAC地址)
+    "active": 1,             该IP是否活跃
+    "type": 0,       (0/1/2/3  有线 / 2.4G wifi / 5G wifi / guest wifi)
+    :param terminal:
+    :param logname:
+    :param kwargs:
+    :return:
+    """
+    option = {
+        'online': 1,
+        'withbrlan': 0
+    }
+    option.update(kwargs)
+    api = '/cgi-bin/luci/;stok=token/api/misystem/devicelist'
+    ret = setGet(terminal, logname, api, **option)
+    if ret['code'] is 0:
+        return ret
+    else:
+        return None
+
+
+def getOnlineDeviceType(terminal, logname):
+    result = dict()
+    option = {
+        'online': 1,
+        'withbrlan': 1,
+    }
+    ret = getDeviceList(terminal, logname, **option)
+    for d in ret['list']:
+        result[d['mac']] = d['type']
+    return result
+
 if __name__ == '__main__':
 
-    host = '192.168.15.1'
+    host = '192.168.31.1'
     # api = '/cgi-bin/luci/;stok=token/api/xqnetwork/set_wifi'
     # dictx = {'wifiIndex':1, 'on':1, 'ssid':'peanuts_mu', 'pwd':'12345678','encryption':'mixed-psk', 'channel':'11',
     #         'bandwidth':'20','hidden':'0', 'txpower':'mid'}
     webclient = HttpClient()
     webclient.connect(host)
-    setCheckFromFile(webclient, 'api.data', 'aaa')
+    # option = {
+    #     'bsd': 0,
+    #     'on1': 1,
+    #     'ssid1': 'peanuts',
+    #     'pwd1': '',
+    #     'encryption1': 'none',
+    #     'channel1': '0',
+    #     'bandwidth1': '0',
+    #     'hidden1': 0,
+    #     'txpwr1': 'mid',
+    # }
+    option = {
+        'wifiIndex': 1,
+        'ssid': v.SSID,
+        'encryption': 'psk2',
+        'pwd': v.SPECIAL_KEY,
+    }
+    ret = setWifi(webclient, 'aaa', **option)
     webclient.close()
 
 

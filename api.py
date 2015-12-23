@@ -7,8 +7,11 @@ import random
 import re
 import time as t
 import os
+from Crypto.Cipher import AES
+
 
 import var as v
+
 
 def getWebLoginNonce():
     """
@@ -21,12 +24,12 @@ def getWebLoginNonce():
     """
     timeNum = int(time.time())
     randomNum = random.randint(1, 9999)
-    macStr = 'peanutsWebClient'
+    macStr = 'peanutsclient'
     nonce = '0_' + macStr + '_' + str(timeNum) + '_' + str(randomNum)
     return nonce
 
 
-def getWebLoginPassword(password, key):
+def getWebLoginPassword(password=v.WEB_PWD, key=v.WEB_KEY):
     """
     password = sha1(nonce+sha1(pwd+key))
     """
@@ -38,11 +41,57 @@ def getWebLoginPassword(password, key):
     return result
 
 
+def getWebLoginOldPwd():
+    result = dict()
+    nonce = getWebLoginNonce()
+    oldPwd = str(hashlib.sha1(nonce + v.ACCOUNT_DEFAULT_PWD).hexdigest())
+    result['nonce'] = nonce
+    result['password'] = oldPwd
+    return result
+
+
+def getWebLoginNewPwdEncryptBase64(password=v.WEB_PWD, key=v.WEB_KEY):
+
+    # AES加密密钥是oldpwdnononce
+    oldPwdNoNonce = v.ACCOUNT_DEFAULT_PWD
+    aesKey = oldPwdNoNonce.decode('hex')
+    # aes-cbc-128 的key 16bytes
+    aesKey = aesKey[0:16]
+    iv = v.IV.decode('hex')
+    newPwdNoNonce = str(hashlib.sha1(password + key).hexdigest())
+    text = newPwdNoNonce
+    text = PKCSPad(text)
+
+    encryptor = AES.new(aesKey, AES.MODE_CBC, iv)
+    cipher = encryptor.encrypt(text)
+    cipherbase = cipher.encode('base64')
+    return cipherbase
+
+
+def PKCSPad(data):
+    """
+    PKCS#5 padding is identical to PKCS#7 padding, except that
+    it has only been defined for block ciphers that use a 64 bit (8 byte)
+    block size.
+    But in AES, there is no block of 8 bit, so PKCS#5 is PKCS#7.
+    """
+    BS = AES.block_size
+    data =  data + (BS - len(data) % BS) * chr(BS - len(data) % BS)
+    return data
+
+
+def PKCSUnpad(data):
+    data = data[0:-ord(data[-1])]
+    return data
+
 class HttpClient(object):
     def __init__(self, init=0):
         self.init = init
         self.token = None
-        self.headers = {"Content-type": "application/x-www-form-urlencoded", "Accept": "text/plain"}
+        self.headers = {"Content-type": "application/x-www-form-urlencoded",
+                        "Accept": "text/plain",
+                        "User-Agent": "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/47.0.2526.106 Safari/537.36"
+                        }
 
     def connect(self, hostname, port=80):
         self.hostname = hostname
@@ -58,12 +107,14 @@ class HttpClient(object):
             self.httpClient.close()
 
     def getToken(self, password=None):
-
-        login = getWebLoginPassword(password, v.WEB_KEY)
+        if self.init is 0:
+            self.login = getWebLoginPassword(password, v.WEB_KEY)
+        elif self.init is 1:
+            self.login = getWebLoginOldPwd()
         params = urllib.urlencode({'username': v.WEB_USERNAME,
-                                   'password': login['password'],
+                                   'password': self.login['password'],
                                    'init': self.init,
-                                   'nonce': login['nonce']})
+                                   'nonce': self.login['nonce']})
 
         self.httpClient.request('POST', '/cgi-bin/luci/api/xqsystem/login', params, self.headers)
         response = self.httpClient.getresponse()
@@ -134,6 +185,39 @@ def setCheck(terminal, logname, apipath, **kwargs):
             ret = terminal.getApi(apipath, **kwargs)
         else:
             ret = 'get token failed!'
+        curTime = t.strftime('%Y.%m.%d %H:%M:%S', t.localtime())
+        f = open(v.TEST_SUITE_LOG_PATH + logname + '.log', 'a')
+        f.write(curTime + '~#API request to ' + terminal.hostname + '#')
+        f.write(apipath + '?' + str(kwargs) + '\n')
+        f.writelines(str(ret))
+        f.write('\n')
+        if ret['code'] == 0:
+            f.write('api processes PASS\n\n')
+            f.close()
+            return True
+        else:
+            f.write('api processes FAIL\n\n')
+            f.close()
+            return False
+
+    except Exception, e:
+        curTime = t.strftime('%Y.%m.%d %H:%M:%S', t.localtime())
+        f = open(v.TEST_SUITE_LOG_PATH + logname + '.log', 'a')
+        f.write(curTime + '~#API request to ' + terminal.hostname + ' failed#')
+        f.write(apipath + '?' + str(kwargs) + '\n')
+        f.write(str(e))
+        f.write('\n\n')
+        terminal.close()
+        f.close()
+        return False
+
+
+def setCheck2(terminal, logname, apipath, **kwargs):
+    if not os.path.exists(v.TEST_SUITE_LOG_PATH):
+        os.makedirs(v.TEST_SUITE_LOG_PATH)
+
+    try:
+        ret = terminal.getApi(apipath, **kwargs)
         curTime = t.strftime('%Y.%m.%d %H:%M:%S', t.localtime())
         f = open(v.TEST_SUITE_LOG_PATH + logname + '.log', 'a')
         f.write(curTime + '~#API request to ' + terminal.hostname + '#')
@@ -330,7 +414,47 @@ def setReset(terminal, logname, **kwargs):
     }
     option.update(kwargs)
     api = '/cgi-bin/luci/;stok=token/api/xqsystem/reset'
-    return setCheck(terminal, logname, **option)
+    return setCheck(terminal, logname, api, **option)
+
+
+def setRouterNormal(terminal, logname,  **kwargs):
+    """
+    name 路由器名
+    locale 路由器地点
+    nonce 加密用
+    newPwd 新管理密码
+    oldPwd 旧管理密码
+    ssid wifi ssid
+    encryption (none,mixed-psk,psk2)
+    password wifi 密码
+    txpwr 1 穿墙
+    :param terminal:
+    :param logname:
+    :param kwargs:
+    :return:
+    """
+    # old = getWebLoginOldPwd()
+    # new = getWebLoginNewPwdEncryptBase64()
+    terminal.getToken()
+    time.sleep(1)
+    old = getWebLoginOldPwd()
+    new = getWebLoginNewPwdEncryptBase64()
+    option = {
+        'name': 'peanuts',
+        'locale': 'com',
+        'ssid': 'peanuts_check',
+        'encryption': 'mixed-psk',
+        'password': '12345678',
+        'nonce': old['nonce'],
+        'newPwd': new,
+        'oldPwd': old['password'],
+        'txpwr': 1,
+    }
+    option.update(kwargs)
+    api = '/cgi-bin/luci/;stok=token/api/misystem/set_router_normal'
+    result = setCheck2(terminal, logname, api, **option)
+    time.sleep(10)
+    return result
 
 
 def getWifiDetailAll(terminal, logname):
@@ -402,32 +526,17 @@ def getOnlineDeviceType(terminal, logname):
     return result
 
 if __name__ == '__main__':
-
-    host = '192.168.31.1'
-    # api = '/cgi-bin/luci/;stok=token/api/xqnetwork/set_wifi'
-    # dictx = {'wifiIndex':1, 'on':1, 'ssid':'peanuts_mu', 'pwd':'12345678','encryption':'mixed-psk', 'channel':'11',
-    #         'bandwidth':'20','hidden':'0', 'txpower':'mid'}
-    webclient = HttpClient()
-    webclient.connect(host)
-    # option = {
-    #     'bsd': 0,
-    #     'on1': 1,
-    #     'ssid1': 'peanuts',
-    #     'pwd1': '',
-    #     'encryption1': 'none',
-    #     'channel1': '0',
-    #     'bandwidth1': '0',
-    #     'hidden1': 0,
-    #     'txpwr1': 'mid',
-    # }
     option = {
-        'wifiIndex': 1,
-        'ssid': v.SSID,
-        'encryption': 'psk2',
-        'pwd': v.SPECIAL_KEY,
+        'name': 'peanuts',
+        'locale': '公司',
+        'ssid': 'peanuts_check',
+        'encryption': 'mixed-psk',
+        'password': v.KEY,
+        'txpwr': 1,
     }
-    ret = setWifi(webclient, 'aaa', **option)
+    host = '192.168.31.1'
+    webclient = HttpClient(init=1)
+    webclient.connect(host)
+    setRouterNormal(webclient, 'aaa', **option)
     webclient.close()
-
-
 

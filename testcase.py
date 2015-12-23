@@ -4218,6 +4218,7 @@ class AP_MIXEDPSK_BSD(TestCase):
         self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
                                 "Ping responsed percent werenot good enough.")
 
+
 class AP_TEST(TestCase):
     @classmethod
     def setUpClass(self):

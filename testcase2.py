@@ -1,3 +1,4 @@
+# -*- coding: utf8 -*-
 from unittest import *
 
 import api
@@ -1575,7 +1576,7 @@ class AP_CLEAR_CHAN_WHITELIST(TestCase):
         res2gConn = setAdbClearStaConn(self.device[0], "normal", "2g", self.__class__.__name__)
         self.assertFalse(res2gConn, "Association wasnot supposed to be successful which sta outof whitelist.")
 
-        #删除所有whitelist则白名单不再生效
+        #鍒犻櫎鎵�鏈墂hitelist鍒欑櫧鍚嶅崟涓嶅啀鐢熸晥
         option = {
             'model': 1,
             'mac': '11:22:33:44:55:66',
@@ -1597,7 +1598,7 @@ class AP_CLEAR_CHAN_WHITELIST(TestCase):
 
         res5gConn = setAdbClearStaConn(self.device[0], "normal", "5g", self.__class__.__name__)
         self.assertFalse(res5gConn, "Association wasnot supposed to be successful which sta outof whitelist.")
-        #删除所有whitelist则白名单不再生效
+        #鍒犻櫎鎵�鏈墂hitelist鍒欑櫧鍚嶅崟涓嶅啀鐢熸晥
         option = {
             'model': 1,
             'mac': '11:22:33:44:55:66',
@@ -4082,7 +4083,7 @@ class AP_MIXEDPSK_CHAN13_165_FLOW(TestCase):
     @classmethod
     def setUpClass(self):
 
-        self.dut = api.HttpClient(E)
+        self.dut = api.HttpClient()
         ret1 = self.dut.connect(v.HOST)
         ret2 = chkAdbDevicesCount(1)
 
@@ -5066,7 +5067,7 @@ class AP_SSIDHIDE(TestCase):
         api.setWifi(self.dut, self.__name__, **option5g)
 
 
-class CHECK_AP_LASTESTPOWER(TestCase):
+class AP_CHECK(TestCase):
     @classmethod
     def setUpClass(self):
 
@@ -5081,13 +5082,15 @@ class CHECK_AP_LASTESTPOWER(TestCase):
         option2g = {
             'wifiIndex': 1,
             'ssid': 'peanuts_check',
-            'encryption': 'none',
+            'encryption': 'mixed-psk',
+            'pwd': v.KEY,
             'channel': v.CHANNEL,
         }
         option5g = {
             'wifiIndex': 2,
             'ssid': 'peanuts_check',
-            'encryption': 'none',
+            'encryption': 'mixed',
+            'pwd': v.KEY,
             'channel': v.CHANNEL_5G,
         }
         api.setWifi(self.dut2, self.__name__, **option2g)
@@ -5097,7 +5100,7 @@ class CHECK_AP_LASTESTPOWER(TestCase):
     def tearDownClass(self):
         pass
 
-    def ap_reboot(self):
+    def check_ap_reboot_lastestpower(self):
         count = 0
         while count <= 800:
             setMvFile(self.dut, self.__class__.__name__, src='/tmp/messages', dst='/tmp/message1')
@@ -5125,20 +5128,27 @@ class CHECK_AP_LASTESTPOWER(TestCase):
                 except Exception, e:
                     raise e
 
-            power2g = getWlanLastEstPower(self.dut, v.DUT_MODULE, "2g", self.__class__.__name__)
-            txPower2g = getWlanTxPower(self.dut, v.DUT_MODULE, "2g", self.__class__.__name__)
-            power5g = getWlanLastEstPower(self.dut, v.DUT_MODULE, "5g", self.__class__.__name__)
-            txPower5g = getWlanTxPower(self.dut, v.DUT_MODULE, "5g", self.__class__.__name__)
-            if power2g <= txPower2g/2 or power5g <= txPower5g/2:
+            power2g = 0
+            power5g = 0
+            while power2g == 0 or power5g == 0:
+                power2g = getWlanLastEstPower(self.dut, v.DUT_MODULE, "2g", self.__class__.__name__)
+                txPower2g = getWlanTxPower(self.dut, v.DUT_MODULE, "2g", self.__class__.__name__)
+                t.sleep(1)
+                power5g = getWlanLastEstPower(self.dut, v.DUT_MODULE, "5g", self.__class__.__name__)
+                txPower5g = getWlanTxPower(self.dut, v.DUT_MODULE, "5g", self.__class__.__name__)
+                t.sleep(1)
+
+            if power2g <= (txPower2g-5) or power5g <= (txPower5g-5):
                 loop = 0
                 while loop < 120:
                     getWlanLastEstPower(self.dut, v.DUT_MODULE, "2g", self.__class__.__name__)
                     getWlanLastEstPower(self.dut, v.DUT_MODULE, "5g", self.__class__.__name__)
                     loop += 1
                     t.sleep(300)
+                self.fail(msg='last est power check is failed')
             count += 1
 
-    def ap_upgrade(self):
+    def check_ap_upgrade_lastestpower(self):
         count = 0
         while count <= 800:
             upgradefile = getFilePath(self.dut, self.__class__.__name__, path='/extdisks', pattern='brcm4709*')
@@ -5171,24 +5181,31 @@ class CHECK_AP_LASTESTPOWER(TestCase):
                     except Exception, e:
                         raise e
 
+            power2g = 0
+            power5g = 0
+            while power2g == 0 or power5g == 0:
                 power2g = getWlanLastEstPower(self.dut, v.DUT_MODULE, "2g", self.__class__.__name__)
                 txPower2g = getWlanTxPower(self.dut, v.DUT_MODULE, "2g", self.__class__.__name__)
+                t.sleep(1)
                 power5g = getWlanLastEstPower(self.dut, v.DUT_MODULE, "5g", self.__class__.__name__)
                 txPower5g = getWlanTxPower(self.dut, v.DUT_MODULE, "5g", self.__class__.__name__)
-                if power2g <= txPower2g/2 or power5g <= txPower5g/2:
-                    loop = 0
-                    while loop < 120:
-                        getWlanLastEstPower(self.dut, v.DUT_MODULE, "2g", self.__class__.__name__)
-                        getWlanLastEstPower(self.dut, v.DUT_MODULE, "5g", self.__class__.__name__)
-                        loop += 1
-                        t.sleep(300)
+                t.sleep(1)
+
+            if power2g <= (txPower2g-5) or power5g <= (txPower5g-5):
+                loop = 0
+                while loop < 120:
+                    getWlanLastEstPower(self.dut, v.DUT_MODULE, "2g", self.__class__.__name__)
+                    getWlanLastEstPower(self.dut, v.DUT_MODULE, "5g", self.__class__.__name__)
+                    loop += 1
+                    t.sleep(300)
+                self.fail(msg='last est power check is failed')
             else:
                 self.fail(msg='fail to find upgrade file!')
             count += 1
 
-    def ap_reset(self):
+    def check_ap_reset_lastestpower(self):
         count = 0
-        while count <= 800:
+        while count <= 2:
             setMvFile(self.dut, self.__class__.__name__, src='/tmp/messages', dst='/tmp/message1')
             api.setReset(self.dut2, self.__class__.__name__)
             t.sleep(60)
@@ -5215,30 +5232,48 @@ class CHECK_AP_LASTESTPOWER(TestCase):
                     raise e
 
             #router_init
+            option = {
+                'name': 'peanuts',
+                'locale': '鍏徃',
+                'ssid': 'peanuts_check',
+                'encryption': 'mixed-psk',
+                'password': v.KEY,
+                'txpwr': 1,
+            }
+            webclient = api.HttpClient(init=1)
+            webclient.connect(v.HOST)
+            api.setRouterNormal(webclient, self.__class__.__name__, **option)
+            webclient.close()
 
             power2g = getWlanLastEstPower(self.dut, v.DUT_MODULE, "2g", self.__class__.__name__)
             txPower2g = getWlanTxPower(self.dut, v.DUT_MODULE, "2g", self.__class__.__name__)
+            t.sleep(1)
             power5g = getWlanLastEstPower(self.dut, v.DUT_MODULE, "5g", self.__class__.__name__)
             txPower5g = getWlanTxPower(self.dut, v.DUT_MODULE, "5g", self.__class__.__name__)
-            if power2g <= txPower2g/2 or power5g <= txPower5g/2:
-                loop = 0
-                while loop < 120:
-                    getWlanLastEstPower(self.dut, v.DUT_MODULE, "2g", self.__class__.__name__)
-                    getWlanLastEstPower(self.dut, v.DUT_MODULE, "5g", self.__class__.__name__)
-                    loop += 1
-                    t.sleep(300)
+            t.sleep(1)
+
+            loop = 0
+            while (power2g <= (txPower2g-5) and txPower2g != 0) or (power5g <= (txPower5g-5) and txPower5g != 0):
+                t.sleep(10)
+                power2g = getWlanLastEstPower(self.dut, v.DUT_MODULE, "2g", self.__class__.__name__)
+                txPower2g = getWlanTxPower(self.dut, v.DUT_MODULE, "2g", self.__class__.__name__)
+                power5g = getWlanLastEstPower(self.dut, v.DUT_MODULE, "5g", self.__class__.__name__)
+                txPower5g = getWlanTxPower(self.dut, v.DUT_MODULE, "5g", self.__class__.__name__)
+
+                loop += 1
+                if loop >= 360:
+                    self.fail(msg='last est power check is failed')
             count += 1
 
 
 if __name__ == '__main__':
-    v.HOST = "192.168.130.1"
+    v.HOST = "192.168.31.1"
     v.WEB_PWD = "12345678"
     cases = [
-        'assoc_clear_sta_2g',
-        'assoc_clear_sta_5g',
+        'check_ap_reset_lastestpower',
     ]
 
-    suite = TestSuite(map(AP_CLEAR_CHAN, cases))
+    suite = TestSuite(map(AP_CHECK, cases))
     curTime = t.strftime('%Y.%m.%d %H.%M.%S', t.localtime())
     f = open(curTime + '_RESULT.log', 'a')
     runner = TextTestRunner(f, verbosity=2)

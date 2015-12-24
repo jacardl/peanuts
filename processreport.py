@@ -197,7 +197,7 @@ class GetFlowLog(threading.Thread):
         report = open(self.reportName)
         for line in report:
             if not line.isspace():
-                m = re.search('testcase\.(AP_.*_FLOW\d?)', line)
+                m = re.search('testcase.*\.(AP_.*_FLOW\d?)', line)
                 if m:
                     logFile = m.group(1) + ".log"
                     logFile = self.logPath + logFile
@@ -590,7 +590,7 @@ class GetOnlineLog(threading.Thread):
         report = open(self.reportName)
         for line in report:
             if not line.isspace():
-                m = re.search('assoc_repeat.*testcase\.(.*)\)', line)
+                m = re.search('assoc_repeat.*testcase.*\.(.*)\)', line)
                 if m:
                     if line.endswith("ok\n"):
                         self.result["pass"] += 100

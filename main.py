@@ -14,7 +14,7 @@ import var as v
 import common as co
 import images
 import data
-import testcase as tc
+import testcase2 as tc
 import sendmail as sm
 import memmonitor as mm
 import processreport as pr

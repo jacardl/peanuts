@@ -542,7 +542,7 @@ def getWlanTxPower(terminal, dut, intf, logname):
         command = commandDic.get(intf)
         ret = setGet(terminal, command, logname)
         for line in ret:
-            m = re.search('\d*\.\d*.*', line)
+            m = re.search('(\d{1,3}\.\d{1,2}\s*){2,3}', line)
             if m:
                 power = m.group(0)
                 powerList = power.split()
@@ -1240,8 +1240,23 @@ def setIperfFlow(target, interval, time, logname):
 
 
 if __name__ == '__main__':
-    ssh = SshClient(2)
-    ssh.connect("192.168.140.1", "", "")
-    v.DUT_MODULE = "R1CM"
-    setWifiRestart(ssh, "log")
-    ssh.close()
+    # ssh = SshClient(2)
+    # ssh.connect("192.168.140.1", "", "")
+    # v.DUT_MODULE = "R1CM"
+    # setWifiRestart(ssh, "log")
+    # ssh.close()
+    # line = "Error: Curpower failed. Bring up interface and disable mpc if necessary (wl mpc 0)"
+    line = "Maximum Power Target among all rates:   19.00  19.00  0.0"
+    m = re.search('(\d{1,3}\.\d{1,2}\s*){2,3}', line)
+    if m:
+        power = m.group(0)
+        print power
+        powerList = power.split()
+        sum = 0.0
+        for c in range(len(powerList)):
+            sum += float(powerList[c])
+        result = sum / len(powerList)
+        result = float(result)
+    else:
+        result = 0
+    print result

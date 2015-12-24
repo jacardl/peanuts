@@ -9,7 +9,6 @@ import time as t
 import os
 from Crypto.Cipher import AES
 
-
 import var as v
 
 
@@ -282,7 +281,7 @@ def setWifi(terminal, logname, **kwargs):
     :return:
     """
     option = {
-        'wifiIndex':1,
+        'wifiIndex': 1,
         'on': 1,
         'ssid': 'peanuts',
         'pwd': '',
@@ -296,7 +295,16 @@ def setWifi(terminal, logname, **kwargs):
     option.update(kwargs)
     api = '/cgi-bin/luci/;stok=token/api/xqnetwork/set_wifi'
     ret = setCheck(terminal, logname, api, **option)
-    time.sleep(10)
+    status = getWifiStatus(terminal, logname)
+    index = option['wifiIndex']
+    if index == 3:
+        while status['status'][0]['up'] != option.get('on'):
+            t.sleep(2)
+            status = getWifiStatus(terminal, logname)
+    else:
+        while status['status'][index-1]['up'] != option.get('on'):
+            t.sleep(2)
+            status = getWifiStatus(terminal, logname)
     return ret
 
 
@@ -467,6 +475,25 @@ def getWifiDetailAll(terminal, logname):
         return None
 
 
+def getWifiChannel(terminal, intf, logname):
+    """
+    channel = wifidetailall['info'][0]['channelInfo']['channel']
+    :param terminal:
+    :param intf:
+    :param logname:
+    :return:
+    """
+    ret = getWifiDetailAll(terminal, logname)
+    if ret is None:
+        return None
+    else:
+        commandDic = {
+            '2g': "ret['info'][0]['channelInfo']['channel']",
+            '5g': "ret['info'][1]['channelInfo']['channel']",
+        }
+        channel = commandDic.get(intf)
+        return int(eval(channel))
+
 def getDeviceDetail(terminal, logname, **kwargs):
     """
     mac: '11:22:33:44:55:66'
@@ -515,6 +542,12 @@ def getDeviceList(terminal, logname, **kwargs):
 
 
 def getOnlineDeviceType(terminal, logname):
+    """
+    "type": 0,       (0/1/2/3  有线 / 2.4G wifi / 5G wifi / guest wifi)
+    :param terminal:
+    :param logname:
+    :return:
+    """
     result = dict()
     option = {
         'online': 1,
@@ -525,18 +558,34 @@ def getOnlineDeviceType(terminal, logname):
         result[d['mac']] = d['type']
     return result
 
+
+def getWifiStatus(terminal, logname):
+    """
+    {'status': [{'ssid': 'peanuts', 'up': 0}, {'ssid': 'peanuts_automatic_test_suite-5G', 'up': 0}], 'code': 0}
+    :param terminal:
+    :param logname:
+    :return:
+    """
+    api = '/cgi-bin/luci/;stok=token/api/xqnetwork/wifi_status'
+    ret = setGet(terminal, logname, api)
+    return ret
+
+
 if __name__ == '__main__':
     option = {
-        'name': 'peanuts',
-        'locale': '公司',
-        'ssid': 'peanuts_check',
-        'encryption': 'mixed-psk',
-        'password': v.KEY,
-        'txpwr': 1,
+        'wifiIndex': 1,
+        'on': 1,
+        'ssid': 'peanuts',
+        'pwd': '',
+        'encryption': 'none',
+        'channel': '0',
+        'bandwidth': '0',
+        'hidden': 0,
+        'txpwr': 'mid'
     }
-    host = '192.168.31.1'
-    webclient = HttpClient(init=1)
+    host = '192.168.140.1'
+    webclient = HttpClient(init=0)
     webclient.connect(host)
-    setRouterNormal(webclient, 'aaa', **option)
+    setWifi(webclient, 'aaa', **option)
     webclient.close()
 

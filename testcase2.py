@@ -326,8 +326,13 @@ class AP_CLEAR_LOW_TXPOWER(TestCase):
             'encryption': 'none',
             'txpwr': 'min',
         }
-        api.setWifi(self.dut2, self.__name__, **option2g)
+        api.setWifi(self.dut2, self.__class__.__name__, **option2g)
         power = getWlanTxPower(self.dut, v.DUT_MODULE, "2g", self.__class__.__name__)
+        loop = 0
+        while power == 0 and loop < 5:
+            t.sleep(2)
+            power = getWlanTxPower(self.dut, v.DUT_MODULE, "2g", self.__class__.__name__)
+            loop += 1
         if v.DUT_MODULE == "R1D" or v.DUT_MODULE == "R2D":
             """
             exactly 19.75
@@ -363,8 +368,13 @@ class AP_CLEAR_LOW_TXPOWER(TestCase):
             'txpwr': 'min',
         }
 
-        api.setWifi(self.dut2, self.__name__, **option5g)
+        api.setWifi(self.dut2, self.__class__.__name__, **option5g)
         power = getWlanTxPower(self.dut, v.DUT_MODULE, "5g", self.__class__.__name__)
+        loop = 0
+        while power == 0 and loop < 5:
+            t.sleep(2)
+            power = getWlanTxPower(self.dut, v.DUT_MODULE, "5g", self.__class__.__name__)
+            loop += 1
         if v.DUT_MODULE == "R1D" or v.DUT_MODULE == "R2D":
             """
             exactly 16.25
@@ -394,6 +404,11 @@ class AP_CLEAR_LOW_TXPOWER(TestCase):
         }
         api.setWifi(self.dut2, self.__class__.__name__, **option2g)
         power = getWlanTxPower(self.dut, v.DUT_MODULE, "2g", self.__class__.__name__)
+        loop = 0
+        while power == 0 and loop < 5:
+            t.sleep(2)
+            power = getWlanTxPower(self.dut, v.DUT_MODULE, "2g", self.__class__.__name__)
+            loop += 1
         if v.DUT_MODULE == "R1D" or v.DUT_MODULE == "R2D":
             """
             exactly 19.75
@@ -433,6 +448,11 @@ class AP_CLEAR_LOW_TXPOWER(TestCase):
         api.setWifi(self.dut2, self.__class__.__name__, **option2g)
 
         power = getWlanTxPower(self.dut, v.DUT_MODULE, "2g", self.__class__.__name__)
+        loop = 0
+        while power == 0 and loop < 5:
+            t.sleep(2)
+            power = getWlanTxPower(self.dut, v.DUT_MODULE, "2g", self.__class__.__name__)
+            loop += 1
         if v.DUT_MODULE == "R1D" or v.DUT_MODULE == "R2D":
             """
             exactly 19.75
@@ -472,6 +492,11 @@ class AP_CLEAR_LOW_TXPOWER(TestCase):
         api.setWifi(self.dut2, self.__class__.__name__, **option2g)
 
         power = getWlanTxPower(self.dut, v.DUT_MODULE, "2g", self.__class__.__name__)
+        loop = 0
+        while power == 0 and loop < 5:
+            t.sleep(2)
+            power = getWlanTxPower(self.dut, v.DUT_MODULE, "2g", self.__class__.__name__)
+            loop += 1
         if v.DUT_MODULE == "R1D" or v.DUT_MODULE == "R2D":
             """
             exactly 19.75
@@ -511,6 +536,11 @@ class AP_CLEAR_LOW_TXPOWER(TestCase):
         api.setWifi(self.dut2, self.__class__.__name__, **option2g)
 
         power = getWlanTxPower(self.dut, v.DUT_MODULE, "2g", self.__class__.__name__)
+        loop = 0
+        while power == 0 and loop < 5:
+            t.sleep(2)
+            power = getWlanTxPower(self.dut, v.DUT_MODULE, "2g", self.__class__.__name__)
+            loop += 1
         if v.DUT_MODULE == "R1D" or v.DUT_MODULE == "R2D":
             """
             exactly 19.75
@@ -549,6 +579,11 @@ class AP_CLEAR_LOW_TXPOWER(TestCase):
         }
         api.setWifi(self.dut2, self.__class__.__name__, **option5g)
         power = getWlanTxPower(self.dut, v.DUT_MODULE, "5g", self.__class__.__name__)
+        loop = 0
+        while power == 0 and loop < 5:
+            t.sleep(2)
+            power = getWlanTxPower(self.dut, v.DUT_MODULE, "5g", self.__class__.__name__)
+            loop += 1
         if v.DUT_MODULE == "R1D" or v.DUT_MODULE == "R2D":
             """
             exactly 15.5
@@ -578,6 +613,11 @@ class AP_CLEAR_LOW_TXPOWER(TestCase):
         }
         api.setWifi(self.dut2, self.__class__.__name__, **option5g)
         power = getWlanTxPower(self.dut, v.DUT_MODULE, "5g", self.__class__.__name__)
+        loop = 0
+        while power == 0 and loop < 5:
+            t.sleep(2)
+            power = getWlanTxPower(self.dut, v.DUT_MODULE, "5g", self.__class__.__name__)
+            loop += 1
         if v.DUT_MODULE == "R1D" or v.DUT_MODULE == "R2D":
             """
             exactly 15.5
@@ -607,6 +647,11 @@ class AP_CLEAR_LOW_TXPOWER(TestCase):
         }
         api.setWifi(self.dut2, self.__class__.__name__, **option5g)
         power = getWlanTxPower(self.dut, v.DUT_MODULE, "5g", self.__class__.__name__)
+        loop = 0
+        while power == 0 and loop < 5:
+            t.sleep(2)
+            power = getWlanTxPower(self.dut, v.DUT_MODULE, "5g", self.__class__.__name__)
+            loop += 1
         if v.DUT_MODULE == "R1D" or v.DUT_MODULE == "R2D":
             """
             exactly 16.25
@@ -636,6 +681,11 @@ class AP_CLEAR_LOW_TXPOWER(TestCase):
         }
         api.setWifi(self.dut2, self.__class__.__name__, **option5g)
         power = getWlanTxPower(self.dut, v.DUT_MODULE, "5g", self.__class__.__name__)
+        loop = 0
+        while power == 0 and loop < 5:
+            t.sleep(2)
+            power = getWlanTxPower(self.dut, v.DUT_MODULE, "5g", self.__class__.__name__)
+            loop += 1
         if v.DUT_MODULE == "R1D" or v.DUT_MODULE == "R2D":
             """
             exactly 16.25
@@ -689,9 +739,15 @@ class AP_CLEAR_MID_TXPOWER(TestCase):
             'encryption': 'none',
             'txpwr': 'mid',
         }
-        api.setWifi(self.dut2, self.__name__, **option2g)
+        api.setWifi(self.dut2, self.__class__.__name__, **option2g)
 
         power = getWlanTxPower(self.dut, v.DUT_MODULE, "2g", self.__class__.__name__)
+        loop = 0
+        while power == 0 and loop < 5:
+            t.sleep(2)
+            power = getWlanTxPower(self.dut, v.DUT_MODULE, "2g", self.__class__.__name__)
+            loop += 1
+
         if v.DUT_MODULE == "R1D" or v.DUT_MODULE == "R2D":
             """
             exactly 23.25
@@ -728,9 +784,15 @@ class AP_CLEAR_MID_TXPOWER(TestCase):
             'txpwr': 'mid',
         }
 
-        api.setWifi(self.dut2, self.__name__, **option5g)
+        api.setWifi(self.dut2, self.__class__.__name__, **option5g)
 
         power = getWlanTxPower(self.dut, v.DUT_MODULE, "5g", self.__class__.__name__)
+        loop = 0
+        while power == 0 and loop < 5:
+            t.sleep(2)
+            power = getWlanTxPower(self.dut, v.DUT_MODULE, "5g", self.__class__.__name__)
+            loop += 1
+
         if v.DUT_MODULE == "R1D" or v.DUT_MODULE == "R2D":
             """
             exactly 19
@@ -761,6 +823,11 @@ class AP_CLEAR_MID_TXPOWER(TestCase):
         api.setWifi(self.dut2, self.__class__.__name__, **option2g)
 
         power = getWlanTxPower(self.dut, v.DUT_MODULE, "2g", self.__class__.__name__)
+        loop = 0
+        while power == 0 and loop < 5:
+            t.sleep(2)
+            power = getWlanTxPower(self.dut, v.DUT_MODULE, "2g", self.__class__.__name__)
+            loop += 1
         if v.DUT_MODULE == "R1D" or v.DUT_MODULE == "R2D":
             """
             exactly 23.25
@@ -800,6 +867,11 @@ class AP_CLEAR_MID_TXPOWER(TestCase):
         api.setWifi(self.dut2, self.__class__.__name__, **option2g)
 
         power = getWlanTxPower(self.dut, v.DUT_MODULE, "2g", self.__class__.__name__)
+        loop = 0
+        while power == 0 and loop < 5:
+            t.sleep(2)
+            power = getWlanTxPower(self.dut, v.DUT_MODULE, "2g", self.__class__.__name__)
+            loop += 1
         if v.DUT_MODULE == "R1D" or v.DUT_MODULE == "R2D":
             """
             exactly 23.25
@@ -838,6 +910,11 @@ class AP_CLEAR_MID_TXPOWER(TestCase):
         }
         api.setWifi(self.dut2, self.__class__.__name__, **option2g)
         power = getWlanTxPower(self.dut, v.DUT_MODULE, "2g", self.__class__.__name__)
+        loop = 0
+        while power == 0 and loop < 5:
+            t.sleep(2)
+            power = getWlanTxPower(self.dut, v.DUT_MODULE, "2g", self.__class__.__name__)
+            loop += 1
         if v.DUT_MODULE == "R1D" or v.DUT_MODULE == "R2D":
             """
             exactly 23.25
@@ -877,6 +954,11 @@ class AP_CLEAR_MID_TXPOWER(TestCase):
         api.setWifi(self.dut2, self.__class__.__name__, **option2g)
 
         power = getWlanTxPower(self.dut, v.DUT_MODULE, "2g", self.__class__.__name__)
+        loop = 0
+        while power == 0 and loop < 5:
+            t.sleep(2)
+            power = getWlanTxPower(self.dut, v.DUT_MODULE, "2g", self.__class__.__name__)
+            loop += 1
         if v.DUT_MODULE == "R1D" or v.DUT_MODULE == "R2D":
             """
             exactly 23.25
@@ -915,6 +997,11 @@ class AP_CLEAR_MID_TXPOWER(TestCase):
         }
         api.setWifi(self.dut2, self.__class__.__name__, **option5g)
         power = getWlanTxPower(self.dut, v.DUT_MODULE, "5g", self.__class__.__name__)
+        loop = 0
+        while power == 0 and loop < 5:
+            t.sleep(2)
+            power = getWlanTxPower(self.dut, v.DUT_MODULE, "5g", self.__class__.__name__)
+            loop += 1
         if v.DUT_MODULE == "R1D" or v.DUT_MODULE == "R2D":
             """
             exactly 18.25
@@ -945,6 +1032,11 @@ class AP_CLEAR_MID_TXPOWER(TestCase):
         api.setWifi(self.dut2, self.__class__.__name__, **option5g)
 
         power = getWlanTxPower(self.dut, v.DUT_MODULE, "5g", self.__class__.__name__)
+        loop = 0
+        while power == 0 and loop < 5:
+            t.sleep(2)
+            power = getWlanTxPower(self.dut, v.DUT_MODULE, "5g", self.__class__.__name__)
+            loop += 1
         if v.DUT_MODULE == "R1D" or v.DUT_MODULE == "R2D":
             """
             exactly 18.25
@@ -974,6 +1066,11 @@ class AP_CLEAR_MID_TXPOWER(TestCase):
         }
         api.setWifi(self.dut2, self.__class__.__name__, **option5g)
         power = getWlanTxPower(self.dut, v.DUT_MODULE, "5g", self.__class__.__name__)
+        loop = 0
+        while power == 0 and loop < 5:
+            t.sleep(2)
+            power = getWlanTxPower(self.dut, v.DUT_MODULE, "5g", self.__class__.__name__)
+            loop += 1
         if v.DUT_MODULE == "R1D" or v.DUT_MODULE == "R2D":
             """
             exactly 19
@@ -1004,6 +1101,11 @@ class AP_CLEAR_MID_TXPOWER(TestCase):
         api.setWifi(self.dut2, self.__class__.__name__, **option5g)
 
         power = getWlanTxPower(self.dut, v.DUT_MODULE, "5g", self.__class__.__name__)
+        loop = 0
+        while power == 0 and loop < 5:
+            t.sleep(2)
+            power = getWlanTxPower(self.dut, v.DUT_MODULE, "5g", self.__class__.__name__)
+            loop += 1
         if v.DUT_MODULE == "R1D" or v.DUT_MODULE == "R2D":
             """
             exactly 19
@@ -1057,9 +1159,14 @@ class AP_CLEAR_HIGH_TXPOWER(TestCase):
             'encryption': 'none',
             'txpwr': 'max',
         }
-        api.setWifi(self.dut2, self.__name__, **option2g)
+        api.setWifi(self.dut2, self.__class__.__name__, **option2g)
 
         power = getWlanTxPower(self.dut, v.DUT_MODULE, "2g", self.__class__.__name__)
+        loop = 0
+        while power == 0 and loop < 5:
+            t.sleep(2)
+            power = getWlanTxPower(self.dut, v.DUT_MODULE, "2g", self.__class__.__name__)
+            loop += 1
         if v.DUT_MODULE == "R1D" or v.DUT_MODULE == "R2D":
             """
             exactly 27
@@ -1095,9 +1202,14 @@ class AP_CLEAR_HIGH_TXPOWER(TestCase):
             'txpwr': 'max',
         }
 
-        api.setWifi(self.dut2, self.__name__, **option5g)
+        api.setWifi(self.dut2, self.__class__.__name__, **option5g)
 
         power = getWlanTxPower(self.dut, v.DUT_MODULE, "5g", self.__class__.__name__)
+        loop = 0
+        while power == 0 and loop < 5:
+            t.sleep(2)
+            power = getWlanTxPower(self.dut, v.DUT_MODULE, "5g", self.__class__.__name__)
+            loop += 1
         if v.DUT_MODULE == "R1D" or v.DUT_MODULE == "R2D":
             """
             exactly 22
@@ -1128,6 +1240,11 @@ class AP_CLEAR_HIGH_TXPOWER(TestCase):
         api.setWifi(self.dut2, self.__class__.__name__, **option2g)
 
         power = getWlanTxPower(self.dut, v.DUT_MODULE, "2g", self.__class__.__name__)
+        loop = 0
+        while power == 0 and loop < 5:
+            t.sleep(2)
+            power = getWlanTxPower(self.dut, v.DUT_MODULE, "2g", self.__class__.__name__)
+            loop += 1
         if v.DUT_MODULE == "R1D" or v.DUT_MODULE == "R2D":
             """
             exactly 27
@@ -1166,6 +1283,11 @@ class AP_CLEAR_HIGH_TXPOWER(TestCase):
         api.setWifi(self.dut2, self.__class__.__name__, **option2g)
 
         power = getWlanTxPower(self.dut, v.DUT_MODULE, "2g", self.__class__.__name__)
+        loop = 0
+        while power == 0 and loop < 5:
+            t.sleep(2)
+            power = getWlanTxPower(self.dut, v.DUT_MODULE, "2g", self.__class__.__name__)
+            loop += 1
         if v.DUT_MODULE == "R1D" or v.DUT_MODULE == "R2D":
             """
             exactly 27
@@ -1204,6 +1326,11 @@ class AP_CLEAR_HIGH_TXPOWER(TestCase):
         api.setWifi(self.dut2, self.__class__.__name__, **option2g)
 
         power = getWlanTxPower(self.dut, v.DUT_MODULE, "2g", self.__class__.__name__)
+        loop = 0
+        while power == 0 and loop < 5:
+            t.sleep(2)
+            power = getWlanTxPower(self.dut, v.DUT_MODULE, "2g", self.__class__.__name__)
+            loop += 1
         if v.DUT_MODULE == "R1D" or v.DUT_MODULE == "R2D":
             """
             exactly 27
@@ -1242,6 +1369,11 @@ class AP_CLEAR_HIGH_TXPOWER(TestCase):
         api.setWifi(self.dut2, self.__class__.__name__, **option2g)
 
         power = getWlanTxPower(self.dut, v.DUT_MODULE, "2g", self.__class__.__name__)
+        loop = 0
+        while power == 0 and loop < 5:
+            t.sleep(2)
+            power = getWlanTxPower(self.dut, v.DUT_MODULE, "2g", self.__class__.__name__)
+            loop += 1
         if v.DUT_MODULE == "R1D" or v.DUT_MODULE == "R2D":
             """
             exactly 27
@@ -1280,6 +1412,11 @@ class AP_CLEAR_HIGH_TXPOWER(TestCase):
         api.setWifi(self.dut2, self.__class__.__name__, **option5g)
 
         power = getWlanTxPower(self.dut, v.DUT_MODULE, "5g", self.__class__.__name__)
+        loop = 0
+        while power == 0 and loop < 5:
+            t.sleep(2)
+            power = getWlanTxPower(self.dut, v.DUT_MODULE, "5g", self.__class__.__name__)
+            loop += 1
         if v.DUT_MODULE == "R1D" or v.DUT_MODULE == "R2D":
             """
             exactly 21
@@ -1310,6 +1447,11 @@ class AP_CLEAR_HIGH_TXPOWER(TestCase):
         api.setWifi(self.dut2, self.__class__.__name__, **option5g)
 
         power = getWlanTxPower(self.dut, v.DUT_MODULE, "5g", self.__class__.__name__)
+        loop = 0
+        while power == 0 and loop < 5:
+            t.sleep(2)
+            power = getWlanTxPower(self.dut, v.DUT_MODULE, "5g", self.__class__.__name__)
+            loop += 1
         if v.DUT_MODULE == "R1D" or v.DUT_MODULE == "R2D":
             """
             exactly 21
@@ -1339,6 +1481,11 @@ class AP_CLEAR_HIGH_TXPOWER(TestCase):
         }
         api.setWifi(self.dut2, self.__class__.__name__, **option5g)
         power = getWlanTxPower(self.dut, v.DUT_MODULE, "5g", self.__class__.__name__)
+        loop = 0
+        while power == 0 and loop < 5:
+            t.sleep(2)
+            power = getWlanTxPower(self.dut, v.DUT_MODULE, "5g", self.__class__.__name__)
+            loop += 1
         if v.DUT_MODULE == "R1D" or v.DUT_MODULE == "R2D":
             """
             exactly 22
@@ -1368,6 +1515,11 @@ class AP_CLEAR_HIGH_TXPOWER(TestCase):
         }
         api.setWifi(self.dut2, self.__class__.__name__, **option5g)
         power = getWlanTxPower(self.dut, v.DUT_MODULE, "5g", self.__class__.__name__)
+        loop = 0
+        while power == 0 and loop < 5:
+            t.sleep(2)
+            power = getWlanTxPower(self.dut, v.DUT_MODULE, "5g", self.__class__.__name__)
+            loop += 1
         if v.DUT_MODULE == "R1D" or v.DUT_MODULE == "R2D":
             """
             exactly 22
@@ -1420,9 +1572,8 @@ class AP_CLEAR_CHANSELECTION(TestCase):
         }
         while count < 10:
             api.setWifi(self.dut, self.__class__.__name__, **option2g)
-            wifiInfo = api.getWifiDetailAll(self.dut, self.__class__.__name__)
-            channel = wifiInfo['info'][0]['channelInfo']['channel']
-            if int(channel) not in chan2g:
+            channel = api.getWifiChannel(self.dut, '2g', self.__class__.__name__)
+            if channel not in chan2g:
                 self.fail("Current auto-selected channel isnot between 1 and 11.")
             else:
                 count += 1
@@ -1447,7 +1598,7 @@ class AP_CLEAR_CHANSELECTION(TestCase):
 
 class AP_CLEAR_CHAN_WHITELIST(TestCase):
     @classmethod
-    def setUp(self):
+    def setUpClass(self):
         self.dut = api.HttpClient()
         ret1 = self.dut.connect(v.HOST)
         ret2 = chkAdbDevicesCount(1)
@@ -1485,15 +1636,15 @@ class AP_CLEAR_CHAN_WHITELIST(TestCase):
         self.staMac = wlanInfo["mac"].upper()
 
     @classmethod
-    def tearDown(self):
+    def tearDownClass(self):
 
         option = {
             'model': 1,
             'mac': '11:22:33:44:55:66',
             'option': 1
         }
-        api.setEditDevice(self.dut, self.__class__.__name__, **option)
-        api.setWifiMacFilter(self.dut, self.__class__.__name__)
+        api.setEditDevice(self.dut, self.__name__, **option)
+        api.setWifiMacFilter(self.dut, self.__name__)
 
         option2g = {
             'wifiIndex': 1,
@@ -1576,7 +1727,7 @@ class AP_CLEAR_CHAN_WHITELIST(TestCase):
         res2gConn = setAdbClearStaConn(self.device[0], "normal", "2g", self.__class__.__name__)
         self.assertFalse(res2gConn, "Association wasnot supposed to be successful which sta outof whitelist.")
 
-        #删除所有whitelist则白名单不再生效
+        #鍒犻櫎鎵�鏈墂hitelist鍒欑櫧鍚嶅崟涓嶅啀鐢熸晥
         option = {
             'model': 1,
             'mac': '11:22:33:44:55:66',
@@ -1598,7 +1749,7 @@ class AP_CLEAR_CHAN_WHITELIST(TestCase):
 
         res5gConn = setAdbClearStaConn(self.device[0], "normal", "5g", self.__class__.__name__)
         self.assertFalse(res5gConn, "Association wasnot supposed to be successful which sta outof whitelist.")
-        #删除所有whitelist则白名单不再生效
+        #鍒犻櫎鎵�鏈墂hitelist鍒欑櫧鍚嶅崟涓嶅啀鐢熸晥
         option = {
             'model': 1,
             'mac': '11:22:33:44:55:66',
@@ -1619,7 +1770,7 @@ class AP_CLEAR_CHAN_WHITELIST(TestCase):
 
 class AP_CLEAR_CHAN_BLACKLIST(TestCase):
     @classmethod
-    def setUp(self):
+    def setUpClass(self):
         self.dut = api.HttpClient()
         ret1 = self.dut.connect(v.HOST)
         ret2 = chkAdbDevicesCount(1)
@@ -1650,7 +1801,7 @@ class AP_CLEAR_CHAN_BLACKLIST(TestCase):
         self.staMac = wlanInfo["mac"].upper()
 
     @classmethod
-    def tearDown(self):
+    def tearDownClass(self):
         api.setWifiMacFilter(self.dut, self.__class__.__name__)
 
         option2g = {
@@ -4362,7 +4513,7 @@ class AP_MIXEDPSK_BSD(TestCase):
         api.setAllWifi(self.dut, self.__name__, **option)
         self.device = getAdbDevices()
         wlanInfo = getAdbShellWlan(self.device[0], self.__name__)
-        self.staMac = wlanInfo['mac']
+        self.staMac = wlanInfo['mac'].upper()
 
     @classmethod
     def tearDownClass(self):
@@ -4375,9 +4526,11 @@ class AP_MIXEDPSK_BSD(TestCase):
             resConn = setAdbPsk2StaConn(self.device[0], "normal", "2g", self.__class__.__name__)
             connType = api.getOnlineDeviceType(self.dut, self.__class__.__name__)
             if self.staMac in connType.keys():
-                resConn2 = int(connType[self.staMac]) is 2
+                resConn2 = int(connType[self.staMac]) == 2
                 if resConn and resConn2:
                     break
+            else:
+                resConn2 = False
             count += 1
 
         self.assertTrue(resConn, msg="Association wasnot successful.")
@@ -4394,9 +4547,11 @@ class AP_MIXEDPSK_BSD(TestCase):
             resConn = setAdbPskStaConn(self.device[0], "normal", "2g", self.__class__.__name__)
             connType = api.getOnlineDeviceType(self.dut, self.__class__.__name__)
             if self.staMac in connType.keys():
-                resConn2 = int(connType[self.staMac]) is 2
+                resConn2 = int(connType[self.staMac]) == 2
                 if resConn and resConn2:
                     break
+            else:
+                resConn2 = False
             count += 1
 
         self.assertTrue(resConn, msg="Association wasnot successful.")
@@ -4413,9 +4568,11 @@ class AP_MIXEDPSK_BSD(TestCase):
             resConn = setAdbTkipPsk2StaConn(self.device[0], "normal", "2g", self.__class__.__name__)
             connType = api.getOnlineDeviceType(self.dut, self.__class__.__name__)
             if self.staMac in connType.keys():
-                resConn2 = int(connType[self.staMac]) is 2
+                resConn2 = int(connType[self.staMac]) == 2
                 if resConn and resConn2:
                     break
+            else:
+                resConn2 = False
             count += 1
 
         self.assertTrue(resConn, msg="Association wasnot successful.")
@@ -4432,9 +4589,11 @@ class AP_MIXEDPSK_BSD(TestCase):
             resConn = setAdbTkipPskStaConn(self.device[0], "normal", "2g", self.__class__.__name__)
             connType = api.getOnlineDeviceType(self.dut, self.__class__.__name__)
             if self.staMac in connType.keys():
-                resConn2 = int(connType[self.staMac]) is 2
+                resConn2 = int(connType[self.staMac]) == 2
                 if resConn and resConn2:
                     break
+            else:
+                resConn2 = False
             count += 1
 
         self.assertTrue(resConn, msg="Association wasnot successful.")
@@ -4624,7 +4783,7 @@ class AP_GUEST_MIXEDPSK(TestCase):
 
 class AP_GUEST_CLEAR_WHITELIST(TestCase):
     @classmethod
-    def setUp(self):
+    def setUpClass(self):
         self.dut = api.HttpClient()
         ret1 = self.dut.connect(v.HOST)
         ret2 = chkAdbDevicesCount(1)
@@ -4647,21 +4806,21 @@ class AP_GUEST_CLEAR_WHITELIST(TestCase):
             'mac': '11:22:33:44:55:66',
             'option': 0
         }
-        api.setEditDevice(self.dut, self.__class__.__name__, **option)
+        api.setEditDevice(self.dut, self.__name__, **option)
         self.device = getAdbDevices()
 
         wlanInfo = getAdbShellWlan(self.device[0], self.__name__)
-        self.staMac = wlanInfo["mac"]
+        self.staMac = wlanInfo["mac"].upper()
 
     @classmethod
-    def tearDown(self):
+    def tearDownClass(self):
         option = {
             'model': 1,
             'mac': '11:22:33:44:55:66',
             'option': 1
         }
-        api.setEditDevice(self.dut, self.__class__.__name__, **option)
-        api.setWifiMacFilter(self.dut, self.__class__.__name__)
+        api.setEditDevice(self.dut, self.__name__, **option)
+        api.setWifiMacFilter(self.dut, self.__name__)
         option2g = {
             'wifiIndex': 1,
             'on': 0,
@@ -4723,7 +4882,7 @@ class AP_GUEST_CLEAR_WHITELIST(TestCase):
 
 class AP_GUEST_CLEAR_BLACKLIST(TestCase):
     @classmethod
-    def setUp(self):
+    def setUpClass(self):
         self.dut = api.HttpClient()
         ret1 = self.dut.connect(v.HOST)
         ret2 = chkAdbDevicesCount(1)
@@ -4742,11 +4901,11 @@ class AP_GUEST_CLEAR_BLACKLIST(TestCase):
         self.device = getAdbDevices()
 
         wlanInfo = getAdbShellWlan(self.device[0], self.__name__)
-        self.staMac = wlanInfo["mac"]
+        self.staMac = wlanInfo["mac"].upper()
 
     @classmethod
-    def tearDown(self):
-        api.setWifiMacFilter(self.dut, self.__class__.__name__)
+    def tearDownClass(self):
+        api.setWifiMacFilter(self.dut, self.__name__)
         option2g = {
             'wifiIndex': 1,
             'on': 0,
@@ -4953,7 +5112,7 @@ class AP_SSIDHIDE(TestCase):
             'encryption': 'none',
             'hidden': 1
         }
-        api.setWifi(self.dut, self.__name__, **option2g)
+        api.setWifi(self.dut, self.__class__.__name__, **option2g)
 
         ret2g = setAdbScanSsidNoExist(self.device[0], "normal", "2g", self.__class__.__name__)
         if ret2g is False:
@@ -4974,7 +5133,7 @@ class AP_SSIDHIDE(TestCase):
             'hidden': 1
         }
 
-        api.setWifi(self.dut, self.__name__, **option5g)
+        api.setWifi(self.dut, self.__class__.__name__, **option5g)
 
         ret5g = setAdbScanSsidNoExist(self.device[0], "normal", "5g", self.__class__.__name__)
         if ret5g is False:
@@ -4984,7 +5143,7 @@ class AP_SSIDHIDE(TestCase):
             'wifiIndex': 2,
             'on': 0
         }
-        api.setWifi(self.dut, self.__name__, **option5g)
+        api.setWifi(self.dut, self.__class__.__name__, **option5g)
 
     def ap_psk2_ssidhide_2g(self):
         option2g = {
@@ -4994,7 +5153,7 @@ class AP_SSIDHIDE(TestCase):
             'pwd': v.KEY,
             'hidden': 1
         }
-        api.setWifi(self.dut, self.__name__, **option2g)
+        api.setWifi(self.dut, self.__class__.__name__, **option2g)
 
         ret2g = setAdbScanSsidNoExist(self.device[0], "normal", "2g", self.__class__.__name__)
         if ret2g is False:
@@ -5004,7 +5163,7 @@ class AP_SSIDHIDE(TestCase):
             'wifiIndex': 1,
             'on': 0
         }
-        api.setWifi(self.dut, self.__name__, **option2g)
+        api.setWifi(self.dut, self.__class__.__name__, **option2g)
 
     def ap_psk2_ssidhide_5g(self):
         option5g = {
@@ -5014,7 +5173,7 @@ class AP_SSIDHIDE(TestCase):
             'pwd': v.KEY,
             'hidden': 1
         }
-        api.setWifi(self.dut, self.__name__, **option5g)
+        api.setWifi(self.dut, self.__class__.__name__, **option5g)
 
         ret5g = setAdbScanSsidNoExist(self.device[0], "normal", "5g", self.__class__.__name__)
         if ret5g is False:
@@ -5024,7 +5183,7 @@ class AP_SSIDHIDE(TestCase):
             'wifiIndex': 2,
             'on': 0
         }
-        api.setWifi(self.dut, self.__name__, **option5g)
+        api.setWifi(self.dut, self.__class__.__name__, **option5g)
 
     def ap_mixedpsk_ssidhide_2g(self):
         option2g = {
@@ -5034,7 +5193,7 @@ class AP_SSIDHIDE(TestCase):
             'pwd': v.KEY,
             'hidden': 1
         }
-        api.setWifi(self.dut, self.__name__, **option2g)
+        api.setWifi(self.dut, self.__class__.__name__, **option2g)
 
         ret2g = setAdbScanSsidNoExist(self.device[0], "normal", "2g", self.__class__.__name__)
         if ret2g is False:
@@ -5044,7 +5203,7 @@ class AP_SSIDHIDE(TestCase):
             'wifiIndex': 1,
             'on': 0
         }
-        api.setWifi(self.dut, self.__name__, **option2g)
+        api.setWifi(self.dut, self.__class__.__name__, **option2g)
 
     def ap_mixedpsk_ssidhide_5g(self):
         option5g = {
@@ -5054,7 +5213,7 @@ class AP_SSIDHIDE(TestCase):
             'pwd': v.KEY,
             'hidden': 1
         }
-        api.setWifi(self.dut, self.__name__, **option5g)
+        api.setWifi(self.dut, self.__class__.__name__, **option5g)
 
         ret5g = setAdbScanSsidNoExist(self.device[0], "normal", "5g", self.__class__.__name__)
         if ret5g is False:
@@ -5064,7 +5223,7 @@ class AP_SSIDHIDE(TestCase):
             'wifiIndex': 2,
             'on': 0
         }
-        api.setWifi(self.dut, self.__name__, **option5g)
+        api.setWifi(self.dut, self.__class__.__name__, **option5g)
 
 
 class AP_CHECK(TestCase):
@@ -5270,10 +5429,10 @@ if __name__ == '__main__':
     v.HOST = "192.168.31.1"
     v.WEB_PWD = "12345678"
     cases = [
-        'check_ap_reset_lastestpower',
+        'assoc_psk2_near_field_sta',
     ]
 
-    suite = TestSuite(map(AP_CHECK, cases))
+    suite = TestSuite(map(AP_MIXEDPSK_BSD, cases))
     curTime = t.strftime('%Y.%m.%d %H.%M.%S', t.localtime())
     f = open(curTime + '_RESULT.log', 'a')
     runner = TextTestRunner(f, verbosity=2)

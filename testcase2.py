@@ -5205,7 +5205,7 @@ class AP_CHECK(TestCase):
 
     def check_ap_reset_lastestpower(self):
         count = 0
-        while count <= 2:
+        while count <= 800:
             setMvFile(self.dut, self.__class__.__name__, src='/tmp/messages', dst='/tmp/message1')
             api.setReset(self.dut2, self.__class__.__name__)
             t.sleep(60)
@@ -5245,15 +5245,18 @@ class AP_CHECK(TestCase):
             api.setRouterNormal(webclient, self.__class__.__name__, **option)
             webclient.close()
 
-            power2g = getWlanLastEstPower(self.dut, v.DUT_MODULE, "2g", self.__class__.__name__)
-            txPower2g = getWlanTxPower(self.dut, v.DUT_MODULE, "2g", self.__class__.__name__)
-            t.sleep(1)
-            power5g = getWlanLastEstPower(self.dut, v.DUT_MODULE, "5g", self.__class__.__name__)
-            txPower5g = getWlanTxPower(self.dut, v.DUT_MODULE, "5g", self.__class__.__name__)
-            t.sleep(1)
+            txPower2g = 0
+            txPower5g = 0
+            while txPower2g == 0 or txPower5g == 0:
+                power2g = getWlanLastEstPower(self.dut, v.DUT_MODULE, "2g", self.__class__.__name__)
+                txPower2g = getWlanTxPower(self.dut, v.DUT_MODULE, "2g", self.__class__.__name__)
+                t.sleep(1)
+                power5g = getWlanLastEstPower(self.dut, v.DUT_MODULE, "5g", self.__class__.__name__)
+                txPower5g = getWlanTxPower(self.dut, v.DUT_MODULE, "5g", self.__class__.__name__)
+                t.sleep(1)
 
             loop = 0
-            while (power2g <= (txPower2g-5) and txPower2g != 0) or (power5g <= (txPower5g-5) and txPower5g != 0):
+            while power2g <= (txPower2g-5) or power5g <= (txPower5g-5):
                 t.sleep(10)
                 power2g = getWlanLastEstPower(self.dut, v.DUT_MODULE, "2g", self.__class__.__name__)
                 txPower2g = getWlanTxPower(self.dut, v.DUT_MODULE, "2g", self.__class__.__name__)

@@ -5399,7 +5399,7 @@ class AP_CHECK(TestCase):
                 'txpwr': 1,
             }
             webclient = api.HttpClient()
-            webclient.connect(hostname=v.HOST, init=1)
+            webclient.connect(host=v.HOST, init=1)
             api.setRouterNormal(webclient, self.__class__.__name__, **option)
             webclient.close()
 

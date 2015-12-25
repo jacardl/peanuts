@@ -245,10 +245,10 @@ class GeneralPage(wx.Panel):
             self.staIp.Enable(False)
             self.staSshUsr.Enable(False)
             self.staSshPasswd.Enable(False)
-        elif v.STA_MODULE == "R1CM & Android":
-            self.staIp.Enable(True)
-            self.staSshUsr.Enable(True)
-            self.staSshPasswd.Enable(True)
+        # elif v.STA_MODULE == "R1CM & Android":
+        #     self.staIp.Enable(True)
+        #     self.staSshUsr.Enable(True)
+        #     self.staSshPasswd.Enable(True)
 
     def EvtChoice3(self, event):
         type = event.GetString()

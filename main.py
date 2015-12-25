@@ -124,6 +124,10 @@ class GeneralPage(wx.Panel):
         self.sshPasswd = wx.TextCtrl(self, -1, '')
         self.sshPasswd.SetValue(v.PASSWD)
 
+        webPasswdLbl = wx.StaticText(self, -1, 'Web password:')
+        self.webPasswd = wx.TextCtrl(self, -1, '')
+        self.webPasswd.SetValue(v.WEB_PWD)
+
         # DUT connection box
         connBox = wx.StaticBox(self, -1, 'DUT', size=(580, -1))
         connSizer = wx.StaticBoxSizer(connBox, wx.HORIZONTAL)
@@ -152,10 +156,14 @@ class GeneralPage(wx.Panel):
         connSizer4 = wx.BoxSizer(wx.VERTICAL)
         connSizer4.Add(connLbl, 0,
                        wx.ALIGN_RIGHT | wx.TOP | wx.LEFT, 10)
+        connSizer4.Add(webPasswdLbl, 0,
+                       wx.ALIGN_RIGHT | wx.TOP | wx.LEFT, 10)
 
         connSizer5 = wx.BoxSizer(wx.VERTICAL)
         connSizer5.Add(self.conn, 0,
                        wx.ALIGN_LEFT | wx.TOP | wx.LEFT, 2)
+        connSizer5.Add(self.webPasswd, 0,
+                       wx.ALIGN_LEFT | wx.TOP | wx.LEFT, 4)
 
         connSizer.Add(connSizer2, 0, wx.LEFT, 5)
         connSizer.Add(connSizer3, 0, wx.LEFT, 2)
@@ -164,24 +172,28 @@ class GeneralPage(wx.Panel):
 
         # sta connection ctrl
         staTypeLbl = wx.StaticText(self, -1, 'Device:')
-        self.staType = wx.Choice(self, -1, choices=['Android', 'R1CM & Android'])
+        self.staType = wx.Choice(self, -1, choices=['Android'])
         self.staType.SetSelection(0)
         self.Bind(wx.EVT_CHOICE, self.EvtChoice2, self.staType)
 
-        staIpLbl = wx.StaticText(self, -1, 'IP:')
-        self.staIp = wx.TextCtrl(self, -1, '')
-        self.staIp.Enable(False)
-        self.staIp.SetValue(v.STA_IP)
+        staCountLbl = wx.StaticText(self, -1, 'Count:')
+        self.staCount = wx.TextCtrl(self, -1, '')
+        self.staCount.SetValue(v.STA_COUNT)
 
-        staSshUsrLbl = wx.StaticText(self, -1, 'User:')
-        self.staSshUsr = wx.TextCtrl(self, -1, '')
-        self.staSshUsr.Enable(False)
-        self.staSshUsr.SetValue(v.STA_USR)
-
-        staSshPasswdLbl = wx.StaticText(self, -1, 'Password:')
-        self.staSshPasswd = wx.TextCtrl(self, -1, '')
-        self.staSshPasswd.Enable(False)
-        self.staSshPasswd.SetValue(v.STA_PASSWD)
+        # staIpLbl = wx.StaticText(self, -1, 'IP:')
+        # self.staIp = wx.TextCtrl(self, -1, '')
+        # self.staIp.Enable(False)
+        # self.staIp.SetValue(v.STA_IP)
+        #
+        # staSshUsrLbl = wx.StaticText(self, -1, 'User:')
+        # self.staSshUsr = wx.TextCtrl(self, -1, '')
+        # self.staSshUsr.Enable(False)
+        # self.staSshUsr.SetValue(v.STA_USR)
+        #
+        # staSshPasswdLbl = wx.StaticText(self, -1, 'Password:')
+        # self.staSshPasswd = wx.TextCtrl(self, -1, '')
+        # self.staSshPasswd.Enable(False)
+        # self.staSshPasswd.SetValue(v.STA_PASSWD)
 
         # sta connection box
         staConnBox = wx.StaticBox(self, -1, 'STA', size=(580, -1))
@@ -190,22 +202,27 @@ class GeneralPage(wx.Panel):
         staConnSizer2 = wx.BoxSizer(wx.VERTICAL)
         staConnSizer2.Add(staTypeLbl, 0,
                           wx.ALIGN_RIGHT | wx.TOP | wx.LEFT, 10)
-        staConnSizer2.Add(staIpLbl, 0,
+        staConnSizer2.Add(staCountLbl, 0,
                           wx.ALIGN_RIGHT | wx.TOP | wx.LEFT, 10)
-        staConnSizer2.Add(staSshUsrLbl, 0,
-                          wx.ALIGN_RIGHT | wx.TOP | wx.LEFT, 10)
-        staConnSizer2.Add(staSshPasswdLbl, 0,
-                          wx.ALIGN_RIGHT | wx.TOP | wx.LEFT | wx.BOTTOM, 10)
+
+        # staConnSizer2.Add(staIpLbl, 0,
+        #                   wx.ALIGN_RIGHT | wx.TOP | wx.LEFT, 10)
+        # staConnSizer2.Add(staSshUsrLbl, 0,
+        #                   wx.ALIGN_RIGHT | wx.TOP | wx.LEFT, 10)
+        # staConnSizer2.Add(staSshPasswdLbl, 0,
+        #                   wx.ALIGN_RIGHT | wx.TOP | wx.LEFT | wx.BOTTOM, 10)
 
         staConnSizer3 = wx.BoxSizer(wx.VERTICAL)
         staConnSizer3.Add(self.staType, 0,
                           wx.ALIGN_LEFT | wx.TOP | wx.LEFT, 2)
-        staConnSizer3.Add(self.staIp, 0,
+        staConnSizer3.Add(self.staCount, 0,
                           wx.ALIGN_LEFT | wx.TOP | wx.LEFT, 4)
-        staConnSizer3.Add(self.staSshUsr, 0,
-                          wx.ALIGN_LEFT | wx.TOP | wx.LEFT, 4)
-        staConnSizer3.Add(self.staSshPasswd, 0,
-                          wx.ALIGN_LEFT | wx.TOP | wx.LEFT, 4)
+        # staConnSizer3.Add(self.staIp, 0,
+        #                   wx.ALIGN_LEFT | wx.TOP | wx.LEFT, 4)
+        # staConnSizer3.Add(self.staSshUsr, 0,
+        #                   wx.ALIGN_LEFT | wx.TOP | wx.LEFT, 4)
+        # staConnSizer3.Add(self.staSshPasswd, 0,
+        #                   wx.ALIGN_LEFT | wx.TOP | wx.LEFT, 4)
 
         staConnSizer.Add(staConnSizer2, 0, wx.LEFT, 5)
         staConnSizer.Add(staConnSizer3, 0, wx.LEFT, 2)
@@ -213,7 +230,7 @@ class GeneralPage(wx.Panel):
         mainSizer = wx.BoxSizer(wx.VERTICAL)
         mainSizer.Add(connSizer, 0, wx.ALL, 10)
         mainSizer.Add(staConnSizer, 0, wx.ALL, 10)
-        mainSizer.Add(btnSizer, 0, wx.TOP, 40)
+        mainSizer.Add(btnSizer, 0, wx.TOP, 106)
 
         self.SetSizer(mainSizer)
         mainSizer.Fit(self)
@@ -270,28 +287,46 @@ class GeneralPage(wx.Panel):
             dlgErr.ShowModal()
             dlgErr.Destroy()
 
+    def adbDeviceCheckThread(self, count):
+        result = co.chkAdbDevicesCount(count)
+        if result is False:
+            dlgErr = wx.MessageDialog(self, 'Some Android devices are offline!',
+                                      'Info',
+                                      wx.OK | wx.ICON_INFORMATION | wx.STAY_ON_TOP
+                                      )
+
+            dlgErr.ShowModal()
+            dlgErr.Destroy()
+
     def EvtSave(self, event):
         self.saveBtn.Enable(False)
         if v.DUT_MODULE is not None:
             v.HOST = self.ip.GetValue()
             v.USR = self.sshUsr.GetValue()
             v.PASSWD = self.sshPasswd.GetValue()
+            v.WEB_PWD = self.webPasswd.GetValue()
             dutConn = threading.Thread(target=self.connectionCheckThread, kwargs={'connectiontype': v.CONNECTION_TYPE,
                                                                                   'ip': v.HOST, 'user': v.USR,
                                                                                   'password': v.PASSWD})
             dutConn.start()
             # dutConn.join()
 
-        if v.STA_MODULE is not "Android":
-            v.STA_IP = self.staIp.GetValue()
-            v.STA_USR = self.staSshUsr.GetValue()
-            v.STA_PASSWD = self.staSshPasswd.GetValue()
-            staConn = threading.Thread(target=self.connectionCheckThread,
-                                       kwargs={'connectiontype': v.STA_CONNECTION_TYPE,
-                                               'ip': v.STA_IP, 'user': v.STA_USR,
-                                               'password': v.STA_PASSWD})
-            staConn.start()
+        # if v.STA_MODULE is not "Android":
+        #     v.STA_IP = self.staIp.GetValue()
+        #     v.STA_USR = self.staSshUsr.GetValue()
+        #     v.STA_PASSWD = self.staSshPasswd.GetValue()
+        #     staConn = threading.Thread(target=self.connectionCheckThread,
+        #                                kwargs={'connectiontype': v.STA_CONNECTION_TYPE,
+        #                                        'ip': v.STA_IP, 'user': v.STA_USR,
+        #                                        'password': v.STA_PASSWD})
+        #     staConn.start()
             # staConn.join()
+        if v.STA_MODULE is 'Android':
+            v.STA_COUNT = self.staCount.GetValue()
+            dutConn = threading.Thread(target=self.adbDeviceCheckThread, args=(v.STA_COUNT,))
+            dutConn.start()
+            # dutConn.join()
+
 
     def EvtTextChange(self, event):
         self.saveBtn.Enable(True)

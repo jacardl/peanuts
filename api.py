@@ -83,19 +83,26 @@ def PKCSUnpad(data):
     data = data[0:-ord(data[-1])]
     return data
 
+
 class HttpClient(object):
-    def __init__(self, init=0):
-        self.init = init
-        self.token = None
+    def __init__(self):
+        self.init = None
+        self.token = False
+        self.hostname = None
+        self.httpClient = None
         self.headers = {"Content-type": "application/x-www-form-urlencoded",
                         "Accept": "text/plain",
                         "User-Agent": "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/47.0.2526.106 Safari/537.36"
                         }
 
-    def connect(self, hostname, port=80):
-        self.hostname = hostname
+    def connect(self, init=0, host=v.HOST, port=80, password=v.WEB_PWD):
+        self.init = init
+        self.hostname = host
         try:
-            self.httpClient = httplib.HTTPConnection(self.hostname, port, timeout=30)
+            self.httpClient = httplib.HTTPConnection(host, port, timeout=30)
+            while self.token is False:
+                t.sleep(1)
+                self.getToken(password=password)
             return True
         except:
             print 'connection is failed. please check your network.'
@@ -105,7 +112,7 @@ class HttpClient(object):
         if self.httpClient:
             self.httpClient.close()
 
-    def getToken(self, password=None):
+    def getToken(self, password=v.WEB_PWD):
         if self.init is 0:
             self.login = getWebLoginPassword(password, v.WEB_KEY)
         elif self.init is 1:
@@ -148,11 +155,7 @@ def setGet(terminal, logname, apipath, **kwargs):
         os.makedirs(v.TEST_SUITE_LOG_PATH)
 
     try:
-        token = terminal.getToken(v.WEB_PWD)
-        if token is not False:
-            ret = terminal.getApi(apipath, **kwargs)
-        else:
-            ret = 'get token failed!'
+        ret = terminal.getApi(apipath, **kwargs)
         curTime = t.strftime('%Y.%m.%d %H:%M:%S', t.localtime())
         f = open(v.TEST_SUITE_LOG_PATH + logname + '.log', 'a')
         f.write(curTime + '~#API request to ' + terminal.hostname + '#')
@@ -175,43 +178,6 @@ def setGet(terminal, logname, apipath, **kwargs):
 
 
 def setCheck(terminal, logname, apipath, **kwargs):
-    if not os.path.exists(v.TEST_SUITE_LOG_PATH):
-        os.makedirs(v.TEST_SUITE_LOG_PATH)
-
-    try:
-        token = terminal.getToken(v.WEB_PWD)
-        if token is not False:
-            ret = terminal.getApi(apipath, **kwargs)
-        else:
-            ret = 'get token failed!'
-        curTime = t.strftime('%Y.%m.%d %H:%M:%S', t.localtime())
-        f = open(v.TEST_SUITE_LOG_PATH + logname + '.log', 'a')
-        f.write(curTime + '~#API request to ' + terminal.hostname + '#')
-        f.write(apipath + '?' + str(kwargs) + '\n')
-        f.writelines(str(ret))
-        f.write('\n')
-        if ret['code'] == 0:
-            f.write('api processes PASS\n\n')
-            f.close()
-            return True
-        else:
-            f.write('api processes FAIL\n\n')
-            f.close()
-            return False
-
-    except Exception, e:
-        curTime = t.strftime('%Y.%m.%d %H:%M:%S', t.localtime())
-        f = open(v.TEST_SUITE_LOG_PATH + logname + '.log', 'a')
-        f.write(curTime + '~#API request to ' + terminal.hostname + ' failed#')
-        f.write(apipath + '?' + str(kwargs) + '\n')
-        f.write(str(e))
-        f.write('\n\n')
-        terminal.close()
-        f.close()
-        return False
-
-
-def setCheck2(terminal, logname, apipath, **kwargs):
     if not os.path.exists(v.TEST_SUITE_LOG_PATH):
         os.makedirs(v.TEST_SUITE_LOG_PATH)
 
@@ -295,16 +261,20 @@ def setWifi(terminal, logname, **kwargs):
     option.update(kwargs)
     api = '/cgi-bin/luci/;stok=token/api/xqnetwork/set_wifi'
     ret = setCheck(terminal, logname, api, **option)
+    lastTime = int(t.time())
+    curTime = int(t.time())
     status = getWifiStatus(terminal, logname)
     index = option['wifiIndex']
     if index == 3:
-        while status['status'][0]['up'] != option.get('on'):
+        while status['status'][0]['up'] != option.get('on') or curTime - lastTime <= 10:
             t.sleep(2)
             status = getWifiStatus(terminal, logname)
+            curTime = int(t.time())
     else:
-        while status['status'][index-1]['up'] != option.get('on'):
+        while status['status'][index-1]['up'] != option.get('on') or curTime - lastTime <= 10:
             t.sleep(2)
             status = getWifiStatus(terminal, logname)
+            curTime = int(t.time())
     return ret
 
 
@@ -460,7 +430,7 @@ def setRouterNormal(terminal, logname,  **kwargs):
     }
     option.update(kwargs)
     api = '/cgi-bin/luci/;stok=token/api/misystem/set_router_normal'
-    result = setCheck2(terminal, logname, api, **option)
+    result = setCheck(terminal, logname, api, **option)
     time.sleep(10)
     return result
 
@@ -573,8 +543,8 @@ def getWifiStatus(terminal, logname):
 
 if __name__ == '__main__':
     option = {
-        'wifiIndex': 1,
-        'on': 1,
+        'wifiIndex': 2,
+        'on': 0,
         'ssid': 'peanuts',
         'pwd': '',
         'encryption': 'none',
@@ -584,8 +554,9 @@ if __name__ == '__main__':
         'txpwr': 'mid'
     }
     host = '192.168.140.1'
-    webclient = HttpClient(init=0)
-    webclient.connect(host)
+    webclient = HttpClient()
+    webclient.connect(host=host)
     setWifi(webclient, 'aaa', **option)
+    # print getOnlineDeviceType(webclient, 'aaa')
     webclient.close()
 

@@ -5232,10 +5232,13 @@ class AP_CHECK(TestCase):
         self.dut = SshClient(v.CONNECTION_TYPE)
         ret1 = self.dut.connect(v.HOST, v.USR, v.PASSWD)
         self.dut2 = api.HttpClient()
-        self.dut2.connect(host=v.HOST)
+        ret2 = self.dut2.connect(host=v.HOST)
 
         if ret1 is False:
-            raise Exception("Connection is failed. please check your remote settings.")
+            raise Exception("Connection is failed for dut1. please check your remote settings.")
+
+        if ret2 is False:
+            raise Exception("Connection is failed for dut2. please check your remote settings.")
 
         option2g = {
             'wifiIndex': 1,
@@ -5432,10 +5435,10 @@ if __name__ == '__main__':
     v.HOST = "192.168.31.1"
     v.WEB_PWD = "12345678"
     cases = [
-        'assoc_psk2_near_field_sta',
+        'check_ap_reset_lastestpower',
     ]
 
-    suite = TestSuite(map(AP_MIXEDPSK_BSD, cases))
+    suite = TestSuite(map(AP_CHECK, cases))
     curTime = t.strftime('%Y.%m.%d %H.%M.%S', t.localtime())
     f = open(curTime + '_RESULT.log', 'a')
     runner = TextTestRunner(f, verbosity=2)

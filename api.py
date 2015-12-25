@@ -87,7 +87,7 @@ def PKCSUnpad(data):
 class HttpClient(object):
     def __init__(self):
         self.init = None
-        self.token = False
+        self.token = None
         self.hostname = None
         self.httpClient = None
         self.headers = {"Content-type": "application/x-www-form-urlencoded",
@@ -97,13 +97,19 @@ class HttpClient(object):
 
     def connect(self, init=0, host=v.HOST, port=80, password=v.WEB_PWD):
         self.init = init
+        self.token = False
         self.hostname = host
+        loop = 0
         try:
             self.httpClient = httplib.HTTPConnection(host, port, timeout=30)
-            while self.token is False:
+            while self.token is False and loop < 5:
                 t.sleep(1)
-                self.getToken(password=password)
-            return True
+                result = self.getToken(password=password)
+                loop += 1
+            if result is False:
+                return False
+            else:
+                return True
         except:
             print 'connection is failed. please check your network.'
             return False
@@ -130,7 +136,7 @@ class HttpClient(object):
         else:
             loginresponse = eval(response.read())
             if loginresponse['code'] is not 0:
-                print 'login api process wrong'
+                print 'probably use wrong web password or router hasnot been initialized.'
                 return False
             self.token = 'stok=' + loginresponse['token']
             return self.token
@@ -261,20 +267,21 @@ def setWifi(terminal, logname, **kwargs):
     option.update(kwargs)
     api = '/cgi-bin/luci/;stok=token/api/xqnetwork/set_wifi'
     ret = setCheck(terminal, logname, api, **option)
-    lastTime = int(t.time())
-    curTime = int(t.time())
-    status = getWifiStatus(terminal, logname)
-    index = option['wifiIndex']
-    if index == 3:
-        while status['status'][0]['up'] != option.get('on') or curTime - lastTime <= 10:
-            t.sleep(2)
-            status = getWifiStatus(terminal, logname)
-            curTime = int(t.time())
-    else:
-        while status['status'][index-1]['up'] != option.get('on') or curTime - lastTime <= 10:
-            t.sleep(2)
-            status = getWifiStatus(terminal, logname)
-            curTime = int(t.time())
+    if ret:
+        lastTime = int(t.time())
+        curTime = int(t.time())
+        status = getWifiStatus(terminal, logname)
+        index = option['wifiIndex']
+        if index == 3:
+            while status['status'][0]['up'] != option.get('on') or curTime - lastTime <= 10:
+                t.sleep(2)
+                status = getWifiStatus(terminal, logname)
+                curTime = int(t.time())
+        else:
+            while status['status'][index-1]['up'] != option.get('on') or curTime - lastTime <= 10:
+                t.sleep(2)
+                status = getWifiStatus(terminal, logname)
+                curTime = int(t.time())
     return ret
 
 
@@ -413,8 +420,7 @@ def setRouterNormal(terminal, logname,  **kwargs):
     """
     # old = getWebLoginOldPwd()
     # new = getWebLoginNewPwdEncryptBase64()
-    terminal.getToken()
-    time.sleep(1)
+    t.sleep(1)  # wait 1 sec for nonce check, new nonce > old nonce
     old = getWebLoginOldPwd()
     new = getWebLoginNewPwdEncryptBase64()
     option = {
@@ -431,7 +437,14 @@ def setRouterNormal(terminal, logname,  **kwargs):
     option.update(kwargs)
     api = '/cgi-bin/luci/;stok=token/api/misystem/set_router_normal'
     result = setCheck(terminal, logname, api, **option)
-    time.sleep(10)
+    if result:
+        lastTime = int(t.time())
+        curTime = int(t.time())
+        status = getWifiStatus(terminal, logname)
+        while status['status'][0]['up'] != 1 or curTime - lastTime <= 10:
+            t.sleep(2)
+            status = getWifiStatus(terminal, logname)
+            curTime = int(t.time())
     return result
 
 

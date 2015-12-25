@@ -23,7 +23,7 @@ connection_type = 1 represent ssh
 CONNECTION_TYPE = 2
 STA_CONNECTION_TYPE = 1
 
-VER = '2.5.4'
+VER = '2.5.5'
 
 # ----------------Memory Tracking-----------------
 
@@ -80,7 +80,8 @@ CHINESE_SSID_5G = '业界良心_花生自动化-5G'
 GUEST_SSID = 'peanuts_guest'
 
 PING_PERCENT_PASS = 100
-PING_PERCENT_COUNT = 5
+PING_COUNT = 5
+PING_TARGET = 'www.baidu.com'
 
 BSSID = ''
 BSSID_5G = ''
@@ -123,3 +124,11 @@ MAIL_PIC3 = "throughput_in_%s.png"
 MAIL_XLSX = "memory_tracking.xlsx"
 
 MEM_MONITOR_INTERVAL = 60
+
+# -------------api test------------------#
+WEB_USERNAME = 'admin'
+WEB_PWD = '12345678'
+WEB_KEY = 'a2ffa5c9be07488bbb04a3a47d3c5f6a'
+IV = '64175472480004614961023454661220'
+# uci export account
+ACCOUNT_DEFAULT_PWD = 'b3a4190199d9ee7fe73ef9a4942a69fece39a771'

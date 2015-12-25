@@ -10,12 +10,11 @@ import wx.lib.delayedresult as delayedresult
 import shutil
 import random
 import multiprocessing as mp
-import subprocess
 import var as v
 import common as co
 import images
 import data
-import testcase as tc
+import testcase2 as tc
 import sendmail as sm
 import memmonitor as mm
 import processreport as pr
@@ -613,14 +612,14 @@ class TestSuitePage(wx.Panel):
 
         self.root = self.tree.AddRoot('Test Cases', ct_type=1)
         self.rootAndroid = self.tree.AppendItem(self.root, 'Android-STA', ct_type=1)
-        # self.rootR1CM = self.tree.AppendItem(self.root, 'R1CM-STA', ct_type=1)
-        self.rootNone = self.tree.AppendItem(self.root, 'None-STA', ct_type=1)
+        # self.rootNone = self.tree.AppendItem(self.root, 'None-STA', ct_type=1)
         self.rootCheck = self.tree.AppendItem(self.root, 'Check', ct_type=1)
 
-        self.AddTreeNodes(self.rootAndroid, data.treeAndroid)
-        # self.AddTreeNodes(self.rootR1CM, data.treeR1CM)
-        self.AddTreeNodes(self.rootNone, data.treeNone)
-        self.AddTreeNodes(self.rootCheck, data.treeCheck)
+        # self.AddTreeNodes(self.rootAndroid, data.treeAndroid)
+        # self.AddTreeNodes(self.rootNone, data.treeNone)
+        # self.AddTreeNodes(self.rootCheck, data.treeCheck)
+        self.AddTreeNodes(self.rootAndroid, data.treeAndroidApi)
+        self.AddTreeNodes(self.rootCheck, data.treeCheckApi)
         self.tree.Expand(self.root)
         treeLbl = wx.StaticText(self, -1, 'Select cases supposed to excute:')
 
@@ -768,7 +767,7 @@ class TestSuitePage(wx.Panel):
             else:
                 os.rename(v.TEST_SUITE_LOG_PATH, self.report + str(random.random()))
         if testKeepGoing is False:
-            subprocess.call("taskkill /F /IM python.exe | taskkill /F /T /IM adb.exe")
+            os.system("taskkill /F /IM python.exe | taskkill /F /T /IM adb.exe")
         self.abortEvent.set()
         self.dlg.Destroy()
 

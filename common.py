@@ -512,8 +512,8 @@ def getPingStatus(terminal, target, count, logname):
             result['pass'] = 100 - int(m.group(1))
             return result
         else:
-            result['loss'] = ''
-            result['pass'] = ''
+            result['loss'] = 100
+            result['pass'] = 0
     return result
 
 
@@ -542,7 +542,7 @@ def getWlanTxPower(terminal, dut, intf, logname):
         command = commandDic.get(intf)
         ret = setGet(terminal, command, logname)
         for line in ret:
-            m = re.search('\d*\.\d*.*', line)
+            m = re.search('(\d{1,3}\.\d{1,2}\s*){2,3}', line)
             if m:
                 power = m.group(0)
                 powerList = power.split()
@@ -695,24 +695,24 @@ def getAdbDevices():
 def getAdbShellWlan(device, logname):
     """
     D:\Python\new peanuts\22\iperf-2.0.5-3-win32>adb shell netcfg
-lo       UP                                   127.0.0.1/8   0x00000049 00:00:00:
-00:00:00
-mhi0     DOWN                                   0.0.0.0/0   0x00000090 26:00:00:
-00:00:00
-p2p0     UP                                     0.0.0.0/0   0x00001003 16:f6:5a:
-8f:c7:c1
-sit0     DOWN                                   0.0.0.0/0   0x00000080 00:00:00:
-00:00:00
-wlan0    UP                              192.168.31.103/24  0x00001043 14:f6:5a:
-8f:c7:c1
-rmnetctl DOWN                                   0.0.0.0/0   0x00000080 00:00:00:
-00:00:00
-dummy0   DOWN                                   0.0.0.0/0   0x00000082 a2:ef:9e:
-78:79:f2
-usbnet0  DOWN                                 10.0.2.15/24  0x00001002 0e:f7:11:
-b7:75:b6
-ip6tnl0  DOWN                                   0.0.0.0/0   0x00000080 00:00:00:
-00:00:00
+    lo       UP                                   127.0.0.1/8   0x00000049 00:00:00:
+    00:00:00
+    mhi0     DOWN                                   0.0.0.0/0   0x00000090 26:00:00:
+    00:00:00
+    p2p0     UP                                     0.0.0.0/0   0x00001003 16:f6:5a:
+    8f:c7:c1
+    sit0     DOWN                                   0.0.0.0/0   0x00000080 00:00:00:
+    00:00:00
+    wlan0    UP                              192.168.31.103/24  0x00001043 14:f6:5a:
+    8f:c7:c1
+    rmnetctl DOWN                                   0.0.0.0/0   0x00000080 00:00:00:
+    00:00:00
+    dummy0   DOWN                                   0.0.0.0/0   0x00000082 a2:ef:9e:
+    78:79:f2
+    usbnet0  DOWN                                 10.0.2.15/24  0x00001002 0e:f7:11:
+    b7:75:b6
+    ip6tnl0  DOWN                                   0.0.0.0/0   0x00000080 00:00:00:
+    00:00:00
     """
     command = "netcfg"
     ret = setAdbShell(device, command, logname)
@@ -731,6 +731,36 @@ ip6tnl0  DOWN                                   0.0.0.0/0   0x00000080 00:00:00:
         else:
             result['mac'] = ""
             result['ip'] = ""
+    return result
+
+
+def getAdbPingStatus(terminal, target, count, logname):
+    """
+    C:\Users\Administrator>adb shell ping -c 5 www.baidu.com
+    PING www.a.shifen.com (61.135.169.125) 56(84) bytes of data.
+    64 bytes from 61.135.169.125: icmp_seq=1 ttl=54 time=19.7 ms
+    64 bytes from 61.135.169.125: icmp_seq=2 ttl=54 time=16.1 ms
+    64 bytes from 61.135.169.125: icmp_seq=3 ttl=54 time=16.6 ms
+    64 bytes from 61.135.169.125: icmp_seq=4 ttl=54 time=18.6 ms
+    64 bytes from 61.135.169.125: icmp_seq=5 ttl=54 time=15.6 ms
+
+    --- www.a.shifen.com ping statistics ---
+    5 packets transmitted, 5 received, 0% packet loss, time 4006ms
+    rtt min/avg/max/mdev = 15.669/17.374/19.774/1.563 ms
+    """
+    command = 'ping -c ' + str(count) + ' ' + target
+    ret = setAdbShell(terminal, command, logname)
+    result = {}
+    for line in ret:
+        m = re.search('(\d{1,3})%\spacket\sloss', line)
+
+        if m:
+            result['loss'] = int(m.group(1))
+            result['pass'] = 100 - int(m.group(1))
+            return result
+        else:
+            result['loss'] = 100
+            result['pass'] = 0
     return result
 
 
@@ -765,6 +795,18 @@ def chkBootingUpFinished(terminal, logname):
         return True
     else:
         return False
+
+
+def chkStaOnline(terminal, intf, stamac, logname):
+    commandDic = {"2g": "iwinfo wl1 assoclist | grep -i " + stamac,
+                  "5g": "iwinfo wl0 assoclist | grep -i " + stamac,}
+    command = commandDic.get(intf)
+    ret = setGet(terminal, command, logname)
+    if len(ret) is not 0:
+        return True
+    else:
+        return False
+
 
 def setUCIWirelessIntf(terminal, intf, type, name, value, logname):
     """
@@ -816,7 +858,12 @@ def setUCIWirelessDev(terminal, dut, intf, type, name, value, logname):
 
 
 def setWifiRestart(terminal, logname):
-    command = 'wifi; sleep 10'
+    command = 'miio_notify -t 5 -u;' \
+              '/sbin/notice_tbus_device.sh; ' \
+              '/sbin/wifi >/dev/null 2>/dev/null; ' \
+              '/etc/init.d/minidlna restart; ' \
+              '/etc/init.d/samba restart; ' \
+              '/usr/bin/gettraffic flush_wl_dev >/dev/null 2>/dev/null'
     setConfig(terminal, command, logname)
 
 
@@ -898,6 +945,10 @@ def setUpgradeSystem(terminal, file, logname):
     command = "flash.sh " + file
     setGet(terminal, command, logname)
 
+
+def setReset(terminal, logname):
+    command = "env -i sleep 4 && nvram set restore_defaults=1 && nvram commit && reboot & >/dev/null 2>/dev/null"
+    setConfig(terminal, command, logname)
 
 def setCopyFile(terminal, logname, **kargs):
     command = 'cp %s %s'%(kargs['src'], kargs['dst'])
@@ -1190,7 +1241,22 @@ def setIperfFlow(target, interval, time, logname):
 
 if __name__ == '__main__':
     # ssh = SshClient(2)
-    # ssh.connect("192.168.111.1", "", "")
-    # v.DUT_MODULE = "R2D"
-    setIperfFlow(target="192.168.140.211", interval="", time="20", logname="log")
+    # ssh.connect("192.168.140.1", "", "")
+    # v.DUT_MODULE = "R1CM"
+    # setWifiRestart(ssh, "log")
     # ssh.close()
+    # line = "Error: Curpower failed. Bring up interface and disable mpc if necessary (wl mpc 0)"
+    line = "Maximum Power Target among all rates:   19.00  19.00  0.0"
+    m = re.search('(\d{1,3}\.\d{1,2}\s*){2,3}', line)
+    if m:
+        power = m.group(0)
+        print power
+        powerList = power.split()
+        sum = 0.0
+        for c in range(len(powerList)):
+            sum += float(powerList[c])
+        result = sum / len(powerList)
+        result = float(result)
+    else:
+        result = 0
+    print result

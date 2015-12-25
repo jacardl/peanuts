@@ -44,6 +44,7 @@ class TestCommand:
                         'uci set wireless.' + self.WIFI_IF_2G + '.hidden=0',
                         'uci set wireless.' + self.WIFI_IF_2G + '.macfilter=disabled',
                         'uci del wireless.' + self.WIFI_IF_2G + '.maclist=',
+                        'uci set wireless.' + self.WIFI_IF_2G + '.bsd=0',
                         'uci set wireless.' + self.DEV_5G + '.channel=0',
                         'uci set wireless.' + self.DEV_5G + '.autoch=2',
                         'uci set wireless.' + self.DEV_5G + '.disabled=1',
@@ -52,8 +53,9 @@ class TestCommand:
                         'uci set wireless.' + self.WIFI_IF_5G + '.hidden=0',
                         'uci set wireless.' + self.WIFI_IF_5G + '.macfilter=disabled',
                         'uci del wireless.' + self.WIFI_IF_5G + '.maclist=',
+                        'uci set wireless.' + self.WIFI_IF_5G + '.bsd=0',
                         'uci commit wireless',
-                        "wifi; sleep 10"
+                        # "wifi; sleep 10"
                         ]
         return ap_tear_down
 
@@ -67,7 +69,7 @@ class TestCommand:
             'uci set wireless.guest_2G.macfilter=disabled',
             'uci del wireless.guest_2G.maclist=',
             'uci commit wireless',
-            "wifi; sleep 10",
+            # "wifi; sleep 10"
             ]
         return ap_guest_tear_down
 
@@ -86,7 +88,7 @@ class TestCommand:
                            'uci set wireless.' + self.DEV_5G + '.autoch=2',
                            'uci set wireless.' + self.DEV_5G + '.disabled=0',
                            'uci commit wireless',
-                           'wifi; sleep 10'
+                           #'wifi; sleep 10'
                            ]
         return ap_clear_set_up
 
@@ -104,7 +106,7 @@ class TestCommand:
                                 'uci set wireless.' + self.DEV_5G + '.autoch=0',
                                 'uci set wireless.' + self.DEV_5G + '.disabled=0',
                                 'uci commit wireless',
-                                'wifi; sleep 10'
+                                #'wifi; sleep 10'
                                 ]
         return ap_clear_chan_set_up
 
@@ -122,7 +124,7 @@ class TestCommand:
                                  'uci set wireless.' + self.DEV_5G + '.autoch=0',
                                  'uci set wireless.' + self.DEV_5G + '.disabled=0',
                                  'uci commit wireless',
-                                 'wifi; sleep 10'
+                                 #'wifi; sleep 10'
                                  ]
         return ap_clear_chan2_set_up
 
@@ -140,7 +142,7 @@ class TestCommand:
                                  'uci set wireless.' + self.DEV_5G + '.autoch=0',
                                  'uci set wireless.' + self.DEV_5G + '.disabled=0',
                                  'uci commit wireless',
-                                 'wifi; sleep 10'
+                                 #'wifi; sleep 10'
                                  ]
         return ap_clear_chan3_set_up
 
@@ -158,7 +160,7 @@ class TestCommand:
                                  'uci set wireless.' + self.DEV_5G + '.autoch=0',
                                  'uci set wireless.' + self.DEV_5G + '.disabled=0',
                                  'uci commit wireless',
-                                 'wifi; sleep 10'
+                                 #'wifi; sleep 10'
                                  ]
         return ap_clear_chan4_set_up
 
@@ -174,7 +176,7 @@ class TestCommand:
                                'uci set wireless.' + self.DEV_2G + '.disabled=0',
                                'uci set wireless.' + self.DEV_5G + '.disabled=0',
                                'uci commit wireless',
-                               'wifi; sleep 10'
+                               #'wifi; sleep 10'
                                ]
         return ap_clear_low_set_up
 
@@ -190,7 +192,8 @@ class TestCommand:
                                'uci set wireless.' + self.DEV_2G + '.disabled=0',
                                'uci set wireless.' + self.DEV_5G + '.disabled=0',
                                'uci commit wireless',
-                               'wifi; sleep 10']
+                               #'wifi; sleep 10'
+                               ]
 
         return ap_clear_mid_set_up
 
@@ -206,7 +209,7 @@ class TestCommand:
                                 'uci set wireless.' + self.DEV_2G + '.disabled=0',
                                 'uci set wireless.' + self.DEV_5G + '.disabled=0',
                                 'uci commit wireless',
-                                'wifi; sleep 10'
+                                #'wifi; sleep 10'
                                 ]
         return ap_clear_high_set_up
 
@@ -220,7 +223,7 @@ class TestCommand:
                                     'uci set wireless.' + self.DEV_2G + '.disabled=0',
                                     'uci set wireless.' + self.DEV_5G + '.disabled=0',
                                     'uci commit wireless',
-                                    'wifi; sleep 10'
+                                    #'wifi; sleep 10'
                                     ]
         return ap_clear_ssidhide_set_up
 
@@ -240,7 +243,7 @@ class TestCommand:
                                           'uci set wireless.' + self.WIFI_IF_5G + '.macfilter=allow',
                                           'uci set wireless.' + self.WIFI_IF_2G + '.macfilter=allow',
                                           'uci commit wireless',
-                                          'wifi; sleep 10'
+                                          #'wifi; sleep 10'
                                           ]
         return ap_clear_chan_whitelist_set_up
 
@@ -260,7 +263,8 @@ class TestCommand:
                                           'uci set wireless.' + self.WIFI_IF_5G + '.macfilter=deny',
                                           'uci set wireless.' + self.WIFI_IF_2G + '.macfilter=deny',
                                           'uci commit wireless',
-                                          'wifi; sleep 10']
+                                          #'wifi; sleep 10'
+                                          ]
         return ap_clear_chan_blacklist_set_up
 
     def ap_psk2_chan_set_up(self):
@@ -279,7 +283,7 @@ class TestCommand:
                                'uci set wireless.' + self.DEV_2G + '.disabled=0',
                                'uci set wireless.' + self.DEV_5G + '.disabled=0',
                                'uci commit wireless',
-                               'wifi; sleep 10'
+                               #'wifi; sleep 10'
                                ]
         return ap_psk2_chan_set_up
 
@@ -299,7 +303,7 @@ class TestCommand:
                                 'uci set wireless.' + self.DEV_2G + '.disabled=0',
                                 'uci set wireless.' + self.DEV_5G + '.disabled=0',
                                 'uci commit wireless',
-                                'wifi; sleep 10'
+                                #'wifi; sleep 10'
                                 ]
         return ap_psk2_chan2_set_up
 
@@ -319,7 +323,7 @@ class TestCommand:
                                 'uci set wireless.' + self.DEV_2G + '.disabled=0',
                                 'uci set wireless.' + self.DEV_5G + '.disabled=0',
                                 'uci commit wireless',
-                                'wifi; sleep 10'
+                                #'wifi; sleep 10'
                                 ]
         return ap_psk2_chan3_set_up
 
@@ -339,7 +343,7 @@ class TestCommand:
                                 'uci set wireless.' + self.DEV_2G + '.disabled=0',
                                 'uci set wireless.' + self.DEV_5G + '.disabled=0',
                                 'uci commit wireless',
-                                'wifi; sleep 10'
+                                #'wifi; sleep 10'
                                 ]
         return ap_psk2_chan4_set_up
 
@@ -357,7 +361,7 @@ class TestCommand:
                                    'uci set wireless.' + self.DEV_2G + '.disabled=0',
                                    'uci set wireless.' + self.DEV_5G + '.disabled=0',
                                    'uci commit wireless',
-                                   'wifi; sleep 10'
+                                   #'wifi; sleep 10'
                                    ]
         return ap_psk2_ssidhide_set_up
 
@@ -377,7 +381,7 @@ class TestCommand:
                               'uci set wireless.' + self.DEV_2G + '.disabled=0',
                               'uci set wireless.' + self.DEV_5G + '.disabled=0',
                               'uci commit wireless',
-                              'wifi; sleep 10',
+                              #'wifi; sleep 10',
                               ]
         return ap_mixedpsk_set_up
 
@@ -397,9 +401,33 @@ class TestCommand:
                                'uci set wireless.' + self.DEV_2G + '.disabled=0',
                                'uci set wireless.' + self.DEV_5G + '.disabled=0',
                                'uci commit wireless',
-                               'wifi; sleep 10',
+                               #'wifi; sleep 10',
                                ]
         return ap_mixedpsk_set_up2
+
+
+    def ap_mixedpsk_bsd_set_up(self):
+        ap_mixedpsk_bsd_set_up = ['uci set wireless.' + self.WIFI_IF_5G + '.encryption=mixed-psk',
+                              'uci set wireless.' + self.WIFI_IF_2G + '.encryption=mixed-psk',
+                              'uci set wireless.' + self.WIFI_IF_5G + '.key=' + KEY,
+                              'uci set wireless.' + self.WIFI_IF_2G + '.key=' + KEY,
+                              'uci set wireless.' + self.WIFI_IF_5G + '.ssid=' + SSID,
+                              'uci set wireless.' + self.WIFI_IF_2G + '.ssid=' + SSID,
+                              'uci set wireless.' + self.WIFI_IF_5G + '.hidden=0',
+                              'uci set wireless.' + self.WIFI_IF_2G + '.hidden=0',
+                              'uci set wireless.' + self.WIFI_IF_5G + '.bsd=1',
+                              'uci set wireless.' + self.WIFI_IF_2G + '.bsd=1',
+                              'uci set wireless.' + self.DEV_2G + '.channel=0',
+                              'uci set wireless.' + self.DEV_2G + '.autoch=2',
+                              'uci set wireless.' + self.DEV_5G + '.channel=0',
+                              'uci set wireless.' + self.DEV_5G + '.autoch=2',
+                              'uci set wireless.' + self.DEV_2G + '.disabled=0',
+                              'uci set wireless.' + self.DEV_5G + '.disabled=0',
+                              'uci commit wireless',
+                              # #'wifi; sleep 10',
+                              ]
+        return ap_mixedpsk_bsd_set_up
+
 
     def ap_mixedpsk_chan_set_up(self):
         ap_mixedpsk_chan_set_up = ['uci set wireless.' + self.WIFI_IF_5G + '.encryption=mixed-psk',
@@ -417,7 +445,7 @@ class TestCommand:
                                    'uci set wireless.' + self.DEV_2G + '.disabled=0',
                                    'uci set wireless.' + self.DEV_5G + '.disabled=0',
                                    'uci commit wireless',
-                                   'wifi; sleep 10'
+                                   #'wifi; sleep 10'
                                    ]
         return ap_mixedpsk_chan_set_up
 
@@ -437,7 +465,7 @@ class TestCommand:
                                     'uci set wireless.' + self.DEV_2G + '.disabled=0',
                                     'uci set wireless.' + self.DEV_5G + '.disabled=0',
                                     'uci commit wireless',
-                                    'wifi; sleep 10'
+                                    #'wifi; sleep 10'
                                     ]
         return ap_mixedpsk_chan2_set_up
 
@@ -457,7 +485,7 @@ class TestCommand:
                                     'uci set wireless.' + self.DEV_2G + '.disabled=0',
                                     'uci set wireless.' + self.DEV_5G + '.disabled=0',
                                     'uci commit wireless',
-                                    'wifi; sleep 10'
+                                    #'wifi; sleep 10'
                                     ]
         return ap_mixedpsk_chan3_set_up
 
@@ -477,7 +505,7 @@ class TestCommand:
                                     'uci set wireless.' + self.DEV_2G + '.disabled=0',
                                     'uci set wireless.' + self.DEV_5G + '.disabled=0',
                                     'uci commit wireless',
-                                    'wifi; sleep 10'
+                                    #'wifi; sleep 10'
                                     ]
         return ap_mixedpsk_chan4_set_up
 
@@ -493,7 +521,7 @@ class TestCommand:
                                        'uci set wireless.' + self.DEV_2G + '.disabled=0',
                                        'uci set wireless.' + self.DEV_5G + '.disabled=0',
                                        'uci commit wireless',
-                                       'wifi; sleep 10'
+                                       #'wifi; sleep 10'
                                        ]
         return ap_mixedpsk_ssidhide_set_up
 
@@ -506,7 +534,7 @@ class TestCommand:
                                       'uci set wireless.' + self.DEV_2G + '.channel=' + CHANNEL,
                                       'uci set wireless.' + self.DEV_2G + '.autoch=0',
                                       'uci commit wireless',
-                                      'wifi; sleep 10'
+                                      #'wifi; sleep 10'
                                       ]
         return ap_guest_clear_chan_set_up
 
@@ -520,7 +548,7 @@ class TestCommand:
                                                 'uci set wireless.' + self.DEV_2G + '.autoch=0',
                                                 'uci set wireless.guest_2G.macfilter=allow',
                                                 'uci commit wireless',
-                                                'wifi; sleep 10'
+                                                #'wifi; sleep 10'
                                                 ]
         return ap_guest_clear_chan_whitelist_set_up
 
@@ -534,7 +562,8 @@ class TestCommand:
                                                 'uci set wireless.' + self.DEV_2G + '.autoch=0',
                                                 'uci set wireless.guest_2G.macfilter=deny',
                                                 'uci commit wireless',
-                                                'wifi; sleep 10']
+                                                #'wifi; sleep 10'
+                                                ]
         return ap_guest_clear_chan_blacklist_set_up
 
     def ap_guest_psk2_chan_set_up(self):
@@ -547,7 +576,8 @@ class TestCommand:
                                      'uci set wireless.' + self.DEV_2G + '.channel=' + CHANNEL,
                                      'uci set wireless.' + self.DEV_2G + '.autoch=0',
                                      'uci commit wireless',
-                                     'wifi; sleep 10']
+                                     #'wifi; sleep 10'
+                                     ]
         return ap_guest_psk2_chan_set_up
 
     def ap_guest_mixedpsk_chan_set_up(self):
@@ -560,7 +590,8 @@ class TestCommand:
                                          'uci set wireless.' + self.DEV_2G + '.channel=' + CHANNEL,
                                          'uci set wireless.' + self.DEV_2G + '.autoch=0',
                                          'uci commit wireless',
-                                         'wifi; sleep 10']
+                                         #'wifi; sleep 10'
+                                         ]
         return ap_guest_mixedpsk_chan_set_up
 
     def ap_mixedpsk_chan_bw80_set_up(self):
@@ -574,7 +605,7 @@ class TestCommand:
                                         'uci set wireless.' + self.DEV_2G + '.disabled=0',
                                         'uci set wireless.' + self.DEV_5G + '.disabled=0',
                                         'uci commit wireless',
-                                        'wifi; sleep 10'
+                                        #'wifi; sleep 10'
                                         ]
         return ap_mixedpsk_chan_bw80_set_up
 
@@ -596,7 +627,7 @@ class TestCommand:
                                         'uci set wireless.' + self.DEV_2G + '.disabled=0',
                                         'uci set wireless.' + self.DEV_5G + '.disabled=0',
                                         'uci commit wireless',
-                                        'wifi; sleep 10'
+                                        #'wifi; sleep 10'
                                         ]
         return ap_mixedpsk_chan_bw40_set_up
 
@@ -618,7 +649,7 @@ class TestCommand:
                                         'uci set wireless.' + self.DEV_2G + '.disabled=0',
                                         'uci set wireless.' + self.DEV_5G + '.disabled=0',
                                         'uci commit wireless',
-                                        'wifi; sleep 10'
+                                        #'wifi; sleep 10'
                                         ]
         return ap_mixedpsk_chan_bw20_set_up
 
@@ -638,7 +669,7 @@ class TestCommand:
                                             'uci set wireless.' + self.DEV_2G + '.disabled=0',
                                             'uci set wireless.' + self.DEV_5G + '.disabled=0',
                                             'uci commit wireless',
-                                            'wifi; sleep 10'
+                                            #'wifi; sleep 10'
                                             ]
         return ap_mixedpsk_chan_ssidspec_set_up
 
@@ -658,7 +689,7 @@ class TestCommand:
                                                'uci set wireless.' + self.DEV_2G + '.disabled=0',
                                                'uci set wireless.' + self.DEV_5G + '.disabled=0',
                                                'uci commit wireless',
-                                               'wifi; sleep 10'
+                                               #'wifi; sleep 10'
                                                ]
         return ap_mixedpsk_chan_ssidchinese_set_up
 
@@ -678,7 +709,7 @@ class TestCommand:
                                            'uci set wireless.' + self.DEV_2G + '.disabled=0',
                                            'uci set wireless.' + self.DEV_5G + '.disabled=0',
                                            'uci commit wireless',
-                                           'wifi; sleep 10'
+                                           #'wifi; sleep 10'
                                            ]
         return ap_mixedpsk_chan_keyspec_set_up
 

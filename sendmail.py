@@ -99,13 +99,15 @@ def generateMail(maillist, title, queue=None, attach1=None, attach2=None):
 
 
 if __name__ == '__main__':
-    report = "R1CM 开发版OTA 2.7.10.log"
-    ret = pr.ProcessReport(report)
+    import multiprocessing as mp
+    report = "R1CM 开发版OTA 2.7.36.log"
+    q = mp.Queue() # tranlate test result to generateMail
+    ret = pr.ProcessReport(report, q)
     ret.start()
     ret.join()
 
     # if generateMail(["liujia5@xiaomi.com"], "test", ret.result, report):
-    if generateMail(v.MAILTO_LIST, "【R2D 开发版OTA 2.9.35】自动化测试报告", ret.result, report):
+    if generateMail(["liujia5@xiaomi.com"], "【R1CM 开发版OTA 2.7.36】自动化测试报告", q, report, v.MAIL_XLSX):
         print "successful"
     else:
         print "failed"

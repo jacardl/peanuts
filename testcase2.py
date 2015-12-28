@@ -10,7 +10,7 @@ class AP_CLEAR_CHAN(TestCase):
     @classmethod
     def setUpClass(self):
         self.dut = api.HttpClient()
-        ret1 = self.dut.connect(host=v.HOST)
+        ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
         ret2 = chkAdbDevicesCount(1)
 
         if ret1 is False:
@@ -82,7 +82,7 @@ class AP_CLEAR_LOW(TestCase):
     @classmethod
     def setUpClass(self):
         self.dut = api.HttpClient()
-        ret1 = self.dut.connect(host=v.HOST)
+        ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
         ret2 = chkAdbDevicesCount(1)
 
         if ret1 is False:
@@ -154,7 +154,7 @@ class AP_CLEAR_MID(TestCase):
     @classmethod
     def setUpClass(self):
         self.dut = api.HttpClient()
-        ret1 = self.dut.connect(host=v.HOST)
+        ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
         ret2 = chkAdbDevicesCount(1)
 
         if ret1 is False:
@@ -224,7 +224,7 @@ class AP_CLEAR_HIGH(TestCase):
     @classmethod
     def setUpClass(self):
         self.dut = api.HttpClient()
-        ret1 = self.dut.connect(host=v.HOST)
+        ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
         ret2 = chkAdbDevicesCount(1)
 
         if ret1 is False:
@@ -299,7 +299,7 @@ class AP_CLEAR_LOW_TXPOWER(TestCase):
         self.dut = SshClient(v.CONNECTION_TYPE)
         self.dut2 = api.HttpClient()
         ret1 = self.dut.connect(v.HOST, v.USR, v.PASSWD)
-        self.dut2.connect(host=v.HOST)
+        self.dut2.connect(host=v.HOST, password=v.WEB_PWD)
         if ret1 is False:
             raise Exception('Connection is failed. please check your remote settings.')
 
@@ -712,7 +712,7 @@ class AP_CLEAR_MID_TXPOWER(TestCase):
         self.dut = SshClient(v.CONNECTION_TYPE)
         self.dut2 = api.HttpClient()
         ret1 = self.dut.connect(v.HOST, v.USR, v.PASSWD)
-        self.dut2.connect(host=v.HOST)
+        self.dut2.connect(host=v.HOST, password=v.WEB_PWD)
         if ret1 is False:
             raise Exception('Connection is failed. please check your remote settings.')
 
@@ -1132,7 +1132,7 @@ class AP_CLEAR_HIGH_TXPOWER(TestCase):
         self.dut = SshClient(v.CONNECTION_TYPE)
         self.dut2 = api.HttpClient()
         ret1 = self.dut.connect(v.HOST, v.USR, v.PASSWD)
-        self.dut2.connect(host=v.HOST)
+        self.dut2.connect(host=v.HOST, password=v.WEB_PWD)
         if ret1 is False:
             raise Exception('Connection is failed. please check your remote settings.')
 
@@ -1544,7 +1544,7 @@ class AP_CLEAR_CHANSELECTION(TestCase):
     def setUpClass(self):
 
         self.dut = api.HttpClient()
-        ret1 = self.dut.connect(host=v.HOST)
+        ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
         if ret1 is False:
             raise Exception('Connection is failed. please check your remote settings.')
 
@@ -1600,7 +1600,7 @@ class AP_CLEAR_CHAN_WHITELIST(TestCase):
     @classmethod
     def setUpClass(self):
         self.dut = api.HttpClient()
-        ret1 = self.dut.connect(host=v.HOST)
+        ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
         ret2 = chkAdbDevicesCount(1)
 
         if ret1 is False:
@@ -1772,7 +1772,7 @@ class AP_CLEAR_CHAN_BLACKLIST(TestCase):
     @classmethod
     def setUpClass(self):
         self.dut = api.HttpClient()
-        ret1 = self.dut.connect(host=v.HOST)
+        ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
         ret2 = chkAdbDevicesCount(1)
 
         if ret1 is False:
@@ -1905,7 +1905,7 @@ class AP_CLEAR_CHAN1_36_FLOW(TestCase):
     def setUpClass(self):
 
         self.dut = api.HttpClient()
-        ret1 = self.dut.connect(host=v.HOST)
+        ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
         ret2 = chkAdbDevicesCount(1)
 
         if ret1 is False:
@@ -1979,7 +1979,7 @@ class AP_CLEAR_CHAN6_52_FLOW(TestCase):
     def setUpClass(self):
 
         self.dut = api.HttpClient()
-        ret1 = self.dut.connect(host=v.HOST)
+        ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
         ret2 = chkAdbDevicesCount(1)
 
         if ret1 is False:
@@ -2052,7 +2052,7 @@ class AP_CLEAR_CHAN11_149_FLOW(TestCase):
     def setUpClass(self):
 
         self.dut = api.HttpClient()
-        ret1 = self.dut.connect(host=v.HOST)
+        ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
         ret2 = chkAdbDevicesCount(1)
 
         if ret1 is False:
@@ -2125,7 +2125,7 @@ class AP_CLEAR_CHAN13_165_FLOW(TestCase):
     def setUpClass(self):
 
         self.dut = api.HttpClient()
-        ret1 = self.dut.connect(host=v.HOST)
+        ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
         ret2 = chkAdbDevicesCount(1)
 
         if ret1 is False:
@@ -2198,7 +2198,7 @@ class AP_CLEAR_CHAN_REPEAT(TestCase):
     def setUpClass(self):
 
         self.dut = api.HttpClient()
-        ret1 = self.dut.connect(host=v.HOST)
+        ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
         ret2 = chkAdbDevicesCount(1)
 
         if ret1 is False:
@@ -2252,7 +2252,7 @@ class AP_PSK2_CHAN(TestCase):
     @classmethod
     def setUpClass(self):
         self.dut = api.HttpClient()
-        ret1 = self.dut.connect(host=v.HOST)
+        ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
         ret2 = chkAdbDevicesCount(1)
 
         if ret1 is False:
@@ -2327,7 +2327,7 @@ class AP_PSK2_CHAN1_36_FLOW(TestCase):
     def setUpClass(self):
 
         self.dut = api.HttpClient()
-        ret1 = self.dut.connect(host=v.HOST)
+        ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
         ret2 = chkAdbDevicesCount(1)
 
         if ret1 is False:
@@ -2404,7 +2404,7 @@ class AP_PSK2_CHAN6_52_FLOW(TestCase):
     def setUpClass(self):
 
         self.dut = api.HttpClient()
-        ret1 = self.dut.connect(host=v.HOST)
+        ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
         ret2 = chkAdbDevicesCount(1)
 
         if ret1 is False:
@@ -2481,7 +2481,7 @@ class AP_PSK2_CHAN11_149_FLOW(TestCase):
     def setUpClass(self):
 
         self.dut = api.HttpClient()
-        ret1 = self.dut.connect(host=v.HOST)
+        ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
         ret2 = chkAdbDevicesCount(1)
 
         if ret1 is False:
@@ -2558,7 +2558,7 @@ class AP_PSK2_CHAN13_165_FLOW(TestCase):
     def setUpClass(self):
 
         self.dut = api.HttpClient()
-        ret1 = self.dut.connect(host=v.HOST)
+        ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
         ret2 = chkAdbDevicesCount(1)
 
         if ret1 is False:
@@ -2635,7 +2635,7 @@ class AP_PSK2_CHAN_REPEAT(TestCase):
     def setUpClass(self):
 
         self.dut = api.HttpClient()
-        ret1 = self.dut.connect(host=v.HOST)
+        ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
         ret2 = chkAdbDevicesCount(1)
 
         if ret1 is False:
@@ -2693,7 +2693,7 @@ class AP_MIXEDPSK_CHAN(TestCase):
     @classmethod
     def setUpClass(self):
         self.dut = api.HttpClient()
-        ret1 = self.dut.connect(host=v.HOST)
+        ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
         ret2 = chkAdbDevicesCount(1)
 
         if ret1 is False:
@@ -2851,7 +2851,7 @@ class AP_MIXEDPSK_CHAN_BW80(TestCase):
     @classmethod
     def setUpClass(self):
         self.dut = api.HttpClient()
-        ret1 = self.dut.connect(host=v.HOST)
+        ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
         ret2 = chkAdbDevicesCount(1)
 
         if ret1 is False:
@@ -2941,7 +2941,7 @@ class AP_MIXEDPSK_CHAN_BW40(TestCase):
     @classmethod
     def setUpClass(self):
         self.dut = api.HttpClient()
-        ret1 = self.dut.connect(host=v.HOST)
+        ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
         ret2 = chkAdbDevicesCount(1)
 
         if ret1 is False:
@@ -3101,7 +3101,7 @@ class AP_MIXEDPSK_CHAN_BW20(TestCase):
     @classmethod
     def setUpClass(self):
         self.dut = api.HttpClient()
-        ret1 = self.dut.connect(host=v.HOST)
+        ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
         ret2 = chkAdbDevicesCount(1)
 
         if ret1 is False:
@@ -3262,7 +3262,7 @@ class AP_MIXEDPSK_CHAN_SSIDSPEC(TestCase):
     def setUpClass(self):
 
         self.dut = api.HttpClient()
-        ret1 = self.dut.connect(host=v.HOST)
+        ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
         ret2 = chkAdbDevicesCount(1)
 
         if ret1 is False:
@@ -3418,7 +3418,7 @@ class AP_MIXEDPSK_CHAN_KEYSPEC(TestCase):
     def setUpClass(self):
 
         self.dut = api.HttpClient()
-        ret1 = self.dut.connect(host=v.HOST)
+        ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
         ret2 = chkAdbDevicesCount(1)
 
         if ret1 is False:
@@ -3577,7 +3577,7 @@ class AP_MIXEDPSK_CHAN_SSIDCHINESE(TestCase):
     def setUpClass(self):
 
         self.dut = api.HttpClient()
-        ret1 = self.dut.connect(host=v.HOST)
+        ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
         ret2 = chkAdbDevicesCount(1)
 
         if ret1 is False:
@@ -3733,7 +3733,7 @@ class AP_MIXEDPSK_CHAN1_36_FLOW(TestCase):
     def setUpClass(self):
 
         self.dut = api.HttpClient()
-        ret1 = self.dut.connect(host=v.HOST)
+        ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
         ret2 = chkAdbDevicesCount(1)
 
         if ret1 is False:
@@ -3900,7 +3900,7 @@ class AP_MIXEDPSK_CHAN6_52_FLOW(TestCase):
     def setUpClass(self):
 
         self.dut = api.HttpClient()
-        ret1 = self.dut.connect(host=v.HOST)
+        ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
         ret2 = chkAdbDevicesCount(1)
 
         if ret1 is False:
@@ -4067,7 +4067,7 @@ class AP_MIXEDPSK_CHAN11_149_FLOW(TestCase):
     def setUpClass(self):
 
         self.dut = api.HttpClient()
-        ret1 = self.dut.connect(host=v.HOST)
+        ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
         ret2 = chkAdbDevicesCount(1)
 
         if ret1 is False:
@@ -4234,7 +4234,7 @@ class AP_MIXEDPSK_CHAN13_165_FLOW(TestCase):
     def setUpClass(self):
 
         self.dut = api.HttpClient()
-        ret1 = self.dut.connect(host=v.HOST)
+        ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
         ret2 = chkAdbDevicesCount(1)
 
         if ret1 is False:
@@ -4401,7 +4401,7 @@ class AP_MIXEDPSK_CHAN_REPEAT(TestCase):
     def setUpClass(self):
 
         self.dut = api.HttpClient()
-        ret1 = self.dut.connect(host=v.HOST)
+        ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
         ret2 = chkAdbDevicesCount(1)
 
         if ret1 is False:
@@ -4495,7 +4495,7 @@ class AP_MIXEDPSK_BSD(TestCase):
     @classmethod
     def setUpClass(self):
         self.dut = api.HttpClient()
-        ret1 = self.dut.connect(host=v.HOST)
+        ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
         ret2 = chkAdbDevicesCount(1)
 
         if ret1 is False:
@@ -4608,7 +4608,7 @@ class AP_GUEST_CLEAR(TestCase):
     @classmethod
     def setUpClass(self):
         self.dut = api.HttpClient()
-        ret1 = self.dut.connect(host=v.HOST)
+        ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
         ret2 = chkAdbDevicesCount(1)
 
         if ret1 is False:
@@ -4652,7 +4652,7 @@ class AP_GUEST_PSK2(TestCase):
     @classmethod
     def setUpClass(self):
         self.dut = api.HttpClient()
-        ret1 = self.dut.connect(host=v.HOST)
+        ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
         ret2 = chkAdbDevicesCount(1)
 
         if ret1 is False:
@@ -4697,7 +4697,7 @@ class AP_GUEST_MIXEDPSK(TestCase):
     @classmethod
     def setUpClass(self):
         self.dut = api.HttpClient()
-        ret1 = self.dut.connect(host=v.HOST)
+        ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
         ret2 = chkAdbDevicesCount(1)
 
         if ret1 is False:
@@ -4784,7 +4784,7 @@ class AP_GUEST_CLEAR_WHITELIST(TestCase):
     @classmethod
     def setUpClass(self):
         self.dut = api.HttpClient()
-        ret1 = self.dut.connect(host=v.HOST)
+        ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
         ret2 = chkAdbDevicesCount(1)
 
         if ret1 is False:
@@ -4883,7 +4883,7 @@ class AP_GUEST_CLEAR_BLACKLIST(TestCase):
     @classmethod
     def setUpClass(self):
         self.dut = api.HttpClient()
-        ret1 = self.dut.connect(host=v.HOST)
+        ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
         ret2 = chkAdbDevicesCount(1)
 
         if ret1 is False:
@@ -4958,7 +4958,7 @@ class AP_GUEST_CLEAR_REPEAT(TestCase):
     def setUpClass(self):
 
         self.dut = api.HttpClient()
-        ret1 = self.dut.connect(host=v.HOST)
+        ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
         ret2 = chkAdbDevicesCount(1)
 
         if ret1 is False:
@@ -4995,7 +4995,7 @@ class AP_GUEST_MIXEDPSK_REPEAT(TestCase):
     def setUpClass(self):
 
         self.dut = api.HttpClient()
-        ret1 = self.dut.connect(host=v.HOST)
+        ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
         ret2 = chkAdbDevicesCount(1)
 
         if ret1 is False:
@@ -5051,7 +5051,7 @@ class AP_GUEST_PSK2_REPEAT(TestCase):
     def setUpClass(self):
 
         self.dut = api.HttpClient()
-        ret1 = self.dut.connect(host=v.HOST)
+        ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
         ret2 = chkAdbDevicesCount(1)
 
         if ret1 is False:
@@ -5089,7 +5089,7 @@ class AP_SSIDHIDE(TestCase):
     def setUpClass(self):
 
         self.dut = api.HttpClient()
-        ret1 = self.dut.connect(host=v.HOST)
+        ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
         ret2 = chkAdbDevicesCount(1)
 
         if ret1 is False:
@@ -5121,7 +5121,7 @@ class AP_SSIDHIDE(TestCase):
             'wifiIndex': 1,
             'on': 0
         }
-        api.setWifi(self.dut, self.__name__, **option2g)
+        api.setWifi(self.dut, self.__class__.__name__, **option2g)
 
     def ap_clear_ssidhide_5g(self):
 
@@ -5232,7 +5232,7 @@ class AP_CHECK(TestCase):
         self.dut = SshClient(v.CONNECTION_TYPE)
         ret1 = self.dut.connect(v.HOST, v.USR, v.PASSWD)
         self.dut2 = api.HttpClient()
-        ret2 = self.dut2.connect(host=v.HOST)
+        ret2 = self.dut2.connect(host=v.HOST, password=v.WEB_PWD)
 
         if ret1 is False:
             raise Exception("Connection is failed for dut1. please check your remote settings.")
@@ -5402,7 +5402,7 @@ class AP_CHECK(TestCase):
                 'txpwr': 1,
             }
             webclient = api.HttpClient()
-            webclient.connect(host=v.HOST, init=1)
+            webclient.connect(host=v.HOST, password=v.WEB_PWD, init=1)
             api.setRouterNormal(webclient, self.__class__.__name__, **option)
             webclient.close()
 
@@ -5428,11 +5428,11 @@ class AP_CHECK(TestCase):
                 if loop >= 360:
                     self.fail(msg='last est power check is failed')
             count += 1
-            self.dut2.connect(host=v.HOST)
+            self.dut2.connect(host=v.HOST, password=v.WEB_PWD)
 
 
 if __name__ == '__main__':
-    v.HOST = "192.168.31.1"
+    v.HOST = "192.168.110.1"
     v.WEB_PWD = "12345678"
     cases = [
         'check_ap_reset_lastestpower',

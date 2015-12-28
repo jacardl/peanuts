@@ -128,7 +128,7 @@ MEM_MONITOR_INTERVAL = 60
 
 # -------------api test------------------#
 WEB_USERNAME = 'admin'
-WEB_PWD = '12345678'
+WEB_PWD = ''
 WEB_KEY = 'a2ffa5c9be07488bbb04a3a47d3c5f6a'
 IV = '64175472480004614961023454661220'
 # uci export account

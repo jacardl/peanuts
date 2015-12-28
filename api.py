@@ -101,7 +101,7 @@ class HttpClient(object):
         self.hostname = host
         loop = 0
         try:
-            self.httpClient = httplib.HTTPConnection(host, port, timeout=30)
+            self.httpClient = httplib.HTTPConnection(self.hostname, port, timeout=30)
             while self.token is False and loop < 5:
                 t.sleep(1)
                 result = self.getToken(password=password)
@@ -118,9 +118,10 @@ class HttpClient(object):
         if self.httpClient:
             self.httpClient.close()
 
-    def getToken(self, password=v.WEB_PWD):
+    def getToken(self, password):
+        self.password = password
         if self.init is 0:
-            self.login = getWebLoginPassword(password, v.WEB_KEY)
+            self.login = getWebLoginPassword(self.password, v.WEB_KEY)
         elif self.init is 1:
             self.login = getWebLoginOldPwd()
         params = urllib.urlencode({'username': v.WEB_USERNAME,
@@ -146,14 +147,14 @@ class HttpClient(object):
         if len(kwargs) is 0:
             self.httpClient.request('GET', apipath, headers=self.headers)
             response = self.httpClient.getresponse().read()
-            responsedict = eval(response)
-            return responsedict
+            responseDict = eval(response)
+            return responseDict
         else:
             params = urllib.urlencode(kwargs)
             self.httpClient.request('POST', apipath, params, self.headers)
             response = self.httpClient.getresponse().read()
-            responsedict = eval(response)
-            return responsedict
+            responseDict = eval(response)
+            return responseDict
 
 
 def setGet(terminal, logname, apipath, **kwargs):
@@ -168,6 +169,11 @@ def setGet(terminal, logname, apipath, **kwargs):
         f.write(apipath + '?' + str(kwargs) + '\n')
         f.writelines(str(ret))
         f.write('\n\n')
+        if ret['code'] == 401:
+            f.write('token timeout, renew token.\n\n')
+            f.close()
+            terminal.getToken(password=v.WEB_PWD)
+            setGet(terminal, logname, apipath, **kwargs)
         f.close()
         return ret
 
@@ -196,11 +202,16 @@ def setCheck(terminal, logname, apipath, **kwargs):
         f.writelines(str(ret))
         f.write('\n')
         if ret['code'] == 0:
-            f.write('api processes PASS\n\n')
+            f.write('api processes PASS.\n\n')
             f.close()
             return True
+        elif ret['code'] == 401:
+            f.write('token timeout, renew token.\n\n')
+            f.close()
+            terminal.getToken(password=v.WEB_PWD)
+            setCheck(terminal, logname, apipath, **kwargs)
         else:
-            f.write('api processes FAIL\n\n')
+            f.write('api processes FAIL.\n\n')
             f.close()
             return False
 
@@ -566,10 +577,10 @@ if __name__ == '__main__':
         'hidden': 0,
         'txpwr': 'mid'
     }
-    host = '192.168.140.1'
+    v.HOST = '192.168.110.1'
+    v.WEB_PWD = '12345678'
     webclient = HttpClient()
-    webclient.connect(host=host)
-    setWifi(webclient, 'aaa', **option)
-    # print getOnlineDeviceType(webclient, 'aaa')
+    webclient.connect(host=v.HOST, password=v.WEB_PWD)
+    getWifiStatus(webclient, 'aaa')
     webclient.close()
 

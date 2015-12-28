@@ -673,7 +673,7 @@ class AP_CLEAR_LOW_TXPOWER(TestCase):
     def chan165_txpower_5g(self):
 
         option5g = {
-            'wifiIndex': 1,
+            'wifiIndex': 2,
             'ssid': v.SSID_5G,
             'encryption': 'none',
             'channel': v.CHANNEL4_5G,
@@ -1473,7 +1473,7 @@ class AP_CLEAR_HIGH_TXPOWER(TestCase):
     def chan149_txpower_5g(self):
 
         option5g = {
-            'wifiIndex': 1,
+            'wifiIndex': 2,
             'ssid': v.SSID_5G,
             'encryption': 'none',
             'channel': v.CHANNEL_5G,
@@ -1507,7 +1507,7 @@ class AP_CLEAR_HIGH_TXPOWER(TestCase):
     def chan165_txpower_5g(self):
 
         option5g = {
-            'wifiIndex': 1,
+            'wifiIndex': 2,
             'ssid': v.SSID_5G,
             'encryption': 'none',
             'channel': v.CHANNEL4_5G,
@@ -1588,9 +1588,8 @@ class AP_CLEAR_CHANSELECTION(TestCase):
         }
         while count < 10:
             api.setWifi(self.dut, self.__class__.__name__, **option5g)
-            wifiInfo = api.getWifiDetailAll(self.dut, self.__class__.__name__)
-            channel = wifiInfo['info'][1]['channelInfo']['channel']
-            if int(channel) not in chan5g:
+            channel = api.getWifiChannel(self.dut, '5g', self.__class__.__name__)
+            if channel not in chan5g:
                 self.fail("Current auto-selected channel isnot between 149 and 161.")
             else:
                 count += 1
@@ -5435,10 +5434,10 @@ if __name__ == '__main__':
     v.HOST = "192.168.110.1"
     v.WEB_PWD = "12345678"
     cases = [
-        'check_ap_reset_lastestpower',
+        'assoc_psk2_sta_ssidchinese_5g',
     ]
 
-    suite = TestSuite(map(AP_CHECK, cases))
+    suite = TestSuite(map(AP_MIXEDPSK_CHAN_SSIDCHINESE, cases))
     curTime = t.strftime('%Y.%m.%d %H.%M.%S', t.localtime())
     f = open(curTime + '_RESULT.log', 'a')
     runner = TextTestRunner(f, verbosity=2)

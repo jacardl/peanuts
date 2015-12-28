@@ -10,7 +10,7 @@ import os
 from Crypto.Cipher import AES
 
 import var as v
-
+import common
 
 def getWebLoginNonce():
     """
@@ -150,6 +150,9 @@ class HttpClient(object):
             responseDict = eval(response)
             return responseDict
         else:
+            for key, value in kwargs.items():
+                if type(value) is str and common.checkContainChinese(value):
+                    kwargs[key] = value.decode('gbk').encode('utf8')
             params = urllib.urlencode(kwargs)
             self.httpClient.request('POST', apipath, params, self.headers)
             response = self.httpClient.getresponse().read()
@@ -581,6 +584,14 @@ if __name__ == '__main__':
     v.WEB_PWD = '12345678'
     webclient = HttpClient()
     webclient.connect(host=v.HOST, password=v.WEB_PWD)
-    getWifiStatus(webclient, 'aaa')
+    option5g = {
+        'wifiIndex': 2,
+        'ssid': v.CHINESE_SSID_5G,
+        'channel': v.CHANNEL_5G,
+        'encryption': 'mixed-psk',
+        'pwd': v.KEY
+        }
+
+    setWifi(webclient, 'aaa', **option5g)
     webclient.close()
 

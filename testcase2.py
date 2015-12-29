@@ -1666,18 +1666,16 @@ class AP_CLEAR_CHAN_WHITELIST(TestCase):
             'option': 0
         }
         api.setEditDevice(self.dut, self.__class__.__name__, **option)
+
         res2gConn = setAdbClearStaConn(self.device[0], "normal", "2g", self.__class__.__name__)
 
         if res2gConn:
             result = getAdbShellWlan(self.device[0], self.__class__.__name__)
-            if result['ip'] == '':
-                self.fail(msg='no ip address got.')
-            else:
+            if result['ip'] != '':
                 resPingPercent = getAdbPingStatus(self.device[0], v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
-                self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
-                                        "Ping responsed percent werenot good enough.")
-        else:
-            self.assertTrue(res2gConn, "Association wasnot successful which sta in whitelist.")
+                passPercent = resPingPercent['pass']
+            else:
+                passPercent = 0
 
         option = {
             'model': 1,
@@ -1686,9 +1684,12 @@ class AP_CLEAR_CHAN_WHITELIST(TestCase):
         }
         api.setEditDevice(self.dut, self.__class__.__name__, **option)
 
+        self.assertTrue(res2gConn, "Association wasnot successful which sta in whitelist.")
+        self.assertGreaterEqual(passPercent, v.PING_PERCENT_PASS,
+                                        "Ping responsed percent werenot good enough.")
         # connType = api.getOnlineDeviceType(self.dut, self.__class__.__name__)
         # if self.staMac in connType.keys():
-        #     self.fail(msg='STA should be kicked off.')
+        #     self.fail(msg='STA should be kicked off.'
 
     def assoc_clear_sta_in_whitelist_5g(self):
 
@@ -1698,25 +1699,28 @@ class AP_CLEAR_CHAN_WHITELIST(TestCase):
             'option': 0
         }
         api.setEditDevice(self.dut, self.__class__.__name__, **option)
+
         res5gConn = setAdbClearStaConn(self.device[0], "normal", "5g", self.__class__.__name__)
 
         if res5gConn:
             result = getAdbShellWlan(self.device[0], self.__class__.__name__)
-            if result['ip'] == '':
-                self.fail(msg='no ip address got.')
-            else:
+            if result['ip'] != '':
                 resPingPercent = getAdbPingStatus(self.device[0], v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
-                self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
-                                        "Ping responsed percent werenot good enough.")
-        else:
-            self.assertTrue(res5gConn, "Association wasnot successful which sta in whitelist.")
+                passPercent = resPingPercent['pass']
+            else:
+                passPercent = 0
 
         option = {
             'model': 1,
             'mac': self.staMac,
             'option': 1
         }
+
         api.setEditDevice(self.dut, self.__class__.__name__, **option)
+
+        self.assertTrue(res5gConn, "Association wasnot successful which sta in whitelist.")
+        self.assertGreaterEqual(passPercent, v.PING_PERCENT_PASS,
+                                        "Ping responsed percent werenot good enough.")
         # connType = api.getOnlineDeviceType(self.dut, self.__class__.__name__)
         # if self.staMac in connType.keys():
         #     self.fail(msg='STA should be kicked off.')
@@ -1725,7 +1729,6 @@ class AP_CLEAR_CHAN_WHITELIST(TestCase):
 
         res2gConn = setAdbClearStaConn(self.device[0], "normal", "2g", self.__class__.__name__)
         self.assertFalse(res2gConn, "Association wasnot supposed to be successful which sta outof whitelist.")
-
         #鍒犻櫎鎵�鏈墂hitelist鍒欑櫧鍚嶅崟涓嶅啀鐢熸晥
         # option = {
         #     'model': 1,
@@ -1859,11 +1862,8 @@ class AP_CLEAR_CHAN_BLACKLIST(TestCase):
         api.setEditDevice(self.dut, self.__class__.__name__, **option)
 
         connType = api.getOnlineDeviceType(self.dut, self.__class__.__name__)
-        if self.staMac in connType.keys():
-            self.fail(msg='STA should be kicked off.')
 
         res2gConn = setAdbClearStaConn(self.device[0], "normal", "2g", self.__class__.__name__)
-        self.assertFalse(res2gConn, "Association wasnot supposed to be successful which sta in blacklist.")
 
         option = {
             'model': 0,
@@ -1871,6 +1871,12 @@ class AP_CLEAR_CHAN_BLACKLIST(TestCase):
             'option': 1
         }
         api.setEditDevice(self.dut, self.__class__.__name__, **option)
+
+        if self.staMac in connType.keys():
+            self.fail(msg='STA should be kicked off.')
+
+        self.assertFalse(res2gConn, "Association wasnot supposed to be successful which sta in blacklist.")
+
 
     def assoc_clear_sta_in_blacklist_5g(self):
 
@@ -1885,11 +1891,8 @@ class AP_CLEAR_CHAN_BLACKLIST(TestCase):
         api.setEditDevice(self.dut, self.__class__.__name__, **option)
 
         connType = api.getOnlineDeviceType(self.dut, self.__class__.__name__)
-        if self.staMac in connType.keys():
-            self.fail(msg='STA should be kicked off.')
 
         res5gConn = setAdbClearStaConn(self.device[0], "normal", "5g", self.__class__.__name__)
-        self.assertFalse(res5gConn, "Association wasnot supposed to be successful which sta in blacklist.")
 
         option = {
             'model': 0,
@@ -1897,6 +1900,11 @@ class AP_CLEAR_CHAN_BLACKLIST(TestCase):
             'option': 1
         }
         api.setEditDevice(self.dut, self.__class__.__name__, **option)
+
+        if self.staMac in connType.keys():
+            self.fail(msg='STA should be kicked off.')
+
+        self.assertFalse(res5gConn, "Association wasnot supposed to be successful which sta in blacklist.")
 
 
 class AP_CLEAR_CHAN1_36_FLOW(TestCase):
@@ -4833,18 +4841,16 @@ class AP_GUEST_CLEAR_WHITELIST(TestCase):
             'option': 0
         }
         api.setEditDevice(self.dut, self.__class__.__name__, **option)
+
         res2gConn = setAdbClearStaConn(self.device[0], "normal", "guest", self.__class__.__name__)
 
         if res2gConn:
             result = getAdbShellWlan(self.device[0], self.__class__.__name__)
-            if result['ip'] == '':
-                self.fail(msg='no ip address got.')
-            else:
+            if result['ip'] != '':
                 resPingPercent = getAdbPingStatus(self.device[0], v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
-                self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
-                                        "Ping responsed percent werenot good enough.")
-        else:
-            self.assertTrue(res2gConn, "Association should be successful which sta in whitelist.")
+                passPercent = resPingPercent['pass']
+            else:
+                passPercent = 0
 
         option = {
             'model': 1,
@@ -4852,6 +4858,11 @@ class AP_GUEST_CLEAR_WHITELIST(TestCase):
             'option': 1
         }
         api.setEditDevice(self.dut, self.__class__.__name__, **option)
+
+        self.assertTrue(res2gConn, "Association should be successful which sta in whitelist.")
+        self.assertGreaterEqual(passPercent, v.PING_PERCENT_PASS,
+                                        "Ping responsed percent werenot good enough.")
+
         # connType = api.getOnlineDeviceType(self.dut, self.__class__.__name__)
         # if self.staMac in connType.keys():
         #     self.fail(msg='STA should be kicked off.')
@@ -4939,11 +4950,9 @@ class AP_GUEST_CLEAR_BLACKLIST(TestCase):
         api.setEditDevice(self.dut, self.__class__.__name__, **option)
 
         connType = api.getOnlineDeviceType(self.dut, self.__class__.__name__)
-        if self.staMac in connType.keys():
-            self.fail(msg='STA should be kicked off.')
 
         res2gConn = setAdbClearStaConn(self.device[0], "normal", "guest", self.__class__.__name__)
-        self.assertFalse(res2gConn, "Association wasnot supposed to be successful which sta in blacklist.")
+
         option = {
             'model': 0,
             'mac': self.staMac,
@@ -4951,6 +4960,10 @@ class AP_GUEST_CLEAR_BLACKLIST(TestCase):
         }
         api.setEditDevice(self.dut, self.__class__.__name__, **option)
 
+        if self.staMac in connType.keys():
+            self.fail(msg='STA should be kicked off.')
+
+        self.assertFalse(res2gConn, "Association wasnot supposed to be successful which sta in blacklist.")
 
 class AP_GUEST_CLEAR_REPEAT(TestCase):
     @classmethod
@@ -5113,14 +5126,15 @@ class AP_SSIDHIDE(TestCase):
         api.setWifi(self.dut, self.__class__.__name__, **option2g)
 
         ret2g = setAdbScanSsidNoExist(self.device[0], "normal", "2g", self.__class__.__name__)
-        if ret2g is False:
-            self.fail(msg='2.4g wifi is not hidden..')
 
         option2g = {
             'wifiIndex': 1,
             'on': 0
         }
         api.setWifi(self.dut, self.__class__.__name__, **option2g)
+
+        if ret2g is False:
+            self.fail(msg='2.4g wifi is not hidden..')
 
     def ap_clear_ssidhide_5g(self):
 
@@ -5134,14 +5148,15 @@ class AP_SSIDHIDE(TestCase):
         api.setWifi(self.dut, self.__class__.__name__, **option5g)
 
         ret5g = setAdbScanSsidNoExist(self.device[0], "normal", "5g", self.__class__.__name__)
-        if ret5g is False:
-            self.fail(msg='5g wifi is not hidden..')
 
         option5g = {
             'wifiIndex': 2,
             'on': 0
         }
         api.setWifi(self.dut, self.__class__.__name__, **option5g)
+
+        if ret5g is False:
+            self.fail(msg='5g wifi is not hidden..')
 
     def ap_psk2_ssidhide_2g(self):
         option2g = {
@@ -5154,14 +5169,15 @@ class AP_SSIDHIDE(TestCase):
         api.setWifi(self.dut, self.__class__.__name__, **option2g)
 
         ret2g = setAdbScanSsidNoExist(self.device[0], "normal", "2g", self.__class__.__name__)
-        if ret2g is False:
-            self.fail(msg='2.4g wifi is not hidden..')
 
         option2g = {
             'wifiIndex': 1,
             'on': 0
         }
         api.setWifi(self.dut, self.__class__.__name__, **option2g)
+
+        if ret2g is False:
+            self.fail(msg='2.4g wifi is not hidden..')
 
     def ap_psk2_ssidhide_5g(self):
         option5g = {
@@ -5174,14 +5190,15 @@ class AP_SSIDHIDE(TestCase):
         api.setWifi(self.dut, self.__class__.__name__, **option5g)
 
         ret5g = setAdbScanSsidNoExist(self.device[0], "normal", "5g", self.__class__.__name__)
-        if ret5g is False:
-            self.fail(msg='5g wifi is not hidden..')
 
         option5g = {
             'wifiIndex': 2,
             'on': 0
         }
         api.setWifi(self.dut, self.__class__.__name__, **option5g)
+
+        if ret5g is False:
+            self.fail(msg='5g wifi is not hidden..')
 
     def ap_mixedpsk_ssidhide_2g(self):
         option2g = {
@@ -5194,14 +5211,15 @@ class AP_SSIDHIDE(TestCase):
         api.setWifi(self.dut, self.__class__.__name__, **option2g)
 
         ret2g = setAdbScanSsidNoExist(self.device[0], "normal", "2g", self.__class__.__name__)
-        if ret2g is False:
-            self.fail(msg='2.4g wifi is not hidden..')
 
         option2g = {
             'wifiIndex': 1,
             'on': 0
         }
         api.setWifi(self.dut, self.__class__.__name__, **option2g)
+
+        if ret2g is False:
+            self.fail(msg='2.4g wifi is not hidden..')
 
     def ap_mixedpsk_ssidhide_5g(self):
         option5g = {
@@ -5214,8 +5232,6 @@ class AP_SSIDHIDE(TestCase):
         api.setWifi(self.dut, self.__class__.__name__, **option5g)
 
         ret5g = setAdbScanSsidNoExist(self.device[0], "normal", "5g", self.__class__.__name__)
-        if ret5g is False:
-            self.fail(msg='5g wifi is not hidden..')
 
         option5g = {
             'wifiIndex': 2,
@@ -5223,6 +5239,8 @@ class AP_SSIDHIDE(TestCase):
         }
         api.setWifi(self.dut, self.__class__.__name__, **option5g)
 
+        if ret5g is False:
+            self.fail(msg='5g wifi is not hidden..')
 
 class AP_CHECK(TestCase):
     @classmethod

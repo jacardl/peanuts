@@ -287,13 +287,13 @@ def setWifi(terminal, logname, **kwargs):
         status = getWifiStatus(terminal, logname)
         index = option['wifiIndex']
         if index == 3:
-            while status['status'][0]['up'] != option.get('on') or curTime - lastTime <= 10:
-                t.sleep(2)
+            while status['status'][0]['up'] != option.get('on') or curTime - lastTime <= 20:
+                t.sleep(5)
                 status = getWifiStatus(terminal, logname)
                 curTime = int(t.time())
         else:
-            while status['status'][index-1]['up'] != option.get('on') or curTime - lastTime <= 10:
-                t.sleep(2)
+            while status['status'][index-1]['up'] != option.get('on') or curTime - lastTime <= 20:
+                t.sleep(5)
                 status = getWifiStatus(terminal, logname)
                 curTime = int(t.time())
     return ret
@@ -374,6 +374,7 @@ def setEditDevice(terminal, logname, **kwargs):
     option.update(kwargs)
     api = '/cgi-bin/luci/;stok=token/api/xqnetwork/edit_device'
     ret = setCheck(terminal, logname, api, **option)
+    t.sleep(5)
     return ret
 
 
@@ -580,7 +581,7 @@ if __name__ == '__main__':
         'hidden': 0,
         'txpwr': 'mid'
     }
-    v.HOST = '192.168.110.1'
+    v.HOST = '192.168.130.1'
     v.WEB_PWD = '12345678'
     webclient = HttpClient()
     webclient.connect(host=v.HOST, password=v.WEB_PWD)
@@ -592,6 +593,9 @@ if __name__ == '__main__':
         'pwd': v.KEY
         }
 
-    setWifi(webclient, 'aaa', **option5g)
+    # setWifi(webclient, 'aaa', **option5g)
+    while 1:
+        print getDeviceList(webclient, 'aaa')
+        t.sleep(2)
     webclient.close()
 

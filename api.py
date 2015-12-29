@@ -456,10 +456,31 @@ def setRouterNormal(terminal, logname,  **kwargs):
         lastTime = int(t.time())
         curTime = int(t.time())
         status = getWifiStatus(terminal, logname)
-        while status['status'][0]['up'] != 1 or curTime - lastTime <= 10:
+        while status['status'][0]['up'] != 1 or curTime - lastTime <= 20:
             t.sleep(2)
             status = getWifiStatus(terminal, logname)
             curTime = int(t.time())
+    return result
+
+
+def setLanAp(terminal, logname, **kwargs):
+    option = {
+        'ssid': '',
+        'password': '',
+    }
+    option.update(kwargs)
+    api = '/cgi-bin/luci/;stok=token/api/xqnetwork/set_lan_ap'
+    result = setGet(terminal, logname, api, **option)
+    while not terminal.connect(host=result['ip'], password=v.WEB_PWD):
+        t.sleep(2)
+    return result
+
+
+def setDisableLanAp(terminal, logname):
+    api = '/cgi-bin/luci/;stok=token/api/xqnetwork/disable_lan_ap'
+    result = setGet(terminal, logname, api)
+    while not terminal.connect(host=result['ip'], password=v.WEB_PWD):
+        t.sleep(2)
     return result
 
 
@@ -581,21 +602,15 @@ if __name__ == '__main__':
         'hidden': 0,
         'txpwr': 'mid'
     }
-    v.HOST = '192.168.130.1'
+    v.HOST = '10.237.100.78'
     v.WEB_PWD = '12345678'
     webclient = HttpClient()
     webclient.connect(host=v.HOST, password=v.WEB_PWD)
-    option5g = {
-        'wifiIndex': 2,
-        'ssid': v.CHINESE_SSID_5G,
-        'channel': v.CHANNEL_5G,
-        'encryption': 'mixed-psk',
-        'pwd': v.KEY
-        }
+    result = setDisableLanAp(webclient, 'aaa')
+    print result
 
-    # setWifi(webclient, 'aaa', **option5g)
     while 1:
-        print getDeviceList(webclient, 'aaa')
+        print getWifiStatus(webclient, 'aaa')
         t.sleep(2)
     webclient.close()
 

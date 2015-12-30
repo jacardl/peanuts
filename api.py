@@ -346,7 +346,13 @@ def setAllWifi(terminal, logname, **kwargs):
     option.update(kwargs)
     api = '/cgi-bin/luci/;stok=token/api/xqnetwork/set_all_wifi'
     ret = setCheck(terminal, logname, api, **option)
-    time.sleep(10)
+    if ret:
+        lastTime = int(t.time())
+        curTime = int(t.time())
+        while status['status'][0]['up'] != option.get('on1') or curTime - lastTime <= 20:
+            t.sleep(5)
+            status = getWifiStatus(terminal, logname)
+            curTime = int(t.time())
     return ret
 
 def setEditDevice(terminal, logname, **kwargs):

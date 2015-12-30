@@ -14,6 +14,7 @@ PASSWD = "admin"
 STA_IP = '192.168.32.1'
 STA_USR = 'root'
 STA_PASSWD = 'admin'
+STA_COUNT = "1"
 
 """
 connection_type = 1 represent ssh
@@ -23,7 +24,7 @@ connection_type = 1 represent ssh
 CONNECTION_TYPE = 2
 STA_CONNECTION_TYPE = 1
 
-VER = '2.5.5'
+VER = '2.5.6'
 
 # ----------------Memory Tracking-----------------
 

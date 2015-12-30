@@ -10,7 +10,7 @@ import os
 from Crypto.Cipher import AES
 
 import var as v
-
+import common
 
 def getWebLoginNonce():
     """
@@ -101,7 +101,7 @@ class HttpClient(object):
         self.hostname = host
         loop = 0
         try:
-            self.httpClient = httplib.HTTPConnection(host, port, timeout=30)
+            self.httpClient = httplib.HTTPConnection(self.hostname, port, timeout=30)
             while self.token is False and loop < 5:
                 t.sleep(1)
                 result = self.getToken(password=password)
@@ -118,9 +118,10 @@ class HttpClient(object):
         if self.httpClient:
             self.httpClient.close()
 
-    def getToken(self, password=v.WEB_PWD):
+    def getToken(self, password):
+        self.password = password
         if self.init is 0:
-            self.login = getWebLoginPassword(password, v.WEB_KEY)
+            self.login = getWebLoginPassword(self.password, v.WEB_KEY)
         elif self.init is 1:
             self.login = getWebLoginOldPwd()
         params = urllib.urlencode({'username': v.WEB_USERNAME,
@@ -146,14 +147,17 @@ class HttpClient(object):
         if len(kwargs) is 0:
             self.httpClient.request('GET', apipath, headers=self.headers)
             response = self.httpClient.getresponse().read()
-            responsedict = eval(response)
-            return responsedict
+            responseDict = eval(response)
+            return responseDict
         else:
+            for key, value in kwargs.items():
+                if type(value) is str and common.checkContainChinese(value):
+                    kwargs[key] = value.decode('gbk').encode('utf8')
             params = urllib.urlencode(kwargs)
             self.httpClient.request('POST', apipath, params, self.headers)
             response = self.httpClient.getresponse().read()
-            responsedict = eval(response)
-            return responsedict
+            responseDict = eval(response)
+            return responseDict
 
 
 def setGet(terminal, logname, apipath, **kwargs):
@@ -168,6 +172,11 @@ def setGet(terminal, logname, apipath, **kwargs):
         f.write(apipath + '?' + str(kwargs) + '\n')
         f.writelines(str(ret))
         f.write('\n\n')
+        if ret['code'] == 401:
+            f.write('token timeout, renew token.\n\n')
+            f.close()
+            terminal.getToken(password=v.WEB_PWD)
+            setGet(terminal, logname, apipath, **kwargs)
         f.close()
         return ret
 
@@ -196,11 +205,16 @@ def setCheck(terminal, logname, apipath, **kwargs):
         f.writelines(str(ret))
         f.write('\n')
         if ret['code'] == 0:
-            f.write('api processes PASS\n\n')
+            f.write('api processes PASS.\n\n')
             f.close()
             return True
+        elif ret['code'] == 401:
+            f.write('token timeout, renew token.\n\n')
+            f.close()
+            terminal.getToken(password=v.WEB_PWD)
+            setCheck(terminal, logname, apipath, **kwargs)
         else:
-            f.write('api processes FAIL\n\n')
+            f.write('api processes FAIL.\n\n')
             f.close()
             return False
 
@@ -273,13 +287,13 @@ def setWifi(terminal, logname, **kwargs):
         status = getWifiStatus(terminal, logname)
         index = option['wifiIndex']
         if index == 3:
-            while status['status'][0]['up'] != option.get('on') or curTime - lastTime <= 10:
-                t.sleep(2)
+            while status['status'][0]['up'] != option.get('on') or curTime - lastTime <= 20:
+                t.sleep(5)
                 status = getWifiStatus(terminal, logname)
                 curTime = int(t.time())
         else:
-            while status['status'][index-1]['up'] != option.get('on') or curTime - lastTime <= 10:
-                t.sleep(2)
+            while status['status'][index-1]['up'] != option.get('on') or curTime - lastTime <= 20:
+                t.sleep(5)
                 status = getWifiStatus(terminal, logname)
                 curTime = int(t.time())
     return ret
@@ -332,7 +346,13 @@ def setAllWifi(terminal, logname, **kwargs):
     option.update(kwargs)
     api = '/cgi-bin/luci/;stok=token/api/xqnetwork/set_all_wifi'
     ret = setCheck(terminal, logname, api, **option)
-    time.sleep(10)
+    if ret:
+        lastTime = int(t.time())
+        curTime = int(t.time())
+        while status['status'][0]['up'] != option.get('on1') or curTime - lastTime <= 20:
+            t.sleep(5)
+            status = getWifiStatus(terminal, logname)
+            curTime = int(t.time())
     return ret
 
 def setEditDevice(terminal, logname, **kwargs):
@@ -360,6 +380,7 @@ def setEditDevice(terminal, logname, **kwargs):
     option.update(kwargs)
     api = '/cgi-bin/luci/;stok=token/api/xqnetwork/edit_device'
     ret = setCheck(terminal, logname, api, **option)
+    t.sleep(5)
     return ret
 
 
@@ -441,10 +462,31 @@ def setRouterNormal(terminal, logname,  **kwargs):
         lastTime = int(t.time())
         curTime = int(t.time())
         status = getWifiStatus(terminal, logname)
-        while status['status'][0]['up'] != 1 or curTime - lastTime <= 10:
+        while status['status'][0]['up'] != 1 or curTime - lastTime <= 20:
             t.sleep(2)
             status = getWifiStatus(terminal, logname)
             curTime = int(t.time())
+    return result
+
+
+def setLanAp(terminal, logname, **kwargs):
+    option = {
+        'ssid': '',
+        'password': '',
+    }
+    option.update(kwargs)
+    api = '/cgi-bin/luci/;stok=token/api/xqnetwork/set_lan_ap'
+    result = setGet(terminal, logname, api, **option)
+    while not terminal.connect(host=result['ip'], password=v.WEB_PWD):
+        t.sleep(2)
+    return result
+
+
+def setDisableLanAp(terminal, logname):
+    api = '/cgi-bin/luci/;stok=token/api/xqnetwork/disable_lan_ap'
+    result = setGet(terminal, logname, api)
+    while not terminal.connect(host=result['ip'], password=v.WEB_PWD):
+        t.sleep(2)
     return result
 
 
@@ -566,10 +608,15 @@ if __name__ == '__main__':
         'hidden': 0,
         'txpwr': 'mid'
     }
-    host = '192.168.140.1'
+    v.HOST = '10.237.100.78'
+    v.WEB_PWD = '12345678'
     webclient = HttpClient()
-    webclient.connect(host=host)
-    setWifi(webclient, 'aaa', **option)
-    # print getOnlineDeviceType(webclient, 'aaa')
+    webclient.connect(host=v.HOST, password=v.WEB_PWD)
+    result = setDisableLanAp(webclient, 'aaa')
+    print result
+
+    while 1:
+        print getWifiStatus(webclient, 'aaa')
+        t.sleep(2)
     webclient.close()
 

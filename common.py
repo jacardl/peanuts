@@ -682,14 +682,14 @@ def getAdbDevices():
     """
     command = "adb devices"
     ret = os.popen(command).readlines()
-    del ret[0]
-    m = re.findall('.+\s+device', ''.join(ret))
-    count = 0
     result = []
-    for dev in m:
-        result.append(dev[:-7])
-        count += 1
+    for line in ret:
+        if not line.isspace():
+            m = re.search('(^[0-9a-zA-Z]*)\s*device$', line)
+            if m:
+                result.append(m.group(1))
     return result
+
 
 
 def getAdbShellWlan(device, logname):
@@ -766,7 +766,7 @@ def getAdbPingStatus(terminal, target, count, logname):
 
 def chkAdbDevicesCount(count):
     ret = getAdbDevices()
-    if len(ret) >= count:
+    if len(ret) >= int(count):
         return True
     else:
         return False
@@ -1245,18 +1245,5 @@ if __name__ == '__main__':
     # v.DUT_MODULE = "R1CM"
     # setWifiRestart(ssh, "log")
     # ssh.close()
-    # line = "Error: Curpower failed. Bring up interface and disable mpc if necessary (wl mpc 0)"
-    line = "Maximum Power Target among all rates:   19.00  19.00  0.0"
-    m = re.search('(\d{1,3}\.\d{1,2}\s*){2,3}', line)
-    if m:
-        power = m.group(0)
-        print power
-        powerList = power.split()
-        sum = 0.0
-        for c in range(len(powerList)):
-            sum += float(powerList[c])
-        result = sum / len(powerList)
-        result = float(result)
-    else:
-        result = 0
-    print result
+    print getAdbDevices()
+    print chkAdbDevicesCount(2)

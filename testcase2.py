@@ -6970,8 +6970,6 @@ class AP_RELAY_MIXEDPSK(TestCase):
         if ret2 is False:
             raise Exception("USB devices arenot ready!")
 
-        api.setLanAp(self.dut, self.__name__)
-
         option2g = {
             'wifiIndex': 1,
             'ssid': v.SSID,
@@ -6987,10 +6985,17 @@ class AP_RELAY_MIXEDPSK(TestCase):
 
         api.setWifi(self.dut, self.__name__, **option2g)
         api.setWifi(self.dut, self.__name__, **option5g)
+
+        # first config wifi then change to wire relay module, diff with AP_RELAY_CLEEAR_XXX and AP_RELAY_PSK2
+        api.setLanAp(self.dut, self.__name__)
+
         self.device = getAdbDevices()
 
     @classmethod
     def tearDownClass(self):
+
+        api.setDisableLanAp(self.dut, self.__name__)
+
         option2g = {
             'wifiIndex': 1,
             'on': 0,
@@ -7001,8 +7006,6 @@ class AP_RELAY_MIXEDPSK(TestCase):
         }
         api.setWifi(self.dut, self.__name__, **option2g)
         api.setWifi(self.dut, self.__name__, **option5g)
-
-        api.setDisableLanAp(self.dut, self.__name__)
 
         self.dut.close()
 
@@ -7132,8 +7135,6 @@ class AP_RELAY_MIXEDPSK_CHAN_BW80(TestCase):
         if ret2 is False:
             raise Exception("USB devices arenot ready!")
 
-        api.setLanAp(self.dut, self.__name__)
-
         option5g = {
             'wifiIndex': 2,
             'ssid': v.SSID_5G,
@@ -7144,17 +7145,22 @@ class AP_RELAY_MIXEDPSK_CHAN_BW80(TestCase):
         }
 
         api.setWifi(self.dut, self.__name__, **option5g)
+
+        # first config wifi then change to wire relay module, diff with AP_RELAY_CLEEAR_XXX and AP_RELAY_PSK2
+        api.setLanAp(self.dut, self.__name__)
+
         self.device = getAdbDevices()
 
     @classmethod
     def tearDownClass(self):
+
+        api.setDisableLanAp(self.dut, self.__name__)
+
         option5g = {
             'wifiIndex': 2,
             'on': 0
         }
         api.setWifi(self.dut, self.__name__, **option5g)
-
-        api.setDisableLanAp(self.dut, self.__name__)
 
         self.dut.close()
 
@@ -7228,8 +7234,6 @@ class AP_RELAY_MIXEDPSK_CHAN_BW40(TestCase):
         if ret2 is False:
             raise Exception("USB devices arenot ready!")
 
-        api.setLanAp(self.dut, self.__name__)
-
         option2g = {
             'wifiIndex': 1,
             'ssid': v.SSID,
@@ -7249,10 +7253,17 @@ class AP_RELAY_MIXEDPSK_CHAN_BW40(TestCase):
 
         api.setWifi(self.dut, self.__name__, **option2g)
         api.setWifi(self.dut, self.__name__, **option5g)
+
+        # first config wifi then change to wire relay module, diff with AP_RELAY_CLEEAR_XXX and AP_RELAY_PSK2
+        api.setLanAp(self.dut, self.__name__)
+
         self.device = getAdbDevices()
 
     @classmethod
     def tearDownClass(self):
+
+        api.setDisableLanAp(self.dut, self.__name__)
+
         option2g = {
             'wifiIndex': 1,
             'on': 0,
@@ -7263,8 +7274,6 @@ class AP_RELAY_MIXEDPSK_CHAN_BW40(TestCase):
         }
         api.setWifi(self.dut, self.__name__, **option2g)
         api.setWifi(self.dut, self.__name__, **option5g)
-
-        api.setDisableLanAp(self.dut, self.__name__)
 
         self.dut.close()
 
@@ -7394,8 +7403,6 @@ class AP_RELAY_MIXEDPSK_CHAN_BW20(TestCase):
         if ret2 is False:
             raise Exception("USB devices arenot ready!")
 
-        api.setLanAp(self.dut, self.__name__)
-
         option2g = {
             'wifiIndex': 1,
             'ssid': v.SSID,
@@ -7415,10 +7422,17 @@ class AP_RELAY_MIXEDPSK_CHAN_BW20(TestCase):
 
         api.setWifi(self.dut, self.__name__, **option2g)
         api.setWifi(self.dut, self.__name__, **option5g)
+
+        # first config wifi then change to wire relay module, diff with AP_RELAY_CLEEAR_XXX and AP_RELAY_PSK2
+        api.setLanAp(self.dut, self.__name__)
+
         self.device = getAdbDevices()
 
     @classmethod
     def tearDownClass(self):
+
+        api.setDisableLanAp(self.dut, self.__name__)
+
         option2g = {
             'wifiIndex': 1,
             'on': 0,
@@ -7429,8 +7443,6 @@ class AP_RELAY_MIXEDPSK_CHAN_BW20(TestCase):
         }
         api.setWifi(self.dut, self.__name__, **option2g)
         api.setWifi(self.dut, self.__name__, **option5g)
-
-        api.setDisableLanAp(self.dut, self.__name__)
 
         self.dut.close()
 
@@ -7561,8 +7573,6 @@ class AP_RELAY_MIXEDPSK_SSIDSPEC(TestCase):
         if ret2 is False:
             raise Exception("USB devices arenot ready!")
 
-        api.setLanAp(self.dut, self.__name__)
-
         option2g = {
             'wifiIndex': 1,
             'ssid': v.SPECIAL_SSID,
@@ -7578,10 +7588,17 @@ class AP_RELAY_MIXEDPSK_SSIDSPEC(TestCase):
 
         api.setWifi(self.dut, self.__name__, **option2g)
         api.setWifi(self.dut, self.__name__, **option5g)
+
+        # first config wifi then change to wire relay module, diff with AP_RELAY_CLEEAR_XXX and AP_RELAY_PSK2
+        api.setLanAp(self.dut, self.__name__)
+
         self.device = getAdbDevices()
 
     @classmethod
     def tearDownClass(self):
+
+        api.setDisableLanAp(self.dut, self.__name__)
+
         option2g = {
             'wifiIndex': 1,
             'on': 0,
@@ -7592,8 +7609,6 @@ class AP_RELAY_MIXEDPSK_SSIDSPEC(TestCase):
         }
         api.setWifi(self.dut, self.__name__, **option2g)
         api.setWifi(self.dut, self.__name__, **option5g)
-
-        api.setDisableLanAp(self.dut, self.__name__)
 
         self.dut.close()
 
@@ -7721,8 +7736,6 @@ class AP_RELAY_MIXEDPSK_KEYSPEC(TestCase):
         if ret2 is False:
             raise Exception("USB devices arenot ready!")
 
-        api.setLanAp(self.dut, self.__name__)
-
         option2g = {
             'wifiIndex': 1,
             'ssid': v.SSID,
@@ -7738,10 +7751,17 @@ class AP_RELAY_MIXEDPSK_KEYSPEC(TestCase):
 
         api.setWifi(self.dut, self.__name__, **option2g)
         api.setWifi(self.dut, self.__name__, **option5g)
+
+        # first config wifi then change to wire relay module, diff with AP_RELAY_CLEEAR_XXX and AP_RELAY_PSK2
+        api.setLanAp(self.dut, self.__name__)
+
         self.device = getAdbDevices()
 
     @classmethod
     def tearDownClass(self):
+
+        api.setDisableLanAp(self.dut, self.__name__)
+
         option2g = {
             'wifiIndex': 1,
             'on': 0,
@@ -7752,8 +7772,6 @@ class AP_RELAY_MIXEDPSK_KEYSPEC(TestCase):
         }
         api.setWifi(self.dut, self.__name__, **option2g)
         api.setWifi(self.dut, self.__name__, **option5g)
-
-        api.setDisableLanAp(self.dut, self.__name__)
 
         self.dut.close()
 
@@ -7884,8 +7902,6 @@ class AP_RELAY_MIXEDPSK_SSIDCHINESE(TestCase):
         if ret2 is False:
             raise Exception("USB devices arenot ready!")
 
-        api.setLanAp(self.dut, self.__name__)
-
         option2g = {
             'wifiIndex': 1,
             'ssid': v.CHINESE_SSID,
@@ -7901,10 +7917,17 @@ class AP_RELAY_MIXEDPSK_SSIDCHINESE(TestCase):
 
         api.setWifi(self.dut, self.__name__, **option2g)
         api.setWifi(self.dut, self.__name__, **option5g)
+
+        # first config wifi then change to wire relay module, diff with AP_RELAY_CLEEAR_XXX and AP_RELAY_PSK2
+        api.setLanAp(self.dut, self.__name__)
+
         self.device = getAdbDevices()
 
     @classmethod
     def tearDownClass(self):
+
+        api.setDisableLanAp(self.dut, self.__name__)
+
         option2g = {
             'wifiIndex': 1,
             'on': 0,
@@ -7915,8 +7938,6 @@ class AP_RELAY_MIXEDPSK_SSIDCHINESE(TestCase):
         }
         api.setWifi(self.dut, self.__name__, **option2g)
         api.setWifi(self.dut, self.__name__, **option5g)
-
-        api.setDisableLanAp(self.dut, self.__name__)
 
         self.dut.close()
 
@@ -8043,8 +8064,6 @@ class AP_RElAY_MIXEDPSK_BSD(TestCase):
         if ret2 is False:
             raise Exception("USB devices arenot ready!")
 
-        api.setLanAp(self.dut, self.__name__)
-
         option = {
             'bsd': 1,
             'ssid1': v.SSID,
@@ -8052,15 +8071,20 @@ class AP_RElAY_MIXEDPSK_BSD(TestCase):
             'pwd1': v.KEY,
         }
         api.setAllWifi(self.dut, self.__name__, **option)
+
+        # first config wifi then change to wire relay module, diff with AP_RELAY_CLEEAR_XXX and AP_RELAY_PSK2
+        api.setLanAp(self.dut, self.__name__)
+
         self.device = getAdbDevices()
         wlanInfo = getAdbShellWlan(self.device[0], self.__name__)
         self.staMac = wlanInfo['mac'].upper()
 
     @classmethod
     def tearDownClass(self):
-        api.setAllWifi(self.dut, self.__name__)
 
         api.setDisableLanAp(self.dut, self.__name__)
+
+        api.setAllWifi(self.dut, self.__name__)
 
         self.dut.close()
 
@@ -8301,6 +8325,108 @@ class AP_RELAY_SSIDHIDE(TestCase):
             self.fail(msg='5g wifi is not hidden..')
 
 
+class AP_RELAY_CONFIG_CHECK(TestCase):
+    @classmethod
+    def setUpClass(self):
+
+        self.dut = api.HttpClient()
+        ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
+
+        if ret1 is False:
+            raise Exception("Connection is failed. please check your remote settings.")
+
+        self.option2g = {
+            'wifiIndex': 1,
+            'on': "1",
+            'ssid': v.SSID,
+            'pwd': v.KEY,
+            'encryption': 'mixed-psk',
+            'channel': v.CHANNEL,
+            'bandwidth': '20',
+            'hidden': "0",
+            'txpwr': 'max'
+        }
+
+        self.option5g = {
+            'wifiIndex': 2,
+            'on': "1",
+            'ssid': v.SSID_5G,
+            'pwd': v.KEY,
+            'encryption': 'psk2',
+            'channel': v.CHANNEL_5G,
+            'bandwidth': '40',
+            'hidden': "0",
+            'txpwr': 'min'
+        }
+
+        self.optionGuest = {
+            'wifiIndex': 3,
+            'on': "1",
+            'ssid': v.GUEST_SSID,
+            'encryption': 'mixed-psk',
+            'pwd': v.KEY,
+        }
+        api.setWifi(self.dut, self.__name__, **self.option2g)
+        api.setWifi(self.dut, self.__name__, **self.option5g)
+        api.setWifi(self.dut, self.__name__, **self.optionGuest)
+        api.setLanAp(self.dut, self.__name__)
+
+    @classmethod
+    def tearDownClass(self):
+
+        api.setDisableLanAp(self.dut, self.__name__)
+        option2g = {
+            'wifiIndex': 1,
+            'on': 0,
+        }
+        option5g = {
+            'wifiIndex': 2,
+            'on': 0
+        }
+        api.setWifi(self.dut, self.__name__, **option2g)
+        api.setWifi(self.dut, self.__name__, **option5g)
+
+        self.dut.close()
+
+    def config_check_2g(self):
+        relay2g = api.getWifiDetailDic(self.dut, self.__class__.__name__, "2g")
+
+        api.setDisableLanAp(self.dut, self.__class__.__name__)
+
+        router2g = api.getWifiDetailDic(self.dut, self.__class__.__name__, "2g")
+
+        api.setLanAp(self.dut, self.__class__.__name__)
+
+        self.assertDictEqual(relay2g, self.option2g, msg="Normal router module switch over to wire relay module, wifi config should not be changed.")
+        self.assertDictEqual(router2g, self.option2g, msg="Wire relay module switch back to normal router module, wifi config should not be changed.")
+
+    def config_check_5g(self):
+        relay5g = api.getWifiDetailDic(self.dut, self.__class__.__name__, "5g")
+
+        api.setDisableLanAp(self.dut, self.__class__.__name__)
+
+        router5g = api.getWifiDetailDic(self.dut, self.__class__.__name__, "5g")
+
+        api.setLanAp(self.dut, self.__class__.__name__)
+
+        self.assertDictEqual(relay5g, self.option5g, msg="Normal router module switch over to wire relay module, wifi config should not be changed.")
+        self.assertDictEqual(router5g, self.option5g, msg="Wire relay module switch back to normal router module, wifi config should not be changed.")
+
+    def config_check_guest(self):
+        relayGuest = api.getWifiDetailDic(self.dut, self.__class__.__name__, "guest")
+
+        api.setDisableLanAp(self.dut, self.__class__.__name__)
+
+        routerGuest = api.getWifiDetailDic(self.dut, self.__class__.__name__, "guest")
+
+        api.setLanAp(self.dut, self.__class__.__name__)
+
+        # when wire relay module switch back to normal router module, guest wifi is turned off
+        self.optionGuest["on"] = "0"
+        self.assertDictEqual(relayGuest, {}, msg="Wire relay module should not support guest wifi")
+        self.assertDictEqual(routerGuest, self.optionGuest, msg="Wire relay switch back to normal router module, guest wifi should be turned off.")
+
+
 class AP_CHECK(TestCase):
     @classmethod
     def setUpClass(self):
@@ -8508,13 +8634,15 @@ class AP_CHECK(TestCase):
 
 
 if __name__ == '__main__':
-    v.HOST = "192.168.110.1"
+    v.HOST = "192.168.31.1"
     v.WEB_PWD = "12345678"
     cases = [
-        'assoc_psk2_sta_ssidchinese_5g',
+        'config_check_2g',
+        'config_check_5g',
+        'config_check_guest',
     ]
 
-    suite = TestSuite(map(AP_MIXEDPSK_CHAN_SSIDCHINESE, cases))
+    suite = TestSuite(map(AP_RELAY_CONFIG_CHECK, cases))
     curTime = t.strftime('%Y.%m.%d %H.%M.%S', t.localtime())
     f = open(curTime + '_RESULT.log', 'a')
     runner = TextTestRunner(f, verbosity=2)

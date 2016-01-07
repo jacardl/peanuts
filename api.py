@@ -349,6 +349,7 @@ def setAllWifi(terminal, logname, **kwargs):
     if ret:
         lastTime = int(t.time())
         curTime = int(t.time())
+        status = getWifiStatus(terminal, logname)
         while status['status'][0]['up'] != option.get('on1') or curTime - lastTime <= 20:
             t.sleep(5)
             status = getWifiStatus(terminal, logname)

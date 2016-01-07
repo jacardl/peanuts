@@ -427,7 +427,7 @@ def getChannelFlowLogVerbose(logfile):
                             result[key2] = []
                     count1 = 2
                     count2 = 0
-                n = re.search('\s0.0-\d{1,4}.*\s(\d{1,3}\.?\d{1,2})?\sMbits/sec', line)
+                n = re.search('\s0\.0-\d{1,4}.*\s(\d{1,3}(\.\d{1,2})?)\sMbits/sec', line)
                 if n:
                     count2 += 1
                     if count1 - count2 == 1:

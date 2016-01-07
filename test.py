@@ -1,7 +1,3 @@
-def test(x):
-    def test2(x):
-        x += 1
-        print x
-    test2(x)
+import processreport as pr
 if __name__ == '__main__':
-    test(1)
+    print pr.getChannelFlowLogVerbose("AP_MIXEDPSK_CHAN11_149_FLOW.log")

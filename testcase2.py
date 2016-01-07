@@ -8061,7 +8061,7 @@ class AP_RELAY_MIXEDPSK_SSIDCHINESE(TestCase):
             self.assertTrue(res5gConn, "Association wasnot successful.")
 
 
-class AP_RElAY_MIXEDPSK_BSD(TestCase):
+class AP_RELAY_MIXEDPSK_BSD(TestCase):
     @classmethod
     def setUpClass(self):
         self.dut = api.HttpClient()

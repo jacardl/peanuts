@@ -242,6 +242,8 @@ def connectionCheck(connectiontype, ip=None, port=None, user=None, password=None
     result = client.connect(ip, user, password)
     if result is True:
         hardware = client.getHardware()
+        if hardware == "":
+            return False, ""
         client.close()
         return result, hardware
     elif result is False:

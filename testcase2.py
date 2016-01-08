@@ -5266,7 +5266,8 @@ class AP_RELAY_CLEAR_CHAN(TestCase):
         if ret2 is False:
             raise Exception("USB devices arenot ready!")
 
-        api.setLanAp(self.dut, self.__name__)
+        result = api.setLanAp(self.dut, self.__name__)
+        v.HOST = result['ip']
 
         option2g = {
             'wifiIndex': 1,
@@ -5297,7 +5298,8 @@ class AP_RELAY_CLEAR_CHAN(TestCase):
         api.setWifi(self.dut, self.__name__, **option2g)
         api.setWifi(self.dut, self.__name__, **option5g)
 
-        api.setDisableLanAp(self.dut, self.__name__)
+        result = api.setDisableLanAp(self.dut, self.__name__)
+        v.HOST = result['ip']
 
         self.dut.close()
 
@@ -5343,7 +5345,8 @@ class AP_RELAY_CLEAR_LOW(TestCase):
         if ret2 is False:
             raise Exception("USB devices arenot ready!")
 
-        api.setLanAp(self.dut, self.__name__)
+        result = api.setLanAp(self.dut, self.__name__)
+        v.HOST = result['ip']
 
         option2g = {
             'wifiIndex': 1,
@@ -5375,7 +5378,8 @@ class AP_RELAY_CLEAR_LOW(TestCase):
         api.setWifi(self.dut, self.__name__, **option2g)
         api.setWifi(self.dut, self.__name__, **option5g)
 
-        api.setDisableLanAp(self.dut, self.__name__)
+        result = api.setDisableLanAp(self.dut, self.__name__)
+        v.HOST = result['ip']
 
         self.dut.close()
 
@@ -5421,7 +5425,8 @@ class AP_RELAY_CLEAR_MID(TestCase):
         if ret2 is False:
             raise Exception("USB devices arenot ready!")
 
-        api.setLanAp(self.dut, self.__name__)
+        result = api.setLanAp(self.dut, self.__name__)
+        v.HOST = result['ip']
 
         option2g = {
             'wifiIndex': 1,
@@ -5450,7 +5455,8 @@ class AP_RELAY_CLEAR_MID(TestCase):
         api.setWifi(self.dut, self.__name__, **option2g)
         api.setWifi(self.dut, self.__name__, **option5g)
 
-        api.setDisableLanAp(self.dut, self.__name__)
+        result = api.setDisableLanAp(self.dut, self.__name__)
+        v.HOST = result['ip']
 
         self.dut.close()
 
@@ -5496,7 +5502,8 @@ class AP_RELAY_CLEAR_HIGH(TestCase):
         if ret2 is False:
             raise Exception("USB devices arenot ready!")
 
-        api.setLanAp(self.dut, self.__name__)
+        result = api.setLanAp(self.dut, self.__name__)
+        v.HOST = result['ip']
 
         option2g = {
             'wifiIndex': 1,
@@ -5527,7 +5534,8 @@ class AP_RELAY_CLEAR_HIGH(TestCase):
         api.setWifi(self.dut, self.__name__, **option2g)
         api.setWifi(self.dut, self.__name__, **option5g)
 
-        api.setDisableLanAp(self.dut, self.__name__)
+        result = api.setDisableLanAp(self.dut, self.__name__)
+        v.HOST = result['ip']
 
         self.dut.close()
 
@@ -5570,9 +5578,10 @@ class AP_RELAY_CLEAR_LOW_TXPOWER(TestCase):
             raise Exception('Connection is failed for httpclient. please check your remote settings.')
 
         result = api.setLanAp(self.dut2, self.__name__)
+        v.HOST = result['ip']
 
         self.dut = SshClient(v.CONNECTION_TYPE)
-        ret1 = self.dut.connect(result['ip'], v.USR, v.PASSWD)
+        ret1 = self.dut.connect(v.HOST, v.USR, v.PASSWD)
         if ret1 is False:
             raise Exception('Connection is failed for sshclient after setLanAp.')
 
@@ -5589,7 +5598,8 @@ class AP_RELAY_CLEAR_LOW_TXPOWER(TestCase):
         api.setWifi(self.dut2, self.__name__, **option2g)
         api.setWifi(self.dut2, self.__name__, **option5g)
 
-        api.setDisableLanAp(self.dut2, self.__name__)
+        result = api.setDisableLanAp(self.dut2, self.__name__)
+        v.HOST = result['ip']
 
         self.dut.close()
         self.dut2.close()
@@ -5991,9 +6001,10 @@ class AP_RELAY_CLEAR_MID_TXPOWER(TestCase):
             raise Exception('Connection is failed for httpclient. please check your remote settings.')
 
         result = api.setLanAp(self.dut2, self.__name__)
+        v.HOST = result['ip']
 
         self.dut = SshClient(v.CONNECTION_TYPE)
-        ret1 = self.dut.connect(result['ip'], v.USR, v.PASSWD)
+        ret1 = self.dut.connect(v.HOST, v.USR, v.PASSWD)
         if ret1 is False:
             raise Exception('Connection is failed for sshclient after setLanAp.')
 
@@ -6010,7 +6021,8 @@ class AP_RELAY_CLEAR_MID_TXPOWER(TestCase):
         api.setWifi(self.dut2, self.__name__, **option2g)
         api.setWifi(self.dut2, self.__name__, **option5g)
 
-        api.setDisableLanAp(self.dut2, self.__name__)
+        result = api.setDisableLanAp(self.dut2, self.__name__)
+        v.HOST = result['ip']
 
         self.dut.close()
         self.dut2.close()
@@ -6419,9 +6431,10 @@ class AP_RELAY_CLEAR_HIGH_TXPOWER(TestCase):
             raise Exception('Connection is failed for httpclient. please check your remote settings.')
 
         result = api.setLanAp(self.dut2, self.__name__)
+        v.HOST = result['ip']
 
         self.dut = SshClient(v.CONNECTION_TYPE)
-        ret1 = self.dut.connect(result['ip'], v.USR, v.PASSWD)
+        ret1 = self.dut.connect(v.HOST, v.USR, v.PASSWD)
         if ret1 is False:
             raise Exception('Connection is failed for sshclient after setLanAp.')
 
@@ -6438,7 +6451,8 @@ class AP_RELAY_CLEAR_HIGH_TXPOWER(TestCase):
         api.setWifi(self.dut2, self.__name__, **option2g)
         api.setWifi(self.dut2, self.__name__, **option5g)
 
-        api.setDisableLanAp(self.dut2, self.__name__)
+        result = api.setDisableLanAp(self.dut2, self.__name__)
+        v.HOST = result['ip']
 
         self.dut.close()
         self.dut2.close()
@@ -6840,7 +6854,8 @@ class AP_RELAY_CLEAR_CHANSELECTION(TestCase):
         if ret1 is False:
             raise Exception('Connection is failed. please check your remote settings.')
 
-        api.setLanAp(self.dut, self.__name__)
+        result = api.setLanAp(self.dut, self.__name__)
+        v.HOST = result['ip']
 
     @classmethod
     def tearDownClass(self):
@@ -6855,7 +6870,8 @@ class AP_RELAY_CLEAR_CHANSELECTION(TestCase):
         api.setWifi(self.dut, self.__name__, **option2g)
         api.setWifi(self.dut, self.__name__, **option5g)
 
-        api.setDisableLanAp(self.dut, self.__name__)
+        result = api.setDisableLanAp(self.dut, self.__name__)
+        v.HOST = result['ip']
 
         self.dut.close()
 
@@ -6905,7 +6921,8 @@ class AP_RELAY_PSK2(TestCase):
         if ret2 is False:
             raise Exception("USB devices arenot ready!")
 
-        api.setLanAp(self.dut, self.__name__)
+        result = api.setLanAp(self.dut, self.__name__)
+        v.HOST = result['ip']
 
         option2g = {
             'wifiIndex': 1,
@@ -6937,7 +6954,8 @@ class AP_RELAY_PSK2(TestCase):
         api.setWifi(self.dut, self.__name__, **option2g)
         api.setWifi(self.dut, self.__name__, **option5g)
 
-        api.setDisableLanAp(self.dut, self.__name__)
+        result = api.setDisableLanAp(self.dut, self.__name__)
+        v.HOST = result['ip']
 
         self.dut.close()
 
@@ -7000,14 +7018,16 @@ class AP_RELAY_MIXEDPSK(TestCase):
         api.setWifi(self.dut, self.__name__, **option5g)
 
         # first config wifi then change to wire relay module, diff with AP_RELAY_CLEEAR_XXX and AP_RELAY_PSK2
-        api.setLanAp(self.dut, self.__name__)
+        result = api.setLanAp(self.dut, self.__name__)
+        v.HOST = result['ip']
 
         self.device = getAdbDevices()
 
     @classmethod
     def tearDownClass(self):
 
-        api.setDisableLanAp(self.dut, self.__name__)
+        result = api.setDisableLanAp(self.dut, self.__name__)
+        v.HOST = result['ip']
 
         option2g = {
             'wifiIndex': 1,
@@ -7160,14 +7180,16 @@ class AP_RELAY_MIXEDPSK_CHAN_BW80(TestCase):
         api.setWifi(self.dut, self.__name__, **option5g)
 
         # first config wifi then change to wire relay module, diff with AP_RELAY_CLEEAR_XXX and AP_RELAY_PSK2
-        api.setLanAp(self.dut, self.__name__)
+        result = api.setLanAp(self.dut, self.__name__)
+        v.HOST = result['ip']
 
         self.device = getAdbDevices()
 
     @classmethod
     def tearDownClass(self):
 
-        api.setDisableLanAp(self.dut, self.__name__)
+        result = api.setDisableLanAp(self.dut, self.__name__)
+        v.HOST = result['ip']
 
         option5g = {
             'wifiIndex': 2,
@@ -7268,14 +7290,16 @@ class AP_RELAY_MIXEDPSK_CHAN_BW40(TestCase):
         api.setWifi(self.dut, self.__name__, **option5g)
 
         # first config wifi then change to wire relay module, diff with AP_RELAY_CLEEAR_XXX and AP_RELAY_PSK2
-        api.setLanAp(self.dut, self.__name__)
+        result = api.setLanAp(self.dut, self.__name__)
+        v.HOST = result['ip']
 
         self.device = getAdbDevices()
 
     @classmethod
     def tearDownClass(self):
 
-        api.setDisableLanAp(self.dut, self.__name__)
+        result = api.setDisableLanAp(self.dut, self.__name__)
+        v.HOST = result['ip']
 
         option2g = {
             'wifiIndex': 1,
@@ -7437,14 +7461,16 @@ class AP_RELAY_MIXEDPSK_CHAN_BW20(TestCase):
         api.setWifi(self.dut, self.__name__, **option5g)
 
         # first config wifi then change to wire relay module, diff with AP_RELAY_CLEEAR_XXX and AP_RELAY_PSK2
-        api.setLanAp(self.dut, self.__name__)
+        result = api.setLanAp(self.dut, self.__name__)
+        v.HOST = result['ip']
 
         self.device = getAdbDevices()
 
     @classmethod
     def tearDownClass(self):
 
-        api.setDisableLanAp(self.dut, self.__name__)
+        result = api.setDisableLanAp(self.dut, self.__name__)
+        v.HOST = result['ip']
 
         option2g = {
             'wifiIndex': 1,
@@ -7603,14 +7629,16 @@ class AP_RELAY_MIXEDPSK_SSIDSPEC(TestCase):
         api.setWifi(self.dut, self.__name__, **option5g)
 
         # first config wifi then change to wire relay module, diff with AP_RELAY_CLEEAR_XXX and AP_RELAY_PSK2
-        api.setLanAp(self.dut, self.__name__)
+        result = api.setLanAp(self.dut, self.__name__)
+        v.HOST = result['ip']
 
         self.device = getAdbDevices()
 
     @classmethod
     def tearDownClass(self):
 
-        api.setDisableLanAp(self.dut, self.__name__)
+        result = api.setDisableLanAp(self.dut, self.__name__)
+        v.HOST = result['ip']
 
         option2g = {
             'wifiIndex': 1,
@@ -7766,14 +7794,16 @@ class AP_RELAY_MIXEDPSK_KEYSPEC(TestCase):
         api.setWifi(self.dut, self.__name__, **option5g)
 
         # first config wifi then change to wire relay module, diff with AP_RELAY_CLEEAR_XXX and AP_RELAY_PSK2
-        api.setLanAp(self.dut, self.__name__)
+        result = api.setLanAp(self.dut, self.__name__)
+        v.HOST = result['ip']
 
         self.device = getAdbDevices()
 
     @classmethod
     def tearDownClass(self):
 
-        api.setDisableLanAp(self.dut, self.__name__)
+        result = api.setDisableLanAp(self.dut, self.__name__)
+        v.HOST = result['ip']
 
         option2g = {
             'wifiIndex': 1,
@@ -7932,14 +7962,16 @@ class AP_RELAY_MIXEDPSK_SSIDCHINESE(TestCase):
         api.setWifi(self.dut, self.__name__, **option5g)
 
         # first config wifi then change to wire relay module, diff with AP_RELAY_CLEEAR_XXX and AP_RELAY_PSK2
-        api.setLanAp(self.dut, self.__name__)
+        result = api.setLanAp(self.dut, self.__name__)
+        v.HOST = result['ip']
 
         self.device = getAdbDevices()
 
     @classmethod
     def tearDownClass(self):
 
-        api.setDisableLanAp(self.dut, self.__name__)
+        result = api.setDisableLanAp(self.dut, self.__name__)
+        v.HOST = result['ip']
 
         option2g = {
             'wifiIndex': 1,
@@ -8086,7 +8118,8 @@ class AP_RELAY_MIXEDPSK_BSD(TestCase):
         api.setAllWifi(self.dut, self.__name__, **option)
 
         # first config wifi then change to wire relay module, diff with AP_RELAY_CLEEAR_XXX and AP_RELAY_PSK2
-        api.setLanAp(self.dut, self.__name__)
+        result = api.setLanAp(self.dut, self.__name__)
+        v.HOST = result['ip']
 
         self.device = getAdbDevices()
         wlanInfo = getAdbShellWlan(self.device[0], self.__name__)
@@ -8095,7 +8128,8 @@ class AP_RELAY_MIXEDPSK_BSD(TestCase):
     @classmethod
     def tearDownClass(self):
 
-        api.setDisableLanAp(self.dut, self.__name__)
+        result = api.setDisableLanAp(self.dut, self.__name__)
+        v.HOST = result['ip']
 
         api.setAllWifi(self.dut, self.__name__)
 
@@ -8200,14 +8234,16 @@ class AP_RELAY_SSIDHIDE(TestCase):
         if ret2 is False:
             raise Exception("USB devices arenot ready!")
 
-        api.setLanAp(self.dut, self.__name__)
+        result = api.setLanAp(self.dut, self.__name__)
+        v.HOST = result['ip']
 
         self.device = getAdbDevices()
 
     @classmethod
     def tearDownClass(self):
 
-        api.setDisableLanAp(self.dut, self.__name__)
+        result = api.setDisableLanAp(self.dut, self.__name__)
+        v.HOST = result['ip']
 
         self.dut.close()
 
@@ -8382,12 +8418,14 @@ class AP_RELAY_CONFIG_CHECK(TestCase):
         api.setWifi(self.dut, self.__name__, **self.option2g)
         api.setWifi(self.dut, self.__name__, **self.option5g)
         api.setWifi(self.dut, self.__name__, **self.optionGuest)
-        api.setLanAp(self.dut, self.__name__)
+        result = api.setLanAp(self.dut, self.__name__)
+        v.HOST = result['ip']
 
     @classmethod
     def tearDownClass(self):
 
-        api.setDisableLanAp(self.dut, self.__name__)
+        result = api.setDisableLanAp(self.dut, self.__name__)
+        v.HOST = result['ip']
         option2g = {
             'wifiIndex': 1,
             'on': 0,
@@ -8658,12 +8696,10 @@ if __name__ == '__main__':
     v.HOST = "192.168.31.1"
     v.WEB_PWD = "12345678"
     cases = [
-        'config_check_2g',
-        'config_check_5g',
-        'config_check_guest',
+        'assoc_psk2_sta_5g',
     ]
 
-    suite = TestSuite(map(AP_RELAY_CONFIG_CHECK, cases))
+    suite = TestSuite(map(AP_RELAY_MIXEDPSK_CHAN_BW20, cases))
     curTime = t.strftime('%Y.%m.%d %H.%M.%S', t.localtime())
     f = open(curTime + '_RESULT.log', 'a')
     runner = TextTestRunner(f, verbosity=2)

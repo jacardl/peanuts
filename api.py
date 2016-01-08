@@ -510,10 +510,10 @@ def setLanAp(terminal, logname, **kwargs):
     option.update(kwargs)
     api = '/cgi-bin/luci/;stok=token/api/xqnetwork/set_lan_ap'
     result = setGet(terminal, logname, api, **option)
-    t.sleep(5)
+    t.sleep(10)
     if result is not None:
-        ret = terminal.connect(host=result['ip'], password=v.WEB_PWD)
-        return ret
+        terminal.connect(host=result['ip'], password=v.WEB_PWD)
+        return result
     return result
     # if result is not None:
     #     t.sleep(5)
@@ -526,10 +526,10 @@ def setLanAp(terminal, logname, **kwargs):
 def setDisableLanAp(terminal, logname):
     api = '/cgi-bin/luci/;stok=token/api/xqnetwork/disable_lan_ap'
     result = setGet(terminal, logname, api)
-    t.sleep(5)
+    t.sleep(10)
     if result is not None:
-        ret = terminal.connect(host=result['ip'], password=v.WEB_PWD)
-        return ret
+        terminal.connect(host=result['ip'], password=v.WEB_PWD)
+        return result
     return result
     # if result is not None:
     #     t.sleep(5)

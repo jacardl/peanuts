@@ -5564,16 +5564,17 @@ class AP_RELAY_CLEAR_LOW_TXPOWER(TestCase):
     @classmethod
     def setUpClass(self):
 
-        self.dut = SshClient(v.CONNECTION_TYPE)
         self.dut2 = api.HttpClient()
-        ret1 = self.dut.connect(v.HOST, v.USR, v.PASSWD)
         ret2 = self.dut2.connect(host=v.HOST, password=v.WEB_PWD)
-        if ret1 is False:
-            raise Exception('Connection is failed for sshclient. please check your remote settings.')
         if ret2 is False:
             raise Exception('Connection is failed for httpclient. please check your remote settings.')
 
-        api.setLanAp(self.dut2, self.__name__)
+        result = api.setLanAp(self.dut2, self.__name__)
+
+        self.dut = SshClient(v.CONNECTION_TYPE)
+        ret1 = self.dut.connect(result['ip'], v.USR, v.PASSWD)
+        if ret1 is False:
+            raise Exception('Connection is failed for sshclient after setLanAp.')
 
     @classmethod
     def tearDownClass(self):
@@ -5984,16 +5985,17 @@ class AP_RELAY_CLEAR_MID_TXPOWER(TestCase):
     @classmethod
     def setUpClass(self):
 
-        self.dut = SshClient(v.CONNECTION_TYPE)
         self.dut2 = api.HttpClient()
-        ret1 = self.dut.connect(v.HOST, v.USR, v.PASSWD)
         ret2 = self.dut2.connect(host=v.HOST, password=v.WEB_PWD)
-        if ret1 is False:
-            raise Exception('Connection is failed for sshclient. please check your remote settings.')
         if ret2 is False:
             raise Exception('Connection is failed for httpclient. please check your remote settings.')
 
-        api.setLanAp(self.dut2, self.__name__)
+        result = api.setLanAp(self.dut2, self.__name__)
+
+        self.dut = SshClient(v.CONNECTION_TYPE)
+        ret1 = self.dut.connect(result['ip'], v.USR, v.PASSWD)
+        if ret1 is False:
+            raise Exception('Connection is failed for sshclient after setLanAp.')
 
     @classmethod
     def tearDownClass(self):
@@ -6411,16 +6413,17 @@ class AP_RELAY_CLEAR_HIGH_TXPOWER(TestCase):
     @classmethod
     def setUpClass(self):
 
-        self.dut = SshClient(v.CONNECTION_TYPE)
         self.dut2 = api.HttpClient()
-        ret1 = self.dut.connect(v.HOST, v.USR, v.PASSWD)
         ret2 = self.dut2.connect(host=v.HOST, password=v.WEB_PWD)
-        if ret1 is False:
-            raise Exception('Connection is failed for sshclient. please check your remote settings.')
         if ret2 is False:
             raise Exception('Connection is failed for httpclient. please check your remote settings.')
 
-        api.setLanAp(self.dut2, self.__name__)
+        result = api.setLanAp(self.dut2, self.__name__)
+
+        self.dut = SshClient(v.CONNECTION_TYPE)
+        ret1 = self.dut.connect(result['ip'], v.USR, v.PASSWD)
+        if ret1 is False:
+            raise Exception('Connection is failed for sshclient after setLanAp.')
 
     @classmethod
     def tearDownClass(self):
@@ -8435,6 +8438,14 @@ class AP_RELAY_CONFIG_CHECK(TestCase):
         self.optionGuest["on"] = "0"
         self.assertDictEqual(relayGuest, {}, msg="Wire relay module should not support guest wifi")
         self.assertDictEqual(routerGuest, self.optionGuest, msg="Wire relay switch back to normal router module, guest wifi should be turned off.")
+
+
+class AP_QOS_MANUAL_MIXEDPSK(TestCase):
+    pass
+
+
+class AP_QOS_MANUAL_CLEAR(TestCase):
+    pass
 
 
 class AP_CHECK(TestCase):

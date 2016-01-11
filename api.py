@@ -105,7 +105,7 @@ class HttpClient(object):
             try:
                 self.httpClient = httplib.HTTPConnection(host, port, timeout=30)
                 while self.token is False and loop2 < 5:
-                    t.sleep(1)
+                    t.sleep(2)
                     result = self.getToken(password=password)
                     loop2 += 1
                 if result is False:
@@ -178,8 +178,8 @@ def setGet(terminal, logname, apipath, **kwargs):
 
     def setGetInLoop(terminal, logname, apipath, **kwargs):
         try:
-            ret = terminal.getApi(apipath, **kwargs)
             curTime = t.strftime('%Y.%m.%d %H:%M:%S', t.localtime())
+            ret = terminal.getApi(apipath, **kwargs)
             f = open(v.TEST_SUITE_LOG_PATH + logname + '.log', 'a')
             f.write(curTime + '~#API request to ' + terminal.hostname + '#')
             f.write(apipath + '?' + str(kwargs) + '\n')
@@ -219,8 +219,8 @@ def setCheck(terminal, logname, apipath, **kwargs):
 
     def setCheckInLoop(terminal, logname, apipath, **kwargs):
         try:
-            ret = terminal.getApi(apipath, **kwargs)
             curTime = t.strftime('%Y.%m.%d %H:%M:%S', t.localtime())
+            ret = terminal.getApi(apipath, **kwargs)
             f = open(v.TEST_SUITE_LOG_PATH + logname + '.log', 'a')
             f.write(curTime + '~#API request to ' + terminal.hostname + '#')
             f.write(apipath + '?' + str(kwargs) + '\n')
@@ -510,9 +510,10 @@ def setLanAp(terminal, logname, **kwargs):
     option.update(kwargs)
     api = '/cgi-bin/luci/;stok=token/api/xqnetwork/set_lan_ap'
     result = setGet(terminal, logname, api, **option)
-    t.sleep(10)
+    t.sleep(30)
     if result is not None:
-        terminal.connect(host=result['ip'], password=v.WEB_PWD)
+        v.HOST = result['ip']
+        terminal.connect(host=v.HOST, password=v.WEB_PWD)
         return result
     return result
     # if result is not None:
@@ -526,9 +527,10 @@ def setLanAp(terminal, logname, **kwargs):
 def setDisableLanAp(terminal, logname):
     api = '/cgi-bin/luci/;stok=token/api/xqnetwork/disable_lan_ap'
     result = setGet(terminal, logname, api)
-    t.sleep(10)
+    t.sleep(30)
     if result is not None:
-        terminal.connect(host=result['ip'], password=v.WEB_PWD)
+        v.HOST = result['ip']
+        terminal.connect(host=v.HOST, password=v.WEB_PWD)
         return result
     return result
     # if result is not None:
@@ -702,15 +704,10 @@ def getWifiStatus(terminal, logname):
 
 if __name__ == '__main__':
 
-    v.HOST = '192.168.31.1'
+    v.HOST = '192.168.110.1'
     v.WEB_PWD = '12345678'
     webclient = HttpClient()
     webclient.connect(host=v.HOST, password=v.WEB_PWD)
-    setLanAp(webclient, 'aaa')
-
-    print getWifiDetailDic(webclient, 'aaa', 'guest')
-
-    setDisableLanAp(webclient, 'aaa')
-    print getWifiDetailDic(webclient, 'aaa', 'guest')
+    # setReset(webclient, 'aaa')
     webclient.close()
 

@@ -105,7 +105,7 @@ class HttpClient(object):
             try:
                 self.httpClient = httplib.HTTPConnection(host, port, timeout=30)
                 while self.token is False and loop2 < 5:
-                    t.sleep(2)
+                    t.sleep(5)
                     result = self.getToken(password=password)
                     loop2 += 1
                 if result is False:
@@ -120,7 +120,7 @@ class HttpClient(object):
         ret = connectInLoop(host, password)
         while ret is False and loop < 5:
             loop += 1
-            t.sleep(2)
+            t.sleep(5)
             ret = connectInLoop(host, password)
         return ret
 
@@ -154,7 +154,10 @@ class HttpClient(object):
             return self.token
 
     def getApi(self, path, **kwargs):
-        apipath = re.sub('stok=token', self.token, path)
+        try:
+            apipath = re.sub('stok=token', self.token, path)
+        except:
+            self.getToken(password=v.WEB_PWD)
         if len(kwargs) is 0:
             self.httpClient.request('GET', apipath, headers=self.headers)
             response = self.httpClient.getresponse().read()
@@ -312,6 +315,7 @@ def setWifi(terminal, logname, **kwargs):
     option.update(kwargs)
     api = '/cgi-bin/luci/;stok=token/api/xqnetwork/set_wifi'
     ret = setCheck(terminal, logname, api, **option)
+    t.sleep(10)
     if ret:
         lastTime = int(t.time())
         curTime = int(t.time())
@@ -378,6 +382,7 @@ def setAllWifi(terminal, logname, **kwargs):
     option.update(kwargs)
     api = '/cgi-bin/luci/;stok=token/api/xqnetwork/set_all_wifi'
     ret = setCheck(terminal, logname, api, **option)
+    t.sleep(10)
     if ret:
         lastTime = int(t.time())
         curTime = int(t.time())

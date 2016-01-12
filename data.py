@@ -420,26 +420,6 @@ treeBasicApi = [
         'assoc_clear_sta_in_blacklist_5g',
         'assoc_clear_sta_outof_blacklist_5g',
     ],
-    "AP_CLEAR_CHAN1_36_FLOW",
-    [
-        "assoc_clear_sta_flow_2g",
-        "assoc_clear_sta_flow_5g",
-    ],
-    "AP_CLEAR_CHAN6_52_FLOW",
-    [
-        "assoc_clear_sta_flow_2g",
-        "assoc_clear_sta_flow_5g",
-    ],
-    "AP_CLEAR_CHAN11_149_FLOW",
-    [
-        "assoc_clear_sta_flow_2g",
-        "assoc_clear_sta_flow_5g",
-    ],
-    "AP_CLEAR_CHAN13_165_FLOW",
-    [
-        "assoc_clear_sta_flow_2g",
-        "assoc_clear_sta_flow_5g",
-    ],
     "AP_CLEAR_CHAN_REPEAT",
     [
         "assoc_repeat_clear_sta_2g",
@@ -449,26 +429,6 @@ treeBasicApi = [
     [
         'assoc_psk2_sta_2g',
         'assoc_psk2_sta_5g',
-    ],
-    "AP_PSK2_CHAN1_36_FLOW",
-    [
-        "assoc_psk2_sta_flow_2g",
-        "assoc_psk2_sta_flow_5g",
-    ],
-    "AP_PSK2_CHAN6_52_FLOW",
-    [
-        "assoc_psk2_sta_flow_2g",
-        "assoc_psk2_sta_flow_5g",
-    ],
-    "AP_PSK2_CHAN11_149_FLOW",
-    [
-        "assoc_psk2_sta_flow_2g",
-        "assoc_psk2_sta_flow_5g",
-    ],
-    "AP_PSK2_CHAN13_165_FLOW",
-    [
-        "assoc_psk2_sta_flow_2g",
-        "assoc_psk2_sta_flow_5g",
     ],
     "AP_PSK2_CHAN_REPEAT",
     [
@@ -547,50 +507,6 @@ treeBasicApi = [
         'assoc_psk_sta_ssidchinese_5g',
         'assoc_tkippsk2_sta_ssidchinese_5g',
         'assoc_tkippsk_sta_ssidchinese_5g',
-    ],
-    "AP_MIXEDPSK_CHAN1_36_FLOW",
-    [
-        "assoc_psk2_sta_flow_2g",
-        "assoc_psk_sta_flow_2g",
-        "assoc_tkippsk2_sta_flow_2g",
-        "assoc_tkippsk_sta_flow_2g",
-        "assoc_psk2_sta_flow_5g",
-        "assoc_psk_sta_flow_5g",
-        "assoc_tkippsk2_sta_flow_5g",
-        "assoc_tkippsk_sta_flow_5g",
-    ],
-    "AP_MIXEDPSK_CHAN6_52_FLOW",
-    [
-        "assoc_psk2_sta_flow_2g",
-        "assoc_psk_sta_flow_2g",
-        "assoc_tkippsk2_sta_flow_2g",
-        "assoc_tkippsk_sta_flow_2g",
-        "assoc_psk2_sta_flow_5g",
-        "assoc_psk_sta_flow_5g",
-        "assoc_tkippsk2_sta_flow_5g",
-        "assoc_tkippsk_sta_flow_5g",
-    ],
-    "AP_MIXEDPSK_CHAN11_149_FLOW",
-    [
-        "assoc_psk2_sta_flow_2g",
-        "assoc_psk_sta_flow_2g",
-        "assoc_tkippsk2_sta_flow_2g",
-        "assoc_tkippsk_sta_flow_2g",
-        "assoc_psk2_sta_flow_5g",
-        "assoc_psk_sta_flow_5g",
-        "assoc_tkippsk2_sta_flow_5g",
-        "assoc_tkippsk_sta_flow_5g",
-    ],
-    "AP_MIXEDPSK_CHAN13_165_FLOW",
-    [
-        "assoc_psk2_sta_flow_2g",
-        "assoc_psk_sta_flow_2g",
-        "assoc_tkippsk2_sta_flow_2g",
-        "assoc_tkippsk_sta_flow_2g",
-        "assoc_psk2_sta_flow_5g",
-        "assoc_psk_sta_flow_5g",
-        "assoc_tkippsk2_sta_flow_5g",
-        "assoc_tkippsk_sta_flow_5g",
     ],
     "AP_MIXEDPSK_CHAN_REPEAT",
     [
@@ -832,7 +748,92 @@ treeWireRelayApi = [
 
 ]
 
-
+treeFlowApi = [
+    "AP_CLEAR_CHAN1_36_FLOW",
+    [
+        "assoc_clear_sta_flow_2g",
+        "assoc_clear_sta_flow_5g",
+    ],
+    "AP_CLEAR_CHAN6_52_FLOW",
+    [
+        "assoc_clear_sta_flow_2g",
+        "assoc_clear_sta_flow_5g",
+    ],
+    "AP_CLEAR_CHAN11_149_FLOW",
+    [
+        "assoc_clear_sta_flow_2g",
+        "assoc_clear_sta_flow_5g",
+    ],
+    "AP_CLEAR_CHAN13_165_FLOW",
+    [
+        "assoc_clear_sta_flow_2g",
+        "assoc_clear_sta_flow_5g",
+    ],
+        "AP_PSK2_CHAN1_36_FLOW",
+    [
+        "assoc_psk2_sta_flow_2g",
+        "assoc_psk2_sta_flow_5g",
+    ],
+    "AP_PSK2_CHAN6_52_FLOW",
+    [
+        "assoc_psk2_sta_flow_2g",
+        "assoc_psk2_sta_flow_5g",
+    ],
+    "AP_PSK2_CHAN11_149_FLOW",
+    [
+        "assoc_psk2_sta_flow_2g",
+        "assoc_psk2_sta_flow_5g",
+    ],
+    "AP_PSK2_CHAN13_165_FLOW",
+    [
+        "assoc_psk2_sta_flow_2g",
+        "assoc_psk2_sta_flow_5g",
+    ],
+    "AP_MIXEDPSK_CHAN1_36_FLOW",
+    [
+        "assoc_psk2_sta_flow_2g",
+        "assoc_psk_sta_flow_2g",
+        "assoc_tkippsk2_sta_flow_2g",
+        "assoc_tkippsk_sta_flow_2g",
+        "assoc_psk2_sta_flow_5g",
+        "assoc_psk_sta_flow_5g",
+        "assoc_tkippsk2_sta_flow_5g",
+        "assoc_tkippsk_sta_flow_5g",
+    ],
+    "AP_MIXEDPSK_CHAN6_52_FLOW",
+    [
+        "assoc_psk2_sta_flow_2g",
+        "assoc_psk_sta_flow_2g",
+        "assoc_tkippsk2_sta_flow_2g",
+        "assoc_tkippsk_sta_flow_2g",
+        "assoc_psk2_sta_flow_5g",
+        "assoc_psk_sta_flow_5g",
+        "assoc_tkippsk2_sta_flow_5g",
+        "assoc_tkippsk_sta_flow_5g",
+    ],
+    "AP_MIXEDPSK_CHAN11_149_FLOW",
+    [
+        "assoc_psk2_sta_flow_2g",
+        "assoc_psk_sta_flow_2g",
+        "assoc_tkippsk2_sta_flow_2g",
+        "assoc_tkippsk_sta_flow_2g",
+        "assoc_psk2_sta_flow_5g",
+        "assoc_psk_sta_flow_5g",
+        "assoc_tkippsk2_sta_flow_5g",
+        "assoc_tkippsk_sta_flow_5g",
+    ],
+    "AP_MIXEDPSK_CHAN13_165_FLOW",
+    [
+        "assoc_psk2_sta_flow_2g",
+        "assoc_psk_sta_flow_2g",
+        "assoc_tkippsk2_sta_flow_2g",
+        "assoc_tkippsk_sta_flow_2g",
+        "assoc_psk2_sta_flow_5g",
+        "assoc_psk_sta_flow_5g",
+        "assoc_tkippsk2_sta_flow_5g",
+        "assoc_tkippsk_sta_flow_5g",
+    ],
+]
 
 treeCheckApi = [
     'AP_CHECK',

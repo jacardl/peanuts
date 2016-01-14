@@ -646,14 +646,19 @@ class TestSuitePage(wx.Panel):
         self.tree.SetBackgroundColour(wx.WHITE)
 
         self.root = self.tree.AddRoot('Test Cases', ct_type=1)
-        self.rootAndroid = self.tree.AppendItem(self.root, 'Android-STA', ct_type=1)
-        # self.rootNone = self.tree.AppendItem(self.root, 'None-STA', ct_type=1)
+        self.rootBasic = self.tree.AppendItem(self.root, 'Basic', ct_type=1)
+        self.rootFlow = self.tree.AppendItem(self.root, 'Throughput', ct_type=1)
+        self.rootWireRelay = self.tree.AppendItem(self.root, 'Wire Relay', ct_type=1)
         self.rootCheck = self.tree.AppendItem(self.root, 'Check', ct_type=1)
 
+        # self.rootAndroid = self.tree.AppendItem(self.root, 'Android', ct_type=1)
+        # self.rootCheck = self.tree.AppendItem(self.root, 'Check', ct_type=1)
         # self.AddTreeNodes(self.rootAndroid, data.treeAndroid)
-        # self.AddTreeNodes(self.rootNone, data.treeNone)
         # self.AddTreeNodes(self.rootCheck, data.treeCheck)
-        self.AddTreeNodes(self.rootAndroid, data.treeAndroidApi)
+
+        self.AddTreeNodes(self.rootBasic, data.treeBasicApi)
+        self.AddTreeNodes(self.rootFlow, data.treeFlowApi)
+        self.AddTreeNodes(self.rootWireRelay, data.treeWireRelayApi)
         self.AddTreeNodes(self.rootCheck, data.treeCheckApi)
         self.tree.Expand(self.root)
         treeLbl = wx.StaticText(self, -1, 'Select cases supposed to excute:')

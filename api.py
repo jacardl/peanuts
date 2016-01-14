@@ -99,20 +99,31 @@ class HttpClient(object):
         self.init = init
         self.token = False
         self.hostname = host
-        loop = 0
-        try:
-            self.httpClient = httplib.HTTPConnection(self.hostname, port, timeout=30)
-            while self.token is False and loop < 5:
-                t.sleep(1)
-                result = self.getToken(password=password)
-                loop += 1
-            if result is False:
+
+        def connectInLoop(host, password):
+            loop2 = 0
+            try:
+                self.httpClient = httplib.HTTPConnection(host, port, timeout=30)
+                while self.token is False and loop2 < 5:
+                    t.sleep(5)
+                    result = self.getToken(password=password)
+                    loop2 += 1
+                if result is False:
+                    return False
+                else:
+                    return True
+            except:
+                print 'connection is failed. please check your network.'
                 return False
-            else:
-                return True
-        except:
-            print 'connection is failed. please check your network.'
-            return False
+
+        loop = 0
+        ret = connectInLoop(host, password)
+        while ret is False and loop < 5:
+            loop += 1
+            t.sleep(5)
+            ret = connectInLoop(host, password)
+        return ret
+
 
     def close(self):
         if self.httpClient:
@@ -143,7 +154,10 @@ class HttpClient(object):
             return self.token
 
     def getApi(self, path, **kwargs):
-        apipath = re.sub('stok=token', self.token, path)
+        try:
+            apipath = re.sub('stok=token', self.token, path)
+        except:
+            self.getToken(password=v.WEB_PWD)
         if len(kwargs) is 0:
             self.httpClient.request('GET', apipath, headers=self.headers)
             response = self.httpClient.getresponse().read()
@@ -161,73 +175,93 @@ class HttpClient(object):
 
 
 def setGet(terminal, logname, apipath, **kwargs):
+
     if not os.path.exists(v.TEST_SUITE_LOG_PATH):
         os.makedirs(v.TEST_SUITE_LOG_PATH)
 
-    try:
-        ret = terminal.getApi(apipath, **kwargs)
-        curTime = t.strftime('%Y.%m.%d %H:%M:%S', t.localtime())
-        f = open(v.TEST_SUITE_LOG_PATH + logname + '.log', 'a')
-        f.write(curTime + '~#API request to ' + terminal.hostname + '#')
-        f.write(apipath + '?' + str(kwargs) + '\n')
-        f.writelines(str(ret))
-        f.write('\n\n')
-        if ret['code'] == 401:
-            f.write('token timeout, renew token.\n\n')
+    def setGetInLoop(terminal, logname, apipath, **kwargs):
+        try:
+            curTime = t.strftime('%Y.%m.%d %H:%M:%S', t.localtime())
+            ret = terminal.getApi(apipath, **kwargs)
+            f = open(v.TEST_SUITE_LOG_PATH + logname + '.log', 'a')
+            f.write(curTime + '~#API request to ' + terminal.hostname + '#')
+            f.write(apipath + '?' + str(kwargs) + '\n')
+            f.writelines(str(ret))
+            f.write('\n\n')
+            if ret['code'] == 401:
+                f.write('token timeout, renew token.\n\n')
+                f.close()
+                terminal.getToken(password=v.WEB_PWD)
+                setGet(terminal, logname, apipath, **kwargs)
             f.close()
-            terminal.getToken(password=v.WEB_PWD)
-            setGet(terminal, logname, apipath, **kwargs)
-        f.close()
-        return ret
+            return ret
+        except Exception, e:
+            curTime = t.strftime('%Y.%m.%d %H:%M:%S', t.localtime())
+            f = open(v.TEST_SUITE_LOG_PATH + logname + '.log', 'a')
+            f.write(curTime + '~#API request to ' + terminal.hostname + ' failed#')
+            f.write(apipath + '?' + str(kwargs) + '\n')
+            f.write(str(e))
+            f.write('\n\n')
+            terminal.close()
+            f.close()
+            return None
 
-    except Exception, e:
-        curTime = t.strftime('%Y.%m.%d %H:%M:%S', t.localtime())
-        f = open(v.TEST_SUITE_LOG_PATH + logname + '.log', 'a')
-        f.write(curTime + '~#API request to ' + terminal.hostname + ' failed#')
-        f.write(apipath + '?' + str(kwargs) + '\n')
-        print e
-        f.write(str(e))
-        f.write('\n\n')
-        terminal.close()
-        f.close()
+    loop = 0
+    ret = setGetInLoop(terminal, logname, apipath, **kwargs)
+    while  (ret is None or ret['code'] != 0) and loop < 5:
+        loop += 1
+        t.sleep(2)
+        ret = setGetInLoop(terminal, logname, apipath, **kwargs)
+
+    return ret
 
 
 def setCheck(terminal, logname, apipath, **kwargs):
     if not os.path.exists(v.TEST_SUITE_LOG_PATH):
         os.makedirs(v.TEST_SUITE_LOG_PATH)
 
-    try:
-        ret = terminal.getApi(apipath, **kwargs)
-        curTime = t.strftime('%Y.%m.%d %H:%M:%S', t.localtime())
-        f = open(v.TEST_SUITE_LOG_PATH + logname + '.log', 'a')
-        f.write(curTime + '~#API request to ' + terminal.hostname + '#')
-        f.write(apipath + '?' + str(kwargs) + '\n')
-        f.writelines(str(ret))
-        f.write('\n')
-        if ret['code'] == 0:
-            f.write('api processes PASS.\n\n')
-            f.close()
-            return True
-        elif ret['code'] == 401:
-            f.write('token timeout, renew token.\n\n')
-            f.close()
-            terminal.getToken(password=v.WEB_PWD)
-            setCheck(terminal, logname, apipath, **kwargs)
-        else:
-            f.write('api processes FAIL.\n\n')
+    def setCheckInLoop(terminal, logname, apipath, **kwargs):
+        try:
+            curTime = t.strftime('%Y.%m.%d %H:%M:%S', t.localtime())
+            ret = terminal.getApi(apipath, **kwargs)
+            f = open(v.TEST_SUITE_LOG_PATH + logname + '.log', 'a')
+            f.write(curTime + '~#API request to ' + terminal.hostname + '#')
+            f.write(apipath + '?' + str(kwargs) + '\n')
+            f.writelines(str(ret))
+            f.write('\n')
+            if ret['code'] == 0:
+                f.write('api processes PASS.\n\n')
+                f.close()
+                return True
+            elif ret['code'] == 401:
+                f.write('token timeout, renew token.\n\n')
+                f.close()
+                terminal.getToken(password=v.WEB_PWD)
+                setCheck(terminal, logname, apipath, **kwargs)
+            else:
+                f.write('api processes FAIL.\n\n')
+                f.close()
+                return False
+
+        except Exception, e:
+            curTime = t.strftime('%Y.%m.%d %H:%M:%S', t.localtime())
+            f = open(v.TEST_SUITE_LOG_PATH + logname + '.log', 'a')
+            f.write(curTime + '~#API request to ' + terminal.hostname + ' failed#')
+            f.write(apipath + '?' + str(kwargs) + '\n')
+            f.write(str(e))
+            f.write('\n\n')
+            terminal.close()
             f.close()
             return False
 
-    except Exception, e:
-        curTime = t.strftime('%Y.%m.%d %H:%M:%S', t.localtime())
-        f = open(v.TEST_SUITE_LOG_PATH + logname + '.log', 'a')
-        f.write(curTime + '~#API request to ' + terminal.hostname + ' failed#')
-        f.write(apipath + '?' + str(kwargs) + '\n')
-        f.write(str(e))
-        f.write('\n\n')
-        terminal.close()
-        f.close()
-        return False
+    loop = 0
+    ret = setCheckInLoop(terminal, logname, apipath, **kwargs)
+    while ret is False and loop < 5:
+        loop += 1
+        t.sleep(2)
+        ret = setCheckInLoop(terminal, logname, apipath, **kwargs)
+
+    return ret
 
 
 def setCheckFromFile(terminal, file, logname):
@@ -281,18 +315,20 @@ def setWifi(terminal, logname, **kwargs):
     option.update(kwargs)
     api = '/cgi-bin/luci/;stok=token/api/xqnetwork/set_wifi'
     ret = setCheck(terminal, logname, api, **option)
+    t.sleep(10)
     if ret:
         lastTime = int(t.time())
         curTime = int(t.time())
         status = getWifiStatus(terminal, logname)
         index = option['wifiIndex']
         if index == 3:
-            while status['status'][0]['up'] != option.get('on') or curTime - lastTime <= 20:
+            # getWifiStatus can't get guest wifi status, check 2g instead of
+            while str(status['status'][0]['up']) != str(option.get('on')) or curTime - lastTime <= 20:
                 t.sleep(5)
                 status = getWifiStatus(terminal, logname)
                 curTime = int(t.time())
         else:
-            while status['status'][index-1]['up'] != option.get('on') or curTime - lastTime <= 20:
+            while str(status['status'][index-1]['up']) != str(option.get('on')) or curTime - lastTime <= 20:
                 t.sleep(5)
                 status = getWifiStatus(terminal, logname)
                 curTime = int(t.time())
@@ -346,11 +382,12 @@ def setAllWifi(terminal, logname, **kwargs):
     option.update(kwargs)
     api = '/cgi-bin/luci/;stok=token/api/xqnetwork/set_all_wifi'
     ret = setCheck(terminal, logname, api, **option)
+    t.sleep(10)
     if ret:
         lastTime = int(t.time())
         curTime = int(t.time())
         status = getWifiStatus(terminal, logname)
-        while status['status'][0]['up'] != option.get('on1') or curTime - lastTime <= 20:
+        while str(status['status'][0]['up']) != str(option.get('on1')) or curTime - lastTime <= 20:
             t.sleep(5)
             status = getWifiStatus(terminal, logname)
             curTime = int(t.time())
@@ -463,7 +500,7 @@ def setRouterNormal(terminal, logname,  **kwargs):
         lastTime = int(t.time())
         curTime = int(t.time())
         status = getWifiStatus(terminal, logname)
-        while status['status'][0]['up'] != 1 or curTime - lastTime <= 20:
+        while int(status['status'][0]['up']) != 1 or curTime - lastTime <= 20:
             t.sleep(2)
             status = getWifiStatus(terminal, logname)
             curTime = int(t.time())
@@ -478,27 +515,97 @@ def setLanAp(terminal, logname, **kwargs):
     option.update(kwargs)
     api = '/cgi-bin/luci/;stok=token/api/xqnetwork/set_lan_ap'
     result = setGet(terminal, logname, api, **option)
-    while not terminal.connect(host=result['ip'], password=v.WEB_PWD):
-        t.sleep(2)
+    t.sleep(30)
+    if result is not None:
+        v.HOST = result['ip']
+        terminal.connect(host=v.HOST, password=v.WEB_PWD)
+        return result
     return result
+    # if result is not None:
+    #     t.sleep(5)
+    #     while not terminal.connect(host=result['ip'], password=v.WEB_PWD):
+    #         t.sleep(2)
+    #     return result
+    # return None
 
 
 def setDisableLanAp(terminal, logname):
     api = '/cgi-bin/luci/;stok=token/api/xqnetwork/disable_lan_ap'
     result = setGet(terminal, logname, api)
-    while not terminal.connect(host=result['ip'], password=v.WEB_PWD):
-        t.sleep(2)
+    t.sleep(30)
+    if result is not None:
+        v.HOST = result['ip']
+        terminal.connect(host=v.HOST, password=v.WEB_PWD)
+        return result
     return result
+    # if result is not None:
+    #     t.sleep(5)
+    #     while not terminal.connect(host=result['ip'], password=v.WEB_PWD):
+    #         t.sleep(2)
+    #     return result
+    # return None
 
 
 def getWifiDetailAll(terminal, logname):
 
     api = '/cgi-bin/luci/;stok=token/api/xqnetwork/wifi_detail_all'
     ret = setGet(terminal, logname, api)
-    if ret['code'] is 0:
-        return ret
+    if ret is not None:
+        if ret['code'] is 0:
+            return ret
+    return None
+
+def getWifiDetailDic(terminal, logname, intf):
+    commandDic = {
+        "2g": "{ 'wifiIndex': 1,"
+              "'on': ret['info'][0]['status'],"
+              "'ssid': ret['info'][0]['ssid'],"
+              "'pwd': '',"
+              "'encryption': ret['info'][0]['encryption'],"
+              "'channel': ret['info'][0]['channel'],"
+              "'bandwidth': ret['info'][0]['bandwidth'],"
+              "'hidden': ret['info'][0]['hidden'],"
+              "'txpwr': ret['info'][0]['txpwr']}",
+
+        "5g": "{ 'wifiIndex': 2,"
+              "'on': ret['info'][1]['status'],"
+              "'ssid': ret['info'][1]['ssid'],"
+              "'pwd': '',"
+              "'encryption': ret['info'][1]['encryption'],"
+              "'channel': ret['info'][1]['channel'],"
+              "'bandwidth': ret['info'][1]['bandwidth'],"
+              "'hidden': ret['info'][1]['hidden'],"
+              "'txpwr': ret['info'][1]['txpwr']}",
+
+        "guest":"{ 'wifiIndex': 3,"
+              "'on': ret['info'][-1]['status'],"
+              "'ssid': ret['info'][-1]['ssid'],"
+              "'pwd': '',"
+              "'encryption': ret['info'][-1]['encryption']}",
+    }
+    infoDic = {
+        "2g": "ret['info'][0]",
+        "5g": "ret['info'][1]",
+        "guest": "ret['info'][-1]",
+    }
+    ret = getWifiDetailAll(terminal, logname)
+    if ret is not None:
+        resultDic = eval(commandDic.get(intf))
+        for key, value in resultDic.items():
+            if key is 'wifiIndex':
+                continue
+            resultDic[key] = str(value)
+        infoDicIntf = eval(infoDic.get(intf))
+        if "password"  in infoDicIntf.keys():
+            resultDic["pwd"] = infoDicIntf.get("password")
+        if intf == "guest":
+            if "enabled" in infoDicIntf.keys():
+                return resultDic
+            else:
+                return {}
+        return resultDic
     else:
-        return None
+        return {}
 
 
 def getWifiChannel(terminal, intf, logname):
@@ -534,10 +641,10 @@ def getDeviceDetail(terminal, logname, **kwargs):
     option.update(kwargs)
     api = '/cgi-bin/luci/;stok=token/api/misystem/device_detail'
     ret = setGet(terminal, logname, api, **option)
-    if ret['code'] is 0:
-        return ret
-    else:
-        return None
+    if ret is not None:
+        if ret['code'] is 0:
+            return ret
+    return None
 
 
 def getDeviceList(terminal, logname, **kwargs):
@@ -561,10 +668,10 @@ def getDeviceList(terminal, logname, **kwargs):
     option.update(kwargs)
     api = '/cgi-bin/luci/;stok=token/api/misystem/devicelist'
     ret = setGet(terminal, logname, api, **option)
-    if ret['code'] is 0:
-        return ret
-    else:
-        return None
+    if ret is not None:
+        if ret['code'] is 0:
+            return ret
+    return None
 
 
 def getOnlineDeviceType(terminal, logname):
@@ -580,10 +687,11 @@ def getOnlineDeviceType(terminal, logname):
         'withbrlan': 1,
     }
     ret = getDeviceList(terminal, logname, **option)
-    for d in ret['list']:
-        result[d['mac']] = d['type']
-    return result
-
+    if ret is not None:
+        for d in ret['list']:
+            result[d['mac']] = d['type']
+        return result
+    return None
 
 def getWifiStatus(terminal, logname):
     """
@@ -594,30 +702,17 @@ def getWifiStatus(terminal, logname):
     """
     api = '/cgi-bin/luci/;stok=token/api/xqnetwork/wifi_status'
     ret = setGet(terminal, logname, api)
-    return ret
+    if ret is not None:
+        return ret
+    return None
 
 
 if __name__ == '__main__':
-    option = {
-        'wifiIndex': 2,
-        'on': 0,
-        'ssid': 'peanuts',
-        'pwd': '',
-        'encryption': 'none',
-        'channel': '0',
-        'bandwidth': '0',
-        'hidden': 0,
-        'txpwr': 'mid'
-    }
-    v.HOST = '10.237.100.78'
+
+    v.HOST = '192.168.110.1'
     v.WEB_PWD = '12345678'
     webclient = HttpClient()
     webclient.connect(host=v.HOST, password=v.WEB_PWD)
-    result = setDisableLanAp(webclient, 'aaa')
-    print result
-
-    while 1:
-        print getWifiStatus(webclient, 'aaa')
-        t.sleep(2)
+    # setReset(webclient, 'aaa')
     webclient.close()
 

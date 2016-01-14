@@ -15,6 +15,7 @@ class MemMonitor(threading.Thread):
         self.callback = None
         self.terminal = SshCommand(v.CONNECTION_TYPE)
         self.terminal.connect(v.HOST, v.USR, v.PASSWD)
+        self.tmpHost = v.HOST
 
     def run(self):
         self.running = True
@@ -25,11 +26,12 @@ class MemMonitor(threading.Thread):
             if curr_time - last_time >= self.interval:
                 last_time = curr_time
                 try:
+                    if v.HOST != self.tmpHost:
+                        self.terminal.connect(v.HOST, v.USR, v.PASSWD)
+                        self.tmpHost = v.HOST
                     res = self.terminal.getTotalMemInfo()
                 except Exception, e:
                     continue
-                    # res = dict()
-                    # res["used"] = 0
                 memUsed = res["used"]
                 self.plot.append(memUsed)
                 if self.callback is not None:
@@ -281,6 +283,7 @@ def kernelMonitor(terminal, interval, count, filename, sheetname):
 
 
 def daemonKernelMonitor(terminal, interval, count, filename, sheet1, sheet2):
+    tmpHost = v.HOST
     last_time = t.time()
     wb = Workbook()
     ws1 = wb.active
@@ -302,6 +305,9 @@ def daemonKernelMonitor(terminal, interval, count, filename, sheet1, sheet2):
             if curr_time - last_time >= interval:
                 last_time = curr_time
                 try:
+                    if v.HOST != tmpHost:
+                        terminal.connect(v.HOST, v.USR, v.PASSWD)
+                        tmpHost = v.HOST
                     totalmem = terminal.getTotalMemInfo()
                     time = terminal.getTimeStr()
                     newDic1 = getDaemonRss(terminal)
@@ -367,6 +373,9 @@ def daemonKernelMonitor(terminal, interval, count, filename, sheet1, sheet2):
             if curr_time - last_time >= interval:
                 last_time = curr_time
                 try:
+                    if v.HOST != tmpHost:
+                        terminal.connect(v.HOST, v.USR, v.PASSWD)
+                        tmpHost = v.HOST
                     totalmem = terminal.getTotalMemInfo()
                     time = terminal.getTimeStr()
                     newDic1 = getDaemonRss(terminal)
@@ -469,17 +478,13 @@ def memDiffCalc(filename, sheetname):
 if __name__ == '__main__':
 
     v.CONNECTION_TYPE = 2
-    v.HOST = "192.168.110.1"
-    v.USR = ""
-    v.PASSWD = ""
-    # ssh = SshCommand(2)
-    # ssh.connect("192.168.110.1", "", "")
-    # v.DUT_MODULE = "R2D"
-    # daemonMonitor(ssh, interval=1, count=10, filename="temp.xlsx", sheetname="sheet1")
-    # kernelMonitor(ssh, interval=1, count=10, filename="temp1.xlsx", sheetname="sheet1")
-    memDiffCalc("MEM_2015.11.12 10.31.54.xlsx", ["User Mem Tracking", "Kernel Mem Tracking"])
-    # memMon = MemMonitorXlsx(interval=5, count=0, file="temp.xlsx")
-    # memMon.start()
+    v.HOST = "192.168.31.1"
+    v.USR = "root"
+    v.PASSWD = "admin"
+    memMon = MemMonitorXlsx(interval=5, count=20, file="temp.xlsx")
+    memMon.start()
+    v.HOST = "10.237.100.78"
+    memMon.join()
     # t.sleep(30)
     # memMon.stop()
 

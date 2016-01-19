@@ -772,11 +772,6 @@ def getAdbShellWlan(device, logname):
         return result
 
 
-
-
-
-
-
 def getAdbPingStatus(terminal, target, count, logname):
     """
     C:\Users\Administrator>adb shell ping -c 5 www.baidu.com

@@ -693,47 +693,88 @@ def getAdbDevices():
     return result
 
 
+def getAdbAndroidVersion(device, logname):
+    """
+    127|shell@cancro:/system/bin $ getprop ro.build.version.release
+    getprop ro.build.version.release
+    6.0
+    """
+    command = "getprop ro.build.version.release"
+    ret = setAdbShell(device, command, logname)
+    return str(ret[0])
+
+
+def getAdbWlanMac(device, logname):
+    """
+    127|shell@cancro:/ $  cat /sys/class/net/wlan0/address
+    cat /sys/class/net/wlan0/address
+    """
+    command = "cat /sys/class/net/wlan0/address"
+    ret = setAdbShell(device, command, logname)
+    for line in ret:
+        m = re.search('([\da-fA-F]{2}:){5}[\da-fA-F]{2}', line)
+        if m:
+            result = m.group(0)
+            return result
+
 
 def getAdbShellWlan(device, logname):
-    """
-    D:\Python\new peanuts\22\iperf-2.0.5-3-win32>adb shell netcfg
-    lo       UP                                   127.0.0.1/8   0x00000049 00:00:00:
-    00:00:00
-    mhi0     DOWN                                   0.0.0.0/0   0x00000090 26:00:00:
-    00:00:00
-    p2p0     UP                                     0.0.0.0/0   0x00001003 16:f6:5a:
-    8f:c7:c1
-    sit0     DOWN                                   0.0.0.0/0   0x00000080 00:00:00:
-    00:00:00
-    wlan0    UP                              192.168.31.103/24  0x00001043 14:f6:5a:
-    8f:c7:c1
-    rmnetctl DOWN                                   0.0.0.0/0   0x00000080 00:00:00:
-    00:00:00
-    dummy0   DOWN                                   0.0.0.0/0   0x00000082 a2:ef:9e:
-    78:79:f2
-    usbnet0  DOWN                                 10.0.2.15/24  0x00001002 0e:f7:11:
-    b7:75:b6
-    ip6tnl0  DOWN                                   0.0.0.0/0   0x00000080 00:00:00:
-    00:00:00
-    """
-    command = "netcfg"
-    ret = setAdbShell(device, command, logname)
-    result = {}
-    for line in ret:
-        m = re.search('wlan.*[UPDOWN]\s*((\d{1,3}\.){3}\d{1,3}).*(([\da-fA-F]{2}:){5}[\da-fA-F]{2})', line)
-        if m:
-            if m.group(1) == "0.0.0.0":
-                result['ip'] = ""
-                result['mac'] = m.group(3)
-                return result
+    version = getAdbAndroidVersion(device, logname)
+    o = re.search('^(\d{1,})\.', version)
+    if o:
+        ver = int(o.group(1))
+    if ver < 6:
+        command = "netcfg"
+        """
+        D:\>adb shell netcfg
+        wlan0    UP                              192.168.31.103/24  0x00001043 14:f6:5a:8f:c7:c1
+        """
+        ret = setAdbShell(device, command, logname)
+        result = {}
+        for line in ret:
+            m = re.search('wlan.*[UPDOWN]\s*((\d{1,3}\.){3}\d{1,3}).*(([\da-fA-F]{2}:){5}[\da-fA-F]{2})', line)
+            if m:
+                if m.group(1) == "0.0.0.0":
+                    result['ip'] = ""
+                    result['mac'] = m.group(3)
+                    return result
+                else:
+                    result['ip'] = m.group(1)
+                    result['mac'] = m.group(3)
+                    return result
             else:
-                result['ip'] = m.group(1)
-                result['mac'] = m.group(3)
-                return result
-        else:
-            result['mac'] = ""
-            result['ip'] = ""
-    return result
+                result['mac'] = ""
+                result['ip'] = ""
+        return result
+    else:
+        command = "ifconfig wlan0"
+        """
+        ifconfig
+        wlan0     Link encap:Ethernet  HWaddr 0C:1D:AF:46:80:23
+                  inet addr:192.168.110.211  Bcast:192.168.110.255  Mask:255.255.255.0
+                  inet6 addr: fe80::e1d:afff:fe46:8023/64 Scope: Link
+                  UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1
+                  RX packets:1488 errors:0 dropped:0 overruns:0 frame:0
+                  TX packets:197 errors:0 dropped:0 overruns:0 carrier:0
+                  collisions:0 txqueuelen:1000
+                  RX bytes:585548 TX bytes:22543
+        """
+        ret = setAdbShell(device, command, logname)
+        result = {"mac": "",
+                  "ip": "",}
+        for line in ret:
+            m = re.search('Ethernet  HWaddr (([\da-fA-F]{2}:){5}[\da-fA-F]{2})', line)
+            n = re.search('inet addr:((\d{1,3}\.){3}\d{1,3})', line)
+            if m:
+                result['mac'] = m.group(1)
+            if n:
+                result['ip'] = n.group(1)
+        return result
+
+
+
+
+
 
 
 def getAdbPingStatus(terminal, target, count, logname):
@@ -1247,5 +1288,6 @@ if __name__ == '__main__':
     # v.DUT_MODULE = "R1CM"
     # setWifiRestart(ssh, "log")
     # ssh.close()
-    print getAdbDevices()
-    print chkAdbDevicesCount(2)
+    dut = getAdbDevices()
+    ret = getAdbShellWlan(dut[0], 'aaa')
+    print ret, type(ret)

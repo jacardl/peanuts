@@ -719,11 +719,12 @@ def getAdbWlanMac(device, logname):
 
 
 def getAdbShellWlan(device, logname):
-    version = getAdbAndroidVersion(device, logname)
-    o = re.search('^(\d{1,})\.', version)
+    verStr = getAdbAndroidVersion(device, logname)
+    verInt = 1
+    o = re.search('^(\d{1,})\.', verStr)
     if o:
-        ver = int(o.group(1))
-    if ver < 6:
+        verInt = int(o.group(1))
+    if verInt < 6:
         command = "netcfg"
         """
         D:\>adb shell netcfg

@@ -62,23 +62,22 @@ TEST_SUITE_LOG_PATH = os.getcwd() + os.sep + 'LOG_TEST_SUITE' + os.sep
 IPERF_PATH = os.getcwd() + os.sep + "iperf" + os.sep
 DEFAULT_PATH = os.getcwd() + os.sep
 
-SSID = 'peanuts_automatic_test_suite'
-SSID_5G = 'peanuts_automatic_test_suite-5G'
-'''
-original spec ssid `~!@#$%^&*() =+\|]}[{'";:/?.>,<
-'''
-SPECIAL_SSID = '`~!@#$%^&*() =+\|]}[{\'";:/?.>,<'
-SPECIAL_SSID_5G = '`~!@#$%^&*() =+\|]}[{\'";:/?.-5G'
+WORD_RANGE = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-_"
+SPEC_RANGE = '`~!@#$%^&*() =+\\|]}[{\'\";:/?.>,<'
+CHINESE_RANGE = "花生自动化小米路由器棒棒哒"
 
-CHINESE_SSID = '业界良心_花生自动化'
-CHINESE_SSID_5G = '业界良心_花生自动化-5G'
-GUEST_SSID = 'peanuts_guest'
+SSID = generateRandomString(WORD_RANGE, 31)
+SSID_5G = generateRandomString(WORD_RANGE, 31)
+GUEST_SSID = generateRandomString(WORD_RANGE, 31)
 
-KEY = '12345678'
-"""
-original spec key  `~!@#$%^&*() =+\|]}[{'";:/?.>,<`~!@#$%^&*() =+\|]}[{'";:/?.>,<1
-"""
-SPECIAL_KEY = '`~!@#$%^&*() =+\|]}[{\'";:/?.>,<`~!@#$%^&*() =+\|]}[{\'";:/?.>,<1'
+SPECIAL_SSID = generateRandomString(SPEC_RANGE, 31)
+SPECIAL_SSID_5G = generateRandomString(SPEC_RANGE, 31)
+
+CHINESE_SSID = generateRandomString(CHINESE_RANGE, 10)
+CHINESE_SSID_5G = generateRandomString(CHINESE_RANGE, 10)
+
+KEY = generateRandomString(WORD_RANGE, 63)
+SPECIAL_KEY = generateRandomString(SPEC_RANGE, 63)
 
 PING_PERCENT_PASS = 100
 PING_COUNT = 5
@@ -108,7 +107,7 @@ IPERF_TIME = "60"
 # IPERF_INTERVAL = "1"
 # IPERF_TIME = "5"
 
-SEND_MAIL = 0
+SEND_MAIL = 1
 MAILTO_LIST = ["liujia5@xiaomi.com", "fengjiang@xiaomi.com", "hexiaoliang@xiaomi.com", "linli1@xiaomi.com",
                "wangchunxuan@xiaomi.com", "wangyue3@xiaomi.com", "youguidong@xiaomi.com", "zhangjunjie@xiaomi.com",
                "zhaoziqiang@xiaomi.com", ]

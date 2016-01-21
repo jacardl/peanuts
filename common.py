@@ -8,6 +8,7 @@ from collections import *
 import paramiko as pm
 import subprocess
 import urllib
+import random
 import var as v
 
 
@@ -258,6 +259,17 @@ def convertStrToBashStr(string):
         string = '"' + string + '"'
     return string
 
+
+def generateRandomString(ran, length):
+    result = ""
+    ranUnic = ran.decode("gbk")
+    while len(result) < length:
+        value = ranUnic[random.randint(0, len(ranUnic)-1)]
+        if result.find(value) is -1:
+            result += value
+        if len(result) >= len(ranUnic):
+            result += value
+    return result
 
 
 def convertStrToURL(string):
@@ -1512,6 +1524,7 @@ if __name__ == '__main__':
     # v.DUT_MODULE = "R1CM"
     # setWifiRestart(ssh, "log")
     # ssh.close()
-    dut = getAdbDevices()
-    ret = setAdbPsk2StaConn(dut[0], "normal", "2g", 'aaa')
-    print ret
+    # dut = getAdbDevices()
+    # ret = setAdbPsk2StaConn(dut[0], "normal", "2g", 'aaa')
+    # print ret
+    print generateRandomString(v.SPEC_RANGE, 63)

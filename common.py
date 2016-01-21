@@ -1,4 +1,4 @@
-# -*- coding: gbk -*-
+# -*- coding: utf8 -*-
 import os
 import time as t
 import re
@@ -58,13 +58,13 @@ class SshClient(object):
         if self.connectionType == 1:
             cmd = ";".join(args)
             if checkContainChinese(cmd):
-                cmd = unicode(cmd, 'gbk')
+                cmd = unicode(cmd, 'utf8')
 
             stdin, stdout, stderr = self.client.exec_command(cmd)
             self.out = stdout.readlines()  # input and output are unicode
             for index in range(len(self.out)):
                 try:
-                    self.out[index] = self.out[index].encode("gbk")
+                    self.out[index] = self.out[index].encode("utf8")
                 except Exception, e:
                     self.out[index] = ""
                     pass
@@ -72,7 +72,7 @@ class SshClient(object):
         elif self.connectionType == 2:
             cmd = ";".join(args)  # input and output are utf-8
             if checkContainChinese(cmd):
-                cmd = cmd.decode("gbk")
+                cmd = cmd.decode("utf-8")
                 cmd = cmd.encode("utf-8")
             self.tn.write(cmd + "\n")
             self.out = self.tn.read_until("root@XiaoQiang:", 60)
@@ -85,20 +85,15 @@ class SshClient(object):
         if self.connectionType == 1:
             cmd = arg
             if checkContainChinese(cmd):
-                cmd = unicode(cmd, 'gbk')
+                cmd = unicode(cmd, 'utf8')
 
             stdin, stdout, stderr = self.client.exec_command(cmd)
             err = stderr.readlines()
-            # keepGoing = 0
-            # while keepGoing < 3 and len(err) != 0:
-            # stdin, stdout, stderr = self.client.exec_command(arg)
-            # err = stderr.read()
-            # keepGoing += 1
             return err
         elif self.connectionType == 2:
             cmd = arg
             if checkContainChinese(cmd):
-                cmd = cmd.decode("gbk")
+                cmd = cmd.decode("utf8")
                 cmd = cmd.encode("utf-8")
 
             self.tn.write(cmd + "\n")
@@ -106,8 +101,6 @@ class SshClient(object):
             self.out = self.out.split("\n")
             del self.out[0]
             del self.out[-1]
-            # for index in range(len(self.out)):
-            # self.out[index] = self.out[index].decode("utf-8").encode("gbk")
             return self.out
 
     def close(self):
@@ -218,15 +211,15 @@ class SshCommand(SshClient):
             if n:
                 result["channel"] = n.group(1)
         channelDic = {"current": " daily build ",
-                      "stable": " ¿ª·¢°æOTA ",
-                      "release": " ÎÈ¶¨°æOTA "}
+                      "stable": " å¼€å‘ç‰ˆOTA ",
+                      "release": " ç¨³å®šç‰ˆOTA "}
         result["channel"] = channelDic.get(result["channel"])
         return result
 
     def setMailTitle(self):
         hardware = self.getHardware()
         Rom = self.getRomVersion()
-        title = "¡¾" + hardware + Rom["channel"] + Rom["version"] + "¡¿×Ô¶¯»¯²âÊÔ±¨¸æ"
+        title = "ã€" + hardware + Rom["channel"] + Rom["version"] + "ã€‘è‡ªåŠ¨åŒ–æµ‹è¯•æŠ¥å‘Š"
         return title
 
     def setReportName(self):
@@ -262,14 +255,14 @@ def convertStrToBashStr(string):
 
 def generateRandomString(ran, length):
     result = ""
-    ranUnic = ran.decode("gbk")
+    ranUnic = ran.decode("utf8")
     while len(result) < length:
         value = ranUnic[random.randint(0, len(ranUnic)-1)]
         if result.find(value) is -1:
             result += value
-        if len(result) >= len(ranUnic):
+        elif len(result) >= len(ranUnic):
             result += value
-    return result
+    return result.encode("utf8")
 
 
 def convertStrToURL(string):
@@ -278,7 +271,7 @@ def convertStrToURL(string):
 
 
 def checkContainChinese(string):
-    checkstr = unicode(string, 'gbk')
+    checkstr = unicode(string, 'utf8')
     for ch in checkstr:
         if u'\u4e00' <= ch <= u'\u9ffff':
             return True
@@ -1525,6 +1518,9 @@ if __name__ == '__main__':
     # setWifiRestart(ssh, "log")
     # ssh.close()
     # dut = getAdbDevices()
-    # ret = setAdbPsk2StaConn(dut[0], "normal", "2g", 'aaa')
+    # ret = setAdbPsk2StaConn(dut[0], "chinese", "2g", 'aaa')
     # print ret
-    print generateRandomString(v.SPEC_RANGE, 63)
+    print v.SPECIAL_KEY
+    print v.SSID
+    print v.SPECIAL_SSID
+    print v.CHINESE_SSID

@@ -1,4 +1,4 @@
-# -*- coding: gbk -*-
+# -*- coding: utf8 -*-
 import multiprocessing as mp
 import threading
 import re
@@ -627,18 +627,18 @@ if __name__ == '__main__':
     # while t.isAlive():
     #     print time.time()
     # print getFlowLogVerbose("E:\peanuts\LOG_TEST_SUITE\AP_CLEAR_CHAN_FLOW2.log")
-    # info = GetFlowLog("R1CM ¿ª·¢°æOTA 2.7.10.log")
-    # info = GetOnlineLog("R1CM ¿ª·¢°æOTA 2.5.48.log")
-    # info = GetTestResult("R1CM ¿ª·¢°æOTA 2.5.48.log")
-    info = ProcessReport("R1CM ¿ª·¢°æOTA 2.7.10.log")
+    # info = GetFlowLog("R1CM å¼€å‘ç‰ˆOTA 2.7.10.log")
+    # info = GetOnlineLog("R1CM å¼€å‘ç‰ˆOTA 2.5.48.log")
+    # info = GetTestResult("R1CM å¼€å‘ç‰ˆOTA 2.5.48.log")
+    info = ProcessReport("R1CM å¼€å‘ç‰ˆOTA 2.7.10.log")
     info.start()
     info.join()
     print info.result
     # print info.resultAes
     # print info.resultTkip
     # print info.resultClear
-    # print getChannelFlowLogVerbose("R2D ÎÈ¶¨°æOTA 2.8.6\AP_MIXEDPSK_CHAN11_149_FLOW2.log")
-    # print getFlowLogVerbose("R2D ÎÈ¶¨°æOTA 2.8.6\AP_MIXEDPSK_CHAN11_149_FLOW2.log")
+    # print getChannelFlowLogVerbose("R2D ç¨³å®šç‰ˆOTA 2.8.6\AP_MIXEDPSK_CHAN11_149_FLOW2.log")
+    # print getFlowLogVerbose("R2D ç¨³å®šç‰ˆOTA 2.8.6\AP_MIXEDPSK_CHAN11_149_FLOW2.log")
 
 
 

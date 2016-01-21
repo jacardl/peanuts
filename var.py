@@ -1,4 +1,4 @@
-# -*- coding: cp936 -*-
+# -*- coding: utf8 -*-
 from common import *
 
 TOOL_LIST = ["General", "Memory Tracking", "Log Collection", "Test Suite"]
@@ -64,7 +64,7 @@ DEFAULT_PATH = os.getcwd() + os.sep
 
 WORD_RANGE = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-_"
 SPEC_RANGE = '`~!@#$%^&*() =+\\|]}[{\'\";:/?.>,<'
-CHINESE_RANGE = "»¨Éú×Ô¶¯»¯Ð¡Ã×Â·ÓÉÆ÷°ô°ôßÕ"
+CHINESE_RANGE = "èŠ±ç”Ÿè‡ªåŠ¨åŒ–å°ç±³è·¯ç”±å™¨æ£’æ£’å“’"
 
 SSID = generateRandomString(WORD_RANGE, 31)
 SSID_5G = generateRandomString(WORD_RANGE, 31)
@@ -108,14 +108,14 @@ IPERF_TIME = "60"
 # IPERF_TIME = "5"
 
 SEND_MAIL = 1
-MAILTO_LIST = ["liujia5@xiaomi.com", "fengjiang@xiaomi.com", "hexiaoliang@xiaomi.com", "linli1@xiaomi.com",
-               "wangchunxuan@xiaomi.com", "wangyue3@xiaomi.com", "youguidong@xiaomi.com", "zhangjunjie@xiaomi.com",
-               "zhaoziqiang@xiaomi.com", ]
-# MAILTO_LIST = ["liujia5@xiaomi.com"]
-MAIL_HOST = "mail.srv"  #ÉèÖÃ·þÎñÆ÷
-MAIL_USER = "robot"    #ÓÃ»§Ãû
-MAIL_PASS = ""   #¿ÚÁî
-MAIL_POSTFIX="xiaomi.com"  #·¢¼þÏäµÄºó×º
+# MAILTO_LIST = ["liujia5@xiaomi.com", "fengjiang@xiaomi.com", "hexiaoliang@xiaomi.com", "linli1@xiaomi.com",
+#                "wangchunxuan@xiaomi.com", "wangyue3@xiaomi.com", "youguidong@xiaomi.com", "zhangjunjie@xiaomi.com",
+#                "zhaoziqiang@xiaomi.com", ]
+MAILTO_LIST = ["liujia5@xiaomi.com"]
+MAIL_HOST = "mail.srv"  #è®¾ç½®æœåŠ¡å™¨
+MAIL_USER = "robot"    #ç”¨æˆ·å
+MAIL_PASS = ""   #å£ä»¤
+MAIL_POSTFIX="xiaomi.com"  #å‘ä»¶ç®±çš„åŽç¼€
 MAILFROM_LIST = "robot@xiaomi.com"
 
 MAIL_PIC1 = "total_memory_used.png"

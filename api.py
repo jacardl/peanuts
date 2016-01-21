@@ -166,7 +166,7 @@ class HttpClient(object):
         else:
             for key, value in kwargs.items():
                 if type(value) is str and common.checkContainChinese(value):
-                    kwargs[key] = value.decode('gbk').encode('utf8')
+                    kwargs[key] = value.decode('utf8').encode('utf8')
             params = urllib.urlencode(kwargs)
             self.httpClient.request('POST', apipath, params, self.headers)
             response = self.httpClient.getresponse().read()

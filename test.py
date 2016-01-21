@@ -1,3 +1,4 @@
-import processreport as pr
+# -*- coding: utf8 -*-
+import var as v
 if __name__ == '__main__':
-    print pr.getChannelFlowLogVerbose("AP_MIXEDPSK_CHAN11_149_FLOW.log")
+    print len(v.SPEC_RANGE)

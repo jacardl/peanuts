@@ -7,6 +7,7 @@ import telnetlib
 from collections import *
 import paramiko as pm
 import subprocess
+import urllib
 import var as v
 
 
@@ -256,6 +257,12 @@ def convertStrToBashStr(string):
         string = re.sub('"', '\\"', string)
         string = '"' + string + '"'
     return string
+
+
+
+def convertStrToURL(string):
+    if string is not None:
+        return urllib.quote(string)
 
 
 def checkContainChinese(string):
@@ -1000,221 +1007,434 @@ def setMvFile(terminal, logname, **kargs):
 
 
 def setAdbClearStaConn(device, ssid, radio, logname):
-    if ssid == "normal":
-        commandDic = {
-            "2g": "am instrument -e class com.peanutswifi.ApplicationTest#test_assoc_clear_sta_2g -w com.peanutswifi.test/android.test.InstrumentationTestRunner",
-            "5g": "am instrument -e class com.peanutswifi.ApplicationTest#test_assoc_clear_sta_5g -w com.peanutswifi.test/android.test.InstrumentationTestRunner",
-            "guest": "am instrument -e class com.peanutswifi.ApplicationTest#test_assoc_clear_sta_guest -w com.peanutswifi.test/android.test.InstrumentationTestRunner", }
-
-    command = commandDic.get(radio)
-    ret = setAdbShell(device, command, logname)
-    for line in ret:
-        m = re.search('OK ', line)
-        if m is not None:
-            return True
-    return False
+    if radio is "2g":
+        if ssid is "normal":
+            option = {
+                "ssid": v.SSID,
+            }
+    elif radio is "5g":
+        if ssid is "normal":
+            option = {
+                "ssid": v.SSID_5G,
+            }
+    elif radio is "guest":
+        if ssid is "normal":
+            option = {
+                "ssid": v.GUEST_SSID,
+            }
+    ret = setAdbStaConn(device, logname, **option)
+    return ret
 
 
 def setAdbClearStaConnRepeat(device, ssid, radio, logname):
-    if ssid == "normal":
-        commandDic = {
-            "2g": "am instrument -e class com.peanutswifi.ApplicationTest#test_repeat_assoc_clear_sta_2g -w com.peanutswifi.test/android.test.InstrumentationTestRunner",
-            "5g": "am instrument -e class com.peanutswifi.ApplicationTest#test_repeat_assoc_clear_sta_5g -w com.peanutswifi.test/android.test.InstrumentationTestRunner",
-            "guest": "am instrument -e class com.peanutswifi.ApplicationTest#test_repeat_assoc_clear_sta_guest -w com.peanutswifi.test/android.test.InstrumentationTestRunner", }
+    if radio is "2g":
+        if ssid is "normal":
+            option = {
+                "ssid": v.SSID,
+                "repeat": 1,
+            }
+    elif radio is "5g":
+        if ssid is "normal":
+            option = {
+                "ssid": v.SSID_5G,
+                "repeat": 1,
+            }
+    elif radio is "guest":
+        if ssid is "normal":
+            option = {
+                "ssid": v.GUEST_SSID,
+                "repeat": 1,
+            }
+    ret = setAdbStaConn(device, logname, **option)
+    return ret
 
-    command = commandDic.get(radio)
-    ret = setAdbShell(device, command, logname)
-    for line in ret:
-        m = re.search('OK ', line)
-        if m is not None:
-            return True
-    return False
 
-
-def setAdbPsk2StaConn(device, ssid, radio, logname, key=None, ):
-    if ssid == "normal" and key is None:
-        commandDic = {
-            "2g": "am instrument -e class com.peanutswifi.ApplicationTest#test_assoc_psk2_sta_2g -w com.peanutswifi.test/android.test.InstrumentationTestRunner",
-            "5g": "am instrument -e class com.peanutswifi.ApplicationTest#test_assoc_psk2_sta_5g -w com.peanutswifi.test/android.test.InstrumentationTestRunner",
-            "guest": "am instrument -e class com.peanutswifi.ApplicationTest#test_assoc_psk2_sta_guest -w com.peanutswifi.test/android.test.InstrumentationTestRunner", }
-
-    elif ssid == "chinese" and key is None:
-        commandDic = {
-            "2g": "am instrument -e class com.peanutswifi.ApplicationTest#test_assoc_psk2_sta_ssidchinese_2g -w com.peanutswifi.test/android.test.InstrumentationTestRunner",
-            "5g": "am instrument -e class com.peanutswifi.ApplicationTest#test_assoc_psk2_sta_ssidchinese_5g -w com.peanutswifi.test/android.test.InstrumentationTestRunner",
-            "guest": "am instrument -e class com.peanutswifi.ApplicationTest#test_assoc_psk2_sta_ssidchinese_guest -w com.peanutswifi.test/android.test.InstrumentationTestRunner", }
-
-    elif ssid == "spec" and key is None:
-        commandDic = {
-            "2g": "am instrument -e class com.peanutswifi.ApplicationTest#test_assoc_psk2_sta_ssidspec_2g -w com.peanutswifi.test/android.test.InstrumentationTestRunner",
-            "5g": "am instrument -e class com.peanutswifi.ApplicationTest#test_assoc_psk2_sta_ssidspec_5g -w com.peanutswifi.test/android.test.InstrumentationTestRunner",
-            "guest": "am instrument -e class com.peanutswifi.ApplicationTest#test_assoc_psk2_sta_ssidspec_guest -w com.peanutswifi.test/android.test.InstrumentationTestRunner", }
-
-    elif ssid == "normal" and key == "spec":
-        commandDic = {
-            "2g": "am instrument -e class com.peanutswifi.ApplicationTest#test_assoc_psk2_sta_keyspec_2g -w com.peanutswifi.test/android.test.InstrumentationTestRunner",
-            "5g": "am instrument -e class com.peanutswifi.ApplicationTest#test_assoc_psk2_sta_keyspec_5g -w com.peanutswifi.test/android.test.InstrumentationTestRunner",
-            "guest": "am instrument -e class com.peanutswifi.ApplicationTest#test_assoc_psk2_sta_keyspec_guest -w com.peanutswifi.test/android.test.InstrumentationTestRunner", }
-
-    command = commandDic.get(radio)
-    ret = setAdbShell(device, command, logname)
-    for line in ret:
-        m = re.search('OK ', line)
-        if m is not None:
-            return True
-    return False
+def setAdbPsk2StaConn(device, ssid, radio, logname, key=None):
+    if radio is "2g":
+        if ssid == "normal" and key is None:
+            option = {
+                "ssid": v.SSID,
+                "encryption": "psk2",
+                "key": v.KEY,
+            }
+        elif ssid == "chinese" and key is None:
+            option = {
+                "ssid": v.CHINESE_SSID,
+                "encryption": "psk2",
+                "key": v.KEY,
+            }
+        elif ssid == "spec" and key is None:
+            option = {
+                "ssid": v.SPECIAL_SSID,
+                "encryption": "psk2",
+                "key": v.KEY,
+            }
+        elif ssid == "normal" and key == "spec":
+            option = {
+                "ssid": v.SSID,
+                "encryption": "psk2",
+                "key": v.SPECIAL_KEY,
+            }
+    elif radio is "5g":
+        if ssid == "normal" and key is None:
+            option = {
+                "ssid": v.SSID_5G,
+                "encryption": "psk2",
+                "key": v.KEY,
+            }
+        elif ssid == "chinese" and key is None:
+            option = {
+                "ssid": v.CHINESE_SSID_5G,
+                "encryption": "psk2",
+                "key": v.KEY,
+            }
+        elif ssid == "spec" and key is None:
+            option = {
+                "ssid": v.SPECIAL_SSID_5G,
+                "encryption": "psk2",
+                "key": v.KEY,
+            }
+        elif ssid == "normal" and key == "spec":
+            option = {
+                "ssid": v.SSID_5G,
+                "encryption": "psk2",
+                "key": v.SPECIAL_KEY,
+            }
+    elif radio is "guest":
+        if ssid == "normal" and key is None:
+            option = {
+                "ssid": v.GUEST_SSID,
+                "encryption": "psk2",
+                "key": v.KEY,
+            }
+    ret = setAdbStaConn(device, logname, **option)
+    return ret
 
 
 def setAdbPsk2StaConnRepeat(device, ssid, radio, logname):
-    if ssid == "normal":
-        commandDic = {
-            "2g": "am instrument -e class com.peanutswifi.ApplicationTest#test_repeat_assoc_psk2_sta_2g -w com.peanutswifi.test/android.test.InstrumentationTestRunner",
-            "5g": "am instrument -e class com.peanutswifi.ApplicationTest#test_repeat_assoc_psk2_sta_5g -w com.peanutswifi.test/android.test.InstrumentationTestRunner",
-            "guest": "am instrument -e class com.peanutswifi.ApplicationTest#test_repeat_assoc_psk2_sta_guest -w com.peanutswifi.test/android.test.InstrumentationTestRunner", }
-
-    command = commandDic.get(radio)
-    ret = setAdbShell(device, command, logname)
-    for line in ret:
-        m = re.search('OK ', line)
-        if m is not None:
-            return True
-    return False
+    if radio is "2g":
+        if ssid == "normal":
+            option = {
+                "ssid": v.SSID,
+                "encryption": "psk2",
+                "key": v.KEY,
+                "repeat": 1,
+            }
+    elif radio is "5g":
+        if ssid == "normal":
+            option = {
+                "ssid": v.SSID_5G,
+                "encryption": "psk2",
+                "key": v.KEY,
+                "repeat": 1,
+            }
+    elif radio is "guest":
+        if ssid == "normal":
+            option = {
+                "ssid": v.GUEST_SSID,
+                "encryption": "psk2",
+                "key": v.KEY,
+                "repeat": 1,
+            }
+    ret = setAdbStaConn(device, logname, **option)
+    return ret
 
 
 def setAdbPskStaConn(device, ssid, radio, logname, key=None):
-    if ssid == "normal" and key is None:
-        commandDic = {
-            "2g": "am instrument -e class com.peanutswifi.ApplicationTest#test_assoc_psk_sta_2g -w com.peanutswifi.test/android.test.InstrumentationTestRunner",
-            "5g": "am instrument -e class com.peanutswifi.ApplicationTest#test_assoc_psk_sta_5g -w com.peanutswifi.test/android.test.InstrumentationTestRunner",
-            "guest": "am instrument -e class com.peanutswifi.ApplicationTest#test_assoc_psk_sta_guest -w com.peanutswifi.test/android.test.InstrumentationTestRunner", }
-    elif ssid == "chinese" and key is None:
-        commandDic = {
-            "2g": "am instrument -e class com.peanutswifi.ApplicationTest#test_assoc_psk_sta_ssidchinese_2g -w com.peanutswifi.test/android.test.InstrumentationTestRunner",
-            "5g": "am instrument -e class com.peanutswifi.ApplicationTest#test_assoc_psk_sta_ssidchinese_5g -w com.peanutswifi.test/android.test.InstrumentationTestRunner",
-            "guest": "am instrument -e class com.peanutswifi.ApplicationTest#test_assoc_psk_sta_ssidchinese_guest -w com.peanutswifi.test/android.test.InstrumentationTestRunner", }
-    elif ssid == "spec" and key is None:
-        commandDic = {
-            "2g": "am instrument -e class com.peanutswifi.ApplicationTest#test_assoc_psk_sta_ssidspec_2g -w com.peanutswifi.test/android.test.InstrumentationTestRunner",
-            "5g": "am instrument -e class com.peanutswifi.ApplicationTest#test_assoc_psk_sta_ssidspec_5g -w com.peanutswifi.test/android.test.InstrumentationTestRunner",
-            "guest": "am instrument -e class com.peanutswifi.ApplicationTest#test_assoc_psk_sta_ssidspec_guest -w com.peanutswifi.test/android.test.InstrumentationTestRunner", }
-
-    elif ssid == "normal" and key == "spec":
-        commandDic = {
-            "2g": "am instrument -e class com.peanutswifi.ApplicationTest#test_assoc_psk_sta_keyspec_2g -w com.peanutswifi.test/android.test.InstrumentationTestRunner",
-            "5g": "am instrument -e class com.peanutswifi.ApplicationTest#test_assoc_psk_sta_keyspec_5g -w com.peanutswifi.test/android.test.InstrumentationTestRunner",
-            "guest": "am instrument -e class com.peanutswifi.ApplicationTest#test_assoc_psk_sta_keyspec_guest -w com.peanutswifi.test/android.test.InstrumentationTestRunner", }
-
-    command = commandDic.get(radio)
-    ret = setAdbShell(device, command, logname)
-    for line in ret:
-        m = re.search('OK ', line)
-        if m is not None:
-            return True
-    return False
+    if radio is "2g":
+        if ssid == "normal" and key is None:
+            option = {
+                "ssid": v.SSID,
+                "encryption": "psk",
+                "key": v.KEY,
+            }
+        elif ssid == "chinese" and key is None:
+            option = {
+                "ssid": v.CHINESE_SSID,
+                "encryption": "psk",
+                "key": v.KEY,
+            }
+        elif ssid == "spec" and key is None:
+            option = {
+                "ssid": v.SPECIAL_SSID,
+                "encryption": "psk",
+                "key": v.KEY,
+            }
+        elif ssid == "normal" and key == "spec":
+            option = {
+                "ssid": v.SSID,
+                "encryption": "psk",
+                "key": v.SPECIAL_KEY,
+            }
+    elif radio is "5g":
+        if ssid == "normal" and key is None:
+            option = {
+                "ssid": v.SSID_5G,
+                "encryption": "psk",
+                "key": v.KEY,
+            }
+        elif ssid == "chinese" and key is None:
+            option = {
+                "ssid": v.CHINESE_SSID_5G,
+                "encryption": "psk",
+                "key": v.KEY,
+            }
+        elif ssid == "spec" and key is None:
+            option = {
+                "ssid": v.SPECIAL_SSID_5G,
+                "encryption": "psk",
+                "key": v.KEY,
+            }
+        elif ssid == "normal" and key == "spec":
+            option = {
+                "ssid": v.SSID_5G,
+                "encryption": "psk",
+                "key": v.SPECIAL_KEY,
+            }
+    elif radio is "guest":
+        if ssid == "normal" and key is None:
+            option = {
+                "ssid": v.GUEST_SSID,
+                "encryption": "psk",
+                "key": v.KEY,
+            }
+    ret = setAdbStaConn(device, logname, **option)
+    return ret
 
 
 def setAdbPskStaConnRepeat(device, ssid, radio, logname):
-    if ssid == "normal":
-        commandDic = {
-            "2g": "am instrument -e class com.peanutswifi.ApplicationTest#test_repeat_assoc_psk_sta_2g -w com.peanutswifi.test/android.test.InstrumentationTestRunner",
-            "5g": "am instrument -e class com.peanutswifi.ApplicationTest#test_repeat_assoc_psk_sta_5g -w com.peanutswifi.test/android.test.InstrumentationTestRunner",
-            "guest": "am instrument -e class com.peanutswifi.ApplicationTest#test_repeat_assoc_psk_sta_guest -w com.peanutswifi.test/android.test.InstrumentationTestRunner", }
-
-    command = commandDic.get(radio)
-    ret = setAdbShell(device, command, logname)
-    for line in ret:
-        m = re.search('OK ', line)
-        if m is not None:
-            return True
-    return False
+    if radio is "2g":
+        if ssid == "normal":
+            option = {
+                "ssid": v.SSID,
+                "encryption": "psk",
+                "key": v.KEY,
+                "repeat": 1,
+            }
+    if radio is "5g":
+        if ssid == "normal":
+            option = {
+                "ssid": v.SSID_5G,
+                "encryption": "psk",
+                "key": v.KEY,
+                "repeat": 1,
+            }
+    if radio is "guest":
+        if ssid == "normal":
+            option = {
+                "ssid": v.GUEST_SSID,
+                "encryption": "psk",
+                "key": v.KEY,
+                "repeat": 1,
+            }
+    ret = setAdbStaConn(device, logname, **option)
+    return ret
 
 
 def setAdbTkipPsk2StaConn(device, ssid, radio, logname, key=None):
-    if ssid == "normal" and key is None:
-        commandDic = {
-            "2g": "am instrument -e class com.peanutswifi.ApplicationTest#test_assoc_tkippsk2_sta_2g -w com.peanutswifi.test/android.test.InstrumentationTestRunner",
-            "5g": "am instrument -e class com.peanutswifi.ApplicationTest#test_assoc_tkippsk2_sta_5g -w com.peanutswifi.test/android.test.InstrumentationTestRunner",
-            "guest": "am instrument -e class com.peanutswifi.ApplicationTest#test_assoc_tkippsk2_sta_guest -w com.peanutswifi.test/android.test.InstrumentationTestRunner", }
-    elif ssid == "chinese" and key is None:
-        commandDic = {
-            "2g": "am instrument -e class com.peanutswifi.ApplicationTest#test_assoc_tkippsk2_sta_ssidchinese_2g -w com.peanutswifi.test/android.test.InstrumentationTestRunner",
-            "5g": "am instrument -e class com.peanutswifi.ApplicationTest#test_assoc_tkippsk2_sta_ssidchinese_5g -w com.peanutswifi.test/android.test.InstrumentationTestRunner",
-            "guest": "am instrument -e class com.peanutswifi.ApplicationTest#test_assoc_tkippsk2_sta_ssidchinese_guest -w com.peanutswifi.test/android.test.InstrumentationTestRunner", }
-    elif ssid == "spec" and key is None:
-        commandDic = {
-            "2g": "am instrument -e class com.peanutswifi.ApplicationTest#test_assoc_tkippsk2_sta_ssidspec_2g -w com.peanutswifi.test/android.test.InstrumentationTestRunner",
-            "5g": "am instrument -e class com.peanutswifi.ApplicationTest#test_assoc_tkippsk2_sta_ssidspec_5g -w com.peanutswifi.test/android.test.InstrumentationTestRunner",
-            "guest": "am instrument -e class com.peanutswifi.ApplicationTest#test_assoc_tkippsk2_sta_ssidspec_guest -w com.peanutswifi.test/android.test.InstrumentationTestRunner", }
-    elif ssid == "normal" and key == "spec":
-        commandDic = {
-            "2g": "am instrument -e class com.peanutswifi.ApplicationTest#test_assoc_psk_sta_keyspec_2g -w com.peanutswifi.test/android.test.InstrumentationTestRunner",
-            "5g": "am instrument -e class com.peanutswifi.ApplicationTest#test_assoc_psk_sta_keyspec_5g -w com.peanutswifi.test/android.test.InstrumentationTestRunner",
-            "guest": "am instrument -e class com.peanutswifi.ApplicationTest#test_assoc_psk_sta_keyspec_guest -w com.peanutswifi.test/android.test.InstrumentationTestRunner", }
-
-    command = commandDic.get(radio)
-    ret = setAdbShell(device, command, logname)
-    for line in ret:
-        m = re.search('OK ', line)
-        if m is not None:
-            return True
-    return False
+    if radio is "2g":
+        if ssid == "normal" and key is None:
+            option = {
+                "ssid": v.SSID,
+                "encryption": "tkippsk2",
+                "key": v.KEY,
+            }
+        elif ssid == "chinese" and key is None:
+            option = {
+                "ssid": v.CHINESE_SSID,
+                "encryption": "tkippsk2",
+                "key": v.KEY,
+            }
+        elif ssid == "spec" and key is None:
+            option = {
+                "ssid": v.SPECIAL_SSID,
+                "encryption": "tkippsk2",
+                "key": v.KEY,
+            }
+        elif ssid == "normal" and key == "spec":
+            option = {
+                "ssid": v.SSID,
+                "encryption": "tkippsk2",
+                "key": v.SPECIAL_KEY,
+            }
+    elif radio is "5g":
+        if ssid == "normal" and key is None:
+            option = {
+                "ssid": v.SSID_5G,
+                "encryption": "tkippsk2",
+                "key": v.KEY,
+            }
+        elif ssid == "chinese" and key is None:
+            option = {
+                "ssid": v.CHINESE_SSID_5G,
+                "encryption": "tkippsk2",
+                "key": v.KEY,
+            }
+        elif ssid == "spec" and key is None:
+            option = {
+                "ssid": v.SPECIAL_SSID_5G,
+                "encryption": "tkippsk2",
+                "key": v.KEY,
+            }
+        elif ssid == "normal" and key == "spec":
+            option = {
+                "ssid": v.SSID_5G,
+                "encryption": "tkippsk2",
+                "key": v.SPECIAL_KEY,
+            }
+    elif radio is "guest":
+        if ssid == "normal" and key is None:
+            option = {
+                "ssid": v.GUEST_SSID,
+                "encryption": "tkippsk2",
+                "key": v.KEY,
+            }
+    ret = setAdbStaConn(device, logname, **option)
+    return ret
 
 
 def setAdbTkipPsk2StaConnRepeat(device, ssid, radio, logname):
-    if ssid == "normal":
-        commandDic = {
-            "2g": "am instrument -e class com.peanutswifi.ApplicationTest#test_repeat_assoc_tkippsk2_sta_2g -w com.peanutswifi.test/android.test.InstrumentationTestRunner",
-            "5g": "am instrument -e class com.peanutswifi.ApplicationTest#test_repeat_assoc_tkippsk2_sta_5g -w com.peanutswifi.test/android.test.InstrumentationTestRunner",
-            "guest": "am instrument -e class com.peanutswifi.ApplicationTest#test_repeat_assoc_tkippsk2_sta_guest -w com.peanutswifi.test/android.test.InstrumentationTestRunner", }
-
-    command = commandDic.get(radio)
-    ret = setAdbShell(device, command, logname)
-    for line in ret:
-        m = re.search('OK ', line)
-        if m is not None:
-            return True
-    return False
+    if radio is "2g":
+        if ssid == "normal":
+            option = {
+                "ssid": v.SSID,
+                "encryption": "tkippsk2",
+                "key": v.KEY,
+                "repeat": 1,
+            }
+    if radio is "5g":
+        if ssid == "normal":
+            option = {
+                "ssid": v.SSID_5G,
+                "encryption": "tkippsk2",
+                "key": v.KEY,
+                "repeat": 1,
+            }
+    if radio is "guest":
+        if ssid == "normal":
+            option = {
+                "ssid": v.GUEST_SSID,
+                "encryption": "tkippsk2",
+                "key": v.KEY,
+                "repeat": 1,
+            }
+    ret = setAdbStaConn(device, logname, **option)
+    return ret
 
 
 def setAdbTkipPskStaConn(device, ssid, radio, logname, key=None):
-    if ssid == "normal" and key is None:
-        commandDic = {
-            "2g": "am instrument -e class com.peanutswifi.ApplicationTest#test_assoc_tkippsk_sta_2g -w com.peanutswifi.test/android.test.InstrumentationTestRunner",
-            "5g": "am instrument -e class com.peanutswifi.ApplicationTest#test_assoc_tkippsk_sta_5g -w com.peanutswifi.test/android.test.InstrumentationTestRunner",
-            "guest": "am instrument -e class com.peanutswifi.ApplicationTest#test_assoc_tkippsk_sta_guest -w com.peanutswifi.test/android.test.InstrumentationTestRunner", }
-    elif ssid == "chinese" and key is None:
-        commandDic = {
-            "2g": "am instrument -e class com.peanutswifi.ApplicationTest#test_assoc_tkippsk_sta_ssidchinese_2g -w com.peanutswifi.test/android.test.InstrumentationTestRunner",
-            "5g": "am instrument -e class com.peanutswifi.ApplicationTest#test_assoc_tkippsk_sta_ssidchinese_5g -w com.peanutswifi.test/android.test.InstrumentationTestRunner",
-            "guest": "am instrument -e class com.peanutswifi.ApplicationTest#test_assoc_tkippsk_sta_ssidchinese_guest -w com.peanutswifi.test/android.test.InstrumentationTestRunner", }
-    elif ssid == "spec" and key is None:
-        commandDic = {
-            "2g": "am instrument -e class com.peanutswifi.ApplicationTest#test_assoc_tkippsk_sta_ssidspec_2g -w com.peanutswifi.test/android.test.InstrumentationTestRunner",
-            "5g": "am instrument -e class com.peanutswifi.ApplicationTest#test_assoc_tkippsk_sta_ssidspec_5g -w com.peanutswifi.test/android.test.InstrumentationTestRunner",
-            "guest": "am instrument -e class com.peanutswifi.ApplicationTest#test_assoc_tkippsk_sta_ssidspec_guest -w com.peanutswifi.test/android.test.InstrumentationTestRunner", }
-    elif ssid == "normal" and key == "spec":
-        commandDic = {
-            "2g": "am instrument -e class com.peanutswifi.ApplicationTest#test_assoc_psk_sta_keyspec_2g -w com.peanutswifi.test/android.test.InstrumentationTestRunner",
-            "5g": "am instrument -e class com.peanutswifi.ApplicationTest#test_assoc_psk_sta_keyspec_5g -w com.peanutswifi.test/android.test.InstrumentationTestRunner",
-            "guest": "am instrument -e class com.peanutswifi.ApplicationTest#test_assoc_psk_sta_keyspec_guest -w com.peanutswifi.test/android.test.InstrumentationTestRunner", }
-
-    command = commandDic.get(radio)
-    ret = setAdbShell(device, command, logname)
-    for line in ret:
-        m = re.search('OK ', line)
-        if m is not None:
-            return True
-    return False
+    if radio is "2g":
+        if ssid == "normal" and key is None:
+            option = {
+                "ssid": v.SSID,
+                "encryption": "tkippsk",
+                "key": v.KEY,
+            }
+        elif ssid == "chinese" and key is None:
+            option = {
+                "ssid": v.CHINESE_SSID,
+                "encryption": "tkippsk",
+                "key": v.KEY,
+            }
+        elif ssid == "spec" and key is None:
+            option = {
+                "ssid": v.SPECIAL_SSID,
+                "encryption": "tkippsk",
+                "key": v.KEY,
+            }
+        elif ssid == "normal" and key == "spec":
+            option = {
+                "ssid": v.SSID,
+                "encryption": "tkippsk",
+                "key": v.SPECIAL_KEY,
+            }
+    elif radio is "5g":
+        if ssid == "normal" and key is None:
+            option = {
+                "ssid": v.SSID_5G,
+                "encryption": "tkippsk",
+                "key": v.KEY,
+            }
+        elif ssid == "chinese" and key is None:
+            option = {
+                "ssid": v.CHINESE_SSID_5G,
+                "encryption": "tkippsk",
+                "key": v.KEY,
+            }
+        elif ssid == "spec" and key is None:
+            option = {
+                "ssid": v.SPECIAL_SSID_5G,
+                "encryption": "tkippsk",
+                "key": v.KEY,
+            }
+        elif ssid == "normal" and key == "spec":
+            option = {
+                "ssid": v.SSID_5G,
+                "encryption": "tkippsk",
+                "key": v.SPECIAL_KEY,
+            }
+    elif radio is "guest":
+        if ssid == "normal" and key is None:
+            option = {
+                "ssid": v.GUEST_SSID,
+                "encryption": "tkippsk",
+                "key": v.KEY,
+            }
+    ret = setAdbStaConn(device, logname, **option)
+    return ret
 
 
 def setAdbTkipPskStaConnRepeat(device, ssid, radio, logname):
-    if ssid == "normal":
-        commandDic = {
-            "2g": "am instrument -e class com.peanutswifi.ApplicationTest#test_repeat_assoc_tkippsk_sta_2g -w com.peanutswifi.test/android.test.InstrumentationTestRunner",
-            "5g": "am instrument -e class com.peanutswifi.ApplicationTest#test_repeat_assoc_tkippsk_sta_5g -w com.peanutswifi.test/android.test.InstrumentationTestRunner",
-            "guest": "am instrument -e class com.peanutswifi.ApplicationTest#test_repeat_assoc_tkippsk_sta_guest -w com.peanutswifi.test/android.test.InstrumentationTestRunner", }
+    if radio is "2g":
+        if ssid == "normal":
+            option = {
+                "ssid": v.SSID,
+                "encryption": "tkippsk",
+                "key": v.KEY,
+                "repeat": 1,
+            }
+    elif radio is "5g":
+        if ssid == "normal":
+            option = {
+                "ssid": v.SSID_5G,
+                "encryption": "tkippsk",
+                "key": v.KEY,
+                "repeat": 1,
+            }
+    elif radio is "guest":
+        if ssid == "normal":
+            option = {
+                "ssid": v.GUEST_SSID,
+                "encryption": "tkippsk",
+                "key": v.KEY,
+                "repeat": 1,
+            }
+    ret = setAdbStaConn(device, logname, **option)
+    return ret
 
-    command = commandDic.get(radio)
+
+def setAdbStaConn(device, logname, **kwargs):
+    option = {
+        "ssid": "",
+        "encryption": "clear",
+        "key": "",
+        "repeat": 0,
+        }
+    option.update(kwargs)
+    if option["repeat"] is 1:
+        option["repeat"] = "repeat_"
+    elif option["repeat"] is 0:
+        option["repeat"] = ""
+
+    if option["ssid"] is not "":
+        option["ssid"] = " -e ssid " + convertStrToURL(option["ssid"])
+
+    if option["key"] is not "":
+        option["key"] = " -e key " + convertStrToURL(option["key"])
+
+    command = "am instrument%(ssid)s%(key)s -e class com.peanutswifi.ApplicationTest#test_%(repeat)sassoc_%(encryption)s_sta " \
+              "-w com.peanutswifi.test/com.peanutswifi.MyTestRunner"%option
+
     ret = setAdbShell(device, command, logname)
     for line in ret:
         m = re.search('OK ', line)
@@ -1224,12 +1444,20 @@ def setAdbTkipPskStaConnRepeat(device, ssid, radio, logname):
 
 
 def setAdbScanSsidNoExist(device, ssid, radio, logname):
-    if ssid == "normal":
-        commandDic = {
-            "2g": "am instrument -e class com.peanutswifi.ApplicationTest#test_ssidhide_2g -w com.peanutswifi.test/android.test.InstrumentationTestRunner",
-            "5g": "am instrument -e class com.peanutswifi.ApplicationTest#test_ssidhide_5g -w com.peanutswifi.test/android.test.InstrumentationTestRunner", }
+    if radio is "2g":
+        if ssid is "normal":
+            option = {
+                "ssid": convertStrToURL(v.SSID)
+            }
 
-    command = commandDic.get(radio)
+    elif radio is "5g":
+        if ssid is "normal":
+            option = {
+                "ssid": convertStrToURL(v.SSID_5G)
+            }
+    command = "am instrument -e ssid %(ssid)s -e class com.peanutswifi.ApplicationTest#test_ssidhide " \
+              "-w com.peanutswifi.test/com.peanutswifi.MyTestRunner"%option
+
     ret = setAdbShell(device, command, logname)
     for line in ret:
         m = re.search('OK', line)
@@ -1285,5 +1513,5 @@ if __name__ == '__main__':
     # setWifiRestart(ssh, "log")
     # ssh.close()
     dut = getAdbDevices()
-    ret = getAdbShellWlan(dut[0], 'aaa')
-    print ret, type(ret)
+    ret = setAdbPsk2StaConn(dut[0], "normal", "2g", 'aaa')
+    print ret

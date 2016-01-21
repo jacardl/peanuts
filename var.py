@@ -70,15 +70,15 @@ original spec ssid `~!@#$%^&*() =+\|]}[{'";:/?.>,<
 SPECIAL_SSID = '`~!@#$%^&*() =+\|]}[{\'";:/?.>,<'
 SPECIAL_SSID_5G = '`~!@#$%^&*() =+\|]}[{\'";:/?.-5G'
 
+CHINESE_SSID = '业界良心_花生自动化'
+CHINESE_SSID_5G = '业界良心_花生自动化-5G'
+GUEST_SSID = 'peanuts_guest'
+
 KEY = '12345678'
 """
 original spec key  `~!@#$%^&*() =+\|]}[{'";:/?.>,<`~!@#$%^&*() =+\|]}[{'";:/?.>,<1
 """
 SPECIAL_KEY = '`~!@#$%^&*() =+\|]}[{\'";:/?.>,<`~!@#$%^&*() =+\|]}[{\'";:/?.>,<1'
-
-CHINESE_SSID = '业界良心_花生自动化'
-CHINESE_SSID_5G = '业界良心_花生自动化-5G'
-GUEST_SSID = 'peanuts_guest'
 
 PING_PERCENT_PASS = 100
 PING_COUNT = 5
@@ -108,7 +108,7 @@ IPERF_TIME = "60"
 # IPERF_INTERVAL = "1"
 # IPERF_TIME = "5"
 
-SEND_MAIL = 1
+SEND_MAIL = 0
 MAILTO_LIST = ["liujia5@xiaomi.com", "fengjiang@xiaomi.com", "hexiaoliang@xiaomi.com", "linli1@xiaomi.com",
                "wangchunxuan@xiaomi.com", "wangyue3@xiaomi.com", "youguidong@xiaomi.com", "zhangjunjie@xiaomi.com",
                "zhaoziqiang@xiaomi.com", ]

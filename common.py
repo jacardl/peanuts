@@ -1472,7 +1472,7 @@ def setAdbScanSsidNoExist(device, ssid, radio, logname):
 
 
 def setAdbIperfOn(device, logname):
-    command = "am instrument -e class com.peanutswifi.ApplicationTest#test_iperf2 -w com.peanutswifi.test/android.test.InstrumentationTestRunner"
+    command = "am instrument -e class com.peanutswifi.ApplicationTest#test_iperf2 -w com.peanutswifi.test/com.peanutswifi.MyTestRunner"
     ret = setAdbShell(device, command, logname)
     for line in ret:
         m = re.search('OK', line)

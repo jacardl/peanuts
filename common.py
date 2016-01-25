@@ -1495,8 +1495,8 @@ def setAdbStaConn(device, logname, **kwargs):
     if option["radio"] is not "":
         option["radio"] = " -e radio " + option["radio"]
 
-    command = "am instrument%(ssid)s%(key)s -e class com.peanutswifi.ApplicationTest#test_%(repeat)sassoc_%(encryption)s_sta " \
-              "-w com.peanutswifi.test/com.peanutswifi.MyTestRunner"%option
+    command = "am instrument%(ssid)s%(key)s -e class com.peanutswifi.ApplicationTest#test_%(repeat)sassoc_%(encryption)s_sta%(radio)s" \
+              " -w com.peanutswifi.test/com.peanutswifi.MyTestRunner"%option
 
     ret = setAdbShell(device, command, logname)
     for line in ret:

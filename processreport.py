@@ -368,7 +368,7 @@ def getFlowLogVerbose(logfile):
         log = open(logfile)
         for line in log:
             if not line.isspace():
-                m = re.search('#test_assoc_(.*)_sta -e radio (\d)g', line)
+                m = re.search('#test_assoc_(.*)_sta -e radio (\dg)', line)
                 if m:
                     rfEncrypto = m.group(2) + m.group(1)  # 2gclear/2gpsk2...
                     key1 = rfEncrypto + "tx"
@@ -626,18 +626,13 @@ if __name__ == '__main__':
     # t.start()
     # while t.isAlive():
     #     print time.time()
-    print getFlowLogVerbose("D:\Python\peanuts\AP_CLEAR_CHAN11_149_FLOW.log")
-    print getChannelFlowLogVerbose("D:\Python\peanuts\AP_CLEAR_CHAN11_149_FLOW.log")
-    # info = GetFlowLog("R1CM 开发版OTA 2.7.10.log")
-    # info = GetOnlineLog("R1CM 开发版OTA 2.5.48.log")
-    # info = GetTestResult("R1CM 开发版OTA 2.5.48.log")
-    # info = ProcessReport("R1CM 开发版OTA 2.7.10.log")
-    # info.start()
-    # info.join()
-    # print info.result
-    # print info.resultAes
-    # print info.resultTkip
-    # print info.resultClear
+    # print getFlowLogVerbose("E:\peanuts\AP_MIXEDPSK_CHAN1_36_FLOW.log")
+    # print getChannelFlowLogVerbose("E:\peanuts\AP_MIXEDPSK_CHAN1_36_FLOW.log")
+    info = GetFlowLog("R2D 开发版OTA 2.11.36.log".decode("utf8").encode("gbk"))
+    info.start()
+    info.join()
+    print info.result
+    print info.resultAes
 
 
 

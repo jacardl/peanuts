@@ -4,8 +4,8 @@ from email.mime.text import MIMEText
 from email.mime.image import MIMEImage
 from email.mime.multipart import MIMEMultipart
 from email.mime.application import MIMEApplication
-from common import *
 import var as v
+from common import *
 import processreport as pr
 
 
@@ -100,14 +100,14 @@ def generateMail(maillist, title, queue=None, attach1=None, attach2=None):
 
 if __name__ == '__main__':
     import multiprocessing as mp
-    report = "R1CM 开发版OTA 2.7.36.log"
+    report = "R1D 开发版OTA 2.11.38.log".decode("utf8").encode("gbk")
     q = mp.Queue() # tranlate test result to generateMail
     ret = pr.ProcessReport(report, q)
     ret.start()
     ret.join()
 
     # if generateMail(["liujia5@xiaomi.com"], "test", ret.result, report):
-    if generateMail(["liujia5@xiaomi.com"], "【R1CM 开发版OTA 2.7.36】自动化测试报告", q, report, v.MAIL_XLSX):
+    if generateMail(v.MAILTO_LIST, "【R1D 开发版OTA 2.11.38】自动化测试报告", q, report, v.MAIL_XLSX):
         print "successful"
     else:
         print "failed"

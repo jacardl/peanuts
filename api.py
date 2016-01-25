@@ -708,11 +708,35 @@ def getWifiStatus(terminal, logname):
 
 
 if __name__ == '__main__':
-
-    v.HOST = '192.168.110.1'
+    option = {
+        'wifiIndex': 2,
+        'on': 1,
+        'ssid': v.CHINESE_SSID_5G,
+        'pwd': '',
+        'encryption': 'none',
+        'channel': '0',
+        'bandwidth': '0',
+        'hidden': 0,
+        'txpwr': 'mid'
+    }
+    option2 = {
+        'wifiIndex': 2,
+        'on': 0,
+        'ssid': "peanuts",
+        'pwd': '',
+        'encryption': 'none',
+        'channel': '0',
+        'bandwidth': '0',
+        'hidden': 0,
+        'txpwr': 'mid'
+    }
+    v.HOST = '192.168.140.1'
     v.WEB_PWD = '12345678'
     webclient = HttpClient()
     webclient.connect(host=v.HOST, password=v.WEB_PWD)
-    # setReset(webclient, 'aaa')
+    setWifi(webclient, 'aaa', **option)
+    setWifi(webclient, 'aaa', **option2)
+    setLanAp(webclient, 'aaa')
+    setDisableLanAp(webclient, 'aaa')
     webclient.close()
 

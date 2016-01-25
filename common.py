@@ -1016,16 +1016,19 @@ def setAdbClearStaConn(device, ssid, radio, logname):
         if ssid is "normal":
             option = {
                 "ssid": v.SSID,
+                "radio": "2g",
             }
     elif radio is "5g":
         if ssid is "normal":
             option = {
                 "ssid": v.SSID_5G,
+                "radio": "5g",
             }
     elif radio is "guest":
         if ssid is "normal":
             option = {
                 "ssid": v.GUEST_SSID,
+                "radio": "guest",
             }
     ret = setAdbStaConn(device, logname, **option)
     return ret
@@ -1036,18 +1039,21 @@ def setAdbClearStaConnRepeat(device, ssid, radio, logname):
         if ssid is "normal":
             option = {
                 "ssid": v.SSID,
+                "radio": "2g",
                 "repeat": 1,
             }
     elif radio is "5g":
         if ssid is "normal":
             option = {
                 "ssid": v.SSID_5G,
+                "radio": "5g",
                 "repeat": 1,
             }
     elif radio is "guest":
         if ssid is "normal":
             option = {
                 "ssid": v.GUEST_SSID,
+                "radio": "guest",
                 "repeat": 1,
             }
     ret = setAdbStaConn(device, logname, **option)
@@ -1059,24 +1065,28 @@ def setAdbPsk2StaConn(device, ssid, radio, logname, key=None):
         if ssid == "normal" and key is None:
             option = {
                 "ssid": v.SSID,
+                "radio": "2g",
                 "encryption": "psk2",
                 "key": v.KEY,
             }
         elif ssid == "chinese" and key is None:
             option = {
                 "ssid": v.CHINESE_SSID,
+                "radio": "2g",
                 "encryption": "psk2",
                 "key": v.KEY,
             }
         elif ssid == "spec" and key is None:
             option = {
                 "ssid": v.SPECIAL_SSID,
+                "radio": "2g",
                 "encryption": "psk2",
                 "key": v.KEY,
             }
         elif ssid == "normal" and key == "spec":
             option = {
                 "ssid": v.SSID,
+                "radio": "2g",
                 "encryption": "psk2",
                 "key": v.SPECIAL_KEY,
             }
@@ -1084,24 +1094,28 @@ def setAdbPsk2StaConn(device, ssid, radio, logname, key=None):
         if ssid == "normal" and key is None:
             option = {
                 "ssid": v.SSID_5G,
+                "radio": "5g",
                 "encryption": "psk2",
                 "key": v.KEY,
             }
         elif ssid == "chinese" and key is None:
             option = {
                 "ssid": v.CHINESE_SSID_5G,
+                "radio": "5g",
                 "encryption": "psk2",
                 "key": v.KEY,
             }
         elif ssid == "spec" and key is None:
             option = {
                 "ssid": v.SPECIAL_SSID_5G,
+                "radio": "5g",
                 "encryption": "psk2",
                 "key": v.KEY,
             }
         elif ssid == "normal" and key == "spec":
             option = {
                 "ssid": v.SSID_5G,
+                "radio": "5g",
                 "encryption": "psk2",
                 "key": v.SPECIAL_KEY,
             }
@@ -1109,6 +1123,7 @@ def setAdbPsk2StaConn(device, ssid, radio, logname, key=None):
         if ssid == "normal" and key is None:
             option = {
                 "ssid": v.GUEST_SSID,
+                "radio": "guest",
                 "encryption": "psk2",
                 "key": v.KEY,
             }
@@ -1121,6 +1136,7 @@ def setAdbPsk2StaConnRepeat(device, ssid, radio, logname):
         if ssid == "normal":
             option = {
                 "ssid": v.SSID,
+                "radio": "2g",
                 "encryption": "psk2",
                 "key": v.KEY,
                 "repeat": 1,
@@ -1129,6 +1145,7 @@ def setAdbPsk2StaConnRepeat(device, ssid, radio, logname):
         if ssid == "normal":
             option = {
                 "ssid": v.SSID_5G,
+                "radio": "5g",
                 "encryption": "psk2",
                 "key": v.KEY,
                 "repeat": 1,
@@ -1137,6 +1154,7 @@ def setAdbPsk2StaConnRepeat(device, ssid, radio, logname):
         if ssid == "normal":
             option = {
                 "ssid": v.GUEST_SSID,
+                "radio": "guest",
                 "encryption": "psk2",
                 "key": v.KEY,
                 "repeat": 1,
@@ -1150,24 +1168,28 @@ def setAdbPskStaConn(device, ssid, radio, logname, key=None):
         if ssid == "normal" and key is None:
             option = {
                 "ssid": v.SSID,
+                "radio": "2g",
                 "encryption": "psk",
                 "key": v.KEY,
             }
         elif ssid == "chinese" and key is None:
             option = {
                 "ssid": v.CHINESE_SSID,
+                "radio": "2g",
                 "encryption": "psk",
                 "key": v.KEY,
             }
         elif ssid == "spec" and key is None:
             option = {
                 "ssid": v.SPECIAL_SSID,
+                "radio": "2g",
                 "encryption": "psk",
                 "key": v.KEY,
             }
         elif ssid == "normal" and key == "spec":
             option = {
                 "ssid": v.SSID,
+                "radio": "2g",
                 "encryption": "psk",
                 "key": v.SPECIAL_KEY,
             }
@@ -1175,24 +1197,28 @@ def setAdbPskStaConn(device, ssid, radio, logname, key=None):
         if ssid == "normal" and key is None:
             option = {
                 "ssid": v.SSID_5G,
+                "radio": "5g",
                 "encryption": "psk",
                 "key": v.KEY,
             }
         elif ssid == "chinese" and key is None:
             option = {
                 "ssid": v.CHINESE_SSID_5G,
+                "radio": "5g",
                 "encryption": "psk",
                 "key": v.KEY,
             }
         elif ssid == "spec" and key is None:
             option = {
                 "ssid": v.SPECIAL_SSID_5G,
+                "radio": "5g",
                 "encryption": "psk",
                 "key": v.KEY,
             }
         elif ssid == "normal" and key == "spec":
             option = {
                 "ssid": v.SSID_5G,
+                "radio": "5g",
                 "encryption": "psk",
                 "key": v.SPECIAL_KEY,
             }
@@ -1200,6 +1226,7 @@ def setAdbPskStaConn(device, ssid, radio, logname, key=None):
         if ssid == "normal" and key is None:
             option = {
                 "ssid": v.GUEST_SSID,
+                "radio": "guest",
                 "encryption": "psk",
                 "key": v.KEY,
             }
@@ -1212,6 +1239,7 @@ def setAdbPskStaConnRepeat(device, ssid, radio, logname):
         if ssid == "normal":
             option = {
                 "ssid": v.SSID,
+                "radio": "2g",
                 "encryption": "psk",
                 "key": v.KEY,
                 "repeat": 1,
@@ -1220,6 +1248,7 @@ def setAdbPskStaConnRepeat(device, ssid, radio, logname):
         if ssid == "normal":
             option = {
                 "ssid": v.SSID_5G,
+                "radio": "5g",
                 "encryption": "psk",
                 "key": v.KEY,
                 "repeat": 1,
@@ -1228,6 +1257,7 @@ def setAdbPskStaConnRepeat(device, ssid, radio, logname):
         if ssid == "normal":
             option = {
                 "ssid": v.GUEST_SSID,
+                "radio": "guest",
                 "encryption": "psk",
                 "key": v.KEY,
                 "repeat": 1,
@@ -1241,24 +1271,28 @@ def setAdbTkipPsk2StaConn(device, ssid, radio, logname, key=None):
         if ssid == "normal" and key is None:
             option = {
                 "ssid": v.SSID,
+                "radio": "2g",
                 "encryption": "tkippsk2",
                 "key": v.KEY,
             }
         elif ssid == "chinese" and key is None:
             option = {
                 "ssid": v.CHINESE_SSID,
+                "radio": "2g",
                 "encryption": "tkippsk2",
                 "key": v.KEY,
             }
         elif ssid == "spec" and key is None:
             option = {
                 "ssid": v.SPECIAL_SSID,
+                "radio": "2g",
                 "encryption": "tkippsk2",
                 "key": v.KEY,
             }
         elif ssid == "normal" and key == "spec":
             option = {
                 "ssid": v.SSID,
+                "radio": "2g",
                 "encryption": "tkippsk2",
                 "key": v.SPECIAL_KEY,
             }
@@ -1266,24 +1300,28 @@ def setAdbTkipPsk2StaConn(device, ssid, radio, logname, key=None):
         if ssid == "normal" and key is None:
             option = {
                 "ssid": v.SSID_5G,
+                "radio": "5g",
                 "encryption": "tkippsk2",
                 "key": v.KEY,
             }
         elif ssid == "chinese" and key is None:
             option = {
                 "ssid": v.CHINESE_SSID_5G,
+                "radio": "5g",
                 "encryption": "tkippsk2",
                 "key": v.KEY,
             }
         elif ssid == "spec" and key is None:
             option = {
                 "ssid": v.SPECIAL_SSID_5G,
+                "radio": "5g",
                 "encryption": "tkippsk2",
                 "key": v.KEY,
             }
         elif ssid == "normal" and key == "spec":
             option = {
                 "ssid": v.SSID_5G,
+                "radio": "5g",
                 "encryption": "tkippsk2",
                 "key": v.SPECIAL_KEY,
             }
@@ -1291,6 +1329,7 @@ def setAdbTkipPsk2StaConn(device, ssid, radio, logname, key=None):
         if ssid == "normal" and key is None:
             option = {
                 "ssid": v.GUEST_SSID,
+                "radio": "guest",
                 "encryption": "tkippsk2",
                 "key": v.KEY,
             }
@@ -1303,6 +1342,7 @@ def setAdbTkipPsk2StaConnRepeat(device, ssid, radio, logname):
         if ssid == "normal":
             option = {
                 "ssid": v.SSID,
+                "radio": "2g",
                 "encryption": "tkippsk2",
                 "key": v.KEY,
                 "repeat": 1,
@@ -1311,6 +1351,7 @@ def setAdbTkipPsk2StaConnRepeat(device, ssid, radio, logname):
         if ssid == "normal":
             option = {
                 "ssid": v.SSID_5G,
+                "radio": "5g",
                 "encryption": "tkippsk2",
                 "key": v.KEY,
                 "repeat": 1,
@@ -1319,6 +1360,7 @@ def setAdbTkipPsk2StaConnRepeat(device, ssid, radio, logname):
         if ssid == "normal":
             option = {
                 "ssid": v.GUEST_SSID,
+                "radio": "guest",
                 "encryption": "tkippsk2",
                 "key": v.KEY,
                 "repeat": 1,
@@ -1332,24 +1374,28 @@ def setAdbTkipPskStaConn(device, ssid, radio, logname, key=None):
         if ssid == "normal" and key is None:
             option = {
                 "ssid": v.SSID,
+                "radio": "2g",
                 "encryption": "tkippsk",
                 "key": v.KEY,
             }
         elif ssid == "chinese" and key is None:
             option = {
                 "ssid": v.CHINESE_SSID,
+                "radio": "2g",
                 "encryption": "tkippsk",
                 "key": v.KEY,
             }
         elif ssid == "spec" and key is None:
             option = {
                 "ssid": v.SPECIAL_SSID,
+                "radio": "2g",
                 "encryption": "tkippsk",
                 "key": v.KEY,
             }
         elif ssid == "normal" and key == "spec":
             option = {
                 "ssid": v.SSID,
+                "radio": "2g",
                 "encryption": "tkippsk",
                 "key": v.SPECIAL_KEY,
             }
@@ -1357,24 +1403,28 @@ def setAdbTkipPskStaConn(device, ssid, radio, logname, key=None):
         if ssid == "normal" and key is None:
             option = {
                 "ssid": v.SSID_5G,
+                "radio": "5g",
                 "encryption": "tkippsk",
                 "key": v.KEY,
             }
         elif ssid == "chinese" and key is None:
             option = {
                 "ssid": v.CHINESE_SSID_5G,
+                "radio": "5g",
                 "encryption": "tkippsk",
                 "key": v.KEY,
             }
         elif ssid == "spec" and key is None:
             option = {
                 "ssid": v.SPECIAL_SSID_5G,
+                "radio": "5g",
                 "encryption": "tkippsk",
                 "key": v.KEY,
             }
         elif ssid == "normal" and key == "spec":
             option = {
                 "ssid": v.SSID_5G,
+                "radio": "5g",
                 "encryption": "tkippsk",
                 "key": v.SPECIAL_KEY,
             }
@@ -1382,6 +1432,7 @@ def setAdbTkipPskStaConn(device, ssid, radio, logname, key=None):
         if ssid == "normal" and key is None:
             option = {
                 "ssid": v.GUEST_SSID,
+                "radio": "guest",
                 "encryption": "tkippsk",
                 "key": v.KEY,
             }
@@ -1394,6 +1445,7 @@ def setAdbTkipPskStaConnRepeat(device, ssid, radio, logname):
         if ssid == "normal":
             option = {
                 "ssid": v.SSID,
+                "radio": "2g",
                 "encryption": "tkippsk",
                 "key": v.KEY,
                 "repeat": 1,
@@ -1402,6 +1454,7 @@ def setAdbTkipPskStaConnRepeat(device, ssid, radio, logname):
         if ssid == "normal":
             option = {
                 "ssid": v.SSID_5G,
+                "radio": "5g",
                 "encryption": "tkippsk",
                 "key": v.KEY,
                 "repeat": 1,
@@ -1410,6 +1463,7 @@ def setAdbTkipPskStaConnRepeat(device, ssid, radio, logname):
         if ssid == "normal":
             option = {
                 "ssid": v.GUEST_SSID,
+                "radio": "guest",
                 "encryption": "tkippsk",
                 "key": v.KEY,
                 "repeat": 1,
@@ -1421,6 +1475,7 @@ def setAdbTkipPskStaConnRepeat(device, ssid, radio, logname):
 def setAdbStaConn(device, logname, **kwargs):
     option = {
         "ssid": "",
+        "radio": "",
         "encryption": "clear",
         "key": "",
         "repeat": 0,
@@ -1436,6 +1491,9 @@ def setAdbStaConn(device, logname, **kwargs):
 
     if option["key"] is not "":
         option["key"] = " -e key " + convertStrToURL(option["key"])
+
+    if option["radio"] is not "":
+        option["radio"] = " -e radio " + option["radio"]
 
     command = "am instrument%(ssid)s%(key)s -e class com.peanutswifi.ApplicationTest#test_%(repeat)sassoc_%(encryption)s_sta " \
               "-w com.peanutswifi.test/com.peanutswifi.MyTestRunner"%option

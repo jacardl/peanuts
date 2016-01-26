@@ -283,8 +283,8 @@ def setConfig(terminal, command, logname):
         os.makedirs(v.TEST_SUITE_LOG_PATH)
 
     try:
-        err = terminal.config(command)
         curTime = t.strftime('%Y.%m.%d %H:%M:%S', t.localtime())
+        err = terminal.config(command)
         f = open(v.TEST_SUITE_LOG_PATH + logname + '.log', 'a')
         f.write(curTime + '~#Config to ' + terminal.hostname + '#')
         f.write(command + '\n')
@@ -308,8 +308,8 @@ def setGet(terminal, command, logname):
         os.makedirs(v.TEST_SUITE_LOG_PATH)
 
     try:
-        ret = terminal.command(command)
         curTime = t.strftime('%Y.%m.%d %H:%M:%S', t.localtime())
+        ret = terminal.command(command)
         f = open(v.TEST_SUITE_LOG_PATH + logname + '.log', 'a')
         f.write(curTime + '~#Get from ' + terminal.hostname + '#')
         f.write(command + '\n')
@@ -338,8 +338,8 @@ def setAdbShell(device, command, logname):
         adb = "adb shell "
     command = adb + command
     try:
-        ret = os.popen(command).readlines()
         curTime = t.strftime('%Y.%m.%d %H:%M:%S', t.localtime())
+        ret = os.popen(command).readlines()
         f = open(v.TEST_SUITE_LOG_PATH + logname + '.log', 'a')
         f.write(curTime + '~#ADB#')
         f.write(command + '\n')
@@ -362,6 +362,7 @@ def setShell(command, cwd=None, timeout=30, logname=None):
         os.makedirs(v.TEST_SUITE_LOG_PATH)
 
     try:
+        curTime = t.strftime('%Y.%m.%d %H:%M:%S', t.localtime())
         if cwd is not None:
             pipe = subprocess.Popen(command, stdout=subprocess.PIPE, shell=True, cwd=cwd)
         else:
@@ -377,7 +378,6 @@ def setShell(command, cwd=None, timeout=30, logname=None):
             ret = pipe.stdout.readlines()
         finally:
             timer.cancel()
-        curTime = t.strftime('%Y.%m.%d %H:%M:%S', t.localtime())
         f = open(v.TEST_SUITE_LOG_PATH + logname + '.log', 'a')
         f.write(curTime + '~#OS#')
         f.write(command + '\n')

@@ -1,4 +1,4 @@
-# -*- coding: gbk -*-
+# -*- coding: utf8 -*-
 import multiprocessing as mp
 import threading
 import re
@@ -368,7 +368,7 @@ def getFlowLogVerbose(logfile):
         log = open(logfile)
         for line in log:
             if not line.isspace():
-                m = re.search('#test_assoc_(.*)_sta_(\dg)', line)
+                m = re.search('#test_assoc_(.*)_sta -e radio (\dg)', line)
                 if m:
                     rfEncrypto = m.group(2) + m.group(1)  # 2gclear/2gpsk2...
                     key1 = rfEncrypto + "tx"
@@ -409,7 +409,7 @@ def getChannelFlowLogVerbose(logfile):
         log = open(logfile)
         for line in log:
             if not line.isspace():
-                m = re.search('#test_assoc_(.*)_sta_(\dg)', line)
+                m = re.search('#test_assoc_(.*)_sta -e radio (\dg)', line)
                 if m:
                     encrypto = m.group(1)
                     rf = m.group(2)
@@ -626,19 +626,13 @@ if __name__ == '__main__':
     # t.start()
     # while t.isAlive():
     #     print time.time()
-    # print getFlowLogVerbose("E:\peanuts\LOG_TEST_SUITE\AP_CLEAR_CHAN_FLOW2.log")
-    # info = GetFlowLog("R1CM 开发版OTA 2.7.10.log")
-    # info = GetOnlineLog("R1CM 开发版OTA 2.5.48.log")
-    # info = GetTestResult("R1CM 开发版OTA 2.5.48.log")
-    info = ProcessReport("R1CM 开发版OTA 2.7.10.log")
+    # print getFlowLogVerbose("E:\peanuts\AP_MIXEDPSK_CHAN1_36_FLOW.log")
+    # print getChannelFlowLogVerbose("E:\peanuts\AP_MIXEDPSK_CHAN1_36_FLOW.log")
+    info = GetFlowLog("R2D 寮�鍙戠増OTA 2.11.36.log".decode("utf8").encode("gbk"))
     info.start()
     info.join()
     print info.result
-    # print info.resultAes
-    # print info.resultTkip
-    # print info.resultClear
-    # print getChannelFlowLogVerbose("R2D 稳定版OTA 2.8.6\AP_MIXEDPSK_CHAN11_149_FLOW2.log")
-    # print getFlowLogVerbose("R2D 稳定版OTA 2.8.6\AP_MIXEDPSK_CHAN11_149_FLOW2.log")
+    print info.resultAes
 
 
 

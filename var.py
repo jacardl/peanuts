@@ -1,4 +1,4 @@
-# -*- coding: cp936 -*-
+# -*- coding: utf8 -*-
 from common import *
 
 TOOL_LIST = ["General", "Memory Tracking", "Log Collection", "Test Suite"]
@@ -24,7 +24,7 @@ connection_type = 1 represent ssh
 CONNECTION_TYPE = 2
 STA_CONNECTION_TYPE = 1
 
-VER = '2.5.7'
+VER = '2.5.8'
 
 # ----------------Memory Tracking-----------------
 
@@ -62,23 +62,22 @@ TEST_SUITE_LOG_PATH = os.getcwd() + os.sep + 'LOG_TEST_SUITE' + os.sep
 IPERF_PATH = os.getcwd() + os.sep + "iperf" + os.sep
 DEFAULT_PATH = os.getcwd() + os.sep
 
-SSID = 'peanuts_automatic_test_suite'
-SSID_5G = 'peanuts_automatic_test_suite-5G'
-'''
-original spec ssid `~!@#$%^&*() =+\|]}[{'";:/?.>,<
-'''
-SPECIAL_SSID = '`~!@#$%^&*() =+\|]}[{\'";:/?.>,<'
-SPECIAL_SSID_5G = '`~!@#$%^&*() =+\|]}[{\'";:/?.-5G'
+WORD_RANGE = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-_"
+SPEC_RANGE = '`~!@#$%^&*() =+\\|]}[{\'\";:/?.>,<'
+CHINESE_RANGE = "èŠ±ç”Ÿè‡ªåŠ¨åŒ–å°ç±³è·¯ç”±å™¨æ£’æ£’å“’"
 
-KEY = '12345678'
-"""
-original spec key  `~!@#$%^&*() =+\|]}[{'";:/?.>,<`~!@#$%^&*() =+\|]}[{'";:/?.>,<1
-"""
-SPECIAL_KEY = '`~!@#$%^&*() =+\|]}[{\'";:/?.>,<`~!@#$%^&*() =+\|]}[{\'";:/?.>,<1'
+SSID = generateRandomString(WORD_RANGE, 31)
+SSID_5G = generateRandomString(WORD_RANGE, 31)
+GUEST_SSID = generateRandomString(WORD_RANGE, 31)
 
-CHINESE_SSID = 'Òµ½çÁ¼ÐÄ_»¨Éú×Ô¶¯»¯'
-CHINESE_SSID_5G = 'Òµ½çÁ¼ÐÄ_»¨Éú×Ô¶¯»¯-5G'
-GUEST_SSID = 'peanuts_guest'
+SPECIAL_SSID = generateRandomString(SPEC_RANGE, 31)
+SPECIAL_SSID_5G = generateRandomString(SPEC_RANGE, 31)
+
+CHINESE_SSID = generateRandomString(CHINESE_RANGE, 10)
+CHINESE_SSID_5G = generateRandomString(CHINESE_RANGE, 10)
+
+KEY = generateRandomString(WORD_RANGE, 63)
+SPECIAL_KEY = generateRandomString(SPEC_RANGE, 63)
 
 PING_PERCENT_PASS = 100
 PING_COUNT = 5
@@ -113,10 +112,10 @@ MAILTO_LIST = ["liujia5@xiaomi.com", "fengjiang@xiaomi.com", "hexiaoliang@xiaomi
                "wangchunxuan@xiaomi.com", "wangyue3@xiaomi.com", "youguidong@xiaomi.com", "zhangjunjie@xiaomi.com",
                "zhaoziqiang@xiaomi.com", ]
 # MAILTO_LIST = ["liujia5@xiaomi.com"]
-MAIL_HOST = "mail.srv"  #ÉèÖÃ·þÎñÆ÷
-MAIL_USER = "robot"    #ÓÃ»§Ãû
-MAIL_PASS = ""   #¿ÚÁî
-MAIL_POSTFIX="xiaomi.com"  #·¢¼þÏäµÄºó×º
+MAIL_HOST = "mail.srv"  #è®¾ç½®æœåŠ¡å™¨
+MAIL_USER = "robot"    #ç”¨æˆ·å
+MAIL_PASS = ""   #å£ä»¤
+MAIL_POSTFIX="xiaomi.com"  #å‘ä»¶ç®±çš„åŽç¼€
 MAILFROM_LIST = "robot@xiaomi.com"
 
 MAIL_PIC1 = "total_memory_used.png"

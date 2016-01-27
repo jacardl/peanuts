@@ -1,38 +1,38 @@
-# -*- coding: gbk -*-
+# -*- coding: utf8 -*-
 import smtplib
 from email.mime.text import MIMEText
 from email.mime.image import MIMEImage
 from email.mime.multipart import MIMEMultipart
 from email.mime.application import MIMEApplication
-from common import *
 import var as v
+from common import *
 import processreport as pr
 
 
-def sendMail(to_list, sub, content, attach1=None, attach2=None, pic_list=None):  #to_list£ºÊÕ¼şÈË£»sub£ºÖ÷Ìâ£»content£ºÓÊ¼şÄÚÈİ
+def sendMail(to_list, sub, content, attach1=None, attach2=None, pic_list=None):  #to_listï¼šæ”¶ä»¶äººï¼›subï¼šä¸»é¢˜ï¼›contentï¼šé‚®ä»¶å†…å®¹
 
-    me="<"+v.MAIL_USER+"@"+v.MAIL_POSTFIX+">"   #ÊÕµ½ĞÅºó£¬½«°´ÕÕÉèÖÃÏÔÊ¾
-    msg = MIMEMultipart()   #´´½¨Ò»¸öÊµÀı
-    msg['Subject'] = sub    #ÉèÖÃÖ÷Ìâ
+    me="<"+v.MAIL_USER+"@"+v.MAIL_POSTFIX+">"   #æ”¶åˆ°ä¿¡åï¼Œå°†æŒ‰ç…§è®¾ç½®æ˜¾ç¤º
+    msg = MIMEMultipart()   #åˆ›å»ºä¸€ä¸ªå®ä¾‹
+    msg['Subject'] = sub    #è®¾ç½®ä¸»é¢˜
     msg['From'] = me
     msg['To'] = ";".join(to_list)
 
     # attach1
     if attach1 is not None:
-        # text ÀàĞÍ¸½¼ş
+        # text ç±»å‹é™„ä»¶
         att1 = MIMEText(open(attach1, 'rb').read(), "base64", "gb2312")
         att1["Content-Type"] = "application/octet-stream"
         att1["Content-Disposition"] = 'attachment;filename=Test Report.txt'
         msg.attach(att1)
 
     if attach2 is not None:
-        # xlsxÀàĞÍ¸½¼ş
+        # xlsxç±»å‹é™„ä»¶
         att2 = MIMEApplication(open(attach2, 'rb').read())
         att2.add_header('Content-Disposition', 'attachment', filename="Memory Tracking.xlsx")
         msg.attach(att2)
 
     #attach2
-    att3 = MIMEText(content, _subtype='html', _charset='gbk')
+    att3 = MIMEText(content, _subtype='html', _charset='utf8')
     msg.attach(att3)
 
     #attach3
@@ -50,9 +50,9 @@ def sendMail(to_list, sub, content, attach1=None, attach2=None, pic_list=None): 
 
     try:
         s = smtplib.SMTP()
-        s.connect(v.MAIL_HOST)  #Á¬½Ósmtp·şÎñÆ÷
-        # s.login(mail_user,mail_pass)  #µÇÂ½·şÎñÆ÷
-        s.sendmail(me, to_list, msg.as_string())  #·¢ËÍÓÊ¼ş
+        s.connect(v.MAIL_HOST)  #è¿æ¥smtpæœåŠ¡å™¨
+        # s.login(mail_user,mail_pass)  #ç™»é™†æœåŠ¡å™¨
+        s.sendmail(me, to_list, msg.as_string())  #å‘é€é‚®ä»¶
         s.close()
         return True
     except Exception, e:
@@ -66,13 +66,13 @@ def generateMail(maillist, title, queue=None, attach1=None, attach2=None):
     else:
         raise Exception
     content1 = """
-        <p>±¾´Î×Ô¶¯»¯¹²Ö´ĞĞÓÃÀı %(sum)d ¸ö£¬pass %(pa)d ¸ö£¬Í¨¹ıÂÊ %(percent)0.2f%%£¬ÓÃÊ± %(time)0.2f Ğ¡Ê± </p>
-        <p>ÎŞÏßÖÕ¶Ë¹²³¢ÊÔÉÏÏß %(onlinesum)d ´Î£¬³É¹¦ÉÏÏß %(onlinepa)d ´Î£¬ÉÏÏßÂÊ %(onlinepercent)0.2f%%¡£</p>
+        <p>æœ¬æ¬¡è‡ªåŠ¨åŒ–å…±æ‰§è¡Œç”¨ä¾‹ %(sum)d ä¸ªï¼Œpass %(pa)d ä¸ªï¼Œé€šè¿‡ç‡ %(percent)0.2f%%ï¼Œç”¨æ—¶ %(time)0.2f å°æ—¶ </p>
+        <p>æ— çº¿ç»ˆç«¯å…±å°è¯•ä¸Šçº¿ %(onlinesum)d æ¬¡ï¼ŒæˆåŠŸä¸Šçº¿ %(onlinepa)d æ¬¡ï¼Œä¸Šçº¿ç‡ %(onlinepercent)0.2f%%ã€‚</p>
         """ % argsdic
         # {"sum": 120, "pa": 90, "percent": 20, "time": 36.66, "onlinesum": 3900, "onlinepa": 3000, "onlinepercent": 20}
 
     content2 = """
-        <p>±¾´Î×Ô¶¯»¯¸²¸ÇwifiÍÌÍÂ²âÊÔ£¬¾ßÌå½á¹ûÇë²Î¿´ÏÂÍ¼£º</p>
+        <p>æœ¬æ¬¡è‡ªåŠ¨åŒ–è¦†ç›–wifiååæµ‹è¯•ï¼Œå…·ä½“ç»“æœè¯·å‚çœ‹ä¸‹å›¾ï¼š</p>
         <p><img src="cid:throughput.png" alt="throughput.png" /></p>
         <p><img src="cid:throughput_in_AES.png" alt="throughput_in_AES.png" /></p>
         <p><img src="cid:throughput_in_Clear.png" alt="throughput_in_Clear.png" /></p>
@@ -80,7 +80,7 @@ def generateMail(maillist, title, queue=None, attach1=None, attach2=None):
         """
     content3 = """
         <p><img src="cid:total_memory_used.png" alt="total_memory_used.png" /></p>
-        <p><span style="font-size:12px;">´ËÎªÏµÍ³×Ô¶¯·¢ËÍ£¬ÇëÎğ»Ø¸´£¬²âÊÔ±¨¸æ¼°ÄÚ´æ¸ú×ÙÏêÇé²é¿´¸½¼ş¡£</span></p>
+        <p><span style="font-size:12px;">æ­¤ä¸ºç³»ç»Ÿè‡ªåŠ¨å‘é€ï¼Œè¯·å‹¿å›å¤ï¼Œæµ‹è¯•æŠ¥å‘ŠåŠå†…å­˜è·Ÿè¸ªè¯¦æƒ…æŸ¥çœ‹é™„ä»¶ã€‚</span></p>
         """
     piclist = list()
     if os.path.isfile(v.MAIL_PIC1):
@@ -100,14 +100,14 @@ def generateMail(maillist, title, queue=None, attach1=None, attach2=None):
 
 if __name__ == '__main__':
     import multiprocessing as mp
-    report = "R1CM ¿ª·¢°æOTA 2.7.36.log"
+    report = "R1D å¼€å‘ç‰ˆOTA 2.11.38.log".decode("utf8").encode("gbk")
     q = mp.Queue() # tranlate test result to generateMail
     ret = pr.ProcessReport(report, q)
     ret.start()
     ret.join()
 
     # if generateMail(["liujia5@xiaomi.com"], "test", ret.result, report):
-    if generateMail(["liujia5@xiaomi.com"], "¡¾R1CM ¿ª·¢°æOTA 2.7.36¡¿×Ô¶¯»¯²âÊÔ±¨¸æ", q, report, v.MAIL_XLSX):
+    if generateMail(v.MAILTO_LIST, "ã€R1D å¼€å‘ç‰ˆOTA 2.11.38ã€‘è‡ªåŠ¨åŒ–æµ‹è¯•æŠ¥å‘Š", q, report, v.MAIL_XLSX):
         print "successful"
     else:
         print "failed"

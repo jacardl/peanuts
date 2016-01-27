@@ -1,4 +1,4 @@
-# -*- coding: gbk -*-
+# -*- coding: utf8 -*-
 import threading
 from unittest import *
 import os
@@ -738,8 +738,9 @@ class TestSuitePage(wx.Panel):
         # then add them to suitefailed and process it until count times
         ssh = co.SshCommand(v.CONNECTION_TYPE)
         ssh.connect(v.HOST, v.USR, v.PASSWD)
-        self.report = ssh.setReportName()
-        self.reportFile = ssh.setReportName() + ".log"
+        # save file in windows, default code is gbk
+        self.report = ssh.setReportName().decode("utf8").encode("gbk")
+        self.reportFile = (ssh.setReportName() + ".log").decode("utf8").encode("gbk")
         self.mailTitle = ssh.setMailTitle()
 
         # curTime = t.strftime('%Y.%m.%d %H.%M.%S', t.localtime())

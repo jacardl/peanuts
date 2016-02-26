@@ -1,4 +1,9 @@
 # -*- coding: utf8 -*-
-import var as v
+import serial
+import serial.tools.list_ports_windows
+
 if __name__ == '__main__':
-    print len(v.SPEC_RANGE)
+
+    for port in sorted(serial.tools.list_ports_windows.comports()):
+        print port[0]
+

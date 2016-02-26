@@ -16,15 +16,19 @@ STA_USR = 'root'
 STA_PASSWD = 'admin'
 STA_COUNT = "1"
 
+SERIAL_PORT = "com1"
+BAUDRATE = 115200
+
+
 """
 connection_type = 1 represent ssh
                   2 represent telnet
-                  3
+                  3 serial
 """
-CONNECTION_TYPE = 2
+CONNECTION_TYPE = 1
 STA_CONNECTION_TYPE = 1
 
-VER = '2.5.8'
+VER = '3.0.1'
 
 # ----------------Memory Tracking-----------------
 

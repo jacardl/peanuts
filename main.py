@@ -103,20 +103,20 @@ class GeneralPage(wx.Panel):
 
         # DUT connection ctrl
         typeLbl = wx.StaticText(self, -1, 'Device:')
-        self.type = wx.Choice(self, -1, choices=['R1D', 'R2D', 'R1CM', "R1CL"])
+        self.type = wx.Choice(self, -1, choices=['R1D', 'R2D', 'R1CM', "R1CL", "R3"])
         self.type.SetSelection(0)
         self.Bind(wx.EVT_CHOICE, self.EvtChoice, self.type)
 
         connLbl = wx.StaticText(self, -1, "Connection type:")
-        self.conn = wx.Choice(self, -1, choices=["SSH", "Telnet", "fac"])
-        self.conn.SetSelection(1)
+        self.conn = wx.Choice(self, -1, choices=["SSH", "Telnet", "Serial", "fac" ])
+        self.conn.SetSelection(0)
         self.Bind(wx.EVT_CHOICE, self.EvtChoice3, self.conn)
 
-        ipLbl = wx.StaticText(self, -1, 'IP:')
+        ipLbl = wx.StaticText(self, -1, 'Host IP:')
         self.ip = wx.TextCtrl(self, -1, '')
         self.ip.SetValue(v.HOST)
 
-        sshUsrLbl = wx.StaticText(self, -1, 'User:')
+        sshUsrLbl = wx.StaticText(self, -1, 'User name:')
         self.sshUsr = wx.TextCtrl(self, -1, '')
         self.sshUsr.SetValue(v.USR)
 
@@ -127,6 +127,13 @@ class GeneralPage(wx.Panel):
         webPasswdLbl = wx.StaticText(self, -1, 'Web password:')
         self.webPasswd = wx.TextCtrl(self, -1, '')
         self.webPasswd.SetValue(v.WEB_PWD)
+
+        serialPortLbl = wx.StaticText(self, -1, 'Serial port:')
+        self.serialNum = co.getSerialPort()
+        self.serialPort = wx.Choice(self, -1, choices=self.serialNum)
+        self.serialPort.SetSelection(0)
+        self.Bind(wx.EVT_CHOICE, self.EvtChoice4, self.serialPort)
+        self.serialPort.Enable(False)
 
         # DUT connection box
         connBox = wx.StaticBox(self, -1, 'DUT', size=(580, -1))
@@ -158,11 +165,15 @@ class GeneralPage(wx.Panel):
                        wx.ALIGN_RIGHT | wx.TOP | wx.LEFT, 10)
         connSizer4.Add(webPasswdLbl, 0,
                        wx.ALIGN_RIGHT | wx.TOP | wx.LEFT, 10)
+        connSizer4.Add(serialPortLbl, 0,
+                       wx.ALIGN_RIGHT | wx.TOP | wx.LEFT, 10)
 
         connSizer5 = wx.BoxSizer(wx.VERTICAL)
         connSizer5.Add(self.conn, 0,
                        wx.ALIGN_LEFT | wx.TOP | wx.LEFT, 2)
         connSizer5.Add(self.webPasswd, 0,
+                       wx.ALIGN_LEFT | wx.TOP | wx.LEFT, 4)
+        connSizer5.Add(self.serialPort, 0,
                        wx.ALIGN_LEFT | wx.TOP | wx.LEFT, 4)
 
         connSizer.Add(connSizer2, 0, wx.LEFT, 5)
@@ -180,21 +191,6 @@ class GeneralPage(wx.Panel):
         self.staCount = wx.TextCtrl(self, -1, '')
         self.staCount.SetValue(v.STA_COUNT)
 
-        # staIpLbl = wx.StaticText(self, -1, 'IP:')
-        # self.staIp = wx.TextCtrl(self, -1, '')
-        # self.staIp.Enable(False)
-        # self.staIp.SetValue(v.STA_IP)
-        #
-        # staSshUsrLbl = wx.StaticText(self, -1, 'User:')
-        # self.staSshUsr = wx.TextCtrl(self, -1, '')
-        # self.staSshUsr.Enable(False)
-        # self.staSshUsr.SetValue(v.STA_USR)
-        #
-        # staSshPasswdLbl = wx.StaticText(self, -1, 'Password:')
-        # self.staSshPasswd = wx.TextCtrl(self, -1, '')
-        # self.staSshPasswd.Enable(False)
-        # self.staSshPasswd.SetValue(v.STA_PASSWD)
-
         # sta connection box
         staConnBox = wx.StaticBox(self, -1, 'STA', size=(580, -1))
         staConnSizer = wx.StaticBoxSizer(staConnBox, wx.HORIZONTAL)
@@ -205,24 +201,12 @@ class GeneralPage(wx.Panel):
         staConnSizer2.Add(staCountLbl, 0,
                           wx.ALIGN_RIGHT | wx.TOP | wx.LEFT, 10)
 
-        # staConnSizer2.Add(staIpLbl, 0,
-        #                   wx.ALIGN_RIGHT | wx.TOP | wx.LEFT, 10)
-        # staConnSizer2.Add(staSshUsrLbl, 0,
-        #                   wx.ALIGN_RIGHT | wx.TOP | wx.LEFT, 10)
-        # staConnSizer2.Add(staSshPasswdLbl, 0,
-        #                   wx.ALIGN_RIGHT | wx.TOP | wx.LEFT | wx.BOTTOM, 10)
 
         staConnSizer3 = wx.BoxSizer(wx.VERTICAL)
         staConnSizer3.Add(self.staType, 0,
                           wx.ALIGN_LEFT | wx.TOP | wx.LEFT, 2)
         staConnSizer3.Add(self.staCount, 0,
                           wx.ALIGN_LEFT | wx.TOP | wx.LEFT, 4)
-        # staConnSizer3.Add(self.staIp, 0,
-        #                   wx.ALIGN_LEFT | wx.TOP | wx.LEFT, 4)
-        # staConnSizer3.Add(self.staSshUsr, 0,
-        #                   wx.ALIGN_LEFT | wx.TOP | wx.LEFT, 4)
-        # staConnSizer3.Add(self.staSshPasswd, 0,
-        #                   wx.ALIGN_LEFT | wx.TOP | wx.LEFT, 4)
 
         staConnSizer.Add(staConnSizer2, 0, wx.LEFT, 5)
         staConnSizer.Add(staConnSizer3, 0, wx.LEFT, 2)
@@ -237,9 +221,13 @@ class GeneralPage(wx.Panel):
         mainSizer.SetSizeHints(self)
 
     def EvtChoice(self, event):
+        self.saveBtn.Enable(True)
+        v.SAVE_BTN_FLAG = False
         v.DUT_MODULE = event.GetString()
 
     def EvtChoice2(self, event):
+        self.saveBtn.Enable(True)
+        v.SAVE_BTN_FLAG = False
         v.STA_MODULE = event.GetString()
         if v.STA_MODULE == "Android":
             self.staIp.Enable(False)
@@ -251,9 +239,12 @@ class GeneralPage(wx.Panel):
         #     self.staSshPasswd.Enable(True)
 
     def EvtChoice3(self, event):
+        self.saveBtn.Enable(True)
+        v.SAVE_BTN_FLAG = False
         type = event.GetString()
         self.sshUsr.Enable(True)
         self.sshPasswd.Enable(True)
+        self.serialPort.Enable(False)
         if type == "Telnet":
             v.CONNECTION_TYPE = 2
         elif type == "SSH":
@@ -261,9 +252,18 @@ class GeneralPage(wx.Panel):
         elif type == "fac":
             v.CONNECTION_TYPE = 2
             self.sshUsr.Enable(False)
-            self.sshUsr.SetValue("")
             self.sshPasswd.Enable(False)
-            self.sshPasswd.SetValue("")
+        elif type == "Serial":
+            v.CONNECTION_TYPE = 3
+            self.sshUsr.Enable(False)
+            self.sshPasswd.Enable(False)
+            self.serialPort.Enable(True)
+
+    def EvtChoice4(self, event):
+        self.saveBtn.Enable(True)
+        v.SAVE_BTN_FLAG = False
+        v.SERIAL_PORT = event.GetString()
+
 
     def connectionCheckThread(self, connectiontype, ip=None, port=None, user=None, password=None):
         result, self.hardware = co.connectionCheck(connectiontype, ip=ip, user=user, password=password)
@@ -309,23 +309,11 @@ class GeneralPage(wx.Panel):
                                                                                   'ip': v.HOST, 'user': v.USR,
                                                                                   'password': v.PASSWD})
             dutConn.start()
-            # dutConn.join()
 
-        # if v.STA_MODULE is not "Android":
-        #     v.STA_IP = self.staIp.GetValue()
-        #     v.STA_USR = self.staSshUsr.GetValue()
-        #     v.STA_PASSWD = self.staSshPasswd.GetValue()
-        #     staConn = threading.Thread(target=self.connectionCheckThread,
-        #                                kwargs={'connectiontype': v.STA_CONNECTION_TYPE,
-        #                                        'ip': v.STA_IP, 'user': v.STA_USR,
-        #                                        'password': v.STA_PASSWD})
-        #     staConn.start()
-            # staConn.join()
         if v.STA_MODULE is 'Android':
             v.STA_COUNT = self.staCount.GetValue()
             dutConn = threading.Thread(target=self.adbDeviceCheckThread, args=(v.STA_COUNT,))
             dutConn.start()
-            # dutConn.join()
 
 
     def EvtTextChange(self, event):

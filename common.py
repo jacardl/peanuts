@@ -9,6 +9,10 @@ import paramiko as pm
 import subprocess
 import urllib
 import random
+import serial
+import serial.tools.list_ports_windows
+import binascii
+
 import var as v
 
 
@@ -16,7 +20,7 @@ class SshClient(object):
     def __init__(self, connection):
         self.connectionType = connection
 
-    def connect(self, host, userid, password=None):
+    def connect(self, host=None, userid=None, password=None):
         if self.connectionType == 1:  # represent ssh
             self.hostname = host
             self.client = pm.SSHClient()
@@ -28,7 +32,7 @@ class SshClient(object):
                     print 'please input password'
                 return True
             except:
-                print 'connection is failed. please check your remote settings.'
+                print 'ssh connection is failed. please check your remote settings.'
                 return False
 
         elif self.connectionType == 2:  # represent telnet
@@ -51,7 +55,17 @@ class SshClient(object):
                 return True
 
             except Exception, e:
-                print 'connection is failed. please check your remote settings.'
+                print 'telnet connection is failed. please check your remote settings.'
+                return False
+        elif self.connectionType == 3: # represent serial
+            try:
+                self.ser = serial.Serial(port=v.SERIAL_PORT, baudrate=v.BAUDRATE, timeout=1)
+                # # turn off debug, quote cmd must use ' '
+                self.command('echo 0 > /proc/sys/kernel/printk')
+                return True
+
+            except Exception, e:
+                print 'serial connecting is failed. please check your settings.'
                 return False
 
     def command(self, *args):
@@ -79,6 +93,29 @@ class SshClient(object):
             self.out = self.out.split("\n")
             del self.out[0]  # del command and :~#
             del self.out[-1]
+            return self.out
+        elif self.connectionType == 3:
+            cmd = ";".join(args)
+            for char in cmd:
+                # change char to hex format
+                charHex = binascii.b2a_hex(char)
+                charhex = charHex.decode("hex")
+                self.ser.write(charhex)
+                t.sleep(0.001)
+            self.ser.write("\n")
+            self.out = ''
+            startTime = t.time()
+            curTime = t.time()
+            while (curTime - startTime) <= 10:
+                self.out += self.ser.read()
+                if self.out.find('root@XiaoQiang:/#') is not -1:
+                    break
+                curTime = t.time()
+            print self.out
+            if len(self.out) >= 1:
+                self.out = self.out.split("\n")
+                del self.out[0]  # del command and :~#
+                del self.out[-1]
             return self.out
 
     def config(self, arg):
@@ -108,6 +145,10 @@ class SshClient(object):
             self.client.close()
         elif self.connectionType == 2:
             self.tn.close()
+        elif self.connectionType == 3:
+            # turn on debug, quote cmd must use ' '
+            self.command('echo 7 > /proc/sys/kernel/printk')
+            self.ser.close()
 
 
 class SshCommand(SshClient):
@@ -228,8 +269,11 @@ class SshCommand(SshClient):
         name = hardware + Rom["channel"] + Rom["version"]
         return name
 
-class SerialClient(object):
-    pass
+def getSerialPort():
+    portNums = []
+    for port in sorted(serial.tools.list_ports_windows.comports()):
+        portNums.append(port[0])
+    return portNums
 
 
 def connectionCheck(connectiontype, ip=None, port=None, user=None, password=None):
@@ -659,10 +703,12 @@ def getDaemonRss(terminal):
     ret = terminal.command('ps w | grep -v [[]')
     del ret[0]
     for line in ret:
-        pid = line[:5].strip()
-        name = line[26:].strip()
-        rss = getDaemonPidRss(terminal, pid)
-        pidNameRss['#'.join([name, pid])] = rss
+        m = re.search('^\s+?(\d{1,5})', line)
+        if m:
+            pid = m.group(1)
+            name = line[26:].strip()
+            rss = getDaemonPidRss(terminal, pid)
+            pidNameRss['#'.join([name, pid])] = rss
     return pidNameRss
 
 
@@ -1570,15 +1616,9 @@ def setIperfFlow(target, interval, time, logname):
 
 
 if __name__ == '__main__':
-    # ssh = SshClient(2)
-    # ssh.connect("192.168.140.1", "", "")
-    # v.DUT_MODULE = "R1CM"
-    # setWifiRestart(ssh, "log")
-    # ssh.close()
-    # dut = getAdbDevices()
-    # ret = setAdbPsk2StaConn(dut[0], "chinese", "2g", 'aaa')
-    # print ret
-    print v.SPECIAL_KEY
-    print v.SSID
-    print v.SPECIAL_SSID
-    print v.CHINESE_SSID
+    # ser = SshCommand(3)
+    # # ser.connect(host='10.237.100.78', userid='root', password='admin')
+    # ser.connect()
+    # print getDaemonRss(ser)
+    # ser.close()
+    print getSerialPort()

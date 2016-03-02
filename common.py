@@ -111,7 +111,7 @@ class SshClient(object):
                 if self.out.find('root@XiaoQiang:/#') is not -1:
                     break
                 curTime = t.time()
-            print self.out
+            # print self.out
             if len(self.out) >= 1:
                 self.out = self.out.split("\n")
                 del self.out[0]  # del command and :~#

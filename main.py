@@ -507,6 +507,10 @@ class LogCollectionPage(wx.Panel):
                     logList.append('r1c_wifi2G_log')
                     logList.append('r1c_wifi5G_log')
 
+                elif v.DUT_MODULE == "R3":
+                    logList.append('r3_wifi2G_log')
+                    logList.append('r3_wifi5G_log')
+
                 elif v.DUT_MODULE == "R1CL":
                     logList.append("r1cl_wifi2G_log")
 
@@ -522,6 +526,9 @@ class LogCollectionPage(wx.Panel):
 
                 elif v.DUT_MODULE == "R1CM":
                     logList.append('r1c_forward_statistic_log')
+
+                elif v.DUT_MODULE == "R3":
+                    logList.append('r3_forward_statistic_log')
 
                 elif v.DUT_MODULE == "R1CL":
                     logList.append("r1cl_forward_statistic_log")

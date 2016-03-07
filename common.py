@@ -232,7 +232,7 @@ class SshCommand(SshClient):
         cmd = "bootinfo"
         ret = self.command(cmd)
         for line in ret:
-            m = re.search('option HARDWARE \'([A-Z0-9]{3,})\'', line)
+            m = re.search('option HARDWARE \'([A-Z0-9]{1,})\'', line)
             if m:
                 result = m.group(1)
                 return result
@@ -613,7 +613,7 @@ def getWlanTxPower(terminal, dut, intf, logname):
                 result = 0
         return float(result)
 
-    elif dut == "R1CM" or dut == "R1CL":
+    elif dut == "R1CM" or dut == "R1CL" or dut == "R3":
         commandDic = {"2g": "iwconfig wl1 | grep 'Tx-Power='",
                       "5g": "iwconfig wl0 | grep 'Tx-Power='", }
         command = commandDic.get(intf)
@@ -654,7 +654,7 @@ def  getWlanLastEstPower(terminal, dut, intf, logname):
                 result = 0
         return float(result)
 
-    elif dut == "R1CM" or dut == "R1CL":
+    else:
         return 0
 
 

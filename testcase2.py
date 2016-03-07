@@ -342,14 +342,14 @@ class AP_CLEAR_LOW_TXPOWER(TestCase):
             else:
                 self.fail("R1D/R2D txpower isnot correct.")
 
-        elif v.DUT_MODULE == "R1CM":
+        elif v.DUT_MODULE == "R1CM" or v.DUT_MODULE == "R3":
             """
             exactly 13
             """
             if 12.8 <= power <= 13.2:
                 pass
             else:
-                self.fail("R1CM txpower isnot correct.")
+                self.fail("R1CM/R3 txpower isnot correct.")
         elif v.DUT_MODULE == "R1CL":
             """
             exactly 14
@@ -384,14 +384,14 @@ class AP_CLEAR_LOW_TXPOWER(TestCase):
             else:
                 self.fail("R1D/R2D txpower isnot correct.")
 
-        elif v.DUT_MODULE == "R1CM":
+        elif v.DUT_MODULE == "R1CM" or v.DUT_MODULE == "R3":
             """
             exactly 13
             """
             if 12.8 <= power <= 13.2:
                 pass
             else:
-                self.fail("R1CM txpower isnot correct.")
+                self.fail("R1CM/R3 txpower isnot correct.")
 
     def chan1_txpower_2g(self):
 
@@ -418,14 +418,14 @@ class AP_CLEAR_LOW_TXPOWER(TestCase):
             else:
                 self.fail("R1D/R2D txpower isnot correct.")
 
-        elif v.DUT_MODULE == "R1CM":
+        elif v.DUT_MODULE == "R1CM" or v.DUT_MODULE == "R3":
             """
             exactly 13
             """
             if 12.8 <= power <= 13.2:
                 pass
             else:
-                self.fail("R1CM txpower isnot correct.")
+                self.fail("R1CM/R3 txpower isnot correct.")
 
         elif v.DUT_MODULE == "R1CL":
             """
@@ -462,14 +462,14 @@ class AP_CLEAR_LOW_TXPOWER(TestCase):
             else:
                 self.fail("R1D/R2D txpower isnot correct.")
 
-        elif v.DUT_MODULE == "R1CM":
+        elif v.DUT_MODULE == "R1CM" or v.DUT_MODULE == "R3":
             """
             exactly 13
             """
             if 12.8 <= power <= 13.2:
                 pass
             else:
-                self.fail("R1CM txpower isnot correct.")
+                self.fail("R1CM/R3 txpower isnot correct.")
 
         elif v.DUT_MODULE == "R1CL":
             """
@@ -506,14 +506,14 @@ class AP_CLEAR_LOW_TXPOWER(TestCase):
             else:
                 self.fail("R1D/R2D txpower isnot correct.")
 
-        elif v.DUT_MODULE == "R1CM":
+        elif v.DUT_MODULE == "R1CM" or v.DUT_MODULE == "R3":
             """
             exactly 13
             """
             if 12.8 <= power <= 13.2:
                 pass
             else:
-                self.fail("R1CM txpower isnot correct.")
+                self.fail("R1CM/R3 txpower isnot correct.")
 
         elif v.DUT_MODULE == "R1CL":
             """
@@ -550,14 +550,14 @@ class AP_CLEAR_LOW_TXPOWER(TestCase):
             else:
                 self.fail("R1D/R2D txpower isnot correct.")
 
-        elif v.DUT_MODULE == "R1CM":
+        elif v.DUT_MODULE == "R1CM" or v.DUT_MODULE == "R3":
             """
             exactly 13
             """
             if 12.8 <= power <= 13.2:
                 pass
             else:
-                self.fail("R1CM txpower isnot correct.")
+                self.fail("R1CM/R3 txpower isnot correct.")
 
         elif v.DUT_MODULE == "R1CL":
             """
@@ -593,14 +593,14 @@ class AP_CLEAR_LOW_TXPOWER(TestCase):
             else:
                 self.fail("R1D/R2D txpower isnot correct.")
 
-        elif v.DUT_MODULE == "R1CM":
+        elif v.DUT_MODULE == "R1CM" or v.DUT_MODULE == "R3":
             """
             exactly 13
             """
             if 12.8 <= power <= 13.2:
                 pass
             else:
-                self.fail("R1CM txpower isnot correct.")
+                self.fail("R1CM/R3 txpower isnot correct.")
 
     def chan52_txpower_5g(self):
 
@@ -627,14 +627,14 @@ class AP_CLEAR_LOW_TXPOWER(TestCase):
             else:
                 self.fail("R1D/R2D txpower isnot correct.")
 
-        elif v.DUT_MODULE == "R1CM":
+        elif v.DUT_MODULE == "R1CM" or v.DUT_MODULE == "R3":
             """
             exactly 13
             """
             if 12.8 <= power <= 13.2:
                 pass
             else:
-                self.fail("R1CM txpower isnot correct.")
+                self.fail("R1CM/R3 txpower isnot correct.")
 
     def chan149_txpower_5g(self):
 
@@ -661,14 +661,14 @@ class AP_CLEAR_LOW_TXPOWER(TestCase):
             else:
                 self.fail("R1D/R2D txpower isnot correct.")
 
-        elif v.DUT_MODULE == "R1CM":
+        elif v.DUT_MODULE == "R1CM" or v.DUT_MODULE == "R3":
             """
             exactly 13
             """
             if 12.8 <= power <= 13.2:
                 pass
             else:
-                self.fail("R1CM txpower isnot correct.")
+                self.fail("R1CM/R3 txpower isnot correct.")
 
     def chan165_txpower_5g(self):
 
@@ -695,14 +695,14 @@ class AP_CLEAR_LOW_TXPOWER(TestCase):
             else:
                 self.fail("R1D/R2D txpower isnot correct.")
 
-        elif v.DUT_MODULE == "R1CM":
+        elif v.DUT_MODULE == "R1CM" or v.DUT_MODULE == "R3":
             """
             exactly 13
             """
             if 12.8 <= power <= 13.2:
                 pass
             else:
-                self.fail("R1CM txpower isnot correct.")
+                self.fail("R1CM/R3 txpower isnot correct.")
 
 
 class AP_CLEAR_MID_TXPOWER(TestCase):
@@ -757,14 +757,14 @@ class AP_CLEAR_MID_TXPOWER(TestCase):
             else:
                 self.fail("R1D/R2D txpower isnot correct.")
 
-        elif v.DUT_MODULE == "R1CM":
+        elif v.DUT_MODULE == "R1CM" or v.DUT_MODULE == "R3":
             """
             exactly 15
             """
             if 14.8 <= power <= 15.2:
                 pass
             else:
-                self.fail("R1CM txpower isnot correct.")
+                self.fail("R1CM/R3 txpower isnot correct.")
 
         elif v.DUT_MODULE == "R1CL":
             """
@@ -802,14 +802,14 @@ class AP_CLEAR_MID_TXPOWER(TestCase):
             else:
                 self.fail("R1D/R2D txpower isnot correct.")
 
-        elif v.DUT_MODULE == "R1CM":
+        elif v.DUT_MODULE == "R1CM" or v.DUT_MODULE == "R3":
             """
             exactly 15
             """
             if 14.8 <= power <= 15.2:
                 pass
             else:
-                self.fail("R1CM txpower isnot correct.")
+                self.fail("R1CM/R3 txpower isnot correct.")
 
     def chan1_txpower_2g(self):
 
@@ -837,14 +837,14 @@ class AP_CLEAR_MID_TXPOWER(TestCase):
             else:
                 self.fail("R1D/R2D txpower isnot correct.")
 
-        elif v.DUT_MODULE == "R1CM":
+        elif v.DUT_MODULE == "R1CM" or v.DUT_MODULE == "R3":
             """
             exactly 15
             """
             if 14.8 <= power <= 15.2:
                 pass
             else:
-                self.fail("R1CM txpower isnot correct.")
+                self.fail("R1CM/R3 txpower isnot correct.")
 
         elif v.DUT_MODULE == "R1CL":
             """
@@ -881,14 +881,14 @@ class AP_CLEAR_MID_TXPOWER(TestCase):
             else:
                 self.fail("R1D/R2D txpower isnot correct.")
 
-        elif v.DUT_MODULE == "R1CM":
+        elif v.DUT_MODULE == "R1CM" or v.DUT_MODULE == "R3":
             """
             exactly 15
             """
             if 14.8 <= power <= 15.2:
                 pass
             else:
-                self.fail("R1CM txpower isnot correct.")
+                self.fail("R1CM/R3 txpower isnot correct.")
 
         elif v.DUT_MODULE == "R1CL":
             """
@@ -924,14 +924,14 @@ class AP_CLEAR_MID_TXPOWER(TestCase):
             else:
                 self.fail("R1D/R2D txpower isnot correct.")
 
-        elif v.DUT_MODULE == "R1CM":
+        elif v.DUT_MODULE == "R1CM" or v.DUT_MODULE == "R3":
             """
             exactly 15
             """
             if 14.8 <= power <= 15.2:
                 pass
             else:
-                self.fail("R1CM txpower isnot correct.")
+                self.fail("R1CM/R3 txpower isnot correct.")
 
         elif v.DUT_MODULE == "R1CL":
             """
@@ -968,14 +968,14 @@ class AP_CLEAR_MID_TXPOWER(TestCase):
             else:
                 self.fail("R1D/R2D txpower isnot correct.")
 
-        elif v.DUT_MODULE == "R1CM":
+        elif v.DUT_MODULE == "R1CM" or v.DUT_MODULE == "R3":
             """
             exactly 15
             """
             if 14.8 <= power <= 15.2:
                 pass
             else:
-                self.fail("R1CM txpower isnot correct.")
+                self.fail("R1CM/R3 txpower isnot correct.")
 
         elif v.DUT_MODULE == "R1CL":
             """
@@ -1011,14 +1011,14 @@ class AP_CLEAR_MID_TXPOWER(TestCase):
             else:
                 self.fail("R1D/R2D txpower isnot correct.")
 
-        elif v.DUT_MODULE == "R1CM":
+        elif v.DUT_MODULE == "R1CM" or v.DUT_MODULE == "R3":
             """
             exactly 15
             """
             if 14.8 <= power <= 15.2:
                 pass
             else:
-                self.fail("R1CM txpower isnot correct.")
+                self.fail("R1CM/R3 txpower isnot correct.")
 
     def chan52_txpower_5g(self):
 
@@ -1046,14 +1046,14 @@ class AP_CLEAR_MID_TXPOWER(TestCase):
             else:
                 self.fail("R1D/R2D txpower isnot correct.")
 
-        elif v.DUT_MODULE == "R1CM":
+        elif v.DUT_MODULE == "R1CM" or v.DUT_MODULE == "R3":
             """
             exactly 15
             """
             if 14.8 <= power <= 15.2:
                 pass
             else:
-                self.fail("R1CM txpower isnot correct.")
+                self.fail("R1CM/R3 txpower isnot correct.")
 
     def chan149_txpower_5g(self):
 
@@ -1080,14 +1080,14 @@ class AP_CLEAR_MID_TXPOWER(TestCase):
             else:
                 self.fail("R1D/R2D txpower isnot correct.")
 
-        elif v.DUT_MODULE == "R1CM":
+        elif v.DUT_MODULE == "R1CM" or v.DUT_MODULE == "R3":
             """
             exactly 15
             """
             if 14.8 <= power <= 15.2:
                 pass
             else:
-                self.fail("R1CM txpower isnot correct.")
+                self.fail("R1CM/R3 txpower isnot correct.")
 
     def chan165_txpower_5g(self):
 
@@ -1115,14 +1115,14 @@ class AP_CLEAR_MID_TXPOWER(TestCase):
             else:
                 self.fail("R1D/R2D txpower isnot correct.")
 
-        elif v.DUT_MODULE == "R1CM":
+        elif v.DUT_MODULE == "R1CM" or v.DUT_MODULE == "R3":
             """
             exactly 15
             """
             if 14.8 <= power <= 15.2:
                 pass
             else:
-                self.fail("R1CM txpower isnot correct.")
+                self.fail("R1CM/R3 txpower isnot correct.")
 
 
 class AP_CLEAR_HIGH_TXPOWER(TestCase):
@@ -1176,14 +1176,14 @@ class AP_CLEAR_HIGH_TXPOWER(TestCase):
             else:
                 self.fail("R1D/R2D txpower isnot correct.")
 
-        elif v.DUT_MODULE == "R1CM":
+        elif v.DUT_MODULE == "R1CM" or v.DUT_MODULE == "R3":
             """
             exactly 16
             """
             if 15.8 <= power <= 16.2:
                 pass
             else:
-                self.fail("R1CM txpower isnot correct.")
+                self.fail("R1CM/R3 txpower isnot correct.")
         elif v.DUT_MODULE == "R1CL":
             """
             exactly 17
@@ -1219,14 +1219,14 @@ class AP_CLEAR_HIGH_TXPOWER(TestCase):
             else:
                 self.fail("R1D/R2D txpower isnot correct.")
 
-        elif v.DUT_MODULE == "R1CM":
+        elif v.DUT_MODULE == "R1CM" or v.DUT_MODULE == "R3":
             """
             exactly 16
             """
             if 15.8 <= power <= 16.2:
                 pass
             else:
-                self.fail("R1CM txpower isnot correct.")
+                self.fail("R1CM/R3 txpower isnot correct.")
 
     def chan1_txpower_2g(self):
 
@@ -1254,14 +1254,14 @@ class AP_CLEAR_HIGH_TXPOWER(TestCase):
             else:
                 self.fail("R1D/R2D txpower isnot correct.")
 
-        elif v.DUT_MODULE == "R1CM":
+        elif v.DUT_MODULE == "R1CM" or v.DUT_MODULE == "R3":
             """
             exactly 16
             """
             if 15.8 <= power <= 16.2:
                 pass
             else:
-                self.fail("R1CM txpower isnot correct.")
+                self.fail("R1CM/R3 txpower isnot correct.")
         elif v.DUT_MODULE == "R1CL":
             """
             exactly 17
@@ -1297,14 +1297,14 @@ class AP_CLEAR_HIGH_TXPOWER(TestCase):
             else:
                 self.fail("R1D/R2D txpower isnot correct.")
 
-        elif v.DUT_MODULE == "R1CM":
+        elif v.DUT_MODULE == "R1CM" or v.DUT_MODULE == "R3":
             """
             exactly 16
             """
             if 15.8 <= power <= 16.2:
                 pass
             else:
-                self.fail("R1CM txpower isnot correct.")
+                self.fail("R1CM/R3 txpower isnot correct.")
         elif v.DUT_MODULE == "R1CL":
             """
             exactly 17
@@ -1340,14 +1340,14 @@ class AP_CLEAR_HIGH_TXPOWER(TestCase):
             else:
                 self.fail("R1D/R2D txpower isnot correct.")
 
-        elif v.DUT_MODULE == "R1CM":
+        elif v.DUT_MODULE == "R1CM" or v.DUT_MODULE == "R3":
             """
             exactly 16
             """
             if 15.8 <= power <= 16.2:
                 pass
             else:
-                self.fail("R1CM txpower isnot correct.")
+                self.fail("R1CM/R3 txpower isnot correct.")
         elif v.DUT_MODULE == "R1CL":
             """
             exactly 17
@@ -1383,14 +1383,14 @@ class AP_CLEAR_HIGH_TXPOWER(TestCase):
             else:
                 self.fail("R1D/R2D txpower isnot correct.")
 
-        elif v.DUT_MODULE == "R1CM":
+        elif v.DUT_MODULE == "R1CM" or v.DUT_MODULE == "R3":
             """
             exactly 16
             """
             if 15.8 <= power <= 16.2:
                 pass
             else:
-                self.fail("R1CM txpower isnot correct.")
+                self.fail("R1CM/R3 txpower isnot correct.")
         elif v.DUT_MODULE == "R1CL":
             """
             exactly 17
@@ -1426,14 +1426,14 @@ class AP_CLEAR_HIGH_TXPOWER(TestCase):
             else:
                 self.fail("R1D/R2D txpower isnot correct.")
 
-        elif v.DUT_MODULE == "R1CM":
+        elif v.DUT_MODULE == "R1CM" or v.DUT_MODULE == "R3":
             """
             exactly 16
             """
             if 15.8 <= power <= 16.2:
                 pass
             else:
-                self.fail("R1CM txpower isnot correct.")
+                self.fail("R1CM/R3 txpower isnot correct.")
 
     def chan52_txpower_5g(self):
 
@@ -1461,14 +1461,14 @@ class AP_CLEAR_HIGH_TXPOWER(TestCase):
             else:
                 self.fail("R1D/R2D txpower isnot correct.")
 
-        elif v.DUT_MODULE == "R1CM":
+        elif v.DUT_MODULE == "R1CM" or v.DUT_MODULE == "R3":
             """
             exactly 16
             """
             if 15.8 <= power <= 16.2:
                 pass
             else:
-                self.fail("R1CM txpower isnot correct.")
+                self.fail("R1CM/R3 txpower isnot correct.")
 
     def chan149_txpower_5g(self):
 
@@ -1495,14 +1495,14 @@ class AP_CLEAR_HIGH_TXPOWER(TestCase):
             else:
                 self.fail("R1D/R2D txpower isnot correct.")
 
-        elif v.DUT_MODULE == "R1CM":
+        elif v.DUT_MODULE == "R1CM" or v.DUT_MODULE == "R3":
             """
             exactly 16
             """
             if 15.8 <= power <= 16.2:
                 pass
             else:
-                self.fail("R1CM txpower isnot correct.")
+                self.fail("R1CM/R3 txpower isnot correct.")
 
     def chan165_txpower_5g(self):
 
@@ -1529,14 +1529,14 @@ class AP_CLEAR_HIGH_TXPOWER(TestCase):
             else:
                 self.fail("R1D/R2D txpower isnot correct.")
 
-        elif v.DUT_MODULE == "R1CM":
+        elif v.DUT_MODULE == "R1CM" or v.DUT_MODULE == "R3":
             """
             exactly 16
             """
             if 15.8 <= power <= 16.2:
                 pass
             else:
-                self.fail("R1CM txpower isnot correct.")
+                self.fail("R1CM/R3 txpower isnot correct.")
 
 
 class AP_CLEAR_CHANSELECTION(TestCase):
@@ -5618,14 +5618,14 @@ class AP_RELAY_CLEAR_LOW_TXPOWER(TestCase):
             else:
                 self.fail("R1D/R2D txpower isnot correct.")
 
-        elif v.DUT_MODULE == "R1CM":
+        elif v.DUT_MODULE == "R1CM" or v.DUT_MODULE == "R3":
             """
             exactly 13
             """
             if 12.8 <= power <= 13.2:
                 pass
             else:
-                self.fail("R1CM txpower isnot correct.")
+                self.fail("R1CM/R3 txpower isnot correct.")
         elif v.DUT_MODULE == "R1CL":
             """
             exactly 14
@@ -5660,14 +5660,14 @@ class AP_RELAY_CLEAR_LOW_TXPOWER(TestCase):
             else:
                 self.fail("R1D/R2D txpower isnot correct.")
 
-        elif v.DUT_MODULE == "R1CM":
+        elif v.DUT_MODULE == "R1CM" or v.DUT_MODULE == "R3":
             """
             exactly 13
             """
             if 12.8 <= power <= 13.2:
                 pass
             else:
-                self.fail("R1CM txpower isnot correct.")
+                self.fail("R1CM/R3 txpower isnot correct.")
 
     def chan1_txpower_2g(self):
 
@@ -5694,14 +5694,14 @@ class AP_RELAY_CLEAR_LOW_TXPOWER(TestCase):
             else:
                 self.fail("R1D/R2D txpower isnot correct.")
 
-        elif v.DUT_MODULE == "R1CM":
+        elif v.DUT_MODULE == "R1CM" or v.DUT_MODULE == "R3":
             """
             exactly 13
             """
             if 12.8 <= power <= 13.2:
                 pass
             else:
-                self.fail("R1CM txpower isnot correct.")
+                self.fail("R1CM/R3 txpower isnot correct.")
 
         elif v.DUT_MODULE == "R1CL":
             """
@@ -5738,14 +5738,14 @@ class AP_RELAY_CLEAR_LOW_TXPOWER(TestCase):
             else:
                 self.fail("R1D/R2D txpower isnot correct.")
 
-        elif v.DUT_MODULE == "R1CM":
+        elif v.DUT_MODULE == "R1CM" or v.DUT_MODULE == "R3":
             """
             exactly 13
             """
             if 12.8 <= power <= 13.2:
                 pass
             else:
-                self.fail("R1CM txpower isnot correct.")
+                self.fail("R1CM/R3 txpower isnot correct.")
 
         elif v.DUT_MODULE == "R1CL":
             """
@@ -5782,14 +5782,14 @@ class AP_RELAY_CLEAR_LOW_TXPOWER(TestCase):
             else:
                 self.fail("R1D/R2D txpower isnot correct.")
 
-        elif v.DUT_MODULE == "R1CM":
+        elif v.DUT_MODULE == "R1CM" or v.DUT_MODULE == "R3":
             """
             exactly 13
             """
             if 12.8 <= power <= 13.2:
                 pass
             else:
-                self.fail("R1CM txpower isnot correct.")
+                self.fail("R1CM/R3 txpower isnot correct.")
 
         elif v.DUT_MODULE == "R1CL":
             """
@@ -5826,14 +5826,14 @@ class AP_RELAY_CLEAR_LOW_TXPOWER(TestCase):
             else:
                 self.fail("R1D/R2D txpower isnot correct.")
 
-        elif v.DUT_MODULE == "R1CM":
+        elif v.DUT_MODULE == "R1CM" or v.DUT_MODULE == "R3":
             """
             exactly 13
             """
             if 12.8 <= power <= 13.2:
                 pass
             else:
-                self.fail("R1CM txpower isnot correct.")
+                self.fail("R1CM/R3 txpower isnot correct.")
 
         elif v.DUT_MODULE == "R1CL":
             """
@@ -5869,14 +5869,14 @@ class AP_RELAY_CLEAR_LOW_TXPOWER(TestCase):
             else:
                 self.fail("R1D/R2D txpower isnot correct.")
 
-        elif v.DUT_MODULE == "R1CM":
+        elif v.DUT_MODULE == "R1CM" or v.DUT_MODULE == "R3":
             """
             exactly 13
             """
             if 12.8 <= power <= 13.2:
                 pass
             else:
-                self.fail("R1CM txpower isnot correct.")
+                self.fail("R1CM/R3 txpower isnot correct.")
 
     def chan52_txpower_5g(self):
 
@@ -5903,14 +5903,14 @@ class AP_RELAY_CLEAR_LOW_TXPOWER(TestCase):
             else:
                 self.fail("R1D/R2D txpower isnot correct.")
 
-        elif v.DUT_MODULE == "R1CM":
+        elif v.DUT_MODULE == "R1CM" or v.DUT_MODULE == "R3":
             """
             exactly 13
             """
             if 12.8 <= power <= 13.2:
                 pass
             else:
-                self.fail("R1CM txpower isnot correct.")
+                self.fail("R1CM/R3 txpower isnot correct.")
 
     def chan149_txpower_5g(self):
 
@@ -5937,14 +5937,14 @@ class AP_RELAY_CLEAR_LOW_TXPOWER(TestCase):
             else:
                 self.fail("R1D/R2D txpower isnot correct.")
 
-        elif v.DUT_MODULE == "R1CM":
+        elif v.DUT_MODULE == "R1CM" or v.DUT_MODULE == "R3":
             """
             exactly 13
             """
             if 12.8 <= power <= 13.2:
                 pass
             else:
-                self.fail("R1CM txpower isnot correct.")
+                self.fail("R1CM/R3 txpower isnot correct.")
 
     def chan165_txpower_5g(self):
 
@@ -5971,14 +5971,14 @@ class AP_RELAY_CLEAR_LOW_TXPOWER(TestCase):
             else:
                 self.fail("R1D/R2D txpower isnot correct.")
 
-        elif v.DUT_MODULE == "R1CM":
+        elif v.DUT_MODULE == "R1CM" or v.DUT_MODULE == "R3":
             """
             exactly 13
             """
             if 12.8 <= power <= 13.2:
                 pass
             else:
-                self.fail("R1CM txpower isnot correct.")
+                self.fail("R1CM/R3 txpower isnot correct.")
 
 
 class AP_RELAY_CLEAR_MID_TXPOWER(TestCase):
@@ -6041,14 +6041,14 @@ class AP_RELAY_CLEAR_MID_TXPOWER(TestCase):
             else:
                 self.fail("R1D/R2D txpower isnot correct.")
 
-        elif v.DUT_MODULE == "R1CM":
+        elif v.DUT_MODULE == "R1CM" or v.DUT_MODULE == "R3":
             """
             exactly 15
             """
             if 14.8 <= power <= 15.2:
                 pass
             else:
-                self.fail("R1CM txpower isnot correct.")
+                self.fail("R1CM/R3 txpower isnot correct.")
 
         elif v.DUT_MODULE == "R1CL":
             """
@@ -6086,14 +6086,14 @@ class AP_RELAY_CLEAR_MID_TXPOWER(TestCase):
             else:
                 self.fail("R1D/R2D txpower isnot correct.")
 
-        elif v.DUT_MODULE == "R1CM":
+        elif v.DUT_MODULE == "R1CM" or v.DUT_MODULE == "R3":
             """
             exactly 15
             """
             if 14.8 <= power <= 15.2:
                 pass
             else:
-                self.fail("R1CM txpower isnot correct.")
+                self.fail("R1CM/R3 txpower isnot correct.")
 
     def chan1_txpower_2g(self):
 
@@ -6121,14 +6121,14 @@ class AP_RELAY_CLEAR_MID_TXPOWER(TestCase):
             else:
                 self.fail("R1D/R2D txpower isnot correct.")
 
-        elif v.DUT_MODULE == "R1CM":
+        elif v.DUT_MODULE == "R1CM" or v.DUT_MODULE == "R3":
             """
             exactly 15
             """
             if 14.8 <= power <= 15.2:
                 pass
             else:
-                self.fail("R1CM txpower isnot correct.")
+                self.fail("R1CM/R3 txpower isnot correct.")
 
         elif v.DUT_MODULE == "R1CL":
             """
@@ -6165,14 +6165,14 @@ class AP_RELAY_CLEAR_MID_TXPOWER(TestCase):
             else:
                 self.fail("R1D/R2D txpower isnot correct.")
 
-        elif v.DUT_MODULE == "R1CM":
+        elif v.DUT_MODULE == "R1CM" or v.DUT_MODULE == "R3":
             """
             exactly 15
             """
             if 14.8 <= power <= 15.2:
                 pass
             else:
-                self.fail("R1CM txpower isnot correct.")
+                self.fail("R1CM/R3 txpower isnot correct.")
 
         elif v.DUT_MODULE == "R1CL":
             """
@@ -6208,14 +6208,14 @@ class AP_RELAY_CLEAR_MID_TXPOWER(TestCase):
             else:
                 self.fail("R1D/R2D txpower isnot correct.")
 
-        elif v.DUT_MODULE == "R1CM":
+        elif v.DUT_MODULE == "R1CM" or v.DUT_MODULE == "R3":
             """
             exactly 15
             """
             if 14.8 <= power <= 15.2:
                 pass
             else:
-                self.fail("R1CM txpower isnot correct.")
+                self.fail("R1CM/R3 txpower isnot correct.")
 
         elif v.DUT_MODULE == "R1CL":
             """
@@ -6252,14 +6252,14 @@ class AP_RELAY_CLEAR_MID_TXPOWER(TestCase):
             else:
                 self.fail("R1D/R2D txpower isnot correct.")
 
-        elif v.DUT_MODULE == "R1CM":
+        elif v.DUT_MODULE == "R1CM" or v.DUT_MODULE == "R3":
             """
             exactly 15
             """
             if 14.8 <= power <= 15.2:
                 pass
             else:
-                self.fail("R1CM txpower isnot correct.")
+                self.fail("R1CM/R3 txpower isnot correct.")
 
         elif v.DUT_MODULE == "R1CL":
             """
@@ -6295,14 +6295,14 @@ class AP_RELAY_CLEAR_MID_TXPOWER(TestCase):
             else:
                 self.fail("R1D/R2D txpower isnot correct.")
 
-        elif v.DUT_MODULE == "R1CM":
+        elif v.DUT_MODULE == "R1CM" or v.DUT_MODULE == "R3":
             """
             exactly 15
             """
             if 14.8 <= power <= 15.2:
                 pass
             else:
-                self.fail("R1CM txpower isnot correct.")
+                self.fail("R1CM/R3 txpower isnot correct.")
 
     def chan52_txpower_5g(self):
 
@@ -6330,14 +6330,14 @@ class AP_RELAY_CLEAR_MID_TXPOWER(TestCase):
             else:
                 self.fail("R1D/R2D txpower isnot correct.")
 
-        elif v.DUT_MODULE == "R1CM":
+        elif v.DUT_MODULE == "R1CM" or v.DUT_MODULE == "R3":
             """
             exactly 15
             """
             if 14.8 <= power <= 15.2:
                 pass
             else:
-                self.fail("R1CM txpower isnot correct.")
+                self.fail("R1CM/R3 txpower isnot correct.")
 
     def chan149_txpower_5g(self):
 
@@ -6364,14 +6364,14 @@ class AP_RELAY_CLEAR_MID_TXPOWER(TestCase):
             else:
                 self.fail("R1D/R2D txpower isnot correct.")
 
-        elif v.DUT_MODULE == "R1CM":
+        elif v.DUT_MODULE == "R1CM" or v.DUT_MODULE == "R3":
             """
             exactly 15
             """
             if 14.8 <= power <= 15.2:
                 pass
             else:
-                self.fail("R1CM txpower isnot correct.")
+                self.fail("R1CM/R3 txpower isnot correct.")
 
     def chan165_txpower_5g(self):
 
@@ -6399,14 +6399,14 @@ class AP_RELAY_CLEAR_MID_TXPOWER(TestCase):
             else:
                 self.fail("R1D/R2D txpower isnot correct.")
 
-        elif v.DUT_MODULE == "R1CM":
+        elif v.DUT_MODULE == "R1CM" or v.DUT_MODULE == "R3":
             """
             exactly 15
             """
             if 14.8 <= power <= 15.2:
                 pass
             else:
-                self.fail("R1CM txpower isnot correct.")
+                self.fail("R1CM/R3 txpower isnot correct.")
 
 
 class AP_RELAY_CLEAR_HIGH_TXPOWER(TestCase):
@@ -6468,14 +6468,14 @@ class AP_RELAY_CLEAR_HIGH_TXPOWER(TestCase):
             else:
                 self.fail("R1D/R2D txpower isnot correct.")
 
-        elif v.DUT_MODULE == "R1CM":
+        elif v.DUT_MODULE == "R1CM" or v.DUT_MODULE == "R3":
             """
             exactly 16
             """
             if 15.8 <= power <= 16.2:
                 pass
             else:
-                self.fail("R1CM txpower isnot correct.")
+                self.fail("R1CM/R3 txpower isnot correct.")
         elif v.DUT_MODULE == "R1CL":
             """
             exactly 17
@@ -6511,14 +6511,14 @@ class AP_RELAY_CLEAR_HIGH_TXPOWER(TestCase):
             else:
                 self.fail("R1D/R2D txpower isnot correct.")
 
-        elif v.DUT_MODULE == "R1CM":
+        elif v.DUT_MODULE == "R1CM" or v.DUT_MODULE == "R3":
             """
             exactly 16
             """
             if 15.8 <= power <= 16.2:
                 pass
             else:
-                self.fail("R1CM txpower isnot correct.")
+                self.fail("R1CM/R3 txpower isnot correct.")
 
     def chan1_txpower_2g(self):
 
@@ -6546,14 +6546,14 @@ class AP_RELAY_CLEAR_HIGH_TXPOWER(TestCase):
             else:
                 self.fail("R1D/R2D txpower isnot correct.")
 
-        elif v.DUT_MODULE == "R1CM":
+        elif v.DUT_MODULE == "R1CM" or v.DUT_MODULE == "R3":
             """
             exactly 16
             """
             if 15.8 <= power <= 16.2:
                 pass
             else:
-                self.fail("R1CM txpower isnot correct.")
+                self.fail("R1CM/R3 txpower isnot correct.")
         elif v.DUT_MODULE == "R1CL":
             """
             exactly 17
@@ -6589,14 +6589,14 @@ class AP_RELAY_CLEAR_HIGH_TXPOWER(TestCase):
             else:
                 self.fail("R1D/R2D txpower isnot correct.")
 
-        elif v.DUT_MODULE == "R1CM":
+        elif v.DUT_MODULE == "R1CM" or v.DUT_MODULE == "R3":
             """
             exactly 16
             """
             if 15.8 <= power <= 16.2:
                 pass
             else:
-                self.fail("R1CM txpower isnot correct.")
+                self.fail("R1CM/R3 txpower isnot correct.")
         elif v.DUT_MODULE == "R1CL":
             """
             exactly 17
@@ -6632,14 +6632,14 @@ class AP_RELAY_CLEAR_HIGH_TXPOWER(TestCase):
             else:
                 self.fail("R1D/R2D txpower isnot correct.")
 
-        elif v.DUT_MODULE == "R1CM":
+        elif v.DUT_MODULE == "R1CM" or v.DUT_MODULE == "R3":
             """
             exactly 16
             """
             if 15.8 <= power <= 16.2:
                 pass
             else:
-                self.fail("R1CM txpower isnot correct.")
+                self.fail("R1CM/R3 txpower isnot correct.")
         elif v.DUT_MODULE == "R1CL":
             """
             exactly 17
@@ -6675,14 +6675,14 @@ class AP_RELAY_CLEAR_HIGH_TXPOWER(TestCase):
             else:
                 self.fail("R1D/R2D txpower isnot correct.")
 
-        elif v.DUT_MODULE == "R1CM":
+        elif v.DUT_MODULE == "R1CM" or v.DUT_MODULE == "R3":
             """
             exactly 16
             """
             if 15.8 <= power <= 16.2:
                 pass
             else:
-                self.fail("R1CM txpower isnot correct.")
+                self.fail("R1CM/R3 txpower isnot correct.")
         elif v.DUT_MODULE == "R1CL":
             """
             exactly 17
@@ -6718,14 +6718,14 @@ class AP_RELAY_CLEAR_HIGH_TXPOWER(TestCase):
             else:
                 self.fail("R1D/R2D txpower isnot correct.")
 
-        elif v.DUT_MODULE == "R1CM":
+        elif v.DUT_MODULE == "R1CM" or v.DUT_MODULE == "R3":
             """
             exactly 16
             """
             if 15.8 <= power <= 16.2:
                 pass
             else:
-                self.fail("R1CM txpower isnot correct.")
+                self.fail("R1CM/R3 txpower isnot correct.")
 
     def chan52_txpower_5g(self):
 
@@ -6753,14 +6753,14 @@ class AP_RELAY_CLEAR_HIGH_TXPOWER(TestCase):
             else:
                 self.fail("R1D/R2D txpower isnot correct.")
 
-        elif v.DUT_MODULE == "R1CM":
+        elif v.DUT_MODULE == "R1CM" or v.DUT_MODULE == "R3":
             """
             exactly 16
             """
             if 15.8 <= power <= 16.2:
                 pass
             else:
-                self.fail("R1CM txpower isnot correct.")
+                self.fail("R1CM/R3 txpower isnot correct.")
 
     def chan149_txpower_5g(self):
 
@@ -6787,14 +6787,14 @@ class AP_RELAY_CLEAR_HIGH_TXPOWER(TestCase):
             else:
                 self.fail("R1D/R2D txpower isnot correct.")
 
-        elif v.DUT_MODULE == "R1CM":
+        elif v.DUT_MODULE == "R1CM" or v.DUT_MODULE == "R3":
             """
             exactly 16
             """
             if 15.8 <= power <= 16.2:
                 pass
             else:
-                self.fail("R1CM txpower isnot correct.")
+                self.fail("R1CM/R3 txpower isnot correct.")
 
     def chan165_txpower_5g(self):
 
@@ -6821,14 +6821,14 @@ class AP_RELAY_CLEAR_HIGH_TXPOWER(TestCase):
             else:
                 self.fail("R1D/R2D txpower isnot correct.")
 
-        elif v.DUT_MODULE == "R1CM":
+        elif v.DUT_MODULE == "R1CM" or v.DUT_MODULE == "R3":
             """
             exactly 16
             """
             if 15.8 <= power <= 16.2:
                 pass
             else:
-                self.fail("R1CM txpower isnot correct.")
+                self.fail("R1CM/R3 txpower isnot correct.")
 
 
 class AP_RELAY_CLEAR_CHANSELECTION(TestCase):

@@ -131,6 +131,8 @@ class GeneralPage(wx.Panel):
         serialPortLbl = wx.StaticText(self, -1, 'Serial port:')
         self.serialNum = co.getSerialPort()
         self.serialPort = wx.Choice(self, -1, choices=self.serialNum)
+        v.SERIAL_PORT = self.serialNum[0]
+
         self.serialPort.SetSelection(0)
         self.Bind(wx.EVT_CHOICE, self.EvtChoice4, self.serialPort)
         self.serialPort.Enable(False)

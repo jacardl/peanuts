@@ -16,7 +16,7 @@ STA_USR = 'root'
 STA_PASSWD = 'admin'
 STA_COUNT = "1"
 
-SERIAL_PORT = "com1"
+SERIAL_PORT = ""
 BAUDRATE = 115200
 
 

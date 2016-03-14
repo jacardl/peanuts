@@ -273,6 +273,7 @@ class SshCommand(SshClient):
         name = hardware + Rom["channel"] + Rom["version"]
         return name
 
+
 def getSerialPort():
     portNums = []
     for port in sorted(serial.tools.list_ports_windows.comports()):

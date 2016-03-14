@@ -65,6 +65,7 @@ STA_INTF_5G = 'apclii0'
 TEST_SUITE_LOG_PATH = os.getcwd() + os.sep + 'LOG_TEST_SUITE' + os.sep
 IPERF_PATH = os.getcwd() + os.sep + "iperf" + os.sep
 DEFAULT_PATH = os.getcwd() + os.sep
+SSH_LOG_PATH = TEST_SUITE_LOG_PATH + "ssh_connection.log"
 
 WORD_RANGE = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-_"
 SPEC_RANGE = '`~!@#$%^&*() =+\\|]}[{\'\";:/?.>,<'

@@ -113,7 +113,7 @@ class HttpClient(object):
                 else:
                     return True
             except:
-                print 'connection is failed. please check your network.'
+                print 'http connection is failed. please check your network.'
                 return False
 
         loop = 0
@@ -123,7 +123,6 @@ class HttpClient(object):
             t.sleep(5)
             ret = connectInLoop(host, password)
         return ret
-
 
     def close(self):
         if self.httpClient:
@@ -514,6 +513,7 @@ def setLanAp(terminal, logname, **kwargs):
     }
     option.update(kwargs)
     api = '/cgi-bin/luci/;stok=token/api/xqnetwork/set_lan_ap'
+    t.sleep(20)
     result = setGet(terminal, logname, api, **option)
     t.sleep(30)
     if result is not None:

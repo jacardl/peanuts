@@ -4540,11 +4540,9 @@ class AP_MIXEDPSK_BSD(TestCase):
         count = 0
         while count <= 1:
             resConn = setAdbPsk2StaConn(self.device[0], "normal", "2g", self.__class__.__name__)
-            connType = api.getOnlineDeviceType(self.dut, self.__class__.__name__)
-            if self.staMac in connType.keys():
-                resConn2 = int(connType[self.staMac]) == 2
-                if resConn and resConn2:
-                    break
+            resConn2 = chkAdb5gFreq(self.device[0], self.__class__.__name__)
+            if resConn and resConn2:
+                break
             else:
                 resConn2 = False
             count += 1
@@ -4561,11 +4559,9 @@ class AP_MIXEDPSK_BSD(TestCase):
         count = 0
         while count <= 1:
             resConn = setAdbPskStaConn(self.device[0], "normal", "2g", self.__class__.__name__)
-            connType = api.getOnlineDeviceType(self.dut, self.__class__.__name__)
-            if self.staMac in connType.keys():
-                resConn2 = int(connType[self.staMac]) == 2
-                if resConn and resConn2:
-                    break
+            resConn2 = chkAdb5gFreq(self.device[0], self.__class__.__name__)
+            if resConn and resConn2:
+                break
             else:
                 resConn2 = False
             count += 1
@@ -4582,11 +4578,9 @@ class AP_MIXEDPSK_BSD(TestCase):
         count = 0
         while count <= 1:
             resConn = setAdbTkipPsk2StaConn(self.device[0], "normal", "2g", self.__class__.__name__)
-            connType = api.getOnlineDeviceType(self.dut, self.__class__.__name__)
-            if self.staMac in connType.keys():
-                resConn2 = int(connType[self.staMac]) == 2
-                if resConn and resConn2:
-                    break
+            resConn2 = chkAdb5gFreq(self.device[0], self.__class__.__name__)
+            if resConn and resConn2:
+                break
             else:
                 resConn2 = False
             count += 1
@@ -4603,11 +4597,9 @@ class AP_MIXEDPSK_BSD(TestCase):
         count = 0
         while count <= 1:
             resConn = setAdbTkipPskStaConn(self.device[0], "normal", "2g", self.__class__.__name__)
-            connType = api.getOnlineDeviceType(self.dut, self.__class__.__name__)
-            if self.staMac in connType.keys():
-                resConn2 = int(connType[self.staMac]) == 2
-                if resConn and resConn2:
-                    break
+            resConn2 = chkAdb5gFreq(self.device[0], self.__class__.__name__)
+            if resConn and resConn2:
+                break
             else:
                 resConn2 = False
             count += 1
@@ -8105,11 +8097,9 @@ class AP_RELAY_MIXEDPSK_BSD(TestCase):
         count = 0
         while count <= 1:
             resConn = setAdbPsk2StaConn(self.device[0], "normal", "2g", self.__class__.__name__)
-            connType = api.getOnlineDeviceType(self.dut, self.__class__.__name__)
-            if self.staMac in connType.keys():
-                resConn2 = int(connType[self.staMac]) == 2
-                if resConn and resConn2:
-                    break
+            resConn2 = chkAdb5gFreq(self.device[0], self.__class__.__name__)
+            if resConn and resConn2:
+                break
             else:
                 resConn2 = False
             count += 1
@@ -8126,11 +8116,9 @@ class AP_RELAY_MIXEDPSK_BSD(TestCase):
         count = 0
         while count <= 1:
             resConn = setAdbPskStaConn(self.device[0], "normal", "2g", self.__class__.__name__)
-            connType = api.getOnlineDeviceType(self.dut, self.__class__.__name__)
-            if self.staMac in connType.keys():
-                resConn2 = int(connType[self.staMac]) == 2
-                if resConn and resConn2:
-                    break
+            resConn2 = chkAdb5gFreq(self.device[0], self.__class__.__name__)
+            if resConn and resConn2:
+                break
             else:
                 resConn2 = False
             count += 1
@@ -8147,11 +8135,9 @@ class AP_RELAY_MIXEDPSK_BSD(TestCase):
         count = 0
         while count <= 1:
             resConn = setAdbTkipPsk2StaConn(self.device[0], "normal", "2g", self.__class__.__name__)
-            connType = api.getOnlineDeviceType(self.dut, self.__class__.__name__)
-            if self.staMac in connType.keys():
-                resConn2 = int(connType[self.staMac]) == 2
-                if resConn and resConn2:
-                    break
+            resConn2 = chkAdb5gFreq(self.device[0], self.__class__.__name__)
+            if resConn and resConn2:
+                break
             else:
                 resConn2 = False
             count += 1
@@ -8168,11 +8154,9 @@ class AP_RELAY_MIXEDPSK_BSD(TestCase):
         count = 0
         while count <= 1:
             resConn = setAdbTkipPskStaConn(self.device[0], "normal", "2g", self.__class__.__name__)
-            connType = api.getOnlineDeviceType(self.dut, self.__class__.__name__)
-            if self.staMac in connType.keys():
-                resConn2 = int(connType[self.staMac]) == 2
-                if resConn and resConn2:
-                    break
+            resConn2 = chkAdb5gFreq(self.device[0], self.__class__.__name__)
+            if resConn and resConn2:
+                break
             else:
                 resConn2 = False
             count += 1

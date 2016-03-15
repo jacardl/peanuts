@@ -1620,10 +1620,26 @@ def setIperfFlow(target, interval, time, logname):
     return True
 
 
+def chkAdb2gFreq(device, logname):
+    command = "am instrument -e class com.peanutswifi.ApplicationTest#test_2g_freq -w com.peanutswifi.test/com.peanutswifi.MyTestRunner"
+    ret = setAdbShell(device, command, logname)
+    for line in ret:
+        m = re.search('OK', line)
+        if m is not None:
+            return True
+    return False
+
+
+def chkAdb5gFreq(device, logname):
+    command = "am instrument -e class com.peanutswifi.ApplicationTest#test_5g_freq -w com.peanutswifi.test/com.peanutswifi.MyTestRunner"
+    ret = setAdbShell(device, command, logname)
+    for line in ret:
+        m = re.search('OK', line)
+        if m is not None:
+            return True
+    return False
+
+
 if __name__ == '__main__':
-    # ser = SshCommand(3)
-    # # ser.connect(host='10.237.100.78', userid='root', password='admin')
-    # ser.connect()
-    # print getDaemonRss(ser)
-    # ser.close()
-    print getSerialPort()
+    device = getAdbDevices()
+    chkAdb5gFreq(device[0], 'a')

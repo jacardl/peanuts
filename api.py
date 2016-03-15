@@ -673,6 +673,53 @@ def getDeviceList(terminal, logname, **kwargs):
             return ret
     return None
 
+
+def getDeviceListZigbee(terminal, logname, **kwargs):
+    option = {
+    }
+    option.update(kwargs)
+    api = '/cgi-bin/luci/;stok=token/api/xqsystem/device_list_zigbee'
+    ret = setGet(terminal, logname, api, **option)
+    if ret is not None:
+        if ret['code'] is 0:
+            return ret
+    return None
+
+
+def getInitInfo(terminal, logname, **kwargs):
+    """
+    "routername": "peanuts-r1c-10f",
+    "code": 0,
+    "bound": 0,
+    "romversion": "2.9.84",
+    "connect": 0,
+    "id": "604400000538",
+    "hardware": "R1CM",
+    "language": "zh_cn",
+    "countrycode": "CN",
+    "modules": {
+        "open_ssid": "1",
+        "category_view_ultimate": "1",
+        "guest_wifi": "1",
+        "barcode_plugin": "1",
+        "share_folder": "1",
+        "wifi_security": "1",
+        "file_tunnel": "1"
+    },
+    "routerId": "3f15f0ed-3ff3-4544-95c8-ce85c6fdfc60",
+    "inited": 1
+    """
+    option = {
+    }
+    option.update(kwargs)
+    api = '/cgi-bin/luci/;stok=token/api/xqsystem/init_info'
+    ret = setGet(terminal, logname, api, **option)
+    if ret is not None:
+        if ret['code'] is 0:
+            return ret
+    return None
+
+
 def getOnlineDeviceType(terminal, logname):
     """
     "type": 0,       (0/1/2/3  有线 / 2.4G wifi / 5G wifi / guest wifi)
@@ -805,26 +852,7 @@ def getDeviceCPU(terminal, logname):
 
 if __name__ == '__main__':
     option = {
-        'wifiIndex': 2,
-        'on': 1,
-        'ssid': v.CHINESE_SSID_5G,
-        'pwd': '',
-        'encryption': 'none',
-        'channel': '0',
-        'bandwidth': '0',
-        'hidden': 0,
-        'txpwr': 'mid'
-    }
-    option2 = {
-        'wifiIndex': 2,
-        'on': 0,
-        'ssid': "peanuts",
-        'pwd': '',
-        'encryption': 'none',
-        'channel': '0',
-        'bandwidth': '0',
-        'hidden': 0,
-        'txpwr': 'mid'
+        'mac': '78:D7:5F:8A:82:08'
     }
     v.HOST = '10.237.100.59'
     v.WEB_PWD = '12345678'
@@ -835,5 +863,5 @@ if __name__ == '__main__':
     # setLanAp(webclient, 'aaa')
     # setDisableLanAp(webclient, 'aaa')
     # print getDeviceCPU(webclient, "a.log")
+    print getDeviceStatus(webclient, 'a')
     webclient.close()
-

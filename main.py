@@ -787,18 +787,24 @@ class TestSuitePage(wx.Panel):
                                   jobID=self.jobID)
 
         # start memory monitor
-        self.memMon = mm.MemMonitor(v.MEM_MONITOR_INTERVAL)
-        self.memMonXlsx = mm.MemMonitorXlsx(v.MEM_MONITOR_INTERVAL, file=v.MAIL_XLSX)
+        self.memMon = mm.HttpMemMonitor(v.MEM_MONITOR_INTERVAL)
         self.memMon.setDaemon(True)
-        self.memMonXlsx.setDaemon(True)
         self.memMon.start()
-        self.memMonXlsx.start()
+        self.cpuMon = mm.HttpCPUMonitor(v.MEM_MONITOR_INTERVAL)
+        self.cpuMon.setDaemon(True)
+        self.cpuMon.start()
+
+        if v.CONNECTION_TYPE is not 3:
+            self.memMonXlsx = mm.MemMonitorXlsx(v.MEM_MONITOR_INTERVAL, file=v.MAIL_XLSX)
+            self.memMonXlsx.setDaemon(True)
+            self.memMonXlsx.start()
 
         while testKeepGoing and self.runFlag:
             wx.Yield()  # refresh progress
             (testKeepGoing, skip) = self.dlg.Pulse()
             t.sleep(0.1)
-        # set testKeepGoing to False when click cancel
+            # set testKeepGoing to False when click cancel
+
         if os.path.exists(v.TEST_SUITE_LOG_PATH):
             if not os.path.exists(self.report):
                 os.rename(v.TEST_SUITE_LOG_PATH, self.report)
@@ -816,16 +822,21 @@ class TestSuitePage(wx.Panel):
         try:
             result = delayedResult.get()
             self.memMon.stop()  # stop memory monitor and draw chart
-            self.memMonXlsx.stop()  # stop tracing daemon and kernel memory
+            self.cpuMon.stop()  # stop CPU monitor and draw chart
             # self.memMon.join()
+
+            if v.CONNECTION_TYPE is not 3:
+                self.memMonXlsx.stop()  # stop tracing daemon and kernel memory
+                self.memMonXlsx.join()
+
             q = mp.Queue() # tranlate test result to generateMail
             self.procReport = pr.ProcessReport(self.reportFile, q)
             self.procReport.start()
             self.procReport.join()
-            self.memMonXlsx.join()
 
-            while not os.path.exists(v.DEFAULT_PATH + v.MAIL_PIC1):
-                print "wait for draw memory chart"
+            while not os.path.exists(v.DEFAULT_PATH + v.MAIL_PIC1) or \
+                    not os.path.exists(v.DEFAULT_PATH + v.MAIL_PIC4):
+                print "wait for draw memory/cpu chart"
                 t.sleep(1)
 
             if v.SEND_MAIL == 1:

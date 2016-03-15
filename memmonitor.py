@@ -2,6 +2,7 @@ import multiprocessing as mp
 import matplotlib.pyplot as plt
 from openpyxl import Workbook, load_workbook
 
+import api
 from common import *
 import var as v
 
@@ -33,9 +34,49 @@ class MemMonitor(threading.Thread):
                 except Exception, e:
                     continue
                 memUsed = res["used"]
+                print memUsed
                 self.plot.append(memUsed)
                 if self.callback is not None:
                     self.callback.after_read_res(res, t)
+            t.sleep(self.period)
+        self.terminal.close()
+        p = mp.Process(target=drawMem, args=(self.plot,))
+        p.start()
+        p.join()
+
+    def stop(self):
+        self.running = False
+
+
+class HttpMemMonitor(threading.Thread):
+    def __init__(self, interval=5, period=1):
+        threading.Thread.__init__(self)
+        self.interval = interval
+        self.period = period
+        self.running = False
+        self.callback = None
+        self.terminal = api.HttpClient()
+        self.terminal.connect(host=v.HOST, password=v.WEB_PWD)
+        self.tmpHost = v.HOST
+
+    def run(self):
+        self.running = True
+        self.plot = []
+        last_time = t.time()
+        while self.running:
+            curr_time = t.time()
+            if curr_time - last_time >= self.interval:
+                last_time = curr_time
+                try:
+                    if v.HOST != self.tmpHost:
+                        self.terminal.connect(host=v.HOST, password=v.WEB_PWD)
+                        self.tmpHost = v.HOST
+                    memUsed = api.getDeviceMem(self.terminal, v.DEVICE_STATUS_LOG)
+                except Exception, e:
+                    continue
+                self.plot.append(memUsed)
+                if self.callback is not None:
+                    self.callback.after_read_res(memUsed, t)
             t.sleep(self.period)
         self.terminal.close()
         p = mp.Process(target=drawMem, args=(self.plot,))
@@ -475,16 +516,71 @@ def memDiffCalc(filename, sheetname):
                 sum.value = diff
         wb.save(filename)
 
+
+class HttpCPUMonitor(threading.Thread):
+    def __init__(self, interval=5, period=1):
+        threading.Thread.__init__(self)
+        self.interval = interval
+        self.period = period
+        self.running = False
+        self.callback = None
+        self.terminal = api.HttpClient()
+        self.terminal.connect(host=v.HOST, password=v.WEB_PWD)
+        self.tmpHost = v.HOST
+
+    def run(self):
+        self.running = True
+        self.plot = []
+        last_time = t.time()
+        while self.running:
+            curr_time = t.time()
+            if curr_time - last_time >= self.interval:
+                last_time = curr_time
+                try:
+                    if v.HOST != self.tmpHost:
+                        self.terminal.connect(host=v.HOST, password=v.WEB_PWD)
+                        self.tmpHost = v.HOST
+                    cpuLoad = api.getDeviceCPU(self.terminal, v.DEVICE_STATUS_LOG)
+                except Exception, e:
+                    continue
+                self.plot.append(cpuLoad)
+                if self.callback is not None:
+                    self.callback.after_read_res(cpuLoad, t)
+            t.sleep(self.period)
+        self.terminal.close()
+        p = mp.Process(target=drawCPU, args=(self.plot,))
+        p.start()
+        p.join()
+
+    def stop(self):
+        self.running = False
+
+
+def drawCPU(data):
+    # draw a chart
+    fig, ax = plt.subplots(figsize=(12, 6))
+    print "draw CPU chart"
+    ax.plot(xrange(len(data)), data)
+    # ax.set_title('Total Memory Used')
+    plt.suptitle("Current CPU Load")
+    plt.xlabel('Counts')
+    plt.ylabel('Percent%')
+    # plt.show()
+    plt.savefig(v.MAIL_PIC4)
+    plt.close()
+
+
 if __name__ == '__main__':
 
-    v.CONNECTION_TYPE = 2
-    v.HOST = "192.168.31.1"
-    v.USR = "root"
-    v.PASSWD = "admin"
-    memMon = MemMonitorXlsx(interval=5, count=20, file="temp.xlsx")
+    # v.CONNECTION_TYPE = 2
+    # v.HOST = "192.168.31.1"
+    # v.USR = "root"
+    # v.PASSWD = "admin"
+    v.HOST = '10.237.100.59'
+    v.WEB_PWD = '12345678'
+    webclient = api.HttpClient()
+    webclient.connect(host=v.HOST, password=v.WEB_PWD)
+    memMon = HttpCPUMonitor(interval=5)
     memMon.start()
-    v.HOST = "10.237.100.78"
-    memMon.join()
-    # t.sleep(30)
-    # memMon.stop()
-
+    t.sleep(30)
+    memMon.stop()

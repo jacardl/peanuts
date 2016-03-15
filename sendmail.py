@@ -80,11 +80,13 @@ def generateMail(maillist, title, queue=None, attach1=None, attach2=None):
         """
     content3 = """
         <p><img src="cid:total_memory_used.png" alt="total_memory_used.png" /></p>
+        <p><img src="cid:current_cpu_load.png" alt="current_cpu_load.png" /></p>
         <p><span style="font-size:12px;">此为系统自动发送，请勿回复，测试报告及内存跟踪详情查看附件。</span></p>
         """
     piclist = list()
-    if os.path.isfile(v.MAIL_PIC1):
+    if os.path.isfile(v.MAIL_PIC1) and os.path.isfile(v.MAIL_PIC4):
         piclist.append(v.MAIL_PIC1)
+        piclist.append(v.MAIL_PIC4)
         contents = "{0}{1}".format(content1, content3)
         if os.path.isfile(v.MAIL_PIC2):
             piclist.append(v.MAIL_PIC2)

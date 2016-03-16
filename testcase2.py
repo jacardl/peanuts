@@ -14,7 +14,7 @@ class AP_CLEAR_CHAN(TestCase):
         ret2 = chkAdbDevicesCount(1)
 
         if ret1 is False:
-            raise Exception("Connection is failed. please check your remote settings.")
+            raise Exception("Http connection is failed. please check your remote settings.")
 
         if ret2 is False:
             raise Exception("USB devices arenot ready!")
@@ -86,7 +86,7 @@ class AP_CLEAR_LOW(TestCase):
         ret2 = chkAdbDevicesCount(1)
 
         if ret1 is False:
-            raise Exception("Connection is failed. please check your remote settings.")
+            raise Exception("Http connection is failed. please check your remote settings.")
 
         if ret2 is False:
             raise Exception("USB devices arenot ready!")
@@ -158,7 +158,7 @@ class AP_CLEAR_MID(TestCase):
         ret2 = chkAdbDevicesCount(1)
 
         if ret1 is False:
-            raise Exception("Connection is failed. please check your remote settings.")
+            raise Exception("Http connection is failed. please check your remote settings.")
 
         if ret2 is False:
             raise Exception("USB devices arenot ready!")
@@ -228,7 +228,7 @@ class AP_CLEAR_HIGH(TestCase):
         ret2 = chkAdbDevicesCount(1)
 
         if ret1 is False:
-            raise Exception("Connection is failed. please check your remote settings.")
+            raise Exception("Http connection is failed. please check your remote settings.")
 
         if ret2 is False:
             raise Exception("USB devices arenot ready!")
@@ -342,14 +342,14 @@ class AP_CLEAR_LOW_TXPOWER(TestCase):
             else:
                 self.fail("R1D/R2D txpower isnot correct.")
 
-        elif v.DUT_MODULE == "R1CM":
+        elif v.DUT_MODULE == "R1CM" or v.DUT_MODULE == "R3":
             """
             exactly 13
             """
             if 12.8 <= power <= 13.2:
                 pass
             else:
-                self.fail("R1CM txpower isnot correct.")
+                self.fail("R1CM/R3 txpower isnot correct.")
         elif v.DUT_MODULE == "R1CL":
             """
             exactly 14
@@ -384,14 +384,14 @@ class AP_CLEAR_LOW_TXPOWER(TestCase):
             else:
                 self.fail("R1D/R2D txpower isnot correct.")
 
-        elif v.DUT_MODULE == "R1CM":
+        elif v.DUT_MODULE == "R1CM" or v.DUT_MODULE == "R3":
             """
             exactly 13
             """
             if 12.8 <= power <= 13.2:
                 pass
             else:
-                self.fail("R1CM txpower isnot correct.")
+                self.fail("R1CM/R3 txpower isnot correct.")
 
     def chan1_txpower_2g(self):
 
@@ -418,14 +418,14 @@ class AP_CLEAR_LOW_TXPOWER(TestCase):
             else:
                 self.fail("R1D/R2D txpower isnot correct.")
 
-        elif v.DUT_MODULE == "R1CM":
+        elif v.DUT_MODULE == "R1CM" or v.DUT_MODULE == "R3":
             """
             exactly 13
             """
             if 12.8 <= power <= 13.2:
                 pass
             else:
-                self.fail("R1CM txpower isnot correct.")
+                self.fail("R1CM/R3 txpower isnot correct.")
 
         elif v.DUT_MODULE == "R1CL":
             """
@@ -462,14 +462,14 @@ class AP_CLEAR_LOW_TXPOWER(TestCase):
             else:
                 self.fail("R1D/R2D txpower isnot correct.")
 
-        elif v.DUT_MODULE == "R1CM":
+        elif v.DUT_MODULE == "R1CM" or v.DUT_MODULE == "R3":
             """
             exactly 13
             """
             if 12.8 <= power <= 13.2:
                 pass
             else:
-                self.fail("R1CM txpower isnot correct.")
+                self.fail("R1CM/R3 txpower isnot correct.")
 
         elif v.DUT_MODULE == "R1CL":
             """
@@ -506,14 +506,14 @@ class AP_CLEAR_LOW_TXPOWER(TestCase):
             else:
                 self.fail("R1D/R2D txpower isnot correct.")
 
-        elif v.DUT_MODULE == "R1CM":
+        elif v.DUT_MODULE == "R1CM" or v.DUT_MODULE == "R3":
             """
             exactly 13
             """
             if 12.8 <= power <= 13.2:
                 pass
             else:
-                self.fail("R1CM txpower isnot correct.")
+                self.fail("R1CM/R3 txpower isnot correct.")
 
         elif v.DUT_MODULE == "R1CL":
             """
@@ -550,14 +550,14 @@ class AP_CLEAR_LOW_TXPOWER(TestCase):
             else:
                 self.fail("R1D/R2D txpower isnot correct.")
 
-        elif v.DUT_MODULE == "R1CM":
+        elif v.DUT_MODULE == "R1CM" or v.DUT_MODULE == "R3":
             """
             exactly 13
             """
             if 12.8 <= power <= 13.2:
                 pass
             else:
-                self.fail("R1CM txpower isnot correct.")
+                self.fail("R1CM/R3 txpower isnot correct.")
 
         elif v.DUT_MODULE == "R1CL":
             """
@@ -593,14 +593,14 @@ class AP_CLEAR_LOW_TXPOWER(TestCase):
             else:
                 self.fail("R1D/R2D txpower isnot correct.")
 
-        elif v.DUT_MODULE == "R1CM":
+        elif v.DUT_MODULE == "R1CM" or v.DUT_MODULE == "R3":
             """
             exactly 13
             """
             if 12.8 <= power <= 13.2:
                 pass
             else:
-                self.fail("R1CM txpower isnot correct.")
+                self.fail("R1CM/R3 txpower isnot correct.")
 
     def chan52_txpower_5g(self):
 
@@ -627,14 +627,14 @@ class AP_CLEAR_LOW_TXPOWER(TestCase):
             else:
                 self.fail("R1D/R2D txpower isnot correct.")
 
-        elif v.DUT_MODULE == "R1CM":
+        elif v.DUT_MODULE == "R1CM" or v.DUT_MODULE == "R3":
             """
             exactly 13
             """
             if 12.8 <= power <= 13.2:
                 pass
             else:
-                self.fail("R1CM txpower isnot correct.")
+                self.fail("R1CM/R3 txpower isnot correct.")
 
     def chan149_txpower_5g(self):
 
@@ -661,14 +661,14 @@ class AP_CLEAR_LOW_TXPOWER(TestCase):
             else:
                 self.fail("R1D/R2D txpower isnot correct.")
 
-        elif v.DUT_MODULE == "R1CM":
+        elif v.DUT_MODULE == "R1CM" or v.DUT_MODULE == "R3":
             """
             exactly 13
             """
             if 12.8 <= power <= 13.2:
                 pass
             else:
-                self.fail("R1CM txpower isnot correct.")
+                self.fail("R1CM/R3 txpower isnot correct.")
 
     def chan165_txpower_5g(self):
 
@@ -695,14 +695,14 @@ class AP_CLEAR_LOW_TXPOWER(TestCase):
             else:
                 self.fail("R1D/R2D txpower isnot correct.")
 
-        elif v.DUT_MODULE == "R1CM":
+        elif v.DUT_MODULE == "R1CM" or v.DUT_MODULE == "R3":
             """
             exactly 13
             """
             if 12.8 <= power <= 13.2:
                 pass
             else:
-                self.fail("R1CM txpower isnot correct.")
+                self.fail("R1CM/R3 txpower isnot correct.")
 
 
 class AP_CLEAR_MID_TXPOWER(TestCase):
@@ -757,14 +757,14 @@ class AP_CLEAR_MID_TXPOWER(TestCase):
             else:
                 self.fail("R1D/R2D txpower isnot correct.")
 
-        elif v.DUT_MODULE == "R1CM":
+        elif v.DUT_MODULE == "R1CM" or v.DUT_MODULE == "R3":
             """
             exactly 15
             """
             if 14.8 <= power <= 15.2:
                 pass
             else:
-                self.fail("R1CM txpower isnot correct.")
+                self.fail("R1CM/R3 txpower isnot correct.")
 
         elif v.DUT_MODULE == "R1CL":
             """
@@ -802,14 +802,14 @@ class AP_CLEAR_MID_TXPOWER(TestCase):
             else:
                 self.fail("R1D/R2D txpower isnot correct.")
 
-        elif v.DUT_MODULE == "R1CM":
+        elif v.DUT_MODULE == "R1CM" or v.DUT_MODULE == "R3":
             """
             exactly 15
             """
             if 14.8 <= power <= 15.2:
                 pass
             else:
-                self.fail("R1CM txpower isnot correct.")
+                self.fail("R1CM/R3 txpower isnot correct.")
 
     def chan1_txpower_2g(self):
 
@@ -837,14 +837,14 @@ class AP_CLEAR_MID_TXPOWER(TestCase):
             else:
                 self.fail("R1D/R2D txpower isnot correct.")
 
-        elif v.DUT_MODULE == "R1CM":
+        elif v.DUT_MODULE == "R1CM" or v.DUT_MODULE == "R3":
             """
             exactly 15
             """
             if 14.8 <= power <= 15.2:
                 pass
             else:
-                self.fail("R1CM txpower isnot correct.")
+                self.fail("R1CM/R3 txpower isnot correct.")
 
         elif v.DUT_MODULE == "R1CL":
             """
@@ -881,14 +881,14 @@ class AP_CLEAR_MID_TXPOWER(TestCase):
             else:
                 self.fail("R1D/R2D txpower isnot correct.")
 
-        elif v.DUT_MODULE == "R1CM":
+        elif v.DUT_MODULE == "R1CM" or v.DUT_MODULE == "R3":
             """
             exactly 15
             """
             if 14.8 <= power <= 15.2:
                 pass
             else:
-                self.fail("R1CM txpower isnot correct.")
+                self.fail("R1CM/R3 txpower isnot correct.")
 
         elif v.DUT_MODULE == "R1CL":
             """
@@ -924,14 +924,14 @@ class AP_CLEAR_MID_TXPOWER(TestCase):
             else:
                 self.fail("R1D/R2D txpower isnot correct.")
 
-        elif v.DUT_MODULE == "R1CM":
+        elif v.DUT_MODULE == "R1CM" or v.DUT_MODULE == "R3":
             """
             exactly 15
             """
             if 14.8 <= power <= 15.2:
                 pass
             else:
-                self.fail("R1CM txpower isnot correct.")
+                self.fail("R1CM/R3 txpower isnot correct.")
 
         elif v.DUT_MODULE == "R1CL":
             """
@@ -968,14 +968,14 @@ class AP_CLEAR_MID_TXPOWER(TestCase):
             else:
                 self.fail("R1D/R2D txpower isnot correct.")
 
-        elif v.DUT_MODULE == "R1CM":
+        elif v.DUT_MODULE == "R1CM" or v.DUT_MODULE == "R3":
             """
             exactly 15
             """
             if 14.8 <= power <= 15.2:
                 pass
             else:
-                self.fail("R1CM txpower isnot correct.")
+                self.fail("R1CM/R3 txpower isnot correct.")
 
         elif v.DUT_MODULE == "R1CL":
             """
@@ -1011,14 +1011,14 @@ class AP_CLEAR_MID_TXPOWER(TestCase):
             else:
                 self.fail("R1D/R2D txpower isnot correct.")
 
-        elif v.DUT_MODULE == "R1CM":
+        elif v.DUT_MODULE == "R1CM" or v.DUT_MODULE == "R3":
             """
             exactly 15
             """
             if 14.8 <= power <= 15.2:
                 pass
             else:
-                self.fail("R1CM txpower isnot correct.")
+                self.fail("R1CM/R3 txpower isnot correct.")
 
     def chan52_txpower_5g(self):
 
@@ -1046,14 +1046,14 @@ class AP_CLEAR_MID_TXPOWER(TestCase):
             else:
                 self.fail("R1D/R2D txpower isnot correct.")
 
-        elif v.DUT_MODULE == "R1CM":
+        elif v.DUT_MODULE == "R1CM" or v.DUT_MODULE == "R3":
             """
             exactly 15
             """
             if 14.8 <= power <= 15.2:
                 pass
             else:
-                self.fail("R1CM txpower isnot correct.")
+                self.fail("R1CM/R3 txpower isnot correct.")
 
     def chan149_txpower_5g(self):
 
@@ -1080,14 +1080,14 @@ class AP_CLEAR_MID_TXPOWER(TestCase):
             else:
                 self.fail("R1D/R2D txpower isnot correct.")
 
-        elif v.DUT_MODULE == "R1CM":
+        elif v.DUT_MODULE == "R1CM" or v.DUT_MODULE == "R3":
             """
             exactly 15
             """
             if 14.8 <= power <= 15.2:
                 pass
             else:
-                self.fail("R1CM txpower isnot correct.")
+                self.fail("R1CM/R3 txpower isnot correct.")
 
     def chan165_txpower_5g(self):
 
@@ -1115,14 +1115,14 @@ class AP_CLEAR_MID_TXPOWER(TestCase):
             else:
                 self.fail("R1D/R2D txpower isnot correct.")
 
-        elif v.DUT_MODULE == "R1CM":
+        elif v.DUT_MODULE == "R1CM" or v.DUT_MODULE == "R3":
             """
             exactly 15
             """
             if 14.8 <= power <= 15.2:
                 pass
             else:
-                self.fail("R1CM txpower isnot correct.")
+                self.fail("R1CM/R3 txpower isnot correct.")
 
 
 class AP_CLEAR_HIGH_TXPOWER(TestCase):
@@ -1176,14 +1176,14 @@ class AP_CLEAR_HIGH_TXPOWER(TestCase):
             else:
                 self.fail("R1D/R2D txpower isnot correct.")
 
-        elif v.DUT_MODULE == "R1CM":
+        elif v.DUT_MODULE == "R1CM" or v.DUT_MODULE == "R3":
             """
             exactly 16
             """
             if 15.8 <= power <= 16.2:
                 pass
             else:
-                self.fail("R1CM txpower isnot correct.")
+                self.fail("R1CM/R3 txpower isnot correct.")
         elif v.DUT_MODULE == "R1CL":
             """
             exactly 17
@@ -1219,14 +1219,14 @@ class AP_CLEAR_HIGH_TXPOWER(TestCase):
             else:
                 self.fail("R1D/R2D txpower isnot correct.")
 
-        elif v.DUT_MODULE == "R1CM":
+        elif v.DUT_MODULE == "R1CM" or v.DUT_MODULE == "R3":
             """
             exactly 16
             """
             if 15.8 <= power <= 16.2:
                 pass
             else:
-                self.fail("R1CM txpower isnot correct.")
+                self.fail("R1CM/R3 txpower isnot correct.")
 
     def chan1_txpower_2g(self):
 
@@ -1254,14 +1254,14 @@ class AP_CLEAR_HIGH_TXPOWER(TestCase):
             else:
                 self.fail("R1D/R2D txpower isnot correct.")
 
-        elif v.DUT_MODULE == "R1CM":
+        elif v.DUT_MODULE == "R1CM" or v.DUT_MODULE == "R3":
             """
             exactly 16
             """
             if 15.8 <= power <= 16.2:
                 pass
             else:
-                self.fail("R1CM txpower isnot correct.")
+                self.fail("R1CM/R3 txpower isnot correct.")
         elif v.DUT_MODULE == "R1CL":
             """
             exactly 17
@@ -1297,14 +1297,14 @@ class AP_CLEAR_HIGH_TXPOWER(TestCase):
             else:
                 self.fail("R1D/R2D txpower isnot correct.")
 
-        elif v.DUT_MODULE == "R1CM":
+        elif v.DUT_MODULE == "R1CM" or v.DUT_MODULE == "R3":
             """
             exactly 16
             """
             if 15.8 <= power <= 16.2:
                 pass
             else:
-                self.fail("R1CM txpower isnot correct.")
+                self.fail("R1CM/R3 txpower isnot correct.")
         elif v.DUT_MODULE == "R1CL":
             """
             exactly 17
@@ -1340,14 +1340,14 @@ class AP_CLEAR_HIGH_TXPOWER(TestCase):
             else:
                 self.fail("R1D/R2D txpower isnot correct.")
 
-        elif v.DUT_MODULE == "R1CM":
+        elif v.DUT_MODULE == "R1CM" or v.DUT_MODULE == "R3":
             """
             exactly 16
             """
             if 15.8 <= power <= 16.2:
                 pass
             else:
-                self.fail("R1CM txpower isnot correct.")
+                self.fail("R1CM/R3 txpower isnot correct.")
         elif v.DUT_MODULE == "R1CL":
             """
             exactly 17
@@ -1383,14 +1383,14 @@ class AP_CLEAR_HIGH_TXPOWER(TestCase):
             else:
                 self.fail("R1D/R2D txpower isnot correct.")
 
-        elif v.DUT_MODULE == "R1CM":
+        elif v.DUT_MODULE == "R1CM" or v.DUT_MODULE == "R3":
             """
             exactly 16
             """
             if 15.8 <= power <= 16.2:
                 pass
             else:
-                self.fail("R1CM txpower isnot correct.")
+                self.fail("R1CM/R3 txpower isnot correct.")
         elif v.DUT_MODULE == "R1CL":
             """
             exactly 17
@@ -1426,14 +1426,14 @@ class AP_CLEAR_HIGH_TXPOWER(TestCase):
             else:
                 self.fail("R1D/R2D txpower isnot correct.")
 
-        elif v.DUT_MODULE == "R1CM":
+        elif v.DUT_MODULE == "R1CM" or v.DUT_MODULE == "R3":
             """
             exactly 16
             """
             if 15.8 <= power <= 16.2:
                 pass
             else:
-                self.fail("R1CM txpower isnot correct.")
+                self.fail("R1CM/R3 txpower isnot correct.")
 
     def chan52_txpower_5g(self):
 
@@ -1461,14 +1461,14 @@ class AP_CLEAR_HIGH_TXPOWER(TestCase):
             else:
                 self.fail("R1D/R2D txpower isnot correct.")
 
-        elif v.DUT_MODULE == "R1CM":
+        elif v.DUT_MODULE == "R1CM" or v.DUT_MODULE == "R3":
             """
             exactly 16
             """
             if 15.8 <= power <= 16.2:
                 pass
             else:
-                self.fail("R1CM txpower isnot correct.")
+                self.fail("R1CM/R3 txpower isnot correct.")
 
     def chan149_txpower_5g(self):
 
@@ -1495,14 +1495,14 @@ class AP_CLEAR_HIGH_TXPOWER(TestCase):
             else:
                 self.fail("R1D/R2D txpower isnot correct.")
 
-        elif v.DUT_MODULE == "R1CM":
+        elif v.DUT_MODULE == "R1CM" or v.DUT_MODULE == "R3":
             """
             exactly 16
             """
             if 15.8 <= power <= 16.2:
                 pass
             else:
-                self.fail("R1CM txpower isnot correct.")
+                self.fail("R1CM/R3 txpower isnot correct.")
 
     def chan165_txpower_5g(self):
 
@@ -1529,14 +1529,14 @@ class AP_CLEAR_HIGH_TXPOWER(TestCase):
             else:
                 self.fail("R1D/R2D txpower isnot correct.")
 
-        elif v.DUT_MODULE == "R1CM":
+        elif v.DUT_MODULE == "R1CM" or v.DUT_MODULE == "R3":
             """
             exactly 16
             """
             if 15.8 <= power <= 16.2:
                 pass
             else:
-                self.fail("R1CM txpower isnot correct.")
+                self.fail("R1CM/R3 txpower isnot correct.")
 
 
 class AP_CLEAR_CHANSELECTION(TestCase):
@@ -1546,7 +1546,7 @@ class AP_CLEAR_CHANSELECTION(TestCase):
         self.dut = api.HttpClient()
         ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
         if ret1 is False:
-            raise Exception('Connection is failed. please check your remote settings.')
+            raise Exception('Http connection is failed. please check your remote settings.')
 
     @classmethod
     def tearDownClass(self):
@@ -1603,7 +1603,7 @@ class AP_CLEAR_CHAN_WHITELIST(TestCase):
         ret2 = chkAdbDevicesCount(1)
 
         if ret1 is False:
-            raise Exception("Connection is failed. please check your remote settings.")
+            raise Exception("Http connection is failed. please check your remote settings.")
 
         if ret2 is False:
             raise Exception("USB devices arenot ready!")
@@ -1778,7 +1778,7 @@ class AP_CLEAR_CHAN_BLACKLIST(TestCase):
         ret2 = chkAdbDevicesCount(1)
 
         if ret1 is False:
-            raise Exception("Connection is failed. please check your remote settings.")
+            raise Exception("Http connection is failed. please check your remote settings.")
 
         if ret2 is False:
             raise Exception("USB devices arenot ready!")
@@ -1916,7 +1916,7 @@ class AP_CLEAR_CHAN1_36_FLOW(TestCase):
         ret2 = chkAdbDevicesCount(1)
 
         if ret1 is False:
-            raise Exception("Connection is failed. please check your remote settings.")
+            raise Exception("Http connection is failed. please check your remote settings.")
 
         if ret2 is False:
             raise Exception("USB devices arenot ready!")
@@ -1990,7 +1990,7 @@ class AP_CLEAR_CHAN6_52_FLOW(TestCase):
         ret2 = chkAdbDevicesCount(1)
 
         if ret1 is False:
-            raise Exception("Connection is failed. please check your remote settings.")
+            raise Exception("Http connection is failed. please check your remote settings.")
 
         if ret2 is False:
             raise Exception("USB devices arenot ready!")
@@ -2063,7 +2063,7 @@ class AP_CLEAR_CHAN11_149_FLOW(TestCase):
         ret2 = chkAdbDevicesCount(1)
 
         if ret1 is False:
-            raise Exception("Connection is failed. please check your remote settings.")
+            raise Exception("Http connection is failed. please check your remote settings.")
 
         if ret2 is False:
             raise Exception("USB devices arenot ready!")
@@ -2136,7 +2136,7 @@ class AP_CLEAR_CHAN13_165_FLOW(TestCase):
         ret2 = chkAdbDevicesCount(1)
 
         if ret1 is False:
-            raise Exception("Connection is failed. please check your remote settings.")
+            raise Exception("Http connection is failed. please check your remote settings.")
 
         if ret2 is False:
             raise Exception("USB devices arenot ready!")
@@ -2209,7 +2209,7 @@ class AP_CLEAR_CHAN_REPEAT(TestCase):
         ret2 = chkAdbDevicesCount(1)
 
         if ret1 is False:
-            raise Exception("Connection is failed. please check your remote settings.")
+            raise Exception("Http connection is failed. please check your remote settings.")
 
         if ret2 is False:
             raise Exception("USB devices arenot ready!")
@@ -2263,7 +2263,7 @@ class AP_PSK2_CHAN(TestCase):
         ret2 = chkAdbDevicesCount(1)
 
         if ret1 is False:
-            raise Exception("Connection is failed. please check your remote settings.")
+            raise Exception("Http connection is failed. please check your remote settings.")
 
         if ret2 is False:
             raise Exception("USB devices arenot ready!")
@@ -2338,7 +2338,7 @@ class AP_PSK2_CHAN1_36_FLOW(TestCase):
         ret2 = chkAdbDevicesCount(1)
 
         if ret1 is False:
-            raise Exception("Connection is failed. please check your remote settings.")
+            raise Exception("Http connection is failed. please check your remote settings.")
 
         if ret2 is False:
             raise Exception("USB devices arenot ready!")
@@ -2415,7 +2415,7 @@ class AP_PSK2_CHAN6_52_FLOW(TestCase):
         ret2 = chkAdbDevicesCount(1)
 
         if ret1 is False:
-            raise Exception("Connection is failed. please check your remote settings.")
+            raise Exception("Http connection is failed. please check your remote settings.")
 
         if ret2 is False:
             raise Exception("USB devices arenot ready!")
@@ -2492,7 +2492,7 @@ class AP_PSK2_CHAN11_149_FLOW(TestCase):
         ret2 = chkAdbDevicesCount(1)
 
         if ret1 is False:
-            raise Exception("Connection is failed. please check your remote settings.")
+            raise Exception("Http connection is failed. please check your remote settings.")
 
         if ret2 is False:
             raise Exception("USB devices arenot ready!")
@@ -2569,7 +2569,7 @@ class AP_PSK2_CHAN13_165_FLOW(TestCase):
         ret2 = chkAdbDevicesCount(1)
 
         if ret1 is False:
-            raise Exception("Connection is failed. please check your remote settings.")
+            raise Exception("Http connection is failed. please check your remote settings.")
 
         if ret2 is False:
             raise Exception("USB devices arenot ready!")
@@ -2646,7 +2646,7 @@ class AP_PSK2_CHAN_REPEAT(TestCase):
         ret2 = chkAdbDevicesCount(1)
 
         if ret1 is False:
-            raise Exception("Connection is failed. please check your remote settings.")
+            raise Exception("Http connection is failed. please check your remote settings.")
 
         if ret2 is False:
             raise Exception("USB devices arenot ready!")
@@ -2704,7 +2704,7 @@ class AP_MIXEDPSK_CHAN(TestCase):
         ret2 = chkAdbDevicesCount(1)
 
         if ret1 is False:
-            raise Exception("Connection is failed. please check your remote settings.")
+            raise Exception("Http connection is failed. please check your remote settings.")
 
         if ret2 is False:
             raise Exception("USB devices arenot ready!")
@@ -2862,7 +2862,7 @@ class AP_MIXEDPSK_CHAN_BW80(TestCase):
         ret2 = chkAdbDevicesCount(1)
 
         if ret1 is False:
-            raise Exception("Connection is failed. please check your remote settings.")
+            raise Exception("Http connection is failed. please check your remote settings.")
 
         if ret2 is False:
             raise Exception("USB devices arenot ready!")
@@ -2952,7 +2952,7 @@ class AP_MIXEDPSK_CHAN_BW40(TestCase):
         ret2 = chkAdbDevicesCount(1)
 
         if ret1 is False:
-            raise Exception("Connection is failed. please check your remote settings.")
+            raise Exception("Http connection is failed. please check your remote settings.")
 
         if ret2 is False:
             raise Exception("USB devices arenot ready!")
@@ -3112,7 +3112,7 @@ class AP_MIXEDPSK_CHAN_BW20(TestCase):
         ret2 = chkAdbDevicesCount(1)
 
         if ret1 is False:
-            raise Exception("Connection is failed. please check your remote settings.")
+            raise Exception("Http connection is failed. please check your remote settings.")
 
         if ret2 is False:
             raise Exception("USB devices arenot ready!")
@@ -3273,7 +3273,7 @@ class AP_MIXEDPSK_CHAN_SSIDSPEC(TestCase):
         ret2 = chkAdbDevicesCount(1)
 
         if ret1 is False:
-            raise Exception("Connection is failed. please check your remote settings.")
+            raise Exception("Http connection is failed. please check your remote settings.")
 
         if ret2 is False:
             raise Exception("USB devices arenot ready!")
@@ -3429,7 +3429,7 @@ class AP_MIXEDPSK_CHAN_KEYSPEC(TestCase):
         ret2 = chkAdbDevicesCount(1)
 
         if ret1 is False:
-            raise Exception("Connection is failed. please check your remote settings.")
+            raise Exception("Http connection is failed. please check your remote settings.")
 
         if ret2 is False:
             raise Exception("USB devices arenot ready!")
@@ -3588,7 +3588,7 @@ class AP_MIXEDPSK_CHAN_SSIDCHINESE(TestCase):
         ret2 = chkAdbDevicesCount(1)
 
         if ret1 is False:
-            raise Exception("Connection is failed. please check your remote settings.")
+            raise Exception("Http connection is failed. please check your remote settings.")
 
         if ret2 is False:
             raise Exception("USB devices arenot ready!")
@@ -3744,7 +3744,7 @@ class AP_MIXEDPSK_CHAN1_36_FLOW(TestCase):
         ret2 = chkAdbDevicesCount(1)
 
         if ret1 is False:
-            raise Exception("Connection is failed. please check your remote settings.")
+            raise Exception("Http connection is failed. please check your remote settings.")
 
         if ret2 is False:
             raise Exception("USB devices arenot ready!")
@@ -3911,7 +3911,7 @@ class AP_MIXEDPSK_CHAN6_52_FLOW(TestCase):
         ret2 = chkAdbDevicesCount(1)
 
         if ret1 is False:
-            raise Exception("Connection is failed. please check your remote settings.")
+            raise Exception("Http connection is failed. please check your remote settings.")
 
         if ret2 is False:
             raise Exception("USB devices arenot ready!")
@@ -4078,7 +4078,7 @@ class AP_MIXEDPSK_CHAN11_149_FLOW(TestCase):
         ret2 = chkAdbDevicesCount(1)
 
         if ret1 is False:
-            raise Exception("Connection is failed. please check your remote settings.")
+            raise Exception("Http connection is failed. please check your remote settings.")
 
         if ret2 is False:
             raise Exception("USB devices arenot ready!")
@@ -4245,7 +4245,7 @@ class AP_MIXEDPSK_CHAN13_165_FLOW(TestCase):
         ret2 = chkAdbDevicesCount(1)
 
         if ret1 is False:
-            raise Exception("Connection is failed. please check your remote settings.")
+            raise Exception("Http connection is failed. please check your remote settings.")
 
         if ret2 is False:
             raise Exception("USB devices arenot ready!")
@@ -4412,7 +4412,7 @@ class AP_MIXEDPSK_CHAN_REPEAT(TestCase):
         ret2 = chkAdbDevicesCount(1)
 
         if ret1 is False:
-            raise Exception("Connection is failed. please check your remote settings.")
+            raise Exception("Http connection is failed. please check your remote settings.")
 
         if ret2 is False:
             raise Exception("USB devices arenot ready!")
@@ -4506,7 +4506,7 @@ class AP_MIXEDPSK_BSD(TestCase):
         ret2 = chkAdbDevicesCount(1)
 
         if ret1 is False:
-            raise Exception("Connection is failed. please check your remote settings.")
+            raise Exception("Http connection is failed. please check your remote settings.")
 
         if ret2 is False:
             raise Exception("USB devices arenot ready!")
@@ -4540,11 +4540,9 @@ class AP_MIXEDPSK_BSD(TestCase):
         count = 0
         while count <= 1:
             resConn = setAdbPsk2StaConn(self.device[0], "normal", "2g", self.__class__.__name__)
-            connType = api.getOnlineDeviceType(self.dut, self.__class__.__name__)
-            if self.staMac in connType.keys():
-                resConn2 = int(connType[self.staMac]) == 2
-                if resConn and resConn2:
-                    break
+            resConn2 = chkAdb5gFreq(self.device[0], self.__class__.__name__)
+            if resConn and resConn2:
+                break
             else:
                 resConn2 = False
             count += 1
@@ -4561,11 +4559,9 @@ class AP_MIXEDPSK_BSD(TestCase):
         count = 0
         while count <= 1:
             resConn = setAdbPskStaConn(self.device[0], "normal", "2g", self.__class__.__name__)
-            connType = api.getOnlineDeviceType(self.dut, self.__class__.__name__)
-            if self.staMac in connType.keys():
-                resConn2 = int(connType[self.staMac]) == 2
-                if resConn and resConn2:
-                    break
+            resConn2 = chkAdb5gFreq(self.device[0], self.__class__.__name__)
+            if resConn and resConn2:
+                break
             else:
                 resConn2 = False
             count += 1
@@ -4582,11 +4578,9 @@ class AP_MIXEDPSK_BSD(TestCase):
         count = 0
         while count <= 1:
             resConn = setAdbTkipPsk2StaConn(self.device[0], "normal", "2g", self.__class__.__name__)
-            connType = api.getOnlineDeviceType(self.dut, self.__class__.__name__)
-            if self.staMac in connType.keys():
-                resConn2 = int(connType[self.staMac]) == 2
-                if resConn and resConn2:
-                    break
+            resConn2 = chkAdb5gFreq(self.device[0], self.__class__.__name__)
+            if resConn and resConn2:
+                break
             else:
                 resConn2 = False
             count += 1
@@ -4603,11 +4597,9 @@ class AP_MIXEDPSK_BSD(TestCase):
         count = 0
         while count <= 1:
             resConn = setAdbTkipPskStaConn(self.device[0], "normal", "2g", self.__class__.__name__)
-            connType = api.getOnlineDeviceType(self.dut, self.__class__.__name__)
-            if self.staMac in connType.keys():
-                resConn2 = int(connType[self.staMac]) == 2
-                if resConn and resConn2:
-                    break
+            resConn2 = chkAdb5gFreq(self.device[0], self.__class__.__name__)
+            if resConn and resConn2:
+                break
             else:
                 resConn2 = False
             count += 1
@@ -4629,7 +4621,7 @@ class AP_GUEST_CLEAR(TestCase):
         ret2 = chkAdbDevicesCount(1)
 
         if ret1 is False:
-            raise Exception("Connection is failed. please check your remote settings.")
+            raise Exception("Http connection is failed. please check your remote settings.")
 
         if ret2 is False:
             raise Exception("USB devices arenot ready!")
@@ -4673,7 +4665,7 @@ class AP_GUEST_PSK2(TestCase):
         ret2 = chkAdbDevicesCount(1)
 
         if ret1 is False:
-            raise Exception("Connection is failed. please check your remote settings.")
+            raise Exception("Http connection is failed. please check your remote settings.")
 
         if ret2 is False:
             raise Exception("USB devices arenot ready!")
@@ -4718,7 +4710,7 @@ class AP_GUEST_MIXEDPSK(TestCase):
         ret2 = chkAdbDevicesCount(1)
 
         if ret1 is False:
-            raise Exception("Connection is failed. please check your remote settings.")
+            raise Exception("Http connection is failed. please check your remote settings.")
 
         if ret2 is False:
             raise Exception("USB devices arenot ready!")
@@ -4805,7 +4797,7 @@ class AP_GUEST_CLEAR_WHITELIST(TestCase):
         ret2 = chkAdbDevicesCount(1)
 
         if ret1 is False:
-            raise Exception("Connection is failed. please check your remote settings.")
+            raise Exception("Http connection is failed. please check your remote settings.")
 
         if ret2 is False:
             raise Exception("USB devices arenot ready!")
@@ -4907,7 +4899,7 @@ class AP_GUEST_CLEAR_BLACKLIST(TestCase):
         ret2 = chkAdbDevicesCount(1)
 
         if ret1 is False:
-            raise Exception("Connection is failed. please check your remote settings.")
+            raise Exception("Http connection is failed. please check your remote settings.")
 
         if ret2 is False:
             raise Exception("USB devices arenot ready!")
@@ -4984,7 +4976,7 @@ class AP_GUEST_CLEAR_REPEAT(TestCase):
         ret2 = chkAdbDevicesCount(1)
 
         if ret1 is False:
-            raise Exception("Connection is failed. please check your remote settings.")
+            raise Exception("Http connection is failed. please check your remote settings.")
 
         if ret2 is False:
             raise Exception("USB devices arenot ready!")
@@ -5021,7 +5013,7 @@ class AP_GUEST_MIXEDPSK_REPEAT(TestCase):
         ret2 = chkAdbDevicesCount(1)
 
         if ret1 is False:
-            raise Exception("Connection is failed. please check your remote settings.")
+            raise Exception("Http connection is failed. please check your remote settings.")
 
         if ret2 is False:
             raise Exception("USB devices arenot ready!")
@@ -5077,7 +5069,7 @@ class AP_GUEST_PSK2_REPEAT(TestCase):
         ret2 = chkAdbDevicesCount(1)
 
         if ret1 is False:
-            raise Exception("Connection is failed. please check your remote settings.")
+            raise Exception("Http connection is failed. please check your remote settings.")
 
         if ret2 is False:
             raise Exception("USB devices arenot ready!")
@@ -5115,7 +5107,7 @@ class AP_SSIDHIDE(TestCase):
         ret2 = chkAdbDevicesCount(1)
 
         if ret1 is False:
-            raise Exception("Connection is failed. please check your remote settings.")
+            raise Exception("Http connection is failed. please check your remote settings.")
 
         if ret2 is False:
             raise Exception("USB devices arenot ready!")
@@ -5261,7 +5253,7 @@ class AP_RELAY_CLEAR_CHAN(TestCase):
         ret2 = chkAdbDevicesCount(1)
 
         if ret1 is False:
-            raise Exception("Connection is failed. please check your remote settings.")
+            raise Exception("Http connection is failed. please check your remote settings.")
 
         if ret2 is False:
             raise Exception("USB devices arenot ready!")
@@ -5338,7 +5330,7 @@ class AP_RELAY_CLEAR_LOW(TestCase):
         ret2 = chkAdbDevicesCount(1)
 
         if ret1 is False:
-            raise Exception("Connection is failed. please check your remote settings.")
+            raise Exception("Http connection is failed. please check your remote settings.")
 
         if ret2 is False:
             raise Exception("USB devices arenot ready!")
@@ -5416,7 +5408,7 @@ class AP_RELAY_CLEAR_MID(TestCase):
         ret2 = chkAdbDevicesCount(1)
 
         if ret1 is False:
-            raise Exception("Connection is failed. please check your remote settings.")
+            raise Exception("Http connection is failed. please check your remote settings.")
 
         if ret2 is False:
             raise Exception("USB devices arenot ready!")
@@ -5491,7 +5483,7 @@ class AP_RELAY_CLEAR_HIGH(TestCase):
         ret2 = chkAdbDevicesCount(1)
 
         if ret1 is False:
-            raise Exception("Connection is failed. please check your remote settings.")
+            raise Exception("Http connection is failed. please check your remote settings.")
 
         if ret2 is False:
             raise Exception("USB devices arenot ready!")
@@ -5618,14 +5610,14 @@ class AP_RELAY_CLEAR_LOW_TXPOWER(TestCase):
             else:
                 self.fail("R1D/R2D txpower isnot correct.")
 
-        elif v.DUT_MODULE == "R1CM":
+        elif v.DUT_MODULE == "R1CM" or v.DUT_MODULE == "R3":
             """
             exactly 13
             """
             if 12.8 <= power <= 13.2:
                 pass
             else:
-                self.fail("R1CM txpower isnot correct.")
+                self.fail("R1CM/R3 txpower isnot correct.")
         elif v.DUT_MODULE == "R1CL":
             """
             exactly 14
@@ -5660,14 +5652,14 @@ class AP_RELAY_CLEAR_LOW_TXPOWER(TestCase):
             else:
                 self.fail("R1D/R2D txpower isnot correct.")
 
-        elif v.DUT_MODULE == "R1CM":
+        elif v.DUT_MODULE == "R1CM" or v.DUT_MODULE == "R3":
             """
             exactly 13
             """
             if 12.8 <= power <= 13.2:
                 pass
             else:
-                self.fail("R1CM txpower isnot correct.")
+                self.fail("R1CM/R3 txpower isnot correct.")
 
     def chan1_txpower_2g(self):
 
@@ -5694,14 +5686,14 @@ class AP_RELAY_CLEAR_LOW_TXPOWER(TestCase):
             else:
                 self.fail("R1D/R2D txpower isnot correct.")
 
-        elif v.DUT_MODULE == "R1CM":
+        elif v.DUT_MODULE == "R1CM" or v.DUT_MODULE == "R3":
             """
             exactly 13
             """
             if 12.8 <= power <= 13.2:
                 pass
             else:
-                self.fail("R1CM txpower isnot correct.")
+                self.fail("R1CM/R3 txpower isnot correct.")
 
         elif v.DUT_MODULE == "R1CL":
             """
@@ -5738,14 +5730,14 @@ class AP_RELAY_CLEAR_LOW_TXPOWER(TestCase):
             else:
                 self.fail("R1D/R2D txpower isnot correct.")
 
-        elif v.DUT_MODULE == "R1CM":
+        elif v.DUT_MODULE == "R1CM" or v.DUT_MODULE == "R3":
             """
             exactly 13
             """
             if 12.8 <= power <= 13.2:
                 pass
             else:
-                self.fail("R1CM txpower isnot correct.")
+                self.fail("R1CM/R3 txpower isnot correct.")
 
         elif v.DUT_MODULE == "R1CL":
             """
@@ -5782,14 +5774,14 @@ class AP_RELAY_CLEAR_LOW_TXPOWER(TestCase):
             else:
                 self.fail("R1D/R2D txpower isnot correct.")
 
-        elif v.DUT_MODULE == "R1CM":
+        elif v.DUT_MODULE == "R1CM" or v.DUT_MODULE == "R3":
             """
             exactly 13
             """
             if 12.8 <= power <= 13.2:
                 pass
             else:
-                self.fail("R1CM txpower isnot correct.")
+                self.fail("R1CM/R3 txpower isnot correct.")
 
         elif v.DUT_MODULE == "R1CL":
             """
@@ -5826,14 +5818,14 @@ class AP_RELAY_CLEAR_LOW_TXPOWER(TestCase):
             else:
                 self.fail("R1D/R2D txpower isnot correct.")
 
-        elif v.DUT_MODULE == "R1CM":
+        elif v.DUT_MODULE == "R1CM" or v.DUT_MODULE == "R3":
             """
             exactly 13
             """
             if 12.8 <= power <= 13.2:
                 pass
             else:
-                self.fail("R1CM txpower isnot correct.")
+                self.fail("R1CM/R3 txpower isnot correct.")
 
         elif v.DUT_MODULE == "R1CL":
             """
@@ -5869,14 +5861,14 @@ class AP_RELAY_CLEAR_LOW_TXPOWER(TestCase):
             else:
                 self.fail("R1D/R2D txpower isnot correct.")
 
-        elif v.DUT_MODULE == "R1CM":
+        elif v.DUT_MODULE == "R1CM" or v.DUT_MODULE == "R3":
             """
             exactly 13
             """
             if 12.8 <= power <= 13.2:
                 pass
             else:
-                self.fail("R1CM txpower isnot correct.")
+                self.fail("R1CM/R3 txpower isnot correct.")
 
     def chan52_txpower_5g(self):
 
@@ -5903,14 +5895,14 @@ class AP_RELAY_CLEAR_LOW_TXPOWER(TestCase):
             else:
                 self.fail("R1D/R2D txpower isnot correct.")
 
-        elif v.DUT_MODULE == "R1CM":
+        elif v.DUT_MODULE == "R1CM" or v.DUT_MODULE == "R3":
             """
             exactly 13
             """
             if 12.8 <= power <= 13.2:
                 pass
             else:
-                self.fail("R1CM txpower isnot correct.")
+                self.fail("R1CM/R3 txpower isnot correct.")
 
     def chan149_txpower_5g(self):
 
@@ -5937,14 +5929,14 @@ class AP_RELAY_CLEAR_LOW_TXPOWER(TestCase):
             else:
                 self.fail("R1D/R2D txpower isnot correct.")
 
-        elif v.DUT_MODULE == "R1CM":
+        elif v.DUT_MODULE == "R1CM" or v.DUT_MODULE == "R3":
             """
             exactly 13
             """
             if 12.8 <= power <= 13.2:
                 pass
             else:
-                self.fail("R1CM txpower isnot correct.")
+                self.fail("R1CM/R3 txpower isnot correct.")
 
     def chan165_txpower_5g(self):
 
@@ -5971,14 +5963,14 @@ class AP_RELAY_CLEAR_LOW_TXPOWER(TestCase):
             else:
                 self.fail("R1D/R2D txpower isnot correct.")
 
-        elif v.DUT_MODULE == "R1CM":
+        elif v.DUT_MODULE == "R1CM" or v.DUT_MODULE == "R3":
             """
             exactly 13
             """
             if 12.8 <= power <= 13.2:
                 pass
             else:
-                self.fail("R1CM txpower isnot correct.")
+                self.fail("R1CM/R3 txpower isnot correct.")
 
 
 class AP_RELAY_CLEAR_MID_TXPOWER(TestCase):
@@ -6041,14 +6033,14 @@ class AP_RELAY_CLEAR_MID_TXPOWER(TestCase):
             else:
                 self.fail("R1D/R2D txpower isnot correct.")
 
-        elif v.DUT_MODULE == "R1CM":
+        elif v.DUT_MODULE == "R1CM" or v.DUT_MODULE == "R3":
             """
             exactly 15
             """
             if 14.8 <= power <= 15.2:
                 pass
             else:
-                self.fail("R1CM txpower isnot correct.")
+                self.fail("R1CM/R3 txpower isnot correct.")
 
         elif v.DUT_MODULE == "R1CL":
             """
@@ -6086,14 +6078,14 @@ class AP_RELAY_CLEAR_MID_TXPOWER(TestCase):
             else:
                 self.fail("R1D/R2D txpower isnot correct.")
 
-        elif v.DUT_MODULE == "R1CM":
+        elif v.DUT_MODULE == "R1CM" or v.DUT_MODULE == "R3":
             """
             exactly 15
             """
             if 14.8 <= power <= 15.2:
                 pass
             else:
-                self.fail("R1CM txpower isnot correct.")
+                self.fail("R1CM/R3 txpower isnot correct.")
 
     def chan1_txpower_2g(self):
 
@@ -6121,14 +6113,14 @@ class AP_RELAY_CLEAR_MID_TXPOWER(TestCase):
             else:
                 self.fail("R1D/R2D txpower isnot correct.")
 
-        elif v.DUT_MODULE == "R1CM":
+        elif v.DUT_MODULE == "R1CM" or v.DUT_MODULE == "R3":
             """
             exactly 15
             """
             if 14.8 <= power <= 15.2:
                 pass
             else:
-                self.fail("R1CM txpower isnot correct.")
+                self.fail("R1CM/R3 txpower isnot correct.")
 
         elif v.DUT_MODULE == "R1CL":
             """
@@ -6165,14 +6157,14 @@ class AP_RELAY_CLEAR_MID_TXPOWER(TestCase):
             else:
                 self.fail("R1D/R2D txpower isnot correct.")
 
-        elif v.DUT_MODULE == "R1CM":
+        elif v.DUT_MODULE == "R1CM" or v.DUT_MODULE == "R3":
             """
             exactly 15
             """
             if 14.8 <= power <= 15.2:
                 pass
             else:
-                self.fail("R1CM txpower isnot correct.")
+                self.fail("R1CM/R3 txpower isnot correct.")
 
         elif v.DUT_MODULE == "R1CL":
             """
@@ -6208,14 +6200,14 @@ class AP_RELAY_CLEAR_MID_TXPOWER(TestCase):
             else:
                 self.fail("R1D/R2D txpower isnot correct.")
 
-        elif v.DUT_MODULE == "R1CM":
+        elif v.DUT_MODULE == "R1CM" or v.DUT_MODULE == "R3":
             """
             exactly 15
             """
             if 14.8 <= power <= 15.2:
                 pass
             else:
-                self.fail("R1CM txpower isnot correct.")
+                self.fail("R1CM/R3 txpower isnot correct.")
 
         elif v.DUT_MODULE == "R1CL":
             """
@@ -6252,14 +6244,14 @@ class AP_RELAY_CLEAR_MID_TXPOWER(TestCase):
             else:
                 self.fail("R1D/R2D txpower isnot correct.")
 
-        elif v.DUT_MODULE == "R1CM":
+        elif v.DUT_MODULE == "R1CM" or v.DUT_MODULE == "R3":
             """
             exactly 15
             """
             if 14.8 <= power <= 15.2:
                 pass
             else:
-                self.fail("R1CM txpower isnot correct.")
+                self.fail("R1CM/R3 txpower isnot correct.")
 
         elif v.DUT_MODULE == "R1CL":
             """
@@ -6295,14 +6287,14 @@ class AP_RELAY_CLEAR_MID_TXPOWER(TestCase):
             else:
                 self.fail("R1D/R2D txpower isnot correct.")
 
-        elif v.DUT_MODULE == "R1CM":
+        elif v.DUT_MODULE == "R1CM" or v.DUT_MODULE == "R3":
             """
             exactly 15
             """
             if 14.8 <= power <= 15.2:
                 pass
             else:
-                self.fail("R1CM txpower isnot correct.")
+                self.fail("R1CM/R3 txpower isnot correct.")
 
     def chan52_txpower_5g(self):
 
@@ -6330,14 +6322,14 @@ class AP_RELAY_CLEAR_MID_TXPOWER(TestCase):
             else:
                 self.fail("R1D/R2D txpower isnot correct.")
 
-        elif v.DUT_MODULE == "R1CM":
+        elif v.DUT_MODULE == "R1CM" or v.DUT_MODULE == "R3":
             """
             exactly 15
             """
             if 14.8 <= power <= 15.2:
                 pass
             else:
-                self.fail("R1CM txpower isnot correct.")
+                self.fail("R1CM/R3 txpower isnot correct.")
 
     def chan149_txpower_5g(self):
 
@@ -6364,14 +6356,14 @@ class AP_RELAY_CLEAR_MID_TXPOWER(TestCase):
             else:
                 self.fail("R1D/R2D txpower isnot correct.")
 
-        elif v.DUT_MODULE == "R1CM":
+        elif v.DUT_MODULE == "R1CM" or v.DUT_MODULE == "R3":
             """
             exactly 15
             """
             if 14.8 <= power <= 15.2:
                 pass
             else:
-                self.fail("R1CM txpower isnot correct.")
+                self.fail("R1CM/R3 txpower isnot correct.")
 
     def chan165_txpower_5g(self):
 
@@ -6399,14 +6391,14 @@ class AP_RELAY_CLEAR_MID_TXPOWER(TestCase):
             else:
                 self.fail("R1D/R2D txpower isnot correct.")
 
-        elif v.DUT_MODULE == "R1CM":
+        elif v.DUT_MODULE == "R1CM" or v.DUT_MODULE == "R3":
             """
             exactly 15
             """
             if 14.8 <= power <= 15.2:
                 pass
             else:
-                self.fail("R1CM txpower isnot correct.")
+                self.fail("R1CM/R3 txpower isnot correct.")
 
 
 class AP_RELAY_CLEAR_HIGH_TXPOWER(TestCase):
@@ -6468,14 +6460,14 @@ class AP_RELAY_CLEAR_HIGH_TXPOWER(TestCase):
             else:
                 self.fail("R1D/R2D txpower isnot correct.")
 
-        elif v.DUT_MODULE == "R1CM":
+        elif v.DUT_MODULE == "R1CM" or v.DUT_MODULE == "R3":
             """
             exactly 16
             """
             if 15.8 <= power <= 16.2:
                 pass
             else:
-                self.fail("R1CM txpower isnot correct.")
+                self.fail("R1CM/R3 txpower isnot correct.")
         elif v.DUT_MODULE == "R1CL":
             """
             exactly 17
@@ -6511,14 +6503,14 @@ class AP_RELAY_CLEAR_HIGH_TXPOWER(TestCase):
             else:
                 self.fail("R1D/R2D txpower isnot correct.")
 
-        elif v.DUT_MODULE == "R1CM":
+        elif v.DUT_MODULE == "R1CM" or v.DUT_MODULE == "R3":
             """
             exactly 16
             """
             if 15.8 <= power <= 16.2:
                 pass
             else:
-                self.fail("R1CM txpower isnot correct.")
+                self.fail("R1CM/R3 txpower isnot correct.")
 
     def chan1_txpower_2g(self):
 
@@ -6546,14 +6538,14 @@ class AP_RELAY_CLEAR_HIGH_TXPOWER(TestCase):
             else:
                 self.fail("R1D/R2D txpower isnot correct.")
 
-        elif v.DUT_MODULE == "R1CM":
+        elif v.DUT_MODULE == "R1CM" or v.DUT_MODULE == "R3":
             """
             exactly 16
             """
             if 15.8 <= power <= 16.2:
                 pass
             else:
-                self.fail("R1CM txpower isnot correct.")
+                self.fail("R1CM/R3 txpower isnot correct.")
         elif v.DUT_MODULE == "R1CL":
             """
             exactly 17
@@ -6589,14 +6581,14 @@ class AP_RELAY_CLEAR_HIGH_TXPOWER(TestCase):
             else:
                 self.fail("R1D/R2D txpower isnot correct.")
 
-        elif v.DUT_MODULE == "R1CM":
+        elif v.DUT_MODULE == "R1CM" or v.DUT_MODULE == "R3":
             """
             exactly 16
             """
             if 15.8 <= power <= 16.2:
                 pass
             else:
-                self.fail("R1CM txpower isnot correct.")
+                self.fail("R1CM/R3 txpower isnot correct.")
         elif v.DUT_MODULE == "R1CL":
             """
             exactly 17
@@ -6632,14 +6624,14 @@ class AP_RELAY_CLEAR_HIGH_TXPOWER(TestCase):
             else:
                 self.fail("R1D/R2D txpower isnot correct.")
 
-        elif v.DUT_MODULE == "R1CM":
+        elif v.DUT_MODULE == "R1CM" or v.DUT_MODULE == "R3":
             """
             exactly 16
             """
             if 15.8 <= power <= 16.2:
                 pass
             else:
-                self.fail("R1CM txpower isnot correct.")
+                self.fail("R1CM/R3 txpower isnot correct.")
         elif v.DUT_MODULE == "R1CL":
             """
             exactly 17
@@ -6675,14 +6667,14 @@ class AP_RELAY_CLEAR_HIGH_TXPOWER(TestCase):
             else:
                 self.fail("R1D/R2D txpower isnot correct.")
 
-        elif v.DUT_MODULE == "R1CM":
+        elif v.DUT_MODULE == "R1CM" or v.DUT_MODULE == "R3":
             """
             exactly 16
             """
             if 15.8 <= power <= 16.2:
                 pass
             else:
-                self.fail("R1CM txpower isnot correct.")
+                self.fail("R1CM/R3 txpower isnot correct.")
         elif v.DUT_MODULE == "R1CL":
             """
             exactly 17
@@ -6718,14 +6710,14 @@ class AP_RELAY_CLEAR_HIGH_TXPOWER(TestCase):
             else:
                 self.fail("R1D/R2D txpower isnot correct.")
 
-        elif v.DUT_MODULE == "R1CM":
+        elif v.DUT_MODULE == "R1CM" or v.DUT_MODULE == "R3":
             """
             exactly 16
             """
             if 15.8 <= power <= 16.2:
                 pass
             else:
-                self.fail("R1CM txpower isnot correct.")
+                self.fail("R1CM/R3 txpower isnot correct.")
 
     def chan52_txpower_5g(self):
 
@@ -6753,14 +6745,14 @@ class AP_RELAY_CLEAR_HIGH_TXPOWER(TestCase):
             else:
                 self.fail("R1D/R2D txpower isnot correct.")
 
-        elif v.DUT_MODULE == "R1CM":
+        elif v.DUT_MODULE == "R1CM" or v.DUT_MODULE == "R3":
             """
             exactly 16
             """
             if 15.8 <= power <= 16.2:
                 pass
             else:
-                self.fail("R1CM txpower isnot correct.")
+                self.fail("R1CM/R3 txpower isnot correct.")
 
     def chan149_txpower_5g(self):
 
@@ -6787,14 +6779,14 @@ class AP_RELAY_CLEAR_HIGH_TXPOWER(TestCase):
             else:
                 self.fail("R1D/R2D txpower isnot correct.")
 
-        elif v.DUT_MODULE == "R1CM":
+        elif v.DUT_MODULE == "R1CM" or v.DUT_MODULE == "R3":
             """
             exactly 16
             """
             if 15.8 <= power <= 16.2:
                 pass
             else:
-                self.fail("R1CM txpower isnot correct.")
+                self.fail("R1CM/R3 txpower isnot correct.")
 
     def chan165_txpower_5g(self):
 
@@ -6821,14 +6813,14 @@ class AP_RELAY_CLEAR_HIGH_TXPOWER(TestCase):
             else:
                 self.fail("R1D/R2D txpower isnot correct.")
 
-        elif v.DUT_MODULE == "R1CM":
+        elif v.DUT_MODULE == "R1CM" or v.DUT_MODULE == "R3":
             """
             exactly 16
             """
             if 15.8 <= power <= 16.2:
                 pass
             else:
-                self.fail("R1CM txpower isnot correct.")
+                self.fail("R1CM/R3 txpower isnot correct.")
 
 
 class AP_RELAY_CLEAR_CHANSELECTION(TestCase):
@@ -6838,7 +6830,7 @@ class AP_RELAY_CLEAR_CHANSELECTION(TestCase):
         self.dut = api.HttpClient()
         ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
         if ret1 is False:
-            raise Exception('Connection is failed. please check your remote settings.')
+            raise Exception('Http connection is failed. please check your remote settings.')
 
         api.setLanAp(self.dut, self.__name__)
 
@@ -6900,7 +6892,7 @@ class AP_RELAY_PSK2(TestCase):
         ret2 = chkAdbDevicesCount(1)
 
         if ret1 is False:
-            raise Exception("Connection is failed. please check your remote settings.")
+            raise Exception("Http connection is failed. please check your remote settings.")
 
         if ret2 is False:
             raise Exception("USB devices arenot ready!")
@@ -6978,7 +6970,7 @@ class AP_RELAY_MIXEDPSK(TestCase):
         ret2 = chkAdbDevicesCount(1)
 
         if ret1 is False:
-            raise Exception("Connection is failed. please check your remote settings.")
+            raise Exception("Http connection is failed. please check your remote settings.")
 
         if ret2 is False:
             raise Exception("USB devices arenot ready!")
@@ -7143,7 +7135,7 @@ class AP_RELAY_MIXEDPSK_CHAN_BW80(TestCase):
         ret2 = chkAdbDevicesCount(1)
 
         if ret1 is False:
-            raise Exception("Connection is failed. please check your remote settings.")
+            raise Exception("Http connection is failed. please check your remote settings.")
 
         if ret2 is False:
             raise Exception("USB devices arenot ready!")
@@ -7242,7 +7234,7 @@ class AP_RELAY_MIXEDPSK_CHAN_BW40(TestCase):
         ret2 = chkAdbDevicesCount(1)
 
         if ret1 is False:
-            raise Exception("Connection is failed. please check your remote settings.")
+            raise Exception("Http connection is failed. please check your remote settings.")
 
         if ret2 is False:
             raise Exception("USB devices arenot ready!")
@@ -7411,7 +7403,7 @@ class AP_RELAY_MIXEDPSK_CHAN_BW20(TestCase):
         ret2 = chkAdbDevicesCount(1)
 
         if ret1 is False:
-            raise Exception("Connection is failed. please check your remote settings.")
+            raise Exception("Http connection is failed. please check your remote settings.")
 
         if ret2 is False:
             raise Exception("USB devices arenot ready!")
@@ -7581,7 +7573,7 @@ class AP_RELAY_MIXEDPSK_SSIDSPEC(TestCase):
         ret2 = chkAdbDevicesCount(1)
 
         if ret1 is False:
-            raise Exception("Connection is failed. please check your remote settings.")
+            raise Exception("Http connection is failed. please check your remote settings.")
 
         if ret2 is False:
             raise Exception("USB devices arenot ready!")
@@ -7744,7 +7736,7 @@ class AP_RELAY_MIXEDPSK_KEYSPEC(TestCase):
         ret2 = chkAdbDevicesCount(1)
 
         if ret1 is False:
-            raise Exception("Connection is failed. please check your remote settings.")
+            raise Exception("Http connection is failed. please check your remote settings.")
 
         if ret2 is False:
             raise Exception("USB devices arenot ready!")
@@ -7910,7 +7902,7 @@ class AP_RELAY_MIXEDPSK_SSIDCHINESE(TestCase):
         ret2 = chkAdbDevicesCount(1)
 
         if ret1 is False:
-            raise Exception("Connection is failed. please check your remote settings.")
+            raise Exception("Http connection is failed. please check your remote settings.")
 
         if ret2 is False:
             raise Exception("USB devices arenot ready!")
@@ -8072,7 +8064,7 @@ class AP_RELAY_MIXEDPSK_BSD(TestCase):
         ret2 = chkAdbDevicesCount(1)
 
         if ret1 is False:
-            raise Exception("Connection is failed. please check your remote settings.")
+            raise Exception("Http connection is failed. please check your remote settings.")
 
         if ret2 is False:
             raise Exception("USB devices arenot ready!")
@@ -8105,11 +8097,9 @@ class AP_RELAY_MIXEDPSK_BSD(TestCase):
         count = 0
         while count <= 1:
             resConn = setAdbPsk2StaConn(self.device[0], "normal", "2g", self.__class__.__name__)
-            connType = api.getOnlineDeviceType(self.dut, self.__class__.__name__)
-            if self.staMac in connType.keys():
-                resConn2 = int(connType[self.staMac]) == 2
-                if resConn and resConn2:
-                    break
+            resConn2 = chkAdb5gFreq(self.device[0], self.__class__.__name__)
+            if resConn and resConn2:
+                break
             else:
                 resConn2 = False
             count += 1
@@ -8126,11 +8116,9 @@ class AP_RELAY_MIXEDPSK_BSD(TestCase):
         count = 0
         while count <= 1:
             resConn = setAdbPskStaConn(self.device[0], "normal", "2g", self.__class__.__name__)
-            connType = api.getOnlineDeviceType(self.dut, self.__class__.__name__)
-            if self.staMac in connType.keys():
-                resConn2 = int(connType[self.staMac]) == 2
-                if resConn and resConn2:
-                    break
+            resConn2 = chkAdb5gFreq(self.device[0], self.__class__.__name__)
+            if resConn and resConn2:
+                break
             else:
                 resConn2 = False
             count += 1
@@ -8147,11 +8135,9 @@ class AP_RELAY_MIXEDPSK_BSD(TestCase):
         count = 0
         while count <= 1:
             resConn = setAdbTkipPsk2StaConn(self.device[0], "normal", "2g", self.__class__.__name__)
-            connType = api.getOnlineDeviceType(self.dut, self.__class__.__name__)
-            if self.staMac in connType.keys():
-                resConn2 = int(connType[self.staMac]) == 2
-                if resConn and resConn2:
-                    break
+            resConn2 = chkAdb5gFreq(self.device[0], self.__class__.__name__)
+            if resConn and resConn2:
+                break
             else:
                 resConn2 = False
             count += 1
@@ -8168,11 +8154,9 @@ class AP_RELAY_MIXEDPSK_BSD(TestCase):
         count = 0
         while count <= 1:
             resConn = setAdbTkipPskStaConn(self.device[0], "normal", "2g", self.__class__.__name__)
-            connType = api.getOnlineDeviceType(self.dut, self.__class__.__name__)
-            if self.staMac in connType.keys():
-                resConn2 = int(connType[self.staMac]) == 2
-                if resConn and resConn2:
-                    break
+            resConn2 = chkAdb5gFreq(self.device[0], self.__class__.__name__)
+            if resConn and resConn2:
+                break
             else:
                 resConn2 = False
             count += 1
@@ -8195,7 +8179,7 @@ class AP_RELAY_SSIDHIDE(TestCase):
         ret2 = chkAdbDevicesCount(1)
 
         if ret1 is False:
-            raise Exception("Connection is failed. please check your remote settings.")
+            raise Exception("Http connection is failed. please check your remote settings.")
 
         if ret2 is False:
             raise Exception("USB devices arenot ready!")
@@ -8346,7 +8330,7 @@ class AP_RELAY_CONFIG_CHECK(TestCase):
         ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
 
         if ret1 is False:
-            raise Exception("Connection is failed. please check your remote settings.")
+            raise Exception("Http connection is failed. please check your remote settings.")
 
         self.option2g = {
             'wifiIndex': 1,
@@ -8458,10 +8442,10 @@ class AP_CHECK(TestCase):
         ret2 = self.dut2.connect(host=v.HOST, password=v.WEB_PWD)
 
         if ret1 is False:
-            raise Exception("Connection is failed for dut1. please check your remote settings.")
+            raise Exception("Connection is failed. please check your remote settings.")
 
         if ret2 is False:
-            raise Exception("Connection is failed for dut2. please check your remote settings.")
+            raise Exception("Http connection is failed. please check your remote settings.")
 
         option2g = {
             'wifiIndex': 1,

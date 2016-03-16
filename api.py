@@ -113,7 +113,7 @@ class HttpClient(object):
                 else:
                     return True
             except:
-                print 'connection is failed. please check your network.'
+                print 'http connection is failed. please check your network.'
                 return False
 
         loop = 0
@@ -123,7 +123,6 @@ class HttpClient(object):
             t.sleep(5)
             ret = connectInLoop(host, password)
         return ret
-
 
     def close(self):
         if self.httpClient:
@@ -514,6 +513,7 @@ def setLanAp(terminal, logname, **kwargs):
     }
     option.update(kwargs)
     api = '/cgi-bin/luci/;stok=token/api/xqnetwork/set_lan_ap'
+    t.sleep(20)
     result = setGet(terminal, logname, api, **option)
     t.sleep(30)
     if result is not None:
@@ -674,6 +674,52 @@ def getDeviceList(terminal, logname, **kwargs):
     return None
 
 
+def getDeviceListZigbee(terminal, logname, **kwargs):
+    option = {
+    }
+    option.update(kwargs)
+    api = '/cgi-bin/luci/;stok=token/api/xqsystem/device_list_zigbee'
+    ret = setGet(terminal, logname, api, **option)
+    if ret is not None:
+        if ret['code'] is 0:
+            return ret
+    return None
+
+
+def getInitInfo(terminal, logname, **kwargs):
+    """
+    "routername": "peanuts-r1c-10f",
+    "code": 0,
+    "bound": 0,
+    "romversion": "2.9.84",
+    "connect": 0,
+    "id": "604400000538",
+    "hardware": "R1CM",
+    "language": "zh_cn",
+    "countrycode": "CN",
+    "modules": {
+        "open_ssid": "1",
+        "category_view_ultimate": "1",
+        "guest_wifi": "1",
+        "barcode_plugin": "1",
+        "share_folder": "1",
+        "wifi_security": "1",
+        "file_tunnel": "1"
+    },
+    "routerId": "3f15f0ed-3ff3-4544-95c8-ce85c6fdfc60",
+    "inited": 1
+    """
+    option = {
+    }
+    option.update(kwargs)
+    api = '/cgi-bin/luci/;stok=token/api/xqsystem/init_info'
+    ret = setGet(terminal, logname, api, **option)
+    if ret is not None:
+        if ret['code'] is 0:
+            return ret
+    return None
+
+
 def getOnlineDeviceType(terminal, logname):
     """
     "type": 0,       (0/1/2/3  有线 / 2.4G wifi / 5G wifi / guest wifi)
@@ -693,6 +739,7 @@ def getOnlineDeviceType(terminal, logname):
         return result
     return None
 
+
 def getWifiStatus(terminal, logname):
     """
     {'status': [{'ssid': 'peanuts', 'up': 0}, {'ssid': 'peanuts_automatic_test_suite-5G', 'up': 0}], 'code': 0}
@@ -707,36 +754,114 @@ def getWifiStatus(terminal, logname):
     return None
 
 
+def getDeviceStatus(terminal, logname):
+    """
+        {
+       "dev": [   设备的流量统计信息
+           {
+               "mac": "3C:07:54:54:C6:CC",
+               "maxdownloadspeed": "2168702",
+               "upload": "11202382",
+               "upspeed": "5817",
+               "downspeed": "3343",
+               "online": "11493",
+               "devname": "Salmon_MacPro",
+               "maxuploadspeed": "102550",
+               "download": "161864788"
+           },
+           {
+               "mac": "F4:F1:5A:EA:FD:63",
+               "maxdownloadspeed": "378532",
+               "upload": "1900901",
+               "upspeed": "0",
+               "downspeed": "0",
+               "online": "11143",
+               "devname": "Salmon_iPhone5",
+               "maxuploadspeed": "18542",
+               "download": "25363179"
+           }
+       ],
+       "hardware": {
+           "mac": "10:48:B1:E8:11:8C",
+           "platform": "R1D",
+           "version": "2.1.41",
+           "channel": "current",
+           "sn": "480800000230"
+       },
+       "count": {
+           "all": 4,         历史设备总数
+           "online": 2    当前在线设备数
+       },
+       "code": 0,
+       "wan": {
+           "downspeed": "4962",
+           "maxdownloadspeed": "2200417",
+           "history": "9311,2253,4401,2262,7754,4041,3135,3368,4909,9714,3794,3222,5528,1702,3598,1192,1582,2298,436,1752,2170,852,5675,1633,145,4053",   wan口速度历史数据
+           "devname": "eth0.2",
+           "upload": "31670567",
+           "upspeed": "6096",
+           "maxuploadspeed": "193775",
+           "download": "362481137"
+       },
+       "mem": {
+           "usage": 0.44,  内存使用率
+           "total": 256,      内存总量
+           "hz": 1333,       内存频率
+           "type": "DDR3"  内存类型
+       },
+       "cpu": {
+           "core": 1,     CPU核心数
+           "hz": 1,        CPU主频
+           "load": 0.01  CPU负载
+       },
+       "upTime": "89460.12"   开机时长
+    }
+
+    :param terminal:
+    :param logname:
+    :return:
+    """
+    api = '/cgi-bin/luci/;stok=token/api/misystem/status'
+    ret = setGet(terminal, logname, api)
+    if ret is not None:
+        return ret
+    return None
+
+
+def getDeviceMem(terminal, logname):
+    ret = getDeviceStatus(terminal, logname)
+    if ret is None:
+        return None
+    else:
+        usage = ret['mem']['usage']
+        total = ret['mem']['total']
+        usageNum = float(usage)
+        totalNum = float(total.split()[0])
+        usedMemNum = int(usageNum * totalNum * 1024)
+        return usedMemNum
+
+def getDeviceCPU(terminal, logname):
+    ret = getDeviceStatus(terminal, logname)
+    if ret is None:
+        return None
+    else:
+        load = ret['cpu']['load']
+        loadPercent = float(load) * 100
+        return loadPercent
+
+
 if __name__ == '__main__':
     option = {
-        'wifiIndex': 2,
-        'on': 1,
-        'ssid': v.CHINESE_SSID_5G,
-        'pwd': '',
-        'encryption': 'none',
-        'channel': '0',
-        'bandwidth': '0',
-        'hidden': 0,
-        'txpwr': 'mid'
+        'mac': '78:D7:5F:8A:82:08'
     }
-    option2 = {
-        'wifiIndex': 2,
-        'on': 0,
-        'ssid': "peanuts",
-        'pwd': '',
-        'encryption': 'none',
-        'channel': '0',
-        'bandwidth': '0',
-        'hidden': 0,
-        'txpwr': 'mid'
-    }
-    v.HOST = '192.168.140.1'
+    v.HOST = '10.237.100.59'
     v.WEB_PWD = '12345678'
     webclient = HttpClient()
     webclient.connect(host=v.HOST, password=v.WEB_PWD)
-    setWifi(webclient, 'aaa', **option)
-    setWifi(webclient, 'aaa', **option2)
-    setLanAp(webclient, 'aaa')
-    setDisableLanAp(webclient, 'aaa')
+    # setWifi(webclient, 'aaa', **option)
+    # setWifi(webclient, 'aaa', **option2)
+    # setLanAp(webclient, 'aaa')
+    # setDisableLanAp(webclient, 'aaa')
+    # print getDeviceCPU(webclient, "a.log")
+    print getDeviceStatus(webclient, 'a')
     webclient.close()
-

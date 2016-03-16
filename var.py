@@ -16,15 +16,19 @@ STA_USR = 'root'
 STA_PASSWD = 'admin'
 STA_COUNT = "1"
 
+SERIAL_PORT = ""
+BAUDRATE = 115200
+
+
 """
 connection_type = 1 represent ssh
                   2 represent telnet
-                  3
+                  3 serial
 """
-CONNECTION_TYPE = 2
+CONNECTION_TYPE = 1
 STA_CONNECTION_TYPE = 1
 
-VER = '2.5.8'
+VER = '3.0.1'
 
 # ----------------Memory Tracking-----------------
 
@@ -61,6 +65,8 @@ STA_INTF_5G = 'apclii0'
 TEST_SUITE_LOG_PATH = os.getcwd() + os.sep + 'LOG_TEST_SUITE' + os.sep
 IPERF_PATH = os.getcwd() + os.sep + "iperf" + os.sep
 DEFAULT_PATH = os.getcwd() + os.sep
+SSH_LOG_PATH = TEST_SUITE_LOG_PATH + "ssh_connection.log"
+DEVICE_STATUS_LOG = "device_status_log"
 
 WORD_RANGE = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-_"
 SPEC_RANGE = '`~!@#$%^&*() =+\\|]}[{\'\";:/?.>,<'
@@ -121,9 +127,10 @@ MAILFROM_LIST = "robot@xiaomi.com"
 MAIL_PIC1 = "total_memory_used.png"
 MAIL_PIC2 = "throughput.png"
 MAIL_PIC3 = "throughput_in_%s.png"
+MAIL_PIC4 = "current_cpu_load.png"
 MAIL_XLSX = "memory_tracking.xlsx"
 
-MEM_MONITOR_INTERVAL = 60
+MEM_MONITOR_INTERVAL = 240
 
 # -------------api test------------------#
 WEB_USERNAME = 'admin'

@@ -130,7 +130,7 @@ MAIL_PIC3 = "throughput_in_%s.png"
 MAIL_PIC4 = "current_cpu_load.png"
 MAIL_XLSX = "memory_tracking.xlsx"
 
-MEM_MONITOR_INTERVAL = 60
+MEM_MONITOR_INTERVAL = 240
 
 # -------------api test------------------#
 WEB_USERNAME = 'admin'

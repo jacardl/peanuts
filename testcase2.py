@@ -8425,11 +8425,420 @@ class AP_RELAY_CONFIG_CHECK(TestCase):
 
 
 class AP_QOS_MANUAL_MIXEDPSK(TestCase):
-    pass
+    @classmethod
+    def setUpClass(self):
+        self.dut = api.HttpClient()
+        ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
+        ret2 = chkAdbDevicesCount(1)
+
+        if ret1 is False:
+            raise Exception("Http connection is failed. please check your remote settings.")
+
+        if ret2 is False:
+            raise Exception("USB devices arenot ready!")
+
+        option2g = {
+            'wifiIndex': 1,
+            'ssid': v.SSID,
+            'encryption': 'mixed-psk',
+            'pwd': v.KEY
+        }
+        option5g = {
+            'wifiIndex': 2,
+            'ssid': v.SSID_5G,
+            'encryption': 'mixed-psk',
+            'pwd': v.KEY
+        }
+
+        api.setWifi(self.dut, self.__name__, **option2g)
+        api.setWifi(self.dut, self.__name__, **option5g)
+
+        self.device = getAdbDevices()
+        wlanInfo = getAdbShellWlan(self.device[0], self.__name__)
+        self.staMac = wlanInfo["mac"].upper()
+
+        optionQosMode = {
+            'mode': 2
+        }
+        optionQosLimits = {
+            'mode': 2,
+            'data': [
+            {
+                'mac': self.staMac,
+                'maxup': v.QOS_MAXUP,
+                'maxdown': v.QOS_MAXDOWN,
+            },
+        ]
+        }
+
+        api.setQosSwitch(self.dut, self.__name__)
+        api.setQosMode(self.dut, self.__name__, **optionQosMode)
+        api.setQosLimits(self.dut, self.__name__, **optionQosLimits)
+
+
+    @classmethod
+    def tearDownClass(self):
+
+        api.setDisableLanAp(self.dut, self.__name__)
+
+        option2g = {
+            'wifiIndex': 1,
+            'on': 0,
+        }
+        option5g = {
+            'wifiIndex': 2,
+            'on': 0
+        }
+        api.setWifi(self.dut, self.__name__, **option2g)
+        api.setWifi(self.dut, self.__name__, **option5g)
+
+        optionQosSwitch = {
+            'on': 0,
+        }
+        api.setQosSwitch(self.dut, self.__name__, **optionQosSwitch)
+
+        self.dut.close()
+
+    def assoc_psk2_sta_speedtest_2g(self):
+
+        res2gConn = setAdbPsk2StaConn(self.device[0], "normal", "2g", self.__class__.__name__)
+        if res2gConn:
+            result = getAdbShellWlan(self.device[0], self.__class__.__name__)
+            if result['ip'] == '':
+                self.fail(msg='no ip address got.')
+            else:
+                speedTestRes = getAdbSpeedTestResult(self.device[0], self.__class__.__name__)
+                download = speedTestRes['down'] * 0.125
+                upload = speedTestRes['up'] * 0.125
+                self.assertLessEqual(download, v.QOS_MAXDOWN * 1.1, "Qos manual for downlink does not work")
+                self.assertLessEqual(upload, v.QOS_MAXUP * 1.1, "Qos manual for uplink does not work")
+        else:
+            self.assertTrue(res2gConn, "Association wasnot successful.")
+
+    def assoc_psk2_sta_speedtest_5g(self):
+
+        res5gConn = setAdbPsk2StaConn(self.device[0], "normal", "5g", self.__class__.__name__)
+        if res5gConn:
+            result = getAdbShellWlan(self.device[0], self.__class__.__name__)
+            if result['ip'] == '':
+                self.fail(msg='no ip address got.')
+            else:
+                speedTestRes = getAdbSpeedTestResult(self.device[0], self.__class__.__name__)
+                download = speedTestRes['down'] * 0.125
+                upload = speedTestRes['up'] * 0.125
+                self.assertLessEqual(download, v.QOS_MAXDOWN * 1.1, "Qos manual for downlink does not work")
+                self.assertLessEqual(upload, v.QOS_MAXUP * 1.1, "Qos manual for uplink does not work")
+        else:
+            self.assertTrue(res5gConn, "Association wasnot successful.")
+
+    def assoc_psk_sta_speedtest_2g(self):
+
+        res2gConn = setAdbPskStaConn(self.device[0], "normal", "2g", self.__class__.__name__)
+        if res2gConn:
+            result = getAdbShellWlan(self.device[0], self.__class__.__name__)
+            if result['ip'] == '':
+                self.fail(msg='no ip address got.')
+            else:
+                speedTestRes = getAdbSpeedTestResult(self.device[0], self.__class__.__name__)
+                download = speedTestRes['down'] * 0.125
+                upload = speedTestRes['up'] * 0.125
+                self.assertLessEqual(download, v.QOS_MAXDOWN * 1.1, "Qos manual for downlink does not work")
+                self.assertLessEqual(upload, v.QOS_MAXUP * 1.1, "Qos manual for uplink does not work")
+        else:
+            self.assertTrue(res2gConn, "Association wasnot successful.")
+
+    def assoc_psk_sta_speedtest_5g(self):
+
+        res5gConn = setAdbPskStaConn(self.device[0], "normal", "5g", self.__class__.__name__)
+        if res5gConn:
+            result = getAdbShellWlan(self.device[0], self.__class__.__name__)
+            if result['ip'] == '':
+                self.fail(msg='no ip address got.')
+            else:
+                speedTestRes = getAdbSpeedTestResult(self.device[0], self.__class__.__name__)
+                download = speedTestRes['down'] * 0.125
+                upload = speedTestRes['up'] * 0.125
+                self.assertLessEqual(download, v.QOS_MAXDOWN * 1.1, "Qos manual for downlink does not work")
+                self.assertLessEqual(upload, v.QOS_MAXUP * 1.1, "Qos manual for uplink does not work")
+        else:
+            self.assertTrue(res5gConn, "Association wasnot successful.")
+
+    def assoc_tkippsk2_sta_speedtest_2g(self):
+
+        res2gConn = setAdbTkipPsk2StaConn(self.device[0], "normal", "2g", self.__class__.__name__)
+        if res2gConn:
+            result = getAdbShellWlan(self.device[0], self.__class__.__name__)
+            if result['ip'] == '':
+                self.fail(msg='no ip address got.')
+            else:
+                speedTestRes = getAdbSpeedTestResult(self.device[0], self.__class__.__name__)
+                download = speedTestRes['down'] * 0.125
+                upload = speedTestRes['up'] * 0.125
+                self.assertLessEqual(download, v.QOS_MAXDOWN * 1.1, "Qos manual for downlink does not work")
+                self.assertLessEqual(upload, v.QOS_MAXUP * 1.1, "Qos manual for uplink does not work")
+        else:
+            self.assertTrue(res2gConn, "Association wasnot successful.")
+
+    def assoc_tkippsk2_sta_speedtest_5g(self):
+
+        res5gConn = setAdbTkipPsk2StaConn(self.device[0], "normal", "5g", self.__class__.__name__)
+        if res5gConn:
+            result = getAdbShellWlan(self.device[0], self.__class__.__name__)
+            if result['ip'] == '':
+                self.fail(msg='no ip address got.')
+            else:
+                speedTestRes = getAdbSpeedTestResult(self.device[0], self.__class__.__name__)
+                download = speedTestRes['down'] * 0.125
+                upload = speedTestRes['up'] * 0.125
+                self.assertLessEqual(download, v.QOS_MAXDOWN * 1.1, "Qos manual for downlink does not work")
+                self.assertLessEqual(upload, v.QOS_MAXUP * 1.1, "Qos manual for uplink does not work")
+        else:
+            self.assertTrue(res5gConn, "Association wasnot successful.")
+
+    def assoc_tkippsk_sta_speedtest_2g(self):
+
+        res2gConn = setAdbTkipPskStaConn(self.device[0], "normal", "2g", self.__class__.__name__)
+        if res2gConn:
+            result = getAdbShellWlan(self.device[0], self.__class__.__name__)
+            if result['ip'] == '':
+                self.fail(msg='no ip address got.')
+            else:
+                speedTestRes = getAdbSpeedTestResult(self.device[0], self.__class__.__name__)
+                download = speedTestRes['down'] * 0.125
+                upload = speedTestRes['up'] * 0.125
+                self.assertLessEqual(download, v.QOS_MAXDOWN * 1.1, "Qos manual for downlink does not work")
+                self.assertLessEqual(upload, v.QOS_MAXUP * 1.1, "Qos manual for uplink does not work")
+        else:
+            self.assertTrue(res2gConn, "Association wasnot successful.")
+
+    def assoc_tkippsk_sta_speedtest_5g(self):
+
+        res5gConn = setAdbTkipPskStaConn(self.device[0], "normal", "5g", self.__class__.__name__)
+        if res5gConn:
+            result = getAdbShellWlan(self.device[0], self.__class__.__name__)
+            if result['ip'] == '':
+                self.fail(msg='no ip address got.')
+            else:
+                speedTestRes = getAdbSpeedTestResult(self.device[0], self.__class__.__name__)
+                download = speedTestRes['down'] * 0.125
+                upload = speedTestRes['up'] * 0.125
+                self.assertLessEqual(download, v.QOS_MAXDOWN * 1.1, "Qos manual for downlink does not work")
+                self.assertLessEqual(upload, v.QOS_MAXUP * 1.1, "Qos manual for uplink does not work")
+        else:
+            self.assertTrue(res5gConn, "Association wasnot successful.")
 
 
 class AP_QOS_MANUAL_CLEAR(TestCase):
-    pass
+    @classmethod
+    def setUpClass(self):
+        self.dut = api.HttpClient()
+        ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
+        ret2 = chkAdbDevicesCount(1)
+
+        if ret1 is False:
+            raise Exception("Http connection is failed. please check your remote settings.")
+
+        if ret2 is False:
+            raise Exception("USB devices arenot ready!")
+
+        option2g = {
+            'wifiIndex': 1,
+            'ssid': v.SSID,
+            'encryption': 'none',
+        }
+        option5g = {
+            'wifiIndex': 2,
+            'ssid': v.SSID_5G,
+            'encryption': 'none',
+        }
+
+        api.setWifi(self.dut, self.__name__, **option2g)
+        api.setWifi(self.dut, self.__name__, **option5g)
+
+        self.device = getAdbDevices()
+        wlanInfo = getAdbShellWlan(self.device[0], self.__name__)
+        self.staMac = wlanInfo["mac"].upper()
+
+        optionQosMode = {
+            'mode': 2
+        }
+        optionQosLimits = {
+            'mode': 2,
+            'data': [
+            {
+                'mac': self.staMac,
+                'maxup': v.QOS_MAXUP,
+                'maxdown': v.QOS_MAXDOWN,
+            },
+        ]
+        }
+
+        api.setQosSwitch(self.dut, self.__name__)
+        api.setQosMode(self.dut, self.__name__, **optionQosMode)
+        api.setQosLimits(self.dut, self.__name__, **optionQosLimits)
+
+    @classmethod
+    def tearDownClass(self):
+
+        api.setDisableLanAp(self.dut, self.__name__)
+
+        option2g = {
+            'wifiIndex': 1,
+            'on': 0,
+        }
+        option5g = {
+            'wifiIndex': 2,
+            'on': 0
+        }
+        api.setWifi(self.dut, self.__name__, **option2g)
+        api.setWifi(self.dut, self.__name__, **option5g)
+
+        optionQosSwitch = {
+            'on': 0,
+        }
+        api.setQosSwitch(self.dut, self.__name__, **optionQosSwitch)
+
+        self.dut.close()
+
+    def assoc_clear_sta_speedtest_2g(self):
+
+        res2gConn = setAdbClearStaConn(self.device[0], "normal", "2g", self.__class__.__name__)
+        if res2gConn:
+            result = getAdbShellWlan(self.device[0], self.__class__.__name__)
+            if result['ip'] == '':
+                self.fail(msg='no ip address got.')
+            else:
+                speedTestRes = getAdbSpeedTestResult(self.device[0], self.__class__.__name__)
+                download = speedTestRes['down'] * 0.125
+                upload = speedTestRes['up'] * 0.125
+                self.assertLessEqual(download, v.QOS_MAXDOWN * 1.1, "Qos manual for downlink does not work")
+                self.assertLessEqual(upload, v.QOS_MAXUP * 1.1, "Qos manual for uplink does not work")
+        else:
+            self.assertTrue(res2gConn, "Association wasnot successful.")
+
+    def assoc_clear_sta_speedtest_5g(self):
+
+        res5gConn = setAdbClearStaConn(self.device[0], "normal", "5g", self.__class__.__name__)
+        if res5gConn:
+            result = getAdbShellWlan(self.device[0], self.__class__.__name__)
+            if result['ip'] == '':
+                self.fail(msg='no ip address got.')
+            else:
+                speedTestRes = getAdbSpeedTestResult(self.device[0], self.__class__.__name__)
+                download = speedTestRes['down'] * 0.125
+                upload = speedTestRes['up'] * 0.125
+                self.assertLessEqual(download, v.QOS_MAXDOWN * 1.1, "Qos manual for downlink does not work")
+                self.assertLessEqual(upload, v.QOS_MAXUP * 1.1, "Qos manual for uplink does not work")
+        else:
+            self.assertTrue(res5gConn, "Association wasnot successful.")
+
+
+class AP_QOS_MANUAL_PSK2(TestCase):
+    @classmethod
+    def setUpClass(self):
+        self.dut = api.HttpClient()
+        ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
+        ret2 = chkAdbDevicesCount(1)
+
+        if ret1 is False:
+            raise Exception("Http connection is failed. please check your remote settings.")
+
+        if ret2 is False:
+            raise Exception("USB devices arenot ready!")
+
+        option2g = {
+            'wifiIndex': 1,
+            'ssid': v.SSID,
+            'encryption': 'psk2',
+            'pwd': v.KEY
+        }
+        option5g = {
+            'wifiIndex': 2,
+            'ssid': v.SSID_5G,
+            'encryption': 'psk2',
+            'pwd': v.KEY
+        }
+
+        api.setWifi(self.dut, self.__name__, **option2g)
+        api.setWifi(self.dut, self.__name__, **option5g)
+
+        self.device = getAdbDevices()
+        wlanInfo = getAdbShellWlan(self.device[0], self.__name__)
+        self.staMac = wlanInfo["mac"].upper()
+
+        optionQosMode = {
+            'mode': 2
+        }
+        optionQosLimits = {
+            'mode': 2,
+            'data': [
+            {
+                'mac': self.staMac,
+                'maxup': v.QOS_MAXUP,
+                'maxdown': v.QOS_MAXDOWN,
+            },
+        ]
+        }
+
+        api.setQosSwitch(self.dut, self.__name__)
+        api.setQosMode(self.dut, self.__name__, **optionQosMode)
+        api.setQosLimits(self.dut, self.__name__, **optionQosLimits)
+
+
+    @classmethod
+    def tearDownClass(self):
+
+        api.setDisableLanAp(self.dut, self.__name__)
+
+        option2g = {
+            'wifiIndex': 1,
+            'on': 0,
+        }
+        option5g = {
+            'wifiIndex': 2,
+            'on': 0
+        }
+        api.setWifi(self.dut, self.__name__, **option2g)
+        api.setWifi(self.dut, self.__name__, **option5g)
+
+        optionQosSwitch = {
+            'on': 0,
+        }
+        api.setQosSwitch(self.dut, self.__name__, **optionQosSwitch)
+
+        self.dut.close()
+
+    def assoc_psk2_sta_speedtest_2g(self):
+
+        res2gConn = setAdbPsk2StaConn(self.device[0], "normal", "2g", self.__class__.__name__)
+        if res2gConn:
+            result = getAdbShellWlan(self.device[0], self.__class__.__name__)
+            if result['ip'] == '':
+                self.fail(msg='no ip address got.')
+            else:
+                speedTestRes = getAdbSpeedTestResult(self.device[0], self.__class__.__name__)
+                download = speedTestRes['down'] * 0.125
+                upload = speedTestRes['up'] * 0.125
+                self.assertLessEqual(download, v.QOS_MAXDOWN * 1.1, "Qos manual for downlink does not work")
+                self.assertLessEqual(upload, v.QOS_MAXUP * 1.1, "Qos manual for uplink does not work")
+        else:
+            self.assertTrue(res2gConn, "Association wasnot successful.")
+
+    def assoc_psk2_sta_speedtest_5g(self):
+
+        res5gConn = setAdbPsk2StaConn(self.device[0], "normal", "5g", self.__class__.__name__)
+        if res5gConn:
+            result = getAdbShellWlan(self.device[0], self.__class__.__name__)
+            if result['ip'] == '':
+                self.fail(msg='no ip address got.')
+            else:
+                speedTestRes = getAdbSpeedTestResult(self.device[0], self.__class__.__name__)
+                download = speedTestRes['down'] * 0.125
+                upload = speedTestRes['up'] * 0.125
+                self.assertLessEqual(download, v.QOS_MAXDOWN * 1.1, "Qos manual for downlink does not work")
+                self.assertLessEqual(upload, v.QOS_MAXUP * 1.1, "Qos manual for uplink does not work")
+        else:
+            self.assertTrue(res5gConn, "Association wasnot successful.")
 
 
 class AP_CHECK(TestCase):

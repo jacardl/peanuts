@@ -613,6 +613,24 @@ def setQosLimits(terminal, logname, **kwargs):
     return setCheck(terminal, logname, api, **option)
 
 
+def setQosLimit(terminal, logname, **kwargs):
+    """
+    mac
+    upload (mode==1 表示优先级，取值1/2/3；mode==2 表示手动设置，取值 xx KB/s)
+    download (mode==1 表示优先级，取值1/2/3；mode==2 表示手动设置，取值 xx KB/s)
+    mode 模式(0/1/2 自动/优先级/手动)
+    """
+    option = {
+        'mode': 1,
+        'mac': '',
+        'upload': '',
+        'download': '',
+    }
+    option.update(kwargs)
+    api = '/cgi-bin/luci/;stok=token/api/misystem/qos_limit'
+    return setCheck(terminal, logname, api, **option)
+
+
 def setQosMode(terminal, logname, **kwargs):
     """
     mode 0/1/2  自动/优先级/手动

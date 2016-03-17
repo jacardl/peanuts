@@ -1740,11 +1740,34 @@ def getAdbPingStatus(terminal, target, count, logname):
 
 
 def getAdbSpeedTestResult(device, logname):
+    """
+    Running tests
+    Test running started
+    junit.framework.AssertionFailedError: downlink rate: 467.77 KB/s, uplink rate: 484.38 KB/s
+    at com.peanutswifi.ApplicationTest.test_speettest(ApplicationTest.java:114)
+    at android.test.InstrumentationTestCase.runMethod(InstrumentationTestCase.java:214)
+    at android.test.InstrumentationTestCase.runTest(InstrumentationTestCase.java:199)
+    at android.test.ActivityInstrumentationTestCase2.runTest(ActivityInstrumentationTestCase2.java:192)
+    at android.test.AndroidTestRunner.runTest(AndroidTestRunner.java:191)
+    at android.test.AndroidTestRunner.runTest(AndroidTestRunner.java:176)
+    at android.test.InstrumentationTestRunner.onStart(InstrumentationTestRunner.java:555)
+    at android.app.Instrumentation$InstrumentationThread.run(Instrumentation.java:1886)
+
+    Finish
+    """
     result = {
         'up': 0,
         'down': 0,
               }
-    # TODO
+    command = "am instrument -e class com.peanutswifi.ApplicationTest#test_speedtest -w com.peanutswifi.test/com.peanutswifi.MyTestRunner"
+    ret = setAdbShell(device, command, logname)
+    for line in ret:
+        m = re.search('downlink rate: (.*) KB/s, uplink rate: (.*) KB/s', line)
+
+        if m:
+            result['down'] = float(m.group(1))
+            result['up'] = float(m.group(2))
+            return result
     return result
 
 
@@ -1778,4 +1801,4 @@ def chkAdb5gFreq(device, logname):
 
 if __name__ == '__main__':
     device = getAdbDevices()
-    chkAdb5gFreq(device[0], 'a')
+    print getAdbSpeedTestResult(device[0], 'a')

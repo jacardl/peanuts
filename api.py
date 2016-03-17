@@ -546,6 +546,40 @@ def setDisableLanAp(terminal, logname):
     # return None
 
 
+def setWifiAp(terminal, logname, **kwargs):
+    option = {
+        'ssid': v.ROOT_AP_SSID,
+        'encryption': 'WPA2PSK',
+        'enctype': 'TKIPAES',
+        'password': v.ROOT_AP_PWD,
+        'channel': 6,
+        'bandwidth': '20',
+        'nssid': v.SSID_WIRELESS_RELAY,
+        'nencryption': 'none',
+    }
+    option.update(kwargs)
+    api = '/cgi-bin/luci/;stok=token/api/xqnetwork/set_wifi_ap'
+    t.sleep(20)
+    result = setGet(terminal, logname, api, **option)
+    t.sleep(30)
+    if result is not None:
+        v.HOST = result['ip']
+        terminal.connect(host=v.HOST, password=v.WEB_PWD)
+        return result
+    return result
+
+
+def setDisableAp(terminal, logname):
+    api = '/cgi-bin/luci/;stok=token/api/xqnetwork/disable_ap'
+    result = setGet(terminal, logname, api)
+    t.sleep(30)
+    if result is not None:
+        v.HOST = result['lanip']
+        terminal.connect(host=v.HOST, password=v.WEB_PWD)
+        return result
+    return result
+
+
 def setQosSwitch(terminal, logname, **kwargs):
     """
     on 1/0 开启关闭qos

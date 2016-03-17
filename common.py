@@ -949,6 +949,16 @@ def setAdbClearStaConn(device, ssid, radio, logname):
     return ret
 
 
+def setAdbClearSta(device, ssid, radio, logname):
+    option = {
+        "ssid": ssid,
+        "radio": radio,
+    }
+
+    ret = setAdbStaConn(device, logname, **option)
+    return ret
+
+
 def setAdbClearStaConnRepeat(device, ssid, radio, logname):
     if radio is "2g":
         if ssid is "normal":
@@ -971,6 +981,16 @@ def setAdbClearStaConnRepeat(device, ssid, radio, logname):
                 "radio": "guest",
                 "repeat": 1,
             }
+    ret = setAdbStaConn(device, logname, **option)
+    return ret
+
+
+def setAdbClearStaRepeat(device, ssid, radio, logname):
+    option = {
+        "ssid": ssid,
+        "radio": radio,
+        "repeat": 1,
+    }
     ret = setAdbStaConn(device, logname, **option)
     return ret
 
@@ -1046,6 +1066,16 @@ def setAdbPsk2StaConn(device, ssid, radio, logname, key=None):
     return ret
 
 
+def setAdbPsk2Sta(device, ssid, key, radio, logname):
+    option = {
+        "ssid": ssid,
+        "radio": radio,
+        "encryption": "psk2",
+        "key": key
+    }
+    ret = setAdbStaConn(device, logname, **option)
+    return ret
+
 def setAdbPsk2StaConnRepeat(device, ssid, radio, logname):
     if radio is "2g":
         if ssid == "normal":
@@ -1074,6 +1104,18 @@ def setAdbPsk2StaConnRepeat(device, ssid, radio, logname):
                 "key": v.KEY,
                 "repeat": 1,
             }
+    ret = setAdbStaConn(device, logname, **option)
+    return ret
+
+
+def setAdbPsk2StaRepeat(device, ssid, radio, logname):
+    option = {
+        "ssid": ssid,
+        "radio": radio,
+        "encryption": "psk2",
+        "key": v.KEY,
+        "repeat": 1,
+    }
     ret = setAdbStaConn(device, logname, **option)
     return ret
 
@@ -1149,6 +1191,17 @@ def setAdbPskStaConn(device, ssid, radio, logname, key=None):
     return ret
 
 
+def setAdbPskSta(device, ssid, key, radio, logname):
+    option = {
+        "ssid": ssid,
+        "radio": radio,
+        "encryption": "psk",
+        "key": key
+    }
+    ret = setAdbStaConn(device, logname, **option)
+    return ret
+
+
 def setAdbPskStaConnRepeat(device, ssid, radio, logname):
     if radio is "2g":
         if ssid == "normal":
@@ -1177,6 +1230,18 @@ def setAdbPskStaConnRepeat(device, ssid, radio, logname):
                 "key": v.KEY,
                 "repeat": 1,
             }
+    ret = setAdbStaConn(device, logname, **option)
+    return ret
+
+
+def setAdbPskStaRepeat(device, ssid, radio, logname):
+    option = {
+        "ssid": ssid,
+        "radio": radio,
+        "encryption": "psk",
+        "key": v.KEY,
+        "repeat": 1,
+    }
     ret = setAdbStaConn(device, logname, **option)
     return ret
 
@@ -1252,6 +1317,17 @@ def setAdbTkipPsk2StaConn(device, ssid, radio, logname, key=None):
     return ret
 
 
+def setAdbTkipPsk2Sta(device, ssid, key, radio, logname):
+    option = {
+        "ssid": ssid,
+        "radio": radio,
+        "encryption": "tkippsk2",
+        "key": key
+    }
+    ret = setAdbStaConn(device, logname, **option)
+    return ret
+
+
 def setAdbTkipPsk2StaConnRepeat(device, ssid, radio, logname):
     if radio is "2g":
         if ssid == "normal":
@@ -1280,6 +1356,18 @@ def setAdbTkipPsk2StaConnRepeat(device, ssid, radio, logname):
                 "key": v.KEY,
                 "repeat": 1,
             }
+    ret = setAdbStaConn(device, logname, **option)
+    return ret
+
+
+def setAdbTkipPsk2StaRepeat(device, ssid, radio, logname):
+    option = {
+        "ssid": ssid,
+        "radio": radio,
+        "encryption": "tkippsk2",
+        "key": v.KEY,
+        "repeat": 1,
+    }
     ret = setAdbStaConn(device, logname, **option)
     return ret
 
@@ -1355,6 +1443,17 @@ def setAdbTkipPskStaConn(device, ssid, radio, logname, key=None):
     return ret
 
 
+def setAdbTkipPskSta(device, ssid, key, radio, logname):
+    option = {
+        "ssid": ssid,
+        "radio": radio,
+        "encryption": "tkippsk",
+        "key": key
+    }
+    ret = setAdbStaConn(device, logname, **option)
+    return ret
+
+
 def setAdbTkipPskStaConnRepeat(device, ssid, radio, logname):
     if radio is "2g":
         if ssid == "normal":
@@ -1383,6 +1482,18 @@ def setAdbTkipPskStaConnRepeat(device, ssid, radio, logname):
                 "key": v.KEY,
                 "repeat": 1,
             }
+    ret = setAdbStaConn(device, logname, **option)
+    return ret
+
+
+def setAdbTkipPskStaRepeat(device, ssid, radio, logname):
+    option = {
+        "ssid": ssid,
+        "radio": radio,
+        "encryption": "tkippsk",
+        "key": v.KEY,
+        "repeat": 1,
+    }
     ret = setAdbStaConn(device, logname, **option)
     return ret
 
@@ -1433,6 +1544,22 @@ def setAdbScanSsidNoExist(device, ssid, radio, logname):
             option = {
                 "ssid": convertStrToURL(v.SSID_5G)
             }
+    command = "am instrument -e ssid %(ssid)s -e class com.peanutswifi.ApplicationTest#test_ssidhide " \
+              "-w com.peanutswifi.test/com.peanutswifi.MyTestRunner"%option
+
+    ret = setAdbShell(device, command, logname)
+    for line in ret:
+        m = re.search('OK', line)
+        if m:
+            return True
+    return False
+
+
+def chkAdbScanSsidNoExist(device, ssid, logname):
+    option = {
+        "ssid": convertStrToURL(ssid)
+    }
+
     command = "am instrument -e ssid %(ssid)s -e class com.peanutswifi.ApplicationTest#test_ssidhide " \
               "-w com.peanutswifi.test/com.peanutswifi.MyTestRunner"%option
 

@@ -9043,17 +9043,6 @@ class AP_WIRELESS_RELAY_CLEAR_CHAN(TestCase):
 
         api.setDisableAp(self.dut, self.__name__)
 
-        option2g = {
-            'wifiIndex': 1,
-            'on': 0,
-        }
-        option5g = {
-            'wifiIndex': 2,
-            'on': 0
-        }
-        api.setWifi(self.dut, self.__name__, **option2g)
-        api.setWifi(self.dut, self.__name__, **option5g)
-
         self.dut.close()
 
     def assoc_clear_sta_2g(self):
@@ -9117,17 +9106,6 @@ class AP_WIRELESS_RELAY_PSK2(TestCase):
     def tearDownClass(self):
 
         api.setDisableAp(self.dut, self.__name__)
-
-        option2g = {
-            'wifiIndex': 1,
-            'on': 0,
-        }
-        option5g = {
-            'wifiIndex': 2,
-            'on': 0
-        }
-        api.setWifi(self.dut, self.__name__, **option2g)
-        api.setWifi(self.dut, self.__name__, **option5g)
 
         self.dut.close()
 
@@ -9193,16 +9171,6 @@ class AP_WIRELESS_RELAY_MIXEDPSK(TestCase):
 
         api.setDisableAp(self.dut, self.__name__)
 
-        option2g = {
-            'wifiIndex': 1,
-            'on': 0,
-        }
-        option5g = {
-            'wifiIndex': 2,
-            'on': 0
-        }
-        api.setWifi(self.dut, self.__name__, **option2g)
-        api.setWifi(self.dut, self.__name__, **option5g)
 
         self.dut.close()
 
@@ -9222,7 +9190,7 @@ class AP_WIRELESS_RELAY_MIXEDPSK(TestCase):
 
     def assoc_psk2_sta_5g(self):
 
-        res5gConn = setAdbPsk2Sta(self.device[0], v.WIRELESS_RELAY_SSID_5G, v.KEY, self.__class__.__name__)
+        res5gConn = setAdbPsk2Sta(self.device[0], v.WIRELESS_RELAY_SSID_5G, v.KEY, "5g", self.__class__.__name__)
         if res5gConn:
             result = getAdbShellWlan(self.device[0], self.__class__.__name__)
             if result['ip'] == '':
@@ -9353,16 +9321,6 @@ class AP_WIRELESS_RELAY_MIXEDPSK_SSIDSPEC(TestCase):
 
         api.setDisableAp(self.dut, self.__name__)
 
-        option2g = {
-            'wifiIndex': 1,
-            'on': 0,
-        }
-        option5g = {
-            'wifiIndex': 2,
-            'on': 0
-        }
-        api.setWifi(self.dut, self.__name__, **option2g)
-        api.setWifi(self.dut, self.__name__, **option5g)
 
         self.dut.close()
 
@@ -9509,17 +9467,6 @@ class AP_WIRELESS_RELAY_MIXEDPSK_KEYSPEC(TestCase):
     def tearDownClass(self):
 
         api.setDisableAp(self.dut, self.__name__)
-
-        option2g = {
-            'wifiIndex': 1,
-            'on': 0,
-        }
-        option5g = {
-            'wifiIndex': 2,
-            'on': 0
-        }
-        api.setWifi(self.dut, self.__name__, **option2g)
-        api.setWifi(self.dut, self.__name__, **option5g)
 
         self.dut.close()
 
@@ -9670,17 +9617,6 @@ class AP_WIRELESS_RELAY_MIXEDPSK_SSIDCHINESE(TestCase):
 
         api.setDisableAp(self.dut, self.__name__)
 
-        option2g = {
-            'wifiIndex': 1,
-            'on': 0,
-        }
-        option5g = {
-            'wifiIndex': 2,
-            'on': 0
-        }
-        api.setWifi(self.dut, self.__name__, **option2g)
-        api.setWifi(self.dut, self.__name__, **option5g)
-
         self.dut.close()
 
     def assoc_psk2_sta_ssidchinese_2g(self):
@@ -9699,7 +9635,7 @@ class AP_WIRELESS_RELAY_MIXEDPSK_SSIDCHINESE(TestCase):
 
     def assoc_psk2_sta_ssidchinese_5g(self):
 
-        res5gConn = setAdbPsk2Sta(self.device[0], v.WIRELESS_RELAY_CHINESE_SSID_5G, v.KEY, self.__class__.__name__)
+        res5gConn = setAdbPsk2Sta(self.device[0], v.WIRELESS_RELAY_CHINESE_SSID_5G, v.KEY, "5g", self.__class__.__name__)
         if res5gConn:
             result = getAdbShellWlan(self.device[0], self.__class__.__name__)
             if result['ip'] == '':
@@ -9727,7 +9663,7 @@ class AP_WIRELESS_RELAY_MIXEDPSK_SSIDCHINESE(TestCase):
 
     def assoc_psk_sta_ssidchinese_5g(self):
 
-        res5gConn = setAdbPskSta(self.device[0], v.WIRELESS_RELAY_CHINESE_SSID_5G, v.KEY, self.__class__.__name__)
+        res5gConn = setAdbPskSta(self.device[0], v.WIRELESS_RELAY_CHINESE_SSID_5G, v.KEY, "5g", self.__class__.__name__)
         if res5gConn:
             result = getAdbShellWlan(self.device[0], self.__class__.__name__)
             if result['ip'] == '':
@@ -9841,17 +9777,6 @@ class AP_WIRELESS_RELAY_CLEAR_LOW(TestCase):
 
         api.setDisableAp(self.dut, self.__name__)
 
-        option2g = {
-            'wifiIndex': 1,
-            'on': 0,
-        }
-        option5g = {
-            'wifiIndex': 2,
-            'on': 0,
-        }
-        api.setWifi(self.dut, self.__name__, **option2g)
-        api.setWifi(self.dut, self.__name__, **option5g)
-
         self.dut.close()
 
     def assoc_clear_sta_2g(self):
@@ -9928,17 +9853,6 @@ class AP_WIRELESS_RELAY_CLEAR_MID(TestCase):
     def tearDownClass(self):
 
         api.setDisableAp(self.dut, self.__name__)
-
-        option2g = {
-            'wifiIndex': 1,
-            'on': 0,
-        }
-        option5g = {
-            'wifiIndex': 2,
-            'on': 0,
-        }
-        api.setWifi(self.dut, self.__name__, **option2g)
-        api.setWifi(self.dut, self.__name__, **option5g)
 
         self.dut.close()
 
@@ -10018,16 +9932,6 @@ class AP_WIRELESS_RELAY_CLEAR_HIGH(TestCase):
 
         api.setDisableAp(self.dut, self.__name__)
 
-        option2g = {
-            'wifiIndex': 1,
-            'on': 0,
-        }
-        option5g = {
-            'wifiIndex': 2,
-            'on': 0,
-        }
-        api.setWifi(self.dut, self.__name__, **option2g)
-        api.setWifi(self.dut, self.__name__, **option5g)
         self.dut.close()
 
     def assoc_clear_sta_2g(self):
@@ -10085,17 +9989,6 @@ class AP_WIRELESS_RELAY_CLEAR_CHANSELECTION(TestCase):
     def tearDownClass(self):
 
         api.setDisableAp(self.dut, self.__name__)
-
-        option2g = {
-            'wifiIndex': 1,
-            'on': 0,
-        }
-        option5g = {
-            'wifiIndex': 2,
-            'on': 0
-        }
-        api.setWifi(self.dut, self.__name__, **option2g)
-        api.setWifi(self.dut, self.__name__, **option5g)
 
         self.dut.close()
 
@@ -10175,12 +10068,6 @@ class AP_WIRELESS_RELAY_MIXEDPSK_CHAN_BW80(TestCase):
     def tearDownClass(self):
 
         api.setDisableAp(self.dut, self.__name__)
-
-        option5g = {
-            'wifiIndex': 2,
-            'on': 0
-        }
-        api.setWifi(self.dut, self.__name__, **option5g)
 
         self.dut.close()
 
@@ -10293,17 +10180,6 @@ class AP_WIRELESS_RELAY_MIXEDPSK_CHAN_BW40(TestCase):
     def tearDownClass(self):
 
         api.setDisableAp(self.dut, self.__name__)
-
-        option2g = {
-            'wifiIndex': 1,
-            'on': 0,
-        }
-        option5g = {
-            'wifiIndex': 2,
-            'on': 0
-        }
-        api.setWifi(self.dut, self.__name__, **option2g)
-        api.setWifi(self.dut, self.__name__, **option5g)
 
         self.dut.close()
 
@@ -10473,17 +10349,6 @@ class AP_WIRELESS_RELAY_MIXEDPSK_CHAN_BW20(TestCase):
 
         api.setDisableAp(self.dut, self.__name__)
 
-        option2g = {
-            'wifiIndex': 1,
-            'on': 0,
-        }
-        option5g = {
-            'wifiIndex': 2,
-            'on': 0
-        }
-        api.setWifi(self.dut, self.__name__, **option2g)
-        api.setWifi(self.dut, self.__name__, **option5g)
-
         self.dut.close()
 
     def assoc_psk2_sta_5g(self):
@@ -10641,17 +10506,6 @@ class AP_WIRELESS_RELAY_MIXEDPSK_BSD(TestCase):
     def tearDownClass(self):
 
         api.setDisableAp(self.dut, self.__name__)
-
-        option2g = {
-            'wifiIndex': 1,
-            'on': 0,
-        }
-        option5g = {
-            'wifiIndex': 2,
-            'on': 0
-        }
-        api.setWifi(self.dut, self.__name__, **option2g)
-        api.setWifi(self.dut, self.__name__, **option5g)
 
         self.dut.close()
 
@@ -10953,9 +10807,9 @@ class AP_WIRELESS_RELAY_CONFIG_CHECK(TestCase):
         }
         api.setWifiAp(self.dut, self.__name__, **option)
 
-        self.relayConfGuest = api.getWifiDetailDic(self.dut, self.__class__.__name__, "guest")
+        self.relayConfGuest = api.getWifiDetailDic(self.dut, self.__name__, "guest")
 
-        api.setDisableAp(self.dut, self.__class__.__name__)
+        api.setDisableAp(self.dut, self.__name__)
 
     @classmethod
     def tearDownClass(self):

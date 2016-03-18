@@ -74,7 +74,8 @@ class HttpMemMonitor(threading.Thread):
                     memUsed = api.getDeviceMem(self.terminal, v.DEVICE_STATUS_LOG)
                 except Exception, e:
                     continue
-                self.plot.append(memUsed)
+                if memUsed is not None:
+                    self.plot.append(memUsed)
                 if self.callback is not None:
                     self.callback.after_read_res(memUsed, t)
             t.sleep(self.period)
@@ -543,7 +544,8 @@ class HttpCPUMonitor(threading.Thread):
                     cpuLoad = api.getDeviceCPU(self.terminal, v.DEVICE_STATUS_LOG)
                 except Exception, e:
                     continue
-                self.plot.append(cpuLoad)
+                if cpuLoad is not None:
+                    self.plot.append(cpuLoad)
                 if self.callback is not None:
                     self.callback.after_read_res(cpuLoad, t)
             t.sleep(self.period)

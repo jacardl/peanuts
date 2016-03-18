@@ -938,6 +938,7 @@ def getDeviceMem(terminal, logname):
         usedMemNum = int(usageNum * totalNum * 1024)
         return usedMemNum
 
+
 def getDeviceCPU(terminal, logname):
     ret = getDeviceStatus(terminal, logname)
     if ret is None:

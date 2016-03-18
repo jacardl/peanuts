@@ -554,7 +554,7 @@ def setWifiAp(terminal, logname, **kwargs):
         'password': v.ROOT_AP_PWD,
         'channel': 6,
         'bandwidth': '20',
-        'nssid': v.SSID_WIRELESS_RELAY,
+        'nssid': v.ROOT_AP_SSID,
         'nencryption': 'none',
     }
     option.update(kwargs)

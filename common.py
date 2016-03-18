@@ -1756,8 +1756,8 @@ def getAdbSpeedTestResult(device, logname):
     Finish
     """
     result = {
-        'up': 0,
-        'down': 0,
+        'up': "",
+        'down': "",
               }
     command = "am instrument -e class com.peanutswifi.ApplicationTest#test_speedtest -w com.peanutswifi.test/com.peanutswifi.MyTestRunner"
     ret = setAdbShell(device, command, logname)

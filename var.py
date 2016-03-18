@@ -28,7 +28,7 @@ connection_type = 1 represent ssh
 CONNECTION_TYPE = 1
 STA_CONNECTION_TYPE = 1
 
-VER = '3.0.1'
+VER = '3.1.1'
 
 # ----------------Memory Tracking-----------------
 

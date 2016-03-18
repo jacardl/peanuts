@@ -34,7 +34,6 @@ class MemMonitor(threading.Thread):
                 except Exception, e:
                     continue
                 memUsed = res["used"]
-                print memUsed
                 self.plot.append(memUsed)
                 if self.callback is not None:
                     self.callback.after_read_res(res, t)

@@ -8950,17 +8950,6 @@ class AP_QOS_WIRELESS_RELAY_CLEAR(TestCase):
 
         api.setDisableAp(self.dut, self.__name__)
 
-        option2g = {
-            'wifiIndex': 1,
-            'on': 0,
-        }
-        option5g = {
-            'wifiIndex': 2,
-            'on': 0
-        }
-        api.setWifi(self.dut, self.__name__, **option2g)
-        api.setWifi(self.dut, self.__name__, **option5g)
-
         optionQosSwitch = {
             'on': 0,
         }

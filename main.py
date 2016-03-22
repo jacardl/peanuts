@@ -129,7 +129,12 @@ class GeneralPage(wx.Panel):
         self.webPasswd.SetValue(v.WEB_PWD)
 
         serialPortLbl = wx.StaticText(self, -1, 'Serial port:')
-        self.serialNum = co.getSerialPort()
+        self.serialNum = []
+        if len(co.getSerialPort()) is 0:
+            self.serialNum.append("None")
+        else:
+            self.serialNum = co.getSerialPort()
+        self.serialNum.append("None")
         self.serialPort = wx.Choice(self, -1, choices=self.serialNum)
         v.SERIAL_PORT = self.serialNum[0]
 

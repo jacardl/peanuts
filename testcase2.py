@@ -8090,7 +8090,16 @@ class AP_RELAY_MIXEDPSK_BSD(TestCase):
         api.setDisableLanAp(self.dut, self.__name__)
 
         api.setAllWifi(self.dut, self.__name__)
-
+        option2g = {
+            'wifiIndex': 1,
+            'on': 0,
+        }
+        option5g = {
+            'wifiIndex': 2,
+            'on': 0
+        }
+        api.setWifi(self.dut, self.__name__, **option2g)
+        api.setWifi(self.dut, self.__name__, **option5g)
         self.dut.close()
 
     def assoc_psk2_near_field_sta(self):
@@ -10496,6 +10505,17 @@ class AP_WIRELESS_RELAY_MIXEDPSK_BSD(TestCase):
 
         api.setDisableAp(self.dut, self.__name__)
 
+        api.setAllWifi(self.dut, self.__name__)
+        option2g = {
+            'wifiIndex': 1,
+            'on': 0,
+        }
+        option5g = {
+            'wifiIndex': 2,
+            'on': 0
+        }
+        api.setWifi(self.dut, self.__name__, **option2g)
+        api.setWifi(self.dut, self.__name__, **option5g)
         self.dut.close()
 
     def assoc_psk2_near_field_sta(self):

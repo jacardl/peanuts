@@ -645,6 +645,22 @@ def setQosMode(terminal, logname, **kwargs):
     return setCheck(terminal, logname, api, **option)
 
 
+def setWebAccessOpt(terminal, logname, **kwargs):
+    """
+    open 0/1 关闭/开启
+    opt 0/1 添加/删除
+    mac
+    """
+    option = {
+        'open': 1,
+        'opt': 0,
+        'mac': '',
+    }
+    option.update(kwargs)
+    api = '/cgi-bin/luci/;stok=token/api/misystem/web_access_opt'
+    return setCheck(terminal, logname, api, **option)
+
+
 def getWifiDetailAll(terminal, logname):
 
     api = '/cgi-bin/luci/;stok=token/api/xqnetwork/wifi_detail_all'
@@ -954,16 +970,13 @@ def getDeviceCPU(terminal, logname):
 
 if __name__ == '__main__':
     option = {
-        'mac': '78:D7:5F:8A:82:08'
+        'model': 0,
+        'mac': '11:22:33:44:55:66',
+        'option': 1
     }
-    v.HOST = '10.237.100.59'
+    v.HOST = '192.168.110.1'
     v.WEB_PWD = '12345678'
     webclient = HttpClient()
     webclient.connect(host=v.HOST, password=v.WEB_PWD)
-    # setWifi(webclient, 'aaa', **option)
-    # setWifi(webclient, 'aaa', **option2)
-    # setLanAp(webclient, 'aaa')
-    # setDisableLanAp(webclient, 'aaa')
-    # print getDeviceCPU(webclient, "a.log")
-    print getDeviceStatus(webclient, 'a')
+    print setEditDevice(webclient, 'a')
     webclient.close()

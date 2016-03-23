@@ -1555,22 +1555,6 @@ def setAdbScanSsidNoExist(device, ssid, radio, logname):
     return False
 
 
-def chkAdbScanSsidNoExist(device, ssid, logname):
-    option = {
-        "ssid": convertStrToURL(ssid)
-    }
-
-    command = "am instrument -e ssid %(ssid)s -e class com.peanutswifi.ApplicationTest#test_ssidhide " \
-              "-w com.peanutswifi.test/com.peanutswifi.MyTestRunner"%option
-
-    ret = setAdbShell(device, command, logname)
-    for line in ret:
-        m = re.search('OK', line)
-        if m:
-            return True
-    return False
-
-
 def setAdbIperfOn(device, logname):
     command = "am instrument -e class com.peanutswifi.ApplicationTest#test_iperf2 -w com.peanutswifi.test/com.peanutswifi.MyTestRunner"
     ret = setAdbShell(device, command, logname)
@@ -1771,6 +1755,37 @@ def getAdbSpeedTestResult(device, logname):
     return result
 
 
+def getAdbShellCurl(device, url, logname):
+    command = "curl -I " + url
+    ret = setAdbShell(device, command, logname)
+    return ret
+
+
+def chkAdbShellUrlAccess(device, url, logname):
+    ret = getAdbShellCurl(device, url, logname)
+    for line in ret:
+        if line.find('200 OK') is not -1:
+            return True
+        elif line.find('403 Not Found') is not -1:
+            return False
+
+
+def chkAdbScanSsidNoExist(device, ssid, logname):
+    option = {
+        "ssid": convertStrToURL(ssid)
+    }
+
+    command = "am instrument -e ssid %(ssid)s -e class com.peanutswifi.ApplicationTest#test_ssidhide " \
+              "-w com.peanutswifi.test/com.peanutswifi.MyTestRunner"%option
+
+    ret = setAdbShell(device, command, logname)
+    for line in ret:
+        m = re.search('OK', line)
+        if m:
+            return True
+    return False
+
+
 def chkAdbDevicesCount(count):
     ret = getAdbDevices()
     if len(ret) >= int(count):
@@ -1801,4 +1816,4 @@ def chkAdb5gFreq(device, logname):
 
 if __name__ == '__main__':
     device = getAdbDevices()
-    print getAdbSpeedTestResult(device[0], 'a')
+    print chkAdbShellUrlAccess(device[0], 'http://192.168.110.1/cgi-bin/luci/web', 'a')

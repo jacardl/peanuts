@@ -513,9 +513,9 @@ def setLanAp(terminal, logname, **kwargs):
     }
     option.update(kwargs)
     api = '/cgi-bin/luci/;stok=token/api/xqnetwork/set_lan_ap'
-    t.sleep(20)
+    t.sleep(60)
     result = setGet(terminal, logname, api, **option)
-    t.sleep(30)
+    t.sleep(60)
     if result is not None:
         v.HOST = result['ip']
         terminal.connect(host=v.HOST, password=v.WEB_PWD)
@@ -531,8 +531,9 @@ def setLanAp(terminal, logname, **kwargs):
 
 def setDisableLanAp(terminal, logname):
     api = '/cgi-bin/luci/;stok=token/api/xqnetwork/disable_lan_ap'
+    t.sleep(60)
     result = setGet(terminal, logname, api)
-    t.sleep(30)
+    t.sleep(60)
     if result is not None:
         v.HOST = result['ip']
         terminal.connect(host=v.HOST, password=v.WEB_PWD)
@@ -559,9 +560,9 @@ def setWifiAp(terminal, logname, **kwargs):
     }
     option.update(kwargs)
     api = '/cgi-bin/luci/;stok=token/api/xqnetwork/set_wifi_ap'
-    t.sleep(20)
+    t.sleep(60)
     result = setGet(terminal, logname, api, **option)
-    t.sleep(30)
+    t.sleep(60)
     if result is not None:
         v.HOST = result['ip']
         terminal.connect(host=v.HOST, password=v.WEB_PWD)
@@ -571,8 +572,9 @@ def setWifiAp(terminal, logname, **kwargs):
 
 def setDisableAp(terminal, logname):
     api = '/cgi-bin/luci/;stok=token/api/xqnetwork/disable_ap'
+    t.sleep(60)
     result = setGet(terminal, logname, api)
-    t.sleep(30)
+    t.sleep(60)
     if result is not None:
         v.HOST = result['lanip']
         terminal.connect(host=v.HOST, password=v.WEB_PWD)
@@ -724,6 +726,7 @@ def getWifiChannel(terminal, intf, logname):
         }
         channel = commandDic.get(intf)
         return int(eval(channel))
+
 
 def getDeviceDetail(terminal, logname, **kwargs):
     """

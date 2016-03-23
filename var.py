@@ -139,8 +139,8 @@ MAIL_XLSX = "memory_tracking.xlsx"
 
 MEM_MONITOR_INTERVAL = 300
 
-QOS_MAXUP = 500
-QOS_MAXDOWN = 200
+QOS_MAXUP = 800
+QOS_MAXDOWN = 500
 
 ROOT_AP_SSID = "peanuts_automatic_test_root_ap_"
 ROOT_AP_PWD = "12345678"

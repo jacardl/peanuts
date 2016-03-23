@@ -1684,7 +1684,8 @@ class AP_CLEAR_CHAN_WHITELIST(TestCase):
         }
         api.setEditDevice(self.dut, self.__class__.__name__, **option)
 
-        self.assertTrue(res2gConn, "Association wasnot successful which sta in whitelist.")
+        if res2gConn is False:
+            self.fail("Association wasnot successful which sta in whitelist.")
         self.assertGreaterEqual(passPercent, v.PING_PERCENT_PASS,
                                         "Ping responsed percent werenot good enough.")
         # connType = api.getOnlineDeviceType(self.dut, self.__class__.__name__)
@@ -1718,7 +1719,8 @@ class AP_CLEAR_CHAN_WHITELIST(TestCase):
 
         api.setEditDevice(self.dut, self.__class__.__name__, **option)
 
-        self.assertTrue(res5gConn, "Association wasnot successful which sta in whitelist.")
+        if res5gConn is False:
+            self.fail("Association wasnot successful which sta in whitelist.")
         self.assertGreaterEqual(passPercent, v.PING_PERCENT_PASS,
                                         "Ping responsed percent werenot good enough.")
         # connType = api.getOnlineDeviceType(self.dut, self.__class__.__name__)
@@ -4861,7 +4863,8 @@ class AP_GUEST_CLEAR_WHITELIST(TestCase):
         }
         api.setEditDevice(self.dut, self.__class__.__name__, **option)
 
-        self.assertTrue(res2gConn, "Association should be successful which sta in whitelist.")
+        if res2gConn is False:
+            self.fail("Association wasnot successful which sta in whitelist.")
         self.assertGreaterEqual(passPercent, v.PING_PERCENT_PASS,
                                         "Ping responsed percent werenot good enough.")
 
@@ -10922,7 +10925,6 @@ class AP_MIXEDPSK_WEB_ACCESS(TestCase):
         res2gConn = setAdbPsk2Sta(self.device[0], v.SSID, v.KEY, "2g", self.__class__.__name__)
         if res2gConn:
             ret1 = chkAdbShellUrlAccess(self.device[0], v.CHECK_ACCESS_URL, self.__class__.__name__)
-            self.assertTrue(ret1, "STA in whitelist should be allowed access web")
 
             option = {
                 'open': 1,
@@ -10930,7 +10932,7 @@ class AP_MIXEDPSK_WEB_ACCESS(TestCase):
                 'mac': self.staMac,
             }
 
-            api.setWebAccessOpt(self.dut, self.__name__, **option)
+            api.setWebAccessOpt(self.dut, self.__class__.__name__, **option)
 
             ret2 = chkAdbShellUrlAccess(self.device[0], v.CHECK_ACCESS_URL, self.__class__.__name__)
 
@@ -10940,8 +10942,9 @@ class AP_MIXEDPSK_WEB_ACCESS(TestCase):
                 'mac': self.staMac,
                 }
 
-            api.setWebAccessOpt(self.dut, self.__name__, **option)
-
+            api.setWebAccessOpt(self.dut, self.__class__.__name__, **option)
+            if ret1 is False:
+                self.fail("STA in whitelist should be allowed access web")
             self.assertFalse(ret2, "STA out of whitelist should not be allowed access web")
         else:
             self.assertTrue(res2gConn, "Association wasnot successful.")
@@ -10950,7 +10953,6 @@ class AP_MIXEDPSK_WEB_ACCESS(TestCase):
         res2gConn = setAdbPskSta(self.device[0], v.SSID, v.KEY, "2g", self.__class__.__name__)
         if res2gConn:
             ret1 = chkAdbShellUrlAccess(self.device[0], v.CHECK_ACCESS_URL, self.__class__.__name__)
-            self.assertTrue(ret1, "STA in whitelist should be allowed access web")
 
             option = {
                 'open': 1,
@@ -10958,7 +10960,7 @@ class AP_MIXEDPSK_WEB_ACCESS(TestCase):
                 'mac': self.staMac,
             }
 
-            api.setWebAccessOpt(self.dut, self.__name__, **option)
+            api.setWebAccessOpt(self.dut, self.__class__.__name__, **option)
 
             ret2 = chkAdbShellUrlAccess(self.device[0], v.CHECK_ACCESS_URL, self.__class__.__name__)
 
@@ -10968,17 +10970,17 @@ class AP_MIXEDPSK_WEB_ACCESS(TestCase):
                 'mac': self.staMac,
                 }
 
-            api.setWebAccessOpt(self.dut, self.__name__, **option)
-
+            api.setWebAccessOpt(self.dut, self.__class__.__name__, **option)
+            if ret1 is False:
+                self.fail("STA in whitelist should be allowed access web")
             self.assertFalse(ret2, "STA out of whitelist should not be allowed access web")
         else:
             self.assertTrue(res2gConn, "Association wasnot successful.")
 
-    def assoc_tkippsk2_access_web_2g(self):
+    def assoc_tkippsk2_sta_access_web_2g(self):
         res2gConn = setAdbTkipPsk2Sta(self.device[0], v.SSID, v.KEY, "2g", self.__class__.__name__)
         if res2gConn:
             ret1 = chkAdbShellUrlAccess(self.device[0], v.CHECK_ACCESS_URL, self.__class__.__name__)
-            self.assertTrue(ret1, "STA in whitelist should be allowed access web")
 
             option = {
                 'open': 1,
@@ -10986,7 +10988,7 @@ class AP_MIXEDPSK_WEB_ACCESS(TestCase):
                 'mac': self.staMac,
             }
 
-            api.setWebAccessOpt(self.dut, self.__name__, **option)
+            api.setWebAccessOpt(self.dut, self.__class__.__name__, **option)
 
             ret2 = chkAdbShellUrlAccess(self.device[0], v.CHECK_ACCESS_URL, self.__class__.__name__)
 
@@ -10996,17 +10998,17 @@ class AP_MIXEDPSK_WEB_ACCESS(TestCase):
                 'mac': self.staMac,
                 }
 
-            api.setWebAccessOpt(self.dut, self.__name__, **option)
-
+            api.setWebAccessOpt(self.dut, self.__class__.__name__, **option)
+            if ret1 is False:
+                self.fail("STA in whitelist should be allowed access web")
             self.assertFalse(ret2, "STA out of whitelist should not be allowed access web")
         else:
             self.assertTrue(res2gConn, "Association wasnot successful.")
 
-    def assoc_tkippsk_access_web_2g(self):
+    def assoc_tkippsk_sta_access_web_2g(self):
         res2gConn = setAdbTkipPskSta(self.device[0], v.SSID, v.KEY, "2g", self.__class__.__name__)
         if res2gConn:
             ret1 = chkAdbShellUrlAccess(self.device[0], v.CHECK_ACCESS_URL, self.__class__.__name__)
-            self.assertTrue(ret1, "STA in whitelist should be allowed access web")
 
             option = {
                 'open': 1,
@@ -11014,7 +11016,7 @@ class AP_MIXEDPSK_WEB_ACCESS(TestCase):
                 'mac': self.staMac,
             }
 
-            api.setWebAccessOpt(self.dut, self.__name__, **option)
+            api.setWebAccessOpt(self.dut, self.__class__.__name__, **option)
 
             ret2 = chkAdbShellUrlAccess(self.device[0], v.CHECK_ACCESS_URL, self.__class__.__name__)
 
@@ -11024,17 +11026,17 @@ class AP_MIXEDPSK_WEB_ACCESS(TestCase):
                 'mac': self.staMac,
                 }
 
-            api.setWebAccessOpt(self.dut, self.__name__, **option)
-
+            api.setWebAccessOpt(self.dut, self.__class__.__name__, **option)
+            if ret1 is False:
+                self.fail("STA in whitelist should be allowed access web")
             self.assertFalse(ret2, "STA out of whitelist should not be allowed access web")
         else:
             self.assertTrue(res2gConn, "Association wasnot successful.")
 
     def assoc_psk2_sta_access_web_5g(self):
-        res5gConn = setAdbPsk2Sta(self.device[0], v.SSID, v.KEY, "5g", self.__class__.__name__)
+        res5gConn = setAdbPsk2Sta(self.device[0], v.SSID_5G, v.KEY, "5g", self.__class__.__name__)
         if res5gConn:
             ret1 = chkAdbShellUrlAccess(self.device[0], v.CHECK_ACCESS_URL, self.__class__.__name__)
-            self.assertTrue(ret1, "STA in whitelist should be allowed access web")
 
             option = {
                 'open': 1,
@@ -11042,7 +11044,7 @@ class AP_MIXEDPSK_WEB_ACCESS(TestCase):
                 'mac': self.staMac,
             }
 
-            api.setWebAccessOpt(self.dut, self.__name__, **option)
+            api.setWebAccessOpt(self.dut, self.__class__.__name__, **option)
 
             ret2 = chkAdbShellUrlAccess(self.device[0], v.CHECK_ACCESS_URL, self.__class__.__name__)
 
@@ -11052,17 +11054,17 @@ class AP_MIXEDPSK_WEB_ACCESS(TestCase):
                 'mac': self.staMac,
                 }
 
-            api.setWebAccessOpt(self.dut, self.__name__, **option)
-
+            api.setWebAccessOpt(self.dut, self.__class__.__name__, **option)
+            if ret1 is False:
+                self.fail("STA in whitelist should be allowed access web")
             self.assertFalse(ret2, "STA out of whitelist should not be allowed access web")
         else:
             self.assertTrue(res5gConn, "Association wasnot successful.")
 
     def assoc_psk_sta_access_web_5g(self):
-        res5gConn = setAdbPskSta(self.device[0], v.SSID, v.KEY, "5g", self.__class__.__name__)
+        res5gConn = setAdbPskSta(self.device[0], v.SSID_5G, v.KEY, "5g", self.__class__.__name__)
         if res5gConn:
             ret1 = chkAdbShellUrlAccess(self.device[0], v.CHECK_ACCESS_URL, self.__class__.__name__)
-            self.assertTrue(ret1, "STA in whitelist should be allowed access web")
 
             option = {
                 'open': 1,
@@ -11070,7 +11072,7 @@ class AP_MIXEDPSK_WEB_ACCESS(TestCase):
                 'mac': self.staMac,
             }
 
-            api.setWebAccessOpt(self.dut, self.__name__, **option)
+            api.setWebAccessOpt(self.dut, self.__class__.__name__, **option)
 
             ret2 = chkAdbShellUrlAccess(self.device[0], v.CHECK_ACCESS_URL, self.__class__.__name__)
 
@@ -11080,17 +11082,17 @@ class AP_MIXEDPSK_WEB_ACCESS(TestCase):
                 'mac': self.staMac,
                 }
 
-            api.setWebAccessOpt(self.dut, self.__name__, **option)
-
+            api.setWebAccessOpt(self.dut, self.__class__.__name__, **option)
+            if ret1 is False:
+                self.fail("STA in whitelist should be allowed access web")
             self.assertFalse(ret2, "STA out of whitelist should not be allowed access web")
         else:
             self.assertTrue(res5gConn, "Association wasnot successful.")
 
     def assoc_tkippsk2_sta_access_web_5g(self):
-        res5gConn = setAdbTkipPsk2Sta(self.device[0], v.SSID, v.KEY, "5g", self.__class__.__name__)
+        res5gConn = setAdbTkipPsk2Sta(self.device[0], v.SSID_5G, v.KEY, "5g", self.__class__.__name__)
         if res5gConn:
             ret1 = chkAdbShellUrlAccess(self.device[0], v.CHECK_ACCESS_URL, self.__class__.__name__)
-            self.assertTrue(ret1, "STA in whitelist should be allowed access web")
 
             option = {
                 'open': 1,
@@ -11098,7 +11100,7 @@ class AP_MIXEDPSK_WEB_ACCESS(TestCase):
                 'mac': self.staMac,
             }
 
-            api.setWebAccessOpt(self.dut, self.__name__, **option)
+            api.setWebAccessOpt(self.dut, self.__class__.__name__, **option)
 
             ret2 = chkAdbShellUrlAccess(self.device[0], v.CHECK_ACCESS_URL, self.__class__.__name__)
 
@@ -11108,17 +11110,17 @@ class AP_MIXEDPSK_WEB_ACCESS(TestCase):
                 'mac': self.staMac,
                 }
 
-            api.setWebAccessOpt(self.dut, self.__name__, **option)
-
+            api.setWebAccessOpt(self.dut, self.__class__.__name__, **option)
+            if ret1 is False:
+                self.fail("STA in whitelist should be allowed access web")
             self.assertFalse(ret2, "STA out of whitelist should not be allowed access web")
         else:
             self.assertTrue(res5gConn, "Association wasnot successful.")
 
     def assoc_tkippsk_sta_access_web_5g(self):
-        res5gConn = setAdbTkipPskSta(self.device[0], v.SSID, v.KEY, "5g", self.__class__.__name__)
+        res5gConn = setAdbTkipPskSta(self.device[0], v.SSID_5G, v.KEY, "5g", self.__class__.__name__)
         if res5gConn:
             ret1 = chkAdbShellUrlAccess(self.device[0], v.CHECK_ACCESS_URL, self.__class__.__name__)
-            self.assertTrue(ret1, "STA in whitelist should be allowed access web")
 
             option = {
                 'open': 1,
@@ -11126,7 +11128,7 @@ class AP_MIXEDPSK_WEB_ACCESS(TestCase):
                 'mac': self.staMac,
             }
 
-            api.setWebAccessOpt(self.dut, self.__name__, **option)
+            api.setWebAccessOpt(self.dut, self.__class__.__name__, **option)
 
             ret2 = chkAdbShellUrlAccess(self.device[0], v.CHECK_ACCESS_URL, self.__class__.__name__)
 
@@ -11136,8 +11138,9 @@ class AP_MIXEDPSK_WEB_ACCESS(TestCase):
                 'mac': self.staMac,
                 }
 
-            api.setWebAccessOpt(self.dut, self.__name__, **option)
-
+            api.setWebAccessOpt(self.dut, self.__class__.__name__, **option)
+            if ret1 is False:
+                self.fail("STA in whitelist should be allowed access web")
             self.assertFalse(ret2, "STA out of whitelist should not be allowed access web")
         else:
             self.assertTrue(res5gConn, "Association wasnot successful.")

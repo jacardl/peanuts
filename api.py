@@ -513,9 +513,9 @@ def setLanAp(terminal, logname, **kwargs):
     }
     option.update(kwargs)
     api = '/cgi-bin/luci/;stok=token/api/xqnetwork/set_lan_ap'
-    t.sleep(20)
+    t.sleep(60)
     result = setGet(terminal, logname, api, **option)
-    t.sleep(30)
+    t.sleep(60)
     if result is not None:
         v.HOST = result['ip']
         terminal.connect(host=v.HOST, password=v.WEB_PWD)
@@ -531,8 +531,9 @@ def setLanAp(terminal, logname, **kwargs):
 
 def setDisableLanAp(terminal, logname):
     api = '/cgi-bin/luci/;stok=token/api/xqnetwork/disable_lan_ap'
+    t.sleep(60)
     result = setGet(terminal, logname, api)
-    t.sleep(30)
+    t.sleep(60)
     if result is not None:
         v.HOST = result['ip']
         terminal.connect(host=v.HOST, password=v.WEB_PWD)
@@ -546,6 +547,104 @@ def setDisableLanAp(terminal, logname):
     # return None
 
 
+def setWifiAp(terminal, logname, **kwargs):
+    option = {
+        'ssid': v.ROOT_AP_SSID,
+        'encryption': 'WPA2PSK',
+        'enctype': 'TKIPAES',
+        'password': v.ROOT_AP_PWD,
+        'channel': 6,
+        'bandwidth': '20',
+        'nssid': v.ROOT_AP_SSID,
+        'nencryption': 'none',
+    }
+    option.update(kwargs)
+    api = '/cgi-bin/luci/;stok=token/api/xqnetwork/set_wifi_ap'
+    t.sleep(60)
+    result = setGet(terminal, logname, api, **option)
+    t.sleep(60)
+    if result is not None:
+        v.HOST = result['ip']
+        terminal.connect(host=v.HOST, password=v.WEB_PWD)
+        return result
+    return result
+
+
+def setDisableAp(terminal, logname):
+    api = '/cgi-bin/luci/;stok=token/api/xqnetwork/disable_ap'
+    t.sleep(60)
+    result = setGet(terminal, logname, api)
+    t.sleep(60)
+    if result is not None:
+        v.HOST = result['lanip']
+        terminal.connect(host=v.HOST, password=v.WEB_PWD)
+        return result
+    return result
+
+
+def setQosSwitch(terminal, logname, **kwargs):
+    """
+    on 1/0 开启关闭qos
+    """
+    option = {
+        'on': 1
+    }
+    option.update(kwargs)
+    api = '/cgi-bin/luci/;stok=token/api/misystem/qos_switch'
+    return setCheck(terminal, logname, api, **option)
+
+
+def setQosLimits(terminal, logname, **kwargs):
+    """
+    mode 1/2 优先级/手动
+    data [
+    {"mac":"A0:86:C6:FE:B8:28","maxup":"3","maxdown":"3"},
+    {"mac":"08:57:00:C8:6D:BD","maxup":"2","maxdown":"2"}
+    ]
+    mode为1时，maxup/maxdown 1/2/3 优先级低中高
+    mode为2时，maxup/maxdown xxxKB/s
+    """
+    option = {
+        'mode': 1,
+        'data': [
+            {'mac': '', 'maxup': '', 'maxdown': ''},
+        ]
+    }
+    option.update(kwargs)
+    api = '/cgi-bin/luci/;stok=token/api/misystem/qos_limits'
+    return setCheck(terminal, logname, api, **option)
+
+
+def setQosLimit(terminal, logname, **kwargs):
+    """
+    mac
+    upload (mode==1 表示优先级，取值1/2/3；mode==2 表示手动设置，取值 xx KB/s)
+    download (mode==1 表示优先级，取值1/2/3；mode==2 表示手动设置，取值 xx KB/s)
+    mode 模式(0/1/2 自动/优先级/手动)
+    """
+    option = {
+        'mode': 1,
+        'mac': '',
+        'upload': '',
+        'download': '',
+    }
+    option.update(kwargs)
+    api = '/cgi-bin/luci/;stok=token/api/misystem/qos_limit'
+    return setCheck(terminal, logname, api, **option)
+
+
+def setQosMode(terminal, logname, **kwargs):
+    """
+    mode 0/1/2  自动/优先级/手动
+    """
+    option = {
+        'mode': 1
+    }
+    option.update(kwargs)
+    api = '/cgi-bin/luci/;stok=token/api/misystem/qos_mode'
+    return setCheck(terminal, logname, api, **option)
+
+
 def getWifiDetailAll(terminal, logname):
 
     api = '/cgi-bin/luci/;stok=token/api/xqnetwork/wifi_detail_all'
@@ -554,6 +653,7 @@ def getWifiDetailAll(terminal, logname):
         if ret['code'] is 0:
             return ret
     return None
+
 
 def getWifiDetailDic(terminal, logname, intf):
     commandDic = {
@@ -626,6 +726,7 @@ def getWifiChannel(terminal, intf, logname):
         }
         channel = commandDic.get(intf)
         return int(eval(channel))
+
 
 def getDeviceDetail(terminal, logname, **kwargs):
     """
@@ -839,6 +940,7 @@ def getDeviceMem(terminal, logname):
         totalNum = float(total.split()[0])
         usedMemNum = int(usageNum * totalNum * 1024)
         return usedMemNum
+
 
 def getDeviceCPU(terminal, logname):
     ret = getDeviceStatus(terminal, logname)

@@ -738,142 +738,6 @@ def getKernelSlab(terminal):
     return result
 
 
-def getAdbDevices():
-    """
-    C:\Users\Jac>adb devices
-    List of devices attached
-    01808409        device
-    87eae3b5        device
-    """
-    command = "adb devices"
-    ret = os.popen(command).readlines()
-    result = []
-    for line in ret:
-        if not line.isspace():
-            m = re.search('(^[0-9a-zA-Z]*)\s*device$', line)
-            if m:
-                result.append(m.group(1))
-    return result
-
-
-def getAdbAndroidVersion(device, logname):
-    """
-    127|shell@cancro:/system/bin $ getprop ro.build.version.release
-    getprop ro.build.version.release
-    6.0
-    """
-    command = "getprop ro.build.version.release"
-    ret = setAdbShell(device, command, logname)
-    return str(ret[0])
-
-
-def getAdbWlanMac(device, logname):
-    """
-    127|shell@cancro:/ $  cat /sys/class/net/wlan0/address
-    cat /sys/class/net/wlan0/address
-    """
-    command = "cat /sys/class/net/wlan0/address"
-    ret = setAdbShell(device, command, logname)
-    for line in ret:
-        m = re.search('([\da-fA-F]{2}:){5}[\da-fA-F]{2}', line)
-        if m:
-            result = m.group(0)
-            return result
-
-
-def getAdbShellWlan(device, logname):
-    verStr = getAdbAndroidVersion(device, logname)
-    verInt = 1
-    o = re.search('^(\d{1,})\.', verStr)
-    if o:
-        verInt = int(o.group(1))
-    if verInt < 6:
-        command = "netcfg"
-        """
-        D:\>adb shell netcfg
-        wlan0    UP                              192.168.31.103/24  0x00001043 14:f6:5a:8f:c7:c1
-        """
-        ret = setAdbShell(device, command, logname)
-        result = {}
-        for line in ret:
-            m = re.search('wlan.*[UPDOWN]\s*((\d{1,3}\.){3}\d{1,3}).*(([\da-fA-F]{2}:){5}[\da-fA-F]{2})', line)
-            if m:
-                if m.group(1) == "0.0.0.0":
-                    result['ip'] = ""
-                    result['mac'] = m.group(3)
-                    return result
-                else:
-                    result['ip'] = m.group(1)
-                    result['mac'] = m.group(3)
-                    return result
-            else:
-                result['mac'] = ""
-                result['ip'] = ""
-        return result
-    else:
-        command = "ifconfig wlan0"
-        """
-        ifconfig
-        wlan0     Link encap:Ethernet  HWaddr 0C:1D:AF:46:80:23
-                  inet addr:192.168.110.211  Bcast:192.168.110.255  Mask:255.255.255.0
-                  inet6 addr: fe80::e1d:afff:fe46:8023/64 Scope: Link
-                  UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1
-                  RX packets:1488 errors:0 dropped:0 overruns:0 frame:0
-                  TX packets:197 errors:0 dropped:0 overruns:0 carrier:0
-                  collisions:0 txqueuelen:1000
-                  RX bytes:585548 TX bytes:22543
-        """
-        ret = setAdbShell(device, command, logname)
-        result = {"mac": "",
-                  "ip": "",}
-        for line in ret:
-            m = re.search('Ethernet  HWaddr (([\da-fA-F]{2}:){5}[\da-fA-F]{2})', line)
-            n = re.search('inet addr:((\d{1,3}\.){3}\d{1,3})', line)
-            if m:
-                result['mac'] = m.group(1)
-            if n:
-                result['ip'] = n.group(1)
-        return result
-
-
-def getAdbPingStatus(terminal, target, count, logname):
-    """
-    C:\Users\Administrator>adb shell ping -c 5 www.baidu.com
-    PING www.a.shifen.com (61.135.169.125) 56(84) bytes of data.
-    64 bytes from 61.135.169.125: icmp_seq=1 ttl=54 time=19.7 ms
-    64 bytes from 61.135.169.125: icmp_seq=2 ttl=54 time=16.1 ms
-    64 bytes from 61.135.169.125: icmp_seq=3 ttl=54 time=16.6 ms
-    64 bytes from 61.135.169.125: icmp_seq=4 ttl=54 time=18.6 ms
-    64 bytes from 61.135.169.125: icmp_seq=5 ttl=54 time=15.6 ms
-
-    --- www.a.shifen.com ping statistics ---
-    5 packets transmitted, 5 received, 0% packet loss, time 4006ms
-    rtt min/avg/max/mdev = 15.669/17.374/19.774/1.563 ms
-    """
-    command = 'ping -c ' + str(count) + ' ' + target
-    ret = setAdbShell(terminal, command, logname)
-    result = {}
-    for line in ret:
-        m = re.search('(\d{1,3})%\spacket\sloss', line)
-
-        if m:
-            result['loss'] = int(m.group(1))
-            result['pass'] = 100 - int(m.group(1))
-            return result
-        else:
-            result['loss'] = 100
-            result['pass'] = 0
-    return result
-
-
-def chkAdbDevicesCount(count):
-    ret = getAdbDevices()
-    if len(ret) >= int(count):
-        return True
-    else:
-        return False
-
-
 def chkSiteSurvey(terminal, intf, chkbssid, logname):
     ret = getSiteSurvey(terminal, intf, logname)
     try:
@@ -1085,6 +949,16 @@ def setAdbClearStaConn(device, ssid, radio, logname):
     return ret
 
 
+def setAdbClearSta(device, ssid, radio, logname):
+    option = {
+        "ssid": ssid,
+        "radio": radio,
+    }
+
+    ret = setAdbStaConn(device, logname, **option)
+    return ret
+
+
 def setAdbClearStaConnRepeat(device, ssid, radio, logname):
     if radio is "2g":
         if ssid is "normal":
@@ -1107,6 +981,16 @@ def setAdbClearStaConnRepeat(device, ssid, radio, logname):
                 "radio": "guest",
                 "repeat": 1,
             }
+    ret = setAdbStaConn(device, logname, **option)
+    return ret
+
+
+def setAdbClearStaRepeat(device, ssid, radio, logname):
+    option = {
+        "ssid": ssid,
+        "radio": radio,
+        "repeat": 1,
+    }
     ret = setAdbStaConn(device, logname, **option)
     return ret
 
@@ -1182,6 +1066,16 @@ def setAdbPsk2StaConn(device, ssid, radio, logname, key=None):
     return ret
 
 
+def setAdbPsk2Sta(device, ssid, key, radio, logname):
+    option = {
+        "ssid": ssid,
+        "radio": radio,
+        "encryption": "psk2",
+        "key": key
+    }
+    ret = setAdbStaConn(device, logname, **option)
+    return ret
+
 def setAdbPsk2StaConnRepeat(device, ssid, radio, logname):
     if radio is "2g":
         if ssid == "normal":
@@ -1210,6 +1104,18 @@ def setAdbPsk2StaConnRepeat(device, ssid, radio, logname):
                 "key": v.KEY,
                 "repeat": 1,
             }
+    ret = setAdbStaConn(device, logname, **option)
+    return ret
+
+
+def setAdbPsk2StaRepeat(device, ssid, radio, logname):
+    option = {
+        "ssid": ssid,
+        "radio": radio,
+        "encryption": "psk2",
+        "key": v.KEY,
+        "repeat": 1,
+    }
     ret = setAdbStaConn(device, logname, **option)
     return ret
 
@@ -1285,6 +1191,17 @@ def setAdbPskStaConn(device, ssid, radio, logname, key=None):
     return ret
 
 
+def setAdbPskSta(device, ssid, key, radio, logname):
+    option = {
+        "ssid": ssid,
+        "radio": radio,
+        "encryption": "psk",
+        "key": key
+    }
+    ret = setAdbStaConn(device, logname, **option)
+    return ret
+
+
 def setAdbPskStaConnRepeat(device, ssid, radio, logname):
     if radio is "2g":
         if ssid == "normal":
@@ -1313,6 +1230,18 @@ def setAdbPskStaConnRepeat(device, ssid, radio, logname):
                 "key": v.KEY,
                 "repeat": 1,
             }
+    ret = setAdbStaConn(device, logname, **option)
+    return ret
+
+
+def setAdbPskStaRepeat(device, ssid, radio, logname):
+    option = {
+        "ssid": ssid,
+        "radio": radio,
+        "encryption": "psk",
+        "key": v.KEY,
+        "repeat": 1,
+    }
     ret = setAdbStaConn(device, logname, **option)
     return ret
 
@@ -1388,6 +1317,17 @@ def setAdbTkipPsk2StaConn(device, ssid, radio, logname, key=None):
     return ret
 
 
+def setAdbTkipPsk2Sta(device, ssid, key, radio, logname):
+    option = {
+        "ssid": ssid,
+        "radio": radio,
+        "encryption": "tkippsk2",
+        "key": key
+    }
+    ret = setAdbStaConn(device, logname, **option)
+    return ret
+
+
 def setAdbTkipPsk2StaConnRepeat(device, ssid, radio, logname):
     if radio is "2g":
         if ssid == "normal":
@@ -1416,6 +1356,18 @@ def setAdbTkipPsk2StaConnRepeat(device, ssid, radio, logname):
                 "key": v.KEY,
                 "repeat": 1,
             }
+    ret = setAdbStaConn(device, logname, **option)
+    return ret
+
+
+def setAdbTkipPsk2StaRepeat(device, ssid, radio, logname):
+    option = {
+        "ssid": ssid,
+        "radio": radio,
+        "encryption": "tkippsk2",
+        "key": v.KEY,
+        "repeat": 1,
+    }
     ret = setAdbStaConn(device, logname, **option)
     return ret
 
@@ -1491,6 +1443,17 @@ def setAdbTkipPskStaConn(device, ssid, radio, logname, key=None):
     return ret
 
 
+def setAdbTkipPskSta(device, ssid, key, radio, logname):
+    option = {
+        "ssid": ssid,
+        "radio": radio,
+        "encryption": "tkippsk",
+        "key": key
+    }
+    ret = setAdbStaConn(device, logname, **option)
+    return ret
+
+
 def setAdbTkipPskStaConnRepeat(device, ssid, radio, logname):
     if radio is "2g":
         if ssid == "normal":
@@ -1519,6 +1482,18 @@ def setAdbTkipPskStaConnRepeat(device, ssid, radio, logname):
                 "key": v.KEY,
                 "repeat": 1,
             }
+    ret = setAdbStaConn(device, logname, **option)
+    return ret
+
+
+def setAdbTkipPskStaRepeat(device, ssid, radio, logname):
+    option = {
+        "ssid": ssid,
+        "radio": radio,
+        "encryption": "tkippsk",
+        "key": v.KEY,
+        "repeat": 1,
+    }
     ret = setAdbStaConn(device, logname, **option)
     return ret
 
@@ -1580,6 +1555,22 @@ def setAdbScanSsidNoExist(device, ssid, radio, logname):
     return False
 
 
+def chkAdbScanSsidNoExist(device, ssid, logname):
+    option = {
+        "ssid": convertStrToURL(ssid)
+    }
+
+    command = "am instrument -e ssid %(ssid)s -e class com.peanutswifi.ApplicationTest#test_ssidhide " \
+              "-w com.peanutswifi.test/com.peanutswifi.MyTestRunner"%option
+
+    ret = setAdbShell(device, command, logname)
+    for line in ret:
+        m = re.search('OK', line)
+        if m:
+            return True
+    return False
+
+
 def setAdbIperfOn(device, logname):
     command = "am instrument -e class com.peanutswifi.ApplicationTest#test_iperf2 -w com.peanutswifi.test/com.peanutswifi.MyTestRunner"
     ret = setAdbShell(device, command, logname)
@@ -1620,6 +1611,174 @@ def setIperfFlow(target, interval, time, logname):
     return True
 
 
+def getAdbDevices():
+    """
+    C:\Users\Jac>adb devices
+    List of devices attached
+    01808409        device
+    87eae3b5        device
+    """
+    command = "adb devices"
+    ret = os.popen(command).readlines()
+    result = []
+    for line in ret:
+        if not line.isspace():
+            m = re.search('(^[0-9a-zA-Z]*)\s*device$', line)
+            if m:
+                result.append(m.group(1))
+    return result
+
+
+def getAdbAndroidVersion(device, logname):
+    """
+    127|shell@cancro:/system/bin $ getprop ro.build.version.release
+    getprop ro.build.version.release
+    6.0
+    """
+    command = "getprop ro.build.version.release"
+    ret = setAdbShell(device, command, logname)
+    return str(ret[0])
+
+
+def getAdbWlanMac(device, logname):
+    """
+    127|shell@cancro:/ $  cat /sys/class/net/wlan0/address
+    cat /sys/class/net/wlan0/address
+    """
+    command = "cat /sys/class/net/wlan0/address"
+    ret = setAdbShell(device, command, logname)
+    for line in ret:
+        m = re.search('([\da-fA-F]{2}:){5}[\da-fA-F]{2}', line)
+        if m:
+            result = m.group(0)
+            return result
+
+
+def getAdbShellWlan(device, logname):
+    verStr = getAdbAndroidVersion(device, logname)
+    verInt = 1
+    o = re.search('^(\d{1,})\.', verStr)
+    if o:
+        verInt = int(o.group(1))
+    if verInt < 6:
+        command = "netcfg"
+        """
+        D:\>adb shell netcfg
+        wlan0    UP                              192.168.31.103/24  0x00001043 14:f6:5a:8f:c7:c1
+        """
+        ret = setAdbShell(device, command, logname)
+        result = {}
+        for line in ret:
+            m = re.search('wlan.*[UPDOWN]\s*((\d{1,3}\.){3}\d{1,3}).*(([\da-fA-F]{2}:){5}[\da-fA-F]{2})', line)
+            if m:
+                if m.group(1) == "0.0.0.0":
+                    result['ip'] = ""
+                    result['mac'] = m.group(3)
+                    return result
+                else:
+                    result['ip'] = m.group(1)
+                    result['mac'] = m.group(3)
+                    return result
+            else:
+                result['mac'] = ""
+                result['ip'] = ""
+        return result
+    else:
+        command = "ifconfig wlan0"
+        """
+        ifconfig
+        wlan0     Link encap:Ethernet  HWaddr 0C:1D:AF:46:80:23
+                  inet addr:192.168.110.211  Bcast:192.168.110.255  Mask:255.255.255.0
+                  inet6 addr: fe80::e1d:afff:fe46:8023/64 Scope: Link
+                  UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1
+                  RX packets:1488 errors:0 dropped:0 overruns:0 frame:0
+                  TX packets:197 errors:0 dropped:0 overruns:0 carrier:0
+                  collisions:0 txqueuelen:1000
+                  RX bytes:585548 TX bytes:22543
+        """
+        ret = setAdbShell(device, command, logname)
+        result = {"mac": "",
+                  "ip": "",}
+        for line in ret:
+            m = re.search('Ethernet  HWaddr (([\da-fA-F]{2}:){5}[\da-fA-F]{2})', line)
+            n = re.search('inet addr:((\d{1,3}\.){3}\d{1,3})', line)
+            if m:
+                result['mac'] = m.group(1)
+            if n:
+                result['ip'] = n.group(1)
+        return result
+
+
+def getAdbPingStatus(terminal, target, count, logname):
+    """
+    C:\Users\Administrator>adb shell ping -c 5 www.baidu.com
+    PING www.a.shifen.com (61.135.169.125) 56(84) bytes of data.
+    64 bytes from 61.135.169.125: icmp_seq=1 ttl=54 time=19.7 ms
+    64 bytes from 61.135.169.125: icmp_seq=2 ttl=54 time=16.1 ms
+    64 bytes from 61.135.169.125: icmp_seq=3 ttl=54 time=16.6 ms
+    64 bytes from 61.135.169.125: icmp_seq=4 ttl=54 time=18.6 ms
+    64 bytes from 61.135.169.125: icmp_seq=5 ttl=54 time=15.6 ms
+
+    --- www.a.shifen.com ping statistics ---
+    5 packets transmitted, 5 received, 0% packet loss, time 4006ms
+    rtt min/avg/max/mdev = 15.669/17.374/19.774/1.563 ms
+    """
+    command = 'ping -c ' + str(count) + ' ' + target
+    ret = setAdbShell(terminal, command, logname)
+    result = {}
+    for line in ret:
+        m = re.search('(\d{1,3})%\spacket\sloss', line)
+
+        if m:
+            result['loss'] = int(m.group(1))
+            result['pass'] = 100 - int(m.group(1))
+            return result
+        else:
+            result['loss'] = 100
+            result['pass'] = 0
+    return result
+
+
+def getAdbSpeedTestResult(device, logname):
+    """
+    Running tests
+    Test running started
+    junit.framework.AssertionFailedError: downlink rate: 467.77 KB/s, uplink rate: 484.38 KB/s
+    at com.peanutswifi.ApplicationTest.test_speettest(ApplicationTest.java:114)
+    at android.test.InstrumentationTestCase.runMethod(InstrumentationTestCase.java:214)
+    at android.test.InstrumentationTestCase.runTest(InstrumentationTestCase.java:199)
+    at android.test.ActivityInstrumentationTestCase2.runTest(ActivityInstrumentationTestCase2.java:192)
+    at android.test.AndroidTestRunner.runTest(AndroidTestRunner.java:191)
+    at android.test.AndroidTestRunner.runTest(AndroidTestRunner.java:176)
+    at android.test.InstrumentationTestRunner.onStart(InstrumentationTestRunner.java:555)
+    at android.app.Instrumentation$InstrumentationThread.run(Instrumentation.java:1886)
+
+    Finish
+    """
+    result = {
+        'up': "",
+        'down': "",
+              }
+    command = "am instrument -e class com.peanutswifi.ApplicationTest#test_speedtest -w com.peanutswifi.test/com.peanutswifi.MyTestRunner"
+    ret = setAdbShell(device, command, logname)
+    for line in ret:
+        m = re.search('downlink rate: (.*) KB/s, uplink rate: (.*) KB/s', line)
+
+        if m:
+            result['down'] = float(m.group(1))
+            result['up'] = float(m.group(2))
+            return result
+    return result
+
+
+def chkAdbDevicesCount(count):
+    ret = getAdbDevices()
+    if len(ret) >= int(count):
+        return True
+    else:
+        return False
+
+
 def chkAdb2gFreq(device, logname):
     command = "am instrument -e class com.peanutswifi.ApplicationTest#test_2g_freq -w com.peanutswifi.test/com.peanutswifi.MyTestRunner"
     ret = setAdbShell(device, command, logname)
@@ -1642,4 +1801,4 @@ def chkAdb5gFreq(device, logname):
 
 if __name__ == '__main__':
     device = getAdbDevices()
-    chkAdb5gFreq(device[0], 'a')
+    print getAdbSpeedTestResult(device[0], 'a')

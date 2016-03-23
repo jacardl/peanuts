@@ -129,7 +129,12 @@ class GeneralPage(wx.Panel):
         self.webPasswd.SetValue(v.WEB_PWD)
 
         serialPortLbl = wx.StaticText(self, -1, 'Serial port:')
-        self.serialNum = co.getSerialPort()
+        self.serialNum = []
+        if len(co.getSerialPort()) is 0:
+            self.serialNum.append("None")
+        else:
+            self.serialNum = co.getSerialPort()
+        self.serialNum.append("None")
         self.serialPort = wx.Choice(self, -1, choices=self.serialNum)
         v.SERIAL_PORT = self.serialNum[0]
 
@@ -646,6 +651,8 @@ class TestSuitePage(wx.Panel):
         self.rootBasic = self.tree.AppendItem(self.root, 'Basic', ct_type=1)
         self.rootFlow = self.tree.AppendItem(self.root, 'Throughput', ct_type=1)
         self.rootWireRelay = self.tree.AppendItem(self.root, 'Wire Relay', ct_type=1)
+        self.rootWirelessRelay = self.tree.AppendItem(self.root, 'Wireless Relay', ct_type=1)
+        self.rootQosApi = self.tree.AppendItem(self.root, 'QoS', ct_type=1)
         self.rootCheck = self.tree.AppendItem(self.root, 'Check', ct_type=1)
 
         # self.rootAndroid = self.tree.AppendItem(self.root, 'Android', ct_type=1)
@@ -656,6 +663,8 @@ class TestSuitePage(wx.Panel):
         self.AddTreeNodes(self.rootBasic, data.treeBasicApi)
         self.AddTreeNodes(self.rootFlow, data.treeFlowApi)
         self.AddTreeNodes(self.rootWireRelay, data.treeWireRelayApi)
+        self.AddTreeNodes(self.rootWirelessRelay, data.treeWirelessRelayApi)
+        self.AddTreeNodes(self.rootQosApi, data.treeQosApi)
         self.AddTreeNodes(self.rootCheck, data.treeCheckApi)
         self.tree.Expand(self.root)
         treeLbl = wx.StaticText(self, -1, 'Select cases supposed to excute:')

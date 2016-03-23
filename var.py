@@ -28,7 +28,7 @@ connection_type = 1 represent ssh
 CONNECTION_TYPE = 1
 STA_CONNECTION_TYPE = 1
 
-VER = '3.0.1'
+VER = '3.1.1'
 
 # ----------------Memory Tracking-----------------
 
@@ -65,7 +65,7 @@ STA_INTF_5G = 'apclii0'
 TEST_SUITE_LOG_PATH = os.getcwd() + os.sep + 'LOG_TEST_SUITE' + os.sep
 IPERF_PATH = os.getcwd() + os.sep + "iperf" + os.sep
 DEFAULT_PATH = os.getcwd() + os.sep
-SSH_LOG_PATH = TEST_SUITE_LOG_PATH + "ssh_connection.log"
+SSH_LOG_PATH = DEFAULT_PATH + "ssh_connection.log"
 DEVICE_STATUS_LOG = "device_status_log"
 
 WORD_RANGE = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-_"
@@ -81,6 +81,13 @@ SPECIAL_SSID_5G = generateRandomString(SPEC_RANGE, 31)
 
 CHINESE_SSID = generateRandomString(CHINESE_RANGE, 10)
 CHINESE_SSID_5G = generateRandomString(CHINESE_RANGE, 10)
+
+WIRELESS_RELAY_SSID = generateRandomString(WORD_RANGE, 28)
+WIRELESS_RELAY_SSID_5G = WIRELESS_RELAY_SSID + "_5G"
+WIRELESS_RELAY_SPECIAL_SSID = generateRandomString(SPEC_RANGE, 28)
+WIRELESS_RELAY_SPECIAL_SSID_5G = WIRELESS_RELAY_SPECIAL_SSID + "_5G"
+WIRELESS_RELAY_CHINESE_SSID = generateRandomString(CHINESE_RANGE, 7)
+WIRELESS_RELAY_CHINESE_SSID_5G = WIRELESS_RELAY_CHINESE_SSID + "_5G"
 
 KEY = generateRandomString(WORD_RANGE, 63)
 SPECIAL_KEY = generateRandomString(SPEC_RANGE, 63)
@@ -130,8 +137,14 @@ MAIL_PIC3 = "throughput_in_%s.png"
 MAIL_PIC4 = "current_cpu_load.png"
 MAIL_XLSX = "memory_tracking.xlsx"
 
-MEM_MONITOR_INTERVAL = 240
+MEM_MONITOR_INTERVAL = 300
 
+QOS_MAXUP = 800
+QOS_MAXDOWN = 500
+
+ROOT_AP_SSID = "peanuts_automatic_test_root_ap_"
+ROOT_AP_PWD = "12345678"
+ROOT_AP_CHANNEL = 11
 # -------------api test------------------#
 WEB_USERNAME = 'admin'
 WEB_PWD = '12345678'
@@ -139,3 +152,4 @@ WEB_KEY = 'a2ffa5c9be07488bbb04a3a47d3c5f6a'
 IV = '64175472480004614961023454661220'
 # uci export account
 ACCOUNT_DEFAULT_PWD = 'b3a4190199d9ee7fe73ef9a4942a69fece39a771'
+

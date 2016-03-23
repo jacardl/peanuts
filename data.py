@@ -748,6 +748,172 @@ treeWireRelayApi = [
 
 ]
 
+
+treeWirelessRelayApi = [
+    'AP_WIRELESS_RELAY_CLEAR_CHAN',
+    [
+        'assoc_clear_sta_2g',
+        'assoc_clear_sta_5g',
+    ],
+    'AP_WIRELESS_RELAY_CLEAR_LOW',
+    [
+        'assoc_clear_sta_2g',
+        'assoc_clear_sta_5g',
+    ],
+    'AP_WIRELESS_RELAY_CLEAR_MID',
+    [
+        'assoc_clear_sta_2g',
+        'assoc_clear_sta_5g',
+    ],
+    'AP_WIRELESS_RELAY_CLEAR_HIGH',
+    [
+        'assoc_clear_sta_2g',
+        'assoc_clear_sta_5g',
+    ],
+    'AP_WIRELESS_RELAY_CLEAR_CHANSELECTION',
+    [
+        'chanselection_2g',
+        'chanselection_5g',
+    ],
+    'AP_WIRELESS_RELAY_PSK2',
+    [
+        'assoc_psk2_sta_2g',
+        'assoc_psk2_sta_5g',
+    ],
+    'AP_WIRELESS_RELAY_MIXEDPSK',
+    [
+        'assoc_psk2_sta_2g',
+        'assoc_psk_sta_2g',
+        'assoc_tkippsk2_sta_2g',
+        'assoc_tkippsk_sta_2g',
+        'assoc_psk2_sta_5g',
+        'assoc_psk_sta_5g',
+        'assoc_tkippsk2_sta_5g',
+        'assoc_tkippsk_sta_5g',
+    ],
+    'AP_WIRELESS_RELAY_MIXEDPSK_CHAN_BW80',
+    [
+        'assoc_psk2_sta_5g',
+        'assoc_psk_sta_5g',
+        'assoc_tkippsk2_sta_5g',
+        'assoc_tkippsk_sta_5g',
+    ],
+    'AP_WIRELESS_RELAY_MIXEDPSK_CHAN_BW40',
+    [
+        'assoc_psk2_sta_2g',
+        'assoc_psk_sta_2g',
+        'assoc_tkippsk2_sta_2g',
+        'assoc_tkippsk_sta_2g',
+        'assoc_psk2_sta_5g',
+        'assoc_psk_sta_5g',
+        'assoc_tkippsk2_sta_5g',
+        'assoc_tkippsk_sta_5g',
+    ],
+    'AP_WIRELESS_RELAY_MIXEDPSK_CHAN_BW20',
+    [
+        'assoc_psk2_sta_2g',
+        'assoc_psk_sta_2g',
+        'assoc_tkippsk2_sta_2g',
+        'assoc_tkippsk_sta_2g',
+        'assoc_psk2_sta_5g',
+        'assoc_psk_sta_5g',
+        'assoc_tkippsk2_sta_5g',
+        'assoc_tkippsk_sta_5g',
+    ],
+    'AP_WIRELESS_RELAY_MIXEDPSK_SSIDSPEC',
+    [
+        'assoc_psk2_sta_ssidspec_2g',
+        'assoc_psk_sta_ssidspec_2g',
+        'assoc_tkippsk2_sta_ssidspec_2g',
+        'assoc_tkippsk_sta_ssidspec_2g',
+        'assoc_psk2_sta_ssidspec_5g',
+        'assoc_psk_sta_ssidspec_5g',
+        'assoc_tkippsk2_sta_ssidspec_5g',
+        'assoc_tkippsk_sta_ssidspec_5g',
+    ],
+    'AP_WIRELESS_RELAY_MIXEDPSK_KEYSPEC',
+    [
+        'assoc_psk2_sta_keyspec_2g',
+        'assoc_psk_sta_keyspec_2g',
+        'assoc_tkippsk2_sta_keyspec_2g',
+        'assoc_tkippsk_sta_keyspec_2g',
+        'assoc_psk2_sta_keyspec_5g',
+        'assoc_psk_sta_keyspec_5g',
+        'assoc_tkippsk2_sta_keyspec_5g',
+        'assoc_tkippsk_sta_keyspec_5g',
+    ],
+    'AP_WIRELESS_RELAY_MIXEDPSK_SSIDCHINESE',
+    [
+        'assoc_psk2_sta_ssidchinese_2g',
+        'assoc_psk_sta_ssidchinese_2g',
+        'assoc_tkippsk2_sta_ssidchinese_2g',
+        'assoc_tkippsk_sta_ssidchinese_2g',
+        'assoc_psk2_sta_ssidchinese_5g',
+        'assoc_psk_sta_ssidchinese_5g',
+        'assoc_tkippsk2_sta_ssidchinese_5g',
+        'assoc_tkippsk_sta_ssidchinese_5g',
+    ],
+    'AP_WIRELESS_RELAY_MIXEDPSK_BSD',
+    [
+        'assoc_psk2_near_field_sta',
+        'assoc_psk_near_field_sta',
+        'assoc_tkippsk2_near_field_sta',
+        'assoc_tkippsk_near_field_sta',
+    ],
+    'AP_WIRELESS_RELAY_SSIDHIDE',
+    [
+        'ap_clear_ssidhide_2g',
+        'ap_psk2_ssidhide_2g',
+        'ap_mixedpsk_ssidhide_2g',
+        'ap_clear_ssidhide_5g',
+        'ap_psk2_ssidhide_5g',
+        'ap_mixedpsk_ssidhide_5g',
+    ],
+    'AP_WIRELESS_RELAY_CONFIG_CHECK',
+    [
+        'config_check_2g',
+        'config_check_5g',
+        'config_check_guest',
+    ],
+
+]
+
+
+treeQosApi = [
+    'AP_QOS_MIXEDPSK',
+    [
+        'assoc_psk2_sta_speedtest_2g',
+        'assoc_psk_sta_speedtest_2g',
+        'assoc_tkippsk2_sta_speedtest_2g',
+        'assoc_tkippsk_sta_speedtest_2g',
+        'assoc_psk2_sta_speedtest_5g',
+        'assoc_psk_sta_speedtest_5g',
+        'assoc_tkippsk2_sta_speedtest_5g',
+        'assoc_tkippsk_sta_speedtest_5g',
+     ],
+    'AP_QOS_CLEAR',
+    [
+        'assoc_clear_sta_speedtest_2g',
+        'assoc_clear_sta_speedtest_5g',
+    ],
+    'AP_QOS_PSK2',
+    [
+        'assoc_psk2_sta_speedtest_2g',
+        'assoc_psk2_sta_speedtest_5g',
+    ],
+    # 'AP_QOS_RELAY_CLEAR',
+    # [
+    #     'assoc_clear_sta_speedtest_2g',
+    #     'assoc_clear_sta_speedtest_5g',
+    # ],
+    # 'AP_QOS_WIRELESS_RELAY_CLEAR',
+    # [
+    #     'assoc_clear_sta_speedtest_2g',
+    #     'assoc_clear_sta_speedtest_5g',
+    # ],
+]
+
+
 treeFlowApi = [
     "AP_CLEAR_CHAN1_36_FLOW",
     [

@@ -651,10 +651,13 @@ def setWebAccessOpt(terminal, logname, **kwargs):
     opt 0/1 添加/删除
     mac
     """
+    # option = {
+    #     'open': 1,
+    #     'opt': 0,
+    #     'mac': '',
+    # }
     option = {
         'open': 1,
-        'opt': 0,
-        'mac': '',
     }
     option.update(kwargs)
     api = '/cgi-bin/luci/;stok=token/api/misystem/web_access_opt'

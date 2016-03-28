@@ -645,6 +645,26 @@ def setQosMode(terminal, logname, **kwargs):
     return setCheck(terminal, logname, api, **option)
 
 
+def setQosGuest(terminal, logname, **kwargs):
+    """
+    percent: (0, 1]
+    :return
+    {'code': 0, 'guest': {'down': 13635, 'percent': 0.7, 'up': 13435}}
+    """
+    option = {
+        'percent': 1
+    }
+    option.update(kwargs)
+    api = '/cgi-bin/luci/;stok=token/api/misystem/qos_guest'
+    ret = setGet(terminal, logname, api, **option)
+    if ret is not None:
+        if ret['code'] is 0:
+            ret['guest']['down'] = ret['guest']['down']/8 # change from kb/s to KB/s
+            ret['guest']['up'] = ret['guest']['up']/8
+            return ret
+    return None
+
+
 def setWebAccessOpt(terminal, logname, **kwargs):
     """
     open 0/1 关闭/开启
@@ -973,13 +993,11 @@ def getDeviceCPU(terminal, logname):
 
 if __name__ == '__main__':
     option = {
-        'model': 0,
-        'mac': '11:22:33:44:55:66',
-        'option': 1
+        'percent': 0.7
     }
-    v.HOST = '192.168.110.1'
+    v.HOST = '192.168.31.1'
     v.WEB_PWD = '12345678'
     webclient = HttpClient()
     webclient.connect(host=v.HOST, password=v.WEB_PWD)
-    print setEditDevice(webclient, 'a')
+    print setQosGuest(webclient, 'a', **option)
     webclient.close()

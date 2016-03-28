@@ -28,7 +28,7 @@ connection_type = 1 represent ssh
 CONNECTION_TYPE = 1
 STA_CONNECTION_TYPE = 1
 
-VER = '3.1.1'
+VER = '3.2.1'
 
 # ----------------Memory Tracking-----------------
 
@@ -95,6 +95,7 @@ SPECIAL_KEY = generateRandomString(SPEC_RANGE, 63)
 PING_PERCENT_PASS = 100
 PING_COUNT = 5
 PING_TARGET = 'www.baidu.com'
+CHECK_ACCESS_URL = "http://miwifi.com/cgi-bin/luci/web"
 
 BSSID = ''
 BSSID_5G = ''

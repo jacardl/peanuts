@@ -573,15 +573,16 @@ def drawCPU(data):
 
 if __name__ == '__main__':
 
-    # v.CONNECTION_TYPE = 2
-    # v.HOST = "192.168.31.1"
-    # v.USR = "root"
-    # v.PASSWD = "admin"
-    v.HOST = '10.237.100.59'
-    v.WEB_PWD = '12345678'
-    webclient = api.HttpClient()
-    webclient.connect(host=v.HOST, password=v.WEB_PWD)
-    memMon = HttpCPUMonitor(interval=5)
+    v.CONNECTION_TYPE = 2
+    v.HOST = "192.168.31.1"
+    v.USR = "root"
+    v.PASSWD = "admin"
+    # v.HOST = '192.168.31.1'
+    # v.WEB_PWD = '12345678'
+    # webclient = api.HttpClient()
+    # webclient.connect(host=v.HOST, password=v.WEB_PWD)
+    # memMon = HttpCPUMonitor(interval=5)
+    memMon = MemMonitorXlsx(5, count=5, file='a.xlsx')
     memMon.start()
-    t.sleep(30)
-    memMon.stop()
+    # t.sleep(30)
+    # memMon.stop()

@@ -731,6 +731,9 @@ def getKernelSlab(terminal):
     result = OrderedDict()
     cmd = 'cat /proc/slabinfo'
     ret = terminal.command(cmd)
+    if len(ret) <= 2:
+        result["Total Cache"] = 0
+        return result
     for line in ret[2:]:
         cacheList = line.split()
         result[cacheList[0]] = round(float(cacheList[2]) * float(cacheList[3])/1024, 2)

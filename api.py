@@ -326,11 +326,15 @@ def setWifi(terminal, logname, **kwargs):
                 t.sleep(5)
                 status = getWifiStatus(terminal, logname)
                 curTime = int(t.time())
+                if curTime - lastTime >= 25:
+                    break
         else:
             while str(status['status'][index-1]['up']) != str(option.get('on')) or curTime - lastTime <= 20:
                 t.sleep(5)
                 status = getWifiStatus(terminal, logname)
                 curTime = int(t.time())
+                if curTime - lastTime >= 25:
+                    break
     return ret
 
 

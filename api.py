@@ -314,27 +314,36 @@ def setWifi(terminal, logname, **kwargs):
     option.update(kwargs)
     api = '/cgi-bin/luci/;stok=token/api/xqnetwork/set_wifi'
     ret = setCheck(terminal, logname, api, **option)
-    t.sleep(10)
+    t.sleep(30)
     if ret:
         lastTime = int(t.time())
         curTime = int(t.time())
-        status = getWifiStatus(terminal, logname)
+        # status = getWifiStatus(terminal, logname)
+        detailAll = getWifiDetailAll(terminal, logname)
         index = option['wifiIndex']
         if index == 3:
-            # getWifiStatus can't get guest wifi status, check 2g instead of
-            while str(status['status'][0]['up']) != str(option.get('on')) or curTime - lastTime <= 20:
+            status = str(detailAll['info'][-1]['status'])
+            while status != str(option.get('on')) and curTime - lastTime <= 50:
                 t.sleep(5)
-                status = getWifiStatus(terminal, logname)
+
+                # status = getWifiStatus(terminal, logname)
+                detailAll = getWifiDetailAll(terminal, logname)
+                status = str(detailAll['info'][-1]['status'])
+
                 curTime = int(t.time())
-                if curTime - lastTime >= 25:
-                    break
+                # if curTime - lastTime >= 25:
+                #     break
         else:
-            while str(status['status'][index-1]['up']) != str(option.get('on')) or curTime - lastTime <= 20:
+            status = str(detailAll['info'][index-1]['status'])
+            while status != str(option.get('on')) and curTime - lastTime <= 50:
                 t.sleep(5)
-                status = getWifiStatus(terminal, logname)
+                # status = getWifiStatus(terminal, logname)
+                detailAll = getWifiDetailAll(terminal, logname)
+                status = str(detailAll['info'][index-1]['status'])
+
                 curTime = int(t.time())
-                if curTime - lastTime >= 25:
-                    break
+                # if curTime - lastTime >= 25:
+                #     break
     return ret
 
 
@@ -997,11 +1006,19 @@ def getDeviceCPU(terminal, logname):
 
 if __name__ == '__main__':
     option = {
-        'percent': 0.7
+        'wifiIndex': 3,
+        'on': 1,
+        'ssid': 'peanuts-VIP',
+        'pwd': '',
+        'encryption': 'none',
+        'channel': '0',
+        'bandwidth': '0',
+        'hidden': 0,
+        'txpwr': 'mid'
     }
     v.HOST = '192.168.31.1'
     v.WEB_PWD = '12345678'
     webclient = HttpClient()
     webclient.connect(host=v.HOST, password=v.WEB_PWD)
-    print setQosGuest(webclient, 'a', **option)
+    setWifi(webclient, 'a', **option)
     webclient.close()

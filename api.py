@@ -337,7 +337,8 @@ def setWifi(terminal, logname, **kwargs):
                 curTime = int(t.time())
         else:
             try:
-                status = str(detailAll['info'][index-1]['status'])
+                if len(detailAll['info'][index-1]['device']) > 0:
+                    status = str(detailAll['info'][index-1]['status'])
             except Exception, e:
                 setLog(logname, str(e))
                 status = str(option.get('on'))

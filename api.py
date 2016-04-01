@@ -314,23 +314,36 @@ def setWifi(terminal, logname, **kwargs):
     option.update(kwargs)
     api = '/cgi-bin/luci/;stok=token/api/xqnetwork/set_wifi'
     ret = setCheck(terminal, logname, api, **option)
-    t.sleep(10)
+    t.sleep(30)
     if ret:
         lastTime = int(t.time())
         curTime = int(t.time())
-        status = getWifiStatus(terminal, logname)
+        # status = getWifiStatus(terminal, logname)
+        detailAll = getWifiDetailAll(terminal, logname)
         index = option['wifiIndex']
         if index == 3:
-            # getWifiStatus can't get guest wifi status, check 2g instead of
-            while str(status['status'][0]['up']) != str(option.get('on')) or curTime - lastTime <= 20:
+            status = str(detailAll['info'][-1]['status'])
+            while status != str(option.get('on')) and curTime - lastTime <= 50:
                 t.sleep(5)
-                status = getWifiStatus(terminal, logname)
+
+                # status = getWifiStatus(terminal, logname)
+                detailAll = getWifiDetailAll(terminal, logname)
+                status = str(detailAll['info'][-1]['status'])
+
                 curTime = int(t.time())
+                # if curTime - lastTime >= 25:
+                #     break
         else:
-            while str(status['status'][index-1]['up']) != str(option.get('on')) or curTime - lastTime <= 20:
+            status = str(detailAll['info'][index-1]['status'])
+            while status != str(option.get('on')) and curTime - lastTime <= 50:
                 t.sleep(5)
-                status = getWifiStatus(terminal, logname)
+                # status = getWifiStatus(terminal, logname)
+                detailAll = getWifiDetailAll(terminal, logname)
+                status = str(detailAll['info'][index-1]['status'])
+
                 curTime = int(t.time())
+                # if curTime - lastTime >= 25:
+                #     break
     return ret
 
 
@@ -643,6 +656,26 @@ def setQosMode(terminal, logname, **kwargs):
     option.update(kwargs)
     api = '/cgi-bin/luci/;stok=token/api/misystem/qos_mode'
     return setCheck(terminal, logname, api, **option)
+
+
+def setQosGuest(terminal, logname, **kwargs):
+    """
+    percent: (0, 1]
+    :return
+    {'code': 0, 'guest': {'down': 13635, 'percent': 0.7, 'up': 13435}}
+    """
+    option = {
+        'percent': 1
+    }
+    option.update(kwargs)
+    api = '/cgi-bin/luci/;stok=token/api/misystem/qos_guest'
+    ret = setGet(terminal, logname, api, **option)
+    if ret is not None:
+        if ret['code'] is 0:
+            ret['guest']['down'] = ret['guest']['down']/8 # change from kb/s to KB/s
+            ret['guest']['up'] = ret['guest']['up']/8
+            return ret
+    return None
 
 
 def setWebAccessOpt(terminal, logname, **kwargs):
@@ -973,13 +1006,19 @@ def getDeviceCPU(terminal, logname):
 
 if __name__ == '__main__':
     option = {
-        'model': 0,
-        'mac': '11:22:33:44:55:66',
-        'option': 1
+        'wifiIndex': 3,
+        'on': 1,
+        'ssid': 'peanuts-VIP',
+        'pwd': '',
+        'encryption': 'none',
+        'channel': '0',
+        'bandwidth': '0',
+        'hidden': 0,
+        'txpwr': 'mid'
     }
-    v.HOST = '192.168.110.1'
+    v.HOST = '192.168.31.1'
     v.WEB_PWD = '12345678'
     webclient = HttpClient()
     webclient.connect(host=v.HOST, password=v.WEB_PWD)
-    print setEditDevice(webclient, 'a')
+    setWifi(webclient, 'a', **option)
     webclient.close()

@@ -576,16 +576,13 @@ treeQosApi = [
         'assoc_psk2_sta_speedtest_2g',
         'assoc_psk2_sta_speedtest_5g',
     ],
-    # 'AP_QOS_RELAY_CLEAR',
-    # [
-    #     'assoc_clear_sta_speedtest_2g',
-    #     'assoc_clear_sta_speedtest_5g',
-    # ],
-    # 'AP_QOS_WIRELESS_RELAY_CLEAR',
-    # [
-    #     'assoc_clear_sta_speedtest_2g',
-    #     'assoc_clear_sta_speedtest_5g',
-    # ],
+    'AP_QOS_GUEST_MIXEDPSK',
+    [
+        'assoc_psk2_sta_speedtest_guest',
+        'assoc_psk_sta_speedtest_guest',
+        'assoc_tkippsk2_sta_speedtest_guest',
+        'assoc_tkippsk_sta_speedtest_guest',
+    ]
 ]
 
 

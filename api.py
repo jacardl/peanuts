@@ -176,7 +176,7 @@ class HttpClient(object):
 def setLog(logname, content):
     curTime = t.strftime('%Y.%m.%d %H:%M:%S', t.localtime())
     f = open(v.TEST_SUITE_LOG_PATH + logname + '.log', 'a')
-    f.write(curTime + content + '\n')
+    f.write(curTime + '~# ' + content + '\n')
     f.write('\n')
     f.close()
 
@@ -397,14 +397,22 @@ def setAllWifi(terminal, logname, **kwargs):
     option.update(kwargs)
     api = '/cgi-bin/luci/;stok=token/api/xqnetwork/set_all_wifi'
     ret = setCheck(terminal, logname, api, **option)
-    t.sleep(10)
+    t.sleep(30)
     if ret:
         lastTime = int(t.time())
         curTime = int(t.time())
-        status = getWifiStatus(terminal, logname)
-        while str(status['status'][0]['up']) != str(option.get('on1')) or curTime - lastTime <= 20:
+        detailAll = getWifiDetailAll(terminal, logname)
+        status = str(detailAll['info'][0]['status']) == str(detailAll['info'][1]['status']) \
+                 == str(option.get('on1'))
+        bsd = str(detailAll['info'][0]['bsd']) == str(detailAll['info'][1]['bsd']) \
+              == str(option.get('bsd'))
+        while (status != True or bsd != True) and curTime - lastTime <= 50:
             t.sleep(5)
-            status = getWifiStatus(terminal, logname)
+            detailAll = getWifiDetailAll(terminal, logname)
+            status = str(detailAll['info'][0]['status']) == str(detailAll['info'][1]['status']) \
+                     == str(option.get('on1'))
+            bsd = str(detailAll['info'][0]['bsd']) == str(detailAll['info'][1]['bsd']) \
+                  == str(option.get('bsd'))
             curTime = int(t.time())
     return ret
 

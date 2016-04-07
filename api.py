@@ -708,6 +708,11 @@ def setWebAccessOpt(terminal, logname, **kwargs):
     return setCheck(terminal, logname, api, **option)
 
 
+def setUploadLog(terminal, logname):
+    api = '/cgi-bin/luci/;stok=token/api/xqsystem/upload_log'
+    return setCheck(terminal, logname, api)
+
+
 def getWifiDetailAll(terminal, logname):
 
     api = '/cgi-bin/luci/;stok=token/api/xqnetwork/wifi_detail_all'

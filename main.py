@@ -801,15 +801,15 @@ class TestSuitePage(wx.Panel):
 
         # start memory monitor
         self.memMon = mm.HttpMemMonitor(v.MEM_MONITOR_INTERVAL)
-        self.memMon.setDaemon(True)
+        # self.memMon.setDaemon(True)
         self.memMon.start()
         self.cpuMon = mm.HttpCPUMonitor(v.MEM_MONITOR_INTERVAL)
-        self.cpuMon.setDaemon(True)
+        # self.cpuMon.setDaemon(True)
         self.cpuMon.start()
 
         if v.CONNECTION_TYPE is not 3:
             self.memMonXlsx = mm.MemMonitorXlsx(v.MEM_MONITOR_INTERVAL, file=v.MAIL_XLSX)
-            self.memMonXlsx.setDaemon(True)
+            # self.memMonXlsx.setDaemon(True)
             self.memMonXlsx.start()
 
         while testKeepGoing and self.runFlag:

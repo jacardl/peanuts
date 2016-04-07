@@ -124,7 +124,7 @@ IPERF_TIME = "60"
 UPLOAD_LOG = 1
 SEND_MAIL = 1
 MAILTO_LIST = ["liujia5@xiaomi.com", "fengjiang@xiaomi.com", "hexiaoliang@xiaomi.com", "linli1@xiaomi.com",
-               "wangchunxuan@xiaomi.com", "wangyue3@xiaomi.com", "youguidong@xiaomi.com", "zhangjunjie@xiaomi.com",
+               "wangchunxuan@xiaomi.com", "youguidong@xiaomi.com", "zhangjunjie@xiaomi.com",
                "zhaoziqiang@xiaomi.com", ]
 # MAILTO_LIST = ["liujia5@xiaomi.com"]
 MAIL_HOST = "mail.srv"  #设置服务器

@@ -65,21 +65,13 @@ treeBasicApi = [
         "chanselection_2g",
         "chanselection_5g",
     ],
-    "AP_CLEAR_CHAN_REPEAT",
-    [
-        "assoc_repeat_clear_sta_2g",
-        "assoc_repeat_clear_sta_5g"
-    ],
+
     'AP_PSK2_CHAN',
     [
         'assoc_psk2_sta_2g',
         'assoc_psk2_sta_5g',
     ],
-    "AP_PSK2_CHAN_REPEAT",
-    [
-        "assoc_repeat_psk2_sta_2g",
-        "assoc_repeat_psk2_sta_5g",
-    ],
+
     'AP_MIXEDPSK_CHAN',
     [
         'assoc_psk2_sta_2g',
@@ -153,17 +145,7 @@ treeBasicApi = [
         'assoc_tkippsk2_sta_ssidchinese_5g',
         'assoc_tkippsk_sta_ssidchinese_5g',
     ],
-    "AP_MIXEDPSK_CHAN_REPEAT",
-    [
-        "assoc_repeat_psk2_sta_2g",
-        "assoc_repeat_psk_sta_2g",
-        "assoc_repeat_tkippsk2_sta_2g",
-        "assoc_repeat_tkippsk_sta_2g",
-        "assoc_repeat_psk2_sta_5g",
-        "assoc_repeat_psk_sta_5g",
-        "assoc_repeat_tkippsk2_sta_5g",
-         "assoc_repeat_tkippsk_sta_5g",
-    ],
+
     'AP_MIXEDPSK_BSD',
     [
         'assoc_psk2_near_field_sta',
@@ -188,21 +170,7 @@ treeBasicApi = [
         'assoc_tkippsk2_sta_guest',
         'assoc_tkippsk_sta_guest',
     ],
-    "AP_GUEST_CLEAR_REPEAT",
-    [
-        "assoc_repeat_clear_sta_guest",
-    ],
-    "AP_GUEST_MIXEDPSK_REPEAT",
-    [
-        "assoc_repeat_psk2_sta_guest",
-        "assoc_repeat_psk_sta_guest",
-        "assoc_repeat_tkippsk2_sta_guest",
-        "assoc_repeat_tkippsk_sta_guest",
-    ],
-    "AP_GUEST_PSK2_REPEAT",
-    [
-        "assoc_repeat_psk2_sta_guest",
-    ],
+
     'AP_SSIDHIDE',
     [
         'ap_clear_ssidhide_2g',
@@ -673,13 +641,52 @@ treeFlowApi = [
     ],
 ]
 
-treeCheckApi = [
+treeOthersApi = [
     'AP_CHECK',
     [
         'check_ap_reboot_lastestpower',
         'check_ap_upgrade_lastestpower',
         'check_ap_reset_lastestpower',
     ]
+]
+
+treeStressApi = [
+    "AP_CLEAR_CHAN_REPEAT",
+    [
+        "assoc_repeat_clear_sta_2g",
+        "assoc_repeat_clear_sta_5g"
+    ],
+    "AP_PSK2_CHAN_REPEAT",
+    [
+        "assoc_repeat_psk2_sta_2g",
+        "assoc_repeat_psk2_sta_5g",
+    ],
+    "AP_MIXEDPSK_CHAN_REPEAT",
+    [
+        "assoc_repeat_psk2_sta_2g",
+        "assoc_repeat_psk_sta_2g",
+        "assoc_repeat_tkippsk2_sta_2g",
+        "assoc_repeat_tkippsk_sta_2g",
+        "assoc_repeat_psk2_sta_5g",
+        "assoc_repeat_psk_sta_5g",
+        "assoc_repeat_tkippsk2_sta_5g",
+         "assoc_repeat_tkippsk_sta_5g",
+    ],
+    "AP_GUEST_CLEAR_REPEAT",
+    [
+        "assoc_repeat_clear_sta_guest",
+    ],
+    "AP_GUEST_MIXEDPSK_REPEAT",
+    [
+        "assoc_repeat_psk2_sta_guest",
+        "assoc_repeat_psk_sta_guest",
+        "assoc_repeat_tkippsk2_sta_guest",
+        "assoc_repeat_tkippsk_sta_guest",
+    ],
+    "AP_GUEST_PSK2_REPEAT",
+    [
+        "assoc_repeat_psk2_sta_guest",
+    ],
 ]
 
 # -------------------------------------------------------

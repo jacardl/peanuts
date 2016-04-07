@@ -173,6 +173,14 @@ class HttpClient(object):
             return responseDict
 
 
+def setLog(logname, content):
+    curTime = t.strftime('%Y.%m.%d %H:%M:%S', t.localtime())
+    f = open(v.TEST_SUITE_LOG_PATH + logname + '.log', 'a')
+    f.write(curTime + '~# ' + content + '\n')
+    f.write('\n')
+    f.close()
+
+
 def setGet(terminal, logname, apipath, **kwargs):
 
     if not os.path.exists(v.TEST_SUITE_LOG_PATH):
@@ -318,32 +326,27 @@ def setWifi(terminal, logname, **kwargs):
     if ret:
         lastTime = int(t.time())
         curTime = int(t.time())
-        # status = getWifiStatus(terminal, logname)
         detailAll = getWifiDetailAll(terminal, logname)
         index = option['wifiIndex']
         if index == 3:
             status = str(detailAll['info'][-1]['status'])
             while status != str(option.get('on')) and curTime - lastTime <= 50:
                 t.sleep(5)
-
-                # status = getWifiStatus(terminal, logname)
                 detailAll = getWifiDetailAll(terminal, logname)
                 status = str(detailAll['info'][-1]['status'])
-
                 curTime = int(t.time())
-                # if curTime - lastTime >= 25:
-                #     break
         else:
-            status = str(detailAll['info'][index-1]['status'])
+            try:
+                if len(detailAll['info'][index-1]['device']) > 0:
+                    status = str(detailAll['info'][index-1]['status'])
+            except Exception, e:
+                setLog(logname, str(e))
+                status = str(option.get('on'))
             while status != str(option.get('on')) and curTime - lastTime <= 50:
                 t.sleep(5)
-                # status = getWifiStatus(terminal, logname)
                 detailAll = getWifiDetailAll(terminal, logname)
                 status = str(detailAll['info'][index-1]['status'])
-
                 curTime = int(t.time())
-                # if curTime - lastTime >= 25:
-                #     break
     return ret
 
 
@@ -394,14 +397,22 @@ def setAllWifi(terminal, logname, **kwargs):
     option.update(kwargs)
     api = '/cgi-bin/luci/;stok=token/api/xqnetwork/set_all_wifi'
     ret = setCheck(terminal, logname, api, **option)
-    t.sleep(10)
+    t.sleep(30)
     if ret:
         lastTime = int(t.time())
         curTime = int(t.time())
-        status = getWifiStatus(terminal, logname)
-        while str(status['status'][0]['up']) != str(option.get('on1')) or curTime - lastTime <= 20:
+        detailAll = getWifiDetailAll(terminal, logname)
+        status = str(detailAll['info'][0]['status']) == str(detailAll['info'][1]['status']) \
+                 == str(option.get('on1'))
+        bsd = str(detailAll['info'][0]['bsd']) == str(detailAll['info'][1]['bsd']) \
+              == str(option.get('bsd'))
+        while (status != True or bsd != True) and curTime - lastTime <= 50:
             t.sleep(5)
-            status = getWifiStatus(terminal, logname)
+            detailAll = getWifiDetailAll(terminal, logname)
+            status = str(detailAll['info'][0]['status']) == str(detailAll['info'][1]['status']) \
+                     == str(option.get('on1'))
+            bsd = str(detailAll['info'][0]['bsd']) == str(detailAll['info'][1]['bsd']) \
+                  == str(option.get('bsd'))
             curTime = int(t.time())
     return ret
 
@@ -695,6 +706,11 @@ def setWebAccessOpt(terminal, logname, **kwargs):
     option.update(kwargs)
     api = '/cgi-bin/luci/;stok=token/api/misystem/web_access_opt'
     return setCheck(terminal, logname, api, **option)
+
+
+def setUploadLog(terminal, logname):
+    api = '/cgi-bin/luci/;stok=token/api/xqsystem/upload_log'
+    return setCheck(terminal, logname, api)
 
 
 def getWifiDetailAll(terminal, logname):

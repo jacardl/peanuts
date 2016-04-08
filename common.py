@@ -1669,7 +1669,6 @@ def getAdbShellWlan(device, logname):
             else:
                 result['mac'] = ""
                 result['ip'] = ""
-        return result
     else:
         command = "ifconfig wlan0"
         """
@@ -1693,7 +1692,12 @@ def getAdbShellWlan(device, logname):
                 result['mac'] = m.group(1)
             if n:
                 result['ip'] = n.group(1)
-        return result
+
+    if len(result['mac']) is 0:
+        command = 'cat /sys/class/net/wlan0/address'
+        ret = setAdbShell(device, command, logname)
+        result['mac'] = ret[0].strip('\r\n')
+    return result
 
 
 def getAdbPingStatus(terminal, target, count, logname):
@@ -1819,4 +1823,4 @@ def chkAdb5gFreq(device, logname):
 
 if __name__ == '__main__':
     device = getAdbDevices()
-    print chkAdbShellUrlAccess(device[0], 'http://192.168.110.1/cgi-bin/luci/web', 'a')
+    print getAdbShellWlan(device[0], 'a')

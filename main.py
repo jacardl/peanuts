@@ -650,6 +650,7 @@ class TestSuitePage(wx.Panel):
 
         self.root = self.tree.AddRoot('Test Cases', ct_type=1)
         self.rootBasic = self.tree.AppendItem(self.root, 'Basic', ct_type=1)
+        self.rootBSD = self.tree.AppendItem(self.root, 'BSD', ct_type=1)
         self.rootQosApi = self.tree.AppendItem(self.root, 'QoS', ct_type=1)
         self.rootAccessControlApi = self.tree.AppendItem(self.root, 'Access Control', ct_type=1)
         self.rootWireRelay = self.tree.AppendItem(self.root, 'Wire Relay', ct_type=1)
@@ -664,6 +665,7 @@ class TestSuitePage(wx.Panel):
         # self.AddTreeNodes(self.rootCheck, data.treeCheck)
 
         self.AddTreeNodes(self.rootBasic, data.treeBasicApi)
+        self.AddTreeNodes(self.rootBSD, data.treeBSDApi)
         self.AddTreeNodes(self.rootQosApi, data.treeQosApi)
         self.AddTreeNodes(self.rootAccessControlApi, data.treeAccessControlApi)
         self.AddTreeNodes(self.rootWireRelay, data.treeWireRelayApi)

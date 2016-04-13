@@ -146,13 +146,6 @@ treeBasicApi = [
         'assoc_tkippsk_sta_ssidchinese_5g',
     ],
 
-    'AP_MIXEDPSK_BSD',
-    [
-        'assoc_psk2_near_field_sta',
-        'assoc_psk_near_field_sta',
-        'assoc_tkippsk2_near_field_sta',
-        'assoc_tkippsk_near_field_sta',
-    ],
     'AP_GUEST_CLEAR',
     [
         'assoc_clear_sta_guest',
@@ -180,7 +173,84 @@ treeBasicApi = [
         'ap_mixedpsk_ssidhide_2g',
         'ap_mixedpsk_ssidhide_5g',
     ],
+    'AP_MIXEDPSK_SSIDHIDE',
+    [
+        'assoc_psk2_sta_2g',
+        'assoc_psk_sta_2g',
+        'assoc_tkippsk2_sta_2g',
+        'assoc_tkippsk_sta_2g',
+        'assoc_psk2_sta_5g',
+        'assoc_psk_sta_5g',
+        'assoc_tkippsk2_sta_5g',
+        'assoc_tkippsk_sta_5g',
+    ],
+
 ]
+
+
+treeBSDApi = [
+    'AP_MIXEDPSK_BSD',
+    [
+        'assoc_psk2_near_field_sta',
+        'assoc_psk_near_field_sta',
+        'assoc_tkippsk2_near_field_sta',
+        'assoc_tkippsk_near_field_sta',
+    ],
+    'AP_SSIDHIDE_BSD',
+    [
+        'ap_clear_ssidhide',
+        'ap_psk2_ssidhide',
+        'ap_mixedpsk_ssidhide',
+    ],
+    'AP_MIXEDPSK_SSIDHIDE_BSD',
+    [
+        'assoc_psk2_near_field_sta',
+        'assoc_psk_near_field_sta',
+        'assoc_tkippsk2_near_field_sta',
+        'assoc_tkippsk_near_field_sta'
+    ],
+    'AP_RELAY_MIXEDPSK_BSD',
+    [
+        'assoc_psk2_near_field_sta',
+        'assoc_psk_near_field_sta',
+        'assoc_tkippsk2_near_field_sta',
+        'assoc_tkippsk_near_field_sta',
+    ],
+    'AP_RELAY_SSIDHIDE_BSD',
+    [
+        'ap_clear_ssidhide',
+        'ap_psk2_ssidhide',
+        'ap_mixedpsk_ssidhide',
+    ],
+    'AP_RELAY_MIXEDPSK_SSIDHIDE_BSD',
+    [
+        'assoc_psk2_near_field_sta',
+        'assoc_psk_near_field_sta',
+        'assoc_tkippsk2_near_field_sta',
+        'assoc_tkippsk_near_field_sta',
+    ],
+    'AP_WIRELESS_RELAY_MIXEDPSK_BSD',
+    [
+        'assoc_psk2_near_field_sta',
+        'assoc_psk_near_field_sta',
+        'assoc_tkippsk2_near_field_sta',
+        'assoc_tkippsk_near_field_sta',
+    ],
+    'AP_WIRELESS_RELAY_SSIDHIDE_BSD',
+    [
+        'ap_clear_ssidhide',
+        'ap_psk2_ssidhide',
+        'ap_mixedpsk_ssidhide',
+    ],
+    'AP_WIRELESS_RELAY_MIXEDPSK_SSIDHIDE_BSD',
+    [
+        'assoc_psk2_near_field_sta',
+        'assoc_psk_near_field_sta',
+        'assoc_tkippsk2_near_field_sta',
+        'assoc_tkippsk_near_field_sta',
+    ],
+]
+
 
 treeWireRelayApi = [
     'AP_RELAY_CLEAR_CHAN',
@@ -325,13 +395,6 @@ treeWireRelayApi = [
         'assoc_tkippsk2_sta_ssidchinese_5g',
         'assoc_tkippsk_sta_ssidchinese_5g',
     ],
-    'AP_RELAY_MIXEDPSK_BSD',
-    [
-        'assoc_psk2_near_field_sta',
-        'assoc_psk_near_field_sta',
-        'assoc_tkippsk2_near_field_sta',
-        'assoc_tkippsk_near_field_sta',
-    ],
     'AP_RELAY_SSIDHIDE',
     [
         'ap_clear_ssidhide_2g',
@@ -340,6 +403,17 @@ treeWireRelayApi = [
         'ap_clear_ssidhide_5g',
         'ap_psk2_ssidhide_5g',
         'ap_mixedpsk_ssidhide_5g',
+    ],
+    'AP_RELAY_MIXEDPSK_SSIDHIDE',
+    [
+        'assoc_psk2_sta_2g',
+        'assoc_psk_sta_2g',
+        'assoc_tkippsk2_sta_2g',
+        'assoc_tkippsk_sta_2g',
+        'assoc_psk2_sta_5g',
+        'assoc_psk_sta_5g',
+        'assoc_tkippsk2_sta_5g',
+        'assoc_tkippsk_sta_5g',
     ],
     'AP_RELAY_CONFIG_CHECK',
     [
@@ -501,13 +575,6 @@ treeWirelessRelayApi = [
         'assoc_tkippsk2_sta_ssidchinese_5g',
         'assoc_tkippsk_sta_ssidchinese_5g',
     ],
-    'AP_WIRELESS_RELAY_MIXEDPSK_BSD',
-    [
-        'assoc_psk2_near_field_sta',
-        'assoc_psk_near_field_sta',
-        'assoc_tkippsk2_near_field_sta',
-        'assoc_tkippsk_near_field_sta',
-    ],
     'AP_WIRELESS_RELAY_SSIDHIDE',
     [
         'ap_clear_ssidhide_2g',
@@ -516,6 +583,17 @@ treeWirelessRelayApi = [
         'ap_clear_ssidhide_5g',
         'ap_psk2_ssidhide_5g',
         'ap_mixedpsk_ssidhide_5g',
+    ],
+    'AP_WIRELESS_RELAY_MIXEDPSK_SSIDHIDE',
+    [
+        'assoc_psk2_sta_2g',
+        'assoc_psk_sta_2g',
+        'assoc_tkippsk2_sta_2g',
+        'assoc_tkippsk_sta_2g',
+        'assoc_psk2_sta_5g',
+        'assoc_psk_sta_5g',
+        'assoc_tkippsk2_sta_5g',
+        'assoc_tkippsk_sta_5g',
     ],
     'AP_WIRELESS_RELAY_CONFIG_CHECK',
     [

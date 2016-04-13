@@ -10785,6 +10785,84 @@ class AP_WIRELESS_RELAY_CONFIG_CHECK(TestCase):
         self.assertDictEqual(routerConfGuest, self.optionGuest, msg="Wireless relay switch back to normal router module, guest wifi should be turned off.")
 
 
+class AP_WIRELESS_RELAY_SCAN(TestCase):
+    @classmethod
+    def setUpClass(self):
+        self.dut = api.HttpClient()
+        ret = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
+        if ret is False:
+            raise Exception("Http connection is failed. please check your remote settings.")
+
+    @classmethod
+    def tearDownClass(self):
+
+        self.dut.close()
+
+    def scan_radio_on_2g(self):
+
+        option2g = {
+            'wifiIndex': 1,
+            'ssid': v.SSID,
+            'encryption': 'mixed-psk',
+            'pwd': v.KEY
+        }
+
+        api.setWifi(self.dut, self.__class__.__name__, **option2g)
+
+        option = {
+            'ssid': v.ROOT_AP_SSID,
+        }
+
+        res, wifiInfo = api.chkWifiInfo(self.dut, self.__class__.__name__, **option)
+
+        if res is False:
+            self.fail(msg="Scan wifi list should be successful when 2.4g radio on.")
+
+        result = api.setWifiAp(self.dut, self.__class__.__name__, **wifiInfo)
+
+        self.assertEqual(result['code'], 0, msg='Switching to wireless relay module should be successful using wifi info scaned')
+
+        api.setDisableAp(self.dut, self.__class__.__name__)
+
+        option2g = {
+            'wifiIndex': 1,
+            'on': 0,
+        }
+        api.setWifi(self.dut, self.__class__.__name__, **option2g)
+
+    def scan_radio_off_2g(self):
+
+        option2g = {
+            'wifiIndex': 1,
+            'on': 0,
+        }
+        api.setWifi(self.dut, self.__class__.__name__, **option2g)
+
+        option = {
+            'ssid': v.ROOT_AP_SSID,
+        }
+
+        res, wifiInfo = api.chkWifiInfo(self.dut, self.__class__.__name__, **option)
+
+        if res is False:
+            self.fail(msg="Scan wifi list should be successful when 2.4g radio off.")
+
+        result = api.setWifiAp(self.dut, self.__class__.__name__, **wifiInfo)
+
+        self.assertEqual(result['code'], 0, msg='Switching to wireless relay module should be successful using wifi info scaned')
+
+        api.setDisableAp(self.dut, self.__class__.__name__)
+
+        option2g = {
+            'wifiIndex': 1,
+            'ssid': v.SSID,
+            'encryption': 'mixed-psk',
+            'pwd': v.KEY
+        }
+
+        api.setWifi(self.dut, self.__class__.__name__, **option2g)
+
+
 class AP_MIXEDPSK_WEB_ACCESS(TestCase):
     @classmethod
     def setUpClass(self):

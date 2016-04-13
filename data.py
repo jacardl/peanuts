@@ -393,6 +393,11 @@ treeAccessControlApi = [
 
 
 treeWirelessRelayApi = [
+    'AP_WIRELESS_RELAY_SCAN',
+    [
+        'scan_radio_on_2g',
+        'scan_radio_off_2g'
+    ],
     'AP_WIRELESS_RELAY_CLEAR_CHAN',
     [
         'assoc_clear_sta_2g',

@@ -18,6 +18,7 @@ import testcase2 as tc
 import sendmail as sm
 import memmonitor as mm
 import processreport as pr
+import api
 # ----------------------------------------------------------------------------
 
 
@@ -676,9 +677,13 @@ class TestSuitePage(wx.Panel):
         self.sel2gCheck = wx.CheckBox(self, -1, "2.4G")
         self.sel5gCheck = wx.CheckBox(self, -1, "5G")
         self.selGuestCheck = wx.CheckBox(self, -1, "Guest wifi")
+        self.selUploadLog = wx.CheckBox(self, -1, 'Upload Log')
+        self.selUploadLog.SetValue(True)
+
         self.Bind(wx.EVT_CHECKBOX, self.EvtSel2g, self.sel2gCheck)
         self.Bind(wx.EVT_CHECKBOX, self.EvtSel5g, self.sel5gCheck)
         self.Bind(wx.EVT_CHECKBOX, self.EvtSelGuest, self.selGuestCheck)
+        self.Bind(wx.EVT_CHECKBOX, self.EvtSelUploadLog, self.selUploadLog)
 
         self.applyBtn = wx.Button(self, -1, 'Apply')
         self.cancelBtn = wx.Button(self, -1, 'Cancel')
@@ -692,7 +697,7 @@ class TestSuitePage(wx.Panel):
         self.retry.SetValue(v.FAIL_RETRY)
 
         mainSizer = wx.BoxSizer(wx.VERTICAL)
-        selRadioSizer = wx.BoxSizer(wx.HORIZONTAL)
+        checkBoxSizer = wx.BoxSizer(wx.HORIZONTAL)
         btnSizer = wx.BoxSizer(wx.HORIZONTAL)
 
         btnSizer.Add(retryLbl, 0, wx.LEFT, 10)
@@ -701,12 +706,13 @@ class TestSuitePage(wx.Panel):
         btnSizer.Add(self.applyBtn, 0, wx.LEFT, 143)
         btnSizer.Add(self.cancelBtn, 0, wx.LEFT, 15)
 
-        selRadioSizer.Add(self.sel2gCheck, 0, wx.LEFT, 10)
-        selRadioSizer.Add(self.sel5gCheck, 0, wx.LEFT, 10)
-        selRadioSizer.Add(self.selGuestCheck, 0, wx.LEFT, 10)
+        checkBoxSizer.Add(self.sel2gCheck, 0, wx.LEFT, 10)
+        checkBoxSizer.Add(self.sel5gCheck, 0, wx.LEFT, 10)
+        checkBoxSizer.Add(self.selGuestCheck, 0, wx.LEFT, 10)
+        checkBoxSizer.Add(self.selUploadLog, 0, wx.LEFT, 10)
 
         mainSizer.Add(treeLbl, 0, wx.ALIGN_LEFT | wx.TOP | wx.LEFT | wx.BOTTOM, 10)
-        mainSizer.Add(selRadioSizer, 0, wx.LEFT | wx.BOTTOM, 10)
+        mainSizer.Add(checkBoxSizer, 0, wx.LEFT | wx.BOTTOM, 10)
         mainSizer.Add(self.tree, 0, wx.ALIGN_LEFT | wx.LEFT, 20)
         mainSizer.Add(btnSizer, 0, wx.TOP, 10)
 
@@ -856,6 +862,13 @@ class TestSuitePage(wx.Panel):
                 # add Queue to communicate with processreport process
                 sm.generateMail(v.MAILTO_LIST, self.mailTitle, q, self.reportFile, v.MAIL_XLSX)
 
+            # upload log to server
+            if v.UPLOAD_LOG is 1:
+                ter = api.HttpClient()
+                ter.connect(host=v.HOST, password=v.WEB_PWD)
+                api.setUploadLog(ter, v.DEVICE_STATUS_LOG)
+                ter.close()
+
             files = os.listdir(v.DEFAULT_PATH)
             for file in files:
                 if os.path.splitext(file)[1] == ".png":
@@ -995,6 +1008,13 @@ class TestSuitePage(wx.Panel):
                         m = re.search('guest', child2Name)
                         if m:
                             self.tree.CheckItem(child2, checked=False)
+
+    def EvtSelUploadLog(self, event):
+        if self.selUploadLog.IsChecked() is True:
+            v.UPLOAD_LOG = 1
+        else:
+            v.UPLOAD_LOG = 0
+
 
 class Frame(wx.Frame):
     def __init__(self):

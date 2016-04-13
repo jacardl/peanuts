@@ -28,7 +28,7 @@ connection_type = 1 represent ssh
 CONNECTION_TYPE = 1
 STA_CONNECTION_TYPE = 1
 
-VER = '3.2.3'
+VER = '3.2.4'
 
 # ----------------Memory Tracking-----------------
 
@@ -86,7 +86,7 @@ WIRELESS_RELAY_SSID = generateRandomString(WORD_RANGE, 28)
 WIRELESS_RELAY_SSID_5G = WIRELESS_RELAY_SSID + "_5G"
 WIRELESS_RELAY_SPECIAL_SSID = generateRandomString(SPEC_RANGE, 28)
 WIRELESS_RELAY_SPECIAL_SSID_5G = WIRELESS_RELAY_SPECIAL_SSID + "_5G"
-WIRELESS_RELAY_CHINESE_SSID = generateRandomString(CHINESE_RANGE, 7)
+WIRELESS_RELAY_CHINESE_SSID = generateRandomString(CHINESE_RANGE, 9)
 WIRELESS_RELAY_CHINESE_SSID_5G = WIRELESS_RELAY_CHINESE_SSID + "_5G"
 
 KEY = generateRandomString(WORD_RANGE, 63)
@@ -121,9 +121,10 @@ IPERF_TIME = "60"
 # IPERF_INTERVAL = "1"
 # IPERF_TIME = "5"
 
+UPLOAD_LOG = 1
 SEND_MAIL = 1
 MAILTO_LIST = ["liujia5@xiaomi.com", "fengjiang@xiaomi.com", "hexiaoliang@xiaomi.com", "linli1@xiaomi.com",
-               "wangchunxuan@xiaomi.com", "wangyue3@xiaomi.com", "youguidong@xiaomi.com", "zhangjunjie@xiaomi.com",
+               "wangchunxuan@xiaomi.com", "youguidong@xiaomi.com", "zhangjunjie@xiaomi.com",
                "zhaoziqiang@xiaomi.com", ]
 # MAILTO_LIST = ["liujia5@xiaomi.com"]
 MAIL_HOST = "mail.srv"  #设置服务器

@@ -796,6 +796,32 @@ def getWifiChannel(terminal, intf, logname):
         return int(eval(channel))
 
 
+def getWifiList(terminal, logname):
+    '''
+    {
+      "list":[
+         {
+            "mac":"66:09:80:73:75:75",
+            "bandwidth":20,
+            "ssid":"Xiaomi_7572_VIP",
+            "channel":"6",
+            "xm":"",
+            "enctype":"NONE",
+            "encryption":"NONE",
+            "signal":"100"
+         },
+         ],
+      "code":0
+    }
+    '''
+    api = '/cgi-bin/luci/;stok=token/api/xqnetwork/wifi_list'
+    ret = setGet(terminal, logname, api)
+    if ret is not None:
+        if ret['code'] is 0:
+            return ret
+    return None
+
+
 def getDeviceDetail(terminal, logname, **kwargs):
     """
     mac: '11:22:33:44:55:66'
@@ -1020,21 +1046,33 @@ def getDeviceCPU(terminal, logname):
         return loadPercent
 
 
+def chkWifiInfo(terminal, logname, **kwargs):
+    option = {
+        "mac":"", # 8C:BE:BE:10:05:B0
+        "bandwidth":20,
+        "ssid":"", # mandatory
+        "channel":"",
+        "xm":"", # R3
+        "enctype":"", #TKIPAES
+        "encryption":"", #WPA2PSK
+        "signal":""
+    }
+    option.update(kwargs)
+    ret = getWifiList(terminal, logname)
+    wifiList = ret['list']
+    for index in xrange(len(wifiList)):
+        if option['ssid'] == wifiList[index]['ssid']:
+            return True, wifiList[index]
+    return False
+
+
 if __name__ == '__main__':
     option = {
-        'wifiIndex': 3,
-        'on': 1,
-        'ssid': 'peanuts-VIP',
-        'pwd': '',
-        'encryption': 'none',
-        'channel': '0',
-        'bandwidth': '0',
-        'hidden': 0,
-        'txpwr': 'mid'
+        'ssid': 'MI-MAC',
     }
     v.HOST = '192.168.31.1'
     v.WEB_PWD = '12345678'
     webclient = HttpClient()
     webclient.connect(host=v.HOST, password=v.WEB_PWD)
-    setWifi(webclient, 'a', **option)
+    print chkWifiInfo(webclient, 'a', **option)
     webclient.close()

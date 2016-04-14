@@ -196,13 +196,13 @@ treeBSDApi = [
         'assoc_tkippsk2_near_field_sta',
         'assoc_tkippsk_near_field_sta',
     ],
-    'AP_SSIDHIDE_BSD',
+    'AP_BSD_SSIDHIDE',
     [
         'ap_clear_ssidhide',
         'ap_psk2_ssidhide',
         'ap_mixedpsk_ssidhide',
     ],
-    'AP_MIXEDPSK_SSIDHIDE_BSD',
+    'AP_MIXEDPSK_BSD_SSIDHIDE',
     [
         'assoc_psk2_near_field_sta',
         'assoc_psk_near_field_sta',
@@ -216,13 +216,13 @@ treeBSDApi = [
         'assoc_tkippsk2_near_field_sta',
         'assoc_tkippsk_near_field_sta',
     ],
-    'AP_RELAY_SSIDHIDE_BSD',
+    'AP_RELAY_BSD_SSIDHIDE',
     [
         'ap_clear_ssidhide',
         'ap_psk2_ssidhide',
         'ap_mixedpsk_ssidhide',
     ],
-    'AP_RELAY_MIXEDPSK_SSIDHIDE_BSD',
+    'AP_RELAY_MIXEDPSK_BSD_SSIDHIDE',
     [
         'assoc_psk2_near_field_sta',
         'assoc_psk_near_field_sta',
@@ -236,13 +236,13 @@ treeBSDApi = [
         'assoc_tkippsk2_near_field_sta',
         'assoc_tkippsk_near_field_sta',
     ],
-    'AP_WIRELESS_RELAY_SSIDHIDE_BSD',
+    'AP_WIRELESS_RELAY_BSD_SSIDHIDE',
     [
         'ap_clear_ssidhide',
         'ap_psk2_ssidhide',
         'ap_mixedpsk_ssidhide',
     ],
-    'AP_WIRELESS_RELAY_MIXEDPSK_SSIDHIDE_BSD',
+    'AP_WIRELESS_RELAY_MIXEDPSK_BSD_SSIDHIDE',
     [
         'assoc_psk2_near_field_sta',
         'assoc_psk_near_field_sta',

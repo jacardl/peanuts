@@ -4615,7 +4615,237 @@ class AP_MIXEDPSK_BSD(TestCase):
                                 "Ping responsed percent werenot good enough.")
 
 
-class AP_MIXEDPSK_SSIDHIDE_BSD(TestCase):
+class AP_MIXEDPSK_BSD_WHITELIST(TestCase):
+    @classmethod
+    def setUpClass(self):
+        self.dut = api.HttpClient()
+        ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
+        ret2 = chkAdbDevicesCount(1)
+
+        if ret1 is False:
+            raise Exception("Http connection is failed. please check your remote settings.")
+
+        if ret2 is False:
+            raise Exception("USB devices arenot ready!")
+        option = {
+            'bsd': 1,
+            'ssid1': v.SSID,
+            'encryption1': 'mixed-psk',
+            'pwd1': v.KEY,
+        }
+        api.setAllWifi(self.dut, self.__name__, **option)
+        self.device = getAdbDevices()
+        wlanInfo = getAdbShellWlan(self.device[0], self.__name__)
+        self.staMac = wlanInfo['mac'].upper()
+
+    @classmethod
+    def tearDownClass(self):
+        api.setAllWifi(self.dut, self.__name__)
+        option2g = {
+            'wifiIndex': 1,
+            'on': 0,
+        }
+        option5g = {
+            'wifiIndex': 2,
+            'on': 0
+        }
+        api.setWifi(self.dut, self.__name__, **option2g)
+        api.setWifi(self.dut, self.__name__, **option5g)
+        self.dut.close()
+
+    def assoc_psk2_near_field_sta(self):
+        count = 0
+        while count <= 1:
+            resConn = setAdbPsk2StaConn(self.device[0], "normal", "2g", self.__class__.__name__)
+            resConn2 = chkAdb5gFreq(self.device[0], self.__class__.__name__)
+            if resConn and resConn2:
+                break
+            else:
+                resConn2 = False
+            count += 1
+
+        self.assertTrue(resConn, msg="Association wasnot successful.")
+        self.assertTrue(resConn2, msg="STA doesnot associate with 5g")
+        result = getAdbShellWlan(self.device[0], self.__class__.__name__)
+        self.assertIsNot(result['ip'], "", msg='no ip address got.')
+        resPingPercent = getAdbPingStatus(self.device[0], v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
+        self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
+                                "Ping responsed percent werenot good enough.")
+
+    def assoc_psk_near_field_sta(self):
+        count = 0
+        while count <= 1:
+            resConn = setAdbPskStaConn(self.device[0], "normal", "2g", self.__class__.__name__)
+            resConn2 = chkAdb5gFreq(self.device[0], self.__class__.__name__)
+            if resConn and resConn2:
+                break
+            else:
+                resConn2 = False
+            count += 1
+
+        self.assertTrue(resConn, msg="Association wasnot successful.")
+        self.assertTrue(resConn2, msg="STA doesnot associate with 5g")
+        result = getAdbShellWlan(self.device[0], self.__class__.__name__)
+        self.assertIsNot(result['ip'], "", msg='no ip address got.')
+        resPingPercent = getAdbPingStatus(self.device[0], v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
+        self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
+                                "Ping responsed percent werenot good enough.")
+
+    def assoc_tkippsk2_near_field_sta(self):
+        count = 0
+        while count <= 1:
+            resConn = setAdbTkipPsk2StaConn(self.device[0], "normal", "2g", self.__class__.__name__)
+            resConn2 = chkAdb5gFreq(self.device[0], self.__class__.__name__)
+            if resConn and resConn2:
+                break
+            else:
+                resConn2 = False
+            count += 1
+
+        self.assertTrue(resConn, msg="Association wasnot successful.")
+        self.assertTrue(resConn2, msg="STA doesnot associate with 5g")
+        result = getAdbShellWlan(self.device[0], self.__class__.__name__)
+        self.assertIsNot(result['ip'], "", msg='no ip address got.')
+        resPingPercent = getAdbPingStatus(self.device[0], v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
+        self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
+                                "Ping responsed percent werenot good enough.")
+
+    def assoc_tkippsk_near_field_sta(self):
+        count = 0
+        while count <= 1:
+            resConn = setAdbTkipPskStaConn(self.device[0], "normal", "2g", self.__class__.__name__)
+            resConn2 = chkAdb5gFreq(self.device[0], self.__class__.__name__)
+            if resConn and resConn2:
+                break
+            else:
+                resConn2 = False
+            count += 1
+
+        self.assertTrue(resConn, msg="Association wasnot successful.")
+        self.assertTrue(resConn2, msg="STA doesnot associate with 5g")
+        result = getAdbShellWlan(self.device[0], self.__class__.__name__)
+        self.assertIsNot(result['ip'], "", msg='no ip address got.')
+        resPingPercent = getAdbPingStatus(self.device[0], v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
+        self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
+                                "Ping responsed percent werenot good enough.")
+
+
+class AP_MIXEDPSK_BSD_BLACKLIST(TestCase):
+    @classmethod
+    def setUpClass(self):
+        self.dut = api.HttpClient()
+        ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
+        ret2 = chkAdbDevicesCount(1)
+
+        if ret1 is False:
+            raise Exception("Http connection is failed. please check your remote settings.")
+
+        if ret2 is False:
+            raise Exception("USB devices arenot ready!")
+        option = {
+            'bsd': 1,
+            'ssid1': v.SSID,
+            'encryption1': 'mixed-psk',
+            'pwd1': v.KEY,
+        }
+        api.setAllWifi(self.dut, self.__name__, **option)
+        self.device = getAdbDevices()
+        wlanInfo = getAdbShellWlan(self.device[0], self.__name__)
+        self.staMac = wlanInfo['mac'].upper()
+
+    @classmethod
+    def tearDownClass(self):
+        api.setAllWifi(self.dut, self.__name__)
+        option2g = {
+            'wifiIndex': 1,
+            'on': 0,
+        }
+        option5g = {
+            'wifiIndex': 2,
+            'on': 0
+        }
+        api.setWifi(self.dut, self.__name__, **option2g)
+        api.setWifi(self.dut, self.__name__, **option5g)
+        self.dut.close()
+
+    def assoc_psk2_near_field_sta(self):
+        count = 0
+        while count <= 1:
+            resConn = setAdbPsk2StaConn(self.device[0], "normal", "2g", self.__class__.__name__)
+            resConn2 = chkAdb5gFreq(self.device[0], self.__class__.__name__)
+            if resConn and resConn2:
+                break
+            else:
+                resConn2 = False
+            count += 1
+
+        self.assertTrue(resConn, msg="Association wasnot successful.")
+        self.assertTrue(resConn2, msg="STA doesnot associate with 5g")
+        result = getAdbShellWlan(self.device[0], self.__class__.__name__)
+        self.assertIsNot(result['ip'], "", msg='no ip address got.')
+        resPingPercent = getAdbPingStatus(self.device[0], v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
+        self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
+                                "Ping responsed percent werenot good enough.")
+
+    def assoc_psk_near_field_sta(self):
+        count = 0
+        while count <= 1:
+            resConn = setAdbPskStaConn(self.device[0], "normal", "2g", self.__class__.__name__)
+            resConn2 = chkAdb5gFreq(self.device[0], self.__class__.__name__)
+            if resConn and resConn2:
+                break
+            else:
+                resConn2 = False
+            count += 1
+
+        self.assertTrue(resConn, msg="Association wasnot successful.")
+        self.assertTrue(resConn2, msg="STA doesnot associate with 5g")
+        result = getAdbShellWlan(self.device[0], self.__class__.__name__)
+        self.assertIsNot(result['ip'], "", msg='no ip address got.')
+        resPingPercent = getAdbPingStatus(self.device[0], v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
+        self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
+                                "Ping responsed percent werenot good enough.")
+
+    def assoc_tkippsk2_near_field_sta(self):
+        count = 0
+        while count <= 1:
+            resConn = setAdbTkipPsk2StaConn(self.device[0], "normal", "2g", self.__class__.__name__)
+            resConn2 = chkAdb5gFreq(self.device[0], self.__class__.__name__)
+            if resConn and resConn2:
+                break
+            else:
+                resConn2 = False
+            count += 1
+
+        self.assertTrue(resConn, msg="Association wasnot successful.")
+        self.assertTrue(resConn2, msg="STA doesnot associate with 5g")
+        result = getAdbShellWlan(self.device[0], self.__class__.__name__)
+        self.assertIsNot(result['ip'], "", msg='no ip address got.')
+        resPingPercent = getAdbPingStatus(self.device[0], v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
+        self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
+                                "Ping responsed percent werenot good enough.")
+
+    def assoc_tkippsk_near_field_sta(self):
+        count = 0
+        while count <= 1:
+            resConn = setAdbTkipPskStaConn(self.device[0], "normal", "2g", self.__class__.__name__)
+            resConn2 = chkAdb5gFreq(self.device[0], self.__class__.__name__)
+            if resConn and resConn2:
+                break
+            else:
+                resConn2 = False
+            count += 1
+
+        self.assertTrue(resConn, msg="Association wasnot successful.")
+        self.assertTrue(resConn2, msg="STA doesnot associate with 5g")
+        result = getAdbShellWlan(self.device[0], self.__class__.__name__)
+        self.assertIsNot(result['ip'], "", msg='no ip address got.')
+        resPingPercent = getAdbPingStatus(self.device[0], v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
+        self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
+                                "Ping responsed percent werenot good enough.")
+
+
+class AP_MIXEDPSK_BSD_SSIDHIDE(TestCase):
     @classmethod
     def setUpClass(self):
         self.dut = api.HttpClient()
@@ -5522,7 +5752,7 @@ class AP_MIXEDPSK_SSIDHIDE(TestCase):
             self.assertTrue(res5gConn, "Association wasnot successful.")
 
 
-class AP_SSIDHIDE_BSD(TestCase):
+class AP_BSD_SSIDHIDE(TestCase):
     @classmethod
     def setUpClass(self):
 
@@ -8539,7 +8769,7 @@ class AP_RELAY_MIXEDPSK_BSD(TestCase):
                                 "Ping responsed percent werenot good enough.")
 
 
-class AP_RELAY_MIXEDPSK_SSIDHIDE_BSD(TestCase):
+class AP_RELAY_MIXEDPSK_BSD_SSIDHIDE(TestCase):
     @classmethod
     def setUpClass(self):
         self.dut = api.HttpClient()
@@ -8984,7 +9214,7 @@ class AP_RELAY_MIXEDPSK_SSIDHIDE(TestCase):
 
 
 
-class AP_RELAY_SSIDHIDE_BSD(TestCase):
+class AP_RELAY_BSD_SSIDHIDE(TestCase):
     @classmethod
     def setUpClass(self):
 
@@ -11285,7 +11515,7 @@ class AP_WIRELESS_RELAY_MIXEDPSK_CHAN_BW20(TestCase):
             self.assertTrue(res2gConn, "Association wasnot successful.")
 
 
-class AP_WIRELESS_RELAY_MIXEDPSK_BSD(TestCase):
+class AP_WIRELESS_RELAY_BSD_MIXEDPSK(TestCase):
     @classmethod
     def setUpClass(self):
         self.dut = api.HttpClient()
@@ -11418,7 +11648,7 @@ class AP_WIRELESS_RELAY_MIXEDPSK_BSD(TestCase):
                                 "Ping responsed percent werenot good enough.")
 
 
-class AP_WIRELESS_RELAY_MIXEDPSK_SSIDHIDE_BSD(TestCase):
+class AP_WIRELESS_RELAY_MIXEDPSK_BSD_SSIDHIDE(TestCase):
     @classmethod
     def setUpClass(self):
         self.dut = api.HttpClient()
@@ -11715,7 +11945,7 @@ class AP_WIRELESS_RELAY_SSIDHIDE(TestCase):
             self.fail(msg='5g wifi is not hidden..')
 
 
-class AP_WIRELESS_RELAY_SSIDHIDE_BSD(TestCase):
+class AP_WIRELESS_RELAY_BSD_SSIDHIDE(TestCase):
     @classmethod
     def setUpClass(self):
 

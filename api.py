@@ -1046,6 +1046,24 @@ def getDeviceCPU(terminal, logname):
         return loadPercent
 
 
+def getDeviceSystemInfo(terminal, logname):
+    result = dict()
+    ret = getDeviceStatus(terminal, logname)
+    if ret is None:
+        return None
+    else:
+        usage = ret['mem']['usage']
+        total = ret['mem']['total']
+        usageNum = float(usage)
+        totalNum = float(total.split()[0])
+        usedMemNum = int(usageNum * totalNum * 1024)
+        load = ret['cpu']['load']
+        loadPercent = float(load) * 100
+        result['memUsed'] = usedMemNum
+        result['cpuLoad'] = loadPercent
+        return result
+
+
 def chkWifiInfo(terminal, logname, **kwargs):
     option = {
         "mac":"", # 8C:BE:BE:10:05:B0

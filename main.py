@@ -808,12 +808,9 @@ class TestSuitePage(wx.Panel):
                                   jobID=self.jobID)
 
         # start memory monitor
-        self.memMon = mm.HttpMemMonitor(v.MEM_MONITOR_INTERVAL)
+        self.memMon = mm.HttpMemCPUMonitor(v.MEM_MONITOR_INTERVAL)
         # self.memMon.setDaemon(True)
         self.memMon.start()
-        self.cpuMon = mm.HttpCPUMonitor(v.MEM_MONITOR_INTERVAL)
-        # self.cpuMon.setDaemon(True)
-        self.cpuMon.start()
 
         if v.CONNECTION_TYPE is not 3:
             self.memMonXlsx = mm.MemMonitorXlsx(v.MEM_MONITOR_INTERVAL, file=v.MAIL_XLSX)
@@ -843,7 +840,6 @@ class TestSuitePage(wx.Panel):
         try:
             result = delayedResult.get()
             self.memMon.stop()  # stop memory monitor and draw chart
-            self.cpuMon.stop()  # stop CPU monitor and draw chart
             # self.memMon.join()
 
             if v.CONNECTION_TYPE is not 3:

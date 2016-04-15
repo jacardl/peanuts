@@ -142,6 +142,7 @@ class HttpMemCPUMonitor(threading.Thread):
         self.running = True
         self.plot = []
         self.plot2 = []
+        status = dict()
         last_time = t.time()
         while self.running:
             curr_time = t.time()
@@ -151,8 +152,7 @@ class HttpMemCPUMonitor(threading.Thread):
                     if v.HOST != self.tmpHost:
                         self.terminal.connect(host=v.HOST, password=v.WEB_PWD)
                         self.tmpHost = v.HOST
-                    # memUsed = api.getDeviceMem(self.terminal, v.DEVICE_STATUS_LOG)
-                        status = api.getDeviceStatus()
+                    status = api.getDeviceSystemInfo(self.terminal, v.DEVICE_STATUS_LOG)
                 except Exception, e:
                     continue
                 if status['memUsed'] is not None:

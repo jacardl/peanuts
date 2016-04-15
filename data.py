@@ -196,6 +196,27 @@ treeBSDApi = [
         'assoc_tkippsk2_near_field_sta',
         'assoc_tkippsk_near_field_sta',
     ],
+    'AP_MIXEDPSK_BSD_SSIDSPEC',
+    [
+        'assoc_psk2_near_field_sta',
+        'assoc_psk_near_field_sta',
+        'assoc_tkippsk2_near_field_sta',
+        'assoc_tkippsk_near_field_sta',
+    ],
+    'AP_MIXEDPSK_CHAN_KEYSPEC',
+    [
+        'assoc_psk2_near_field_sta',
+        'assoc_psk_near_field_sta',
+        'assoc_tkippsk2_near_field_sta',
+        'assoc_tkippsk_near_field_sta',
+    ],
+    'AP_MIXEDPSK_CHAN_SSIDCHINESE',
+    [
+        'assoc_psk2_near_field_sta',
+        'assoc_psk_near_field_sta',
+        'assoc_tkippsk2_near_field_sta',
+        'assoc_tkippsk_near_field_sta',
+    ],
     'AP_BSD_SSIDHIDE',
     [
         'ap_clear_ssidhide',
@@ -208,6 +229,16 @@ treeBSDApi = [
         'assoc_psk_near_field_sta',
         'assoc_tkippsk2_near_field_sta',
         'assoc_tkippsk_near_field_sta'
+    ],
+    'AP_MIXEDPSK_BSD_WHITELIST',
+    [
+        'assoc_psk2_near_field_sta_in_whitelist',
+        'assoc_psk2_near_field_sta_outof_whitelist',
+    ],
+    'AP_MIXEDPSK_BSD_BLACKLIST',
+    [
+        'assoc_psk2_near_field_sta_in_blacklist',
+        'assoc_psk2_near_field_sta_outof_blacklist',
     ],
     'AP_RELAY_MIXEDPSK_BSD',
     [

@@ -1088,9 +1088,9 @@ if __name__ == '__main__':
     option = {
         'ssid': 'MI-MAC',
     }
-    v.HOST = '192.168.31.1'
+    v.HOST = '192.168.110.1'
     v.WEB_PWD = '12345678'
     webclient = HttpClient()
     webclient.connect(host=v.HOST, password=v.WEB_PWD)
-    print chkWifiInfo(webclient, 'a', **option)
+    print getDeviceSystemInfo(webclient, 'a')
     webclient.close()

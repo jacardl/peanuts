@@ -116,17 +116,18 @@ class MemMonitorXlsx(threading.Thread):
 
     def run(self):
         self.running = True
-        daemon = threading.Thread(target=daemonKernelMonitor, args=(self.terminal, self.interval, self.count,
+        self.daemon = threading.Thread(target=daemonKernelMonitor, args=(self.terminal, self.interval, self.count,
                                                                     self.file, self.sheetDaemon, self.sheetKernel))
-        daemon.setDaemon(True)
-        daemon.start()
-        while self.running and daemon.isAlive():
-            daemon.join(1)
+        # daemon.setDaemon(True)
+        self.daemon.start()
+        while self.running and self.daemon.isAlive():
+            self.daemon.join(1)
         memDiffCalc(self.file, [self.sheetDaemon, self.sheetKernel])
 
         self.stop()
 
     def stop(self):
+        self.daemon.__stop()
         self.running = False
         self.terminal.close()
 

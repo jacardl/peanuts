@@ -203,14 +203,14 @@ treeBSDApi = [
         'assoc_tkippsk2_near_field_sta',
         'assoc_tkippsk_near_field_sta',
     ],
-    'AP_MIXEDPSK_CHAN_KEYSPEC',
+    'AP_MIXEDPSK_BSD_KEYSPEC',
     [
         'assoc_psk2_near_field_sta',
         'assoc_psk_near_field_sta',
         'assoc_tkippsk2_near_field_sta',
         'assoc_tkippsk_near_field_sta',
     ],
-    'AP_MIXEDPSK_CHAN_SSIDCHINESE',
+    'AP_MIXEDPSK_BSD_SSIDCHINESE',
     [
         'assoc_psk2_near_field_sta',
         'assoc_psk_near_field_sta',

@@ -11952,7 +11952,7 @@ class AP_WIRELESS_RELAY_MIXEDPSK_CHAN_BW20(TestCase):
             self.assertTrue(res2gConn, "Association wasnot successful.")
 
 
-class AP_WIRELESS_RELAY_BSD_MIXEDPSK(TestCase):
+class AP_WIRELESS_RELAY_MIXEDPSK_BSD(TestCase):
     @classmethod
     def setUpClass(self):
         self.dut = api.HttpClient()

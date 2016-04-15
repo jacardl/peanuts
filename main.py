@@ -681,11 +681,14 @@ class TestSuitePage(wx.Panel):
         self.selGuestCheck = wx.CheckBox(self, -1, "Guest wifi")
         self.selUploadLog = wx.CheckBox(self, -1, 'Upload Log')
         self.selUploadLog.SetValue(True)
+        self.selSendMail = wx.CheckBox(self, -1, 'Send Mail')
+        self.selSendMail.SetValue(True)
 
         self.Bind(wx.EVT_CHECKBOX, self.EvtSel2g, self.sel2gCheck)
         self.Bind(wx.EVT_CHECKBOX, self.EvtSel5g, self.sel5gCheck)
         self.Bind(wx.EVT_CHECKBOX, self.EvtSelGuest, self.selGuestCheck)
         self.Bind(wx.EVT_CHECKBOX, self.EvtSelUploadLog, self.selUploadLog)
+        self.Bind(wx.EVT_CHECKBOX, self.EvtSelSendMail, self.selSendMail)
 
         self.applyBtn = wx.Button(self, -1, 'Apply')
         self.cancelBtn = wx.Button(self, -1, 'Cancel')
@@ -712,6 +715,7 @@ class TestSuitePage(wx.Panel):
         checkBoxSizer.Add(self.sel5gCheck, 0, wx.LEFT, 10)
         checkBoxSizer.Add(self.selGuestCheck, 0, wx.LEFT, 10)
         checkBoxSizer.Add(self.selUploadLog, 0, wx.LEFT, 10)
+        checkBoxSizer.Add(self.selSendMail, 0, wx.LEFT, 10)
 
         mainSizer.Add(treeLbl, 0, wx.ALIGN_LEFT | wx.TOP | wx.LEFT | wx.BOTTOM, 10)
         mainSizer.Add(checkBoxSizer, 0, wx.LEFT | wx.BOTTOM, 10)
@@ -1013,6 +1017,11 @@ class TestSuitePage(wx.Panel):
         else:
             v.UPLOAD_LOG = 0
 
+    def EvtSelSendMail(self, event):
+        if self.selSendMail.IsChecked() is True:
+            v.SEND_MAIL = 1
+        else:
+            v.SEND_MAIL = 0
 
 class Frame(wx.Frame):
     def __init__(self):

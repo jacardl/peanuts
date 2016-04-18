@@ -5149,12 +5149,28 @@ class AP_MIXEDPSK_BSD_WHITELIST(TestCase):
             'pwd1': v.KEY,
         }
         api.setAllWifi(self.dut, self.__name__, **option)
+
+        option = {
+            'model': 1,
+            'mac': '11:22:33:44:55:66',
+            'option': 0
+        }
+        api.setEditDevice(self.dut, self.__name__, **option)
+
         self.device = getAdbDevices()
         wlanInfo = getAdbShellWlan(self.device[0], self.__name__)
         self.staMac = wlanInfo['mac'].upper()
 
     @classmethod
     def tearDownClass(self):
+        option = {
+            'model': 1,
+            'mac': '11:22:33:44:55:66',
+            'option': 1
+        }
+        api.setEditDevice(self.dut, self.__name__, **option)
+        api.setWifiMacFilter(self.dut, self.__name__)
+
         api.setAllWifi(self.dut, self.__name__)
         option2g = {
             'wifiIndex': 1,
@@ -5230,6 +5246,8 @@ class AP_MIXEDPSK_BSD_BLACKLIST(TestCase):
 
     @classmethod
     def tearDownClass(self):
+        api.setWifiMacFilter(self.dut, self.__name__)
+
         api.setAllWifi(self.dut, self.__name__)
         option2g = {
             'wifiIndex': 1,

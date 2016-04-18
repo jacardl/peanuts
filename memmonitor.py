@@ -221,7 +221,7 @@ class MemMonitorXlsx(threading.Thread):
                                                                     self.file, self.sheetDaemon, self.sheetKernel))
         # daemon.setDaemon(True)
         daemon.start()
-        while self.running and self.daemon.isAlive():
+        while self.running and daemon.isAlive():
             daemon.join(1)
         memDiffCalc(self.file, [self.sheetDaemon, self.sheetKernel])
 

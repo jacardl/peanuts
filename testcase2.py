@@ -8025,6 +8025,8 @@ class AP_RELAY_MIXEDPSK(TestCase):
         if ret2 is False:
             raise Exception("USB devices arenot ready!")
 
+        api.setLanAp(self.dut, self.__name__)
+
         option2g = {
             'wifiIndex': 1,
             'ssid': v.SSID,
@@ -8040,9 +8042,6 @@ class AP_RELAY_MIXEDPSK(TestCase):
 
         api.setWifi(self.dut, self.__name__, **option2g)
         api.setWifi(self.dut, self.__name__, **option5g)
-
-        # first config wifi then change to wire relay module, diff with AP_RELAY_CLEEAR_XXX and AP_RELAY_PSK2
-        api.setLanAp(self.dut, self.__name__)
 
         self.device = getAdbDevices()
 
@@ -8184,6 +8183,8 @@ class AP_RELAY_MIXEDPSK_CHAN_BW80(TestCase):
         ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
         ret2 = chkAdbDevicesCount(1)
 
+        api.setLanAp(self.dut, self.__name__)
+
         if ret1 is False:
             raise Exception("Http connection is failed. please check your remote settings.")
 
@@ -8200,9 +8201,6 @@ class AP_RELAY_MIXEDPSK_CHAN_BW80(TestCase):
         }
 
         api.setWifi(self.dut, self.__name__, **option5g)
-
-        # first config wifi then change to wire relay module, diff with AP_RELAY_CLEEAR_XXX and AP_RELAY_PSK2
-        api.setLanAp(self.dut, self.__name__)
 
         self.device = getAdbDevices()
 
@@ -8289,6 +8287,8 @@ class AP_RELAY_MIXEDPSK_CHAN_BW40(TestCase):
         if ret2 is False:
             raise Exception("USB devices arenot ready!")
 
+        api.setLanAp(self.dut, self.__name__)
+
         option2g = {
             'wifiIndex': 1,
             'ssid': v.SSID,
@@ -8308,9 +8308,6 @@ class AP_RELAY_MIXEDPSK_CHAN_BW40(TestCase):
 
         api.setWifi(self.dut, self.__name__, **option2g)
         api.setWifi(self.dut, self.__name__, **option5g)
-
-        # first config wifi then change to wire relay module, diff with AP_RELAY_CLEEAR_XXX and AP_RELAY_PSK2
-        api.setLanAp(self.dut, self.__name__)
 
         self.device = getAdbDevices()
 
@@ -8452,6 +8449,8 @@ class AP_RELAY_MIXEDPSK_CHAN_BW20(TestCase):
         ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
         ret2 = chkAdbDevicesCount(1)
 
+        api.setLanAp(self.dut, self.__name__)
+
         if ret1 is False:
             raise Exception("Http connection is failed. please check your remote settings.")
 
@@ -8477,9 +8476,6 @@ class AP_RELAY_MIXEDPSK_CHAN_BW20(TestCase):
 
         api.setWifi(self.dut, self.__name__, **option2g)
         api.setWifi(self.dut, self.__name__, **option5g)
-
-        # first config wifi then change to wire relay module, diff with AP_RELAY_CLEEAR_XXX and AP_RELAY_PSK2
-        api.setLanAp(self.dut, self.__name__)
 
         self.device = getAdbDevices()
 
@@ -8622,6 +8618,8 @@ class AP_RELAY_MIXEDPSK_SSIDSPEC(TestCase):
         ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
         ret2 = chkAdbDevicesCount(1)
 
+        api.setLanAp(self.dut, self.__name__)
+
         if ret1 is False:
             raise Exception("Http connection is failed. please check your remote settings.")
 
@@ -8643,9 +8641,6 @@ class AP_RELAY_MIXEDPSK_SSIDSPEC(TestCase):
 
         api.setWifi(self.dut, self.__name__, **option2g)
         api.setWifi(self.dut, self.__name__, **option5g)
-
-        # first config wifi then change to wire relay module, diff with AP_RELAY_CLEEAR_XXX and AP_RELAY_PSK2
-        api.setLanAp(self.dut, self.__name__)
 
         self.device = getAdbDevices()
 
@@ -8785,6 +8780,8 @@ class AP_RELAY_MIXEDPSK_KEYSPEC(TestCase):
         ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
         ret2 = chkAdbDevicesCount(1)
 
+        api.setLanAp(self.dut, self.__name__)
+
         if ret1 is False:
             raise Exception("Http connection is failed. please check your remote settings.")
 
@@ -8806,9 +8803,6 @@ class AP_RELAY_MIXEDPSK_KEYSPEC(TestCase):
 
         api.setWifi(self.dut, self.__name__, **option2g)
         api.setWifi(self.dut, self.__name__, **option5g)
-
-        # first config wifi then change to wire relay module, diff with AP_RELAY_CLEEAR_XXX and AP_RELAY_PSK2
-        api.setLanAp(self.dut, self.__name__)
 
         self.device = getAdbDevices()
 
@@ -8951,6 +8945,8 @@ class AP_RELAY_MIXEDPSK_SSIDCHINESE(TestCase):
         ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
         ret2 = chkAdbDevicesCount(1)
 
+        api.setLanAp(self.dut, self.__name__)
+
         if ret1 is False:
             raise Exception("Http connection is failed. please check your remote settings.")
 
@@ -8972,9 +8968,6 @@ class AP_RELAY_MIXEDPSK_SSIDCHINESE(TestCase):
 
         api.setWifi(self.dut, self.__name__, **option2g)
         api.setWifi(self.dut, self.__name__, **option5g)
-
-        # first config wifi then change to wire relay module, diff with AP_RELAY_CLEEAR_XXX and AP_RELAY_PSK2
-        api.setLanAp(self.dut, self.__name__)
 
         self.device = getAdbDevices()
 
@@ -9113,6 +9106,8 @@ class AP_RELAY_MIXEDPSK_BSD(TestCase):
         ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
         ret2 = chkAdbDevicesCount(1)
 
+        api.setLanAp(self.dut, self.__name__)
+
         if ret1 is False:
             raise Exception("Http connection is failed. please check your remote settings.")
 
@@ -9126,9 +9121,6 @@ class AP_RELAY_MIXEDPSK_BSD(TestCase):
             'pwd1': v.KEY,
         }
         api.setAllWifi(self.dut, self.__name__, **option)
-
-        # first config wifi then change to wire relay module, diff with AP_RELAY_CLEEAR_XXX and AP_RELAY_PSK2
-        api.setLanAp(self.dut, self.__name__)
 
         self.device = getAdbDevices()
 
@@ -9234,6 +9226,8 @@ class AP_RELAY_MIXEDPSK_BSD_SSIDHIDE(TestCase):
         ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
         ret2 = chkAdbDevicesCount(1)
 
+        api.setLanAp(self.dut, self.__name__)
+
         if ret1 is False:
             raise Exception("Http connection is failed. please check your remote settings.")
 
@@ -9248,9 +9242,6 @@ class AP_RELAY_MIXEDPSK_BSD_SSIDHIDE(TestCase):
             'hidden1': 1,
         }
         api.setAllWifi(self.dut, self.__name__, **option)
-
-        # first config wifi then change to wire relay module, diff with AP_RELAY_CLEEAR_XXX and AP_RELAY_PSK2
-        api.setLanAp(self.dut, self.__name__)
 
         self.device = getAdbDevices()
 
@@ -9509,6 +9500,8 @@ class AP_RELAY_MIXEDPSK_SSIDHIDE(TestCase):
         ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
         ret2 = chkAdbDevicesCount(1)
 
+        api.setLanAp(self.dut, self.__name__)
+
         if ret1 is False:
             raise Exception("Http connection is failed. please check your remote settings.")
 
@@ -9532,9 +9525,6 @@ class AP_RELAY_MIXEDPSK_SSIDHIDE(TestCase):
 
         api.setWifi(self.dut, self.__name__, **option2g)
         api.setWifi(self.dut, self.__name__, **option5g)
-
-        # first config wifi then change to wire relay module, diff with AP_RELAY_CLEEAR_XXX and AP_RELAY_PSK2
-        api.setLanAp(self.dut, self.__name__)
 
         self.device = getAdbDevices()
 

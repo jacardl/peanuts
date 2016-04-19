@@ -1050,7 +1050,7 @@ def getDeviceSystemInfo(terminal, logname):
     result = dict()
     ret = getDeviceStatus(terminal, logname)
     if ret is None:
-        return None
+        return result
     else:
         usage = ret['mem']['usage']
         total = ret['mem']['total']

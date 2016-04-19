@@ -155,10 +155,10 @@ class HttpMemCPUMonitor(threading.Thread):
                     status = api.getDeviceSystemInfo(self.terminal, v.DEVICE_STATUS_LOG)
                 except Exception, e:
                     continue
-                if status['memUsed'] is not None:
-                    self.plot.append(status['memUsed'])
-                if status['cpuLoad'] is not None:
-                    self.plot2.append(status['cpuLoad'])
+                if status.get('memUsed') is not None:
+                    self.plot.append(status.get('memUsed'))
+                if status.get('cpuLoad') is not None:
+                    self.plot2.append(status.get('cpuLoad'))
                 if self.callback is not None:
                     pass
             t.sleep(self.period)

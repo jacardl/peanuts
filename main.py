@@ -650,6 +650,7 @@ class TestSuitePage(wx.Panel):
 
         self.root = self.tree.AddRoot('Test Cases', ct_type=1)
         self.rootBasic = self.tree.AppendItem(self.root, 'Basic', ct_type=1)
+        self.rootBSD = self.tree.AppendItem(self.root, 'BSD', ct_type=1)
         self.rootQosApi = self.tree.AppendItem(self.root, 'QoS', ct_type=1)
         self.rootAccessControlApi = self.tree.AppendItem(self.root, 'Access Control', ct_type=1)
         self.rootWireRelay = self.tree.AppendItem(self.root, 'Wire Relay', ct_type=1)
@@ -664,6 +665,7 @@ class TestSuitePage(wx.Panel):
         # self.AddTreeNodes(self.rootCheck, data.treeCheck)
 
         self.AddTreeNodes(self.rootBasic, data.treeBasicApi)
+        self.AddTreeNodes(self.rootBSD, data.treeBSDApi)
         self.AddTreeNodes(self.rootQosApi, data.treeQosApi)
         self.AddTreeNodes(self.rootAccessControlApi, data.treeAccessControlApi)
         self.AddTreeNodes(self.rootWireRelay, data.treeWireRelayApi)
@@ -679,11 +681,14 @@ class TestSuitePage(wx.Panel):
         self.selGuestCheck = wx.CheckBox(self, -1, "Guest wifi")
         self.selUploadLog = wx.CheckBox(self, -1, 'Upload Log')
         self.selUploadLog.SetValue(True)
+        self.selSendMail = wx.CheckBox(self, -1, 'Send Mail')
+        self.selSendMail.SetValue(True)
 
         self.Bind(wx.EVT_CHECKBOX, self.EvtSel2g, self.sel2gCheck)
         self.Bind(wx.EVT_CHECKBOX, self.EvtSel5g, self.sel5gCheck)
         self.Bind(wx.EVT_CHECKBOX, self.EvtSelGuest, self.selGuestCheck)
         self.Bind(wx.EVT_CHECKBOX, self.EvtSelUploadLog, self.selUploadLog)
+        self.Bind(wx.EVT_CHECKBOX, self.EvtSelSendMail, self.selSendMail)
 
         self.applyBtn = wx.Button(self, -1, 'Apply')
         self.cancelBtn = wx.Button(self, -1, 'Cancel')
@@ -710,6 +715,7 @@ class TestSuitePage(wx.Panel):
         checkBoxSizer.Add(self.sel5gCheck, 0, wx.LEFT, 10)
         checkBoxSizer.Add(self.selGuestCheck, 0, wx.LEFT, 10)
         checkBoxSizer.Add(self.selUploadLog, 0, wx.LEFT, 10)
+        checkBoxSizer.Add(self.selSendMail, 0, wx.LEFT, 10)
 
         mainSizer.Add(treeLbl, 0, wx.ALIGN_LEFT | wx.TOP | wx.LEFT | wx.BOTTOM, 10)
         mainSizer.Add(checkBoxSizer, 0, wx.LEFT | wx.BOTTOM, 10)
@@ -806,12 +812,9 @@ class TestSuitePage(wx.Panel):
                                   jobID=self.jobID)
 
         # start memory monitor
-        self.memMon = mm.HttpMemMonitor(v.MEM_MONITOR_INTERVAL)
+        self.memMon = mm.HttpMemCPUMonitor(v.MEM_MONITOR_INTERVAL)
         # self.memMon.setDaemon(True)
         self.memMon.start()
-        self.cpuMon = mm.HttpCPUMonitor(v.MEM_MONITOR_INTERVAL)
-        # self.cpuMon.setDaemon(True)
-        self.cpuMon.start()
 
         if v.CONNECTION_TYPE is not 3:
             self.memMonXlsx = mm.MemMonitorXlsx(v.MEM_MONITOR_INTERVAL, file=v.MAIL_XLSX)
@@ -841,7 +844,6 @@ class TestSuitePage(wx.Panel):
         try:
             result = delayedResult.get()
             self.memMon.stop()  # stop memory monitor and draw chart
-            self.cpuMon.stop()  # stop CPU monitor and draw chart
             # self.memMon.join()
 
             if v.CONNECTION_TYPE is not 3:
@@ -1015,6 +1017,11 @@ class TestSuitePage(wx.Panel):
         else:
             v.UPLOAD_LOG = 0
 
+    def EvtSelSendMail(self, event):
+        if self.selSendMail.IsChecked() is True:
+            v.SEND_MAIL = 1
+        else:
+            v.SEND_MAIL = 0
 
 class Frame(wx.Frame):
     def __init__(self):

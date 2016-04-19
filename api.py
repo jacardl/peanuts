@@ -1046,6 +1046,24 @@ def getDeviceCPU(terminal, logname):
         return loadPercent
 
 
+def getDeviceSystemInfo(terminal, logname):
+    result = dict()
+    ret = getDeviceStatus(terminal, logname)
+    if ret is None:
+        return result
+    else:
+        usage = ret['mem']['usage']
+        total = ret['mem']['total']
+        usageNum = float(usage)
+        totalNum = float(total.split()[0])
+        usedMemNum = int(usageNum * totalNum * 1024)
+        load = ret['cpu']['load']
+        loadPercent = float(load) * 100
+        result['memUsed'] = usedMemNum
+        result['cpuLoad'] = loadPercent
+        return result
+
+
 def chkWifiInfo(terminal, logname, **kwargs):
     option = {
         "mac":"", # 8C:BE:BE:10:05:B0
@@ -1070,9 +1088,9 @@ if __name__ == '__main__':
     option = {
         'ssid': 'MI-MAC',
     }
-    v.HOST = '192.168.31.1'
+    v.HOST = '192.168.110.1'
     v.WEB_PWD = '12345678'
     webclient = HttpClient()
     webclient.connect(host=v.HOST, password=v.WEB_PWD)
-    print chkWifiInfo(webclient, 'a', **option)
+    print getDeviceSystemInfo(webclient, 'a')
     webclient.close()

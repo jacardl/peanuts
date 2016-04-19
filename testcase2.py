@@ -4633,7 +4633,7 @@ class AP_MIXEDPSK_BSD_SSIDHIDE(TestCase):
             'password': v.ROOT_AP_PWD,
             'channel': v.ROOT_AP_CHANNEL,
             'bandwidth': '20',
-            'nssid': v.ROOT_AP_SSID,
+            'nssid': v.SSID,
             'nencryption': 'mixed-psk',
             'npassword': v.KEY,
         }
@@ -10347,7 +10347,7 @@ class AP_WIRELESS_RELAY_CLEAR_CHAN(TestCase):
             'password': v.ROOT_AP_PWD,
             'channel': v.ROOT_AP_CHANNEL,
             'bandwidth': '20',
-            'nssid': v.ROOT_AP_SSID,
+            'nssid': v.SSID,
             'nencryption': 'none',
         }
         api.setWifiAp(self.dut, self.__name__, **option)
@@ -10637,7 +10637,7 @@ class AP_WIRELESS_RELAY_MIXEDPSK_SSIDHIDE(TestCase):
             'password': v.ROOT_AP_PWD,
             'channel': v.ROOT_AP_CHANNEL,
             'bandwidth': '20',
-            'nssid': v.ROOT_AP_SSID,
+            'nssid': v.SSID,
             'nencryption': 'mixed-psk',
             'npassword': v.KEY,
         }
@@ -11245,7 +11245,7 @@ class AP_WIRELESS_RELAY_CLEAR_LOW(TestCase):
             'password': v.ROOT_AP_PWD,
             'channel': v.ROOT_AP_CHANNEL,
             'bandwidth': '20',
-            'nssid': v.ROOT_AP_SSID,
+            'nssid': v.SSID,
             'nencryption': 'WPA2PSK',
             'npassword': v.ROOT_AP_PWD,
         }
@@ -11324,7 +11324,7 @@ class AP_WIRELESS_RELAY_CLEAR_MID(TestCase):
             'password': v.ROOT_AP_PWD,
             'channel': v.ROOT_AP_CHANNEL,
             'bandwidth': '20',
-            'nssid': v.ROOT_AP_SSID,
+            'nssid': v.SSID,
             'nencryption': 'WPA2PSK',
             'npassword': v.ROOT_AP_PWD,
         }
@@ -11401,7 +11401,7 @@ class AP_WIRELESS_RELAY_CLEAR_HIGH(TestCase):
             'password': v.ROOT_AP_PWD,
             'channel': v.ROOT_AP_CHANNEL,
             'bandwidth': '20',
-            'nssid': v.ROOT_AP_SSID,
+            'nssid': v.SSID,
             'nencryption': 'WPA2PSK',
             'npassword': v.ROOT_AP_PWD,
         }
@@ -11475,7 +11475,7 @@ class AP_WIRELESS_RELAY_CLEAR_CHANSELECTION(TestCase):
             'password': v.ROOT_AP_PWD,
             'channel': v.ROOT_AP_CHANNEL,
             'bandwidth': '20',
-            'nssid': v.ROOT_AP_SSID,
+            'nssid': v.SSID,
             'nencryption': 'WPA2PSK',
             'npassword': v.ROOT_AP_PWD,
         }
@@ -11541,7 +11541,7 @@ class AP_WIRELESS_RELAY_MIXEDPSK_CHAN_BW80(TestCase):
             'password': v.ROOT_AP_PWD,
             'channel': v.ROOT_AP_CHANNEL,
             'bandwidth': '20',
-            'nssid': v.ROOT_AP_SSID,
+            'nssid': v.SSID,
             'nencryption': 'WPA2PSK',
             'npassword': v.ROOT_AP_PWD,
         }
@@ -11644,7 +11644,7 @@ class AP_WIRELESS_RELAY_MIXEDPSK_CHAN_BW40(TestCase):
             'password': v.ROOT_AP_PWD,
             'channel': v.ROOT_AP_CHANNEL,
             'bandwidth': '20',
-            'nssid': v.ROOT_AP_SSID,
+            'nssid': v.SSID,
             'nencryption': 'WPA2PSK',
             'npassword': v.ROOT_AP_PWD,
         }
@@ -11812,7 +11812,7 @@ class AP_WIRELESS_RELAY_MIXEDPSK_CHAN_BW20(TestCase):
             'password': v.ROOT_AP_PWD,
             'channel': v.ROOT_AP_CHANNEL,
             'bandwidth': '20',
-            'nssid': v.ROOT_AP_SSID,
+            'nssid': v.SSID,
             'nencryption': 'WPA2PSK',
             'npassword': v.ROOT_AP_PWD,
         }
@@ -11980,7 +11980,7 @@ class AP_WIRELESS_RELAY_MIXEDPSK_BSD(TestCase):
             'password': v.ROOT_AP_PWD,
             'channel': v.ROOT_AP_CHANNEL,
             'bandwidth': '20',
-            'nssid': v.ROOT_AP_SSID,
+            'nssid': v.SSID,
             'nencryption': 'WPA2PSK',
             'npassword': v.ROOT_AP_PWD,
         }
@@ -12111,7 +12111,7 @@ class AP_WIRELESS_RELAY_MIXEDPSK_BSD_SSIDHIDE(TestCase):
             'password': v.ROOT_AP_PWD,
             'channel': v.ROOT_AP_CHANNEL,
             'bandwidth': '20',
-            'nssid': v.ROOT_AP_SSID,
+            'nssid': v.SSID,
             'nencryption': 'WPA2PSK',
             'npassword': v.ROOT_AP_PWD,
         }
@@ -12244,7 +12244,7 @@ class AP_WIRELESS_RELAY_SSIDHIDE(TestCase):
             'password': v.ROOT_AP_PWD,
             'channel': v.ROOT_AP_CHANNEL,
             'bandwidth': '20',
-            'nssid': v.ROOT_AP_SSID,
+            'nssid': v.SSID,
             'nencryption': 'WPA2PSK',
             'npassword': v.ROOT_AP_PWD,
         }
@@ -12407,7 +12407,7 @@ class AP_WIRELESS_RELAY_BSD_SSIDHIDE(TestCase):
             'password': v.ROOT_AP_PWD,
             'channel': v.ROOT_AP_CHANNEL,
             'bandwidth': '20',
-            'nssid': v.ROOT_AP_SSID,
+            'nssid': v.SSID,
             'nencryption': 'WPA2PSK',
             'npassword': v.ROOT_AP_PWD,
         }
@@ -12525,7 +12525,7 @@ class AP_WIRELESS_RELAY_CONFIG_CHECK(TestCase):
             'password': v.ROOT_AP_PWD,
             'channel': v.ROOT_AP_CHANNEL,
             'bandwidth': '20',
-            'nssid': v.ROOT_AP_SSID,
+            'nssid': v.WIRELESS_RELAY_SSID,
             'nencryption': 'WPA2PSK',
             'npassword': v.ROOT_AP_PWD,
         }

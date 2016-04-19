@@ -63,22 +63,29 @@ def sendMail(to_list, sub, content, attach1=None, attach2=None, pic_list=None): 
 def generateMail(maillist, title, queue=None, attach1=None, attach2=None):
     if queue is not None:
         argsdic = queue.get(True)
+        module = argsdic.get('module')
     else:
         raise Exception
+
+    print argsdic
     content1 = """
-        <p>本次自动化共执行用例 %(sum)d 个，pass %(pa)d 个，通过率 %(percent)0.2f%%，用时 %(time)0.2f 小时 </p>
-        <p>无线终端共尝试上线 %(onlinesum)d 次，成功上线 %(onlinepa)d 次，上线率 %(onlinepercent)0.2f%%。</p>
+        <p>本次自动化共执行用例 %(sum)d 个，pass %(ranpass)d 个，error %(error)d个，通过率 %(percent)0.2f%%，用时 %(time)0.2f 小时 </p>
+        <p>无线终端共尝试上线 %(onlinesum)d 次，成功上线 %(onlinepass)d 次，上线率 %(onlinepercent)0.2f%%。</p>
         """ % argsdic
-        # {"sum": 120, "pa": 90, "percent": 20, "time": 36.66, "onlinesum": 3900, "onlinepa": 3000, "onlinepercent": 20}
+
+    content4 = """
+        <p>覆盖模块：%s。</p>
+        """ % "".join(module)
 
     content2 = """
-        <p>本次自动化覆盖wifi吞吐测试，具体结果请参看下图：</p>
+        <p>wifi吞吐测试结果如下：</p>
         <p><img src="cid:throughput.png" alt="throughput.png" /></p>
         <p><img src="cid:throughput_in_AES.png" alt="throughput_in_AES.png" /></p>
         <p><img src="cid:throughput_in_Clear.png" alt="throughput_in_Clear.png" /></p>
         <p><img src="cid:throughput_in_TKIP.png" alt="throughput_in_TKIP.png" /></p>
         """
     content3 = """
+        <p>系统状态如下：</p>
         <p><img src="cid:total_memory_used.png" alt="total_memory_used.png" /></p>
         <p><img src="cid:current_cpu_load.png" alt="current_cpu_load.png" /></p>
         <p><span style="font-size:12px;">此为系统自动发送，请勿回复，测试报告及内存跟踪详情查看附件。</span></p>
@@ -87,7 +94,7 @@ def generateMail(maillist, title, queue=None, attach1=None, attach2=None):
     if os.path.isfile(v.MAIL_PIC1) and os.path.isfile(v.MAIL_PIC4):
         piclist.append(v.MAIL_PIC1)
         piclist.append(v.MAIL_PIC4)
-        contents = "{0}{1}".format(content1, content3)
+        contents = "{0}{1}{2}".format(content1, content4, content3)
         if os.path.isfile(v.MAIL_PIC2):
             piclist.append(v.MAIL_PIC2)
             if os.path.isfile(v.MAIL_PIC3%"AES"):
@@ -96,20 +103,19 @@ def generateMail(maillist, title, queue=None, attach1=None, attach2=None):
                 piclist.append(v.MAIL_PIC3%"TKIP")
             if os.path.isfile(v.MAIL_PIC3%"Clear"):
                 piclist.append(v.MAIL_PIC3%"Clear")
-            contents = "{0}{1}{2}".format(content1, content2, content3)
+            contents = "{0}{1}{2}{3}".format(content1, content4, content2, content3)
         return sendMail(maillist, title, contents, attach1, attach2, piclist)
 
 
 if __name__ == '__main__':
     import multiprocessing as mp
-    report = "R1D 开发版OTA 2.11.38.log".decode("utf8").encode("gbk")
+    report = "err.log".decode("utf8").encode("gbk")
     q = mp.Queue() # tranlate test result to generateMail
     ret = pr.ProcessReport(report, q)
     ret.start()
     ret.join()
 
-    # if generateMail(["liujia5@xiaomi.com"], "test", ret.result, report):
-    if generateMail(v.MAILTO_LIST, "【R1D 开发版OTA 2.11.38】自动化测试报告", q, report, v.MAIL_XLSX):
+    if generateMail(["liujia5@xiaomi.com"], "test", q, report, v.MAIL_XLSX):
         print "successful"
     else:
         print "failed"

@@ -34,7 +34,7 @@ class ProcessReport(mp.Process):
             pass
         self.result.update(error=test.result['error'])
         self.result.update(ranpass=test.result["ranpass"])
-        self.result.update(sum=(test.result["ransum"] + self.result['error']))
+        self.result.update(sum=test.result["ransum"])
         if self.result['sum'] == 0:
             self.result.update(percent=0)
         else:
@@ -96,23 +96,32 @@ class GetTestResult(threading.Thread):
         f = open(self.reportName)
         for line in f:
             if not line.isspace():
-                m = re.search('Ran\s+(\d+)\s+[tes]+\s+in\s+\d+', line)
+                m = re.search('Ran\s+(\d+)\s+[tes]+\s+in.*', line)
                 if m:
-                    self.result["ransum"] = int(m.group(1))
-                    break
-        for line in f:
-            if not line.isspace():
-                m = re.search('FAILED \(failures=(\d+)(, errors=(\d+))?\)', line)
-                n = re.search('OK', line)
-                if m:
-                    self.result["ranfail"] = int(m.group(1))
-                    if m.group(2) is not None:
-                        self.result['error'] += int(m.group(3))
-                if n:
-                    self.result["ranfail"] = 0
-                    break
+                    if self.result['ransum'] is 0:
+                        self.result['ransum'] = int(m.group(1))
+                    print line
+                    next(f)
+                    line2 = next(f)
+                    m2 = re.search('(FAILED \((failures=(\d+))?(, )?(errors=(\d+))?\))?(OK)?', line2)
+                    if m2:
+                        print line2
+                        if m.group(1) and m2.group(3) and m2.group(6):
+                            self.result["ranpass"] += (int(m.group(1)) - int(m2.group(3)))
+                            self.result['ranfail'] = int(m2.group(3))
+                            self.result['error'] += int(m2.group(6))
+                        elif m.group(1) and m2.group(3):
+                            self.result["ranpass"] += (int(m.group(1)) - int(m2.group(3)))
+                            self.result['ranfail'] = int(m2.group(3))
+                        elif m.group(1) and m2.group(6):
+                            self.result["ranpass"] += int(m.group(1))
+                            self.result['error'] += int(m2.group(6))
+                            self.result['ranfail'] = 0
+                        elif m.group(1) and m2.group(7):
+                            self.result['ranpass'] += int(m.group(1))
+                            self.result['ranfail'] = 0
+
         f.close()
-        self.result["ranpass"] = self.result["ransum"] - self.result["ranfail"]
         self.stop()
 
     def stop(self):
@@ -685,7 +694,7 @@ if __name__ == '__main__':
     #     print time.time()
     # print getFlowLogVerbose("E:\peanuts\AP_MIXEDPSK_CHAN1_36_FLOW.log")
     # print getChannelFlowLogVerbose("E:\peanuts\AP_MIXEDPSK_CHAN1_36_FLOW.log")
-    info = GetTestModule("err.log".decode("utf8").encode("gbk"))
+    info = GetTestResult("err2.log".decode("utf8").encode("gbk"))
     info.start()
     info.join()
     print info.result

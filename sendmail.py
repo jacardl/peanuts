@@ -69,8 +69,8 @@ def generateMail(maillist, title, queue=None, attach1=None, attach2=None):
 
     print argsdic
     content1 = """
-        <p>本次自动化共执行用例 %(sum)d 个，pass %(ranpass)d 个，error %(error)d个，通过率 %(percent)0.2f%%，用时 %(time)0.2f 小时 </p>
-        <p>无线终端共尝试上线 %(onlinesum)d 次，成功上线 %(onlinepass)d 次，上线率 %(onlinepercent)0.2f%%。</p>
+        <p>本次自动化成功执行用例 %(sum)d 个，通过%(ranpass)d 个，通过率 %(percent)0.2f%%。有%(error)d个脚本执行错误，共用时 %(time)0.2f 小时 </p>
+        <p>无线终端尝试上线 %(onlinesum)d 次，成功上线 %(onlinepass)d 次，上线率 %(onlinepercent)0.2f%%。</p>
         """ % argsdic
 
     content4 = """
@@ -109,7 +109,7 @@ def generateMail(maillist, title, queue=None, attach1=None, attach2=None):
 
 if __name__ == '__main__':
     import multiprocessing as mp
-    report = "err.log".decode("utf8").encode("gbk")
+    report = "err2.log".decode("utf8").encode("gbk")
     q = mp.Queue() # tranlate test result to generateMail
     ret = pr.ProcessReport(report, q)
     ret.start()

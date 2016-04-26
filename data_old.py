@@ -337,3 +337,56 @@ treeCheck = [
         "test2",
     ]
 ]
+
+# ---------------commands for log collect-----------------
+system_log = ['date', 'bootinfo', 'df -h', 'free -m', 'crontab -l',
+              'nvram show', 'bdata show', 'ps w | grep -v [[]', 'pstree -p']
+
+network_log = ['ifconfig -a', 'iwinfo', 'iwconfig', 'ubus call network.interface.wan status',
+               'brctl show', 'cat /tmp/dhcp.leases /var/etc/dnsmasq.conf', 'ubus call trafficd hw',
+               'arp -a', 'iptables-save', 'netstat -lanp', 'nslookup www.baidu.com']
+
+uci_config = ['uci export network', 'uci export wireless', 'uci export dhcp', 'uci export misc',
+              'uci export miqos', 'uci export firewall']
+
+r1d_wifi2G_log = ['wl -i wl1 dump wlc', 'wl -i wl1 dump bsscfg', 'wl -i wl1 dump dma',
+                  'wl -i wl1 dump status', 'wl -i wl1 dump scb', 'wl -i wl1 dump rssi', 'wl -i wl1 noise',
+                  'wl -i wl1 scanresults', 'wl -i wl1 assoclist', "wl -i wl1 sta_info xxx"
+                  'iwpriv wl1 set AutoChannelSel=4 ; iwpriv wl1 ScanResult',
+                  'iwinfo wl1 info', 'wl -i wl1 status', "wl -i wl1 rate", "iwinfo wl1 assoclist"]
+
+r1d_wifi5G_log = ['wl -i wl0 dump wlc', 'wl -i wl0 dump bsscfg', 'wl -i wl0 dump dma',
+                  'wl -i wl0 dump status', 'wl -i wl0 dump scb', 'wl -i wl0 dump rssi', 'wl -i wl0 noise',
+                  'wl -i wl0 scanresults', 'wl -i wl0 assoclist', "wl -i wl0 sta_info xxx"
+                  'iwpriv wl0 set AutoChannelSel=4 ; iwpriv wl0 ScanResult',
+                  'iwinfo wl0 info', 'wl -i wl0 status', "wl rate", "iwinfo wl1 assoclist"]
+
+r1d_forward_statistic_log = ['cat /proc/net/ip_conntrack', 'wl dump ctf', 'wl -i wl1 counters ; wl -i wl1 reset_cnts',
+                             'wl -i wl0 counters ; wl -i wl0 reset_cnts', "wl -i wl1 dump ampdu ; wl -i wl1 ampdu_clear_dump",
+                             "wl -i wl0 dump ampdu ; wl -i wl0 ampdu_clear_dump"]
+
+r1c_wifi2G_log = ['iwlist wl1 channel', 'iwlist wl1 txpower', 'iwinfo wl1 freqlist', 'iwinfo wl1 assoclist', 'iwpriv wl1 show stainfo',
+                  'iwpriv wl1 channels', 'iwpriv wl1 show bainfo',
+                  'iwpriv wl1 e2p', 'iwpriv wl1 ScanResult', 'iwpriv apcli0 Connstatus',
+                  'cat /etc/Wireless/mt7620/mt7620.dat', 'iwinfo wl1 info', ]
+
+r1c_wifi5G_log = ['iwlist wl0 channel', 'iwlist wl0 txpower', 'iwinfo wl0 freqlist', 'iwinfo wl0 assoclist', 'iwpriv wl0 show stainfo',
+                  'iwpriv wl0 channels',  'iwpriv wl0 show bainfo',
+                  'iwpriv wl0 e2p', 'iwpriv wl0 ScanResult',
+                  'cat /etc/Wireless/mt7612/mt7612.dat', 'iwinfo wl0 info', ]
+
+r1c_forward_statistic_log = ['cat /proc/net/ip_conntrack', 'iwpriv wl1 show stacountinfo', 'iwpriv wl1 stat ; iwpriv wl1 show stat_reset',
+                             'iwpriv wl0 show stacountinfo ; iwpriv wl0 show stat_reset',  'iwpriv wl0 stat ; iwpriv wl0 show stat_reset',]
+
+
+r1cl_wifi2G_log = ['iwlist wl1 channel', 'iwlist wl1 txpower', 'iwinfo wl1 freqlist', 'iwinfo wl1 assoclist',
+                  # 'iwpriv wl1 channels',
+                  'iwpriv wl1 show stainfo', 'iwpriv wl1 show bainfo',
+                  'iwpriv wl1 e2p', 'iwpriv wl1 ScanResult', 'iwpriv apcli0 Connstatus',
+                  'cat /etc/Wireless/mt7628/mt7628.dat', 'iwinfo wl1 info', ]
+
+r1cl_forward_statistic_log = ['cat /proc/net/ip_conntrack', 'iwpriv wl1 show stacountinfo', 'iwpriv wl1 stat ; iwpriv wl1 show stat_reset',
+                              ]
+
+messages_log = []
+# -------------------------------------------------------

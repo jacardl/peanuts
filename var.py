@@ -28,7 +28,7 @@ connection_type = 1 represent ssh
 CONNECTION_TYPE = 1
 STA_CONNECTION_TYPE = 1
 
-VER = '3.3.1'
+VER = '3.3.2'
 
 # ----------------Memory Tracking-----------------
 
@@ -70,7 +70,7 @@ DEVICE_STATUS_LOG = "device_status_log"
 
 WORD_RANGE = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-_"
 SPEC_RANGE = '`~!@#$%^&*() =+\\|]}[{\'\";:/?.>,<'
-CHINESE_RANGE = "花生自动化小米路由器棒棒哒"
+CHINESE_RANGE = "宣室求贤访逐臣贾生才调更无伦可怜夜半虚前席不问苍生问鬼神"
 
 SSID = generateRandomString(WORD_RANGE, 31)
 SSID_5G = generateRandomString(WORD_RANGE, 31)
@@ -123,9 +123,7 @@ IPERF_TIME = "60"
 
 UPLOAD_LOG = 1
 SEND_MAIL = 1
-MAILTO_LIST = ["liujia5@xiaomi.com", "fengjiang@xiaomi.com", "hexiaoliang@xiaomi.com", "linli1@xiaomi.com",
-               "wangchunxuan@xiaomi.com", "youguidong@xiaomi.com", "zhangjunjie@xiaomi.com",
-               "zhaoziqiang@xiaomi.com", ]
+MAILTO_LIST = ['miwifi-test-wifi@xiaomi.com']
 # MAILTO_LIST = ["liujia5@xiaomi.com"]
 MAIL_HOST = "mail.srv"  #设置服务器
 MAIL_USER = "robot"    #用户名

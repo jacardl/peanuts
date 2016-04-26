@@ -7,7 +7,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 import var as v
-
+import data
 
 class ProcessReport(mp.Process):
     def __init__(self, report, q):
@@ -23,29 +23,31 @@ class ProcessReport(mp.Process):
         test = GetTestResult(self.report)
         flow = GetFlowLog(self.report)
         online = GetOnlineLog(self.report)
+        module = GetTestModule(self.report)
         time.start()
         test.start()
         flow.start()
         online.start()
+        module.start()
         while time.is_alive() or test.is_alive() or flow.is_alive() \
-                or online.is_alive():
+                or online.is_alive() or module.is_alive():
             pass
-        self.result.update(sum=test.result["testsum"])
-        self.result.update(pa=test.result["testpass"])
-        testSum = test.result["testsum"]
-        if testSum == 0:
+        self.result.update(error=test.result['error'])
+        self.result.update(ranpass=test.result["ranpass"])
+        self.result.update(sum=test.result["ransum"])
+        if self.result['sum'] == 0:
             self.result.update(percent=0)
         else:
-            self.result.update(percent=test.result["testpass"]/float(test.result["testsum"])*100)
-
+            self.result.update(percent=self.result["ranpass"]/float(self.result['sum'])*100)
         self.result.update(time=time.timeUsed)
         self.result.update(onlinesum=online.result["pass"]+online.result["fail"])
-        self.result.update(onlinepa=online.result["pass"])
+        self.result.update(onlinepass=online.result["pass"])
         onlineSum = online.result["pass"]+online.result["fail"]
         if onlineSum == 0:
             self.result.update(onlinepercent=0)
         else:
             self.result.update(onlinepercent=online.result["pass"]/float(onlineSum)*100)
+        self.result.update(module=module.result)
         self.qu.put(self.result)
         self.stop()
 
@@ -82,28 +84,44 @@ class GetTestResult(threading.Thread):
         threading.Thread.__init__(self)
         self.running = False
         self.reportName = report
-        self.result = {}
+        self.result = {
+            'error': 0,
+            'ranfail': 0,
+            'ranpass': 0,
+            'ransum': 0,
+            }
 
     def run(self):
         self.running = True
         f = open(self.reportName)
         for line in f:
             if not line.isspace():
-                m = re.search('Ran\s+(\d+)\s+[tes]+\s+in\s+\d+', line)
+                m = re.search('Ran\s+(\d+)\s+[tes]+\s+in.*', line)
                 if m:
-                    self.result["testsum"] = int(m.group(1))
-                    break
-        for line in f:
-            if not line.isspace():
-                m = re.search('FAILED \(failures=(\d+)\)', line)
-                n = re.search('OK', line)
-                if m:
-                    self.result["testfail"] = int(m.group(1))
-                if n:
-                    self.result["testfail"] = 0
-                    break
+                    if self.result['ransum'] is 0:
+                        self.result['ransum'] = int(m.group(1))
+                    print line
+                    next(f)
+                    line2 = next(f)
+                    m2 = re.search('(FAILED \((failures=(\d+))?(, )?(errors=(\d+))?\))?(OK)?', line2)
+                    if m2:
+                        print line2
+                        if m.group(1) and m2.group(3) and m2.group(6):
+                            self.result["ranpass"] += (int(m.group(1)) - int(m2.group(3)))
+                            self.result['ranfail'] = int(m2.group(3))
+                            self.result['error'] += int(m2.group(6))
+                        elif m.group(1) and m2.group(3):
+                            self.result["ranpass"] += (int(m.group(1)) - int(m2.group(3)))
+                            self.result['ranfail'] = int(m2.group(3))
+                        elif m.group(1) and m2.group(6):
+                            self.result["ranpass"] += int(m.group(1))
+                            self.result['error'] += int(m2.group(6))
+                            self.result['ranfail'] = 0
+                        elif m.group(1) and m2.group(7):
+                            self.result['ranpass'] += int(m.group(1))
+                            self.result['ranfail'] = 0
+
         f.close()
-        self.result["testpass"] = self.result["testsum"] - self.result["testfail"]
         self.stop()
 
     def stop(self):
@@ -622,17 +640,64 @@ class GetOnlineLog(threading.Thread):
         self.running = False
 
 
+class GetTestModule(threading.Thread):
+    def __init__(self, report):
+        threading.Thread.__init__(self)
+        self.running = False
+        self.reportName = report
+        self.logPath = v.TEST_SUITE_LOG_PATH
+        self.moduleDict = {
+            'treeBasicApi': '基础功能',
+            'treeBSDApi': '双频合一',
+            'treeWireRelayApi':'有线中继',
+            'treeWirelessRelayApi':'无线中继',
+            'treeAccessControlApi':'接入控制',
+            'treeQosApi':'智能限速',
+            'treeFlowApi':'WiFi吞吐',
+            'treeStressApi':'压力测试',
+            'treeOthersApi':'其他',
+        }
+        self.result = list()
+
+    def run(self):
+        self.running = True
+        f = open(self.reportName)
+        for line in f:
+            if not line.isspace():
+                m = re.search('\(testcase.*\.(.*)\)', line)
+                if m:
+                    testCase = m.group(1)
+                    for module in self.moduleDict.iterkeys():
+                        if chkTestCaseModule(testCase, module):
+                            if self.moduleDict.get(module) not in self.result:
+                                self.result.append(self.moduleDict.get(module))
+                                self.result.append('，')
+        del self.result[-1]
+        f.close()
+        self.stop()
+
+    def stop(self):
+        self.running = False
+
+
+def chkTestCaseModule(tcName, module):
+    for i in getattr(data, module):
+        if isinstance(i, str):
+            if tcName == i:
+                return True
+    return False
+
+
 if __name__ == '__main__':
     # t.start()
     # while t.isAlive():
     #     print time.time()
     # print getFlowLogVerbose("E:\peanuts\AP_MIXEDPSK_CHAN1_36_FLOW.log")
     # print getChannelFlowLogVerbose("E:\peanuts\AP_MIXEDPSK_CHAN1_36_FLOW.log")
-    info = GetFlowLog("R2D 开发版OTA 2.11.36.log".decode("utf8").encode("gbk"))
+    info = GetTestResult("err2.log".decode("utf8").encode("gbk"))
     info.start()
     info.join()
     print info.result
-    print info.resultAes
 
 
 

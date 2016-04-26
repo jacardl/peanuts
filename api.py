@@ -1081,7 +1081,7 @@ def chkWifiInfo(terminal, logname, **kwargs):
     for index in xrange(len(wifiList)):
         if option['ssid'] == wifiList[index]['ssid']:
             return True, wifiList[index]
-    return False
+    return False, []
 
 
 if __name__ == '__main__':

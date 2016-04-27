@@ -263,9 +263,9 @@ def setCheck(terminal, logname, apipath, **kwargs):
 
     loop = 0
     ret = setCheckInLoop(terminal, logname, apipath, **kwargs)
-    while ret is False and loop < 5:
+    while ret is False and loop < 3:
         loop += 1
-        t.sleep(2)
+        t.sleep(10)
         ret = setCheckInLoop(terminal, logname, apipath, **kwargs)
 
     return ret

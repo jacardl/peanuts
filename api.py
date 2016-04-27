@@ -215,9 +215,9 @@ def setGet(terminal, logname, apipath, **kwargs):
 
     loop = 0
     ret = setGetInLoop(terminal, logname, apipath, **kwargs)
-    while  (ret is None or ret['code'] != 0) and loop < 5:
+    while (ret is None or ret['code'] != 0) and loop < 3:
         loop += 1
-        t.sleep(2)
+        t.sleep(10)
         ret = setGetInLoop(terminal, logname, apipath, **kwargs)
 
     return ret
@@ -577,7 +577,7 @@ def setWifiAp(terminal, logname, **kwargs):
         'encryption': 'WPA2PSK',
         'enctype': 'TKIPAES',
         'password': v.ROOT_AP_PWD,
-        'channel': 6,
+        'channel': v.ROOT_AP_CHANNEL,
         'bandwidth': '20',
         'nssid': v.ROOT_AP_SSID,
         'nencryption': 'none',

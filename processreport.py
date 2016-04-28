@@ -100,12 +100,10 @@ class GetTestResult(threading.Thread):
                 if m:
                     if self.result['ransum'] is 0:
                         self.result['ransum'] = int(m.group(1))
-                    print line
                     next(f)
                     line2 = next(f)
                     m2 = re.search('(FAILED \((failures=(\d+))?(, )?(errors=(\d+))?\))?(OK)?', line2)
                     if m2:
-                        print line2
                         if m.group(1) and m2.group(3) and m2.group(6):
                             self.result["ranpass"] += (int(m.group(1)) - int(m2.group(3)))
                             self.result['ranfail'] = int(m2.group(3))

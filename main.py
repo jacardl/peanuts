@@ -816,7 +816,7 @@ class TestSuitePage(wx.Panel):
         self.memMon.start()
 
         # start upload
-        if v.SEND_MAIL == 1:
+        if v.UPLOAD_LOG == 1:
             self.upLoad = api.SetUploadLog(v.DEVICE_STATUS_LOG)
             self.upLoad.start()
 

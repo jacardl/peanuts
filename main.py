@@ -813,8 +813,12 @@ class TestSuitePage(wx.Panel):
 
         # start memory monitor
         self.memMon = mm.HttpMemCPUMonitor(v.MEM_MONITOR_INTERVAL)
-        # self.memMon.setDaemon(True)
         self.memMon.start()
+
+        # start upload
+        if v.SEND_MAIL == 1:
+            self.upLoad = api.SetUploadLog(v.DEVICE_STATUS_LOG)
+            self.upLoad.start()
 
         if v.CONNECTION_TYPE is not 3:
             self.memMonXlsx = mm.MemMonitorXlsx(v.MEM_MONITOR_INTERVAL, file=v.MAIL_XLSX)
@@ -864,12 +868,9 @@ class TestSuitePage(wx.Panel):
                 # add Queue to communicate with processreport process
                 sm.generateMail(v.MAILTO_LIST, self.mailTitle, q, self.reportFile, v.MAIL_XLSX)
 
-            # upload log to server
+            # before stoping upload log threading, upload log for the last time
             if v.UPLOAD_LOG is 1:
-                ter = api.HttpClient()
-                ter.connect(host=v.HOST, password=v.WEB_PWD)
-                api.setUploadLog(ter, v.DEVICE_STATUS_LOG)
-                ter.close()
+                self.upLoad.stop()
 
             files = os.listdir(v.DEFAULT_PATH)
             for file in files:

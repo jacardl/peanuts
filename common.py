@@ -1530,6 +1530,7 @@ def setAdbStaConn(device, logname, **kwargs):
               " -w com.peanutswifi.test/com.peanutswifi.MyTestRunner"%option
 
     ret = setAdbShell(device, command, logname)
+    t.sleep(2)
     for line in ret:
         m = re.search('OK ', line)
         if m is not None:

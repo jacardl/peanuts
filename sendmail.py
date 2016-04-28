@@ -41,7 +41,7 @@ def sendMail(to_list, sub, content, attach1=None, attach2=None, pic_list=None): 
         for pic in pic_list:
             cnt += 1
             fp = open(pic, "rb")
-            att4 = MIMEImage(fp.read())
+            att4 = MIMEImage(fp.read(), _subtype="png")
             fp.close()
             att4.add_header('Content-ID', '<'+pic+'>')
             att4["Content-Type"] = 'application/octet-stream'
@@ -109,7 +109,7 @@ def generateMail(maillist, title, queue=None, attach1=None, attach2=None):
 
 if __name__ == '__main__':
     import multiprocessing as mp
-    report = "err2.log".decode("utf8").encode("gbk")
+    report = "R3L daily build 2.5.58.log".decode("utf8").encode("gbk")
     q = mp.Queue() # tranlate test result to generateMail
     ret = pr.ProcessReport(report, q)
     ret.start()

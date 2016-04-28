@@ -8,6 +8,7 @@ import re
 import time as t
 import os
 from Crypto.Cipher import AES
+import threading
 
 import var as v
 import common
@@ -215,9 +216,9 @@ def setGet(terminal, logname, apipath, **kwargs):
 
     loop = 0
     ret = setGetInLoop(terminal, logname, apipath, **kwargs)
-    while  (ret is None or ret['code'] != 0) and loop < 5:
+    while (ret is None or ret['code'] != 0) and loop < 3:
         loop += 1
-        t.sleep(2)
+        t.sleep(10)
         ret = setGetInLoop(terminal, logname, apipath, **kwargs)
 
     return ret
@@ -263,9 +264,9 @@ def setCheck(terminal, logname, apipath, **kwargs):
 
     loop = 0
     ret = setCheckInLoop(terminal, logname, apipath, **kwargs)
-    while ret is False and loop < 5:
+    while ret is False and loop < 3:
         loop += 1
-        t.sleep(2)
+        t.sleep(10)
         ret = setCheckInLoop(terminal, logname, apipath, **kwargs)
 
     return ret
@@ -577,7 +578,7 @@ def setWifiAp(terminal, logname, **kwargs):
         'encryption': 'WPA2PSK',
         'enctype': 'TKIPAES',
         'password': v.ROOT_AP_PWD,
-        'channel': 6,
+        'channel': v.ROOT_AP_CHANNEL,
         'bandwidth': '20',
         'nssid': v.ROOT_AP_SSID,
         'nencryption': 'none',
@@ -711,6 +712,36 @@ def setWebAccessOpt(terminal, logname, **kwargs):
 def setUploadLog(terminal, logname):
     api = '/cgi-bin/luci/;stok=token/api/xqsystem/upload_log'
     return setCheck(terminal, logname, api)
+
+
+class SetUploadLog(threading.Thread):
+    def __init__(self, logname):
+        threading.Thread.__init__(self)
+        self.logname = logname
+
+    def run(self):
+        self.running = True
+        last_time = t.time()
+        while self.running:
+            curr_time = t.time()
+            if curr_time - last_time >= 18000: # inverval 5 hours
+                try:
+                    ter = HttpClient()
+                    ter.connect(host=v.HOST, password=v.WEB_PWD)
+                except Exception, e:
+                    continue
+                setUploadLog(ter, self.logname)
+                ter.close()
+                last_time = curr_time
+            t.sleep(1)
+
+        ter2 = HttpClient()
+        ter2.connect(host=v.HOST, password=v.WEB_PWD)
+        setUploadLog(ter, self.logname)
+        ter.close()
+
+    def stop(self):
+        self.running = False
 
 
 def getWifiDetailAll(terminal, logname):

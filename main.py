@@ -819,6 +819,7 @@ class TestSuitePage(wx.Panel):
         if v.UPLOAD_LOG == 1:
             self.upLoad = api.SetUploadLog(v.DEVICE_STATUS_LOG)
             self.upLoad.start()
+            self.upLoad.join()
 
         if v.CONNECTION_TYPE is not 3:
             self.memMonXlsx = mm.MemMonitorXlsx(v.MEM_MONITOR_INTERVAL, file=v.MAIL_XLSX)

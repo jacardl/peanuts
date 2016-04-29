@@ -724,7 +724,7 @@ class SetUploadLog(threading.Thread):
         last_time = t.time()
         while self.running:
             curr_time = t.time()
-            if curr_time - last_time >= 18000: # inverval 5 hours
+            if curr_time - last_time >= 10800: # inverval 3 hours
                 try:
                     ter = HttpClient()
                     ter.connect(host=v.HOST, password=v.WEB_PWD)

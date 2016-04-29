@@ -744,6 +744,19 @@ class SetUploadLog(threading.Thread):
         self.running = False
 
 
+class SetUploadLog2(threading.Thread):
+    def __init__(self, logname):
+        threading.Thread.__init__(self)
+        self.logname = logname
+
+    def run(self):
+        ter = HttpClient()
+        ter.connect(host=v.HOST, password=v.WEB_PWD)
+        setUploadLog(ter, self.logname)
+        ter.close()
+        t.sleep(2)
+
+
 def getWifiDetailAll(terminal, logname):
 
     api = '/cgi-bin/luci/;stok=token/api/xqnetwork/wifi_detail_all'
@@ -1119,9 +1132,9 @@ if __name__ == '__main__':
     option = {
         'ssid': 'MI-MAC',
     }
-    v.HOST = '192.168.110.1'
+    v.HOST = '192.168.130.1'
     v.WEB_PWD = '12345678'
     webclient = HttpClient()
     webclient.connect(host=v.HOST, password=v.WEB_PWD)
-    print getDeviceSystemInfo(webclient, 'a')
+    setUploadLog(webclient, 'a')
     webclient.close()

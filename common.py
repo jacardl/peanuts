@@ -1615,6 +1615,26 @@ def getAdbDevices():
     return result
 
 
+def getAdbDevicesModel():
+    adbNumList = getAdbDevices()
+    modelDict = dict()
+    command = "getprop ro.product.model"
+    if len(adbNumList) is not 0:
+        for num in adbNumList:
+            modelDict[num] = setAdbShell(num, command, v.DEVICE_STATUS_LOG)[0]
+        return modelDict
+    else:
+        return modelDict
+
+
+def getAdbDeviceModel(serialnum):
+    command = "getprop ro.product.model"
+    ret = setAdbShell(serialnum, command, v.DEVICE_STATUS_LOG)
+    if len(ret) is not 0:
+        return ret[0]
+    return ""
+
+
 def getAdbAndroidVersion(device, logname):
     """
     127|shell@cancro:/system/bin $ getprop ro.build.version.release
@@ -1827,4 +1847,4 @@ if __name__ == '__main__':
     v.PASSWD = "admin"
     terminal = ShellCommand(v.CONNECTION_TYPE)
     ret = terminal.connect(v.HOST, v.USR, v.PASSWD)
-    print getWlanTxPower(terminal, "2g", "a")
+    print getAdbDevicesModel()

@@ -21,6 +21,8 @@ STA_COUNT = "1"
 SERIAL_PORT = ""
 BAUDRATE = 115200
 
+ANDROID_SERIAL_NUM = ''
+ANDROID_MODEL = ''
 
 """
 connection_type = 1 represent ssh
@@ -53,7 +55,6 @@ GET_MODEL = 'uci get /usr/share/xiaoqiang/xiaoqiang_version.version.HARDWARE'
 # ----------------Test Suite-----------------
 
 DUT_MODULE = 'R1D'
-STA_MODULE = 'Android'
 
 INTF_2G = 'wl1'
 INTF_5G = 'wl0'

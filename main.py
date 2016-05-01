@@ -187,9 +187,18 @@ class GeneralPage(wx.Panel):
 
         # sta connection ctrl
         staTypeLbl = wx.StaticText(self, -1, 'Device:')
-        self.staType = wx.Choice(self, -1, choices=['Android'])
-        self.staType.SetSelection(0)
-        self.Bind(wx.EVT_CHOICE, self.EvtChoice2, self.staType)
+        staSerialNumList = list()
+        if len(co.getAdbDevicesModel()) is 0:
+            staSerialNumList.append("None")
+        else:
+            staSerialNumList = co.getAdbDevicesModel().keys()
+        self.staSerialNum = wx.Choice(self, -1, choices=staSerialNumList)
+        self.staSerialNum.SetSelection(0)
+        v.ANDROID_SERIAL_NUM = staSerialNumList[0]
+        self.Bind(wx.EVT_CHOICE, self.EvtChoice2, self.staSerialNum)
+
+        self.staModel = wx.StaticText(self, -1, '')
+        self.staModel.SetForegroundColour("gray")
 
         staCountLbl = wx.StaticText(self, -1, 'Count:')
         self.staCount = wx.TextCtrl(self, -1, '')
@@ -205,20 +214,20 @@ class GeneralPage(wx.Panel):
         staConnSizer2.Add(staCountLbl, 0,
                           wx.ALIGN_RIGHT | wx.TOP | wx.LEFT, 10)
 
-
         staConnSizer3 = wx.BoxSizer(wx.VERTICAL)
-        staConnSizer3.Add(self.staType, 0,
+        staConnSizer3.Add(self.staSerialNum, 0,
                           wx.ALIGN_LEFT | wx.TOP | wx.LEFT, 4)
         staConnSizer3.Add(self.staCount, 0,
                           wx.ALIGN_LEFT | wx.TOP | wx.LEFT, 4)
 
         staConnSizer.Add(staConnSizer2, 0, wx.LEFT, 5)
         staConnSizer.Add(staConnSizer3, 0, wx.LEFT, 2)
+        staConnSizer.Add(self.staModel, 0, wx.LEFT | wx.TOP, 2 | 4)
 
         mainSizer = wx.BoxSizer(wx.VERTICAL)
         mainSizer.Add(connSizer, 0, wx.ALL, 10)
         mainSizer.Add(staConnSizer, 0, wx.ALL, 10)
-        mainSizer.Add(btnSizer, 0, wx.TOP, 106)
+        mainSizer.Add(btnSizer, 0, wx.TOP, 104)
 
         self.SetSizer(mainSizer)
         mainSizer.Fit(self)
@@ -232,7 +241,7 @@ class GeneralPage(wx.Panel):
     def EvtChoice2(self, event):
         self.saveBtn.Enable(True)
         v.SAVE_BTN_FLAG = False
-        v.STA_MODULE = event.GetString()
+        v.ANDROID_SERIAL_NUM = event.GetString()
 
     def EvtChoice3(self, event):
         self.saveBtn.Enable(True)
@@ -304,12 +313,12 @@ class GeneralPage(wx.Panel):
                                                                                   'ip': v.HOST, 'user': v.USR,
                                                                                   'password': v.PASSWD})
             dutConn.start()
-
-        if v.STA_MODULE is 'Android':
+        if v.ANDROID_SERIAL_NUM is not None:
             v.STA_COUNT = self.staCount.GetValue()
             dutConn = threading.Thread(target=self.adbDeviceCheckThread, args=(v.STA_COUNT,))
             dutConn.start()
-
+            v.ANDROID_MODEL = co.getAdbDeviceModel(v.ANDROID_SERIAL_NUM)
+            self.staModel.SetLabel(v.ANDROID_MODEL)
 
     def EvtTextChange(self, event):
         self.saveBtn.Enable(True)

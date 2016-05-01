@@ -917,6 +917,7 @@ def setReset(terminal, logname):
     command = "env -i sleep 4 && nvram set restore_defaults=1 && nvram commit && reboot & >/dev/null 2>/dev/null"
     setConfig(terminal, command, logname)
 
+
 def setCopyFile(terminal, logname, **kargs):
     command = 'cp %s %s'%(kargs['src'], kargs['dst'])
     setConfig(terminal, command, logname)
@@ -925,6 +926,26 @@ def setCopyFile(terminal, logname, **kargs):
 def setMvFile(terminal, logname, **kargs):
     command = 'mv %s %s'%(kargs['src'], kargs['dst'])
     setConfig(terminal, command, logname)
+
+
+def setIperfFlow(target, interval, time, logname):
+    if os.path.exists(v.IPERF_PATH):
+        pass
+    else:
+        raise Exception("iperf doesnot exist! please copy iperf dir to the path same as peanuts.")
+
+    command = "iperf.exe -c " + target
+    if interval != "":
+        command = command + " -i " + interval
+    if time != "":
+        command = command + " -t " + time
+
+    command += " -r -w 2m -f m"
+    ret = setShell(command, cwd=v.IPERF_PATH, timeout=3*int(time), logname=logname)
+    # os.chdir(v.DEFAULT_PATH)
+    if len(ret) == 0:
+        return False
+    return True
 
 
 def setAdbClearStaConn(device, ssid, radio, logname):
@@ -1577,24 +1598,9 @@ class SetAdbIperfOn(threading.Thread):
         setAdbIperfOn(self.device, self.logname)
 
 
-def setIperfFlow(target, interval, time, logname):
-    if os.path.exists(v.IPERF_PATH):
-        pass
-    else:
-        raise Exception("iperf doesnot exist! please copy iperf dir to the path same as peanuts.")
-
-    command = "iperf.exe -c " + target
-    if interval != "":
-        command = command + " -i " + interval
-    if time != "":
-        command = command + " -t " + time
-
-    command += " -r -w 2m -f m"
-    ret = setShell(command, cwd=v.IPERF_PATH, timeout=3*int(time), logname=logname)
-    # os.chdir(v.DEFAULT_PATH)
-    if len(ret) == 0:
-        return False
-    return True
+def setAdbReboot(device, logname):
+    command = "reboot"
+    setAdbShell(device, command, logname)
 
 
 def getAdbDevices():

@@ -643,8 +643,10 @@ class TestSuitePage(wx.Panel):
                 os.rename(v.TEST_SUITE_LOG_PATH, self.report)
             else:
                 os.rename(v.TEST_SUITE_LOG_PATH, self.report + str(random.random()))
-        if testKeepGoing is False:
+        if testKeepGoing is False: # click cancel
             os.system("taskkill /F /IM python.exe | taskkill /F /T /IM adb.exe")
+        else: # reboot android device
+            co.setAdbReboot(v.ANDROID_SERIAL_NUM, v.DEVICE_STATUS_LOG)
         self.abortEvent.set()
         self.dlg.Destroy()
 

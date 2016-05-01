@@ -12244,7 +12244,7 @@ class AP_WIRELESS_RELAY_SSIDHIDE(TestCase):
             'password': v.ROOT_AP_PWD,
             'channel': v.ROOT_AP_CHANNEL,
             'bandwidth': '20',
-            'nssid': v.SSID,
+            'nssid': v.WIRELESS_RELAY_SSID,
             'nencryption': 'WPA2PSK',
             'npassword': v.ROOT_AP_PWD,
         }

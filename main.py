@@ -104,16 +104,16 @@ class GeneralPage(wx.Panel):
         self.type.SetSelection(0)
         self.Bind(wx.EVT_CHOICE, self.EvtChoice, self.type)
 
-        connLbl = wx.StaticText(self, -1, "Connection type:")
-        self.conn = wx.Choice(self, -1, choices=["SSH", "Telnet", "Serial", "fac" ])
+        connLbl = wx.StaticText(self, -1, "Shell:")
+        self.conn = wx.Choice(self, -1, choices=["SSH", "Telnet", "Serial", "Factory"])
         self.conn.SetSelection(0)
         self.Bind(wx.EVT_CHOICE, self.EvtChoice3, self.conn)
 
-        ipLbl = wx.StaticText(self, -1, 'Host IP:')
+        ipLbl = wx.StaticText(self, -1, 'Host:')
         self.ip = wx.TextCtrl(self, -1, '')
         self.ip.SetValue(v.HOST)
 
-        shellUsrLbl = wx.StaticText(self, -1, 'User name:')
+        shellUsrLbl = wx.StaticText(self, -1, 'User:')
         self.shellUsr = wx.TextCtrl(self, -1, '')
         self.shellUsr.SetValue(v.USR)
 
@@ -121,11 +121,11 @@ class GeneralPage(wx.Panel):
         self.shellPasswd = wx.TextCtrl(self, -1, '')
         self.shellPasswd.SetValue(v.PASSWD)
 
-        webPasswdLbl = wx.StaticText(self, -1, 'Web password:')
+        webPasswdLbl = wx.StaticText(self, -1, 'Web Password:')
         self.webPasswd = wx.TextCtrl(self, -1, '')
         self.webPasswd.SetValue(v.WEB_PWD)
 
-        serialPortLbl = wx.StaticText(self, -1, 'Serial port:')
+        serialPortLbl = wx.StaticText(self, -1, 'Serial:')
         self.serialNum = []
         if len(co.getSerialPort()) is 0:
             self.serialNum.append("None")
@@ -155,7 +155,7 @@ class GeneralPage(wx.Panel):
 
         connSizer3 = wx.BoxSizer(wx.VERTICAL)
         connSizer3.Add(self.type, 0,
-                       wx.ALIGN_LEFT | wx.TOP | wx.LEFT, 2)
+                       wx.ALIGN_LEFT | wx.TOP | wx.LEFT, 4)
         connSizer3.Add(self.ip, 0,
                        wx.ALIGN_LEFT | wx.TOP | wx.LEFT, 4)
         connSizer3.Add(self.shellUsr, 0,
@@ -167,17 +167,17 @@ class GeneralPage(wx.Panel):
         connSizer4 = wx.BoxSizer(wx.VERTICAL)
         connSizer4.Add(connLbl, 0,
                        wx.ALIGN_RIGHT | wx.TOP | wx.LEFT, 10)
-        connSizer4.Add(webPasswdLbl, 0,
-                       wx.ALIGN_RIGHT | wx.TOP | wx.LEFT, 10)
         connSizer4.Add(serialPortLbl, 0,
+                       wx.ALIGN_RIGHT | wx.TOP | wx.LEFT, 10)
+        connSizer4.Add(webPasswdLbl, 0,
                        wx.ALIGN_RIGHT | wx.TOP | wx.LEFT, 10)
 
         connSizer5 = wx.BoxSizer(wx.VERTICAL)
         connSizer5.Add(self.conn, 0,
-                       wx.ALIGN_LEFT | wx.TOP | wx.LEFT, 2)
-        connSizer5.Add(self.webPasswd, 0,
                        wx.ALIGN_LEFT | wx.TOP | wx.LEFT, 4)
         connSizer5.Add(self.serialPort, 0,
+                       wx.ALIGN_LEFT | wx.TOP | wx.LEFT, 4)
+        connSizer5.Add(self.webPasswd, 0,
                        wx.ALIGN_LEFT | wx.TOP | wx.LEFT, 4)
 
         connSizer.Add(connSizer2, 0, wx.LEFT, 5)
@@ -208,7 +208,7 @@ class GeneralPage(wx.Panel):
 
         staConnSizer3 = wx.BoxSizer(wx.VERTICAL)
         staConnSizer3.Add(self.staType, 0,
-                          wx.ALIGN_LEFT | wx.TOP | wx.LEFT, 2)
+                          wx.ALIGN_LEFT | wx.TOP | wx.LEFT, 4)
         staConnSizer3.Add(self.staCount, 0,
                           wx.ALIGN_LEFT | wx.TOP | wx.LEFT, 4)
 
@@ -245,7 +245,7 @@ class GeneralPage(wx.Panel):
             v.CONNECTION_TYPE = 2
         elif type == "SSH":
             v.CONNECTION_TYPE = 1
-        elif type == "fac":
+        elif type == "Factory":
             v.CONNECTION_TYPE = 2
             self.shellUsr.Enable(False)
             self.shellPasswd.Enable(False)
@@ -433,7 +433,7 @@ class TestSuitePage(wx.Panel):
         wx.Window.__init__(self, parent, -1, style=wx.BORDER_STATIC)
         ##        wx.StaticText(self, -1, "Test suite", wx.Point(10, 10))
         ##        self.tree = wx.TreeCtrl(self, size = (340,330))
-        self.tree = CT.CustomTreeCtrl(self, size=(340, 303),
+        self.tree = CT.CustomTreeCtrl(self, size=(540, 303),
                                       style=
                                       wx.BORDER_SIMPLE
                                       | wx.WANTS_CHARS,

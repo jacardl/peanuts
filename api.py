@@ -724,7 +724,7 @@ class SetUploadLog(threading.Thread):
         last_time = t.time()
         while self.running:
             curr_time = t.time()
-            if curr_time - last_time >= 18000: # inverval 5 hours
+            if curr_time - last_time >= 10800: # inverval 3 hours
                 try:
                     ter = HttpClient()
                     ter.connect(host=v.HOST, password=v.WEB_PWD)
@@ -742,6 +742,19 @@ class SetUploadLog(threading.Thread):
 
     def stop(self):
         self.running = False
+
+
+class SetUploadLog2(threading.Thread):
+    def __init__(self, logname):
+        threading.Thread.__init__(self)
+        self.logname = logname
+
+    def run(self):
+        ter = HttpClient()
+        ter.connect(host=v.HOST, password=v.WEB_PWD)
+        setUploadLog(ter, self.logname)
+        ter.close()
+        t.sleep(2)
 
 
 def getWifiDetailAll(terminal, logname):
@@ -1119,9 +1132,9 @@ if __name__ == '__main__':
     option = {
         'ssid': 'MI-MAC',
     }
-    v.HOST = '192.168.110.1'
+    v.HOST = '192.168.130.1'
     v.WEB_PWD = '12345678'
     webclient = HttpClient()
     webclient.connect(host=v.HOST, password=v.WEB_PWD)
-    print getDeviceSystemInfo(webclient, 'a')
+    setUploadLog(webclient, 'a')
     webclient.close()

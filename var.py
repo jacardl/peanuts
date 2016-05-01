@@ -1,7 +1,9 @@
 # -*- coding: utf8 -*-
 from common import *
 
-TOOL_LIST = ["General", "Memory Tracking", "Log Collection", "Test Suite"]
+VER = '3.4.1'
+
+TOOL_LIST = ["General", "Memory Tracking", "Test Suite"]
 
 # ----------------General-----------------
 
@@ -27,8 +29,6 @@ connection_type = 1 represent ssh
 """
 CONNECTION_TYPE = 1
 STA_CONNECTION_TYPE = 1
-
-VER = '3.3.5'
 
 # ----------------Memory Tracking-----------------
 

@@ -60,11 +60,7 @@ class ToolBook(wx.Toolbook):
                 page2 = MemoryTrackPage(self)
                 self.AddPage(page2, tool, imageId=imageIdGenerator.next())
 
-            # elif tool == v.TOOL_LIST[2]:
-            #     page3 = LogCollectionPage(self)
-            #     self.AddPage(page3, tool, imageId=imageIdGenerator.next())
-
-            elif tool == v.TOOL_LIST[3]:
+            elif tool == v.TOOL_LIST[2]:
                 page4 = TestSuitePage(self)
                 self.AddPage(page4, tool, imageId=imageIdGenerator.next())
 
@@ -117,13 +113,13 @@ class GeneralPage(wx.Panel):
         self.ip = wx.TextCtrl(self, -1, '')
         self.ip.SetValue(v.HOST)
 
-        sshUsrLbl = wx.StaticText(self, -1, 'User name:')
-        self.sshUsr = wx.TextCtrl(self, -1, '')
-        self.sshUsr.SetValue(v.USR)
+        shellUsrLbl = wx.StaticText(self, -1, 'User name:')
+        self.shellUsr = wx.TextCtrl(self, -1, '')
+        self.shellUsr.SetValue(v.USR)
 
-        sshPasswdLbl = wx.StaticText(self, -1, 'Password:')
-        self.sshPasswd = wx.TextCtrl(self, -1, '')
-        self.sshPasswd.SetValue(v.PASSWD)
+        shellPasswdLbl = wx.StaticText(self, -1, 'Password:')
+        self.shellPasswd = wx.TextCtrl(self, -1, '')
+        self.shellPasswd.SetValue(v.PASSWD)
 
         webPasswdLbl = wx.StaticText(self, -1, 'Web password:')
         self.webPasswd = wx.TextCtrl(self, -1, '')
@@ -152,9 +148,9 @@ class GeneralPage(wx.Panel):
                        wx.ALIGN_RIGHT | wx.TOP | wx.LEFT, 10)
         connSizer2.Add(ipLbl, 0,
                        wx.ALIGN_RIGHT | wx.TOP | wx.LEFT, 10)
-        connSizer2.Add(sshUsrLbl, 0,
+        connSizer2.Add(shellUsrLbl, 0,
                        wx.ALIGN_RIGHT | wx.TOP | wx.LEFT, 10)
-        connSizer2.Add(sshPasswdLbl, 0,
+        connSizer2.Add(shellPasswdLbl, 0,
                        wx.ALIGN_RIGHT | wx.TOP | wx.LEFT | wx.BOTTOM, 10)
 
         connSizer3 = wx.BoxSizer(wx.VERTICAL)
@@ -162,9 +158,9 @@ class GeneralPage(wx.Panel):
                        wx.ALIGN_LEFT | wx.TOP | wx.LEFT, 2)
         connSizer3.Add(self.ip, 0,
                        wx.ALIGN_LEFT | wx.TOP | wx.LEFT, 4)
-        connSizer3.Add(self.sshUsr, 0,
+        connSizer3.Add(self.shellUsr, 0,
                        wx.ALIGN_LEFT | wx.TOP | wx.LEFT, 4)
-        connSizer3.Add(self.sshPasswd, 0,
+        connSizer3.Add(self.shellPasswd, 0,
                        wx.ALIGN_LEFT | wx.TOP | wx.LEFT, 4)
 
         # right column
@@ -237,21 +233,13 @@ class GeneralPage(wx.Panel):
         self.saveBtn.Enable(True)
         v.SAVE_BTN_FLAG = False
         v.STA_MODULE = event.GetString()
-        if v.STA_MODULE == "Android":
-            self.staIp.Enable(False)
-            self.staSshUsr.Enable(False)
-            self.staSshPasswd.Enable(False)
-        # elif v.STA_MODULE == "R1CM & Android":
-        #     self.staIp.Enable(True)
-        #     self.staSshUsr.Enable(True)
-        #     self.staSshPasswd.Enable(True)
 
     def EvtChoice3(self, event):
         self.saveBtn.Enable(True)
         v.SAVE_BTN_FLAG = False
         type = event.GetString()
-        self.sshUsr.Enable(True)
-        self.sshPasswd.Enable(True)
+        self.shellUsr.Enable(True)
+        self.shellPasswd.Enable(True)
         self.serialPort.Enable(False)
         if type == "Telnet":
             v.CONNECTION_TYPE = 2
@@ -259,19 +247,18 @@ class GeneralPage(wx.Panel):
             v.CONNECTION_TYPE = 1
         elif type == "fac":
             v.CONNECTION_TYPE = 2
-            self.sshUsr.Enable(False)
-            self.sshPasswd.Enable(False)
+            self.shellUsr.Enable(False)
+            self.shellPasswd.Enable(False)
         elif type == "Serial":
             v.CONNECTION_TYPE = 3
-            self.sshUsr.Enable(False)
-            self.sshPasswd.Enable(False)
+            self.shellUsr.Enable(False)
+            self.shellPasswd.Enable(False)
             self.serialPort.Enable(True)
 
     def EvtChoice4(self, event):
         self.saveBtn.Enable(True)
         v.SAVE_BTN_FLAG = False
         v.SERIAL_PORT = event.GetString()
-
 
     def connectionCheckThread(self, connectiontype, ip=None, port=None, user=None, password=None):
         result, self.hardware = co.connectionCheck(connectiontype, ip=ip, user=user, password=password)
@@ -310,8 +297,8 @@ class GeneralPage(wx.Panel):
         self.saveBtn.Enable(False)
         if v.DUT_MODULE is not None:
             v.HOST = self.ip.GetValue()
-            v.USR = self.sshUsr.GetValue()
-            v.PASSWD = self.sshPasswd.GetValue()
+            v.USR = self.shellUsr.GetValue()
+            v.PASSWD = self.shellPasswd.GetValue()
             v.WEB_PWD = self.webPasswd.GetValue()
             dutConn = threading.Thread(target=self.connectionCheckThread, kwargs={'connectiontype': v.CONNECTION_TYPE,
                                                                                   'ip': v.HOST, 'user': v.USR,
@@ -568,12 +555,12 @@ class TestSuitePage(wx.Panel):
     def TextTestRunnerFailCheck(self, jobID, abortEvent, testcase, count):
         # process testcases tend to find error or failed cases,
         # then add them to suitefailed and process it until count times
-        ssh = co.SshCommand(v.CONNECTION_TYPE)
-        ssh.connect(v.HOST, v.USR, v.PASSWD)
+        shell = co.ShellCommand(v.CONNECTION_TYPE)
+        shell.connect(v.HOST, v.USR, v.PASSWD)
         # save file in windows, default code is gbk
-        self.report = ssh.setReportName().decode("utf8").encode("gbk")
-        self.reportFile = (ssh.setReportName() + ".log").decode("utf8").encode("gbk")
-        self.mailTitle = ssh.setMailTitle()
+        self.report = shell.setReportName().decode("utf8").encode("gbk")
+        self.reportFile = (shell.setReportName() + ".log").decode("utf8").encode("gbk")
+        self.mailTitle = shell.setMailTitle()
 
         # curTime = t.strftime('%Y.%m.%d %H.%M.%S', t.localtime())
         f = open(self.reportFile, 'a')

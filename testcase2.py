@@ -296,7 +296,7 @@ class AP_CLEAR_LOW_TXPOWER(TestCase):
     @classmethod
     def setUpClass(self):
 
-        self.dut = SshClient(v.CONNECTION_TYPE)
+        self.dut = ShellClient(v.CONNECTION_TYPE)
         self.dut2 = api.HttpClient()
         ret1 = self.dut.connect(v.HOST, v.USR, v.PASSWD)
         self.dut2.connect(host=v.HOST, password=v.WEB_PWD)
@@ -709,7 +709,7 @@ class AP_CLEAR_MID_TXPOWER(TestCase):
     @classmethod
     def setUpClass(self):
 
-        self.dut = SshClient(v.CONNECTION_TYPE)
+        self.dut = ShellClient(v.CONNECTION_TYPE)
         self.dut2 = api.HttpClient()
         ret1 = self.dut.connect(v.HOST, v.USR, v.PASSWD)
         self.dut2.connect(host=v.HOST, password=v.WEB_PWD)
@@ -1129,7 +1129,7 @@ class AP_CLEAR_HIGH_TXPOWER(TestCase):
     @classmethod
     def setUpClass(self):
 
-        self.dut = SshClient(v.CONNECTION_TYPE)
+        self.dut = ShellClient(v.CONNECTION_TYPE)
         self.dut2 = api.HttpClient()
         ret1 = self.dut.connect(v.HOST, v.USR, v.PASSWD)
         self.dut2.connect(host=v.HOST, password=v.WEB_PWD)
@@ -6613,10 +6613,10 @@ class AP_RELAY_CLEAR_LOW_TXPOWER(TestCase):
 
         api.setLanAp(self.dut2, self.__name__)
 
-        self.dut = SshClient(v.CONNECTION_TYPE)
+        self.dut = ShellClient(v.CONNECTION_TYPE)
         ret1 = self.dut.connect(v.HOST, v.USR, v.PASSWD)
         if ret1 is False:
-            raise Exception('Connection is failed for sshclient after setLanAp.')
+            raise Exception('Connection is failed for shell after setLanAp.')
 
     @classmethod
     def tearDownClass(self):
@@ -7034,10 +7034,10 @@ class AP_RELAY_CLEAR_MID_TXPOWER(TestCase):
 
         api.setLanAp(self.dut2, self.__name__)
 
-        self.dut = SshClient(v.CONNECTION_TYPE)
+        self.dut = ShellClient(v.CONNECTION_TYPE)
         ret1 = self.dut.connect(v.HOST, v.USR, v.PASSWD)
         if ret1 is False:
-            raise Exception('Connection is failed for sshclient after setLanAp.')
+            raise Exception('Connection is failed for shell after setLanAp.')
 
     @classmethod
     def tearDownClass(self):
@@ -7462,10 +7462,10 @@ class AP_RELAY_CLEAR_HIGH_TXPOWER(TestCase):
 
         api.setLanAp(self.dut2, self.__name__)
 
-        self.dut = SshClient(v.CONNECTION_TYPE)
+        self.dut = ShellClient(v.CONNECTION_TYPE)
         ret1 = self.dut.connect(v.HOST, v.USR, v.PASSWD)
         if ret1 is False:
-            raise Exception('Connection is failed for sshclient after setLanAp.')
+            raise Exception('Connection is failed for shell after setLanAp.')
 
     @classmethod
     def tearDownClass(self):
@@ -12940,7 +12940,7 @@ class AP_CHECK(TestCase):
     @classmethod
     def setUpClass(self):
 
-        self.dut = SshClient(v.CONNECTION_TYPE)
+        self.dut = ShellClient(v.CONNECTION_TYPE)
         ret1 = self.dut.connect(v.HOST, v.USR, v.PASSWD)
         self.dut2 = api.HttpClient()
         ret2 = self.dut2.connect(host=v.HOST, password=v.WEB_PWD)
@@ -12980,7 +12980,7 @@ class AP_CHECK(TestCase):
             t.sleep(60)
             while 1:
                 try:
-                    self.dut = SshClient(v.CONNECTION_TYPE)
+                    self.dut = ShellClient(v.CONNECTION_TYPE)
                     ret = self.dut.connect(v.HOST, v.USR, v.PASSWD)
                     if ret is True:
                         chkCount = 0
@@ -13033,7 +13033,7 @@ class AP_CHECK(TestCase):
                 t.sleep(60)
                 while 1:
                     try:
-                        self.dut = SshClient(v.CONNECTION_TYPE)
+                        self.dut = ShellClient(v.CONNECTION_TYPE)
                         ret = self.dut.connect(v.HOST, v.USR, v.PASSWD)
                         if ret is True:
                             chkCount = 0
@@ -13083,7 +13083,7 @@ class AP_CHECK(TestCase):
             t.sleep(60)
             while 1:
                 try:
-                    self.dut = SshClient(v.CONNECTION_TYPE)
+                    self.dut = ShellClient(v.CONNECTION_TYPE)
                     ret = self.dut.connect(v.HOST, v.USR, v.PASSWD)
                     if ret is True:
                         chkCount = 0

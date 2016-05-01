@@ -17,7 +17,7 @@ import binascii
 import var as v
 
 
-class SshClient(object):
+class ShellClient(object):
     def __init__(self, connection):
         self.connectionType = connection
 
@@ -155,7 +155,7 @@ class SshClient(object):
             self.ser.close()
 
 
-class SshCommand(SshClient):
+class ShellCommand(ShellClient):
     def getPidList(self):
         self.outPidList = []
         out = self.command('ps w | grep -v [[]')
@@ -282,7 +282,7 @@ def getSerialPort():
 
 
 def connectionCheck(connectiontype, ip=None, port=None, user=None, password=None):
-    client = SshCommand(connectiontype)
+    client = ShellCommand(connectiontype)
     result = client.connect(ip, user, password)
     if result is True:
         hardware = client.getHardware()
@@ -1825,6 +1825,6 @@ if __name__ == '__main__':
     v.HOST = "192.168.31.1"
     v.USR = "root"
     v.PASSWD = "admin"
-    terminal = SshCommand(v.CONNECTION_TYPE)
+    terminal = ShellCommand(v.CONNECTION_TYPE)
     ret = terminal.connect(v.HOST, v.USR, v.PASSWD)
     print getWlanTxPower(terminal, "2g", "a")

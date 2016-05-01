@@ -598,43 +598,6 @@ def getSiteSurvey(terminal, intf, logname):
     return result
 
 
-def getWlanTxPower2(terminal, dut, intf, logname):
-    if dut == "R1D" or dut == "R2D":
-        commandDic = {"2g": "wl -i wl1 curpower | grep 'Maximum Power Target among all rates'",
-                      "5g": "wl -i wl0 curpower | grep 'Maximum Power Target among all rates'", }
-        command = commandDic.get(intf)
-        ret = setGet(terminal, command, logname)
-        if isinstance(ret, list):
-            for line in ret:
-                m = re.search('(\d{1,3}\.\d{1,2}\s*){2,3}', line)
-                if m:
-                    power = m.group(0)
-                    powerList = power.split()
-                    sum = 0.0
-                    for c in range(len(powerList)):
-                        sum += float(powerList[c])
-                    result = sum / len(powerList)
-                    return float(result)
-                else:
-                    result = 0
-            return float(result)
-
-    elif dut == "R1CM" or dut == "R1CL" or dut == "R3":
-        commandDic = {"2g": "iwconfig wl1 | grep 'Tx-Power='",
-                      "5g": "iwconfig wl0 | grep 'Tx-Power='", }
-        command = commandDic.get(intf)
-        ret = setGet(terminal, command, logname)
-        if isinstance(ret, list):
-            for line in ret:
-                m = re.search('(\d*)\sdBm', line)
-                if m:
-                    result = m.group(1)
-                    return float(result)
-                else:
-                    result = 0
-            return float(result)
-
-
 def getWlanTxPower(terminal, intf, logname):
     commandDic1 = {"2g": "wl -i wl1 curpower | grep 'Maximum Power Target among all rates'",
                    "5g": "wl -i wl0 curpower | grep 'Maximum Power Target among all rates'", }
@@ -668,7 +631,7 @@ def getWlanTxPower(terminal, intf, logname):
     return float(result)
 
 
-def  getWlanLastEstPower(terminal, dut, intf, logname):
+def getWlanLastEstPower(terminal, dut, intf, logname):
 
     if dut == "R1D" or dut == "R2D":
         commandDic = {"2g": "wl -i wl1 curpower | grep 'Last est. power'",

@@ -461,7 +461,7 @@ class TestSuitePage(wx.Panel):
         self.rootAccessControlApi = self.tree.AppendItem(self.root, 'Access Control', ct_type=1)
         self.rootWireRelay = self.tree.AppendItem(self.root, 'Wire Relay', ct_type=1)
         self.rootWirelessRelay = self.tree.AppendItem(self.root, 'Wireless Relay', ct_type=1)
-        self.rootFlow = self.tree.AppendItem(self.root, 'Throughput', ct_type=1)
+        self.rootThrough = self.tree.AppendItem(self.root, 'Throughput', ct_type=1)
         self.rootStress = self.tree.AppendItem(self.root, 'Stress', ct_type=1)
         self.rootOthers = self.tree.AppendItem(self.root, 'Others', ct_type=1)
 
@@ -476,7 +476,7 @@ class TestSuitePage(wx.Panel):
         self.AddTreeNodes(self.rootAccessControlApi, data.treeAccessControlApi)
         self.AddTreeNodes(self.rootWireRelay, data.treeWireRelayApi)
         self.AddTreeNodes(self.rootWirelessRelay, data.treeWirelessRelayApi)
-        self.AddTreeNodes(self.rootFlow, data.treeFlowApi)
+        self.AddTreeNodes(self.rootThrough, data.treeThroughputApi)
         self.AddTreeNodes(self.rootStress, data.treeStressApi)
         self.AddTreeNodes(self.rootOthers, data.treeOthersApi)
         self.tree.Expand(self.root)

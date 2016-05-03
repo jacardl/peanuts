@@ -668,90 +668,174 @@ treeQosApi = [
 ]
 
 
-treeFlowApi = [
-    "AP_CLEAR_CHAN1_36_FLOW",
+treeThroughputApi = [
+    "AP_CLEAR_CHAN1_BW20_THROUGHPUT",
     [
-        "assoc_clear_sta_flow_2g",
-        "assoc_clear_sta_flow_5g",
+        "assoc_sta_throughput_2g",
     ],
-    "AP_CLEAR_CHAN6_52_FLOW",
+    "AP_CLEAR_CHAN6_BW20_THROUGHPUT",
     [
-        "assoc_clear_sta_flow_2g",
-        "assoc_clear_sta_flow_5g",
+        "assoc_sta_throughput_2g",
     ],
-    "AP_CLEAR_CHAN11_149_FLOW",
+    "AP_CLEAR_CHAN11_BW20_THROUGHPUT",
     [
-        "assoc_clear_sta_flow_2g",
-        "assoc_clear_sta_flow_5g",
+        "assoc_sta_throughput_2g",
     ],
-    "AP_CLEAR_CHAN13_165_FLOW",
+    "AP_CLEAR_CHAN13_BW20_THROUGHPUT",
     [
-        "assoc_clear_sta_flow_2g",
-        "assoc_clear_sta_flow_5g",
+        "assoc_sta_throughput_2g",
     ],
-        "AP_PSK2_CHAN1_36_FLOW",
+    "AP_CLEAR_CHAN1_BW40_THROUGHPUT",
     [
-        "assoc_psk2_sta_flow_2g",
-        "assoc_psk2_sta_flow_5g",
+        "assoc_sta_throughput_2g",
     ],
-    "AP_PSK2_CHAN6_52_FLOW",
+    "AP_CLEAR_CHAN6_BW40_THROUGHPUT",
     [
-        "assoc_psk2_sta_flow_2g",
-        "assoc_psk2_sta_flow_5g",
+        "assoc_sta_throughput_2g",
     ],
-    "AP_PSK2_CHAN11_149_FLOW",
+    "AP_CLEAR_CHAN11_BW40_THROUGHPUT",
     [
-        "assoc_psk2_sta_flow_2g",
-        "assoc_psk2_sta_flow_5g",
+        "assoc_sta_throughput_2g",
     ],
-    "AP_PSK2_CHAN13_165_FLOW",
+    "AP_CLEAR_CHAN13_BW40_THROUGHPUT",
     [
-        "assoc_psk2_sta_flow_2g",
-        "assoc_psk2_sta_flow_5g",
+        "assoc_sta_throughput_2g",
     ],
-    "AP_MIXEDPSK_CHAN1_36_FLOW",
+    "AP_PSK2_CHAN1_BW20_THROUGHPUT",
     [
-        "assoc_psk2_sta_flow_2g",
-        "assoc_psk_sta_flow_2g",
-        "assoc_tkippsk2_sta_flow_2g",
-        "assoc_tkippsk_sta_flow_2g",
-        "assoc_psk2_sta_flow_5g",
-        "assoc_psk_sta_flow_5g",
-        "assoc_tkippsk2_sta_flow_5g",
-        "assoc_tkippsk_sta_flow_5g",
+        "assoc_sta_throughput_2g",
     ],
-    "AP_MIXEDPSK_CHAN6_52_FLOW",
+    "AP_PSK2_CHAN6_BW20_THROUGHPUT",
     [
-        "assoc_psk2_sta_flow_2g",
-        "assoc_psk_sta_flow_2g",
-        "assoc_tkippsk2_sta_flow_2g",
-        "assoc_tkippsk_sta_flow_2g",
-        "assoc_psk2_sta_flow_5g",
-        "assoc_psk_sta_flow_5g",
-        "assoc_tkippsk2_sta_flow_5g",
-        "assoc_tkippsk_sta_flow_5g",
+        "assoc_sta_throughput_2g",
     ],
-    "AP_MIXEDPSK_CHAN11_149_FLOW",
+    "AP_PSK2_CHAN11_BW20_THROUGHPUT",
     [
-        "assoc_psk2_sta_flow_2g",
-        "assoc_psk_sta_flow_2g",
-        "assoc_tkippsk2_sta_flow_2g",
-        "assoc_tkippsk_sta_flow_2g",
-        "assoc_psk2_sta_flow_5g",
-        "assoc_psk_sta_flow_5g",
-        "assoc_tkippsk2_sta_flow_5g",
-        "assoc_tkippsk_sta_flow_5g",
+        "assoc2_sta_throughput_2g",
     ],
-    "AP_MIXEDPSK_CHAN13_165_FLOW",
+    "AP_PSK2_CHAN13_BW20_THROUGHPUT",
     [
-        "assoc_psk2_sta_flow_2g",
-        "assoc_psk_sta_flow_2g",
-        "assoc_tkippsk2_sta_flow_2g",
-        "assoc_tkippsk_sta_flow_2g",
-        "assoc_psk2_sta_flow_5g",
-        "assoc_psk_sta_flow_5g",
-        "assoc_tkippsk2_sta_flow_5g",
-        "assoc_tkippsk_sta_flow_5g",
+        "assoc_sta_throughput_2g",
+    ],
+    "AP_PSK2_CHAN1_BW40_THROUGHPUT",
+    [
+        "assoc_sta_throughput_2g",
+    ],
+    "AP_PSK2_CHAN6_BW40_THROUGHPUT",
+    [
+        "assoc_sta_throughput_2g",
+    ],
+    "AP_PSK2_CHAN11_BW40_THROUGHPUT",
+    [
+        "assoc_sta_throughput_2g",
+    ],
+    "AP_PSK2_CHAN13_BW40_THROUGHPUT",
+    [
+        "assoc_sta_throughput_2g",
+    ],
+    "AP_CLEAR_CHAN36_BW20_THROUGHPUT",
+    [
+        "assoc_sta_throughput_5g",
+    ],
+    "AP_CLEAR_CHAN52_BW20_THROUGHPUT",
+    [
+        "assoc_sta_throughput_5g",
+    ],
+    "AP_CLEAR_CHAN149_BW20_THROUGHPUT",
+    [
+        "assoc_sta_throughput_5g",
+    ],
+    "AP_CLEAR_CHAN165_BW20_THROUGHPUT",
+    [
+        "assoc_sta_throughput_5g",
+    ],
+    "AP_CLEAR_CHAN36_BW40_THROUGHPUT",
+    [
+        "assoc_sta_throughput_5g",
+    ],
+    "AP_CLEAR_CHAN44_BW40_THROUGHPUT",
+    [
+        "assoc_sta_throughput_5g",
+    ],
+    "AP_CLEAR_CHAN52_BW40_THROUGHPUT",
+    [
+        "assoc_sta_throughput_5g",
+    ],
+    "AP_CLEAR_CHAN60_BW40_THROUGHPUT",
+    [
+        "assoc_sta_throughput_5g",
+    ],
+    "AP_CLEAR_CHAN149_BW40_THROUGHPUT",
+    [
+        "assoc_sta_throughput_5g",
+    ],
+    "AP_CLEAR_CHAN157_BW40_THROUGHPUT",
+    [
+        "assoc_sta_throughput_5g",
+    ],
+    "AP_CLEAR_CHAN36_BW80_THROUGHPUT",
+    [
+        "assoc_sta_throughput_5g",
+    ],
+    "AP_CLEAR_CHAN52_BW80_THROUGHPUT",
+    [
+        "assoc_sta_throughput_5g",
+    ],
+    "AP_CLEAR_CHAN149_BW80_THROUGHPUT",
+    [
+        "assoc_sta_throughput_5g",
+    ],
+    "AP_PSK2_CHAN36_BW20_THROUGHPUT",
+    [
+        "assoc_sta_throughput_5g",
+    ],
+    "AP_PSK2_CHAN52_BW20_THROUGHPUT",
+    [
+        "assoc_sta_throughput_5g",
+    ],
+    "AP_PSK2_CHAN149_BW20_THROUGHPUT",
+    [
+        "assoc_sta_throughput_5g",
+    ],
+    "AP_PSK2_CHAN165_BW20_THROUGHPUT",
+    [
+        "assoc_sta_throughput_5g",
+    ],
+    "AP_PSK2_CHAN36_BW40_THROUGHPUT",
+    [
+        "assoc_sta_throughput_5g",
+    ],
+    "AP_PSK2_CHAN44_BW40_THROUGHPUT",
+    [
+        "assoc_sta_throughput_5g",
+    ],
+    "AP_PSK2_CHAN52_BW40_THROUGHPUT",
+    [
+        "assoc_sta_throughput_5g",
+    ],
+    "AP_PSK2_CHAN60_BW40_THROUGHPUT",
+    [
+        "assoc_sta_throughput_5g",
+    ],
+    "AP_PSK2_CHAN149_BW40_THROUGHPUT",
+    [
+        "assoc_sta_throughput_5g",
+    ],
+    "AP_PSK2_CHAN157_BW40_THROUGHPUT",
+    [
+        "assoc_sta_throughput_5g",
+    ],
+    "AP_PSK2_CHAN36_BW80_THROUGHPUT",
+    [
+        "assoc_sta_throughput_5g",
+    ],
+    "AP_PSK2_CHAN52_BW80_THROUGHPUT",
+    [
+        "assoc_sta_throughput_5g",
+    ],
+    "AP_PSK2_CHAN149_BW80_THROUGHPUT",
+    [
+        "assoc_sta_throughput_5g",
     ],
 ]
 

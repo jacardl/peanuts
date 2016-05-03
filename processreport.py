@@ -5,6 +5,8 @@ import re
 from collections import *
 import numpy as np
 import matplotlib.pyplot as plt
+from openpyxl import Workbook, load_workbook
+from openpyxl.cell import column_index_from_string
 
 import var as v
 import data
@@ -21,15 +23,16 @@ class ProcessReport(mp.Process):
         self.running = True
         time = GetTimeUsed(self.report)
         test = GetTestResult(self.report)
-        flow = GetFlowLog(self.report)
+        # flow = GetFlowLog(self.report)
+        throughput = GetThroughputLog(self.report)
         online = GetOnlineLog(self.report)
         module = GetTestModule(self.report)
         time.start()
         test.start()
-        flow.start()
+        throughput.start()
         online.start()
         module.start()
-        while time.is_alive() or test.is_alive() or flow.is_alive() \
+        while time.is_alive() or test.is_alive() or throughput.is_alive() \
                 or online.is_alive() or module.is_alive():
             pass
         self.result.update(error=test.result['error'])
@@ -589,6 +592,80 @@ def drawChannelFlowLog(data, encrypto):
     plt.close()
 
 
+class GetThroughputLog(threading.Thread):
+    def __init__(self, report):
+        threading.Thread.__init__(self)
+        self.reportName = report
+        self.logPath = v.TEST_SUITE_LOG_PATH
+
+    def run(self):
+        indexList = list()
+        report = open(self.reportName)
+        for line in report:
+            if not line.isspace():
+                m = re.search('AP_(.*)_CHAN(\d{1,3})_BW(\d{2})_THROUGHPUT', line)
+                if m:
+                    logFile = self.logPath + m.group(0) + ".log"
+                    chanBW = "CH" + m.group(2) + " " + m.group(3) + "M" # CH36 20M
+                    encrypto = m.group(1) # CLEAR or PSK2
+                    infoTuple = (logFile, chanBW, encrypto)
+                    if infoTuple not in indexList:
+                        indexList.append(infoTuple)
+        report.close()
+        try:
+            wb = load_workbook(v.MAIL_THROUGHPUT_XLSX)
+        except:
+            print "specified file no exists!"
+            return
+        ws = wb["Sheet1"]
+        for tu in indexList:
+            speedDict = getThroughputLogVerbose(tu[0])
+            for cell in ws.get_cell_collection():
+                if tu[1] == cell.value:
+                    x = cell.row
+                    y = column_index_from_string(cell.column)
+                    if tu[2] == "PSK2":
+                        x += 3
+                        y += 1
+                        while ws.cell(row=x, column=y).value is not None:
+                            x += 1
+                        ws.cell(row=x, column=y).value = speedDict["tx"]
+                    elif tu[2] == "CLEAR":
+                        x += 3
+                        y += 2
+                        while ws.cell(row=x, column=y).value is not None:
+                            x += 1
+                        ws.cell(row=x, column=y).value = speedDict["tx"]
+                    y += 2
+                    ws.cell(row=x, column=y).value = speedDict['rx']
+                    break
+        wb.save(self.logPath + v.MAIL_THROUGHPUT_XLSX)
+
+
+def getThroughputLogVerbose(logfile):
+    result = {
+        'tx': 0,
+        'rx': 0,
+    }
+    try:
+        log = open(logfile)
+        for line in log:
+            if not line.isspace():
+                m = re.search('\s0.0-\d{1,4}.*\s(\d{1,3}\.?\d{1,2})?\sMbits/sec', line)
+                if m:
+                    if result['tx'] is 0:
+                        result['tx'] = m.group(1)
+                        continue
+                    else:
+                        result['rx'] = m.group(1)
+                        break
+        log.close()
+    except IOError as e:
+        raise e
+    return result
+
+
+
 class GetOnlineLog(threading.Thread):
     def __init__(self, report):
         threading.Thread.__init__(self)
@@ -692,10 +769,9 @@ if __name__ == '__main__':
     #     print time.time()
     # print getFlowLogVerbose("E:\peanuts\AP_MIXEDPSK_CHAN1_36_FLOW.log")
     # print getChannelFlowLogVerbose("E:\peanuts\AP_MIXEDPSK_CHAN1_36_FLOW.log")
-    info = GetTestResult("err2.log".decode("utf8").encode("gbk"))
+    info = GetThroughputLog("report.log".decode("utf8").encode("gbk"))
     info.start()
     info.join()
-    print info.result
 
 
 

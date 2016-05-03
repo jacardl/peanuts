@@ -1,7 +1,7 @@
 # -*- coding: utf8 -*-
 from common import *
 
-VER = '3.4.1'
+VER = '3.5.1'
 
 TOOL_LIST = ["General", "Memory Tracking", "Test Suite"]
 
@@ -137,6 +137,8 @@ MAIL_PIC2 = "throughput.png"
 MAIL_PIC3 = "throughput_in_%s.png"
 MAIL_PIC4 = "current_cpu_load.png"
 MAIL_XLSX = "memory_tracking.xlsx"
+MAIL_THROUGHPUT_XLSX = "Throughput.xlsx"
+
 
 MEM_MONITOR_INTERVAL = 300
 

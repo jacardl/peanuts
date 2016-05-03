@@ -14,7 +14,7 @@ class MemMonitor(threading.Thread):
         self.period = period
         self.running = False
         self.callback = None
-        self.terminal = SshCommand(v.CONNECTION_TYPE)
+        self.terminal = ShellCommand(v.CONNECTION_TYPE)
         self.terminal.connect(v.HOST, v.USR, v.PASSWD)
         self.tmpHost = v.HOST
 
@@ -212,7 +212,7 @@ class MemMonitorXlsx(threading.Thread):
         self.file = file
         self.sheetDaemon = "User Mem Tracking"
         self.sheetKernel = "Kernel Mem Tracking"
-        self.terminal = SshCommand(v.CONNECTION_TYPE)
+        self.terminal = ShellCommand(v.CONNECTION_TYPE)
         self.ret = self.terminal.connect(v.HOST, v.USR, v.PASSWD)
 
     def run(self):

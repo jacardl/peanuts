@@ -33,7 +33,6 @@ class AP_CLEAR_CHAN(TestCase):
         }
         api.setWifi(self.dut, self.__name__, **option2g)
         api.setWifi(self.dut, self.__name__, **option5g)
-        self.device = getAdbDevices()
 
     @classmethod
     def tearDownClass(self):
@@ -51,13 +50,14 @@ class AP_CLEAR_CHAN(TestCase):
 
     def assoc_clear_sta_2g(self):
 
-        res2gConn = setAdbClearStaConn(self.device[0], "normal", "2g", self.__class__.__name__)
+        res2gConn = setAdbClearStaConn(v.ANDROID_SERIAL_NUM, "normal", "2g", self.__class__.__name__)
         if res2gConn:
-            result = getAdbShellWlan(self.device[0], self.__class__.__name__)
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             if result['ip'] == '':
                 self.fail(msg='no ip address got.')
             else:
-                resPingPercent = getAdbPingStatus(self.device[0], v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
+                resPingPercent = getAdbPingStatus(v.ANDROID_SERIAL_NUM, v.PING_TARGET, v.PING_COUNT,
+                                                  self.__class__.__name__)
                 self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
                                         "Ping responsed percent werenot good enough.")
         else:
@@ -65,13 +65,14 @@ class AP_CLEAR_CHAN(TestCase):
 
     def assoc_clear_sta_5g(self):
 
-        res5gConn = setAdbClearStaConn(self.device[0], "normal", "5g", self.__class__.__name__)
+        res5gConn = setAdbClearStaConn(v.ANDROID_SERIAL_NUM, "normal", "5g", self.__class__.__name__)
         if res5gConn:
-            result = getAdbShellWlan(self.device[0], self.__class__.__name__)
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             if result['ip'] == '':
                 self.fail(msg='no ip address got.')
             else:
-                resPingPercent = getAdbPingStatus(self.device[0], v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
+                resPingPercent = getAdbPingStatus(v.ANDROID_SERIAL_NUM, v.PING_TARGET, v.PING_COUNT,
+                                                  self.__class__.__name__)
                 self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
                                         "Ping responsed percent werenot good enough.")
         else:
@@ -105,7 +106,6 @@ class AP_CLEAR_LOW(TestCase):
         }
         api.setWifi(self.dut, self.__name__, **option2g)
         api.setWifi(self.dut, self.__name__, **option5g)
-        self.device = getAdbDevices()
 
     @classmethod
     def tearDownClass(self):
@@ -123,13 +123,14 @@ class AP_CLEAR_LOW(TestCase):
 
     def assoc_clear_sta_2g(self):
 
-        res2gConn = setAdbClearStaConn(self.device[0], "normal", "2g", self.__class__.__name__)
+        res2gConn = setAdbClearStaConn(v.ANDROID_SERIAL_NUM, "normal", "2g", self.__class__.__name__)
         if res2gConn:
-            result = getAdbShellWlan(self.device[0], self.__class__.__name__)
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             if result['ip'] == '':
                 self.fail(msg='no ip address got.')
             else:
-                resPingPercent = getAdbPingStatus(self.device[0], v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
+                resPingPercent = getAdbPingStatus(v.ANDROID_SERIAL_NUM, v.PING_TARGET, v.PING_COUNT,
+                                                  self.__class__.__name__)
                 self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
                                         "Ping responsed percent werenot good enough.")
         else:
@@ -137,13 +138,14 @@ class AP_CLEAR_LOW(TestCase):
 
     def assoc_clear_sta_5g(self):
 
-        res5gConn = setAdbClearStaConn(self.device[0], "normal", "5g", self.__class__.__name__)
+        res5gConn = setAdbClearStaConn(v.ANDROID_SERIAL_NUM, "normal", "5g", self.__class__.__name__)
         if res5gConn:
-            result = getAdbShellWlan(self.device[0], self.__class__.__name__)
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             if result['ip'] == '':
                 self.fail(msg='no ip address got.')
             else:
-                resPingPercent = getAdbPingStatus(self.device[0], v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
+                resPingPercent = getAdbPingStatus(v.ANDROID_SERIAL_NUM, v.PING_TARGET, v.PING_COUNT,
+                                                  self.__class__.__name__)
                 self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
                                         "Ping responsed percent werenot good enough.")
         else:
@@ -175,7 +177,6 @@ class AP_CLEAR_MID(TestCase):
         }
         api.setWifi(self.dut, self.__name__, **option2g)
         api.setWifi(self.dut, self.__name__, **option5g)
-        self.device = getAdbDevices()
 
     @classmethod
     def tearDownClass(self):
@@ -193,13 +194,14 @@ class AP_CLEAR_MID(TestCase):
 
     def assoc_clear_sta_2g(self):
 
-        res2gConn = setAdbClearStaConn(self.device[0], "normal", "2g", self.__class__.__name__)
+        res2gConn = setAdbClearStaConn(v.ANDROID_SERIAL_NUM, "normal", "2g", self.__class__.__name__)
         if res2gConn:
-            result = getAdbShellWlan(self.device[0], self.__class__.__name__)
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             if result['ip'] == '':
                 self.fail(msg='no ip address got.')
             else:
-                resPingPercent = getAdbPingStatus(self.device[0], v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
+                resPingPercent = getAdbPingStatus(v.ANDROID_SERIAL_NUM, v.PING_TARGET, v.PING_COUNT,
+                                                  self.__class__.__name__)
                 self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
                                         "Ping responsed percent werenot good enough.")
         else:
@@ -207,13 +209,14 @@ class AP_CLEAR_MID(TestCase):
 
     def assoc_clear_sta_5g(self):
 
-        res5gConn = setAdbClearStaConn(self.device[0], "normal", "5g", self.__class__.__name__)
+        res5gConn = setAdbClearStaConn(v.ANDROID_SERIAL_NUM, "normal", "5g", self.__class__.__name__)
         if res5gConn:
-            result = getAdbShellWlan(self.device[0], self.__class__.__name__)
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             if result['ip'] == '':
                 self.fail(msg='no ip address got.')
             else:
-                resPingPercent = getAdbPingStatus(self.device[0], v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
+                resPingPercent = getAdbPingStatus(v.ANDROID_SERIAL_NUM, v.PING_TARGET, v.PING_COUNT,
+                                                  self.__class__.__name__)
                 self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
                                         "Ping responsed percent werenot good enough.")
         else:
@@ -247,7 +250,6 @@ class AP_CLEAR_HIGH(TestCase):
         }
         api.setWifi(self.dut, self.__name__, **option2g)
         api.setWifi(self.dut, self.__name__, **option5g)
-        self.device = getAdbDevices()
 
     @classmethod
     def tearDownClass(self):
@@ -265,13 +267,14 @@ class AP_CLEAR_HIGH(TestCase):
 
     def assoc_clear_sta_2g(self):
 
-        res2gConn = setAdbClearStaConn(self.device[0], "normal", "2g", self.__class__.__name__)
+        res2gConn = setAdbClearStaConn(v.ANDROID_SERIAL_NUM, "normal", "2g", self.__class__.__name__)
         if res2gConn:
-            result = getAdbShellWlan(self.device[0], self.__class__.__name__)
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             if result['ip'] == '':
                 self.fail(msg='no ip address got.')
             else:
-                resPingPercent = getAdbPingStatus(self.device[0], v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
+                resPingPercent = getAdbPingStatus(v.ANDROID_SERIAL_NUM, v.PING_TARGET, v.PING_COUNT,
+                                                  self.__class__.__name__)
                 self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
                                         "Ping responsed percent werenot good enough.")
         else:
@@ -279,13 +282,14 @@ class AP_CLEAR_HIGH(TestCase):
 
     def assoc_clear_sta_5g(self):
 
-        res5gConn = setAdbClearStaConn(self.device[0], "normal", "5g", self.__class__.__name__)
+        res5gConn = setAdbClearStaConn(v.ANDROID_SERIAL_NUM, "normal", "5g", self.__class__.__name__)
         if res5gConn:
-            result = getAdbShellWlan(self.device[0], self.__class__.__name__)
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             if result['ip'] == '':
                 self.fail(msg='no ip address got.')
             else:
-                resPingPercent = getAdbPingStatus(self.device[0], v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
+                resPingPercent = getAdbPingStatus(v.ANDROID_SERIAL_NUM, v.PING_TARGET, v.PING_COUNT,
+                                                  self.__class__.__name__)
                 self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
                                         "Ping responsed percent werenot good enough.")
         else:
@@ -296,7 +300,7 @@ class AP_CLEAR_LOW_TXPOWER(TestCase):
     @classmethod
     def setUpClass(self):
 
-        self.dut = SshClient(v.CONNECTION_TYPE)
+        self.dut = ShellClient(v.CONNECTION_TYPE)
         self.dut2 = api.HttpClient()
         ret1 = self.dut.connect(v.HOST, v.USR, v.PASSWD)
         self.dut2.connect(host=v.HOST, password=v.WEB_PWD)
@@ -709,7 +713,7 @@ class AP_CLEAR_MID_TXPOWER(TestCase):
     @classmethod
     def setUpClass(self):
 
-        self.dut = SshClient(v.CONNECTION_TYPE)
+        self.dut = ShellClient(v.CONNECTION_TYPE)
         self.dut2 = api.HttpClient()
         ret1 = self.dut.connect(v.HOST, v.USR, v.PASSWD)
         self.dut2.connect(host=v.HOST, password=v.WEB_PWD)
@@ -1129,7 +1133,7 @@ class AP_CLEAR_HIGH_TXPOWER(TestCase):
     @classmethod
     def setUpClass(self):
 
-        self.dut = SshClient(v.CONNECTION_TYPE)
+        self.dut = ShellClient(v.CONNECTION_TYPE)
         self.dut2 = api.HttpClient()
         ret1 = self.dut.connect(v.HOST, v.USR, v.PASSWD)
         self.dut2.connect(host=v.HOST, password=v.WEB_PWD)
@@ -1629,9 +1633,7 @@ class AP_CLEAR_CHAN_WHITELIST(TestCase):
         }
         api.setEditDevice(self.dut, self.__name__, **option)
 
-        self.device = getAdbDevices()
-
-        wlanInfo = getAdbShellWlan(self.device[0], self.__name__)
+        wlanInfo = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__name__)
         self.staMac = wlanInfo["mac"].upper()
 
     @classmethod
@@ -1667,12 +1669,13 @@ class AP_CLEAR_CHAN_WHITELIST(TestCase):
         }
         api.setEditDevice(self.dut, self.__class__.__name__, **option)
 
-        res2gConn = setAdbClearStaConn(self.device[0], "normal", "2g", self.__class__.__name__)
+        res2gConn = setAdbClearStaConn(v.ANDROID_SERIAL_NUM, "normal", "2g", self.__class__.__name__)
 
         if res2gConn:
-            result = getAdbShellWlan(self.device[0], self.__class__.__name__)
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             if result['ip'] != '':
-                resPingPercent = getAdbPingStatus(self.device[0], v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
+                resPingPercent = getAdbPingStatus(v.ANDROID_SERIAL_NUM, v.PING_TARGET, v.PING_COUNT,
+                                                  self.__class__.__name__)
                 passPercent = resPingPercent['pass']
             else:
                 passPercent = 0
@@ -1687,7 +1690,7 @@ class AP_CLEAR_CHAN_WHITELIST(TestCase):
         if res2gConn is False:
             self.fail("Association wasnot successful which sta in whitelist.")
         self.assertGreaterEqual(passPercent, v.PING_PERCENT_PASS,
-                                        "Ping responsed percent werenot good enough.")
+                                "Ping responsed percent werenot good enough.")
         # connType = api.getOnlineDeviceType(self.dut, self.__class__.__name__)
         # if self.staMac in connType.keys():
         #     self.fail(msg='STA should be kicked off.'
@@ -1701,12 +1704,13 @@ class AP_CLEAR_CHAN_WHITELIST(TestCase):
         }
         api.setEditDevice(self.dut, self.__class__.__name__, **option)
 
-        res5gConn = setAdbClearStaConn(self.device[0], "normal", "5g", self.__class__.__name__)
+        res5gConn = setAdbClearStaConn(v.ANDROID_SERIAL_NUM, "normal", "5g", self.__class__.__name__)
 
         if res5gConn:
-            result = getAdbShellWlan(self.device[0], self.__class__.__name__)
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             if result['ip'] != '':
-                resPingPercent = getAdbPingStatus(self.device[0], v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
+                resPingPercent = getAdbPingStatus(v.ANDROID_SERIAL_NUM, v.PING_TARGET, v.PING_COUNT,
+                                                  self.__class__.__name__)
                 passPercent = resPingPercent['pass']
             else:
                 passPercent = 0
@@ -1722,16 +1726,16 @@ class AP_CLEAR_CHAN_WHITELIST(TestCase):
         if res5gConn is False:
             self.fail("Association wasnot successful which sta in whitelist.")
         self.assertGreaterEqual(passPercent, v.PING_PERCENT_PASS,
-                                        "Ping responsed percent werenot good enough.")
+                                "Ping responsed percent werenot good enough.")
         # connType = api.getOnlineDeviceType(self.dut, self.__class__.__name__)
         # if self.staMac in connType.keys():
         #     self.fail(msg='STA should be kicked off.')
 
     def assoc_clear_sta_outof_whitelist_2g(self):
 
-        res2gConn = setAdbClearStaConn(self.device[0], "normal", "2g", self.__class__.__name__)
+        res2gConn = setAdbClearStaConn(v.ANDROID_SERIAL_NUM, "normal", "2g", self.__class__.__name__)
         self.assertFalse(res2gConn, "Association wasnot supposed to be successful which sta outof whitelist.")
-        #鍒犻櫎鎵�鏈墂hitelist鍒欑櫧鍚嶅崟涓嶅啀鐢熸晥
+        # 鍒犻櫎鎵�鏈墂hitelist鍒欑櫧鍚嶅崟涓嶅啀鐢熸晥
         # option = {
         #     'model': 1,
         #     'mac': '11:22:33:44:55:66',
@@ -1739,7 +1743,7 @@ class AP_CLEAR_CHAN_WHITELIST(TestCase):
         # }
         # api.setEditDevice(self.dut, self.__class__.__name__, **option)
         #
-        # res2gConn = setAdbClearStaConn(self.device[0], "normal", "2g", self.__class__.__name__)
+        # res2gConn = setAdbClearStaConn(v.ANDROID_SERIAL_NUM, "normal", "2g", self.__class__.__name__)
         # self.assertTrue(res2gConn, "Association should be successful when no sta in whitelist at all.")
         #
         # option = {
@@ -1751,9 +1755,9 @@ class AP_CLEAR_CHAN_WHITELIST(TestCase):
 
     def assoc_clear_sta_outof_whitelist_5g(self):
 
-        res5gConn = setAdbClearStaConn(self.device[0], "normal", "5g", self.__class__.__name__)
+        res5gConn = setAdbClearStaConn(v.ANDROID_SERIAL_NUM, "normal", "5g", self.__class__.__name__)
         self.assertFalse(res5gConn, "Association wasnot supposed to be successful which sta outof whitelist.")
-        #鍒犻櫎鎵�鏈墂hitelist鍒欑櫧鍚嶅崟涓嶅啀鐢熸晥
+        # 鍒犻櫎鎵�鏈墂hitelist鍒欑櫧鍚嶅崟涓嶅啀鐢熸晥
         # option = {
         #     'model': 1,
         #     'mac': '11:22:33:44:55:66',
@@ -1761,7 +1765,7 @@ class AP_CLEAR_CHAN_WHITELIST(TestCase):
         # }
         # api.setEditDevice(self.dut, self.__class__.__name__, **option)
         #
-        # res5gConn = setAdbClearStaConn(self.device[0], "normal", "5g", self.__class__.__name__)
+        # res5gConn = setAdbClearStaConn(v.ANDROID_SERIAL_NUM, "normal", "5g", self.__class__.__name__)
         # self.assertTrue(res5gConn, "Association should be successful when no sta in whitelist at all.")
         #
         # option = {
@@ -1799,9 +1803,8 @@ class AP_CLEAR_CHAN_BLACKLIST(TestCase):
         }
         api.setWifi(self.dut, self.__name__, **option2g)
         api.setWifi(self.dut, self.__name__, **option5g)
-        self.device = getAdbDevices()
 
-        wlanInfo = getAdbShellWlan(self.device[0], self.__name__)
+        wlanInfo = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__name__)
         self.staMac = wlanInfo["mac"].upper()
 
     @classmethod
@@ -1823,14 +1826,15 @@ class AP_CLEAR_CHAN_BLACKLIST(TestCase):
 
     def assoc_clear_sta_outof_blacklist_2g(self):
 
-        res2gConn = setAdbClearStaConn(self.device[0], "normal", "2g", self.__class__.__name__)
+        res2gConn = setAdbClearStaConn(v.ANDROID_SERIAL_NUM, "normal", "2g", self.__class__.__name__)
 
         if res2gConn:
-            result = getAdbShellWlan(self.device[0], self.__class__.__name__)
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             if result['ip'] == '':
                 self.fail(msg='no ip address got.')
             else:
-                resPingPercent = getAdbPingStatus(self.device[0], v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
+                resPingPercent = getAdbPingStatus(v.ANDROID_SERIAL_NUM, v.PING_TARGET, v.PING_COUNT,
+                                                  self.__class__.__name__)
                 self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
                                         "Ping responsed percent werenot good enough.")
         else:
@@ -1838,14 +1842,15 @@ class AP_CLEAR_CHAN_BLACKLIST(TestCase):
 
     def assoc_clear_sta_outof_blacklist_5g(self):
 
-        res5gConn = setAdbClearStaConn(self.device[0], "normal", "5g", self.__class__.__name__)
+        res5gConn = setAdbClearStaConn(v.ANDROID_SERIAL_NUM, "normal", "5g", self.__class__.__name__)
 
         if res5gConn:
-            result = getAdbShellWlan(self.device[0], self.__class__.__name__)
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             if result['ip'] == '':
                 self.fail(msg='no ip address got.')
             else:
-                resPingPercent = getAdbPingStatus(self.device[0], v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
+                resPingPercent = getAdbPingStatus(v.ANDROID_SERIAL_NUM, v.PING_TARGET, v.PING_COUNT,
+                                                  self.__class__.__name__)
                 self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
                                         "Ping responsed percent werenot good enough.")
         else:
@@ -1853,7 +1858,7 @@ class AP_CLEAR_CHAN_BLACKLIST(TestCase):
 
     def assoc_clear_sta_in_blacklist_2g(self):
 
-        res2gConn = setAdbClearStaConn(self.device[0], "normal", "2g", self.__class__.__name__)
+        res2gConn = setAdbClearStaConn(v.ANDROID_SERIAL_NUM, "normal", "2g", self.__class__.__name__)
         self.assertTrue(res2gConn, "Association should be successful which sta outof blacklist.")
 
         option = {
@@ -1865,7 +1870,7 @@ class AP_CLEAR_CHAN_BLACKLIST(TestCase):
 
         connType = api.getOnlineDeviceType(self.dut, self.__class__.__name__)
 
-        res2gConn = setAdbClearStaConn(self.device[0], "normal", "2g", self.__class__.__name__)
+        res2gConn = setAdbClearStaConn(v.ANDROID_SERIAL_NUM, "normal", "2g", self.__class__.__name__)
 
         option = {
             'model': 0,
@@ -1879,10 +1884,9 @@ class AP_CLEAR_CHAN_BLACKLIST(TestCase):
 
         self.assertFalse(res2gConn, "Association wasnot supposed to be successful which sta in blacklist.")
 
-
     def assoc_clear_sta_in_blacklist_5g(self):
 
-        res5gConn = setAdbClearStaConn(self.device[0], "normal", "5g", self.__class__.__name__)
+        res5gConn = setAdbClearStaConn(v.ANDROID_SERIAL_NUM, "normal", "5g", self.__class__.__name__)
         self.assertTrue(res5gConn, "Association should be successful which sta outof blacklist.")
 
         option = {
@@ -1894,7 +1898,7 @@ class AP_CLEAR_CHAN_BLACKLIST(TestCase):
 
         connType = api.getOnlineDeviceType(self.dut, self.__class__.__name__)
 
-        res5gConn = setAdbClearStaConn(self.device[0], "normal", "5g", self.__class__.__name__)
+        res5gConn = setAdbClearStaConn(v.ANDROID_SERIAL_NUM, "normal", "5g", self.__class__.__name__)
 
         option = {
             'model': 0,
@@ -1936,7 +1940,6 @@ class AP_CLEAR_CHAN1_36_FLOW(TestCase):
 
         api.setWifi(self.dut, self.__name__, **option2g)
         api.setWifi(self.dut, self.__name__, **option5g)
-        self.device = getAdbDevices()
 
     @classmethod
     def tearDownClass(self):
@@ -1954,11 +1957,11 @@ class AP_CLEAR_CHAN1_36_FLOW(TestCase):
 
     def assoc_clear_sta_flow_2g(self):
 
-        res2gConn = setAdbClearStaConn(self.device[0], "normal", "2g", self.__class__.__name__)
+        res2gConn = setAdbClearStaConn(v.ANDROID_SERIAL_NUM, "normal", "2g", self.__class__.__name__)
 
         if res2gConn is True:
-            result = getAdbShellWlan(self.device[0], self.__class__.__name__)
-            iperfOn = SetAdbIperfOn(self.device[0], self.__class__.__name__)
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
+            iperfOn = SetAdbIperfOn(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             iperfOn.start()
             t.sleep(3.0)
             ret = setIperfFlow(result["ip"], v.IPERF_INTERVAL, v.IPERF_TIME, self.__class__.__name__)
@@ -1969,11 +1972,11 @@ class AP_CLEAR_CHAN1_36_FLOW(TestCase):
 
     def assoc_clear_sta_flow_5g(self):
 
-        res2gConn = setAdbClearStaConn(self.device[0], "normal", "5g", self.__class__.__name__)
+        res2gConn = setAdbClearStaConn(v.ANDROID_SERIAL_NUM, "normal", "5g", self.__class__.__name__)
 
         if res2gConn is True:
-            result = getAdbShellWlan(self.device[0], self.__class__.__name__)
-            iperfOn = SetAdbIperfOn(self.device[0], self.__class__.__name__)
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
+            iperfOn = SetAdbIperfOn(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             iperfOn.start()
             t.sleep(3.0)
             ret = setIperfFlow(result["ip"], v.IPERF_INTERVAL, v.IPERF_TIME, self.__class__.__name__)
@@ -2009,7 +2012,6 @@ class AP_CLEAR_CHAN6_52_FLOW(TestCase):
 
         api.setWifi(self.dut, self.__name__, **option2g)
         api.setWifi(self.dut, self.__name__, **option5g)
-        self.device = getAdbDevices()
 
     @classmethod
     def tearDownClass(self):
@@ -2027,11 +2029,11 @@ class AP_CLEAR_CHAN6_52_FLOW(TestCase):
 
     def assoc_clear_sta_flow_2g(self):
 
-        res2gConn = setAdbClearStaConn(self.device[0], "normal", "2g", self.__class__.__name__)
+        res2gConn = setAdbClearStaConn(v.ANDROID_SERIAL_NUM, "normal", "2g", self.__class__.__name__)
 
         if res2gConn is True:
-            result = getAdbShellWlan(self.device[0], self.__class__.__name__)
-            iperfOn = SetAdbIperfOn(self.device[0], self.__class__.__name__)
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
+            iperfOn = SetAdbIperfOn(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             iperfOn.start()
             t.sleep(3.0)
             ret = setIperfFlow(result["ip"], v.IPERF_INTERVAL, v.IPERF_TIME, self.__class__.__name__)
@@ -2042,11 +2044,11 @@ class AP_CLEAR_CHAN6_52_FLOW(TestCase):
 
     def assoc_clear_sta_flow_5g(self):
 
-        res2gConn = setAdbClearStaConn(self.device[0], "normal", "5g", self.__class__.__name__)
+        res2gConn = setAdbClearStaConn(v.ANDROID_SERIAL_NUM, "normal", "5g", self.__class__.__name__)
 
         if res2gConn is True:
-            result = getAdbShellWlan(self.device[0], self.__class__.__name__)
-            iperfOn = SetAdbIperfOn(self.device[0], self.__class__.__name__)
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
+            iperfOn = SetAdbIperfOn(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             iperfOn.start()
             t.sleep(3.0)
             ret = setIperfFlow(result["ip"], v.IPERF_INTERVAL, v.IPERF_TIME, self.__class__.__name__)
@@ -2082,7 +2084,6 @@ class AP_CLEAR_CHAN11_149_FLOW(TestCase):
 
         api.setWifi(self.dut, self.__name__, **option2g)
         api.setWifi(self.dut, self.__name__, **option5g)
-        self.device = getAdbDevices()
 
     @classmethod
     def tearDownClass(self):
@@ -2100,11 +2101,11 @@ class AP_CLEAR_CHAN11_149_FLOW(TestCase):
 
     def assoc_clear_sta_flow_2g(self):
 
-        res2gConn = setAdbClearStaConn(self.device[0], "normal", "2g", self.__class__.__name__)
+        res2gConn = setAdbClearStaConn(v.ANDROID_SERIAL_NUM, "normal", "2g", self.__class__.__name__)
 
         if res2gConn is True:
-            result = getAdbShellWlan(self.device[0], self.__class__.__name__)
-            iperfOn = SetAdbIperfOn(self.device[0], self.__class__.__name__)
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
+            iperfOn = SetAdbIperfOn(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             iperfOn.start()
             t.sleep(3.0)
             ret = setIperfFlow(result["ip"], v.IPERF_INTERVAL, v.IPERF_TIME, self.__class__.__name__)
@@ -2115,11 +2116,11 @@ class AP_CLEAR_CHAN11_149_FLOW(TestCase):
 
     def assoc_clear_sta_flow_5g(self):
 
-        res2gConn = setAdbClearStaConn(self.device[0], "normal", "5g", self.__class__.__name__)
+        res2gConn = setAdbClearStaConn(v.ANDROID_SERIAL_NUM, "normal", "5g", self.__class__.__name__)
 
         if res2gConn is True:
-            result = getAdbShellWlan(self.device[0], self.__class__.__name__)
-            iperfOn = SetAdbIperfOn(self.device[0], self.__class__.__name__)
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
+            iperfOn = SetAdbIperfOn(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             iperfOn.start()
             t.sleep(3.0)
             ret = setIperfFlow(result["ip"], v.IPERF_INTERVAL, v.IPERF_TIME, self.__class__.__name__)
@@ -2155,7 +2156,6 @@ class AP_CLEAR_CHAN13_165_FLOW(TestCase):
 
         api.setWifi(self.dut, self.__name__, **option2g)
         api.setWifi(self.dut, self.__name__, **option5g)
-        self.device = getAdbDevices()
 
     @classmethod
     def tearDownClass(self):
@@ -2173,11 +2173,11 @@ class AP_CLEAR_CHAN13_165_FLOW(TestCase):
 
     def assoc_clear_sta_flow_2g(self):
 
-        res2gConn = setAdbClearStaConn(self.device[0], "normal", "2g", self.__class__.__name__)
+        res2gConn = setAdbClearStaConn(v.ANDROID_SERIAL_NUM, "normal", "2g", self.__class__.__name__)
 
         if res2gConn is True:
-            result = getAdbShellWlan(self.device[0], self.__class__.__name__)
-            iperfOn = SetAdbIperfOn(self.device[0], self.__class__.__name__)
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
+            iperfOn = SetAdbIperfOn(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             iperfOn.start()
             t.sleep(3.0)
             ret = setIperfFlow(result["ip"], v.IPERF_INTERVAL, v.IPERF_TIME, self.__class__.__name__)
@@ -2188,11 +2188,11 @@ class AP_CLEAR_CHAN13_165_FLOW(TestCase):
 
     def assoc_clear_sta_flow_5g(self):
 
-        res2gConn = setAdbClearStaConn(self.device[0], "normal", "5g", self.__class__.__name__)
+        res2gConn = setAdbClearStaConn(v.ANDROID_SERIAL_NUM, "normal", "5g", self.__class__.__name__)
 
         if res2gConn is True:
-            result = getAdbShellWlan(self.device[0], self.__class__.__name__)
-            iperfOn = SetAdbIperfOn(self.device[0], self.__class__.__name__)
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
+            iperfOn = SetAdbIperfOn(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             iperfOn.start()
             t.sleep(3.0)
             ret = setIperfFlow(result["ip"], v.IPERF_INTERVAL, v.IPERF_TIME, self.__class__.__name__)
@@ -2228,7 +2228,6 @@ class AP_CLEAR_CHAN_REPEAT(TestCase):
 
         api.setWifi(self.dut, self.__name__, **option2g)
         api.setWifi(self.dut, self.__name__, **option5g)
-        self.device = getAdbDevices()
 
     @classmethod
     def tearDownClass(self):
@@ -2246,13 +2245,13 @@ class AP_CLEAR_CHAN_REPEAT(TestCase):
 
     def assoc_repeat_clear_sta_2g(self):
 
-        res2gConn = setAdbClearStaConnRepeat(self.device[0], "normal", "2g", self.__class__.__name__)
+        res2gConn = setAdbClearStaConnRepeat(v.ANDROID_SERIAL_NUM, "normal", "2g", self.__class__.__name__)
 
         self.assertTrue(res2gConn, "Not all association were successful.")
 
     def assoc_repeat_clear_sta_5g(self):
 
-        res5gConn = setAdbClearStaConnRepeat(self.device[0], "normal", "5g", self.__class__.__name__)
+        res5gConn = setAdbClearStaConnRepeat(v.ANDROID_SERIAL_NUM, "normal", "5g", self.__class__.__name__)
 
         self.assertTrue(res5gConn, "Not all association were successful.")
 
@@ -2286,7 +2285,6 @@ class AP_PSK2_CHAN(TestCase):
 
         api.setWifi(self.dut, self.__name__, **option2g)
         api.setWifi(self.dut, self.__name__, **option5g)
-        self.device = getAdbDevices()
 
     @classmethod
     def tearDownClass(self):
@@ -2304,13 +2302,14 @@ class AP_PSK2_CHAN(TestCase):
 
     def assoc_psk2_sta_2g(self):
 
-        res2gConn = setAdbPsk2StaConn(self.device[0], "normal", "2g", self.__class__.__name__)
+        res2gConn = setAdbPsk2StaConn(v.ANDROID_SERIAL_NUM, "normal", "2g", self.__class__.__name__)
         if res2gConn:
-            result = getAdbShellWlan(self.device[0], self.__class__.__name__)
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             if result['ip'] == '':
                 self.fail(msg='no ip address got.')
             else:
-                resPingPercent = getAdbPingStatus(self.device[0], v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
+                resPingPercent = getAdbPingStatus(v.ANDROID_SERIAL_NUM, v.PING_TARGET, v.PING_COUNT,
+                                                  self.__class__.__name__)
                 self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
                                         "Ping responsed percent werenot good enough.")
         else:
@@ -2318,13 +2317,14 @@ class AP_PSK2_CHAN(TestCase):
 
     def assoc_psk2_sta_5g(self):
 
-        res5gConn = setAdbPsk2StaConn(self.device[0], "normal", "5g", self.__class__.__name__)
+        res5gConn = setAdbPsk2StaConn(v.ANDROID_SERIAL_NUM, "normal", "5g", self.__class__.__name__)
         if res5gConn:
-            result = getAdbShellWlan(self.device[0], self.__class__.__name__)
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             if result['ip'] == '':
                 self.fail(msg='no ip address got.')
             else:
-                resPingPercent = getAdbPingStatus(self.device[0], v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
+                resPingPercent = getAdbPingStatus(v.ANDROID_SERIAL_NUM, v.PING_TARGET, v.PING_COUNT,
+                                                  self.__class__.__name__)
                 self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
                                         "Ping responsed percent werenot good enough.")
         else:
@@ -2361,7 +2361,6 @@ class AP_PSK2_CHAN1_36_FLOW(TestCase):
 
         api.setWifi(self.dut, self.__name__, **option2g)
         api.setWifi(self.dut, self.__name__, **option5g)
-        self.device = getAdbDevices()
 
     @classmethod
     def tearDownClass(self):
@@ -2379,11 +2378,11 @@ class AP_PSK2_CHAN1_36_FLOW(TestCase):
 
     def assoc_psk2_sta_flow_2g(self):
 
-        res2gConn = setAdbPsk2StaConn(self.device[0], "normal", "2g", self.__class__.__name__)
+        res2gConn = setAdbPsk2StaConn(v.ANDROID_SERIAL_NUM, "normal", "2g", self.__class__.__name__)
 
         if res2gConn is True:
-            result = getAdbShellWlan(self.device[0], self.__class__.__name__)
-            iperfOn = SetAdbIperfOn(self.device[0], self.__class__.__name__)
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
+            iperfOn = SetAdbIperfOn(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             iperfOn.start()
             t.sleep(3.0)
             ret = setIperfFlow(result["ip"], v.IPERF_INTERVAL, v.IPERF_TIME, self.__class__.__name__)
@@ -2394,11 +2393,11 @@ class AP_PSK2_CHAN1_36_FLOW(TestCase):
 
     def assoc_psk2_sta_flow_5g(self):
 
-        res2gConn = setAdbPsk2StaConn(self.device[0], "normal", "5g", self.__class__.__name__)
+        res2gConn = setAdbPsk2StaConn(v.ANDROID_SERIAL_NUM, "normal", "5g", self.__class__.__name__)
 
         if res2gConn is True:
-            result = getAdbShellWlan(self.device[0], self.__class__.__name__)
-            iperfOn = SetAdbIperfOn(self.device[0], self.__class__.__name__)
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
+            iperfOn = SetAdbIperfOn(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             iperfOn.start()
             t.sleep(3.0)
             ret = setIperfFlow(result["ip"], v.IPERF_INTERVAL, v.IPERF_TIME, self.__class__.__name__)
@@ -2438,7 +2437,6 @@ class AP_PSK2_CHAN6_52_FLOW(TestCase):
 
         api.setWifi(self.dut, self.__name__, **option2g)
         api.setWifi(self.dut, self.__name__, **option5g)
-        self.device = getAdbDevices()
 
     @classmethod
     def tearDownClass(self):
@@ -2456,11 +2454,11 @@ class AP_PSK2_CHAN6_52_FLOW(TestCase):
 
     def assoc_psk2_sta_flow_2g(self):
 
-        res2gConn = setAdbPsk2StaConn(self.device[0], "normal", "2g", self.__class__.__name__)
+        res2gConn = setAdbPsk2StaConn(v.ANDROID_SERIAL_NUM, "normal", "2g", self.__class__.__name__)
 
         if res2gConn is True:
-            result = getAdbShellWlan(self.device[0], self.__class__.__name__)
-            iperfOn = SetAdbIperfOn(self.device[0], self.__class__.__name__)
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
+            iperfOn = SetAdbIperfOn(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             iperfOn.start()
             t.sleep(3.0)
             ret = setIperfFlow(result["ip"], v.IPERF_INTERVAL, v.IPERF_TIME, self.__class__.__name__)
@@ -2471,11 +2469,11 @@ class AP_PSK2_CHAN6_52_FLOW(TestCase):
 
     def assoc_psk2_sta_flow_5g(self):
 
-        res2gConn = setAdbPsk2StaConn(self.device[0], "normal", "5g", self.__class__.__name__)
+        res2gConn = setAdbPsk2StaConn(v.ANDROID_SERIAL_NUM, "normal", "5g", self.__class__.__name__)
 
         if res2gConn is True:
-            result = getAdbShellWlan(self.device[0], self.__class__.__name__)
-            iperfOn = SetAdbIperfOn(self.device[0], self.__class__.__name__)
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
+            iperfOn = SetAdbIperfOn(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             iperfOn.start()
             t.sleep(3.0)
             ret = setIperfFlow(result["ip"], v.IPERF_INTERVAL, v.IPERF_TIME, self.__class__.__name__)
@@ -2515,7 +2513,6 @@ class AP_PSK2_CHAN11_149_FLOW(TestCase):
 
         api.setWifi(self.dut, self.__name__, **option2g)
         api.setWifi(self.dut, self.__name__, **option5g)
-        self.device = getAdbDevices()
 
     @classmethod
     def tearDownClass(self):
@@ -2533,11 +2530,11 @@ class AP_PSK2_CHAN11_149_FLOW(TestCase):
 
     def assoc_psk2_sta_flow_2g(self):
 
-        res2gConn = setAdbPsk2StaConn(self.device[0], "normal", "2g", self.__class__.__name__)
+        res2gConn = setAdbPsk2StaConn(v.ANDROID_SERIAL_NUM, "normal", "2g", self.__class__.__name__)
 
         if res2gConn is True:
-            result = getAdbShellWlan(self.device[0], self.__class__.__name__)
-            iperfOn = SetAdbIperfOn(self.device[0], self.__class__.__name__)
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
+            iperfOn = SetAdbIperfOn(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             iperfOn.start()
             t.sleep(3.0)
             ret = setIperfFlow(result["ip"], v.IPERF_INTERVAL, v.IPERF_TIME, self.__class__.__name__)
@@ -2548,11 +2545,11 @@ class AP_PSK2_CHAN11_149_FLOW(TestCase):
 
     def assoc_psk2_sta_flow_5g(self):
 
-        res2gConn = setAdbPsk2StaConn(self.device[0], "normal", "5g", self.__class__.__name__)
+        res2gConn = setAdbPsk2StaConn(v.ANDROID_SERIAL_NUM, "normal", "5g", self.__class__.__name__)
 
         if res2gConn is True:
-            result = getAdbShellWlan(self.device[0], self.__class__.__name__)
-            iperfOn = SetAdbIperfOn(self.device[0], self.__class__.__name__)
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
+            iperfOn = SetAdbIperfOn(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             iperfOn.start()
             t.sleep(3.0)
             ret = setIperfFlow(result["ip"], v.IPERF_INTERVAL, v.IPERF_TIME, self.__class__.__name__)
@@ -2592,7 +2589,6 @@ class AP_PSK2_CHAN13_165_FLOW(TestCase):
 
         api.setWifi(self.dut, self.__name__, **option2g)
         api.setWifi(self.dut, self.__name__, **option5g)
-        self.device = getAdbDevices()
 
     @classmethod
     def tearDownClass(self):
@@ -2610,11 +2606,11 @@ class AP_PSK2_CHAN13_165_FLOW(TestCase):
 
     def assoc_psk2_sta_flow_2g(self):
 
-        res2gConn = setAdbPsk2StaConn(self.device[0], "normal", "2g", self.__class__.__name__)
+        res2gConn = setAdbPsk2StaConn(v.ANDROID_SERIAL_NUM, "normal", "2g", self.__class__.__name__)
 
         if res2gConn is True:
-            result = getAdbShellWlan(self.device[0], self.__class__.__name__)
-            iperfOn = SetAdbIperfOn(self.device[0], self.__class__.__name__)
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
+            iperfOn = SetAdbIperfOn(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             iperfOn.start()
             t.sleep(3.0)
             ret = setIperfFlow(result["ip"], v.IPERF_INTERVAL, v.IPERF_TIME, self.__class__.__name__)
@@ -2625,11 +2621,11 @@ class AP_PSK2_CHAN13_165_FLOW(TestCase):
 
     def assoc_psk2_sta_flow_5g(self):
 
-        res2gConn = setAdbPsk2StaConn(self.device[0], "normal", "5g", self.__class__.__name__)
+        res2gConn = setAdbPsk2StaConn(v.ANDROID_SERIAL_NUM, "normal", "5g", self.__class__.__name__)
 
         if res2gConn is True:
-            result = getAdbShellWlan(self.device[0], self.__class__.__name__)
-            iperfOn = SetAdbIperfOn(self.device[0], self.__class__.__name__)
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
+            iperfOn = SetAdbIperfOn(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             iperfOn.start()
             t.sleep(3.0)
             ret = setIperfFlow(result["ip"], v.IPERF_INTERVAL, v.IPERF_TIME, self.__class__.__name__)
@@ -2669,7 +2665,6 @@ class AP_PSK2_CHAN_REPEAT(TestCase):
 
         api.setWifi(self.dut, self.__name__, **option2g)
         api.setWifi(self.dut, self.__name__, **option5g)
-        self.device = getAdbDevices()
 
     @classmethod
     def tearDownClass(self):
@@ -2687,13 +2682,13 @@ class AP_PSK2_CHAN_REPEAT(TestCase):
 
     def assoc_repeat_psk2_sta_2g(self):
 
-        res2gConn = setAdbPsk2StaConnRepeat(self.device[0], "normal", "2g", self.__class__.__name__)
+        res2gConn = setAdbPsk2StaConnRepeat(v.ANDROID_SERIAL_NUM, "normal", "2g", self.__class__.__name__)
 
         self.assertTrue(res2gConn, "Not all association were successful.")
 
     def assoc_repeat_psk2_sta_5g(self):
 
-        res5gConn = setAdbPsk2StaConnRepeat(self.device[0], "normal", "5g", self.__class__.__name__)
+        res5gConn = setAdbPsk2StaConnRepeat(v.ANDROID_SERIAL_NUM, "normal", "5g", self.__class__.__name__)
 
         self.assertTrue(res5gConn, "Not all association were successful.")
 
@@ -2727,7 +2722,6 @@ class AP_MIXEDPSK_CHAN(TestCase):
 
         api.setWifi(self.dut, self.__name__, **option2g)
         api.setWifi(self.dut, self.__name__, **option5g)
-        self.device = getAdbDevices()
 
     @classmethod
     def tearDownClass(self):
@@ -2745,13 +2739,14 @@ class AP_MIXEDPSK_CHAN(TestCase):
 
     def assoc_psk2_sta_2g(self):
 
-        res2gConn = setAdbPsk2StaConn(self.device[0], "normal", "2g", self.__class__.__name__)
+        res2gConn = setAdbPsk2StaConn(v.ANDROID_SERIAL_NUM, "normal", "2g", self.__class__.__name__)
         if res2gConn:
-            result = getAdbShellWlan(self.device[0], self.__class__.__name__)
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             if result['ip'] == '':
                 self.fail(msg='no ip address got.')
             else:
-                resPingPercent = getAdbPingStatus(self.device[0], v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
+                resPingPercent = getAdbPingStatus(v.ANDROID_SERIAL_NUM, v.PING_TARGET, v.PING_COUNT,
+                                                  self.__class__.__name__)
                 self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
                                         "Ping responsed percent werenot good enough.")
         else:
@@ -2759,13 +2754,14 @@ class AP_MIXEDPSK_CHAN(TestCase):
 
     def assoc_psk2_sta_5g(self):
 
-        res5gConn = setAdbPsk2StaConn(self.device[0], "normal", "5g", self.__class__.__name__)
+        res5gConn = setAdbPsk2StaConn(v.ANDROID_SERIAL_NUM, "normal", "5g", self.__class__.__name__)
         if res5gConn:
-            result = getAdbShellWlan(self.device[0], self.__class__.__name__)
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             if result['ip'] == '':
                 self.fail(msg='no ip address got.')
             else:
-                resPingPercent = getAdbPingStatus(self.device[0], v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
+                resPingPercent = getAdbPingStatus(v.ANDROID_SERIAL_NUM, v.PING_TARGET, v.PING_COUNT,
+                                                  self.__class__.__name__)
                 self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
                                         "Ping responsed percent werenot good enough.")
         else:
@@ -2773,13 +2769,14 @@ class AP_MIXEDPSK_CHAN(TestCase):
 
     def assoc_psk_sta_2g(self):
 
-        res2gConn = setAdbPskStaConn(self.device[0], "normal", "2g", self.__class__.__name__)
+        res2gConn = setAdbPskStaConn(v.ANDROID_SERIAL_NUM, "normal", "2g", self.__class__.__name__)
         if res2gConn:
-            result = getAdbShellWlan(self.device[0], self.__class__.__name__)
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             if result['ip'] == '':
                 self.fail(msg='no ip address got.')
             else:
-                resPingPercent = getAdbPingStatus(self.device[0], v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
+                resPingPercent = getAdbPingStatus(v.ANDROID_SERIAL_NUM, v.PING_TARGET, v.PING_COUNT,
+                                                  self.__class__.__name__)
                 self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
                                         "Ping responsed percent werenot good enough.")
         else:
@@ -2787,13 +2784,14 @@ class AP_MIXEDPSK_CHAN(TestCase):
 
     def assoc_psk_sta_5g(self):
 
-        res5gConn = setAdbPskStaConn(self.device[0], "normal", "5g", self.__class__.__name__)
+        res5gConn = setAdbPskStaConn(v.ANDROID_SERIAL_NUM, "normal", "5g", self.__class__.__name__)
         if res5gConn:
-            result = getAdbShellWlan(self.device[0], self.__class__.__name__)
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             if result['ip'] == '':
                 self.fail(msg='no ip address got.')
             else:
-                resPingPercent = getAdbPingStatus(self.device[0], v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
+                resPingPercent = getAdbPingStatus(v.ANDROID_SERIAL_NUM, v.PING_TARGET, v.PING_COUNT,
+                                                  self.__class__.__name__)
                 self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
                                         "Ping responsed percent werenot good enough.")
         else:
@@ -2801,13 +2799,14 @@ class AP_MIXEDPSK_CHAN(TestCase):
 
     def assoc_tkippsk2_sta_2g(self):
 
-        res2gConn = setAdbTkipPsk2StaConn(self.device[0], "normal", "2g", self.__class__.__name__)
+        res2gConn = setAdbTkipPsk2StaConn(v.ANDROID_SERIAL_NUM, "normal", "2g", self.__class__.__name__)
         if res2gConn:
-            result = getAdbShellWlan(self.device[0], self.__class__.__name__)
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             if result['ip'] == '':
                 self.fail(msg='no ip address got.')
             else:
-                resPingPercent = getAdbPingStatus(self.device[0], v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
+                resPingPercent = getAdbPingStatus(v.ANDROID_SERIAL_NUM, v.PING_TARGET, v.PING_COUNT,
+                                                  self.__class__.__name__)
                 self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
                                         "Ping responsed percent werenot good enough.")
         else:
@@ -2815,13 +2814,14 @@ class AP_MIXEDPSK_CHAN(TestCase):
 
     def assoc_tkippsk2_sta_5g(self):
 
-        res5gConn = setAdbTkipPsk2StaConn(self.device[0], "normal", "5g", self.__class__.__name__)
+        res5gConn = setAdbTkipPsk2StaConn(v.ANDROID_SERIAL_NUM, "normal", "5g", self.__class__.__name__)
         if res5gConn:
-            result = getAdbShellWlan(self.device[0], self.__class__.__name__)
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             if result['ip'] == '':
                 self.fail(msg='no ip address got.')
             else:
-                resPingPercent = getAdbPingStatus(self.device[0], v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
+                resPingPercent = getAdbPingStatus(v.ANDROID_SERIAL_NUM, v.PING_TARGET, v.PING_COUNT,
+                                                  self.__class__.__name__)
                 self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
                                         "Ping responsed percent werenot good enough.")
         else:
@@ -2829,13 +2829,14 @@ class AP_MIXEDPSK_CHAN(TestCase):
 
     def assoc_tkippsk_sta_2g(self):
 
-        res2gConn = setAdbTkipPskStaConn(self.device[0], "normal", "2g", self.__class__.__name__)
+        res2gConn = setAdbTkipPskStaConn(v.ANDROID_SERIAL_NUM, "normal", "2g", self.__class__.__name__)
         if res2gConn:
-            result = getAdbShellWlan(self.device[0], self.__class__.__name__)
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             if result['ip'] == '':
                 self.fail(msg='no ip address got.')
             else:
-                resPingPercent = getAdbPingStatus(self.device[0], v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
+                resPingPercent = getAdbPingStatus(v.ANDROID_SERIAL_NUM, v.PING_TARGET, v.PING_COUNT,
+                                                  self.__class__.__name__)
                 self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
                                         "Ping responsed percent werenot good enough.")
         else:
@@ -2843,13 +2844,14 @@ class AP_MIXEDPSK_CHAN(TestCase):
 
     def assoc_tkippsk_sta_5g(self):
 
-        res5gConn = setAdbTkipPskStaConn(self.device[0], "normal", "5g", self.__class__.__name__)
+        res5gConn = setAdbTkipPskStaConn(v.ANDROID_SERIAL_NUM, "normal", "5g", self.__class__.__name__)
         if res5gConn:
-            result = getAdbShellWlan(self.device[0], self.__class__.__name__)
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             if result['ip'] == '':
                 self.fail(msg='no ip address got.')
             else:
-                resPingPercent = getAdbPingStatus(self.device[0], v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
+                resPingPercent = getAdbPingStatus(v.ANDROID_SERIAL_NUM, v.PING_TARGET, v.PING_COUNT,
+                                                  self.__class__.__name__)
                 self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
                                         "Ping responsed percent werenot good enough.")
         else:
@@ -2878,7 +2880,6 @@ class AP_MIXEDPSK_CHAN_BW80(TestCase):
         }
 
         api.setWifi(self.dut, self.__name__, **option5g)
-        self.device = getAdbDevices()
 
     @classmethod
     def tearDownClass(self):
@@ -2891,13 +2892,14 @@ class AP_MIXEDPSK_CHAN_BW80(TestCase):
 
     def assoc_psk2_sta_5g(self):
 
-        res5gConn = setAdbPsk2StaConn(self.device[0], "normal", "5g", self.__class__.__name__)
+        res5gConn = setAdbPsk2StaConn(v.ANDROID_SERIAL_NUM, "normal", "5g", self.__class__.__name__)
         if res5gConn:
-            result = getAdbShellWlan(self.device[0], self.__class__.__name__)
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             if result['ip'] == '':
                 self.fail(msg='no ip address got.')
             else:
-                resPingPercent = getAdbPingStatus(self.device[0], v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
+                resPingPercent = getAdbPingStatus(v.ANDROID_SERIAL_NUM, v.PING_TARGET, v.PING_COUNT,
+                                                  self.__class__.__name__)
                 self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
                                         "Ping responsed percent werenot good enough.")
         else:
@@ -2905,13 +2907,14 @@ class AP_MIXEDPSK_CHAN_BW80(TestCase):
 
     def assoc_psk_sta_5g(self):
 
-        res5gConn = setAdbPskStaConn(self.device[0], "normal", "5g", self.__class__.__name__)
+        res5gConn = setAdbPskStaConn(v.ANDROID_SERIAL_NUM, "normal", "5g", self.__class__.__name__)
         if res5gConn:
-            result = getAdbShellWlan(self.device[0], self.__class__.__name__)
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             if result['ip'] == '':
                 self.fail(msg='no ip address got.')
             else:
-                resPingPercent = getAdbPingStatus(self.device[0], v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
+                resPingPercent = getAdbPingStatus(v.ANDROID_SERIAL_NUM, v.PING_TARGET, v.PING_COUNT,
+                                                  self.__class__.__name__)
                 self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
                                         "Ping responsed percent werenot good enough.")
         else:
@@ -2919,13 +2922,14 @@ class AP_MIXEDPSK_CHAN_BW80(TestCase):
 
     def assoc_tkippsk2_sta_5g(self):
 
-        res5gConn = setAdbTkipPsk2StaConn(self.device[0], "normal", "5g", self.__class__.__name__)
+        res5gConn = setAdbTkipPsk2StaConn(v.ANDROID_SERIAL_NUM, "normal", "5g", self.__class__.__name__)
         if res5gConn:
-            result = getAdbShellWlan(self.device[0], self.__class__.__name__)
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             if result['ip'] == '':
                 self.fail(msg='no ip address got.')
             else:
-                resPingPercent = getAdbPingStatus(self.device[0], v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
+                resPingPercent = getAdbPingStatus(v.ANDROID_SERIAL_NUM, v.PING_TARGET, v.PING_COUNT,
+                                                  self.__class__.__name__)
                 self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
                                         "Ping responsed percent werenot good enough.")
         else:
@@ -2933,13 +2937,14 @@ class AP_MIXEDPSK_CHAN_BW80(TestCase):
 
     def assoc_tkippsk_sta_5g(self):
 
-        res5gConn = setAdbTkipPskStaConn(self.device[0], "normal", "5g", self.__class__.__name__)
+        res5gConn = setAdbTkipPskStaConn(v.ANDROID_SERIAL_NUM, "normal", "5g", self.__class__.__name__)
         if res5gConn:
-            result = getAdbShellWlan(self.device[0], self.__class__.__name__)
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             if result['ip'] == '':
                 self.fail(msg='no ip address got.')
             else:
-                resPingPercent = getAdbPingStatus(self.device[0], v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
+                resPingPercent = getAdbPingStatus(v.ANDROID_SERIAL_NUM, v.PING_TARGET, v.PING_COUNT,
+                                                  self.__class__.__name__)
                 self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
                                         "Ping responsed percent werenot good enough.")
         else:
@@ -2977,7 +2982,6 @@ class AP_MIXEDPSK_CHAN_BW40(TestCase):
 
         api.setWifi(self.dut, self.__name__, **option2g)
         api.setWifi(self.dut, self.__name__, **option5g)
-        self.device = getAdbDevices()
 
     @classmethod
     def tearDownClass(self):
@@ -2995,13 +2999,14 @@ class AP_MIXEDPSK_CHAN_BW40(TestCase):
 
     def assoc_psk2_sta_5g(self):
 
-        res5gConn = setAdbPsk2StaConn(self.device[0], "normal", "5g", self.__class__.__name__)
+        res5gConn = setAdbPsk2StaConn(v.ANDROID_SERIAL_NUM, "normal", "5g", self.__class__.__name__)
         if res5gConn:
-            result = getAdbShellWlan(self.device[0], self.__class__.__name__)
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             if result['ip'] == '':
                 self.fail(msg='no ip address got.')
             else:
-                resPingPercent = getAdbPingStatus(self.device[0], v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
+                resPingPercent = getAdbPingStatus(v.ANDROID_SERIAL_NUM, v.PING_TARGET, v.PING_COUNT,
+                                                  self.__class__.__name__)
                 self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
                                         "Ping responsed percent werenot good enough.")
         else:
@@ -3009,13 +3014,14 @@ class AP_MIXEDPSK_CHAN_BW40(TestCase):
 
     def assoc_psk_sta_5g(self):
 
-        res5gConn = setAdbPskStaConn(self.device[0], "normal", "5g", self.__class__.__name__)
+        res5gConn = setAdbPskStaConn(v.ANDROID_SERIAL_NUM, "normal", "5g", self.__class__.__name__)
         if res5gConn:
-            result = getAdbShellWlan(self.device[0], self.__class__.__name__)
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             if result['ip'] == '':
                 self.fail(msg='no ip address got.')
             else:
-                resPingPercent = getAdbPingStatus(self.device[0], v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
+                resPingPercent = getAdbPingStatus(v.ANDROID_SERIAL_NUM, v.PING_TARGET, v.PING_COUNT,
+                                                  self.__class__.__name__)
                 self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
                                         "Ping responsed percent werenot good enough.")
         else:
@@ -3023,13 +3029,14 @@ class AP_MIXEDPSK_CHAN_BW40(TestCase):
 
     def assoc_tkippsk2_sta_5g(self):
 
-        res5gConn = setAdbTkipPsk2StaConn(self.device[0], "normal", "5g", self.__class__.__name__)
+        res5gConn = setAdbTkipPsk2StaConn(v.ANDROID_SERIAL_NUM, "normal", "5g", self.__class__.__name__)
         if res5gConn:
-            result = getAdbShellWlan(self.device[0], self.__class__.__name__)
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             if result['ip'] == '':
                 self.fail(msg='no ip address got.')
             else:
-                resPingPercent = getAdbPingStatus(self.device[0], v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
+                resPingPercent = getAdbPingStatus(v.ANDROID_SERIAL_NUM, v.PING_TARGET, v.PING_COUNT,
+                                                  self.__class__.__name__)
                 self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
                                         "Ping responsed percent werenot good enough.")
         else:
@@ -3037,13 +3044,14 @@ class AP_MIXEDPSK_CHAN_BW40(TestCase):
 
     def assoc_tkippsk_sta_5g(self):
 
-        res5gConn = setAdbTkipPskStaConn(self.device[0], "normal", "5g", self.__class__.__name__)
+        res5gConn = setAdbTkipPskStaConn(v.ANDROID_SERIAL_NUM, "normal", "5g", self.__class__.__name__)
         if res5gConn:
-            result = getAdbShellWlan(self.device[0], self.__class__.__name__)
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             if result['ip'] == '':
                 self.fail(msg='no ip address got.')
             else:
-                resPingPercent = getAdbPingStatus(self.device[0], v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
+                resPingPercent = getAdbPingStatus(v.ANDROID_SERIAL_NUM, v.PING_TARGET, v.PING_COUNT,
+                                                  self.__class__.__name__)
                 self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
                                         "Ping responsed percent werenot good enough.")
         else:
@@ -3051,13 +3059,14 @@ class AP_MIXEDPSK_CHAN_BW40(TestCase):
 
     def assoc_psk2_sta_2g(self):
 
-        res2gConn = setAdbPsk2StaConn(self.device[0], "normal", "2g", self.__class__.__name__)
+        res2gConn = setAdbPsk2StaConn(v.ANDROID_SERIAL_NUM, "normal", "2g", self.__class__.__name__)
         if res2gConn:
-            result = getAdbShellWlan(self.device[0], self.__class__.__name__)
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             if result['ip'] == '':
                 self.fail(msg='no ip address got.')
             else:
-                resPingPercent = getAdbPingStatus(self.device[0], v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
+                resPingPercent = getAdbPingStatus(v.ANDROID_SERIAL_NUM, v.PING_TARGET, v.PING_COUNT,
+                                                  self.__class__.__name__)
                 self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
                                         "Ping responsed percent werenot good enough.")
         else:
@@ -3065,13 +3074,14 @@ class AP_MIXEDPSK_CHAN_BW40(TestCase):
 
     def assoc_psk_sta_2g(self):
 
-        res2gConn = setAdbPskStaConn(self.device[0], "normal", "2g", self.__class__.__name__)
+        res2gConn = setAdbPskStaConn(v.ANDROID_SERIAL_NUM, "normal", "2g", self.__class__.__name__)
         if res2gConn:
-            result = getAdbShellWlan(self.device[0], self.__class__.__name__)
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             if result['ip'] == '':
                 self.fail(msg='no ip address got.')
             else:
-                resPingPercent = getAdbPingStatus(self.device[0], v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
+                resPingPercent = getAdbPingStatus(v.ANDROID_SERIAL_NUM, v.PING_TARGET, v.PING_COUNT,
+                                                  self.__class__.__name__)
                 self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
                                         "Ping responsed percent werenot good enough.")
         else:
@@ -3079,13 +3089,14 @@ class AP_MIXEDPSK_CHAN_BW40(TestCase):
 
     def assoc_tkippsk2_sta_2g(self):
 
-        res2gConn = setAdbTkipPsk2StaConn(self.device[0], "normal", "2g", self.__class__.__name__)
+        res2gConn = setAdbTkipPsk2StaConn(v.ANDROID_SERIAL_NUM, "normal", "2g", self.__class__.__name__)
         if res2gConn:
-            result = getAdbShellWlan(self.device[0], self.__class__.__name__)
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             if result['ip'] == '':
                 self.fail(msg='no ip address got.')
             else:
-                resPingPercent = getAdbPingStatus(self.device[0], v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
+                resPingPercent = getAdbPingStatus(v.ANDROID_SERIAL_NUM, v.PING_TARGET, v.PING_COUNT,
+                                                  self.__class__.__name__)
                 self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
                                         "Ping responsed percent werenot good enough.")
         else:
@@ -3093,13 +3104,14 @@ class AP_MIXEDPSK_CHAN_BW40(TestCase):
 
     def assoc_tkippsk_sta_2g(self):
 
-        res2gConn = setAdbTkipPskStaConn(self.device[0], "normal", "2g", self.__class__.__name__)
+        res2gConn = setAdbTkipPskStaConn(v.ANDROID_SERIAL_NUM, "normal", "2g", self.__class__.__name__)
         if res2gConn:
-            result = getAdbShellWlan(self.device[0], self.__class__.__name__)
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             if result['ip'] == '':
                 self.fail(msg='no ip address got.')
             else:
-                resPingPercent = getAdbPingStatus(self.device[0], v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
+                resPingPercent = getAdbPingStatus(v.ANDROID_SERIAL_NUM, v.PING_TARGET, v.PING_COUNT,
+                                                  self.__class__.__name__)
                 self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
                                         "Ping responsed percent werenot good enough.")
         else:
@@ -3137,7 +3149,6 @@ class AP_MIXEDPSK_CHAN_BW20(TestCase):
 
         api.setWifi(self.dut, self.__name__, **option2g)
         api.setWifi(self.dut, self.__name__, **option5g)
-        self.device = getAdbDevices()
 
     @classmethod
     def tearDownClass(self):
@@ -3155,13 +3166,14 @@ class AP_MIXEDPSK_CHAN_BW20(TestCase):
 
     def assoc_psk2_sta_5g(self):
 
-        res5gConn = setAdbPsk2StaConn(self.device[0], "normal", "5g", self.__class__.__name__)
+        res5gConn = setAdbPsk2StaConn(v.ANDROID_SERIAL_NUM, "normal", "5g", self.__class__.__name__)
         if res5gConn:
-            result = getAdbShellWlan(self.device[0], self.__class__.__name__)
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             if result['ip'] == '':
                 self.fail(msg='no ip address got.')
             else:
-                resPingPercent = getAdbPingStatus(self.device[0], v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
+                resPingPercent = getAdbPingStatus(v.ANDROID_SERIAL_NUM, v.PING_TARGET, v.PING_COUNT,
+                                                  self.__class__.__name__)
                 self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
                                         "Ping responsed percent werenot good enough.")
         else:
@@ -3169,13 +3181,14 @@ class AP_MIXEDPSK_CHAN_BW20(TestCase):
 
     def assoc_psk_sta_5g(self):
 
-        res5gConn = setAdbPskStaConn(self.device[0], "normal", "5g", self.__class__.__name__)
+        res5gConn = setAdbPskStaConn(v.ANDROID_SERIAL_NUM, "normal", "5g", self.__class__.__name__)
         if res5gConn:
-            result = getAdbShellWlan(self.device[0], self.__class__.__name__)
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             if result['ip'] == '':
                 self.fail(msg='no ip address got.')
             else:
-                resPingPercent = getAdbPingStatus(self.device[0], v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
+                resPingPercent = getAdbPingStatus(v.ANDROID_SERIAL_NUM, v.PING_TARGET, v.PING_COUNT,
+                                                  self.__class__.__name__)
                 self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
                                         "Ping responsed percent werenot good enough.")
         else:
@@ -3183,13 +3196,14 @@ class AP_MIXEDPSK_CHAN_BW20(TestCase):
 
     def assoc_tkippsk2_sta_5g(self):
 
-        res5gConn = setAdbTkipPsk2StaConn(self.device[0], "normal", "5g", self.__class__.__name__)
+        res5gConn = setAdbTkipPsk2StaConn(v.ANDROID_SERIAL_NUM, "normal", "5g", self.__class__.__name__)
         if res5gConn:
-            result = getAdbShellWlan(self.device[0], self.__class__.__name__)
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             if result['ip'] == '':
                 self.fail(msg='no ip address got.')
             else:
-                resPingPercent = getAdbPingStatus(self.device[0], v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
+                resPingPercent = getAdbPingStatus(v.ANDROID_SERIAL_NUM, v.PING_TARGET, v.PING_COUNT,
+                                                  self.__class__.__name__)
                 self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
                                         "Ping responsed percent werenot good enough.")
         else:
@@ -3197,13 +3211,14 @@ class AP_MIXEDPSK_CHAN_BW20(TestCase):
 
     def assoc_tkippsk_sta_5g(self):
 
-        res5gConn = setAdbTkipPskStaConn(self.device[0], "normal", "5g", self.__class__.__name__)
+        res5gConn = setAdbTkipPskStaConn(v.ANDROID_SERIAL_NUM, "normal", "5g", self.__class__.__name__)
         if res5gConn:
-            result = getAdbShellWlan(self.device[0], self.__class__.__name__)
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             if result['ip'] == '':
                 self.fail(msg='no ip address got.')
             else:
-                resPingPercent = getAdbPingStatus(self.device[0], v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
+                resPingPercent = getAdbPingStatus(v.ANDROID_SERIAL_NUM, v.PING_TARGET, v.PING_COUNT,
+                                                  self.__class__.__name__)
                 self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
                                         "Ping responsed percent werenot good enough.")
         else:
@@ -3211,13 +3226,14 @@ class AP_MIXEDPSK_CHAN_BW20(TestCase):
 
     def assoc_psk2_sta_2g(self):
 
-        res2gConn = setAdbPsk2StaConn(self.device[0], "normal", "2g", self.__class__.__name__)
+        res2gConn = setAdbPsk2StaConn(v.ANDROID_SERIAL_NUM, "normal", "2g", self.__class__.__name__)
         if res2gConn:
-            result = getAdbShellWlan(self.device[0], self.__class__.__name__)
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             if result['ip'] == '':
                 self.fail(msg='no ip address got.')
             else:
-                resPingPercent = getAdbPingStatus(self.device[0], v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
+                resPingPercent = getAdbPingStatus(v.ANDROID_SERIAL_NUM, v.PING_TARGET, v.PING_COUNT,
+                                                  self.__class__.__name__)
                 self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
                                         "Ping responsed percent werenot good enough.")
         else:
@@ -3225,13 +3241,14 @@ class AP_MIXEDPSK_CHAN_BW20(TestCase):
 
     def assoc_psk_sta_2g(self):
 
-        res2gConn = setAdbPskStaConn(self.device[0], "normal", "2g", self.__class__.__name__)
+        res2gConn = setAdbPskStaConn(v.ANDROID_SERIAL_NUM, "normal", "2g", self.__class__.__name__)
         if res2gConn:
-            result = getAdbShellWlan(self.device[0], self.__class__.__name__)
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             if result['ip'] == '':
                 self.fail(msg='no ip address got.')
             else:
-                resPingPercent = getAdbPingStatus(self.device[0], v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
+                resPingPercent = getAdbPingStatus(v.ANDROID_SERIAL_NUM, v.PING_TARGET, v.PING_COUNT,
+                                                  self.__class__.__name__)
                 self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
                                         "Ping responsed percent werenot good enough.")
         else:
@@ -3239,13 +3256,14 @@ class AP_MIXEDPSK_CHAN_BW20(TestCase):
 
     def assoc_tkippsk2_sta_2g(self):
 
-        res2gConn = setAdbTkipPsk2StaConn(self.device[0], "normal", "2g", self.__class__.__name__)
+        res2gConn = setAdbTkipPsk2StaConn(v.ANDROID_SERIAL_NUM, "normal", "2g", self.__class__.__name__)
         if res2gConn:
-            result = getAdbShellWlan(self.device[0], self.__class__.__name__)
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             if result['ip'] == '':
                 self.fail(msg='no ip address got.')
             else:
-                resPingPercent = getAdbPingStatus(self.device[0], v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
+                resPingPercent = getAdbPingStatus(v.ANDROID_SERIAL_NUM, v.PING_TARGET, v.PING_COUNT,
+                                                  self.__class__.__name__)
                 self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
                                         "Ping responsed percent werenot good enough.")
         else:
@@ -3253,13 +3271,14 @@ class AP_MIXEDPSK_CHAN_BW20(TestCase):
 
     def assoc_tkippsk_sta_2g(self):
 
-        res2gConn = setAdbTkipPskStaConn(self.device[0], "normal", "2g", self.__class__.__name__)
+        res2gConn = setAdbTkipPskStaConn(v.ANDROID_SERIAL_NUM, "normal", "2g", self.__class__.__name__)
         if res2gConn:
-            result = getAdbShellWlan(self.device[0], self.__class__.__name__)
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             if result['ip'] == '':
                 self.fail(msg='no ip address got.')
             else:
-                resPingPercent = getAdbPingStatus(self.device[0], v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
+                resPingPercent = getAdbPingStatus(v.ANDROID_SERIAL_NUM, v.PING_TARGET, v.PING_COUNT,
+                                                  self.__class__.__name__)
                 self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
                                         "Ping responsed percent werenot good enough.")
         else:
@@ -3296,7 +3315,6 @@ class AP_MIXEDPSK_CHAN_SSIDSPEC(TestCase):
 
         api.setWifi(self.dut, self.__name__, **option2g)
         api.setWifi(self.dut, self.__name__, **option5g)
-        self.device = getAdbDevices()
 
     @classmethod
     def tearDownClass(self):
@@ -3314,13 +3332,14 @@ class AP_MIXEDPSK_CHAN_SSIDSPEC(TestCase):
 
     def assoc_psk2_sta_ssidspec_2g(self):
 
-        res2gConn = setAdbPsk2StaConn(self.device[0], "spec", "2g", self.__class__.__name__)
+        res2gConn = setAdbPsk2StaConn(v.ANDROID_SERIAL_NUM, "spec", "2g", self.__class__.__name__)
         if res2gConn:
-            result = getAdbShellWlan(self.device[0], self.__class__.__name__)
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             if result['ip'] == '':
                 self.fail(msg='no ip address got.')
             else:
-                resPingPercent = getAdbPingStatus(self.device[0], v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
+                resPingPercent = getAdbPingStatus(v.ANDROID_SERIAL_NUM, v.PING_TARGET, v.PING_COUNT,
+                                                  self.__class__.__name__)
                 self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
                                         "Ping responsed percent werenot good enough.")
         else:
@@ -3328,13 +3347,14 @@ class AP_MIXEDPSK_CHAN_SSIDSPEC(TestCase):
 
     def assoc_psk2_sta_ssidspec_5g(self):
 
-        res5gConn = setAdbPsk2StaConn(self.device[0], "spec", "5g", self.__class__.__name__)
+        res5gConn = setAdbPsk2StaConn(v.ANDROID_SERIAL_NUM, "spec", "5g", self.__class__.__name__)
         if res5gConn:
-            result = getAdbShellWlan(self.device[0], self.__class__.__name__)
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             if result['ip'] == '':
                 self.fail(msg='no ip address got.')
             else:
-                resPingPercent = getAdbPingStatus(self.device[0], v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
+                resPingPercent = getAdbPingStatus(v.ANDROID_SERIAL_NUM, v.PING_TARGET, v.PING_COUNT,
+                                                  self.__class__.__name__)
                 self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
                                         "Ping responsed percent werenot good enough.")
         else:
@@ -3342,13 +3362,14 @@ class AP_MIXEDPSK_CHAN_SSIDSPEC(TestCase):
 
     def assoc_psk_sta_ssidspec_2g(self):
 
-        res2gConn = setAdbPskStaConn(self.device[0], "spec", "2g", self.__class__.__name__)
+        res2gConn = setAdbPskStaConn(v.ANDROID_SERIAL_NUM, "spec", "2g", self.__class__.__name__)
         if res2gConn:
-            result = getAdbShellWlan(self.device[0], self.__class__.__name__)
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             if result['ip'] == '':
                 self.fail(msg='no ip address got.')
             else:
-                resPingPercent = getAdbPingStatus(self.device[0], v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
+                resPingPercent = getAdbPingStatus(v.ANDROID_SERIAL_NUM, v.PING_TARGET, v.PING_COUNT,
+                                                  self.__class__.__name__)
                 self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
                                         "Ping responsed percent werenot good enough.")
         else:
@@ -3356,13 +3377,14 @@ class AP_MIXEDPSK_CHAN_SSIDSPEC(TestCase):
 
     def assoc_psk_sta_ssidspec_5g(self):
 
-        res5gConn = setAdbPskStaConn(self.device[0], "spec", "5g", self.__class__.__name__)
+        res5gConn = setAdbPskStaConn(v.ANDROID_SERIAL_NUM, "spec", "5g", self.__class__.__name__)
         if res5gConn:
-            result = getAdbShellWlan(self.device[0], self.__class__.__name__)
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             if result['ip'] == '':
                 self.fail(msg='no ip address got.')
             else:
-                resPingPercent = getAdbPingStatus(self.device[0], v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
+                resPingPercent = getAdbPingStatus(v.ANDROID_SERIAL_NUM, v.PING_TARGET, v.PING_COUNT,
+                                                  self.__class__.__name__)
                 self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
                                         "Ping responsed percent werenot good enough.")
         else:
@@ -3370,52 +3392,56 @@ class AP_MIXEDPSK_CHAN_SSIDSPEC(TestCase):
 
     def assoc_tkippsk2_sta_ssidspec_2g(self):
 
-        res2gConn = setAdbTkipPsk2StaConn(self.device[0], "spec", "2g", self.__class__.__name__)
+        res2gConn = setAdbTkipPsk2StaConn(v.ANDROID_SERIAL_NUM, "spec", "2g", self.__class__.__name__)
         if res2gConn:
-            result = getAdbShellWlan(self.device[0], self.__class__.__name__)
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             if result['ip'] == '':
                 self.fail(msg='no ip address got.')
             else:
-                resPingPercent = getAdbPingStatus(self.device[0], v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
+                resPingPercent = getAdbPingStatus(v.ANDROID_SERIAL_NUM, v.PING_TARGET, v.PING_COUNT,
+                                                  self.__class__.__name__)
                 self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
                                         "Ping responsed percent werenot good enough.")
         else:
             self.assertTrue(res2gConn, "Association wasnot successful.")
 
     def assoc_tkippsk2_sta_ssidspec_5g(self):
-        res5gConn = setAdbTkipPsk2StaConn(self.device[0], "spec", "5g", self.__class__.__name__)
+        res5gConn = setAdbTkipPsk2StaConn(v.ANDROID_SERIAL_NUM, "spec", "5g", self.__class__.__name__)
         if res5gConn:
-            result = getAdbShellWlan(self.device[0], self.__class__.__name__)
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             if result['ip'] == '':
                 self.fail(msg='no ip address got.')
             else:
-                resPingPercent = getAdbPingStatus(self.device[0], v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
+                resPingPercent = getAdbPingStatus(v.ANDROID_SERIAL_NUM, v.PING_TARGET, v.PING_COUNT,
+                                                  self.__class__.__name__)
                 self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
                                         "Ping responsed percent werenot good enough.")
         else:
             self.assertTrue(res5gConn, "Association wasnot successful.")
 
     def assoc_tkippsk_sta_ssidspec_2g(self):
-        res2gConn = setAdbTkipPskStaConn(self.device[0], "spec", "2g", self.__class__.__name__)
+        res2gConn = setAdbTkipPskStaConn(v.ANDROID_SERIAL_NUM, "spec", "2g", self.__class__.__name__)
         if res2gConn:
-            result = getAdbShellWlan(self.device[0], self.__class__.__name__)
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             if result['ip'] == '':
                 self.fail(msg='no ip address got.')
             else:
-                resPingPercent = getAdbPingStatus(self.device[0], v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
+                resPingPercent = getAdbPingStatus(v.ANDROID_SERIAL_NUM, v.PING_TARGET, v.PING_COUNT,
+                                                  self.__class__.__name__)
                 self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
                                         "Ping responsed percent werenot good enough.")
         else:
             self.assertTrue(res2gConn, "Association wasnot successful.")
 
     def assoc_tkippsk_sta_ssidspec_5g(self):
-        res5gConn = setAdbTkipPskStaConn(self.device[0], "spec", "5g", self.__class__.__name__)
+        res5gConn = setAdbTkipPskStaConn(v.ANDROID_SERIAL_NUM, "spec", "5g", self.__class__.__name__)
         if res5gConn:
-            result = getAdbShellWlan(self.device[0], self.__class__.__name__)
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             if result['ip'] == '':
                 self.fail(msg='no ip address got.')
             else:
-                resPingPercent = getAdbPingStatus(self.device[0], v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
+                resPingPercent = getAdbPingStatus(v.ANDROID_SERIAL_NUM, v.PING_TARGET, v.PING_COUNT,
+                                                  self.__class__.__name__)
                 self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
                                         "Ping responsed percent werenot good enough.")
         else:
@@ -3452,7 +3478,6 @@ class AP_MIXEDPSK_CHAN_KEYSPEC(TestCase):
 
         api.setWifi(self.dut, self.__name__, **option2g)
         api.setWifi(self.dut, self.__name__, **option5g)
-        self.device = getAdbDevices()
 
     @classmethod
     def tearDownClass(self):
@@ -3470,13 +3495,14 @@ class AP_MIXEDPSK_CHAN_KEYSPEC(TestCase):
 
     def assoc_psk2_sta_keyspec_2g(self):
 
-        res2gConn = setAdbPsk2StaConn(self.device[0], "normal", "2g", self.__class__.__name__, key="spec")
+        res2gConn = setAdbPsk2StaConn(v.ANDROID_SERIAL_NUM, "normal", "2g", self.__class__.__name__, key="spec")
         if res2gConn:
-            result = getAdbShellWlan(self.device[0], self.__class__.__name__)
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             if result['ip'] == '':
                 self.fail(msg='no ip address got.')
             else:
-                resPingPercent = getAdbPingStatus(self.device[0], v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
+                resPingPercent = getAdbPingStatus(v.ANDROID_SERIAL_NUM, v.PING_TARGET, v.PING_COUNT,
+                                                  self.__class__.__name__)
                 self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
                                         "Ping responsed percent werenot good enough.")
         else:
@@ -3484,13 +3510,14 @@ class AP_MIXEDPSK_CHAN_KEYSPEC(TestCase):
 
     def assoc_psk2_sta_keyspec_5g(self):
 
-        res2gConn = setAdbPsk2StaConn(self.device[0], "normal", "5g", self.__class__.__name__, key="spec")
+        res2gConn = setAdbPsk2StaConn(v.ANDROID_SERIAL_NUM, "normal", "5g", self.__class__.__name__, key="spec")
         if res2gConn:
-            result = getAdbShellWlan(self.device[0], self.__class__.__name__)
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             if result['ip'] == '':
                 self.fail(msg='no ip address got.')
             else:
-                resPingPercent = getAdbPingStatus(self.device[0], v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
+                resPingPercent = getAdbPingStatus(v.ANDROID_SERIAL_NUM, v.PING_TARGET, v.PING_COUNT,
+                                                  self.__class__.__name__)
                 self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
                                         "Ping responsed percent werenot good enough.")
         else:
@@ -3498,13 +3525,14 @@ class AP_MIXEDPSK_CHAN_KEYSPEC(TestCase):
 
     def assoc_psk_sta_keyspec_2g(self):
 
-        res2gConn = setAdbPskStaConn(self.device[0], "normal", "2g", self.__class__.__name__, key="spec")
+        res2gConn = setAdbPskStaConn(v.ANDROID_SERIAL_NUM, "normal", "2g", self.__class__.__name__, key="spec")
         if res2gConn:
-            result = getAdbShellWlan(self.device[0], self.__class__.__name__)
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             if result['ip'] == '':
                 self.fail(msg='no ip address got.')
             else:
-                resPingPercent = getAdbPingStatus(self.device[0], v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
+                resPingPercent = getAdbPingStatus(v.ANDROID_SERIAL_NUM, v.PING_TARGET, v.PING_COUNT,
+                                                  self.__class__.__name__)
                 self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
                                         "Ping responsed percent werenot good enough.")
         else:
@@ -3512,13 +3540,14 @@ class AP_MIXEDPSK_CHAN_KEYSPEC(TestCase):
 
     def assoc_psk_sta_keyspec_5g(self):
 
-        res2gConn = setAdbPskStaConn(self.device[0], "normal", "5g", self.__class__.__name__, key="spec")
+        res2gConn = setAdbPskStaConn(v.ANDROID_SERIAL_NUM, "normal", "5g", self.__class__.__name__, key="spec")
         if res2gConn:
-            result = getAdbShellWlan(self.device[0], self.__class__.__name__)
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             if result['ip'] == '':
                 self.fail(msg='no ip address got.')
             else:
-                resPingPercent = getAdbPingStatus(self.device[0], v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
+                resPingPercent = getAdbPingStatus(v.ANDROID_SERIAL_NUM, v.PING_TARGET, v.PING_COUNT,
+                                                  self.__class__.__name__)
                 self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
                                         "Ping responsed percent werenot good enough.")
         else:
@@ -3526,13 +3555,14 @@ class AP_MIXEDPSK_CHAN_KEYSPEC(TestCase):
 
     def assoc_tkippsk2_sta_keyspec_2g(self):
 
-        res2gConn = setAdbTkipPsk2StaConn(self.device[0], "normal", "2g", self.__class__.__name__, key="spec")
+        res2gConn = setAdbTkipPsk2StaConn(v.ANDROID_SERIAL_NUM, "normal", "2g", self.__class__.__name__, key="spec")
         if res2gConn:
-            result = getAdbShellWlan(self.device[0], self.__class__.__name__)
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             if result['ip'] == '':
                 self.fail(msg='no ip address got.')
             else:
-                resPingPercent = getAdbPingStatus(self.device[0], v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
+                resPingPercent = getAdbPingStatus(v.ANDROID_SERIAL_NUM, v.PING_TARGET, v.PING_COUNT,
+                                                  self.__class__.__name__)
                 self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
                                         "Ping responsed percent werenot good enough.")
         else:
@@ -3540,13 +3570,14 @@ class AP_MIXEDPSK_CHAN_KEYSPEC(TestCase):
 
     def assoc_tkippsk2_sta_keyspec_5g(self):
 
-        res2gConn = setAdbTkipPsk2StaConn(self.device[0], "normal", "5g", self.__class__.__name__, key="spec")
+        res2gConn = setAdbTkipPsk2StaConn(v.ANDROID_SERIAL_NUM, "normal", "5g", self.__class__.__name__, key="spec")
         if res2gConn:
-            result = getAdbShellWlan(self.device[0], self.__class__.__name__)
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             if result['ip'] == '':
                 self.fail(msg='no ip address got.')
             else:
-                resPingPercent = getAdbPingStatus(self.device[0], v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
+                resPingPercent = getAdbPingStatus(v.ANDROID_SERIAL_NUM, v.PING_TARGET, v.PING_COUNT,
+                                                  self.__class__.__name__)
                 self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
                                         "Ping responsed percent werenot good enough.")
         else:
@@ -3554,13 +3585,14 @@ class AP_MIXEDPSK_CHAN_KEYSPEC(TestCase):
 
     def assoc_tkippsk_sta_keyspec_2g(self):
 
-        res2gConn = setAdbTkipPskStaConn(self.device[0], "normal", "2g", self.__class__.__name__, key="spec")
+        res2gConn = setAdbTkipPskStaConn(v.ANDROID_SERIAL_NUM, "normal", "2g", self.__class__.__name__, key="spec")
         if res2gConn:
-            result = getAdbShellWlan(self.device[0], self.__class__.__name__)
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             if result['ip'] == '':
                 self.fail(msg='no ip address got.')
             else:
-                resPingPercent = getAdbPingStatus(self.device[0], v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
+                resPingPercent = getAdbPingStatus(v.ANDROID_SERIAL_NUM, v.PING_TARGET, v.PING_COUNT,
+                                                  self.__class__.__name__)
                 self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
                                         "Ping responsed percent werenot good enough.")
         else:
@@ -3568,13 +3600,14 @@ class AP_MIXEDPSK_CHAN_KEYSPEC(TestCase):
 
     def assoc_tkippsk_sta_keyspec_5g(self):
 
-        res2gConn = setAdbTkipPskStaConn(self.device[0], "normal", "5g", self.__class__.__name__, key="spec")
+        res2gConn = setAdbTkipPskStaConn(v.ANDROID_SERIAL_NUM, "normal", "5g", self.__class__.__name__, key="spec")
         if res2gConn:
-            result = getAdbShellWlan(self.device[0], self.__class__.__name__)
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             if result['ip'] == '':
                 self.fail(msg='no ip address got.')
             else:
-                resPingPercent = getAdbPingStatus(self.device[0], v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
+                resPingPercent = getAdbPingStatus(v.ANDROID_SERIAL_NUM, v.PING_TARGET, v.PING_COUNT,
+                                                  self.__class__.__name__)
                 self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
                                         "Ping responsed percent werenot good enough.")
         else:
@@ -3611,7 +3644,6 @@ class AP_MIXEDPSK_CHAN_SSIDCHINESE(TestCase):
 
         api.setWifi(self.dut, self.__name__, **option2g)
         api.setWifi(self.dut, self.__name__, **option5g)
-        self.device = getAdbDevices()
 
     @classmethod
     def tearDownClass(self):
@@ -3629,13 +3661,14 @@ class AP_MIXEDPSK_CHAN_SSIDCHINESE(TestCase):
 
     def assoc_psk2_sta_ssidchinese_2g(self):
 
-        res2gConn = setAdbPsk2StaConn(self.device[0], "chinese", "2g", self.__class__.__name__)
+        res2gConn = setAdbPsk2StaConn(v.ANDROID_SERIAL_NUM, "chinese", "2g", self.__class__.__name__)
         if res2gConn:
-            result = getAdbShellWlan(self.device[0], self.__class__.__name__)
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             if result['ip'] == '':
                 self.fail(msg='no ip address got.')
             else:
-                resPingPercent = getAdbPingStatus(self.device[0], v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
+                resPingPercent = getAdbPingStatus(v.ANDROID_SERIAL_NUM, v.PING_TARGET, v.PING_COUNT,
+                                                  self.__class__.__name__)
                 self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
                                         "Ping responsed percent werenot good enough.")
         else:
@@ -3643,13 +3676,14 @@ class AP_MIXEDPSK_CHAN_SSIDCHINESE(TestCase):
 
     def assoc_psk2_sta_ssidchinese_5g(self):
 
-        res5gConn = setAdbPsk2StaConn(self.device[0], "chinese", "5g", self.__class__.__name__)
+        res5gConn = setAdbPsk2StaConn(v.ANDROID_SERIAL_NUM, "chinese", "5g", self.__class__.__name__)
         if res5gConn:
-            result = getAdbShellWlan(self.device[0], self.__class__.__name__)
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             if result['ip'] == '':
                 self.fail(msg='no ip address got.')
             else:
-                resPingPercent = getAdbPingStatus(self.device[0], v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
+                resPingPercent = getAdbPingStatus(v.ANDROID_SERIAL_NUM, v.PING_TARGET, v.PING_COUNT,
+                                                  self.__class__.__name__)
                 self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
                                         "Ping responsed percent werenot good enough.")
         else:
@@ -3657,13 +3691,14 @@ class AP_MIXEDPSK_CHAN_SSIDCHINESE(TestCase):
 
     def assoc_psk_sta_ssidchinese_2g(self):
 
-        res2gConn = setAdbPskStaConn(self.device[0], "chinese", "2g", self.__class__.__name__)
+        res2gConn = setAdbPskStaConn(v.ANDROID_SERIAL_NUM, "chinese", "2g", self.__class__.__name__)
         if res2gConn:
-            result = getAdbShellWlan(self.device[0], self.__class__.__name__)
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             if result['ip'] == '':
                 self.fail(msg='no ip address got.')
             else:
-                resPingPercent = getAdbPingStatus(self.device[0], v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
+                resPingPercent = getAdbPingStatus(v.ANDROID_SERIAL_NUM, v.PING_TARGET, v.PING_COUNT,
+                                                  self.__class__.__name__)
                 self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
                                         "Ping responsed percent werenot good enough.")
         else:
@@ -3671,13 +3706,14 @@ class AP_MIXEDPSK_CHAN_SSIDCHINESE(TestCase):
 
     def assoc_psk_sta_ssidchinese_5g(self):
 
-        res5gConn = setAdbPskStaConn(self.device[0], "chinese", "5g", self.__class__.__name__)
+        res5gConn = setAdbPskStaConn(v.ANDROID_SERIAL_NUM, "chinese", "5g", self.__class__.__name__)
         if res5gConn:
-            result = getAdbShellWlan(self.device[0], self.__class__.__name__)
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             if result['ip'] == '':
                 self.fail(msg='no ip address got.')
             else:
-                resPingPercent = getAdbPingStatus(self.device[0], v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
+                resPingPercent = getAdbPingStatus(v.ANDROID_SERIAL_NUM, v.PING_TARGET, v.PING_COUNT,
+                                                  self.__class__.__name__)
                 self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
                                         "Ping responsed percent werenot good enough.")
         else:
@@ -3685,52 +3721,56 @@ class AP_MIXEDPSK_CHAN_SSIDCHINESE(TestCase):
 
     def assoc_tkippsk2_sta_ssidchinese_2g(self):
 
-        res2gConn = setAdbTkipPsk2StaConn(self.device[0], "chinese", "2g", self.__class__.__name__)
+        res2gConn = setAdbTkipPsk2StaConn(v.ANDROID_SERIAL_NUM, "chinese", "2g", self.__class__.__name__)
         if res2gConn:
-            result = getAdbShellWlan(self.device[0], self.__class__.__name__)
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             if result['ip'] == '':
                 self.fail(msg='no ip address got.')
             else:
-                resPingPercent = getAdbPingStatus(self.device[0], v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
+                resPingPercent = getAdbPingStatus(v.ANDROID_SERIAL_NUM, v.PING_TARGET, v.PING_COUNT,
+                                                  self.__class__.__name__)
                 self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
                                         "Ping responsed percent werenot good enough.")
         else:
             self.assertTrue(res2gConn, "Association wasnot successful.")
 
     def assoc_tkippsk2_sta_ssidchinese_5g(self):
-        res5gConn = setAdbTkipPsk2StaConn(self.device[0], "chinese", "5g", self.__class__.__name__)
+        res5gConn = setAdbTkipPsk2StaConn(v.ANDROID_SERIAL_NUM, "chinese", "5g", self.__class__.__name__)
         if res5gConn:
-            result = getAdbShellWlan(self.device[0], self.__class__.__name__)
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             if result['ip'] == '':
                 self.fail(msg='no ip address got.')
             else:
-                resPingPercent = getAdbPingStatus(self.device[0], v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
+                resPingPercent = getAdbPingStatus(v.ANDROID_SERIAL_NUM, v.PING_TARGET, v.PING_COUNT,
+                                                  self.__class__.__name__)
                 self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
                                         "Ping responsed percent werenot good enough.")
         else:
             self.assertTrue(res5gConn, "Association wasnot successful.")
 
     def assoc_tkippsk_sta_ssidchinese_2g(self):
-        res2gConn = setAdbTkipPskStaConn(self.device[0], "chinese", "2g", self.__class__.__name__)
+        res2gConn = setAdbTkipPskStaConn(v.ANDROID_SERIAL_NUM, "chinese", "2g", self.__class__.__name__)
         if res2gConn:
-            result = getAdbShellWlan(self.device[0], self.__class__.__name__)
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             if result['ip'] == '':
                 self.fail(msg='no ip address got.')
             else:
-                resPingPercent = getAdbPingStatus(self.device[0], v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
+                resPingPercent = getAdbPingStatus(v.ANDROID_SERIAL_NUM, v.PING_TARGET, v.PING_COUNT,
+                                                  self.__class__.__name__)
                 self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
                                         "Ping responsed percent werenot good enough.")
         else:
             self.assertTrue(res2gConn, "Association wasnot successful.")
 
     def assoc_tkippsk_sta_ssidchinese_5g(self):
-        res5gConn = setAdbTkipPskStaConn(self.device[0], "chinese", "5g", self.__class__.__name__)
+        res5gConn = setAdbTkipPskStaConn(v.ANDROID_SERIAL_NUM, "chinese", "5g", self.__class__.__name__)
         if res5gConn:
-            result = getAdbShellWlan(self.device[0], self.__class__.__name__)
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             if result['ip'] == '':
                 self.fail(msg='no ip address got.')
             else:
-                resPingPercent = getAdbPingStatus(self.device[0], v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
+                resPingPercent = getAdbPingStatus(v.ANDROID_SERIAL_NUM, v.PING_TARGET, v.PING_COUNT,
+                                                  self.__class__.__name__)
                 self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
                                         "Ping responsed percent werenot good enough.")
         else:
@@ -3767,7 +3807,6 @@ class AP_MIXEDPSK_CHAN1_36_FLOW(TestCase):
 
         api.setWifi(self.dut, self.__name__, **option2g)
         api.setWifi(self.dut, self.__name__, **option5g)
-        self.device = getAdbDevices()
 
     @classmethod
     def tearDownClass(self):
@@ -3785,11 +3824,11 @@ class AP_MIXEDPSK_CHAN1_36_FLOW(TestCase):
 
     def assoc_psk2_sta_flow_2g(self):
 
-        res2gConn = setAdbPsk2StaConn(self.device[0], "normal", "2g", self.__class__.__name__)
+        res2gConn = setAdbPsk2StaConn(v.ANDROID_SERIAL_NUM, "normal", "2g", self.__class__.__name__)
 
         if res2gConn is True:
-            result = getAdbShellWlan(self.device[0], self.__class__.__name__)
-            iperfOn = SetAdbIperfOn(self.device[0], self.__class__.__name__)
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
+            iperfOn = SetAdbIperfOn(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             iperfOn.start()
             t.sleep(3.0)
             ret = setIperfFlow(result["ip"], v.IPERF_INTERVAL, v.IPERF_TIME, self.__class__.__name__)
@@ -3800,11 +3839,11 @@ class AP_MIXEDPSK_CHAN1_36_FLOW(TestCase):
 
     def assoc_psk2_sta_flow_5g(self):
 
-        res2gConn = setAdbPsk2StaConn(self.device[0], "normal", "5g", self.__class__.__name__)
+        res2gConn = setAdbPsk2StaConn(v.ANDROID_SERIAL_NUM, "normal", "5g", self.__class__.__name__)
 
         if res2gConn is True:
-            result = getAdbShellWlan(self.device[0], self.__class__.__name__)
-            iperfOn = SetAdbIperfOn(self.device[0], self.__class__.__name__)
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
+            iperfOn = SetAdbIperfOn(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             iperfOn.start()
             t.sleep(3.0)
             ret = setIperfFlow(result["ip"], v.IPERF_INTERVAL, v.IPERF_TIME, self.__class__.__name__)
@@ -3815,11 +3854,11 @@ class AP_MIXEDPSK_CHAN1_36_FLOW(TestCase):
 
     def assoc_psk_sta_flow_2g(self):
 
-        res2gConn = setAdbPskStaConn(self.device[0], "normal", "2g", self.__class__.__name__)
+        res2gConn = setAdbPskStaConn(v.ANDROID_SERIAL_NUM, "normal", "2g", self.__class__.__name__)
 
         if res2gConn is True:
-            result = getAdbShellWlan(self.device[0], self.__class__.__name__)
-            iperfOn = SetAdbIperfOn(self.device[0], self.__class__.__name__)
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
+            iperfOn = SetAdbIperfOn(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             iperfOn.start()
             t.sleep(3.0)
             ret = setIperfFlow(result["ip"], v.IPERF_INTERVAL, v.IPERF_TIME, self.__class__.__name__)
@@ -3830,11 +3869,11 @@ class AP_MIXEDPSK_CHAN1_36_FLOW(TestCase):
 
     def assoc_psk_sta_flow_5g(self):
 
-        res2gConn = setAdbPskStaConn(self.device[0], "normal", "5g", self.__class__.__name__)
+        res2gConn = setAdbPskStaConn(v.ANDROID_SERIAL_NUM, "normal", "5g", self.__class__.__name__)
 
         if res2gConn is True:
-            result = getAdbShellWlan(self.device[0], self.__class__.__name__)
-            iperfOn = SetAdbIperfOn(self.device[0], self.__class__.__name__)
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
+            iperfOn = SetAdbIperfOn(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             iperfOn.start()
             t.sleep(3.0)
             ret = setIperfFlow(result["ip"], v.IPERF_INTERVAL, v.IPERF_TIME, self.__class__.__name__)
@@ -3845,11 +3884,11 @@ class AP_MIXEDPSK_CHAN1_36_FLOW(TestCase):
 
     def assoc_tkippsk2_sta_flow_2g(self):
 
-        res2gConn = setAdbTkipPsk2StaConn(self.device[0], "normal", "2g", self.__class__.__name__)
+        res2gConn = setAdbTkipPsk2StaConn(v.ANDROID_SERIAL_NUM, "normal", "2g", self.__class__.__name__)
 
         if res2gConn is True:
-            result = getAdbShellWlan(self.device[0], self.__class__.__name__)
-            iperfOn = SetAdbIperfOn(self.device[0], self.__class__.__name__)
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
+            iperfOn = SetAdbIperfOn(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             iperfOn.start()
             t.sleep(3.0)
             ret = setIperfFlow(result["ip"], v.IPERF_INTERVAL, v.IPERF_TIME, self.__class__.__name__)
@@ -3860,11 +3899,11 @@ class AP_MIXEDPSK_CHAN1_36_FLOW(TestCase):
 
     def assoc_tkippsk2_sta_flow_5g(self):
 
-        res2gConn = setAdbTkipPsk2StaConn(self.device[0], "normal", "5g", self.__class__.__name__)
+        res2gConn = setAdbTkipPsk2StaConn(v.ANDROID_SERIAL_NUM, "normal", "5g", self.__class__.__name__)
 
         if res2gConn is True:
-            result = getAdbShellWlan(self.device[0], self.__class__.__name__)
-            iperfOn = SetAdbIperfOn(self.device[0], self.__class__.__name__)
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
+            iperfOn = SetAdbIperfOn(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             iperfOn.start()
             t.sleep(3.0)
             ret = setIperfFlow(result["ip"], v.IPERF_INTERVAL, v.IPERF_TIME, self.__class__.__name__)
@@ -3875,11 +3914,11 @@ class AP_MIXEDPSK_CHAN1_36_FLOW(TestCase):
 
     def assoc_tkippsk_sta_flow_2g(self):
 
-        res2gConn = setAdbTkipPskStaConn(self.device[0], "normal", "2g", self.__class__.__name__)
+        res2gConn = setAdbTkipPskStaConn(v.ANDROID_SERIAL_NUM, "normal", "2g", self.__class__.__name__)
 
         if res2gConn is True:
-            result = getAdbShellWlan(self.device[0], self.__class__.__name__)
-            iperfOn = SetAdbIperfOn(self.device[0], self.__class__.__name__)
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
+            iperfOn = SetAdbIperfOn(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             iperfOn.start()
             t.sleep(3.0)
             ret = setIperfFlow(result["ip"], v.IPERF_INTERVAL, v.IPERF_TIME, self.__class__.__name__)
@@ -3890,11 +3929,11 @@ class AP_MIXEDPSK_CHAN1_36_FLOW(TestCase):
 
     def assoc_tkippsk_sta_flow_5g(self):
 
-        res2gConn = setAdbTkipPskStaConn(self.device[0], "normal", "5g", self.__class__.__name__)
+        res2gConn = setAdbTkipPskStaConn(v.ANDROID_SERIAL_NUM, "normal", "5g", self.__class__.__name__)
 
         if res2gConn is True:
-            result = getAdbShellWlan(self.device[0], self.__class__.__name__)
-            iperfOn = SetAdbIperfOn(self.device[0], self.__class__.__name__)
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
+            iperfOn = SetAdbIperfOn(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             iperfOn.start()
             t.sleep(3.0)
             ret = setIperfFlow(result["ip"], v.IPERF_INTERVAL, v.IPERF_TIME, self.__class__.__name__)
@@ -3934,7 +3973,6 @@ class AP_MIXEDPSK_CHAN6_52_FLOW(TestCase):
 
         api.setWifi(self.dut, self.__name__, **option2g)
         api.setWifi(self.dut, self.__name__, **option5g)
-        self.device = getAdbDevices()
 
     @classmethod
     def tearDownClass(self):
@@ -3952,11 +3990,11 @@ class AP_MIXEDPSK_CHAN6_52_FLOW(TestCase):
 
     def assoc_psk2_sta_flow_2g(self):
 
-        res2gConn = setAdbPsk2StaConn(self.device[0], "normal", "2g", self.__class__.__name__)
+        res2gConn = setAdbPsk2StaConn(v.ANDROID_SERIAL_NUM, "normal", "2g", self.__class__.__name__)
 
         if res2gConn is True:
-            result = getAdbShellWlan(self.device[0], self.__class__.__name__)
-            iperfOn = SetAdbIperfOn(self.device[0], self.__class__.__name__)
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
+            iperfOn = SetAdbIperfOn(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             iperfOn.start()
             t.sleep(3.0)
             ret = setIperfFlow(result["ip"], v.IPERF_INTERVAL, v.IPERF_TIME, self.__class__.__name__)
@@ -3967,11 +4005,11 @@ class AP_MIXEDPSK_CHAN6_52_FLOW(TestCase):
 
     def assoc_psk2_sta_flow_5g(self):
 
-        res2gConn = setAdbPsk2StaConn(self.device[0], "normal", "5g", self.__class__.__name__)
+        res2gConn = setAdbPsk2StaConn(v.ANDROID_SERIAL_NUM, "normal", "5g", self.__class__.__name__)
 
         if res2gConn is True:
-            result = getAdbShellWlan(self.device[0], self.__class__.__name__)
-            iperfOn = SetAdbIperfOn(self.device[0], self.__class__.__name__)
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
+            iperfOn = SetAdbIperfOn(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             iperfOn.start()
             t.sleep(3.0)
             ret = setIperfFlow(result["ip"], v.IPERF_INTERVAL, v.IPERF_TIME, self.__class__.__name__)
@@ -3982,11 +4020,11 @@ class AP_MIXEDPSK_CHAN6_52_FLOW(TestCase):
 
     def assoc_psk_sta_flow_2g(self):
 
-        res2gConn = setAdbPskStaConn(self.device[0], "normal", "2g", self.__class__.__name__)
+        res2gConn = setAdbPskStaConn(v.ANDROID_SERIAL_NUM, "normal", "2g", self.__class__.__name__)
 
         if res2gConn is True:
-            result = getAdbShellWlan(self.device[0], self.__class__.__name__)
-            iperfOn = SetAdbIperfOn(self.device[0], self.__class__.__name__)
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
+            iperfOn = SetAdbIperfOn(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             iperfOn.start()
             t.sleep(3.0)
             ret = setIperfFlow(result["ip"], v.IPERF_INTERVAL, v.IPERF_TIME, self.__class__.__name__)
@@ -3997,11 +4035,11 @@ class AP_MIXEDPSK_CHAN6_52_FLOW(TestCase):
 
     def assoc_psk_sta_flow_5g(self):
 
-        res2gConn = setAdbPskStaConn(self.device[0], "normal", "5g", self.__class__.__name__)
+        res2gConn = setAdbPskStaConn(v.ANDROID_SERIAL_NUM, "normal", "5g", self.__class__.__name__)
 
         if res2gConn is True:
-            result = getAdbShellWlan(self.device[0], self.__class__.__name__)
-            iperfOn = SetAdbIperfOn(self.device[0], self.__class__.__name__)
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
+            iperfOn = SetAdbIperfOn(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             iperfOn.start()
             t.sleep(3.0)
             ret = setIperfFlow(result["ip"], v.IPERF_INTERVAL, v.IPERF_TIME, self.__class__.__name__)
@@ -4012,11 +4050,11 @@ class AP_MIXEDPSK_CHAN6_52_FLOW(TestCase):
 
     def assoc_tkippsk2_sta_flow_2g(self):
 
-        res2gConn = setAdbTkipPsk2StaConn(self.device[0], "normal", "2g", self.__class__.__name__)
+        res2gConn = setAdbTkipPsk2StaConn(v.ANDROID_SERIAL_NUM, "normal", "2g", self.__class__.__name__)
 
         if res2gConn is True:
-            result = getAdbShellWlan(self.device[0], self.__class__.__name__)
-            iperfOn = SetAdbIperfOn(self.device[0], self.__class__.__name__)
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
+            iperfOn = SetAdbIperfOn(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             iperfOn.start()
             t.sleep(3.0)
             ret = setIperfFlow(result["ip"], v.IPERF_INTERVAL, v.IPERF_TIME, self.__class__.__name__)
@@ -4027,11 +4065,11 @@ class AP_MIXEDPSK_CHAN6_52_FLOW(TestCase):
 
     def assoc_tkippsk2_sta_flow_5g(self):
 
-        res2gConn = setAdbTkipPsk2StaConn(self.device[0], "normal", "5g", self.__class__.__name__)
+        res2gConn = setAdbTkipPsk2StaConn(v.ANDROID_SERIAL_NUM, "normal", "5g", self.__class__.__name__)
 
         if res2gConn is True:
-            result = getAdbShellWlan(self.device[0], self.__class__.__name__)
-            iperfOn = SetAdbIperfOn(self.device[0], self.__class__.__name__)
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
+            iperfOn = SetAdbIperfOn(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             iperfOn.start()
             t.sleep(3.0)
             ret = setIperfFlow(result["ip"], v.IPERF_INTERVAL, v.IPERF_TIME, self.__class__.__name__)
@@ -4042,11 +4080,11 @@ class AP_MIXEDPSK_CHAN6_52_FLOW(TestCase):
 
     def assoc_tkippsk_sta_flow_2g(self):
 
-        res2gConn = setAdbTkipPskStaConn(self.device[0], "normal", "2g", self.__class__.__name__)
+        res2gConn = setAdbTkipPskStaConn(v.ANDROID_SERIAL_NUM, "normal", "2g", self.__class__.__name__)
 
         if res2gConn is True:
-            result = getAdbShellWlan(self.device[0], self.__class__.__name__)
-            iperfOn = SetAdbIperfOn(self.device[0], self.__class__.__name__)
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
+            iperfOn = SetAdbIperfOn(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             iperfOn.start()
             t.sleep(3.0)
             ret = setIperfFlow(result["ip"], v.IPERF_INTERVAL, v.IPERF_TIME, self.__class__.__name__)
@@ -4057,11 +4095,11 @@ class AP_MIXEDPSK_CHAN6_52_FLOW(TestCase):
 
     def assoc_tkippsk_sta_flow_5g(self):
 
-        res2gConn = setAdbTkipPskStaConn(self.device[0], "normal", "5g", self.__class__.__name__)
+        res2gConn = setAdbTkipPskStaConn(v.ANDROID_SERIAL_NUM, "normal", "5g", self.__class__.__name__)
 
         if res2gConn is True:
-            result = getAdbShellWlan(self.device[0], self.__class__.__name__)
-            iperfOn = SetAdbIperfOn(self.device[0], self.__class__.__name__)
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
+            iperfOn = SetAdbIperfOn(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             iperfOn.start()
             t.sleep(3.0)
             ret = setIperfFlow(result["ip"], v.IPERF_INTERVAL, v.IPERF_TIME, self.__class__.__name__)
@@ -4101,7 +4139,6 @@ class AP_MIXEDPSK_CHAN11_149_FLOW(TestCase):
 
         api.setWifi(self.dut, self.__name__, **option2g)
         api.setWifi(self.dut, self.__name__, **option5g)
-        self.device = getAdbDevices()
 
     @classmethod
     def tearDownClass(self):
@@ -4119,11 +4156,11 @@ class AP_MIXEDPSK_CHAN11_149_FLOW(TestCase):
 
     def assoc_psk2_sta_flow_2g(self):
 
-        res2gConn = setAdbPsk2StaConn(self.device[0], "normal", "2g", self.__class__.__name__)
+        res2gConn = setAdbPsk2StaConn(v.ANDROID_SERIAL_NUM, "normal", "2g", self.__class__.__name__)
 
         if res2gConn is True:
-            result = getAdbShellWlan(self.device[0], self.__class__.__name__)
-            iperfOn = SetAdbIperfOn(self.device[0], self.__class__.__name__)
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
+            iperfOn = SetAdbIperfOn(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             iperfOn.start()
             t.sleep(3.0)
             ret = setIperfFlow(result["ip"], v.IPERF_INTERVAL, v.IPERF_TIME, self.__class__.__name__)
@@ -4134,11 +4171,11 @@ class AP_MIXEDPSK_CHAN11_149_FLOW(TestCase):
 
     def assoc_psk2_sta_flow_5g(self):
 
-        res2gConn = setAdbPsk2StaConn(self.device[0], "normal", "5g", self.__class__.__name__)
+        res2gConn = setAdbPsk2StaConn(v.ANDROID_SERIAL_NUM, "normal", "5g", self.__class__.__name__)
 
         if res2gConn is True:
-            result = getAdbShellWlan(self.device[0], self.__class__.__name__)
-            iperfOn = SetAdbIperfOn(self.device[0], self.__class__.__name__)
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
+            iperfOn = SetAdbIperfOn(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             iperfOn.start()
             t.sleep(3.0)
             ret = setIperfFlow(result["ip"], v.IPERF_INTERVAL, v.IPERF_TIME, self.__class__.__name__)
@@ -4149,11 +4186,11 @@ class AP_MIXEDPSK_CHAN11_149_FLOW(TestCase):
 
     def assoc_psk_sta_flow_2g(self):
 
-        res2gConn = setAdbPskStaConn(self.device[0], "normal", "2g", self.__class__.__name__)
+        res2gConn = setAdbPskStaConn(v.ANDROID_SERIAL_NUM, "normal", "2g", self.__class__.__name__)
 
         if res2gConn is True:
-            result = getAdbShellWlan(self.device[0], self.__class__.__name__)
-            iperfOn = SetAdbIperfOn(self.device[0], self.__class__.__name__)
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
+            iperfOn = SetAdbIperfOn(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             iperfOn.start()
             t.sleep(3.0)
             ret = setIperfFlow(result["ip"], v.IPERF_INTERVAL, v.IPERF_TIME, self.__class__.__name__)
@@ -4164,11 +4201,11 @@ class AP_MIXEDPSK_CHAN11_149_FLOW(TestCase):
 
     def assoc_psk_sta_flow_5g(self):
 
-        res2gConn = setAdbPskStaConn(self.device[0], "normal", "5g", self.__class__.__name__)
+        res2gConn = setAdbPskStaConn(v.ANDROID_SERIAL_NUM, "normal", "5g", self.__class__.__name__)
 
         if res2gConn is True:
-            result = getAdbShellWlan(self.device[0], self.__class__.__name__)
-            iperfOn = SetAdbIperfOn(self.device[0], self.__class__.__name__)
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
+            iperfOn = SetAdbIperfOn(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             iperfOn.start()
             t.sleep(3.0)
             ret = setIperfFlow(result["ip"], v.IPERF_INTERVAL, v.IPERF_TIME, self.__class__.__name__)
@@ -4179,11 +4216,11 @@ class AP_MIXEDPSK_CHAN11_149_FLOW(TestCase):
 
     def assoc_tkippsk2_sta_flow_2g(self):
 
-        res2gConn = setAdbTkipPsk2StaConn(self.device[0], "normal", "2g", self.__class__.__name__)
+        res2gConn = setAdbTkipPsk2StaConn(v.ANDROID_SERIAL_NUM, "normal", "2g", self.__class__.__name__)
 
         if res2gConn is True:
-            result = getAdbShellWlan(self.device[0], self.__class__.__name__)
-            iperfOn = SetAdbIperfOn(self.device[0], self.__class__.__name__)
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
+            iperfOn = SetAdbIperfOn(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             iperfOn.start()
             t.sleep(3.0)
             ret = setIperfFlow(result["ip"], v.IPERF_INTERVAL, v.IPERF_TIME, self.__class__.__name__)
@@ -4194,11 +4231,11 @@ class AP_MIXEDPSK_CHAN11_149_FLOW(TestCase):
 
     def assoc_tkippsk2_sta_flow_5g(self):
 
-        res2gConn = setAdbTkipPsk2StaConn(self.device[0], "normal", "5g", self.__class__.__name__)
+        res2gConn = setAdbTkipPsk2StaConn(v.ANDROID_SERIAL_NUM, "normal", "5g", self.__class__.__name__)
 
         if res2gConn is True:
-            result = getAdbShellWlan(self.device[0], self.__class__.__name__)
-            iperfOn = SetAdbIperfOn(self.device[0], self.__class__.__name__)
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
+            iperfOn = SetAdbIperfOn(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             iperfOn.start()
             t.sleep(3.0)
             ret = setIperfFlow(result["ip"], v.IPERF_INTERVAL, v.IPERF_TIME, self.__class__.__name__)
@@ -4209,11 +4246,11 @@ class AP_MIXEDPSK_CHAN11_149_FLOW(TestCase):
 
     def assoc_tkippsk_sta_flow_2g(self):
 
-        res2gConn = setAdbTkipPskStaConn(self.device[0], "normal", "2g", self.__class__.__name__)
+        res2gConn = setAdbTkipPskStaConn(v.ANDROID_SERIAL_NUM, "normal", "2g", self.__class__.__name__)
 
         if res2gConn is True:
-            result = getAdbShellWlan(self.device[0], self.__class__.__name__)
-            iperfOn = SetAdbIperfOn(self.device[0], self.__class__.__name__)
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
+            iperfOn = SetAdbIperfOn(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             iperfOn.start()
             t.sleep(3.0)
             ret = setIperfFlow(result["ip"], v.IPERF_INTERVAL, v.IPERF_TIME, self.__class__.__name__)
@@ -4224,11 +4261,11 @@ class AP_MIXEDPSK_CHAN11_149_FLOW(TestCase):
 
     def assoc_tkippsk_sta_flow_5g(self):
 
-        res2gConn = setAdbTkipPskStaConn(self.device[0], "normal", "5g", self.__class__.__name__)
+        res2gConn = setAdbTkipPskStaConn(v.ANDROID_SERIAL_NUM, "normal", "5g", self.__class__.__name__)
 
         if res2gConn is True:
-            result = getAdbShellWlan(self.device[0], self.__class__.__name__)
-            iperfOn = SetAdbIperfOn(self.device[0], self.__class__.__name__)
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
+            iperfOn = SetAdbIperfOn(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             iperfOn.start()
             t.sleep(3.0)
             ret = setIperfFlow(result["ip"], v.IPERF_INTERVAL, v.IPERF_TIME, self.__class__.__name__)
@@ -4268,7 +4305,6 @@ class AP_MIXEDPSK_CHAN13_165_FLOW(TestCase):
 
         api.setWifi(self.dut, self.__name__, **option2g)
         api.setWifi(self.dut, self.__name__, **option5g)
-        self.device = getAdbDevices()
 
     @classmethod
     def tearDownClass(self):
@@ -4286,11 +4322,11 @@ class AP_MIXEDPSK_CHAN13_165_FLOW(TestCase):
 
     def assoc_psk2_sta_flow_2g(self):
 
-        res2gConn = setAdbPsk2StaConn(self.device[0], "normal", "2g", self.__class__.__name__)
+        res2gConn = setAdbPsk2StaConn(v.ANDROID_SERIAL_NUM, "normal", "2g", self.__class__.__name__)
 
         if res2gConn is True:
-            result = getAdbShellWlan(self.device[0], self.__class__.__name__)
-            iperfOn = SetAdbIperfOn(self.device[0], self.__class__.__name__)
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
+            iperfOn = SetAdbIperfOn(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             iperfOn.start()
             t.sleep(3.0)
             ret = setIperfFlow(result["ip"], v.IPERF_INTERVAL, v.IPERF_TIME, self.__class__.__name__)
@@ -4301,11 +4337,11 @@ class AP_MIXEDPSK_CHAN13_165_FLOW(TestCase):
 
     def assoc_psk2_sta_flow_5g(self):
 
-        res2gConn = setAdbPsk2StaConn(self.device[0], "normal", "5g", self.__class__.__name__)
+        res2gConn = setAdbPsk2StaConn(v.ANDROID_SERIAL_NUM, "normal", "5g", self.__class__.__name__)
 
         if res2gConn is True:
-            result = getAdbShellWlan(self.device[0], self.__class__.__name__)
-            iperfOn = SetAdbIperfOn(self.device[0], self.__class__.__name__)
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
+            iperfOn = SetAdbIperfOn(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             iperfOn.start()
             t.sleep(3.0)
             ret = setIperfFlow(result["ip"], v.IPERF_INTERVAL, v.IPERF_TIME, self.__class__.__name__)
@@ -4316,11 +4352,11 @@ class AP_MIXEDPSK_CHAN13_165_FLOW(TestCase):
 
     def assoc_psk_sta_flow_2g(self):
 
-        res2gConn = setAdbPskStaConn(self.device[0], "normal", "2g", self.__class__.__name__)
+        res2gConn = setAdbPskStaConn(v.ANDROID_SERIAL_NUM, "normal", "2g", self.__class__.__name__)
 
         if res2gConn is True:
-            result = getAdbShellWlan(self.device[0], self.__class__.__name__)
-            iperfOn = SetAdbIperfOn(self.device[0], self.__class__.__name__)
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
+            iperfOn = SetAdbIperfOn(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             iperfOn.start()
             t.sleep(3.0)
             ret = setIperfFlow(result["ip"], v.IPERF_INTERVAL, v.IPERF_TIME, self.__class__.__name__)
@@ -4331,11 +4367,11 @@ class AP_MIXEDPSK_CHAN13_165_FLOW(TestCase):
 
     def assoc_psk_sta_flow_5g(self):
 
-        res2gConn = setAdbPskStaConn(self.device[0], "normal", "5g", self.__class__.__name__)
+        res2gConn = setAdbPskStaConn(v.ANDROID_SERIAL_NUM, "normal", "5g", self.__class__.__name__)
 
         if res2gConn is True:
-            result = getAdbShellWlan(self.device[0], self.__class__.__name__)
-            iperfOn = SetAdbIperfOn(self.device[0], self.__class__.__name__)
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
+            iperfOn = SetAdbIperfOn(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             iperfOn.start()
             t.sleep(3.0)
             ret = setIperfFlow(result["ip"], v.IPERF_INTERVAL, v.IPERF_TIME, self.__class__.__name__)
@@ -4346,11 +4382,11 @@ class AP_MIXEDPSK_CHAN13_165_FLOW(TestCase):
 
     def assoc_tkippsk2_sta_flow_2g(self):
 
-        res2gConn = setAdbTkipPsk2StaConn(self.device[0], "normal", "2g", self.__class__.__name__)
+        res2gConn = setAdbTkipPsk2StaConn(v.ANDROID_SERIAL_NUM, "normal", "2g", self.__class__.__name__)
 
         if res2gConn is True:
-            result = getAdbShellWlan(self.device[0], self.__class__.__name__)
-            iperfOn = SetAdbIperfOn(self.device[0], self.__class__.__name__)
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
+            iperfOn = SetAdbIperfOn(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             iperfOn.start()
             t.sleep(3.0)
             ret = setIperfFlow(result["ip"], v.IPERF_INTERVAL, v.IPERF_TIME, self.__class__.__name__)
@@ -4361,11 +4397,11 @@ class AP_MIXEDPSK_CHAN13_165_FLOW(TestCase):
 
     def assoc_tkippsk2_sta_flow_5g(self):
 
-        res2gConn = setAdbTkipPsk2StaConn(self.device[0], "normal", "5g", self.__class__.__name__)
+        res2gConn = setAdbTkipPsk2StaConn(v.ANDROID_SERIAL_NUM, "normal", "5g", self.__class__.__name__)
 
         if res2gConn is True:
-            result = getAdbShellWlan(self.device[0], self.__class__.__name__)
-            iperfOn = SetAdbIperfOn(self.device[0], self.__class__.__name__)
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
+            iperfOn = SetAdbIperfOn(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             iperfOn.start()
             t.sleep(3.0)
             ret = setIperfFlow(result["ip"], v.IPERF_INTERVAL, v.IPERF_TIME, self.__class__.__name__)
@@ -4376,11 +4412,11 @@ class AP_MIXEDPSK_CHAN13_165_FLOW(TestCase):
 
     def assoc_tkippsk_sta_flow_2g(self):
 
-        res2gConn = setAdbTkipPskStaConn(self.device[0], "normal", "2g", self.__class__.__name__)
+        res2gConn = setAdbTkipPskStaConn(v.ANDROID_SERIAL_NUM, "normal", "2g", self.__class__.__name__)
 
         if res2gConn is True:
-            result = getAdbShellWlan(self.device[0], self.__class__.__name__)
-            iperfOn = SetAdbIperfOn(self.device[0], self.__class__.__name__)
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
+            iperfOn = SetAdbIperfOn(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             iperfOn.start()
             t.sleep(3.0)
             ret = setIperfFlow(result["ip"], v.IPERF_INTERVAL, v.IPERF_TIME, self.__class__.__name__)
@@ -4391,11 +4427,11 @@ class AP_MIXEDPSK_CHAN13_165_FLOW(TestCase):
 
     def assoc_tkippsk_sta_flow_5g(self):
 
-        res2gConn = setAdbTkipPskStaConn(self.device[0], "normal", "5g", self.__class__.__name__)
+        res2gConn = setAdbTkipPskStaConn(v.ANDROID_SERIAL_NUM, "normal", "5g", self.__class__.__name__)
 
         if res2gConn is True:
-            result = getAdbShellWlan(self.device[0], self.__class__.__name__)
-            iperfOn = SetAdbIperfOn(self.device[0], self.__class__.__name__)
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
+            iperfOn = SetAdbIperfOn(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             iperfOn.start()
             t.sleep(3.0)
             ret = setIperfFlow(result["ip"], v.IPERF_INTERVAL, v.IPERF_TIME, self.__class__.__name__)
@@ -4435,7 +4471,6 @@ class AP_MIXEDPSK_CHAN_REPEAT(TestCase):
 
         api.setWifi(self.dut, self.__name__, **option2g)
         api.setWifi(self.dut, self.__name__, **option5g)
-        self.device = getAdbDevices()
 
     @classmethod
     def tearDownClass(self):
@@ -4453,49 +4488,49 @@ class AP_MIXEDPSK_CHAN_REPEAT(TestCase):
 
     def assoc_repeat_psk2_sta_2g(self):
 
-        res2gConn = setAdbPsk2StaConnRepeat(self.device[0], "normal", "2g", self.__class__.__name__)
+        res2gConn = setAdbPsk2StaConnRepeat(v.ANDROID_SERIAL_NUM, "normal", "2g", self.__class__.__name__)
 
         self.assertTrue(res2gConn, "Not all association were successful.")
 
     def assoc_repeat_psk2_sta_5g(self):
 
-        res5gConn = setAdbPsk2StaConnRepeat(self.device[0], "normal", "5g", self.__class__.__name__)
+        res5gConn = setAdbPsk2StaConnRepeat(v.ANDROID_SERIAL_NUM, "normal", "5g", self.__class__.__name__)
 
         self.assertTrue(res5gConn, "Not all association were successful.")
 
     def assoc_repeat_psk_sta_2g(self):
 
-        res2gConn = setAdbPskStaConnRepeat(self.device[0], "normal", "2g", self.__class__.__name__)
+        res2gConn = setAdbPskStaConnRepeat(v.ANDROID_SERIAL_NUM, "normal", "2g", self.__class__.__name__)
 
         self.assertTrue(res2gConn, "Not all association were successful.")
 
     def assoc_repeat_psk_sta_5g(self):
 
-        res5gConn = setAdbPskStaConnRepeat(self.device[0], "normal", "5g", self.__class__.__name__)
+        res5gConn = setAdbPskStaConnRepeat(v.ANDROID_SERIAL_NUM, "normal", "5g", self.__class__.__name__)
 
         self.assertTrue(res5gConn, "Not all association were successful.")
 
     def assoc_repeat_tkippsk2_sta_2g(self):
 
-        res2gConn = setAdbTkipPsk2StaConnRepeat(self.device[0], "normal", "2g", self.__class__.__name__)
+        res2gConn = setAdbTkipPsk2StaConnRepeat(v.ANDROID_SERIAL_NUM, "normal", "2g", self.__class__.__name__)
 
         self.assertTrue(res2gConn, "Not all association were successful.")
 
     def assoc_repeat_tkippsk2_sta_5g(self):
 
-        res5gConn = setAdbTkipPsk2StaConnRepeat(self.device[0], "normal", "5g", self.__class__.__name__)
+        res5gConn = setAdbTkipPsk2StaConnRepeat(v.ANDROID_SERIAL_NUM, "normal", "5g", self.__class__.__name__)
 
         self.assertTrue(res5gConn, "Not all association were successful.")
 
     def assoc_repeat_tkippsk_sta_2g(self):
 
-        res2gConn = setAdbTkipPskStaConnRepeat(self.device[0], "normal", "2g", self.__class__.__name__)
+        res2gConn = setAdbTkipPskStaConnRepeat(v.ANDROID_SERIAL_NUM, "normal", "2g", self.__class__.__name__)
 
         self.assertTrue(res2gConn, "Not all association were successful.")
 
     def assoc_repeat_tkippsk_sta_5g(self):
 
-        res5gConn = setAdbTkipPskStaConnRepeat(self.device[0], "normal", "5g", self.__class__.__name__)
+        res5gConn = setAdbTkipPskStaConnRepeat(v.ANDROID_SERIAL_NUM, "normal", "5g", self.__class__.__name__)
 
         self.assertTrue(res5gConn, "Not all association were successful.")
 
@@ -4519,7 +4554,6 @@ class AP_MIXEDPSK_BSD(TestCase):
             'pwd1': v.KEY,
         }
         api.setAllWifi(self.dut, self.__name__, **option)
-        self.device = getAdbDevices()
 
     @classmethod
     def tearDownClass(self):
@@ -4539,8 +4573,8 @@ class AP_MIXEDPSK_BSD(TestCase):
     def assoc_psk2_near_field_sta(self):
         count = 0
         while count <= 1:
-            resConn = setAdbPsk2StaConn(self.device[0], "normal", "2g", self.__class__.__name__)
-            resConn2 = chkAdb5gFreq(self.device[0], self.__class__.__name__)
+            resConn = setAdbPsk2StaConn(v.ANDROID_SERIAL_NUM, "normal", "2g", self.__class__.__name__)
+            resConn2 = chkAdb5gFreq(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             if resConn and resConn2:
                 break
             else:
@@ -4549,17 +4583,17 @@ class AP_MIXEDPSK_BSD(TestCase):
 
         self.assertTrue(resConn, msg="Association wasnot successful.")
         self.assertTrue(resConn2, msg="STA doesnot associate with 5g")
-        result = getAdbShellWlan(self.device[0], self.__class__.__name__)
+        result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
         self.assertIsNot(result['ip'], "", msg='no ip address got.')
-        resPingPercent = getAdbPingStatus(self.device[0], v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
+        resPingPercent = getAdbPingStatus(v.ANDROID_SERIAL_NUM, v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
         self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
                                 "Ping responsed percent werenot good enough.")
 
     def assoc_psk_near_field_sta(self):
         count = 0
         while count <= 1:
-            resConn = setAdbPskStaConn(self.device[0], "normal", "2g", self.__class__.__name__)
-            resConn2 = chkAdb5gFreq(self.device[0], self.__class__.__name__)
+            resConn = setAdbPskStaConn(v.ANDROID_SERIAL_NUM, "normal", "2g", self.__class__.__name__)
+            resConn2 = chkAdb5gFreq(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             if resConn and resConn2:
                 break
             else:
@@ -4568,17 +4602,17 @@ class AP_MIXEDPSK_BSD(TestCase):
 
         self.assertTrue(resConn, msg="Association wasnot successful.")
         self.assertTrue(resConn2, msg="STA doesnot associate with 5g")
-        result = getAdbShellWlan(self.device[0], self.__class__.__name__)
+        result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
         self.assertIsNot(result['ip'], "", msg='no ip address got.')
-        resPingPercent = getAdbPingStatus(self.device[0], v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
+        resPingPercent = getAdbPingStatus(v.ANDROID_SERIAL_NUM, v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
         self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
                                 "Ping responsed percent werenot good enough.")
 
     def assoc_tkippsk2_near_field_sta(self):
         count = 0
         while count <= 1:
-            resConn = setAdbTkipPsk2StaConn(self.device[0], "normal", "2g", self.__class__.__name__)
-            resConn2 = chkAdb5gFreq(self.device[0], self.__class__.__name__)
+            resConn = setAdbTkipPsk2StaConn(v.ANDROID_SERIAL_NUM, "normal", "2g", self.__class__.__name__)
+            resConn2 = chkAdb5gFreq(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             if resConn and resConn2:
                 break
             else:
@@ -4587,17 +4621,17 @@ class AP_MIXEDPSK_BSD(TestCase):
 
         self.assertTrue(resConn, msg="Association wasnot successful.")
         self.assertTrue(resConn2, msg="STA doesnot associate with 5g")
-        result = getAdbShellWlan(self.device[0], self.__class__.__name__)
+        result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
         self.assertIsNot(result['ip'], "", msg='no ip address got.')
-        resPingPercent = getAdbPingStatus(self.device[0], v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
+        resPingPercent = getAdbPingStatus(v.ANDROID_SERIAL_NUM, v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
         self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
                                 "Ping responsed percent werenot good enough.")
 
     def assoc_tkippsk_near_field_sta(self):
         count = 0
         while count <= 1:
-            resConn = setAdbTkipPskStaConn(self.device[0], "normal", "2g", self.__class__.__name__)
-            resConn2 = chkAdb5gFreq(self.device[0], self.__class__.__name__)
+            resConn = setAdbTkipPskStaConn(v.ANDROID_SERIAL_NUM, "normal", "2g", self.__class__.__name__)
+            resConn2 = chkAdb5gFreq(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             if resConn and resConn2:
                 break
             else:
@@ -4606,9 +4640,9 @@ class AP_MIXEDPSK_BSD(TestCase):
 
         self.assertTrue(resConn, msg="Association wasnot successful.")
         self.assertTrue(resConn2, msg="STA doesnot associate with 5g")
-        result = getAdbShellWlan(self.device[0], self.__class__.__name__)
+        result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
         self.assertIsNot(result['ip'], "", msg='no ip address got.')
-        resPingPercent = getAdbPingStatus(self.device[0], v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
+        resPingPercent = getAdbPingStatus(v.ANDROID_SERIAL_NUM, v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
         self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
                                 "Ping responsed percent werenot good enough.")
 
@@ -4657,8 +4691,6 @@ class AP_MIXEDPSK_BSD_SSIDHIDE(TestCase):
         api.setWifi(self.dut, self.__name__, **option2g)
         api.setWifi(self.dut, self.__name__, **option5g)
 
-        self.device = getAdbDevices()
-
     @classmethod
     def tearDownClass(self):
 
@@ -4668,13 +4700,14 @@ class AP_MIXEDPSK_BSD_SSIDHIDE(TestCase):
 
     def assoc_psk2_sta_2g(self):
 
-        res2gConn = setAdbPsk2Sta(self.device[0], v.SSID, v.KEY, "2g", self.__class__.__name__)
+        res2gConn = setAdbPsk2Sta(v.ANDROID_SERIAL_NUM, v.SSID, v.KEY, "2g", self.__class__.__name__)
         if res2gConn:
-            result = getAdbShellWlan(self.device[0], self.__class__.__name__)
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             if result['ip'] == '':
                 self.fail(msg='no ip address got.')
             else:
-                resPingPercent = getAdbPingStatus(self.device[0], v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
+                resPingPercent = getAdbPingStatus(v.ANDROID_SERIAL_NUM, v.PING_TARGET, v.PING_COUNT,
+                                                  self.__class__.__name__)
                 self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
                                         "Ping responsed percent werenot good enough.")
         else:
@@ -4682,13 +4715,14 @@ class AP_MIXEDPSK_BSD_SSIDHIDE(TestCase):
 
     def assoc_psk2_sta_5g(self):
 
-        res5gConn = setAdbPsk2Sta(self.device[0], v.SSID_5G, v.KEY, "5g", self.__class__.__name__)
+        res5gConn = setAdbPsk2Sta(v.ANDROID_SERIAL_NUM, v.SSID_5G, v.KEY, "5g", self.__class__.__name__)
         if res5gConn:
-            result = getAdbShellWlan(self.device[0], self.__class__.__name__)
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             if result['ip'] == '':
                 self.fail(msg='no ip address got.')
             else:
-                resPingPercent = getAdbPingStatus(self.device[0], v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
+                resPingPercent = getAdbPingStatus(v.ANDROID_SERIAL_NUM, v.PING_TARGET, v.PING_COUNT,
+                                                  self.__class__.__name__)
                 self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
                                         "Ping responsed percent werenot good enough.")
         else:
@@ -4696,13 +4730,14 @@ class AP_MIXEDPSK_BSD_SSIDHIDE(TestCase):
 
     def assoc_psk_sta_2g(self):
 
-        res2gConn = setAdbPskSta(self.device[0], v.SSID, v.KEY, "2g", self.__class__.__name__)
+        res2gConn = setAdbPskSta(v.ANDROID_SERIAL_NUM, v.SSID, v.KEY, "2g", self.__class__.__name__)
         if res2gConn:
-            result = getAdbShellWlan(self.device[0], self.__class__.__name__)
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             if result['ip'] == '':
                 self.fail(msg='no ip address got.')
             else:
-                resPingPercent = getAdbPingStatus(self.device[0], v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
+                resPingPercent = getAdbPingStatus(v.ANDROID_SERIAL_NUM, v.PING_TARGET, v.PING_COUNT,
+                                                  self.__class__.__name__)
                 self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
                                         "Ping responsed percent werenot good enough.")
         else:
@@ -4710,13 +4745,14 @@ class AP_MIXEDPSK_BSD_SSIDHIDE(TestCase):
 
     def assoc_psk_sta_5g(self):
 
-        res5gConn = setAdbPskSta(self.device[0], v.SSID_5G, v.KEY, "5g", self.__class__.__name__)
+        res5gConn = setAdbPskSta(v.ANDROID_SERIAL_NUM, v.SSID_5G, v.KEY, "5g", self.__class__.__name__)
         if res5gConn:
-            result = getAdbShellWlan(self.device[0], self.__class__.__name__)
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             if result['ip'] == '':
                 self.fail(msg='no ip address got.')
             else:
-                resPingPercent = getAdbPingStatus(self.device[0], v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
+                resPingPercent = getAdbPingStatus(v.ANDROID_SERIAL_NUM, v.PING_TARGET, v.PING_COUNT,
+                                                  self.__class__.__name__)
                 self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
                                         "Ping responsed percent werenot good enough.")
         else:
@@ -4724,13 +4760,14 @@ class AP_MIXEDPSK_BSD_SSIDHIDE(TestCase):
 
     def assoc_tkippsk2_sta_2g(self):
 
-        res2gConn = setAdbTkipPsk2Sta(self.device[0], v.SSID, v.KEY, "2g", self.__class__.__name__)
+        res2gConn = setAdbTkipPsk2Sta(v.ANDROID_SERIAL_NUM, v.SSID, v.KEY, "2g", self.__class__.__name__)
         if res2gConn:
-            result = getAdbShellWlan(self.device[0], self.__class__.__name__)
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             if result['ip'] == '':
                 self.fail(msg='no ip address got.')
             else:
-                resPingPercent = getAdbPingStatus(self.device[0], v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
+                resPingPercent = getAdbPingStatus(v.ANDROID_SERIAL_NUM, v.PING_TARGET, v.PING_COUNT,
+                                                  self.__class__.__name__)
                 self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
                                         "Ping responsed percent werenot good enough.")
         else:
@@ -4738,13 +4775,14 @@ class AP_MIXEDPSK_BSD_SSIDHIDE(TestCase):
 
     def assoc_tkippsk2_sta_5g(self):
 
-        res5gConn = setAdbTkipPsk2Sta(self.device[0], v.SSID_5G, v.KEY, "5g", self.__class__.__name__)
+        res5gConn = setAdbTkipPsk2Sta(v.ANDROID_SERIAL_NUM, v.SSID_5G, v.KEY, "5g", self.__class__.__name__)
         if res5gConn:
-            result = getAdbShellWlan(self.device[0], self.__class__.__name__)
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             if result['ip'] == '':
                 self.fail(msg='no ip address got.')
             else:
-                resPingPercent = getAdbPingStatus(self.device[0], v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
+                resPingPercent = getAdbPingStatus(v.ANDROID_SERIAL_NUM, v.PING_TARGET, v.PING_COUNT,
+                                                  self.__class__.__name__)
                 self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
                                         "Ping responsed percent werenot good enough.")
         else:
@@ -4752,13 +4790,14 @@ class AP_MIXEDPSK_BSD_SSIDHIDE(TestCase):
 
     def assoc_tkippsk_sta_2g(self):
 
-        res2gConn = setAdbTkipPskSta(self.device[0], v.SSID, v.KEY, "2g", self.__class__.__name__)
+        res2gConn = setAdbTkipPskSta(v.ANDROID_SERIAL_NUM, v.SSID, v.KEY, "2g", self.__class__.__name__)
         if res2gConn:
-            result = getAdbShellWlan(self.device[0], self.__class__.__name__)
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             if result['ip'] == '':
                 self.fail(msg='no ip address got.')
             else:
-                resPingPercent = getAdbPingStatus(self.device[0], v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
+                resPingPercent = getAdbPingStatus(v.ANDROID_SERIAL_NUM, v.PING_TARGET, v.PING_COUNT,
+                                                  self.__class__.__name__)
                 self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
                                         "Ping responsed percent werenot good enough.")
         else:
@@ -4766,13 +4805,14 @@ class AP_MIXEDPSK_BSD_SSIDHIDE(TestCase):
 
     def assoc_tkippsk_sta_5g(self):
 
-        res5gConn = setAdbTkipPskSta(self.device[0], v.SSID_5G, v.KEY, "5g", self.__class__.__name__)
+        res5gConn = setAdbTkipPskSta(v.ANDROID_SERIAL_NUM, v.SSID_5G, v.KEY, "5g", self.__class__.__name__)
         if res5gConn:
-            result = getAdbShellWlan(self.device[0], self.__class__.__name__)
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             if result['ip'] == '':
                 self.fail(msg='no ip address got.')
             else:
-                resPingPercent = getAdbPingStatus(self.device[0], v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
+                resPingPercent = getAdbPingStatus(v.ANDROID_SERIAL_NUM, v.PING_TARGET, v.PING_COUNT,
+                                                  self.__class__.__name__)
                 self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
                                         "Ping responsed percent werenot good enough.")
         else:
@@ -4801,8 +4841,6 @@ class AP_MIXEDPSK_BSD_SSIDSPEC(TestCase):
         }
         api.setAllWifi(self.dut, self.__name__, **option)
 
-        self.device = getAdbDevices()
-
     @classmethod
     def tearDownClass(self):
         api.setAllWifi(self.dut, self.__name__)
@@ -4822,8 +4860,8 @@ class AP_MIXEDPSK_BSD_SSIDSPEC(TestCase):
     def assoc_psk2_near_field_sta(self):
         count = 0
         while count <= 1:
-            resConn = setAdbPsk2Sta(self.device[0], v.SPECIAL_SSID, v.KEY, "2g", self.__class__.__name__)
-            resConn2 = chkAdb5gFreq(self.device[0], self.__class__.__name__)
+            resConn = setAdbPsk2Sta(v.ANDROID_SERIAL_NUM, v.SPECIAL_SSID, v.KEY, "2g", self.__class__.__name__)
+            resConn2 = chkAdb5gFreq(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             if resConn and resConn2:
                 break
             else:
@@ -4832,17 +4870,17 @@ class AP_MIXEDPSK_BSD_SSIDSPEC(TestCase):
 
         self.assertTrue(resConn, msg="Association wasnot successful.")
         self.assertTrue(resConn2, msg="STA doesnot associate with 5g")
-        result = getAdbShellWlan(self.device[0], self.__class__.__name__)
+        result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
         self.assertIsNot(result['ip'], "", msg='no ip address got.')
-        resPingPercent = getAdbPingStatus(self.device[0], v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
+        resPingPercent = getAdbPingStatus(v.ANDROID_SERIAL_NUM, v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
         self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
                                 "Ping responsed percent werenot good enough.")
 
     def assoc_psk_near_field_sta(self):
         count = 0
         while count <= 1:
-            resConn = setAdbPskSta(self.device[0], v.SPECIAL_SSID, v.KEY, "2g", self.__class__.__name__)
-            resConn2 = chkAdb5gFreq(self.device[0], self.__class__.__name__)
+            resConn = setAdbPskSta(v.ANDROID_SERIAL_NUM, v.SPECIAL_SSID, v.KEY, "2g", self.__class__.__name__)
+            resConn2 = chkAdb5gFreq(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             if resConn and resConn2:
                 break
             else:
@@ -4851,17 +4889,17 @@ class AP_MIXEDPSK_BSD_SSIDSPEC(TestCase):
 
         self.assertTrue(resConn, msg="Association wasnot successful.")
         self.assertTrue(resConn2, msg="STA doesnot associate with 5g")
-        result = getAdbShellWlan(self.device[0], self.__class__.__name__)
+        result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
         self.assertIsNot(result['ip'], "", msg='no ip address got.')
-        resPingPercent = getAdbPingStatus(self.device[0], v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
+        resPingPercent = getAdbPingStatus(v.ANDROID_SERIAL_NUM, v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
         self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
                                 "Ping responsed percent werenot good enough.")
 
     def assoc_tkippsk2_near_field_sta(self):
         count = 0
         while count <= 1:
-            resConn = setAdbTkipPsk2Sta(self.device[0], v.SPECIAL_SSID, v.KEY, "2g", self.__class__.__name__)
-            resConn2 = chkAdb5gFreq(self.device[0], self.__class__.__name__)
+            resConn = setAdbTkipPsk2Sta(v.ANDROID_SERIAL_NUM, v.SPECIAL_SSID, v.KEY, "2g", self.__class__.__name__)
+            resConn2 = chkAdb5gFreq(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             if resConn and resConn2:
                 break
             else:
@@ -4870,17 +4908,17 @@ class AP_MIXEDPSK_BSD_SSIDSPEC(TestCase):
 
         self.assertTrue(resConn, msg="Association wasnot successful.")
         self.assertTrue(resConn2, msg="STA doesnot associate with 5g")
-        result = getAdbShellWlan(self.device[0], self.__class__.__name__)
+        result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
         self.assertIsNot(result['ip'], "", msg='no ip address got.')
-        resPingPercent = getAdbPingStatus(self.device[0], v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
+        resPingPercent = getAdbPingStatus(v.ANDROID_SERIAL_NUM, v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
         self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
                                 "Ping responsed percent werenot good enough.")
 
     def assoc_tkippsk_near_field_sta(self):
         count = 0
         while count <= 1:
-            resConn = setAdbTkipPskSta(self.device[0], v.SPECIAL_SSID, v.KEY, "2g", self.__class__.__name__)
-            resConn2 = chkAdb5gFreq(self.device[0], self.__class__.__name__)
+            resConn = setAdbTkipPskSta(v.ANDROID_SERIAL_NUM, v.SPECIAL_SSID, v.KEY, "2g", self.__class__.__name__)
+            resConn2 = chkAdb5gFreq(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             if resConn and resConn2:
                 break
             else:
@@ -4889,9 +4927,9 @@ class AP_MIXEDPSK_BSD_SSIDSPEC(TestCase):
 
         self.assertTrue(resConn, msg="Association wasnot successful.")
         self.assertTrue(resConn2, msg="STA doesnot associate with 5g")
-        result = getAdbShellWlan(self.device[0], self.__class__.__name__)
+        result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
         self.assertIsNot(result['ip'], "", msg='no ip address got.')
-        resPingPercent = getAdbPingStatus(self.device[0], v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
+        resPingPercent = getAdbPingStatus(v.ANDROID_SERIAL_NUM, v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
         self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
                                 "Ping responsed percent werenot good enough.")
 
@@ -4918,8 +4956,6 @@ class AP_MIXEDPSK_BSD_KEYSPEC(TestCase):
         }
         api.setAllWifi(self.dut, self.__name__, **option)
 
-        self.device = getAdbDevices()
-
     @classmethod
     def tearDownClass(self):
         api.setAllWifi(self.dut, self.__name__)
@@ -4939,8 +4975,8 @@ class AP_MIXEDPSK_BSD_KEYSPEC(TestCase):
     def assoc_psk2_near_field_sta(self):
         count = 0
         while count <= 1:
-            resConn = setAdbPsk2Sta(self.device[0], v.SSID, v.SPECIAL_KEY, "2g", self.__class__.__name__)
-            resConn2 = chkAdb5gFreq(self.device[0], self.__class__.__name__)
+            resConn = setAdbPsk2Sta(v.ANDROID_SERIAL_NUM, v.SSID, v.SPECIAL_KEY, "2g", self.__class__.__name__)
+            resConn2 = chkAdb5gFreq(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             if resConn and resConn2:
                 break
             else:
@@ -4949,17 +4985,17 @@ class AP_MIXEDPSK_BSD_KEYSPEC(TestCase):
 
         self.assertTrue(resConn, msg="Association wasnot successful.")
         self.assertTrue(resConn2, msg="STA doesnot associate with 5g")
-        result = getAdbShellWlan(self.device[0], self.__class__.__name__)
+        result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
         self.assertIsNot(result['ip'], "", msg='no ip address got.')
-        resPingPercent = getAdbPingStatus(self.device[0], v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
+        resPingPercent = getAdbPingStatus(v.ANDROID_SERIAL_NUM, v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
         self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
                                 "Ping responsed percent werenot good enough.")
 
     def assoc_psk_near_field_sta(self):
         count = 0
         while count <= 1:
-            resConn = setAdbPskSta(self.device[0], v.SSID, v.SPECIAL_KEY, "2g", self.__class__.__name__)
-            resConn2 = chkAdb5gFreq(self.device[0], self.__class__.__name__)
+            resConn = setAdbPskSta(v.ANDROID_SERIAL_NUM, v.SSID, v.SPECIAL_KEY, "2g", self.__class__.__name__)
+            resConn2 = chkAdb5gFreq(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             if resConn and resConn2:
                 break
             else:
@@ -4968,17 +5004,17 @@ class AP_MIXEDPSK_BSD_KEYSPEC(TestCase):
 
         self.assertTrue(resConn, msg="Association wasnot successful.")
         self.assertTrue(resConn2, msg="STA doesnot associate with 5g")
-        result = getAdbShellWlan(self.device[0], self.__class__.__name__)
+        result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
         self.assertIsNot(result['ip'], "", msg='no ip address got.')
-        resPingPercent = getAdbPingStatus(self.device[0], v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
+        resPingPercent = getAdbPingStatus(v.ANDROID_SERIAL_NUM, v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
         self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
                                 "Ping responsed percent werenot good enough.")
 
     def assoc_tkippsk2_near_field_sta(self):
         count = 0
         while count <= 1:
-            resConn = setAdbTkipPsk2Sta(self.device[0], v.SSID, v.SPECIAL_KEY, "2g", self.__class__.__name__)
-            resConn2 = chkAdb5gFreq(self.device[0], self.__class__.__name__)
+            resConn = setAdbTkipPsk2Sta(v.ANDROID_SERIAL_NUM, v.SSID, v.SPECIAL_KEY, "2g", self.__class__.__name__)
+            resConn2 = chkAdb5gFreq(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             if resConn and resConn2:
                 break
             else:
@@ -4987,17 +5023,17 @@ class AP_MIXEDPSK_BSD_KEYSPEC(TestCase):
 
         self.assertTrue(resConn, msg="Association wasnot successful.")
         self.assertTrue(resConn2, msg="STA doesnot associate with 5g")
-        result = getAdbShellWlan(self.device[0], self.__class__.__name__)
+        result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
         self.assertIsNot(result['ip'], "", msg='no ip address got.')
-        resPingPercent = getAdbPingStatus(self.device[0], v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
+        resPingPercent = getAdbPingStatus(v.ANDROID_SERIAL_NUM, v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
         self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
                                 "Ping responsed percent werenot good enough.")
 
     def assoc_tkippsk_near_field_sta(self):
         count = 0
         while count <= 1:
-            resConn = setAdbTkipPskSta(self.device[0], v.SSID, v.SPECIAL_KEY, "2g", self.__class__.__name__)
-            resConn2 = chkAdb5gFreq(self.device[0], self.__class__.__name__)
+            resConn = setAdbTkipPskSta(v.ANDROID_SERIAL_NUM, v.SSID, v.SPECIAL_KEY, "2g", self.__class__.__name__)
+            resConn2 = chkAdb5gFreq(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             if resConn and resConn2:
                 break
             else:
@@ -5006,9 +5042,9 @@ class AP_MIXEDPSK_BSD_KEYSPEC(TestCase):
 
         self.assertTrue(resConn, msg="Association wasnot successful.")
         self.assertTrue(resConn2, msg="STA doesnot associate with 5g")
-        result = getAdbShellWlan(self.device[0], self.__class__.__name__)
+        result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
         self.assertIsNot(result['ip'], "", msg='no ip address got.')
-        resPingPercent = getAdbPingStatus(self.device[0], v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
+        resPingPercent = getAdbPingStatus(v.ANDROID_SERIAL_NUM, v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
         self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
                                 "Ping responsed percent werenot good enough.")
 
@@ -5035,8 +5071,6 @@ class AP_MIXEDPSK_BSD_SSIDCHINESE(TestCase):
         }
         api.setAllWifi(self.dut, self.__name__, **option)
 
-        self.device = getAdbDevices()
-
     @classmethod
     def tearDownClass(self):
         api.setAllWifi(self.dut, self.__name__)
@@ -5056,8 +5090,8 @@ class AP_MIXEDPSK_BSD_SSIDCHINESE(TestCase):
     def assoc_psk2_near_field_sta(self):
         count = 0
         while count <= 1:
-            resConn = setAdbPsk2Sta(self.device[0], v.CHINESE_SSID, v.KEY, "2g", self.__class__.__name__)
-            resConn2 = chkAdb5gFreq(self.device[0], self.__class__.__name__)
+            resConn = setAdbPsk2Sta(v.ANDROID_SERIAL_NUM, v.CHINESE_SSID, v.KEY, "2g", self.__class__.__name__)
+            resConn2 = chkAdb5gFreq(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             if resConn and resConn2:
                 break
             else:
@@ -5066,17 +5100,17 @@ class AP_MIXEDPSK_BSD_SSIDCHINESE(TestCase):
 
         self.assertTrue(resConn, msg="Association wasnot successful.")
         self.assertTrue(resConn2, msg="STA doesnot associate with 5g")
-        result = getAdbShellWlan(self.device[0], self.__class__.__name__)
+        result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
         self.assertIsNot(result['ip'], "", msg='no ip address got.')
-        resPingPercent = getAdbPingStatus(self.device[0], v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
+        resPingPercent = getAdbPingStatus(v.ANDROID_SERIAL_NUM, v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
         self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
                                 "Ping responsed percent werenot good enough.")
 
     def assoc_psk_near_field_sta(self):
         count = 0
         while count <= 1:
-            resConn = setAdbPskSta(self.device[0], v.CHINESE_SSID, v.KEY, "2g", self.__class__.__name__)
-            resConn2 = chkAdb5gFreq(self.device[0], self.__class__.__name__)
+            resConn = setAdbPskSta(v.ANDROID_SERIAL_NUM, v.CHINESE_SSID, v.KEY, "2g", self.__class__.__name__)
+            resConn2 = chkAdb5gFreq(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             if resConn and resConn2:
                 break
             else:
@@ -5085,17 +5119,17 @@ class AP_MIXEDPSK_BSD_SSIDCHINESE(TestCase):
 
         self.assertTrue(resConn, msg="Association wasnot successful.")
         self.assertTrue(resConn2, msg="STA doesnot associate with 5g")
-        result = getAdbShellWlan(self.device[0], self.__class__.__name__)
+        result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
         self.assertIsNot(result['ip'], "", msg='no ip address got.')
-        resPingPercent = getAdbPingStatus(self.device[0], v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
+        resPingPercent = getAdbPingStatus(v.ANDROID_SERIAL_NUM, v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
         self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
                                 "Ping responsed percent werenot good enough.")
 
     def assoc_tkippsk2_near_field_sta(self):
         count = 0
         while count <= 1:
-            resConn = setAdbTkipPsk2Sta(self.device[0], v.CHINESE_SSID, v.KEY, "2g", self.__class__.__name__)
-            resConn2 = chkAdb5gFreq(self.device[0], self.__class__.__name__)
+            resConn = setAdbTkipPsk2Sta(v.ANDROID_SERIAL_NUM, v.CHINESE_SSID, v.KEY, "2g", self.__class__.__name__)
+            resConn2 = chkAdb5gFreq(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             if resConn and resConn2:
                 break
             else:
@@ -5104,17 +5138,17 @@ class AP_MIXEDPSK_BSD_SSIDCHINESE(TestCase):
 
         self.assertTrue(resConn, msg="Association wasnot successful.")
         self.assertTrue(resConn2, msg="STA doesnot associate with 5g")
-        result = getAdbShellWlan(self.device[0], self.__class__.__name__)
+        result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
         self.assertIsNot(result['ip'], "", msg='no ip address got.')
-        resPingPercent = getAdbPingStatus(self.device[0], v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
+        resPingPercent = getAdbPingStatus(v.ANDROID_SERIAL_NUM, v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
         self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
                                 "Ping responsed percent werenot good enough.")
 
     def assoc_tkippsk_near_field_sta(self):
         count = 0
         while count <= 1:
-            resConn = setAdbTkipPskSta(self.device[0], v.CHINESE_SSID, v.KEY, "2g", self.__class__.__name__)
-            resConn2 = chkAdb5gFreq(self.device[0], self.__class__.__name__)
+            resConn = setAdbTkipPskSta(v.ANDROID_SERIAL_NUM, v.CHINESE_SSID, v.KEY, "2g", self.__class__.__name__)
+            resConn2 = chkAdb5gFreq(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             if resConn and resConn2:
                 break
             else:
@@ -5123,9 +5157,9 @@ class AP_MIXEDPSK_BSD_SSIDCHINESE(TestCase):
 
         self.assertTrue(resConn, msg="Association wasnot successful.")
         self.assertTrue(resConn2, msg="STA doesnot associate with 5g")
-        result = getAdbShellWlan(self.device[0], self.__class__.__name__)
+        result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
         self.assertIsNot(result['ip'], "", msg='no ip address got.')
-        resPingPercent = getAdbPingStatus(self.device[0], v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
+        resPingPercent = getAdbPingStatus(v.ANDROID_SERIAL_NUM, v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
         self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
                                 "Ping responsed percent werenot good enough.")
 
@@ -5157,8 +5191,7 @@ class AP_MIXEDPSK_BSD_WHITELIST(TestCase):
         }
         api.setEditDevice(self.dut, self.__name__, **option)
 
-        self.device = getAdbDevices()
-        wlanInfo = getAdbShellWlan(self.device[0], self.__name__)
+        wlanInfo = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__name__)
         self.staMac = wlanInfo['mac'].upper()
 
     @classmethod
@@ -5193,12 +5226,13 @@ class AP_MIXEDPSK_BSD_WHITELIST(TestCase):
         }
         api.setEditDevice(self.dut, self.__class__.__name__, **option)
 
-        res2gConn = setAdbPsk2Sta(self.device[0], v.SSID, v.KEY, "2g", self.__class__.__name__)
+        res2gConn = setAdbPsk2Sta(v.ANDROID_SERIAL_NUM, v.SSID, v.KEY, "2g", self.__class__.__name__)
 
         if res2gConn:
-            result = getAdbShellWlan(self.device[0], self.__class__.__name__)
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             if result['ip'] != '':
-                resPingPercent = getAdbPingStatus(self.device[0], v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
+                resPingPercent = getAdbPingStatus(v.ANDROID_SERIAL_NUM, v.PING_TARGET, v.PING_COUNT,
+                                                  self.__class__.__name__)
                 passPercent = resPingPercent['pass']
             else:
                 passPercent = 0
@@ -5213,11 +5247,11 @@ class AP_MIXEDPSK_BSD_WHITELIST(TestCase):
         if res2gConn is False:
             self.fail("Association wasnot successful which sta in whitelist.")
         self.assertGreaterEqual(passPercent, v.PING_PERCENT_PASS,
-                                        "Ping responsed percent werenot good enough.")
+                                "Ping responsed percent werenot good enough.")
 
     def assoc_psk2_near_field_sta_outof_whitelist(self):
 
-        res2gConn = setAdbPsk2Sta(self.device[0], v.SSID, v.KEY, "2g", self.__class__.__name__)
+        res2gConn = setAdbPsk2Sta(v.ANDROID_SERIAL_NUM, v.SSID, v.KEY, "2g", self.__class__.__name__)
         self.assertFalse(res2gConn, "Association wasnot supposed to be successful which sta outof whitelist.")
 
 
@@ -5240,8 +5274,8 @@ class AP_MIXEDPSK_BSD_BLACKLIST(TestCase):
             'pwd1': v.KEY,
         }
         api.setAllWifi(self.dut, self.__name__, **option)
-        self.device = getAdbDevices()
-        wlanInfo = getAdbShellWlan(self.device[0], self.__name__)
+
+        wlanInfo = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__name__)
         self.staMac = wlanInfo['mac'].upper()
 
     @classmethod
@@ -5263,14 +5297,15 @@ class AP_MIXEDPSK_BSD_BLACKLIST(TestCase):
 
     def assoc_psk2_near_field_sta_outof_blacklist(self):
 
-        res2gConn = setAdbPsk2Sta(self.device[0], v.SSID, v.KEY, "2g", self.__class__.__name__)
+        res2gConn = setAdbPsk2Sta(v.ANDROID_SERIAL_NUM, v.SSID, v.KEY, "2g", self.__class__.__name__)
 
         if res2gConn:
-            result = getAdbShellWlan(self.device[0], self.__class__.__name__)
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             if result['ip'] == '':
                 self.fail(msg='no ip address got.')
             else:
-                resPingPercent = getAdbPingStatus(self.device[0], v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
+                resPingPercent = getAdbPingStatus(v.ANDROID_SERIAL_NUM, v.PING_TARGET, v.PING_COUNT,
+                                                  self.__class__.__name__)
                 self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
                                         "Ping responsed percent werenot good enough.")
         else:
@@ -5278,7 +5313,7 @@ class AP_MIXEDPSK_BSD_BLACKLIST(TestCase):
 
     def assoc_psk2_near_field_sta_in_blacklist(self):
 
-        res2gConn = setAdbPsk2Sta(self.device[0], v.SSID, v.KEY, "2g", self.__class__.__name__)
+        res2gConn = setAdbPsk2Sta(v.ANDROID_SERIAL_NUM, v.SSID, v.KEY, "2g", self.__class__.__name__)
         self.assertTrue(res2gConn, "Association should be successful which sta outof blacklist.")
 
         option = {
@@ -5290,7 +5325,7 @@ class AP_MIXEDPSK_BSD_BLACKLIST(TestCase):
 
         connType = api.getOnlineDeviceType(self.dut, self.__class__.__name__)
 
-        res2gConn = setAdbClearStaConn(self.device[0], "normal", "2g", self.__class__.__name__)
+        res2gConn = setAdbClearStaConn(v.ANDROID_SERIAL_NUM, "normal", "2g", self.__class__.__name__)
 
         option = {
             'model': 0,
@@ -5325,8 +5360,8 @@ class AP_MIXEDPSK_BSD_SSIDHIDE(TestCase):
             'hidden1': 1,
         }
         api.setAllWifi(self.dut, self.__name__, **option)
-        self.device = getAdbDevices()
-        wlanInfo = getAdbShellWlan(self.device[0], self.__name__)
+
+        wlanInfo = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__name__)
         self.staMac = wlanInfo['mac'].upper()
 
     @classmethod
@@ -5347,8 +5382,8 @@ class AP_MIXEDPSK_BSD_SSIDHIDE(TestCase):
     def assoc_psk2_near_field_sta(self):
         count = 0
         while count <= 1:
-            resConn = setAdbPsk2Sta(self.device[0], v.SSID, v.KEY, "2g", self.__class__.__name__)
-            resConn2 = chkAdb5gFreq(self.device[0], self.__class__.__name__)
+            resConn = setAdbPsk2Sta(v.ANDROID_SERIAL_NUM, v.SSID, v.KEY, "2g", self.__class__.__name__)
+            resConn2 = chkAdb5gFreq(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             if resConn and resConn2:
                 break
             else:
@@ -5357,17 +5392,17 @@ class AP_MIXEDPSK_BSD_SSIDHIDE(TestCase):
 
         self.assertTrue(resConn, msg="Association wasnot successful.")
         self.assertTrue(resConn2, msg="STA doesnot associate with 5g")
-        result = getAdbShellWlan(self.device[0], self.__class__.__name__)
+        result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
         self.assertIsNot(result['ip'], "", msg='no ip address got.')
-        resPingPercent = getAdbPingStatus(self.device[0], v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
+        resPingPercent = getAdbPingStatus(v.ANDROID_SERIAL_NUM, v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
         self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
                                 "Ping responsed percent werenot good enough.")
 
     def assoc_psk_near_field_sta(self):
         count = 0
         while count <= 1:
-            resConn = setAdbPskSta(self.device[0], v.SSID, v.KEY, "2g", self.__class__.__name__)
-            resConn2 = chkAdb5gFreq(self.device[0], self.__class__.__name__)
+            resConn = setAdbPskSta(v.ANDROID_SERIAL_NUM, v.SSID, v.KEY, "2g", self.__class__.__name__)
+            resConn2 = chkAdb5gFreq(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             if resConn and resConn2:
                 break
             else:
@@ -5376,17 +5411,17 @@ class AP_MIXEDPSK_BSD_SSIDHIDE(TestCase):
 
         self.assertTrue(resConn, msg="Association wasnot successful.")
         self.assertTrue(resConn2, msg="STA doesnot associate with 5g")
-        result = getAdbShellWlan(self.device[0], self.__class__.__name__)
+        result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
         self.assertIsNot(result['ip'], "", msg='no ip address got.')
-        resPingPercent = getAdbPingStatus(self.device[0], v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
+        resPingPercent = getAdbPingStatus(v.ANDROID_SERIAL_NUM, v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
         self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
                                 "Ping responsed percent werenot good enough.")
 
     def assoc_tkippsk2_near_field_sta(self):
         count = 0
         while count <= 1:
-            resConn = setAdbTkipPsk2Sta(self.device[0], v.SSID, v.KEY, "2g", self.__class__.__name__)
-            resConn2 = chkAdb5gFreq(self.device[0], self.__class__.__name__)
+            resConn = setAdbTkipPsk2Sta(v.ANDROID_SERIAL_NUM, v.SSID, v.KEY, "2g", self.__class__.__name__)
+            resConn2 = chkAdb5gFreq(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             if resConn and resConn2:
                 break
             else:
@@ -5395,17 +5430,17 @@ class AP_MIXEDPSK_BSD_SSIDHIDE(TestCase):
 
         self.assertTrue(resConn, msg="Association wasnot successful.")
         self.assertTrue(resConn2, msg="STA doesnot associate with 5g")
-        result = getAdbShellWlan(self.device[0], self.__class__.__name__)
+        result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
         self.assertIsNot(result['ip'], "", msg='no ip address got.')
-        resPingPercent = getAdbPingStatus(self.device[0], v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
+        resPingPercent = getAdbPingStatus(v.ANDROID_SERIAL_NUM, v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
         self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
                                 "Ping responsed percent werenot good enough.")
 
     def assoc_tkippsk_near_field_sta(self):
         count = 0
         while count <= 1:
-            resConn = setAdbTkipPskSta(self.device[0], v.SSID, v.KEY, "2g", self.__class__.__name__)
-            resConn2 = chkAdb5gFreq(self.device[0], self.__class__.__name__)
+            resConn = setAdbTkipPskSta(v.ANDROID_SERIAL_NUM, v.SSID, v.KEY, "2g", self.__class__.__name__)
+            resConn2 = chkAdb5gFreq(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             if resConn and resConn2:
                 break
             else:
@@ -5414,9 +5449,9 @@ class AP_MIXEDPSK_BSD_SSIDHIDE(TestCase):
 
         self.assertTrue(resConn, msg="Association wasnot successful.")
         self.assertTrue(resConn2, msg="STA doesnot associate with 5g")
-        result = getAdbShellWlan(self.device[0], self.__class__.__name__)
+        result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
         self.assertIsNot(result['ip'], "", msg='no ip address got.')
-        resPingPercent = getAdbPingStatus(self.device[0], v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
+        resPingPercent = getAdbPingStatus(v.ANDROID_SERIAL_NUM, v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
         self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
                                 "Ping responsed percent werenot good enough.")
 
@@ -5439,7 +5474,6 @@ class AP_GUEST_CLEAR(TestCase):
             'encryption': 'none',
         }
         api.setWifi(self.dut, self.__name__, **optionGuest)
-        self.device = getAdbDevices()
 
     @classmethod
     def tearDownClass(self):
@@ -5452,13 +5486,14 @@ class AP_GUEST_CLEAR(TestCase):
 
     def assoc_clear_sta_guest(self):
 
-        res2gConn = setAdbClearStaConn(self.device[0], "normal", "guest", self.__class__.__name__)
+        res2gConn = setAdbClearStaConn(v.ANDROID_SERIAL_NUM, "normal", "guest", self.__class__.__name__)
         if res2gConn:
-            result = getAdbShellWlan(self.device[0], self.__class__.__name__)
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             if result['ip'] == '':
                 self.fail(msg='no ip address got.')
             else:
-                resPingPercent = getAdbPingStatus(self.device[0], v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
+                resPingPercent = getAdbPingStatus(v.ANDROID_SERIAL_NUM, v.PING_TARGET, v.PING_COUNT,
+                                                  self.__class__.__name__)
                 self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
                                         "Ping responsed percent werenot good enough.")
         else:
@@ -5484,7 +5519,6 @@ class AP_GUEST_PSK2(TestCase):
             'pwd': v.KEY,
         }
         api.setWifi(self.dut, self.__name__, **optionGuest)
-        self.device = getAdbDevices()
 
     @classmethod
     def tearDownClass(self):
@@ -5497,13 +5531,14 @@ class AP_GUEST_PSK2(TestCase):
 
     def assoc_psk2_sta_guest(self):
 
-        res2gConn = setAdbPsk2StaConn(self.device[0], "normal", "guest", self.__class__.__name__)
+        res2gConn = setAdbPsk2StaConn(v.ANDROID_SERIAL_NUM, "normal", "guest", self.__class__.__name__)
         if res2gConn:
-            result = getAdbShellWlan(self.device[0], self.__class__.__name__)
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             if result['ip'] == '':
                 self.fail(msg='no ip address got.')
             else:
-                resPingPercent = getAdbPingStatus(self.device[0], v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
+                resPingPercent = getAdbPingStatus(v.ANDROID_SERIAL_NUM, v.PING_TARGET, v.PING_COUNT,
+                                                  self.__class__.__name__)
                 self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
                                         "Ping responsed percent werenot good enough.")
         else:
@@ -5529,7 +5564,6 @@ class AP_GUEST_MIXEDPSK(TestCase):
             'pwd': v.KEY,
         }
         api.setWifi(self.dut, self.__name__, **optionGuest)
-        self.device = getAdbDevices()
 
     @classmethod
     def tearDownClass(self):
@@ -5542,13 +5576,14 @@ class AP_GUEST_MIXEDPSK(TestCase):
 
     def assoc_psk2_sta_guest(self):
 
-        res2gConn = setAdbPsk2StaConn(self.device[0], "normal", "guest", self.__class__.__name__)
+        res2gConn = setAdbPsk2StaConn(v.ANDROID_SERIAL_NUM, "normal", "guest", self.__class__.__name__)
         if res2gConn:
-            result = getAdbShellWlan(self.device[0], self.__class__.__name__)
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             if result['ip'] == '':
                 self.fail(msg='no ip address got.')
             else:
-                resPingPercent = getAdbPingStatus(self.device[0], v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
+                resPingPercent = getAdbPingStatus(v.ANDROID_SERIAL_NUM, v.PING_TARGET, v.PING_COUNT,
+                                                  self.__class__.__name__)
                 self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
                                         "Ping responsed percent werenot good enough.")
         else:
@@ -5556,13 +5591,14 @@ class AP_GUEST_MIXEDPSK(TestCase):
 
     def assoc_psk_sta_guest(self):
 
-        res2gConn = setAdbPskStaConn(self.device[0], "normal", "guest", self.__class__.__name__)
+        res2gConn = setAdbPskStaConn(v.ANDROID_SERIAL_NUM, "normal", "guest", self.__class__.__name__)
         if res2gConn:
-            result = getAdbShellWlan(self.device[0], self.__class__.__name__)
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             if result['ip'] == '':
                 self.fail(msg='no ip address got.')
             else:
-                resPingPercent = getAdbPingStatus(self.device[0], v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
+                resPingPercent = getAdbPingStatus(v.ANDROID_SERIAL_NUM, v.PING_TARGET, v.PING_COUNT,
+                                                  self.__class__.__name__)
                 self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
                                         "Ping responsed percent werenot good enough.")
         else:
@@ -5570,13 +5606,14 @@ class AP_GUEST_MIXEDPSK(TestCase):
 
     def assoc_tkippsk2_sta_guest(self):
 
-        res2gConn = setAdbTkipPsk2StaConn(self.device[0], "normal", "guest", self.__class__.__name__)
+        res2gConn = setAdbTkipPsk2StaConn(v.ANDROID_SERIAL_NUM, "normal", "guest", self.__class__.__name__)
         if res2gConn:
-            result = getAdbShellWlan(self.device[0], self.__class__.__name__)
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             if result['ip'] == '':
                 self.fail(msg='no ip address got.')
             else:
-                resPingPercent = getAdbPingStatus(self.device[0], v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
+                resPingPercent = getAdbPingStatus(v.ANDROID_SERIAL_NUM, v.PING_TARGET, v.PING_COUNT,
+                                                  self.__class__.__name__)
                 self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
                                         "Ping responsed percent werenot good enough.")
         else:
@@ -5584,13 +5621,14 @@ class AP_GUEST_MIXEDPSK(TestCase):
 
     def assoc_tkippsk_sta_guest(self):
 
-        res2gConn = setAdbTkipPskStaConn(self.device[0], "normal", "guest", self.__class__.__name__)
+        res2gConn = setAdbTkipPskStaConn(v.ANDROID_SERIAL_NUM, "normal", "guest", self.__class__.__name__)
         if res2gConn:
-            result = getAdbShellWlan(self.device[0], self.__class__.__name__)
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             if result['ip'] == '':
                 self.fail(msg='no ip address got.')
             else:
-                resPingPercent = getAdbPingStatus(self.device[0], v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
+                resPingPercent = getAdbPingStatus(v.ANDROID_SERIAL_NUM, v.PING_TARGET, v.PING_COUNT,
+                                                  self.__class__.__name__)
                 self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
                                         "Ping responsed percent werenot good enough.")
         else:
@@ -5623,9 +5661,8 @@ class AP_GUEST_CLEAR_WHITELIST(TestCase):
             'option': 0
         }
         api.setEditDevice(self.dut, self.__name__, **option)
-        self.device = getAdbDevices()
 
-        wlanInfo = getAdbShellWlan(self.device[0], self.__name__)
+        wlanInfo = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__name__)
         self.staMac = wlanInfo["mac"].upper()
 
     @classmethod
@@ -5652,12 +5689,13 @@ class AP_GUEST_CLEAR_WHITELIST(TestCase):
         }
         api.setEditDevice(self.dut, self.__class__.__name__, **option)
 
-        res2gConn = setAdbClearStaConn(self.device[0], "normal", "guest", self.__class__.__name__)
+        res2gConn = setAdbClearStaConn(v.ANDROID_SERIAL_NUM, "normal", "guest", self.__class__.__name__)
 
         if res2gConn:
-            result = getAdbShellWlan(self.device[0], self.__class__.__name__)
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             if result['ip'] != '':
-                resPingPercent = getAdbPingStatus(self.device[0], v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
+                resPingPercent = getAdbPingStatus(v.ANDROID_SERIAL_NUM, v.PING_TARGET, v.PING_COUNT,
+                                                  self.__class__.__name__)
                 passPercent = resPingPercent['pass']
             else:
                 passPercent = 0
@@ -5672,7 +5710,7 @@ class AP_GUEST_CLEAR_WHITELIST(TestCase):
         if res2gConn is False:
             self.fail("Association wasnot successful which sta in whitelist.")
         self.assertGreaterEqual(passPercent, v.PING_PERCENT_PASS,
-                                        "Ping responsed percent werenot good enough.")
+                                "Ping responsed percent werenot good enough.")
 
         # connType = api.getOnlineDeviceType(self.dut, self.__class__.__name__)
         # if self.staMac in connType.keys():
@@ -5680,7 +5718,7 @@ class AP_GUEST_CLEAR_WHITELIST(TestCase):
 
     def assoc_clear_sta_outof_whitelist_guest(self):
 
-        res2gConn = setAdbClearStaConn(self.device[0], "normal", "guest", self.__class__.__name__)
+        res2gConn = setAdbClearStaConn(v.ANDROID_SERIAL_NUM, "normal", "guest", self.__class__.__name__)
         self.assertFalse(res2gConn, "Association wasnot supposed to be successful which sta outof whitelist.")
         # option = {
         #     'model': 1,
@@ -5689,7 +5727,7 @@ class AP_GUEST_CLEAR_WHITELIST(TestCase):
         # }
         # api.setEditDevice(self.dut, self.__class__.__name__, **option)
         #
-        # res2gConn = setAdbClearStaConn(self.device[0], "normal", "guest", self.__class__.__name__)
+        # res2gConn = setAdbClearStaConn(v.ANDROID_SERIAL_NUM, "normal", "guest", self.__class__.__name__)
         # self.assertTrue(res2gConn, "Association should be successful when no sta in whitelist at all.")
         #
         # option = {
@@ -5718,9 +5756,8 @@ class AP_GUEST_CLEAR_BLACKLIST(TestCase):
             'encryption': 'none',
         }
         api.setWifi(self.dut, self.__name__, **optionGuest)
-        self.device = getAdbDevices()
 
-        wlanInfo = getAdbShellWlan(self.device[0], self.__name__)
+        wlanInfo = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__name__)
         self.staMac = wlanInfo["mac"].upper()
 
     @classmethod
@@ -5735,14 +5772,15 @@ class AP_GUEST_CLEAR_BLACKLIST(TestCase):
 
     def assoc_clear_sta_outof_blacklist_guest(self):
 
-        res2gConn = setAdbClearStaConn(self.device[0], "normal", "guest", self.__class__.__name__)
+        res2gConn = setAdbClearStaConn(v.ANDROID_SERIAL_NUM, "normal", "guest", self.__class__.__name__)
 
         if res2gConn:
-            result = getAdbShellWlan(self.device[0], self.__class__.__name__)
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             if result['ip'] == '':
                 self.fail(msg='no ip address got.')
             else:
-                resPingPercent = getAdbPingStatus(self.device[0], v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
+                resPingPercent = getAdbPingStatus(v.ANDROID_SERIAL_NUM, v.PING_TARGET, v.PING_COUNT,
+                                                  self.__class__.__name__)
                 self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
                                         "Ping responsed percent werenot good enough.")
         else:
@@ -5750,7 +5788,7 @@ class AP_GUEST_CLEAR_BLACKLIST(TestCase):
 
     def assoc_clear_sta_in_blacklist_guest(self):
 
-        res2gConn = setAdbClearStaConn(self.device[0], "normal", "guest", self.__class__.__name__)
+        res2gConn = setAdbClearStaConn(v.ANDROID_SERIAL_NUM, "normal", "guest", self.__class__.__name__)
         self.assertTrue(res2gConn, "Association should be successful which sta outof blacklist.")
 
         option = {
@@ -5762,7 +5800,7 @@ class AP_GUEST_CLEAR_BLACKLIST(TestCase):
 
         connType = api.getOnlineDeviceType(self.dut, self.__class__.__name__)
 
-        res2gConn = setAdbClearStaConn(self.device[0], "normal", "guest", self.__class__.__name__)
+        res2gConn = setAdbClearStaConn(v.ANDROID_SERIAL_NUM, "normal", "guest", self.__class__.__name__)
 
         option = {
             'model': 0,
@@ -5775,6 +5813,7 @@ class AP_GUEST_CLEAR_BLACKLIST(TestCase):
             self.fail(msg='STA should be kicked off.')
 
         self.assertFalse(res2gConn, "Association wasnot supposed to be successful which sta in blacklist.")
+
 
 class AP_GUEST_CLEAR_REPEAT(TestCase):
     @classmethod
@@ -5795,7 +5834,6 @@ class AP_GUEST_CLEAR_REPEAT(TestCase):
             'encryption': 'none',
         }
         api.setWifi(self.dut, self.__name__, **optionGuest)
-        self.device = getAdbDevices()
 
     @classmethod
     def tearDownClass(self):
@@ -5808,7 +5846,7 @@ class AP_GUEST_CLEAR_REPEAT(TestCase):
 
     def assoc_repeat_clear_sta_guest(self):
 
-        res2gConn = setAdbClearStaConnRepeat(self.device[0], "normal", "guest", self.__class__.__name__)
+        res2gConn = setAdbClearStaConnRepeat(v.ANDROID_SERIAL_NUM, "normal", "guest", self.__class__.__name__)
 
         self.assertTrue(res2gConn, "Not all association were successful.")
 
@@ -5833,7 +5871,6 @@ class AP_GUEST_MIXEDPSK_REPEAT(TestCase):
             'pwd': v.KEY,
         }
         api.setWifi(self.dut, self.__name__, **optionGuest)
-        self.device = getAdbDevices()
 
     @classmethod
     def tearDownClass(self):
@@ -5846,25 +5883,25 @@ class AP_GUEST_MIXEDPSK_REPEAT(TestCase):
 
     def assoc_repeat_psk2_sta_guest(self):
 
-        res2gConn = setAdbPsk2StaConnRepeat(self.device[0], "normal", "guest", self.__class__.__name__)
+        res2gConn = setAdbPsk2StaConnRepeat(v.ANDROID_SERIAL_NUM, "normal", "guest", self.__class__.__name__)
 
         self.assertTrue(res2gConn, "Not all association were successful.")
 
     def assoc_repeat_psk_sta_guest(self):
 
-        res2gConn = setAdbPskStaConnRepeat(self.device[0], "normal", "guest", self.__class__.__name__)
+        res2gConn = setAdbPskStaConnRepeat(v.ANDROID_SERIAL_NUM, "normal", "guest", self.__class__.__name__)
 
         self.assertTrue(res2gConn, "Not all association were successful.")
 
     def assoc_repeat_tkippsk2_sta_guest(self):
 
-        res2gConn = setAdbTkipPsk2StaConnRepeat(self.device[0], "normal", "guest", self.__class__.__name__)
+        res2gConn = setAdbTkipPsk2StaConnRepeat(v.ANDROID_SERIAL_NUM, "normal", "guest", self.__class__.__name__)
 
         self.assertTrue(res2gConn, "Not all association were successful.")
 
     def assoc_repeat_tkippsk_sta_guest(self):
 
-        res2gConn = setAdbTkipPskStaConnRepeat(self.device[0], "normal", "guest", self.__class__.__name__)
+        res2gConn = setAdbTkipPskStaConnRepeat(v.ANDROID_SERIAL_NUM, "normal", "guest", self.__class__.__name__)
 
         self.assertTrue(res2gConn, "Not all association were successful.")
 
@@ -5889,7 +5926,6 @@ class AP_GUEST_PSK2_REPEAT(TestCase):
             'pwd': v.KEY,
         }
         api.setWifi(self.dut, self.__name__, **optionGuest)
-        self.device = getAdbDevices()
 
     @classmethod
     def tearDownClass(self):
@@ -5902,7 +5938,7 @@ class AP_GUEST_PSK2_REPEAT(TestCase):
 
     def assoc_repeat_psk2_sta_guest(self):
 
-        res2gConn = setAdbPsk2StaConnRepeat(self.device[0], "normal", "guest", self.__class__.__name__)
+        res2gConn = setAdbPsk2StaConnRepeat(v.ANDROID_SERIAL_NUM, "normal", "guest", self.__class__.__name__)
 
         self.assertTrue(res2gConn, "Not all association were successful.")
 
@@ -5921,8 +5957,6 @@ class AP_SSIDHIDE(TestCase):
         if ret2 is False:
             raise Exception("USB devices arenot ready!")
 
-        self.device = getAdbDevices()
-
     @classmethod
     def tearDownClass(self):
         self.dut.close()
@@ -5936,7 +5970,7 @@ class AP_SSIDHIDE(TestCase):
         }
         api.setWifi(self.dut, self.__class__.__name__, **option2g)
 
-        ret2g = setAdbScanSsidNoExist(self.device[0], "normal", "2g", self.__class__.__name__)
+        ret2g = setAdbScanSsidNoExist(v.ANDROID_SERIAL_NUM, "normal", "2g", self.__class__.__name__)
 
         option2g = {
             'wifiIndex': 1,
@@ -5958,7 +5992,7 @@ class AP_SSIDHIDE(TestCase):
 
         api.setWifi(self.dut, self.__class__.__name__, **option5g)
 
-        ret5g = setAdbScanSsidNoExist(self.device[0], "normal", "5g", self.__class__.__name__)
+        ret5g = setAdbScanSsidNoExist(v.ANDROID_SERIAL_NUM, "normal", "5g", self.__class__.__name__)
 
         option5g = {
             'wifiIndex': 2,
@@ -5979,7 +6013,7 @@ class AP_SSIDHIDE(TestCase):
         }
         api.setWifi(self.dut, self.__class__.__name__, **option2g)
 
-        ret2g = setAdbScanSsidNoExist(self.device[0], "normal", "2g", self.__class__.__name__)
+        ret2g = setAdbScanSsidNoExist(v.ANDROID_SERIAL_NUM, "normal", "2g", self.__class__.__name__)
 
         option2g = {
             'wifiIndex': 1,
@@ -6000,7 +6034,7 @@ class AP_SSIDHIDE(TestCase):
         }
         api.setWifi(self.dut, self.__class__.__name__, **option5g)
 
-        ret5g = setAdbScanSsidNoExist(self.device[0], "normal", "5g", self.__class__.__name__)
+        ret5g = setAdbScanSsidNoExist(v.ANDROID_SERIAL_NUM, "normal", "5g", self.__class__.__name__)
 
         option5g = {
             'wifiIndex': 2,
@@ -6021,7 +6055,7 @@ class AP_SSIDHIDE(TestCase):
         }
         api.setWifi(self.dut, self.__class__.__name__, **option2g)
 
-        ret2g = setAdbScanSsidNoExist(self.device[0], "normal", "2g", self.__class__.__name__)
+        ret2g = setAdbScanSsidNoExist(v.ANDROID_SERIAL_NUM, "normal", "2g", self.__class__.__name__)
 
         option2g = {
             'wifiIndex': 1,
@@ -6042,7 +6076,7 @@ class AP_SSIDHIDE(TestCase):
         }
         api.setWifi(self.dut, self.__class__.__name__, **option5g)
 
-        ret5g = setAdbScanSsidNoExist(self.device[0], "normal", "5g", self.__class__.__name__)
+        ret5g = setAdbScanSsidNoExist(v.ANDROID_SERIAL_NUM, "normal", "5g", self.__class__.__name__)
 
         option5g = {
             'wifiIndex': 2,
@@ -6083,7 +6117,6 @@ class AP_MIXEDPSK_SSIDHIDE(TestCase):
 
         api.setWifi(self.dut, self.__name__, **option2g)
         api.setWifi(self.dut, self.__name__, **option5g)
-        self.device = getAdbDevices()
 
     @classmethod
     def tearDownClass(self):
@@ -6101,13 +6134,14 @@ class AP_MIXEDPSK_SSIDHIDE(TestCase):
 
     def assoc_psk2_sta_2g(self):
 
-        res2gConn = setAdbPsk2Sta(self.device[0], v.SSID, v.KEY, "2g", self.__class__.__name__)
+        res2gConn = setAdbPsk2Sta(v.ANDROID_SERIAL_NUM, v.SSID, v.KEY, "2g", self.__class__.__name__)
         if res2gConn:
-            result = getAdbShellWlan(self.device[0], self.__class__.__name__)
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             if result['ip'] == '':
                 self.fail(msg='no ip address got.')
             else:
-                resPingPercent = getAdbPingStatus(self.device[0], v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
+                resPingPercent = getAdbPingStatus(v.ANDROID_SERIAL_NUM, v.PING_TARGET, v.PING_COUNT,
+                                                  self.__class__.__name__)
                 self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
                                         "Ping responsed percent werenot good enough.")
         else:
@@ -6115,13 +6149,14 @@ class AP_MIXEDPSK_SSIDHIDE(TestCase):
 
     def assoc_psk2_sta_5g(self):
 
-        res5gConn = setAdbPsk2Sta(self.device[0], v.SSID_5G, v.KEY, "5g", self.__class__.__name__)
+        res5gConn = setAdbPsk2Sta(v.ANDROID_SERIAL_NUM, v.SSID_5G, v.KEY, "5g", self.__class__.__name__)
         if res5gConn:
-            result = getAdbShellWlan(self.device[0], self.__class__.__name__)
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             if result['ip'] == '':
                 self.fail(msg='no ip address got.')
             else:
-                resPingPercent = getAdbPingStatus(self.device[0], v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
+                resPingPercent = getAdbPingStatus(v.ANDROID_SERIAL_NUM, v.PING_TARGET, v.PING_COUNT,
+                                                  self.__class__.__name__)
                 self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
                                         "Ping responsed percent werenot good enough.")
         else:
@@ -6129,13 +6164,14 @@ class AP_MIXEDPSK_SSIDHIDE(TestCase):
 
     def assoc_psk_sta_2g(self):
 
-        res2gConn = setAdbPskSta(self.device[0], v.SSID, v.KEY, "2g", self.__class__.__name__)
+        res2gConn = setAdbPskSta(v.ANDROID_SERIAL_NUM, v.SSID, v.KEY, "2g", self.__class__.__name__)
         if res2gConn:
-            result = getAdbShellWlan(self.device[0], self.__class__.__name__)
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             if result['ip'] == '':
                 self.fail(msg='no ip address got.')
             else:
-                resPingPercent = getAdbPingStatus(self.device[0], v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
+                resPingPercent = getAdbPingStatus(v.ANDROID_SERIAL_NUM, v.PING_TARGET, v.PING_COUNT,
+                                                  self.__class__.__name__)
                 self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
                                         "Ping responsed percent werenot good enough.")
         else:
@@ -6143,13 +6179,14 @@ class AP_MIXEDPSK_SSIDHIDE(TestCase):
 
     def assoc_psk_sta_5g(self):
 
-        res5gConn = setAdbPskSta(self.device[0], v.SSID_5G, v.KEY, "5g", self.__class__.__name__)
+        res5gConn = setAdbPskSta(v.ANDROID_SERIAL_NUM, v.SSID_5G, v.KEY, "5g", self.__class__.__name__)
         if res5gConn:
-            result = getAdbShellWlan(self.device[0], self.__class__.__name__)
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             if result['ip'] == '':
                 self.fail(msg='no ip address got.')
             else:
-                resPingPercent = getAdbPingStatus(self.device[0], v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
+                resPingPercent = getAdbPingStatus(v.ANDROID_SERIAL_NUM, v.PING_TARGET, v.PING_COUNT,
+                                                  self.__class__.__name__)
                 self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
                                         "Ping responsed percent werenot good enough.")
         else:
@@ -6157,13 +6194,14 @@ class AP_MIXEDPSK_SSIDHIDE(TestCase):
 
     def assoc_tkippsk2_sta_2g(self):
 
-        res2gConn = setAdbTkipPsk2Sta(self.device[0], v.SSID, v.KEY, "2g", self.__class__.__name__)
+        res2gConn = setAdbTkipPsk2Sta(v.ANDROID_SERIAL_NUM, v.SSID, v.KEY, "2g", self.__class__.__name__)
         if res2gConn:
-            result = getAdbShellWlan(self.device[0], self.__class__.__name__)
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             if result['ip'] == '':
                 self.fail(msg='no ip address got.')
             else:
-                resPingPercent = getAdbPingStatus(self.device[0], v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
+                resPingPercent = getAdbPingStatus(v.ANDROID_SERIAL_NUM, v.PING_TARGET, v.PING_COUNT,
+                                                  self.__class__.__name__)
                 self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
                                         "Ping responsed percent werenot good enough.")
         else:
@@ -6171,13 +6209,14 @@ class AP_MIXEDPSK_SSIDHIDE(TestCase):
 
     def assoc_tkippsk2_sta_5g(self):
 
-        res5gConn = setAdbTkipPsk2Sta(self.device[0], v.SSID_5G, v.KEY, "5g", self.__class__.__name__)
+        res5gConn = setAdbTkipPsk2Sta(v.ANDROID_SERIAL_NUM, v.SSID_5G, v.KEY, "5g", self.__class__.__name__)
         if res5gConn:
-            result = getAdbShellWlan(self.device[0], self.__class__.__name__)
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             if result['ip'] == '':
                 self.fail(msg='no ip address got.')
             else:
-                resPingPercent = getAdbPingStatus(self.device[0], v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
+                resPingPercent = getAdbPingStatus(v.ANDROID_SERIAL_NUM, v.PING_TARGET, v.PING_COUNT,
+                                                  self.__class__.__name__)
                 self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
                                         "Ping responsed percent werenot good enough.")
         else:
@@ -6185,13 +6224,14 @@ class AP_MIXEDPSK_SSIDHIDE(TestCase):
 
     def assoc_tkippsk_sta_2g(self):
 
-        res2gConn = setAdbTkipPskSta(self.device[0], v.SSID, v.KEY, "2g", self.__class__.__name__)
+        res2gConn = setAdbTkipPskSta(v.ANDROID_SERIAL_NUM, v.SSID, v.KEY, "2g", self.__class__.__name__)
         if res2gConn:
-            result = getAdbShellWlan(self.device[0], self.__class__.__name__)
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             if result['ip'] == '':
                 self.fail(msg='no ip address got.')
             else:
-                resPingPercent = getAdbPingStatus(self.device[0], v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
+                resPingPercent = getAdbPingStatus(v.ANDROID_SERIAL_NUM, v.PING_TARGET, v.PING_COUNT,
+                                                  self.__class__.__name__)
                 self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
                                         "Ping responsed percent werenot good enough.")
         else:
@@ -6199,13 +6239,14 @@ class AP_MIXEDPSK_SSIDHIDE(TestCase):
 
     def assoc_tkippsk_sta_5g(self):
 
-        res5gConn = setAdbTkipPskSta(self.device[0], v.SSID_5G, v.KEY, "5g", self.__class__.__name__)
+        res5gConn = setAdbTkipPskSta(v.ANDROID_SERIAL_NUM, v.SSID_5G, v.KEY, "5g", self.__class__.__name__)
         if res5gConn:
-            result = getAdbShellWlan(self.device[0], self.__class__.__name__)
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             if result['ip'] == '':
                 self.fail(msg='no ip address got.')
             else:
-                resPingPercent = getAdbPingStatus(self.device[0], v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
+                resPingPercent = getAdbPingStatus(v.ANDROID_SERIAL_NUM, v.PING_TARGET, v.PING_COUNT,
+                                                  self.__class__.__name__)
                 self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
                                         "Ping responsed percent werenot good enough.")
         else:
@@ -6225,8 +6266,6 @@ class AP_BSD_SSIDHIDE(TestCase):
 
         if ret2 is False:
             raise Exception("USB devices arenot ready!")
-
-        self.device = getAdbDevices()
 
     @classmethod
     def tearDownClass(self):
@@ -6253,7 +6292,7 @@ class AP_BSD_SSIDHIDE(TestCase):
         }
         api.setAllWifi(self.dut, self.__class__.__name__, **option)
 
-        ret = setAdbScanSsidNoExist(self.device[0], "normal", "2g", self.__class__.__name__)
+        ret = setAdbScanSsidNoExist(v.ANDROID_SERIAL_NUM, "normal", "2g", self.__class__.__name__)
 
         api.setAllWifi(self.dut, self.__class__.__name__)
 
@@ -6270,7 +6309,7 @@ class AP_BSD_SSIDHIDE(TestCase):
         }
         api.setAllWifi(self.dut, self.__class__.__name__, **option)
 
-        ret = setAdbScanSsidNoExist(self.device[0], "normal", "2g", self.__class__.__name__)
+        ret = setAdbScanSsidNoExist(v.ANDROID_SERIAL_NUM, "normal", "2g", self.__class__.__name__)
 
         api.setAllWifi(self.dut, self.__class__.__name__)
 
@@ -6287,7 +6326,7 @@ class AP_BSD_SSIDHIDE(TestCase):
         }
         api.setAllWifi(self.dut, self.__class__.__name__, **option)
 
-        ret = setAdbScanSsidNoExist(self.device[0], "normal", "2g", self.__class__.__name__)
+        ret = setAdbScanSsidNoExist(v.ANDROID_SERIAL_NUM, "normal", "2g", self.__class__.__name__)
 
         api.setAllWifi(self.dut, self.__class__.__name__)
 
@@ -6324,7 +6363,6 @@ class AP_RELAY_CLEAR_CHAN(TestCase):
         }
         api.setWifi(self.dut, self.__name__, **option2g)
         api.setWifi(self.dut, self.__name__, **option5g)
-        self.device = getAdbDevices()
 
     @classmethod
     def tearDownClass(self):
@@ -6345,13 +6383,14 @@ class AP_RELAY_CLEAR_CHAN(TestCase):
 
     def assoc_clear_sta_2g(self):
 
-        res2gConn = setAdbClearStaConn(self.device[0], "normal", "2g", self.__class__.__name__)
+        res2gConn = setAdbClearStaConn(v.ANDROID_SERIAL_NUM, "normal", "2g", self.__class__.__name__)
         if res2gConn:
-            result = getAdbShellWlan(self.device[0], self.__class__.__name__)
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             if result['ip'] == '':
                 self.fail(msg='no ip address got.')
             else:
-                resPingPercent = getAdbPingStatus(self.device[0], v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
+                resPingPercent = getAdbPingStatus(v.ANDROID_SERIAL_NUM, v.PING_TARGET, v.PING_COUNT,
+                                                  self.__class__.__name__)
                 self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
                                         "Ping responsed percent werenot good enough.")
         else:
@@ -6359,13 +6398,14 @@ class AP_RELAY_CLEAR_CHAN(TestCase):
 
     def assoc_clear_sta_5g(self):
 
-        res5gConn = setAdbClearStaConn(self.device[0], "normal", "5g", self.__class__.__name__)
+        res5gConn = setAdbClearStaConn(v.ANDROID_SERIAL_NUM, "normal", "5g", self.__class__.__name__)
         if res5gConn:
-            result = getAdbShellWlan(self.device[0], self.__class__.__name__)
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             if result['ip'] == '':
                 self.fail(msg='no ip address got.')
             else:
-                resPingPercent = getAdbPingStatus(self.device[0], v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
+                resPingPercent = getAdbPingStatus(v.ANDROID_SERIAL_NUM, v.PING_TARGET, v.PING_COUNT,
+                                                  self.__class__.__name__)
                 self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
                                         "Ping responsed percent werenot good enough.")
         else:
@@ -6402,8 +6442,6 @@ class AP_RELAY_CLEAR_LOW(TestCase):
         api.setWifi(self.dut, self.__name__, **option2g)
         api.setWifi(self.dut, self.__name__, **option5g)
 
-        self.device = getAdbDevices()
-
     @classmethod
     def tearDownClass(self):
         option2g = {
@@ -6423,13 +6461,14 @@ class AP_RELAY_CLEAR_LOW(TestCase):
 
     def assoc_clear_sta_2g(self):
 
-        res2gConn = setAdbClearStaConn(self.device[0], "normal", "2g", self.__class__.__name__)
+        res2gConn = setAdbClearStaConn(v.ANDROID_SERIAL_NUM, "normal", "2g", self.__class__.__name__)
         if res2gConn:
-            result = getAdbShellWlan(self.device[0], self.__class__.__name__)
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             if result['ip'] == '':
                 self.fail(msg='no ip address got.')
             else:
-                resPingPercent = getAdbPingStatus(self.device[0], v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
+                resPingPercent = getAdbPingStatus(v.ANDROID_SERIAL_NUM, v.PING_TARGET, v.PING_COUNT,
+                                                  self.__class__.__name__)
                 self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
                                         "Ping responsed percent werenot good enough.")
         else:
@@ -6437,13 +6476,14 @@ class AP_RELAY_CLEAR_LOW(TestCase):
 
     def assoc_clear_sta_5g(self):
 
-        res5gConn = setAdbClearStaConn(self.device[0], "normal", "5g", self.__class__.__name__)
+        res5gConn = setAdbClearStaConn(v.ANDROID_SERIAL_NUM, "normal", "5g", self.__class__.__name__)
         if res5gConn:
-            result = getAdbShellWlan(self.device[0], self.__class__.__name__)
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             if result['ip'] == '':
                 self.fail(msg='no ip address got.')
             else:
-                resPingPercent = getAdbPingStatus(self.device[0], v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
+                resPingPercent = getAdbPingStatus(v.ANDROID_SERIAL_NUM, v.PING_TARGET, v.PING_COUNT,
+                                                  self.__class__.__name__)
                 self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
                                         "Ping responsed percent werenot good enough.")
         else:
@@ -6477,7 +6517,6 @@ class AP_RELAY_CLEAR_MID(TestCase):
         }
         api.setWifi(self.dut, self.__name__, **option2g)
         api.setWifi(self.dut, self.__name__, **option5g)
-        self.device = getAdbDevices()
 
     @classmethod
     def tearDownClass(self):
@@ -6498,13 +6537,14 @@ class AP_RELAY_CLEAR_MID(TestCase):
 
     def assoc_clear_sta_2g(self):
 
-        res2gConn = setAdbClearStaConn(self.device[0], "normal", "2g", self.__class__.__name__)
+        res2gConn = setAdbClearStaConn(v.ANDROID_SERIAL_NUM, "normal", "2g", self.__class__.__name__)
         if res2gConn:
-            result = getAdbShellWlan(self.device[0], self.__class__.__name__)
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             if result['ip'] == '':
                 self.fail(msg='no ip address got.')
             else:
-                resPingPercent = getAdbPingStatus(self.device[0], v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
+                resPingPercent = getAdbPingStatus(v.ANDROID_SERIAL_NUM, v.PING_TARGET, v.PING_COUNT,
+                                                  self.__class__.__name__)
                 self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
                                         "Ping responsed percent werenot good enough.")
         else:
@@ -6512,13 +6552,14 @@ class AP_RELAY_CLEAR_MID(TestCase):
 
     def assoc_clear_sta_5g(self):
 
-        res5gConn = setAdbClearStaConn(self.device[0], "normal", "5g", self.__class__.__name__)
+        res5gConn = setAdbClearStaConn(v.ANDROID_SERIAL_NUM, "normal", "5g", self.__class__.__name__)
         if res5gConn:
-            result = getAdbShellWlan(self.device[0], self.__class__.__name__)
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             if result['ip'] == '':
                 self.fail(msg='no ip address got.')
             else:
-                resPingPercent = getAdbPingStatus(self.device[0], v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
+                resPingPercent = getAdbPingStatus(v.ANDROID_SERIAL_NUM, v.PING_TARGET, v.PING_COUNT,
+                                                  self.__class__.__name__)
                 self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
                                         "Ping responsed percent werenot good enough.")
         else:
@@ -6554,7 +6595,6 @@ class AP_RELAY_CLEAR_HIGH(TestCase):
         }
         api.setWifi(self.dut, self.__name__, **option2g)
         api.setWifi(self.dut, self.__name__, **option5g)
-        self.device = getAdbDevices()
 
     @classmethod
     def tearDownClass(self):
@@ -6575,13 +6615,14 @@ class AP_RELAY_CLEAR_HIGH(TestCase):
 
     def assoc_clear_sta_2g(self):
 
-        res2gConn = setAdbClearStaConn(self.device[0], "normal", "2g", self.__class__.__name__)
+        res2gConn = setAdbClearStaConn(v.ANDROID_SERIAL_NUM, "normal", "2g", self.__class__.__name__)
         if res2gConn:
-            result = getAdbShellWlan(self.device[0], self.__class__.__name__)
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             if result['ip'] == '':
                 self.fail(msg='no ip address got.')
             else:
-                resPingPercent = getAdbPingStatus(self.device[0], v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
+                resPingPercent = getAdbPingStatus(v.ANDROID_SERIAL_NUM, v.PING_TARGET, v.PING_COUNT,
+                                                  self.__class__.__name__)
                 self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
                                         "Ping responsed percent werenot good enough.")
         else:
@@ -6589,13 +6630,14 @@ class AP_RELAY_CLEAR_HIGH(TestCase):
 
     def assoc_clear_sta_5g(self):
 
-        res5gConn = setAdbClearStaConn(self.device[0], "normal", "5g", self.__class__.__name__)
+        res5gConn = setAdbClearStaConn(v.ANDROID_SERIAL_NUM, "normal", "5g", self.__class__.__name__)
         if res5gConn:
-            result = getAdbShellWlan(self.device[0], self.__class__.__name__)
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             if result['ip'] == '':
                 self.fail(msg='no ip address got.')
             else:
-                resPingPercent = getAdbPingStatus(self.device[0], v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
+                resPingPercent = getAdbPingStatus(v.ANDROID_SERIAL_NUM, v.PING_TARGET, v.PING_COUNT,
+                                                  self.__class__.__name__)
                 self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
                                         "Ping responsed percent werenot good enough.")
         else:
@@ -6613,10 +6655,10 @@ class AP_RELAY_CLEAR_LOW_TXPOWER(TestCase):
 
         api.setLanAp(self.dut2, self.__name__)
 
-        self.dut = SshClient(v.CONNECTION_TYPE)
+        self.dut = ShellClient(v.CONNECTION_TYPE)
         ret1 = self.dut.connect(v.HOST, v.USR, v.PASSWD)
         if ret1 is False:
-            raise Exception('Connection is failed for sshclient after setLanAp.')
+            raise Exception('Connection is failed for shell after setLanAp.')
 
     @classmethod
     def tearDownClass(self):
@@ -7034,10 +7076,10 @@ class AP_RELAY_CLEAR_MID_TXPOWER(TestCase):
 
         api.setLanAp(self.dut2, self.__name__)
 
-        self.dut = SshClient(v.CONNECTION_TYPE)
+        self.dut = ShellClient(v.CONNECTION_TYPE)
         ret1 = self.dut.connect(v.HOST, v.USR, v.PASSWD)
         if ret1 is False:
-            raise Exception('Connection is failed for sshclient after setLanAp.')
+            raise Exception('Connection is failed for shell after setLanAp.')
 
     @classmethod
     def tearDownClass(self):
@@ -7462,10 +7504,10 @@ class AP_RELAY_CLEAR_HIGH_TXPOWER(TestCase):
 
         api.setLanAp(self.dut2, self.__name__)
 
-        self.dut = SshClient(v.CONNECTION_TYPE)
+        self.dut = ShellClient(v.CONNECTION_TYPE)
         ret1 = self.dut.connect(v.HOST, v.USR, v.PASSWD)
         if ret1 is False:
-            raise Exception('Connection is failed for sshclient after setLanAp.')
+            raise Exception('Connection is failed for shell after setLanAp.')
 
     @classmethod
     def tearDownClass(self):
@@ -7964,7 +8006,6 @@ class AP_RELAY_PSK2(TestCase):
 
         api.setWifi(self.dut, self.__name__, **option2g)
         api.setWifi(self.dut, self.__name__, **option5g)
-        self.device = getAdbDevices()
 
     @classmethod
     def tearDownClass(self):
@@ -7985,13 +8026,14 @@ class AP_RELAY_PSK2(TestCase):
 
     def assoc_psk2_sta_2g(self):
 
-        res2gConn = setAdbPsk2StaConn(self.device[0], "normal", "2g", self.__class__.__name__)
+        res2gConn = setAdbPsk2StaConn(v.ANDROID_SERIAL_NUM, "normal", "2g", self.__class__.__name__)
         if res2gConn:
-            result = getAdbShellWlan(self.device[0], self.__class__.__name__)
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             if result['ip'] == '':
                 self.fail(msg='no ip address got.')
             else:
-                resPingPercent = getAdbPingStatus(self.device[0], v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
+                resPingPercent = getAdbPingStatus(v.ANDROID_SERIAL_NUM, v.PING_TARGET, v.PING_COUNT,
+                                                  self.__class__.__name__)
                 self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
                                         "Ping responsed percent werenot good enough.")
         else:
@@ -7999,13 +8041,14 @@ class AP_RELAY_PSK2(TestCase):
 
     def assoc_psk2_sta_5g(self):
 
-        res5gConn = setAdbPsk2StaConn(self.device[0], "normal", "5g", self.__class__.__name__)
+        res5gConn = setAdbPsk2StaConn(v.ANDROID_SERIAL_NUM, "normal", "5g", self.__class__.__name__)
         if res5gConn:
-            result = getAdbShellWlan(self.device[0], self.__class__.__name__)
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             if result['ip'] == '':
                 self.fail(msg='no ip address got.')
             else:
-                resPingPercent = getAdbPingStatus(self.device[0], v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
+                resPingPercent = getAdbPingStatus(v.ANDROID_SERIAL_NUM, v.PING_TARGET, v.PING_COUNT,
+                                                  self.__class__.__name__)
                 self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
                                         "Ping responsed percent werenot good enough.")
         else:
@@ -8043,8 +8086,6 @@ class AP_RELAY_MIXEDPSK(TestCase):
         api.setWifi(self.dut, self.__name__, **option2g)
         api.setWifi(self.dut, self.__name__, **option5g)
 
-        self.device = getAdbDevices()
-
     @classmethod
     def tearDownClass(self):
 
@@ -8065,13 +8106,14 @@ class AP_RELAY_MIXEDPSK(TestCase):
 
     def assoc_psk2_sta_2g(self):
 
-        res2gConn = setAdbPsk2StaConn(self.device[0], "normal", "2g", self.__class__.__name__)
+        res2gConn = setAdbPsk2StaConn(v.ANDROID_SERIAL_NUM, "normal", "2g", self.__class__.__name__)
         if res2gConn:
-            result = getAdbShellWlan(self.device[0], self.__class__.__name__)
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             if result['ip'] == '':
                 self.fail(msg='no ip address got.')
             else:
-                resPingPercent = getAdbPingStatus(self.device[0], v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
+                resPingPercent = getAdbPingStatus(v.ANDROID_SERIAL_NUM, v.PING_TARGET, v.PING_COUNT,
+                                                  self.__class__.__name__)
                 self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
                                         "Ping responsed percent werenot good enough.")
         else:
@@ -8079,13 +8121,14 @@ class AP_RELAY_MIXEDPSK(TestCase):
 
     def assoc_psk2_sta_5g(self):
 
-        res5gConn = setAdbPsk2StaConn(self.device[0], "normal", "5g", self.__class__.__name__)
+        res5gConn = setAdbPsk2StaConn(v.ANDROID_SERIAL_NUM, "normal", "5g", self.__class__.__name__)
         if res5gConn:
-            result = getAdbShellWlan(self.device[0], self.__class__.__name__)
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             if result['ip'] == '':
                 self.fail(msg='no ip address got.')
             else:
-                resPingPercent = getAdbPingStatus(self.device[0], v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
+                resPingPercent = getAdbPingStatus(v.ANDROID_SERIAL_NUM, v.PING_TARGET, v.PING_COUNT,
+                                                  self.__class__.__name__)
                 self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
                                         "Ping responsed percent werenot good enough.")
         else:
@@ -8093,13 +8136,14 @@ class AP_RELAY_MIXEDPSK(TestCase):
 
     def assoc_psk_sta_2g(self):
 
-        res2gConn = setAdbPskStaConn(self.device[0], "normal", "2g", self.__class__.__name__)
+        res2gConn = setAdbPskStaConn(v.ANDROID_SERIAL_NUM, "normal", "2g", self.__class__.__name__)
         if res2gConn:
-            result = getAdbShellWlan(self.device[0], self.__class__.__name__)
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             if result['ip'] == '':
                 self.fail(msg='no ip address got.')
             else:
-                resPingPercent = getAdbPingStatus(self.device[0], v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
+                resPingPercent = getAdbPingStatus(v.ANDROID_SERIAL_NUM, v.PING_TARGET, v.PING_COUNT,
+                                                  self.__class__.__name__)
                 self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
                                         "Ping responsed percent werenot good enough.")
         else:
@@ -8107,13 +8151,14 @@ class AP_RELAY_MIXEDPSK(TestCase):
 
     def assoc_psk_sta_5g(self):
 
-        res5gConn = setAdbPskStaConn(self.device[0], "normal", "5g", self.__class__.__name__)
+        res5gConn = setAdbPskStaConn(v.ANDROID_SERIAL_NUM, "normal", "5g", self.__class__.__name__)
         if res5gConn:
-            result = getAdbShellWlan(self.device[0], self.__class__.__name__)
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             if result['ip'] == '':
                 self.fail(msg='no ip address got.')
             else:
-                resPingPercent = getAdbPingStatus(self.device[0], v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
+                resPingPercent = getAdbPingStatus(v.ANDROID_SERIAL_NUM, v.PING_TARGET, v.PING_COUNT,
+                                                  self.__class__.__name__)
                 self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
                                         "Ping responsed percent werenot good enough.")
         else:
@@ -8121,13 +8166,14 @@ class AP_RELAY_MIXEDPSK(TestCase):
 
     def assoc_tkippsk2_sta_2g(self):
 
-        res2gConn = setAdbTkipPsk2StaConn(self.device[0], "normal", "2g", self.__class__.__name__)
+        res2gConn = setAdbTkipPsk2StaConn(v.ANDROID_SERIAL_NUM, "normal", "2g", self.__class__.__name__)
         if res2gConn:
-            result = getAdbShellWlan(self.device[0], self.__class__.__name__)
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             if result['ip'] == '':
                 self.fail(msg='no ip address got.')
             else:
-                resPingPercent = getAdbPingStatus(self.device[0], v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
+                resPingPercent = getAdbPingStatus(v.ANDROID_SERIAL_NUM, v.PING_TARGET, v.PING_COUNT,
+                                                  self.__class__.__name__)
                 self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
                                         "Ping responsed percent werenot good enough.")
         else:
@@ -8135,13 +8181,14 @@ class AP_RELAY_MIXEDPSK(TestCase):
 
     def assoc_tkippsk2_sta_5g(self):
 
-        res5gConn = setAdbTkipPsk2StaConn(self.device[0], "normal", "5g", self.__class__.__name__)
+        res5gConn = setAdbTkipPsk2StaConn(v.ANDROID_SERIAL_NUM, "normal", "5g", self.__class__.__name__)
         if res5gConn:
-            result = getAdbShellWlan(self.device[0], self.__class__.__name__)
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             if result['ip'] == '':
                 self.fail(msg='no ip address got.')
             else:
-                resPingPercent = getAdbPingStatus(self.device[0], v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
+                resPingPercent = getAdbPingStatus(v.ANDROID_SERIAL_NUM, v.PING_TARGET, v.PING_COUNT,
+                                                  self.__class__.__name__)
                 self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
                                         "Ping responsed percent werenot good enough.")
         else:
@@ -8149,13 +8196,14 @@ class AP_RELAY_MIXEDPSK(TestCase):
 
     def assoc_tkippsk_sta_2g(self):
 
-        res2gConn = setAdbTkipPskStaConn(self.device[0], "normal", "2g", self.__class__.__name__)
+        res2gConn = setAdbTkipPskStaConn(v.ANDROID_SERIAL_NUM, "normal", "2g", self.__class__.__name__)
         if res2gConn:
-            result = getAdbShellWlan(self.device[0], self.__class__.__name__)
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             if result['ip'] == '':
                 self.fail(msg='no ip address got.')
             else:
-                resPingPercent = getAdbPingStatus(self.device[0], v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
+                resPingPercent = getAdbPingStatus(v.ANDROID_SERIAL_NUM, v.PING_TARGET, v.PING_COUNT,
+                                                  self.__class__.__name__)
                 self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
                                         "Ping responsed percent werenot good enough.")
         else:
@@ -8163,13 +8211,14 @@ class AP_RELAY_MIXEDPSK(TestCase):
 
     def assoc_tkippsk_sta_5g(self):
 
-        res5gConn = setAdbTkipPskStaConn(self.device[0], "normal", "5g", self.__class__.__name__)
+        res5gConn = setAdbTkipPskStaConn(v.ANDROID_SERIAL_NUM, "normal", "5g", self.__class__.__name__)
         if res5gConn:
-            result = getAdbShellWlan(self.device[0], self.__class__.__name__)
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             if result['ip'] == '':
                 self.fail(msg='no ip address got.')
             else:
-                resPingPercent = getAdbPingStatus(self.device[0], v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
+                resPingPercent = getAdbPingStatus(v.ANDROID_SERIAL_NUM, v.PING_TARGET, v.PING_COUNT,
+                                                  self.__class__.__name__)
                 self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
                                         "Ping responsed percent werenot good enough.")
         else:
@@ -8202,8 +8251,6 @@ class AP_RELAY_MIXEDPSK_CHAN_BW80(TestCase):
 
         api.setWifi(self.dut, self.__name__, **option5g)
 
-        self.device = getAdbDevices()
-
     @classmethod
     def tearDownClass(self):
 
@@ -8219,13 +8266,14 @@ class AP_RELAY_MIXEDPSK_CHAN_BW80(TestCase):
 
     def assoc_psk2_sta_5g(self):
 
-        res5gConn = setAdbPsk2StaConn(self.device[0], "normal", "5g", self.__class__.__name__)
+        res5gConn = setAdbPsk2StaConn(v.ANDROID_SERIAL_NUM, "normal", "5g", self.__class__.__name__)
         if res5gConn:
-            result = getAdbShellWlan(self.device[0], self.__class__.__name__)
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             if result['ip'] == '':
                 self.fail(msg='no ip address got.')
             else:
-                resPingPercent = getAdbPingStatus(self.device[0], v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
+                resPingPercent = getAdbPingStatus(v.ANDROID_SERIAL_NUM, v.PING_TARGET, v.PING_COUNT,
+                                                  self.__class__.__name__)
                 self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
                                         "Ping responsed percent werenot good enough.")
         else:
@@ -8233,13 +8281,14 @@ class AP_RELAY_MIXEDPSK_CHAN_BW80(TestCase):
 
     def assoc_psk_sta_5g(self):
 
-        res5gConn = setAdbPskStaConn(self.device[0], "normal", "5g", self.__class__.__name__)
+        res5gConn = setAdbPskStaConn(v.ANDROID_SERIAL_NUM, "normal", "5g", self.__class__.__name__)
         if res5gConn:
-            result = getAdbShellWlan(self.device[0], self.__class__.__name__)
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             if result['ip'] == '':
                 self.fail(msg='no ip address got.')
             else:
-                resPingPercent = getAdbPingStatus(self.device[0], v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
+                resPingPercent = getAdbPingStatus(v.ANDROID_SERIAL_NUM, v.PING_TARGET, v.PING_COUNT,
+                                                  self.__class__.__name__)
                 self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
                                         "Ping responsed percent werenot good enough.")
         else:
@@ -8247,13 +8296,14 @@ class AP_RELAY_MIXEDPSK_CHAN_BW80(TestCase):
 
     def assoc_tkippsk2_sta_5g(self):
 
-        res5gConn = setAdbTkipPsk2StaConn(self.device[0], "normal", "5g", self.__class__.__name__)
+        res5gConn = setAdbTkipPsk2StaConn(v.ANDROID_SERIAL_NUM, "normal", "5g", self.__class__.__name__)
         if res5gConn:
-            result = getAdbShellWlan(self.device[0], self.__class__.__name__)
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             if result['ip'] == '':
                 self.fail(msg='no ip address got.')
             else:
-                resPingPercent = getAdbPingStatus(self.device[0], v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
+                resPingPercent = getAdbPingStatus(v.ANDROID_SERIAL_NUM, v.PING_TARGET, v.PING_COUNT,
+                                                  self.__class__.__name__)
                 self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
                                         "Ping responsed percent werenot good enough.")
         else:
@@ -8261,13 +8311,14 @@ class AP_RELAY_MIXEDPSK_CHAN_BW80(TestCase):
 
     def assoc_tkippsk_sta_5g(self):
 
-        res5gConn = setAdbTkipPskStaConn(self.device[0], "normal", "5g", self.__class__.__name__)
+        res5gConn = setAdbTkipPskStaConn(v.ANDROID_SERIAL_NUM, "normal", "5g", self.__class__.__name__)
         if res5gConn:
-            result = getAdbShellWlan(self.device[0], self.__class__.__name__)
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             if result['ip'] == '':
                 self.fail(msg='no ip address got.')
             else:
-                resPingPercent = getAdbPingStatus(self.device[0], v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
+                resPingPercent = getAdbPingStatus(v.ANDROID_SERIAL_NUM, v.PING_TARGET, v.PING_COUNT,
+                                                  self.__class__.__name__)
                 self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
                                         "Ping responsed percent werenot good enough.")
         else:
@@ -8309,8 +8360,6 @@ class AP_RELAY_MIXEDPSK_CHAN_BW40(TestCase):
         api.setWifi(self.dut, self.__name__, **option2g)
         api.setWifi(self.dut, self.__name__, **option5g)
 
-        self.device = getAdbDevices()
-
     @classmethod
     def tearDownClass(self):
 
@@ -8331,13 +8380,14 @@ class AP_RELAY_MIXEDPSK_CHAN_BW40(TestCase):
 
     def assoc_psk2_sta_5g(self):
 
-        res5gConn = setAdbPsk2StaConn(self.device[0], "normal", "5g", self.__class__.__name__)
+        res5gConn = setAdbPsk2StaConn(v.ANDROID_SERIAL_NUM, "normal", "5g", self.__class__.__name__)
         if res5gConn:
-            result = getAdbShellWlan(self.device[0], self.__class__.__name__)
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             if result['ip'] == '':
                 self.fail(msg='no ip address got.')
             else:
-                resPingPercent = getAdbPingStatus(self.device[0], v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
+                resPingPercent = getAdbPingStatus(v.ANDROID_SERIAL_NUM, v.PING_TARGET, v.PING_COUNT,
+                                                  self.__class__.__name__)
                 self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
                                         "Ping responsed percent werenot good enough.")
         else:
@@ -8345,13 +8395,14 @@ class AP_RELAY_MIXEDPSK_CHAN_BW40(TestCase):
 
     def assoc_psk_sta_5g(self):
 
-        res5gConn = setAdbPskStaConn(self.device[0], "normal", "5g", self.__class__.__name__)
+        res5gConn = setAdbPskStaConn(v.ANDROID_SERIAL_NUM, "normal", "5g", self.__class__.__name__)
         if res5gConn:
-            result = getAdbShellWlan(self.device[0], self.__class__.__name__)
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             if result['ip'] == '':
                 self.fail(msg='no ip address got.')
             else:
-                resPingPercent = getAdbPingStatus(self.device[0], v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
+                resPingPercent = getAdbPingStatus(v.ANDROID_SERIAL_NUM, v.PING_TARGET, v.PING_COUNT,
+                                                  self.__class__.__name__)
                 self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
                                         "Ping responsed percent werenot good enough.")
         else:
@@ -8359,13 +8410,14 @@ class AP_RELAY_MIXEDPSK_CHAN_BW40(TestCase):
 
     def assoc_tkippsk2_sta_5g(self):
 
-        res5gConn = setAdbTkipPsk2StaConn(self.device[0], "normal", "5g", self.__class__.__name__)
+        res5gConn = setAdbTkipPsk2StaConn(v.ANDROID_SERIAL_NUM, "normal", "5g", self.__class__.__name__)
         if res5gConn:
-            result = getAdbShellWlan(self.device[0], self.__class__.__name__)
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             if result['ip'] == '':
                 self.fail(msg='no ip address got.')
             else:
-                resPingPercent = getAdbPingStatus(self.device[0], v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
+                resPingPercent = getAdbPingStatus(v.ANDROID_SERIAL_NUM, v.PING_TARGET, v.PING_COUNT,
+                                                  self.__class__.__name__)
                 self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
                                         "Ping responsed percent werenot good enough.")
         else:
@@ -8373,13 +8425,14 @@ class AP_RELAY_MIXEDPSK_CHAN_BW40(TestCase):
 
     def assoc_tkippsk_sta_5g(self):
 
-        res5gConn = setAdbTkipPskStaConn(self.device[0], "normal", "5g", self.__class__.__name__)
+        res5gConn = setAdbTkipPskStaConn(v.ANDROID_SERIAL_NUM, "normal", "5g", self.__class__.__name__)
         if res5gConn:
-            result = getAdbShellWlan(self.device[0], self.__class__.__name__)
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             if result['ip'] == '':
                 self.fail(msg='no ip address got.')
             else:
-                resPingPercent = getAdbPingStatus(self.device[0], v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
+                resPingPercent = getAdbPingStatus(v.ANDROID_SERIAL_NUM, v.PING_TARGET, v.PING_COUNT,
+                                                  self.__class__.__name__)
                 self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
                                         "Ping responsed percent werenot good enough.")
         else:
@@ -8387,13 +8440,14 @@ class AP_RELAY_MIXEDPSK_CHAN_BW40(TestCase):
 
     def assoc_psk2_sta_2g(self):
 
-        res2gConn = setAdbPsk2StaConn(self.device[0], "normal", "2g", self.__class__.__name__)
+        res2gConn = setAdbPsk2StaConn(v.ANDROID_SERIAL_NUM, "normal", "2g", self.__class__.__name__)
         if res2gConn:
-            result = getAdbShellWlan(self.device[0], self.__class__.__name__)
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             if result['ip'] == '':
                 self.fail(msg='no ip address got.')
             else:
-                resPingPercent = getAdbPingStatus(self.device[0], v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
+                resPingPercent = getAdbPingStatus(v.ANDROID_SERIAL_NUM, v.PING_TARGET, v.PING_COUNT,
+                                                  self.__class__.__name__)
                 self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
                                         "Ping responsed percent werenot good enough.")
         else:
@@ -8401,13 +8455,14 @@ class AP_RELAY_MIXEDPSK_CHAN_BW40(TestCase):
 
     def assoc_psk_sta_2g(self):
 
-        res2gConn = setAdbPskStaConn(self.device[0], "normal", "2g", self.__class__.__name__)
+        res2gConn = setAdbPskStaConn(v.ANDROID_SERIAL_NUM, "normal", "2g", self.__class__.__name__)
         if res2gConn:
-            result = getAdbShellWlan(self.device[0], self.__class__.__name__)
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             if result['ip'] == '':
                 self.fail(msg='no ip address got.')
             else:
-                resPingPercent = getAdbPingStatus(self.device[0], v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
+                resPingPercent = getAdbPingStatus(v.ANDROID_SERIAL_NUM, v.PING_TARGET, v.PING_COUNT,
+                                                  self.__class__.__name__)
                 self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
                                         "Ping responsed percent werenot good enough.")
         else:
@@ -8415,13 +8470,14 @@ class AP_RELAY_MIXEDPSK_CHAN_BW40(TestCase):
 
     def assoc_tkippsk2_sta_2g(self):
 
-        res2gConn = setAdbTkipPsk2StaConn(self.device[0], "normal", "2g", self.__class__.__name__)
+        res2gConn = setAdbTkipPsk2StaConn(v.ANDROID_SERIAL_NUM, "normal", "2g", self.__class__.__name__)
         if res2gConn:
-            result = getAdbShellWlan(self.device[0], self.__class__.__name__)
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             if result['ip'] == '':
                 self.fail(msg='no ip address got.')
             else:
-                resPingPercent = getAdbPingStatus(self.device[0], v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
+                resPingPercent = getAdbPingStatus(v.ANDROID_SERIAL_NUM, v.PING_TARGET, v.PING_COUNT,
+                                                  self.__class__.__name__)
                 self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
                                         "Ping responsed percent werenot good enough.")
         else:
@@ -8429,13 +8485,14 @@ class AP_RELAY_MIXEDPSK_CHAN_BW40(TestCase):
 
     def assoc_tkippsk_sta_2g(self):
 
-        res2gConn = setAdbTkipPskStaConn(self.device[0], "normal", "2g", self.__class__.__name__)
+        res2gConn = setAdbTkipPskStaConn(v.ANDROID_SERIAL_NUM, "normal", "2g", self.__class__.__name__)
         if res2gConn:
-            result = getAdbShellWlan(self.device[0], self.__class__.__name__)
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             if result['ip'] == '':
                 self.fail(msg='no ip address got.')
             else:
-                resPingPercent = getAdbPingStatus(self.device[0], v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
+                resPingPercent = getAdbPingStatus(v.ANDROID_SERIAL_NUM, v.PING_TARGET, v.PING_COUNT,
+                                                  self.__class__.__name__)
                 self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
                                         "Ping responsed percent werenot good enough.")
         else:
@@ -8477,8 +8534,6 @@ class AP_RELAY_MIXEDPSK_CHAN_BW20(TestCase):
         api.setWifi(self.dut, self.__name__, **option2g)
         api.setWifi(self.dut, self.__name__, **option5g)
 
-        self.device = getAdbDevices()
-
     @classmethod
     def tearDownClass(self):
 
@@ -8499,13 +8554,14 @@ class AP_RELAY_MIXEDPSK_CHAN_BW20(TestCase):
 
     def assoc_psk2_sta_5g(self):
 
-        res5gConn = setAdbPsk2StaConn(self.device[0], "normal", "5g", self.__class__.__name__)
+        res5gConn = setAdbPsk2StaConn(v.ANDROID_SERIAL_NUM, "normal", "5g", self.__class__.__name__)
         if res5gConn:
-            result = getAdbShellWlan(self.device[0], self.__class__.__name__)
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             if result['ip'] == '':
                 self.fail(msg='no ip address got.')
             else:
-                resPingPercent = getAdbPingStatus(self.device[0], v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
+                resPingPercent = getAdbPingStatus(v.ANDROID_SERIAL_NUM, v.PING_TARGET, v.PING_COUNT,
+                                                  self.__class__.__name__)
                 self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
                                         "Ping responsed percent werenot good enough.")
         else:
@@ -8513,13 +8569,14 @@ class AP_RELAY_MIXEDPSK_CHAN_BW20(TestCase):
 
     def assoc_psk_sta_5g(self):
 
-        res5gConn = setAdbPskStaConn(self.device[0], "normal", "5g", self.__class__.__name__)
+        res5gConn = setAdbPskStaConn(v.ANDROID_SERIAL_NUM, "normal", "5g", self.__class__.__name__)
         if res5gConn:
-            result = getAdbShellWlan(self.device[0], self.__class__.__name__)
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             if result['ip'] == '':
                 self.fail(msg='no ip address got.')
             else:
-                resPingPercent = getAdbPingStatus(self.device[0], v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
+                resPingPercent = getAdbPingStatus(v.ANDROID_SERIAL_NUM, v.PING_TARGET, v.PING_COUNT,
+                                                  self.__class__.__name__)
                 self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
                                         "Ping responsed percent werenot good enough.")
         else:
@@ -8527,13 +8584,14 @@ class AP_RELAY_MIXEDPSK_CHAN_BW20(TestCase):
 
     def assoc_tkippsk2_sta_5g(self):
 
-        res5gConn = setAdbTkipPsk2StaConn(self.device[0], "normal", "5g", self.__class__.__name__)
+        res5gConn = setAdbTkipPsk2StaConn(v.ANDROID_SERIAL_NUM, "normal", "5g", self.__class__.__name__)
         if res5gConn:
-            result = getAdbShellWlan(self.device[0], self.__class__.__name__)
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             if result['ip'] == '':
                 self.fail(msg='no ip address got.')
             else:
-                resPingPercent = getAdbPingStatus(self.device[0], v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
+                resPingPercent = getAdbPingStatus(v.ANDROID_SERIAL_NUM, v.PING_TARGET, v.PING_COUNT,
+                                                  self.__class__.__name__)
                 self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
                                         "Ping responsed percent werenot good enough.")
         else:
@@ -8541,13 +8599,14 @@ class AP_RELAY_MIXEDPSK_CHAN_BW20(TestCase):
 
     def assoc_tkippsk_sta_5g(self):
 
-        res5gConn = setAdbTkipPskStaConn(self.device[0], "normal", "5g", self.__class__.__name__)
+        res5gConn = setAdbTkipPskStaConn(v.ANDROID_SERIAL_NUM, "normal", "5g", self.__class__.__name__)
         if res5gConn:
-            result = getAdbShellWlan(self.device[0], self.__class__.__name__)
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             if result['ip'] == '':
                 self.fail(msg='no ip address got.')
             else:
-                resPingPercent = getAdbPingStatus(self.device[0], v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
+                resPingPercent = getAdbPingStatus(v.ANDROID_SERIAL_NUM, v.PING_TARGET, v.PING_COUNT,
+                                                  self.__class__.__name__)
                 self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
                                         "Ping responsed percent werenot good enough.")
         else:
@@ -8555,13 +8614,14 @@ class AP_RELAY_MIXEDPSK_CHAN_BW20(TestCase):
 
     def assoc_psk2_sta_2g(self):
 
-        res2gConn = setAdbPsk2StaConn(self.device[0], "normal", "2g", self.__class__.__name__)
+        res2gConn = setAdbPsk2StaConn(v.ANDROID_SERIAL_NUM, "normal", "2g", self.__class__.__name__)
         if res2gConn:
-            result = getAdbShellWlan(self.device[0], self.__class__.__name__)
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             if result['ip'] == '':
                 self.fail(msg='no ip address got.')
             else:
-                resPingPercent = getAdbPingStatus(self.device[0], v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
+                resPingPercent = getAdbPingStatus(v.ANDROID_SERIAL_NUM, v.PING_TARGET, v.PING_COUNT,
+                                                  self.__class__.__name__)
                 self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
                                         "Ping responsed percent werenot good enough.")
         else:
@@ -8569,13 +8629,14 @@ class AP_RELAY_MIXEDPSK_CHAN_BW20(TestCase):
 
     def assoc_psk_sta_2g(self):
 
-        res2gConn = setAdbPskStaConn(self.device[0], "normal", "2g", self.__class__.__name__)
+        res2gConn = setAdbPskStaConn(v.ANDROID_SERIAL_NUM, "normal", "2g", self.__class__.__name__)
         if res2gConn:
-            result = getAdbShellWlan(self.device[0], self.__class__.__name__)
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             if result['ip'] == '':
                 self.fail(msg='no ip address got.')
             else:
-                resPingPercent = getAdbPingStatus(self.device[0], v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
+                resPingPercent = getAdbPingStatus(v.ANDROID_SERIAL_NUM, v.PING_TARGET, v.PING_COUNT,
+                                                  self.__class__.__name__)
                 self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
                                         "Ping responsed percent werenot good enough.")
         else:
@@ -8583,13 +8644,14 @@ class AP_RELAY_MIXEDPSK_CHAN_BW20(TestCase):
 
     def assoc_tkippsk2_sta_2g(self):
 
-        res2gConn = setAdbTkipPsk2StaConn(self.device[0], "normal", "2g", self.__class__.__name__)
+        res2gConn = setAdbTkipPsk2StaConn(v.ANDROID_SERIAL_NUM, "normal", "2g", self.__class__.__name__)
         if res2gConn:
-            result = getAdbShellWlan(self.device[0], self.__class__.__name__)
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             if result['ip'] == '':
                 self.fail(msg='no ip address got.')
             else:
-                resPingPercent = getAdbPingStatus(self.device[0], v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
+                resPingPercent = getAdbPingStatus(v.ANDROID_SERIAL_NUM, v.PING_TARGET, v.PING_COUNT,
+                                                  self.__class__.__name__)
                 self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
                                         "Ping responsed percent werenot good enough.")
         else:
@@ -8597,13 +8659,14 @@ class AP_RELAY_MIXEDPSK_CHAN_BW20(TestCase):
 
     def assoc_tkippsk_sta_2g(self):
 
-        res2gConn = setAdbTkipPskStaConn(self.device[0], "normal", "2g", self.__class__.__name__)
+        res2gConn = setAdbTkipPskStaConn(v.ANDROID_SERIAL_NUM, "normal", "2g", self.__class__.__name__)
         if res2gConn:
-            result = getAdbShellWlan(self.device[0], self.__class__.__name__)
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             if result['ip'] == '':
                 self.fail(msg='no ip address got.')
             else:
-                resPingPercent = getAdbPingStatus(self.device[0], v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
+                resPingPercent = getAdbPingStatus(v.ANDROID_SERIAL_NUM, v.PING_TARGET, v.PING_COUNT,
+                                                  self.__class__.__name__)
                 self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
                                         "Ping responsed percent werenot good enough.")
         else:
@@ -8642,8 +8705,6 @@ class AP_RELAY_MIXEDPSK_SSIDSPEC(TestCase):
         api.setWifi(self.dut, self.__name__, **option2g)
         api.setWifi(self.dut, self.__name__, **option5g)
 
-        self.device = getAdbDevices()
-
     @classmethod
     def tearDownClass(self):
 
@@ -8664,13 +8725,14 @@ class AP_RELAY_MIXEDPSK_SSIDSPEC(TestCase):
 
     def assoc_psk2_sta_ssidspec_2g(self):
 
-        res2gConn = setAdbPsk2StaConn(self.device[0], "spec", "2g", self.__class__.__name__)
+        res2gConn = setAdbPsk2StaConn(v.ANDROID_SERIAL_NUM, "spec", "2g", self.__class__.__name__)
         if res2gConn:
-            result = getAdbShellWlan(self.device[0], self.__class__.__name__)
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             if result['ip'] == '':
                 self.fail(msg='no ip address got.')
             else:
-                resPingPercent = getAdbPingStatus(self.device[0], v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
+                resPingPercent = getAdbPingStatus(v.ANDROID_SERIAL_NUM, v.PING_TARGET, v.PING_COUNT,
+                                                  self.__class__.__name__)
                 self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
                                         "Ping responsed percent werenot good enough.")
         else:
@@ -8678,13 +8740,14 @@ class AP_RELAY_MIXEDPSK_SSIDSPEC(TestCase):
 
     def assoc_psk2_sta_ssidspec_5g(self):
 
-        res5gConn = setAdbPsk2StaConn(self.device[0], "spec", "5g", self.__class__.__name__)
+        res5gConn = setAdbPsk2StaConn(v.ANDROID_SERIAL_NUM, "spec", "5g", self.__class__.__name__)
         if res5gConn:
-            result = getAdbShellWlan(self.device[0], self.__class__.__name__)
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             if result['ip'] == '':
                 self.fail(msg='no ip address got.')
             else:
-                resPingPercent = getAdbPingStatus(self.device[0], v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
+                resPingPercent = getAdbPingStatus(v.ANDROID_SERIAL_NUM, v.PING_TARGET, v.PING_COUNT,
+                                                  self.__class__.__name__)
                 self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
                                         "Ping responsed percent werenot good enough.")
         else:
@@ -8692,13 +8755,14 @@ class AP_RELAY_MIXEDPSK_SSIDSPEC(TestCase):
 
     def assoc_psk_sta_ssidspec_2g(self):
 
-        res2gConn = setAdbPskStaConn(self.device[0], "spec", "2g", self.__class__.__name__)
+        res2gConn = setAdbPskStaConn(v.ANDROID_SERIAL_NUM, "spec", "2g", self.__class__.__name__)
         if res2gConn:
-            result = getAdbShellWlan(self.device[0], self.__class__.__name__)
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             if result['ip'] == '':
                 self.fail(msg='no ip address got.')
             else:
-                resPingPercent = getAdbPingStatus(self.device[0], v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
+                resPingPercent = getAdbPingStatus(v.ANDROID_SERIAL_NUM, v.PING_TARGET, v.PING_COUNT,
+                                                  self.__class__.__name__)
                 self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
                                         "Ping responsed percent werenot good enough.")
         else:
@@ -8706,13 +8770,14 @@ class AP_RELAY_MIXEDPSK_SSIDSPEC(TestCase):
 
     def assoc_psk_sta_ssidspec_5g(self):
 
-        res5gConn = setAdbPskStaConn(self.device[0], "spec", "5g", self.__class__.__name__)
+        res5gConn = setAdbPskStaConn(v.ANDROID_SERIAL_NUM, "spec", "5g", self.__class__.__name__)
         if res5gConn:
-            result = getAdbShellWlan(self.device[0], self.__class__.__name__)
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             if result['ip'] == '':
                 self.fail(msg='no ip address got.')
             else:
-                resPingPercent = getAdbPingStatus(self.device[0], v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
+                resPingPercent = getAdbPingStatus(v.ANDROID_SERIAL_NUM, v.PING_TARGET, v.PING_COUNT,
+                                                  self.__class__.__name__)
                 self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
                                         "Ping responsed percent werenot good enough.")
         else:
@@ -8720,52 +8785,56 @@ class AP_RELAY_MIXEDPSK_SSIDSPEC(TestCase):
 
     def assoc_tkippsk2_sta_ssidspec_2g(self):
 
-        res2gConn = setAdbTkipPsk2StaConn(self.device[0], "spec", "2g", self.__class__.__name__)
+        res2gConn = setAdbTkipPsk2StaConn(v.ANDROID_SERIAL_NUM, "spec", "2g", self.__class__.__name__)
         if res2gConn:
-            result = getAdbShellWlan(self.device[0], self.__class__.__name__)
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             if result['ip'] == '':
                 self.fail(msg='no ip address got.')
             else:
-                resPingPercent = getAdbPingStatus(self.device[0], v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
+                resPingPercent = getAdbPingStatus(v.ANDROID_SERIAL_NUM, v.PING_TARGET, v.PING_COUNT,
+                                                  self.__class__.__name__)
                 self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
                                         "Ping responsed percent werenot good enough.")
         else:
             self.assertTrue(res2gConn, "Association wasnot successful.")
 
     def assoc_tkippsk2_sta_ssidspec_5g(self):
-        res5gConn = setAdbTkipPsk2StaConn(self.device[0], "spec", "5g", self.__class__.__name__)
+        res5gConn = setAdbTkipPsk2StaConn(v.ANDROID_SERIAL_NUM, "spec", "5g", self.__class__.__name__)
         if res5gConn:
-            result = getAdbShellWlan(self.device[0], self.__class__.__name__)
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             if result['ip'] == '':
                 self.fail(msg='no ip address got.')
             else:
-                resPingPercent = getAdbPingStatus(self.device[0], v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
+                resPingPercent = getAdbPingStatus(v.ANDROID_SERIAL_NUM, v.PING_TARGET, v.PING_COUNT,
+                                                  self.__class__.__name__)
                 self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
                                         "Ping responsed percent werenot good enough.")
         else:
             self.assertTrue(res5gConn, "Association wasnot successful.")
 
     def assoc_tkippsk_sta_ssidspec_2g(self):
-        res2gConn = setAdbTkipPskStaConn(self.device[0], "spec", "2g", self.__class__.__name__)
+        res2gConn = setAdbTkipPskStaConn(v.ANDROID_SERIAL_NUM, "spec", "2g", self.__class__.__name__)
         if res2gConn:
-            result = getAdbShellWlan(self.device[0], self.__class__.__name__)
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             if result['ip'] == '':
                 self.fail(msg='no ip address got.')
             else:
-                resPingPercent = getAdbPingStatus(self.device[0], v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
+                resPingPercent = getAdbPingStatus(v.ANDROID_SERIAL_NUM, v.PING_TARGET, v.PING_COUNT,
+                                                  self.__class__.__name__)
                 self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
                                         "Ping responsed percent werenot good enough.")
         else:
             self.assertTrue(res2gConn, "Association wasnot successful.")
 
     def assoc_tkippsk_sta_ssidspec_5g(self):
-        res5gConn = setAdbTkipPskStaConn(self.device[0], "spec", "5g", self.__class__.__name__)
+        res5gConn = setAdbTkipPskStaConn(v.ANDROID_SERIAL_NUM, "spec", "5g", self.__class__.__name__)
         if res5gConn:
-            result = getAdbShellWlan(self.device[0], self.__class__.__name__)
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             if result['ip'] == '':
                 self.fail(msg='no ip address got.')
             else:
-                resPingPercent = getAdbPingStatus(self.device[0], v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
+                resPingPercent = getAdbPingStatus(v.ANDROID_SERIAL_NUM, v.PING_TARGET, v.PING_COUNT,
+                                                  self.__class__.__name__)
                 self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
                                         "Ping responsed percent werenot good enough.")
         else:
@@ -8804,8 +8873,6 @@ class AP_RELAY_MIXEDPSK_KEYSPEC(TestCase):
         api.setWifi(self.dut, self.__name__, **option2g)
         api.setWifi(self.dut, self.__name__, **option5g)
 
-        self.device = getAdbDevices()
-
     @classmethod
     def tearDownClass(self):
 
@@ -8826,13 +8893,14 @@ class AP_RELAY_MIXEDPSK_KEYSPEC(TestCase):
 
     def assoc_psk2_sta_keyspec_2g(self):
 
-        res2gConn = setAdbPsk2StaConn(self.device[0], "normal", "2g", self.__class__.__name__, key="spec")
+        res2gConn = setAdbPsk2StaConn(v.ANDROID_SERIAL_NUM, "normal", "2g", self.__class__.__name__, key="spec")
         if res2gConn:
-            result = getAdbShellWlan(self.device[0], self.__class__.__name__)
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             if result['ip'] == '':
                 self.fail(msg='no ip address got.')
             else:
-                resPingPercent = getAdbPingStatus(self.device[0], v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
+                resPingPercent = getAdbPingStatus(v.ANDROID_SERIAL_NUM, v.PING_TARGET, v.PING_COUNT,
+                                                  self.__class__.__name__)
                 self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
                                         "Ping responsed percent werenot good enough.")
         else:
@@ -8840,13 +8908,14 @@ class AP_RELAY_MIXEDPSK_KEYSPEC(TestCase):
 
     def assoc_psk2_sta_keyspec_5g(self):
 
-        res2gConn = setAdbPsk2StaConn(self.device[0], "normal", "5g", self.__class__.__name__, key="spec")
+        res2gConn = setAdbPsk2StaConn(v.ANDROID_SERIAL_NUM, "normal", "5g", self.__class__.__name__, key="spec")
         if res2gConn:
-            result = getAdbShellWlan(self.device[0], self.__class__.__name__)
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             if result['ip'] == '':
                 self.fail(msg='no ip address got.')
             else:
-                resPingPercent = getAdbPingStatus(self.device[0], v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
+                resPingPercent = getAdbPingStatus(v.ANDROID_SERIAL_NUM, v.PING_TARGET, v.PING_COUNT,
+                                                  self.__class__.__name__)
                 self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
                                         "Ping responsed percent werenot good enough.")
         else:
@@ -8854,13 +8923,14 @@ class AP_RELAY_MIXEDPSK_KEYSPEC(TestCase):
 
     def assoc_psk_sta_keyspec_2g(self):
 
-        res2gConn = setAdbPskStaConn(self.device[0], "normal", "2g", self.__class__.__name__, key="spec")
+        res2gConn = setAdbPskStaConn(v.ANDROID_SERIAL_NUM, "normal", "2g", self.__class__.__name__, key="spec")
         if res2gConn:
-            result = getAdbShellWlan(self.device[0], self.__class__.__name__)
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             if result['ip'] == '':
                 self.fail(msg='no ip address got.')
             else:
-                resPingPercent = getAdbPingStatus(self.device[0], v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
+                resPingPercent = getAdbPingStatus(v.ANDROID_SERIAL_NUM, v.PING_TARGET, v.PING_COUNT,
+                                                  self.__class__.__name__)
                 self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
                                         "Ping responsed percent werenot good enough.")
         else:
@@ -8868,13 +8938,14 @@ class AP_RELAY_MIXEDPSK_KEYSPEC(TestCase):
 
     def assoc_psk_sta_keyspec_5g(self):
 
-        res2gConn = setAdbPskStaConn(self.device[0], "normal", "5g", self.__class__.__name__, key="spec")
+        res2gConn = setAdbPskStaConn(v.ANDROID_SERIAL_NUM, "normal", "5g", self.__class__.__name__, key="spec")
         if res2gConn:
-            result = getAdbShellWlan(self.device[0], self.__class__.__name__)
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             if result['ip'] == '':
                 self.fail(msg='no ip address got.')
             else:
-                resPingPercent = getAdbPingStatus(self.device[0], v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
+                resPingPercent = getAdbPingStatus(v.ANDROID_SERIAL_NUM, v.PING_TARGET, v.PING_COUNT,
+                                                  self.__class__.__name__)
                 self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
                                         "Ping responsed percent werenot good enough.")
         else:
@@ -8882,13 +8953,14 @@ class AP_RELAY_MIXEDPSK_KEYSPEC(TestCase):
 
     def assoc_tkippsk2_sta_keyspec_2g(self):
 
-        res2gConn = setAdbTkipPsk2StaConn(self.device[0], "normal", "2g", self.__class__.__name__, key="spec")
+        res2gConn = setAdbTkipPsk2StaConn(v.ANDROID_SERIAL_NUM, "normal", "2g", self.__class__.__name__, key="spec")
         if res2gConn:
-            result = getAdbShellWlan(self.device[0], self.__class__.__name__)
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             if result['ip'] == '':
                 self.fail(msg='no ip address got.')
             else:
-                resPingPercent = getAdbPingStatus(self.device[0], v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
+                resPingPercent = getAdbPingStatus(v.ANDROID_SERIAL_NUM, v.PING_TARGET, v.PING_COUNT,
+                                                  self.__class__.__name__)
                 self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
                                         "Ping responsed percent werenot good enough.")
         else:
@@ -8896,13 +8968,14 @@ class AP_RELAY_MIXEDPSK_KEYSPEC(TestCase):
 
     def assoc_tkippsk2_sta_keyspec_5g(self):
 
-        res2gConn = setAdbTkipPsk2StaConn(self.device[0], "normal", "5g", self.__class__.__name__, key="spec")
+        res2gConn = setAdbTkipPsk2StaConn(v.ANDROID_SERIAL_NUM, "normal", "5g", self.__class__.__name__, key="spec")
         if res2gConn:
-            result = getAdbShellWlan(self.device[0], self.__class__.__name__)
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             if result['ip'] == '':
                 self.fail(msg='no ip address got.')
             else:
-                resPingPercent = getAdbPingStatus(self.device[0], v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
+                resPingPercent = getAdbPingStatus(v.ANDROID_SERIAL_NUM, v.PING_TARGET, v.PING_COUNT,
+                                                  self.__class__.__name__)
                 self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
                                         "Ping responsed percent werenot good enough.")
         else:
@@ -8910,13 +8983,14 @@ class AP_RELAY_MIXEDPSK_KEYSPEC(TestCase):
 
     def assoc_tkippsk_sta_keyspec_2g(self):
 
-        res2gConn = setAdbTkipPskStaConn(self.device[0], "normal", "2g", self.__class__.__name__, key="spec")
+        res2gConn = setAdbTkipPskStaConn(v.ANDROID_SERIAL_NUM, "normal", "2g", self.__class__.__name__, key="spec")
         if res2gConn:
-            result = getAdbShellWlan(self.device[0], self.__class__.__name__)
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             if result['ip'] == '':
                 self.fail(msg='no ip address got.')
             else:
-                resPingPercent = getAdbPingStatus(self.device[0], v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
+                resPingPercent = getAdbPingStatus(v.ANDROID_SERIAL_NUM, v.PING_TARGET, v.PING_COUNT,
+                                                  self.__class__.__name__)
                 self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
                                         "Ping responsed percent werenot good enough.")
         else:
@@ -8924,13 +8998,14 @@ class AP_RELAY_MIXEDPSK_KEYSPEC(TestCase):
 
     def assoc_tkippsk_sta_keyspec_5g(self):
 
-        res2gConn = setAdbTkipPskStaConn(self.device[0], "normal", "5g", self.__class__.__name__, key="spec")
+        res2gConn = setAdbTkipPskStaConn(v.ANDROID_SERIAL_NUM, "normal", "5g", self.__class__.__name__, key="spec")
         if res2gConn:
-            result = getAdbShellWlan(self.device[0], self.__class__.__name__)
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             if result['ip'] == '':
                 self.fail(msg='no ip address got.')
             else:
-                resPingPercent = getAdbPingStatus(self.device[0], v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
+                resPingPercent = getAdbPingStatus(v.ANDROID_SERIAL_NUM, v.PING_TARGET, v.PING_COUNT,
+                                                  self.__class__.__name__)
                 self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
                                         "Ping responsed percent werenot good enough.")
         else:
@@ -8969,8 +9044,6 @@ class AP_RELAY_MIXEDPSK_SSIDCHINESE(TestCase):
         api.setWifi(self.dut, self.__name__, **option2g)
         api.setWifi(self.dut, self.__name__, **option5g)
 
-        self.device = getAdbDevices()
-
     @classmethod
     def tearDownClass(self):
 
@@ -8991,13 +9064,14 @@ class AP_RELAY_MIXEDPSK_SSIDCHINESE(TestCase):
 
     def assoc_psk2_sta_ssidchinese_2g(self):
 
-        res2gConn = setAdbPsk2StaConn(self.device[0], "chinese", "2g", self.__class__.__name__)
+        res2gConn = setAdbPsk2StaConn(v.ANDROID_SERIAL_NUM, "chinese", "2g", self.__class__.__name__)
         if res2gConn:
-            result = getAdbShellWlan(self.device[0], self.__class__.__name__)
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             if result['ip'] == '':
                 self.fail(msg='no ip address got.')
             else:
-                resPingPercent = getAdbPingStatus(self.device[0], v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
+                resPingPercent = getAdbPingStatus(v.ANDROID_SERIAL_NUM, v.PING_TARGET, v.PING_COUNT,
+                                                  self.__class__.__name__)
                 self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
                                         "Ping responsed percent werenot good enough.")
         else:
@@ -9005,13 +9079,14 @@ class AP_RELAY_MIXEDPSK_SSIDCHINESE(TestCase):
 
     def assoc_psk2_sta_ssidchinese_5g(self):
 
-        res5gConn = setAdbPsk2StaConn(self.device[0], "chinese", "5g", self.__class__.__name__)
+        res5gConn = setAdbPsk2StaConn(v.ANDROID_SERIAL_NUM, "chinese", "5g", self.__class__.__name__)
         if res5gConn:
-            result = getAdbShellWlan(self.device[0], self.__class__.__name__)
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             if result['ip'] == '':
                 self.fail(msg='no ip address got.')
             else:
-                resPingPercent = getAdbPingStatus(self.device[0], v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
+                resPingPercent = getAdbPingStatus(v.ANDROID_SERIAL_NUM, v.PING_TARGET, v.PING_COUNT,
+                                                  self.__class__.__name__)
                 self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
                                         "Ping responsed percent werenot good enough.")
         else:
@@ -9019,13 +9094,14 @@ class AP_RELAY_MIXEDPSK_SSIDCHINESE(TestCase):
 
     def assoc_psk_sta_ssidchinese_2g(self):
 
-        res2gConn = setAdbPskStaConn(self.device[0], "chinese", "2g", self.__class__.__name__)
+        res2gConn = setAdbPskStaConn(v.ANDROID_SERIAL_NUM, "chinese", "2g", self.__class__.__name__)
         if res2gConn:
-            result = getAdbShellWlan(self.device[0], self.__class__.__name__)
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             if result['ip'] == '':
                 self.fail(msg='no ip address got.')
             else:
-                resPingPercent = getAdbPingStatus(self.device[0], v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
+                resPingPercent = getAdbPingStatus(v.ANDROID_SERIAL_NUM, v.PING_TARGET, v.PING_COUNT,
+                                                  self.__class__.__name__)
                 self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
                                         "Ping responsed percent werenot good enough.")
         else:
@@ -9033,13 +9109,14 @@ class AP_RELAY_MIXEDPSK_SSIDCHINESE(TestCase):
 
     def assoc_psk_sta_ssidchinese_5g(self):
 
-        res5gConn = setAdbPskStaConn(self.device[0], "chinese", "5g", self.__class__.__name__)
+        res5gConn = setAdbPskStaConn(v.ANDROID_SERIAL_NUM, "chinese", "5g", self.__class__.__name__)
         if res5gConn:
-            result = getAdbShellWlan(self.device[0], self.__class__.__name__)
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             if result['ip'] == '':
                 self.fail(msg='no ip address got.')
             else:
-                resPingPercent = getAdbPingStatus(self.device[0], v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
+                resPingPercent = getAdbPingStatus(v.ANDROID_SERIAL_NUM, v.PING_TARGET, v.PING_COUNT,
+                                                  self.__class__.__name__)
                 self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
                                         "Ping responsed percent werenot good enough.")
         else:
@@ -9047,52 +9124,56 @@ class AP_RELAY_MIXEDPSK_SSIDCHINESE(TestCase):
 
     def assoc_tkippsk2_sta_ssidchinese_2g(self):
 
-        res2gConn = setAdbTkipPsk2StaConn(self.device[0], "chinese", "2g", self.__class__.__name__)
+        res2gConn = setAdbTkipPsk2StaConn(v.ANDROID_SERIAL_NUM, "chinese", "2g", self.__class__.__name__)
         if res2gConn:
-            result = getAdbShellWlan(self.device[0], self.__class__.__name__)
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             if result['ip'] == '':
                 self.fail(msg='no ip address got.')
             else:
-                resPingPercent = getAdbPingStatus(self.device[0], v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
+                resPingPercent = getAdbPingStatus(v.ANDROID_SERIAL_NUM, v.PING_TARGET, v.PING_COUNT,
+                                                  self.__class__.__name__)
                 self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
                                         "Ping responsed percent werenot good enough.")
         else:
             self.assertTrue(res2gConn, "Association wasnot successful.")
 
     def assoc_tkippsk2_sta_ssidchinese_5g(self):
-        res5gConn = setAdbTkipPsk2StaConn(self.device[0], "chinese", "5g", self.__class__.__name__)
+        res5gConn = setAdbTkipPsk2StaConn(v.ANDROID_SERIAL_NUM, "chinese", "5g", self.__class__.__name__)
         if res5gConn:
-            result = getAdbShellWlan(self.device[0], self.__class__.__name__)
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             if result['ip'] == '':
                 self.fail(msg='no ip address got.')
             else:
-                resPingPercent = getAdbPingStatus(self.device[0], v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
+                resPingPercent = getAdbPingStatus(v.ANDROID_SERIAL_NUM, v.PING_TARGET, v.PING_COUNT,
+                                                  self.__class__.__name__)
                 self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
                                         "Ping responsed percent werenot good enough.")
         else:
             self.assertTrue(res5gConn, "Association wasnot successful.")
 
     def assoc_tkippsk_sta_ssidchinese_2g(self):
-        res2gConn = setAdbTkipPskStaConn(self.device[0], "chinese", "2g", self.__class__.__name__)
+        res2gConn = setAdbTkipPskStaConn(v.ANDROID_SERIAL_NUM, "chinese", "2g", self.__class__.__name__)
         if res2gConn:
-            result = getAdbShellWlan(self.device[0], self.__class__.__name__)
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             if result['ip'] == '':
                 self.fail(msg='no ip address got.')
             else:
-                resPingPercent = getAdbPingStatus(self.device[0], v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
+                resPingPercent = getAdbPingStatus(v.ANDROID_SERIAL_NUM, v.PING_TARGET, v.PING_COUNT,
+                                                  self.__class__.__name__)
                 self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
                                         "Ping responsed percent werenot good enough.")
         else:
             self.assertTrue(res2gConn, "Association wasnot successful.")
 
     def assoc_tkippsk_sta_ssidchinese_5g(self):
-        res5gConn = setAdbTkipPskStaConn(self.device[0], "chinese", "5g", self.__class__.__name__)
+        res5gConn = setAdbTkipPskStaConn(v.ANDROID_SERIAL_NUM, "chinese", "5g", self.__class__.__name__)
         if res5gConn:
-            result = getAdbShellWlan(self.device[0], self.__class__.__name__)
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             if result['ip'] == '':
                 self.fail(msg='no ip address got.')
             else:
-                resPingPercent = getAdbPingStatus(self.device[0], v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
+                resPingPercent = getAdbPingStatus(v.ANDROID_SERIAL_NUM, v.PING_TARGET, v.PING_COUNT,
+                                                  self.__class__.__name__)
                 self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
                                         "Ping responsed percent werenot good enough.")
         else:
@@ -9122,8 +9203,6 @@ class AP_RELAY_MIXEDPSK_BSD(TestCase):
         }
         api.setAllWifi(self.dut, self.__name__, **option)
 
-        self.device = getAdbDevices()
-
     @classmethod
     def tearDownClass(self):
 
@@ -9145,8 +9224,8 @@ class AP_RELAY_MIXEDPSK_BSD(TestCase):
     def assoc_psk2_near_field_sta(self):
         count = 0
         while count <= 1:
-            resConn = setAdbPsk2StaConn(self.device[0], "normal", "2g", self.__class__.__name__)
-            resConn2 = chkAdb5gFreq(self.device[0], self.__class__.__name__)
+            resConn = setAdbPsk2StaConn(v.ANDROID_SERIAL_NUM, "normal", "2g", self.__class__.__name__)
+            resConn2 = chkAdb5gFreq(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             if resConn and resConn2:
                 break
             else:
@@ -9155,17 +9234,17 @@ class AP_RELAY_MIXEDPSK_BSD(TestCase):
 
         self.assertTrue(resConn, msg="Association wasnot successful.")
         self.assertTrue(resConn2, msg="STA doesnot associate with 5g")
-        result = getAdbShellWlan(self.device[0], self.__class__.__name__)
+        result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
         self.assertIsNot(result['ip'], "", msg='no ip address got.')
-        resPingPercent = getAdbPingStatus(self.device[0], v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
+        resPingPercent = getAdbPingStatus(v.ANDROID_SERIAL_NUM, v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
         self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
                                 "Ping responsed percent werenot good enough.")
 
     def assoc_psk_near_field_sta(self):
         count = 0
         while count <= 1:
-            resConn = setAdbPskStaConn(self.device[0], "normal", "2g", self.__class__.__name__)
-            resConn2 = chkAdb5gFreq(self.device[0], self.__class__.__name__)
+            resConn = setAdbPskStaConn(v.ANDROID_SERIAL_NUM, "normal", "2g", self.__class__.__name__)
+            resConn2 = chkAdb5gFreq(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             if resConn and resConn2:
                 break
             else:
@@ -9174,17 +9253,17 @@ class AP_RELAY_MIXEDPSK_BSD(TestCase):
 
         self.assertTrue(resConn, msg="Association wasnot successful.")
         self.assertTrue(resConn2, msg="STA doesnot associate with 5g")
-        result = getAdbShellWlan(self.device[0], self.__class__.__name__)
+        result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
         self.assertIsNot(result['ip'], "", msg='no ip address got.')
-        resPingPercent = getAdbPingStatus(self.device[0], v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
+        resPingPercent = getAdbPingStatus(v.ANDROID_SERIAL_NUM, v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
         self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
                                 "Ping responsed percent werenot good enough.")
 
     def assoc_tkippsk2_near_field_sta(self):
         count = 0
         while count <= 1:
-            resConn = setAdbTkipPsk2StaConn(self.device[0], "normal", "2g", self.__class__.__name__)
-            resConn2 = chkAdb5gFreq(self.device[0], self.__class__.__name__)
+            resConn = setAdbTkipPsk2StaConn(v.ANDROID_SERIAL_NUM, "normal", "2g", self.__class__.__name__)
+            resConn2 = chkAdb5gFreq(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             if resConn and resConn2:
                 break
             else:
@@ -9193,17 +9272,17 @@ class AP_RELAY_MIXEDPSK_BSD(TestCase):
 
         self.assertTrue(resConn, msg="Association wasnot successful.")
         self.assertTrue(resConn2, msg="STA doesnot associate with 5g")
-        result = getAdbShellWlan(self.device[0], self.__class__.__name__)
+        result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
         self.assertIsNot(result['ip'], "", msg='no ip address got.')
-        resPingPercent = getAdbPingStatus(self.device[0], v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
+        resPingPercent = getAdbPingStatus(v.ANDROID_SERIAL_NUM, v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
         self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
                                 "Ping responsed percent werenot good enough.")
 
     def assoc_tkippsk_near_field_sta(self):
         count = 0
         while count <= 1:
-            resConn = setAdbTkipPskStaConn(self.device[0], "normal", "2g", self.__class__.__name__)
-            resConn2 = chkAdb5gFreq(self.device[0], self.__class__.__name__)
+            resConn = setAdbTkipPskStaConn(v.ANDROID_SERIAL_NUM, "normal", "2g", self.__class__.__name__)
+            resConn2 = chkAdb5gFreq(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             if resConn and resConn2:
                 break
             else:
@@ -9212,9 +9291,9 @@ class AP_RELAY_MIXEDPSK_BSD(TestCase):
 
         self.assertTrue(resConn, msg="Association wasnot successful.")
         self.assertTrue(resConn2, msg="STA doesnot associate with 5g")
-        result = getAdbShellWlan(self.device[0], self.__class__.__name__)
+        result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
         self.assertIsNot(result['ip'], "", msg='no ip address got.')
-        resPingPercent = getAdbPingStatus(self.device[0], v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
+        resPingPercent = getAdbPingStatus(v.ANDROID_SERIAL_NUM, v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
         self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
                                 "Ping responsed percent werenot good enough.")
 
@@ -9243,8 +9322,6 @@ class AP_RELAY_MIXEDPSK_BSD_SSIDHIDE(TestCase):
         }
         api.setAllWifi(self.dut, self.__name__, **option)
 
-        self.device = getAdbDevices()
-
     @classmethod
     def tearDownClass(self):
 
@@ -9266,8 +9343,8 @@ class AP_RELAY_MIXEDPSK_BSD_SSIDHIDE(TestCase):
     def assoc_psk2_near_field_sta(self):
         count = 0
         while count <= 1:
-            resConn = setAdbPsk2StaConn(self.device[0], "normal", "2g", self.__class__.__name__)
-            resConn2 = chkAdb5gFreq(self.device[0], self.__class__.__name__)
+            resConn = setAdbPsk2StaConn(v.ANDROID_SERIAL_NUM, "normal", "2g", self.__class__.__name__)
+            resConn2 = chkAdb5gFreq(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             if resConn and resConn2:
                 break
             else:
@@ -9276,17 +9353,17 @@ class AP_RELAY_MIXEDPSK_BSD_SSIDHIDE(TestCase):
 
         self.assertTrue(resConn, msg="Association wasnot successful.")
         self.assertTrue(resConn2, msg="STA doesnot associate with 5g")
-        result = getAdbShellWlan(self.device[0], self.__class__.__name__)
+        result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
         self.assertIsNot(result['ip'], "", msg='no ip address got.')
-        resPingPercent = getAdbPingStatus(self.device[0], v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
+        resPingPercent = getAdbPingStatus(v.ANDROID_SERIAL_NUM, v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
         self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
                                 "Ping responsed percent werenot good enough.")
 
     def assoc_psk_near_field_sta(self):
         count = 0
         while count <= 1:
-            resConn = setAdbPskStaConn(self.device[0], "normal", "2g", self.__class__.__name__)
-            resConn2 = chkAdb5gFreq(self.device[0], self.__class__.__name__)
+            resConn = setAdbPskStaConn(v.ANDROID_SERIAL_NUM, "normal", "2g", self.__class__.__name__)
+            resConn2 = chkAdb5gFreq(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             if resConn and resConn2:
                 break
             else:
@@ -9295,17 +9372,17 @@ class AP_RELAY_MIXEDPSK_BSD_SSIDHIDE(TestCase):
 
         self.assertTrue(resConn, msg="Association wasnot successful.")
         self.assertTrue(resConn2, msg="STA doesnot associate with 5g")
-        result = getAdbShellWlan(self.device[0], self.__class__.__name__)
+        result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
         self.assertIsNot(result['ip'], "", msg='no ip address got.')
-        resPingPercent = getAdbPingStatus(self.device[0], v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
+        resPingPercent = getAdbPingStatus(v.ANDROID_SERIAL_NUM, v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
         self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
                                 "Ping responsed percent werenot good enough.")
 
     def assoc_tkippsk2_near_field_sta(self):
         count = 0
         while count <= 1:
-            resConn = setAdbTkipPsk2StaConn(self.device[0], "normal", "2g", self.__class__.__name__)
-            resConn2 = chkAdb5gFreq(self.device[0], self.__class__.__name__)
+            resConn = setAdbTkipPsk2StaConn(v.ANDROID_SERIAL_NUM, "normal", "2g", self.__class__.__name__)
+            resConn2 = chkAdb5gFreq(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             if resConn and resConn2:
                 break
             else:
@@ -9314,17 +9391,17 @@ class AP_RELAY_MIXEDPSK_BSD_SSIDHIDE(TestCase):
 
         self.assertTrue(resConn, msg="Association wasnot successful.")
         self.assertTrue(resConn2, msg="STA doesnot associate with 5g")
-        result = getAdbShellWlan(self.device[0], self.__class__.__name__)
+        result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
         self.assertIsNot(result['ip'], "", msg='no ip address got.')
-        resPingPercent = getAdbPingStatus(self.device[0], v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
+        resPingPercent = getAdbPingStatus(v.ANDROID_SERIAL_NUM, v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
         self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
                                 "Ping responsed percent werenot good enough.")
 
     def assoc_tkippsk_near_field_sta(self):
         count = 0
         while count <= 1:
-            resConn = setAdbTkipPskStaConn(self.device[0], "normal", "2g", self.__class__.__name__)
-            resConn2 = chkAdb5gFreq(self.device[0], self.__class__.__name__)
+            resConn = setAdbTkipPskStaConn(v.ANDROID_SERIAL_NUM, "normal", "2g", self.__class__.__name__)
+            resConn2 = chkAdb5gFreq(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             if resConn and resConn2:
                 break
             else:
@@ -9333,12 +9410,11 @@ class AP_RELAY_MIXEDPSK_BSD_SSIDHIDE(TestCase):
 
         self.assertTrue(resConn, msg="Association wasnot successful.")
         self.assertTrue(resConn2, msg="STA doesnot associate with 5g")
-        result = getAdbShellWlan(self.device[0], self.__class__.__name__)
+        result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
         self.assertIsNot(result['ip'], "", msg='no ip address got.')
-        resPingPercent = getAdbPingStatus(self.device[0], v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
+        resPingPercent = getAdbPingStatus(v.ANDROID_SERIAL_NUM, v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
         self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
                                 "Ping responsed percent werenot good enough.")
-
 
 
 class AP_RELAY_SSIDHIDE(TestCase):
@@ -9357,8 +9433,6 @@ class AP_RELAY_SSIDHIDE(TestCase):
 
         api.setLanAp(self.dut, self.__name__)
 
-        self.device = getAdbDevices()
-
     @classmethod
     def tearDownClass(self):
 
@@ -9375,7 +9449,7 @@ class AP_RELAY_SSIDHIDE(TestCase):
         }
         api.setWifi(self.dut, self.__class__.__name__, **option2g)
 
-        ret2g = setAdbScanSsidNoExist(self.device[0], "normal", "2g", self.__class__.__name__)
+        ret2g = setAdbScanSsidNoExist(v.ANDROID_SERIAL_NUM, "normal", "2g", self.__class__.__name__)
 
         option2g = {
             'wifiIndex': 1,
@@ -9397,7 +9471,7 @@ class AP_RELAY_SSIDHIDE(TestCase):
 
         api.setWifi(self.dut, self.__class__.__name__, **option5g)
 
-        ret5g = setAdbScanSsidNoExist(self.device[0], "normal", "5g", self.__class__.__name__)
+        ret5g = setAdbScanSsidNoExist(v.ANDROID_SERIAL_NUM, "normal", "5g", self.__class__.__name__)
 
         option5g = {
             'wifiIndex': 2,
@@ -9418,7 +9492,7 @@ class AP_RELAY_SSIDHIDE(TestCase):
         }
         api.setWifi(self.dut, self.__class__.__name__, **option2g)
 
-        ret2g = setAdbScanSsidNoExist(self.device[0], "normal", "2g", self.__class__.__name__)
+        ret2g = setAdbScanSsidNoExist(v.ANDROID_SERIAL_NUM, "normal", "2g", self.__class__.__name__)
 
         option2g = {
             'wifiIndex': 1,
@@ -9439,7 +9513,7 @@ class AP_RELAY_SSIDHIDE(TestCase):
         }
         api.setWifi(self.dut, self.__class__.__name__, **option5g)
 
-        ret5g = setAdbScanSsidNoExist(self.device[0], "normal", "5g", self.__class__.__name__)
+        ret5g = setAdbScanSsidNoExist(v.ANDROID_SERIAL_NUM, "normal", "5g", self.__class__.__name__)
 
         option5g = {
             'wifiIndex': 2,
@@ -9460,7 +9534,7 @@ class AP_RELAY_SSIDHIDE(TestCase):
         }
         api.setWifi(self.dut, self.__class__.__name__, **option2g)
 
-        ret2g = setAdbScanSsidNoExist(self.device[0], "normal", "2g", self.__class__.__name__)
+        ret2g = setAdbScanSsidNoExist(v.ANDROID_SERIAL_NUM, "normal", "2g", self.__class__.__name__)
 
         option2g = {
             'wifiIndex': 1,
@@ -9481,7 +9555,7 @@ class AP_RELAY_SSIDHIDE(TestCase):
         }
         api.setWifi(self.dut, self.__class__.__name__, **option5g)
 
-        ret5g = setAdbScanSsidNoExist(self.device[0], "normal", "5g", self.__class__.__name__)
+        ret5g = setAdbScanSsidNoExist(v.ANDROID_SERIAL_NUM, "normal", "5g", self.__class__.__name__)
 
         option5g = {
             'wifiIndex': 2,
@@ -9526,8 +9600,6 @@ class AP_RELAY_MIXEDPSK_SSIDHIDE(TestCase):
         api.setWifi(self.dut, self.__name__, **option2g)
         api.setWifi(self.dut, self.__name__, **option5g)
 
-        self.device = getAdbDevices()
-
     @classmethod
     def tearDownClass(self):
 
@@ -9548,13 +9620,14 @@ class AP_RELAY_MIXEDPSK_SSIDHIDE(TestCase):
 
     def assoc_psk2_sta_2g(self):
 
-        res2gConn = setAdbPsk2Sta(self.device[0],v.SSID, v.KEY, "2g", self.__class__.__name__)
+        res2gConn = setAdbPsk2Sta(v.ANDROID_SERIAL_NUM, v.SSID, v.KEY, "2g", self.__class__.__name__)
         if res2gConn:
-            result = getAdbShellWlan(self.device[0], self.__class__.__name__)
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             if result['ip'] == '':
                 self.fail(msg='no ip address got.')
             else:
-                resPingPercent = getAdbPingStatus(self.device[0], v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
+                resPingPercent = getAdbPingStatus(v.ANDROID_SERIAL_NUM, v.PING_TARGET, v.PING_COUNT,
+                                                  self.__class__.__name__)
                 self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
                                         "Ping responsed percent werenot good enough.")
         else:
@@ -9562,13 +9635,14 @@ class AP_RELAY_MIXEDPSK_SSIDHIDE(TestCase):
 
     def assoc_psk2_sta_5g(self):
 
-        res5gConn = setAdbPsk2Sta(self.device[0], v.SSID_5G, v.KEY, "5g", self.__class__.__name__)
+        res5gConn = setAdbPsk2Sta(v.ANDROID_SERIAL_NUM, v.SSID_5G, v.KEY, "5g", self.__class__.__name__)
         if res5gConn:
-            result = getAdbShellWlan(self.device[0], self.__class__.__name__)
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             if result['ip'] == '':
                 self.fail(msg='no ip address got.')
             else:
-                resPingPercent = getAdbPingStatus(self.device[0], v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
+                resPingPercent = getAdbPingStatus(v.ANDROID_SERIAL_NUM, v.PING_TARGET, v.PING_COUNT,
+                                                  self.__class__.__name__)
                 self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
                                         "Ping responsed percent werenot good enough.")
         else:
@@ -9576,13 +9650,14 @@ class AP_RELAY_MIXEDPSK_SSIDHIDE(TestCase):
 
     def assoc_psk_sta_2g(self):
 
-        res2gConn = setAdbPskSta(self.device[0], v.SSID, v.KEY, "2g", self.__class__.__name__)
+        res2gConn = setAdbPskSta(v.ANDROID_SERIAL_NUM, v.SSID, v.KEY, "2g", self.__class__.__name__)
         if res2gConn:
-            result = getAdbShellWlan(self.device[0], self.__class__.__name__)
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             if result['ip'] == '':
                 self.fail(msg='no ip address got.')
             else:
-                resPingPercent = getAdbPingStatus(self.device[0], v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
+                resPingPercent = getAdbPingStatus(v.ANDROID_SERIAL_NUM, v.PING_TARGET, v.PING_COUNT,
+                                                  self.__class__.__name__)
                 self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
                                         "Ping responsed percent werenot good enough.")
         else:
@@ -9590,13 +9665,14 @@ class AP_RELAY_MIXEDPSK_SSIDHIDE(TestCase):
 
     def assoc_psk_sta_5g(self):
 
-        res5gConn = setAdbPskSta(self.device[0],v.SSID_5G, v.KEY, "5g", self.__class__.__name__)
+        res5gConn = setAdbPskSta(v.ANDROID_SERIAL_NUM, v.SSID_5G, v.KEY, "5g", self.__class__.__name__)
         if res5gConn:
-            result = getAdbShellWlan(self.device[0], self.__class__.__name__)
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             if result['ip'] == '':
                 self.fail(msg='no ip address got.')
             else:
-                resPingPercent = getAdbPingStatus(self.device[0], v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
+                resPingPercent = getAdbPingStatus(v.ANDROID_SERIAL_NUM, v.PING_TARGET, v.PING_COUNT,
+                                                  self.__class__.__name__)
                 self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
                                         "Ping responsed percent werenot good enough.")
         else:
@@ -9604,13 +9680,14 @@ class AP_RELAY_MIXEDPSK_SSIDHIDE(TestCase):
 
     def assoc_tkippsk2_sta_2g(self):
 
-        res2gConn = setAdbTkipPsk2Sta(self.device[0],v.SSID, v.KEY, "2g", self.__class__.__name__)
+        res2gConn = setAdbTkipPsk2Sta(v.ANDROID_SERIAL_NUM, v.SSID, v.KEY, "2g", self.__class__.__name__)
         if res2gConn:
-            result = getAdbShellWlan(self.device[0], self.__class__.__name__)
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             if result['ip'] == '':
                 self.fail(msg='no ip address got.')
             else:
-                resPingPercent = getAdbPingStatus(self.device[0], v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
+                resPingPercent = getAdbPingStatus(v.ANDROID_SERIAL_NUM, v.PING_TARGET, v.PING_COUNT,
+                                                  self.__class__.__name__)
                 self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
                                         "Ping responsed percent werenot good enough.")
         else:
@@ -9618,13 +9695,14 @@ class AP_RELAY_MIXEDPSK_SSIDHIDE(TestCase):
 
     def assoc_tkippsk2_sta_5g(self):
 
-        res5gConn = setAdbTkipPsk2Sta(self.device[0],v.SSID_5G, v.KEY, "5g", self.__class__.__name__)
+        res5gConn = setAdbTkipPsk2Sta(v.ANDROID_SERIAL_NUM, v.SSID_5G, v.KEY, "5g", self.__class__.__name__)
         if res5gConn:
-            result = getAdbShellWlan(self.device[0], self.__class__.__name__)
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             if result['ip'] == '':
                 self.fail(msg='no ip address got.')
             else:
-                resPingPercent = getAdbPingStatus(self.device[0], v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
+                resPingPercent = getAdbPingStatus(v.ANDROID_SERIAL_NUM, v.PING_TARGET, v.PING_COUNT,
+                                                  self.__class__.__name__)
                 self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
                                         "Ping responsed percent werenot good enough.")
         else:
@@ -9632,13 +9710,14 @@ class AP_RELAY_MIXEDPSK_SSIDHIDE(TestCase):
 
     def assoc_tkippsk_sta_2g(self):
 
-        res2gConn = setAdbTkipPskSta(self.device[0],v.SSID, v.KEY, "2g", self.__class__.__name__)
+        res2gConn = setAdbTkipPskSta(v.ANDROID_SERIAL_NUM, v.SSID, v.KEY, "2g", self.__class__.__name__)
         if res2gConn:
-            result = getAdbShellWlan(self.device[0], self.__class__.__name__)
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             if result['ip'] == '':
                 self.fail(msg='no ip address got.')
             else:
-                resPingPercent = getAdbPingStatus(self.device[0], v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
+                resPingPercent = getAdbPingStatus(v.ANDROID_SERIAL_NUM, v.PING_TARGET, v.PING_COUNT,
+                                                  self.__class__.__name__)
                 self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
                                         "Ping responsed percent werenot good enough.")
         else:
@@ -9646,18 +9725,18 @@ class AP_RELAY_MIXEDPSK_SSIDHIDE(TestCase):
 
     def assoc_tkippsk_sta_5g(self):
 
-        res5gConn = setAdbTkipPskSta(self.device[0],v.SSID_5G, v.KEY, "5g", self.__class__.__name__)
+        res5gConn = setAdbTkipPskSta(v.ANDROID_SERIAL_NUM, v.SSID_5G, v.KEY, "5g", self.__class__.__name__)
         if res5gConn:
-            result = getAdbShellWlan(self.device[0], self.__class__.__name__)
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             if result['ip'] == '':
                 self.fail(msg='no ip address got.')
             else:
-                resPingPercent = getAdbPingStatus(self.device[0], v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
+                resPingPercent = getAdbPingStatus(v.ANDROID_SERIAL_NUM, v.PING_TARGET, v.PING_COUNT,
+                                                  self.__class__.__name__)
                 self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
                                         "Ping responsed percent werenot good enough.")
         else:
             self.assertTrue(res5gConn, "Association wasnot successful.")
-
 
 
 class AP_RELAY_BSD_SSIDHIDE(TestCase):
@@ -9676,8 +9755,6 @@ class AP_RELAY_BSD_SSIDHIDE(TestCase):
 
         api.setLanAp(self.dut, self.__name__)
 
-        self.device = getAdbDevices()
-
     @classmethod
     def tearDownClass(self):
 
@@ -9694,7 +9771,7 @@ class AP_RELAY_BSD_SSIDHIDE(TestCase):
         }
         api.setAllWifi(self.dut, self.__class__.__name__, **option)
 
-        ret = setAdbScanSsidNoExist(self.device[0], "normal", "2g", self.__class__.__name__)
+        ret = setAdbScanSsidNoExist(v.ANDROID_SERIAL_NUM, "normal", "2g", self.__class__.__name__)
 
         api.setAllWifi(self.dut, self.__class__.__name__)
 
@@ -9711,7 +9788,7 @@ class AP_RELAY_BSD_SSIDHIDE(TestCase):
         }
         api.setAllWifi(self.dut, self.__class__.__name__, **option)
 
-        ret = setAdbScanSsidNoExist(self.device[0], "normal", "2g", self.__class__.__name__)
+        ret = setAdbScanSsidNoExist(v.ANDROID_SERIAL_NUM, "normal", "2g", self.__class__.__name__)
 
         api.setAllWifi(self.dut, self.__class__.__name__)
 
@@ -9728,7 +9805,7 @@ class AP_RELAY_BSD_SSIDHIDE(TestCase):
         }
         api.setAllWifi(self.dut, self.__class__.__name__, **option)
 
-        ret = setAdbScanSsidNoExist(self.device[0], "normal", "2g", self.__class__.__name__)
+        ret = setAdbScanSsidNoExist(v.ANDROID_SERIAL_NUM, "normal", "2g", self.__class__.__name__)
 
         api.setAllWifi(self.dut, self.__class__.__name__)
 
@@ -9739,7 +9816,6 @@ class AP_RELAY_BSD_SSIDHIDE(TestCase):
 class AP_RELAY_CONFIG_CHECK(TestCase):
     @classmethod
     def setUpClass(self):
-
         self.dut = api.HttpClient()
         ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
 
@@ -9784,7 +9860,6 @@ class AP_RELAY_CONFIG_CHECK(TestCase):
 
     @classmethod
     def tearDownClass(self):
-
         api.setDisableLanAp(self.dut, self.__name__)
         option2g = {
             'wifiIndex': 1,
@@ -9808,8 +9883,10 @@ class AP_RELAY_CONFIG_CHECK(TestCase):
 
         api.setLanAp(self.dut, self.__class__.__name__)
 
-        self.assertDictEqual(relay2g, self.option2g, msg="Normal router module switch over to wire relay module, wifi config should not be changed.")
-        self.assertDictEqual(router2g, self.option2g, msg="Wire relay module switch back to normal router module, wifi config should not be changed.")
+        self.assertDictEqual(relay2g, self.option2g,
+                             msg="Normal router module switch over to wire relay module, wifi config should not be changed.")
+        self.assertDictEqual(router2g, self.option2g,
+                             msg="Wire relay module switch back to normal router module, wifi config should not be changed.")
 
     def config_check_5g(self):
         relay5g = api.getWifiDetailDic(self.dut, self.__class__.__name__, "5g")
@@ -9820,8 +9897,10 @@ class AP_RELAY_CONFIG_CHECK(TestCase):
 
         api.setLanAp(self.dut, self.__class__.__name__)
 
-        self.assertDictEqual(relay5g, self.option5g, msg="Normal router module switch over to wire relay module, wifi config should not be changed.")
-        self.assertDictEqual(router5g, self.option5g, msg="Wire relay module switch back to normal router module, wifi config should not be changed.")
+        self.assertDictEqual(relay5g, self.option5g,
+                             msg="Normal router module switch over to wire relay module, wifi config should not be changed.")
+        self.assertDictEqual(router5g, self.option5g,
+                             msg="Wire relay module switch back to normal router module, wifi config should not be changed.")
 
     def config_check_guest(self):
         relayGuest = api.getWifiDetailDic(self.dut, self.__class__.__name__, "guest")
@@ -9835,7 +9914,8 @@ class AP_RELAY_CONFIG_CHECK(TestCase):
         # when wire relay module switch back to normal router module, guest wifi is turned off
         self.optionGuest["on"] = "0"
         self.assertDictEqual(relayGuest, {}, msg="Wire relay module should not support guest wifi")
-        self.assertDictEqual(routerGuest, self.optionGuest, msg="Wire relay switch back to normal router module, guest wifi should be turned off.")
+        self.assertDictEqual(routerGuest, self.optionGuest,
+                             msg="Wire relay switch back to normal router module, guest wifi should be turned off.")
 
 
 class AP_QOS_MIXEDPSK(TestCase):
@@ -9867,8 +9947,7 @@ class AP_QOS_MIXEDPSK(TestCase):
         api.setWifi(self.dut, self.__name__, **option2g)
         api.setWifi(self.dut, self.__name__, **option5g)
 
-        self.device = getAdbDevices()
-        wlanInfo = getAdbShellWlan(self.device[0], self.__name__)
+        wlanInfo = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__name__)
         self.staMac = wlanInfo["mac"].upper()
 
         optionQosMode = {
@@ -9909,113 +9988,137 @@ class AP_QOS_MIXEDPSK(TestCase):
 
     def assoc_psk2_sta_speedtest_2g(self):
 
-        res2gConn = setAdbPsk2Sta(self.device[0], v.SSID, v.KEY, "2g", self.__class__.__name__)
+        res2gConn = setAdbPsk2Sta(v.ANDROID_SERIAL_NUM, v.SSID, v.KEY, "2g", self.__class__.__name__)
         if res2gConn:
-            result = getAdbShellWlan(self.device[0], self.__class__.__name__)
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             if result['ip'] == '':
                 self.fail(msg='no ip address got.')
             else:
-                speedTestRes = getAdbSpeedTestResult(self.device[0], self.__class__.__name__)
-                self.assertLessEqual(speedTestRes['down'], v.QOS_MAXDOWN * 1.1, "Downlink rate %s KB/s exceed maxdown %s KB/s"%(speedTestRes['down'],v.QOS_MAXDOWN))
-                self.assertLessEqual(speedTestRes['up'], v.QOS_MAXUP * 1.1, "Uplink rate %s KB/s exceed maxup %s KB/s"%(speedTestRes['up'],v.QOS_MAXUP))
+                speedTestRes = getAdbSpeedTestResult(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
+                self.assertLessEqual(speedTestRes['down'], v.QOS_MAXDOWN * 1.1,
+                                     "Downlink rate %s KB/s exceed maxdown %s KB/s" % (
+                                         speedTestRes['down'], v.QOS_MAXDOWN))
+                self.assertLessEqual(speedTestRes['up'], v.QOS_MAXUP * 1.1,
+                                     "Uplink rate %s KB/s exceed maxup %s KB/s" % (speedTestRes['up'], v.QOS_MAXUP))
         else:
             self.assertTrue(res2gConn, "Association wasnot successful.")
 
     def assoc_psk2_sta_speedtest_5g(self):
 
-        res5gConn = setAdbPsk2Sta(self.device[0], v.SSID_5G, v.KEY, "5g", self.__class__.__name__)
+        res5gConn = setAdbPsk2Sta(v.ANDROID_SERIAL_NUM, v.SSID_5G, v.KEY, "5g", self.__class__.__name__)
         if res5gConn:
-            result = getAdbShellWlan(self.device[0], self.__class__.__name__)
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             if result['ip'] == '':
                 self.fail(msg='no ip address got.')
             else:
-                speedTestRes = getAdbSpeedTestResult(self.device[0], self.__class__.__name__)
-                self.assertLessEqual(speedTestRes['down'], v.QOS_MAXDOWN * 1.1, "Downlink rate %s KB/s exceed maxdown %s KB/s"%(speedTestRes['down'],v.QOS_MAXDOWN))
-                self.assertLessEqual(speedTestRes['up'], v.QOS_MAXUP * 1.1, "Uplink rate %s KB/s exceed maxup %s KB/s"%(speedTestRes['up'],v.QOS_MAXUP))
+                speedTestRes = getAdbSpeedTestResult(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
+                self.assertLessEqual(speedTestRes['down'], v.QOS_MAXDOWN * 1.1,
+                                     "Downlink rate %s KB/s exceed maxdown %s KB/s" % (
+                                         speedTestRes['down'], v.QOS_MAXDOWN))
+                self.assertLessEqual(speedTestRes['up'], v.QOS_MAXUP * 1.1,
+                                     "Uplink rate %s KB/s exceed maxup %s KB/s" % (speedTestRes['up'], v.QOS_MAXUP))
         else:
             self.assertTrue(res5gConn, "Association wasnot successful.")
 
     def assoc_psk_sta_speedtest_2g(self):
 
-        res2gConn = setAdbPskSta(self.device[0], v.SSID, v.KEY, "2g", self.__class__.__name__)
+        res2gConn = setAdbPskSta(v.ANDROID_SERIAL_NUM, v.SSID, v.KEY, "2g", self.__class__.__name__)
         if res2gConn:
-            result = getAdbShellWlan(self.device[0], self.__class__.__name__)
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             if result['ip'] == '':
                 self.fail(msg='no ip address got.')
             else:
-                speedTestRes = getAdbSpeedTestResult(self.device[0], self.__class__.__name__)
-                self.assertLessEqual(speedTestRes['down'], v.QOS_MAXDOWN * 1.1, "Downlink rate %s KB/s exceed maxdown %s KB/s"%(speedTestRes['down'],v.QOS_MAXDOWN))
-                self.assertLessEqual(speedTestRes['up'], v.QOS_MAXUP * 1.1, "Uplink rate %s KB/s exceed maxup %s KB/s"%(speedTestRes['up'],v.QOS_MAXUP))
+                speedTestRes = getAdbSpeedTestResult(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
+                self.assertLessEqual(speedTestRes['down'], v.QOS_MAXDOWN * 1.1,
+                                     "Downlink rate %s KB/s exceed maxdown %s KB/s" % (
+                                         speedTestRes['down'], v.QOS_MAXDOWN))
+                self.assertLessEqual(speedTestRes['up'], v.QOS_MAXUP * 1.1,
+                                     "Uplink rate %s KB/s exceed maxup %s KB/s" % (speedTestRes['up'], v.QOS_MAXUP))
         else:
             self.assertTrue(res2gConn, "Association wasnot successful.")
 
     def assoc_psk_sta_speedtest_5g(self):
 
-        res5gConn = setAdbPskSta(self.device[0], v.SSID_5G, v.KEY, "5g", self.__class__.__name__)
+        res5gConn = setAdbPskSta(v.ANDROID_SERIAL_NUM, v.SSID_5G, v.KEY, "5g", self.__class__.__name__)
         if res5gConn:
-            result = getAdbShellWlan(self.device[0], self.__class__.__name__)
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             if result['ip'] == '':
                 self.fail(msg='no ip address got.')
             else:
-                speedTestRes = getAdbSpeedTestResult(self.device[0], self.__class__.__name__)
-                self.assertLessEqual(speedTestRes['down'], v.QOS_MAXDOWN * 1.1, "Downlink rate %s KB/s exceed maxdown %s KB/s"%(speedTestRes['down'],v.QOS_MAXDOWN))
-                self.assertLessEqual(speedTestRes['up'], v.QOS_MAXUP * 1.1, "Uplink rate %s KB/s exceed maxup %s KB/s"%(speedTestRes['up'],v.QOS_MAXUP))
+                speedTestRes = getAdbSpeedTestResult(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
+                self.assertLessEqual(speedTestRes['down'], v.QOS_MAXDOWN * 1.1,
+                                     "Downlink rate %s KB/s exceed maxdown %s KB/s" % (
+                                         speedTestRes['down'], v.QOS_MAXDOWN))
+                self.assertLessEqual(speedTestRes['up'], v.QOS_MAXUP * 1.1,
+                                     "Uplink rate %s KB/s exceed maxup %s KB/s" % (speedTestRes['up'], v.QOS_MAXUP))
         else:
             self.assertTrue(res5gConn, "Association wasnot successful.")
 
     def assoc_tkippsk2_sta_speedtest_2g(self):
 
-        res2gConn = setAdbTkipPsk2Sta(self.device[0], v.SSID, v.KEY, "2g", self.__class__.__name__)
+        res2gConn = setAdbTkipPsk2Sta(v.ANDROID_SERIAL_NUM, v.SSID, v.KEY, "2g", self.__class__.__name__)
         if res2gConn:
-            result = getAdbShellWlan(self.device[0], self.__class__.__name__)
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             if result['ip'] == '':
                 self.fail(msg='no ip address got.')
             else:
-                speedTestRes = getAdbSpeedTestResult(self.device[0], self.__class__.__name__)
-                self.assertLessEqual(speedTestRes['down'], v.QOS_MAXDOWN * 1.1, "Downlink rate %s KB/s exceed maxdown %s KB/s"%(speedTestRes['down'],v.QOS_MAXDOWN))
-                self.assertLessEqual(speedTestRes['up'], v.QOS_MAXUP * 1.1, "Uplink rate %s KB/s exceed maxup %s KB/s"%(speedTestRes['up'],v.QOS_MAXUP))
+                speedTestRes = getAdbSpeedTestResult(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
+                self.assertLessEqual(speedTestRes['down'], v.QOS_MAXDOWN * 1.1,
+                                     "Downlink rate %s KB/s exceed maxdown %s KB/s" % (
+                                         speedTestRes['down'], v.QOS_MAXDOWN))
+                self.assertLessEqual(speedTestRes['up'], v.QOS_MAXUP * 1.1,
+                                     "Uplink rate %s KB/s exceed maxup %s KB/s" % (speedTestRes['up'], v.QOS_MAXUP))
         else:
             self.assertTrue(res2gConn, "Association wasnot successful.")
 
     def assoc_tkippsk2_sta_speedtest_5g(self):
 
-        res5gConn = setAdbTkipPsk2Sta(self.device[0], v.SSID_5G, v.KEY, "5g", self.__class__.__name__)
+        res5gConn = setAdbTkipPsk2Sta(v.ANDROID_SERIAL_NUM, v.SSID_5G, v.KEY, "5g", self.__class__.__name__)
         if res5gConn:
-            result = getAdbShellWlan(self.device[0], self.__class__.__name__)
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             if result['ip'] == '':
                 self.fail(msg='no ip address got.')
             else:
-                speedTestRes = getAdbSpeedTestResult(self.device[0], self.__class__.__name__)
-                self.assertLessEqual(speedTestRes['down'], v.QOS_MAXDOWN * 1.1, "Downlink rate %s KB/s exceed maxdown %s KB/s"%(speedTestRes['down'],v.QOS_MAXDOWN))
-                self.assertLessEqual(speedTestRes['up'], v.QOS_MAXUP * 1.1, "Uplink rate %s KB/s exceed maxup %s KB/s"%(speedTestRes['up'],v.QOS_MAXUP))
+                speedTestRes = getAdbSpeedTestResult(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
+                self.assertLessEqual(speedTestRes['down'], v.QOS_MAXDOWN * 1.1,
+                                     "Downlink rate %s KB/s exceed maxdown %s KB/s" % (
+                                         speedTestRes['down'], v.QOS_MAXDOWN))
+                self.assertLessEqual(speedTestRes['up'], v.QOS_MAXUP * 1.1,
+                                     "Uplink rate %s KB/s exceed maxup %s KB/s" % (speedTestRes['up'], v.QOS_MAXUP))
         else:
             self.assertTrue(res5gConn, "Association wasnot successful.")
 
     def assoc_tkippsk_sta_speedtest_2g(self):
 
-        res2gConn = setAdbTkipPskSta(self.device[0], v.SSID, v.KEY, "2g", self.__class__.__name__)
+        res2gConn = setAdbTkipPskSta(v.ANDROID_SERIAL_NUM, v.SSID, v.KEY, "2g", self.__class__.__name__)
         if res2gConn:
-            result = getAdbShellWlan(self.device[0], self.__class__.__name__)
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             if result['ip'] == '':
                 self.fail(msg='no ip address got.')
             else:
-                speedTestRes = getAdbSpeedTestResult(self.device[0], self.__class__.__name__)
-                self.assertLessEqual(speedTestRes['down'], v.QOS_MAXDOWN * 1.1, "Downlink rate %s KB/s exceed maxdown %s KB/s"%(speedTestRes['down'],v.QOS_MAXDOWN))
-                self.assertLessEqual(speedTestRes['up'], v.QOS_MAXUP * 1.1, "Uplink rate %s KB/s exceed maxup %s KB/s"%(speedTestRes['up'],v.QOS_MAXUP))
+                speedTestRes = getAdbSpeedTestResult(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
+                self.assertLessEqual(speedTestRes['down'], v.QOS_MAXDOWN * 1.1,
+                                     "Downlink rate %s KB/s exceed maxdown %s KB/s" % (
+                                         speedTestRes['down'], v.QOS_MAXDOWN))
+                self.assertLessEqual(speedTestRes['up'], v.QOS_MAXUP * 1.1,
+                                     "Uplink rate %s KB/s exceed maxup %s KB/s" % (speedTestRes['up'], v.QOS_MAXUP))
         else:
             self.assertTrue(res2gConn, "Association wasnot successful.")
 
     def assoc_tkippsk_sta_speedtest_5g(self):
 
-        res5gConn = setAdbTkipPskSta(self.device[0], v.SSID_5G, v.KEY, "5g", self.__class__.__name__)
+        res5gConn = setAdbTkipPskSta(v.ANDROID_SERIAL_NUM, v.SSID_5G, v.KEY, "5g", self.__class__.__name__)
         if res5gConn:
-            result = getAdbShellWlan(self.device[0], self.__class__.__name__)
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             if result['ip'] == '':
                 self.fail(msg='no ip address got.')
             else:
-                speedTestRes = getAdbSpeedTestResult(self.device[0], self.__class__.__name__)
-                self.assertLessEqual(speedTestRes['down'], v.QOS_MAXDOWN * 1.1, "Downlink rate %s KB/s exceed maxdown %s KB/s"%(speedTestRes['down'],v.QOS_MAXDOWN))
-                self.assertLessEqual(speedTestRes['up'], v.QOS_MAXUP * 1.1, "Uplink rate %s KB/s exceed maxup %s KB/s"%(speedTestRes['up'],v.QOS_MAXUP))
+                speedTestRes = getAdbSpeedTestResult(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
+                self.assertLessEqual(speedTestRes['down'], v.QOS_MAXDOWN * 1.1,
+                                     "Downlink rate %s KB/s exceed maxdown %s KB/s" % (
+                                         speedTestRes['down'], v.QOS_MAXDOWN))
+                self.assertLessEqual(speedTestRes['up'], v.QOS_MAXUP * 1.1,
+                                     "Uplink rate %s KB/s exceed maxup %s KB/s" % (speedTestRes['up'], v.QOS_MAXUP))
         else:
             self.assertTrue(res5gConn, "Association wasnot successful.")
 
@@ -10047,8 +10150,7 @@ class AP_QOS_CLEAR(TestCase):
         api.setWifi(self.dut, self.__name__, **option2g)
         api.setWifi(self.dut, self.__name__, **option5g)
 
-        self.device = getAdbDevices()
-        wlanInfo = getAdbShellWlan(self.device[0], self.__name__)
+        wlanInfo = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__name__)
         self.staMac = wlanInfo["mac"].upper()
 
         optionQosMode = {
@@ -10089,29 +10191,35 @@ class AP_QOS_CLEAR(TestCase):
 
     def assoc_clear_sta_speedtest_2g(self):
 
-        res2gConn = setAdbClearSta(self.device[0],v.SSID, "2g", self.__class__.__name__)
+        res2gConn = setAdbClearSta(v.ANDROID_SERIAL_NUM, v.SSID, "2g", self.__class__.__name__)
         if res2gConn:
-            result = getAdbShellWlan(self.device[0], self.__class__.__name__)
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             if result['ip'] == '':
                 self.fail(msg='no ip address got.')
             else:
-                speedTestRes = getAdbSpeedTestResult(self.device[0], self.__class__.__name__)
-                self.assertLessEqual(speedTestRes['down'], v.QOS_MAXDOWN * 1.1, "Downlink rate %s KB/s exceed maxdown %s KB/s"%(speedTestRes['down'],v.QOS_MAXDOWN))
-                self.assertLessEqual(speedTestRes['up'], v.QOS_MAXUP * 1.1, "Uplink rate %s KB/s exceed maxup %s KB/s"%(speedTestRes['up'],v.QOS_MAXUP))
+                speedTestRes = getAdbSpeedTestResult(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
+                self.assertLessEqual(speedTestRes['down'], v.QOS_MAXDOWN * 1.1,
+                                     "Downlink rate %s KB/s exceed maxdown %s KB/s" % (
+                                         speedTestRes['down'], v.QOS_MAXDOWN))
+                self.assertLessEqual(speedTestRes['up'], v.QOS_MAXUP * 1.1,
+                                     "Uplink rate %s KB/s exceed maxup %s KB/s" % (speedTestRes['up'], v.QOS_MAXUP))
         else:
             self.assertTrue(res2gConn, "Association wasnot successful.")
 
     def assoc_clear_sta_speedtest_5g(self):
 
-        res5gConn = setAdbClearSta(self.device[0],v.SSID_5G, "5g", self.__class__.__name__)
+        res5gConn = setAdbClearSta(v.ANDROID_SERIAL_NUM, v.SSID_5G, "5g", self.__class__.__name__)
         if res5gConn:
-            result = getAdbShellWlan(self.device[0], self.__class__.__name__)
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             if result['ip'] == '':
                 self.fail(msg='no ip address got.')
             else:
-                speedTestRes = getAdbSpeedTestResult(self.device[0], self.__class__.__name__)
-                self.assertLessEqual(speedTestRes['down'], v.QOS_MAXDOWN * 1.1, "Downlink rate %s KB/s exceed maxdown %s KB/s"%(speedTestRes['down'],v.QOS_MAXDOWN))
-                self.assertLessEqual(speedTestRes['up'], v.QOS_MAXUP * 1.1, "Uplink rate %s KB/s exceed maxup %s KB/s"%(speedTestRes['up'],v.QOS_MAXUP))
+                speedTestRes = getAdbSpeedTestResult(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
+                self.assertLessEqual(speedTestRes['down'], v.QOS_MAXDOWN * 1.1,
+                                     "Downlink rate %s KB/s exceed maxdown %s KB/s" % (
+                                         speedTestRes['down'], v.QOS_MAXDOWN))
+                self.assertLessEqual(speedTestRes['up'], v.QOS_MAXUP * 1.1,
+                                     "Uplink rate %s KB/s exceed maxup %s KB/s" % (speedTestRes['up'], v.QOS_MAXUP))
         else:
             self.assertTrue(res5gConn, "Association wasnot successful.")
 
@@ -10145,8 +10253,7 @@ class AP_QOS_PSK2(TestCase):
         api.setWifi(self.dut, self.__name__, **option2g)
         api.setWifi(self.dut, self.__name__, **option5g)
 
-        self.device = getAdbDevices()
-        wlanInfo = getAdbShellWlan(self.device[0], self.__name__)
+        wlanInfo = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__name__)
         self.staMac = wlanInfo["mac"].upper()
 
         optionQosMode = {
@@ -10163,7 +10270,6 @@ class AP_QOS_PSK2(TestCase):
         api.setQosSwitch(self.dut, self.__name__)
         api.setQosMode(self.dut, self.__name__, **optionQosMode)
         api.setQosLimit(self.dut, self.__name__, **optionQosLimit)
-
 
     @classmethod
     def tearDownClass(self):
@@ -10188,29 +10294,35 @@ class AP_QOS_PSK2(TestCase):
 
     def assoc_psk2_sta_speedtest_2g(self):
 
-        res2gConn = setAdbPsk2Sta(self.device[0], v.SSID, v.KEY, "2g", self.__class__.__name__)
+        res2gConn = setAdbPsk2Sta(v.ANDROID_SERIAL_NUM, v.SSID, v.KEY, "2g", self.__class__.__name__)
         if res2gConn:
-            result = getAdbShellWlan(self.device[0], self.__class__.__name__)
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             if result['ip'] == '':
                 self.fail(msg='no ip address got.')
             else:
-                speedTestRes = getAdbSpeedTestResult(self.device[0], self.__class__.__name__)
-                self.assertLessEqual(speedTestRes['down'], v.QOS_MAXDOWN * 1.1, "Downlink rate %s KB/s exceed maxdown %s KB/s"%(speedTestRes['down'],v.QOS_MAXDOWN))
-                self.assertLessEqual(speedTestRes['up'], v.QOS_MAXUP * 1.1, "Uplink rate %s KB/s exceed maxup %s KB/s"%(speedTestRes['up'],v.QOS_MAXUP))
+                speedTestRes = getAdbSpeedTestResult(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
+                self.assertLessEqual(speedTestRes['down'], v.QOS_MAXDOWN * 1.1,
+                                     "Downlink rate %s KB/s exceed maxdown %s KB/s" % (
+                                         speedTestRes['down'], v.QOS_MAXDOWN))
+                self.assertLessEqual(speedTestRes['up'], v.QOS_MAXUP * 1.1,
+                                     "Uplink rate %s KB/s exceed maxup %s KB/s" % (speedTestRes['up'], v.QOS_MAXUP))
         else:
             self.assertTrue(res2gConn, "Association wasnot successful.")
 
     def assoc_psk2_sta_speedtest_5g(self):
 
-        res5gConn = setAdbPsk2Sta(self.device[0], v.SSID_5G, v.KEY, "5g", self.__class__.__name__)
+        res5gConn = setAdbPsk2Sta(v.ANDROID_SERIAL_NUM, v.SSID_5G, v.KEY, "5g", self.__class__.__name__)
         if res5gConn:
-            result = getAdbShellWlan(self.device[0], self.__class__.__name__)
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             if result['ip'] == '':
                 self.fail(msg='no ip address got.')
             else:
-                speedTestRes = getAdbSpeedTestResult(self.device[0], self.__class__.__name__)
-                self.assertLessEqual(speedTestRes['down'], v.QOS_MAXDOWN * 1.1, "Downlink rate %s KB/s exceed maxdown %s KB/s"%(speedTestRes['down'],v.QOS_MAXDOWN))
-                self.assertLessEqual(speedTestRes['up'], v.QOS_MAXUP * 1.1, "Uplink rate %s KB/s exceed maxup %s KB/s"%(speedTestRes['up'],v.QOS_MAXUP))
+                speedTestRes = getAdbSpeedTestResult(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
+                self.assertLessEqual(speedTestRes['down'], v.QOS_MAXDOWN * 1.1,
+                                     "Downlink rate %s KB/s exceed maxdown %s KB/s" % (
+                                         speedTestRes['down'], v.QOS_MAXDOWN))
+                self.assertLessEqual(speedTestRes['up'], v.QOS_MAXUP * 1.1,
+                                     "Uplink rate %s KB/s exceed maxup %s KB/s" % (speedTestRes['up'], v.QOS_MAXUP))
         else:
             self.assertTrue(res5gConn, "Association wasnot successful.")
 
@@ -10234,7 +10346,6 @@ class AP_QOS_GUEST_MIXEDPSK(TestCase):
             'pwd': v.KEY,
         }
         api.setWifi(self.dut, self.__name__, **optionGuest)
-        self.device = getAdbDevices()
 
         api.setQosSwitch(self.dut, self.__name__)
 
@@ -10262,67 +10373,73 @@ class AP_QOS_GUEST_MIXEDPSK(TestCase):
 
     def assoc_psk2_sta_speedtest_guest(self):
 
-        res2gConn = setAdbPsk2Sta(self.device[0], v.GUEST_SSID, v.KEY, "guest", self.__class__.__name__)
+        res2gConn = setAdbPsk2Sta(v.ANDROID_SERIAL_NUM, v.GUEST_SSID, v.KEY, "guest", self.__class__.__name__)
         if res2gConn:
-            result = getAdbShellWlan(self.device[0], self.__class__.__name__)
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             if result['ip'] == '':
                 self.fail(msg='no ip address got.')
             else:
-                speedTestRes = getAdbSpeedTestResult(self.device[0], self.__class__.__name__)
+                speedTestRes = getAdbSpeedTestResult(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
                 self.assertLessEqual(speedTestRes['down'], self.guestQos['guest']['down'] * 1.1,
-                                     "Downlink rate %s KB/s exceed maxdown %s KB/s"%(speedTestRes['down'],self.guestQos['guest']['down']))
+                                     "Downlink rate %s KB/s exceed maxdown %s KB/s" % (
+                                         speedTestRes['down'], self.guestQos['guest']['down']))
                 self.assertLessEqual(speedTestRes['up'], self.guestQos['guest']['up'] * 1.1,
-                                     "Uplink rate %s KB/s exceed maxup %s KB/s"%(speedTestRes['up'],self.guestQos['guest']['up']))
+                                     "Uplink rate %s KB/s exceed maxup %s KB/s" % (
+                                         speedTestRes['up'], self.guestQos['guest']['up']))
         else:
             self.assertTrue(res2gConn, "Association wasnot successful.")
-
 
     def assoc_psk_sta_speedtest_guest(self):
 
-        res2gConn = setAdbPskSta(self.device[0], v.GUEST_SSID, v.KEY, "guest", self.__class__.__name__)
+        res2gConn = setAdbPskSta(v.ANDROID_SERIAL_NUM, v.GUEST_SSID, v.KEY, "guest", self.__class__.__name__)
         if res2gConn:
-            result = getAdbShellWlan(self.device[0], self.__class__.__name__)
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             if result['ip'] == '':
                 self.fail(msg='no ip address got.')
             else:
-                speedTestRes = getAdbSpeedTestResult(self.device[0], self.__class__.__name__)
+                speedTestRes = getAdbSpeedTestResult(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
                 self.assertLessEqual(speedTestRes['down'], self.guestQos['guest']['down'] * 1.1,
-                                     "Downlink rate %s KB/s exceed maxdown %s KB/s"%(speedTestRes['down'],self.guestQos['guest']['down']))
+                                     "Downlink rate %s KB/s exceed maxdown %s KB/s" % (
+                                         speedTestRes['down'], self.guestQos['guest']['down']))
                 self.assertLessEqual(speedTestRes['up'], self.guestQos['guest']['up'] * 1.1,
-                                     "Uplink rate %s KB/s exceed maxup %s KB/s"%(speedTestRes['up'],self.guestQos['guest']['up']))
+                                     "Uplink rate %s KB/s exceed maxup %s KB/s" % (
+                                         speedTestRes['up'], self.guestQos['guest']['up']))
         else:
             self.assertTrue(res2gConn, "Association wasnot successful.")
 
-
     def assoc_tkippsk2_sta_speedtest_guest(self):
 
-        res2gConn = setAdbTkipPsk2Sta(self.device[0], v.GUEST_SSID, v.KEY, "guest", self.__class__.__name__)
+        res2gConn = setAdbTkipPsk2Sta(v.ANDROID_SERIAL_NUM, v.GUEST_SSID, v.KEY, "guest", self.__class__.__name__)
         if res2gConn:
-            result = getAdbShellWlan(self.device[0], self.__class__.__name__)
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             if result['ip'] == '':
                 self.fail(msg='no ip address got.')
             else:
-                speedTestRes = getAdbSpeedTestResult(self.device[0], self.__class__.__name__)
+                speedTestRes = getAdbSpeedTestResult(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
                 self.assertLessEqual(speedTestRes['down'], self.guestQos['guest']['down'] * 1.1,
-                                     "Downlink rate %s KB/s exceed maxdown %s KB/s"%(speedTestRes['down'],self.guestQos['guest']['down']))
+                                     "Downlink rate %s KB/s exceed maxdown %s KB/s" % (
+                                         speedTestRes['down'], self.guestQos['guest']['down']))
                 self.assertLessEqual(speedTestRes['up'], self.guestQos['guest']['up'] * 1.1,
-                                     "Uplink rate %s KB/s exceed maxup %s KB/s"%(speedTestRes['up'],self.guestQos['guest']['up']))
+                                     "Uplink rate %s KB/s exceed maxup %s KB/s" % (
+                                         speedTestRes['up'], self.guestQos['guest']['up']))
         else:
             self.assertTrue(res2gConn, "Association wasnot successful.")
 
     def assoc_tkippsk_sta_speedtest_guest(self):
 
-        res2gConn = setAdbTkipPskSta(self.device[0], v.GUEST_SSID, v.KEY, "guest", self.__class__.__name__)
+        res2gConn = setAdbTkipPskSta(v.ANDROID_SERIAL_NUM, v.GUEST_SSID, v.KEY, "guest", self.__class__.__name__)
         if res2gConn:
-            result = getAdbShellWlan(self.device[0], self.__class__.__name__)
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             if result['ip'] == '':
                 self.fail(msg='no ip address got.')
             else:
-                speedTestRes = getAdbSpeedTestResult(self.device[0], self.__class__.__name__)
+                speedTestRes = getAdbSpeedTestResult(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
                 self.assertLessEqual(speedTestRes['down'], self.guestQos['guest']['down'] * 1.1,
-                                     "Downlink rate %s KB/s exceed maxdown %s KB/s"%(speedTestRes['down'],self.guestQos['guest']['down']))
+                                     "Downlink rate %s KB/s exceed maxdown %s KB/s" % (
+                                         speedTestRes['down'], self.guestQos['guest']['down']))
                 self.assertLessEqual(speedTestRes['up'], self.guestQos['guest']['up'] * 1.1,
-                                     "Uplink rate %s KB/s exceed maxup %s KB/s"%(speedTestRes['up'],self.guestQos['guest']['up']))
+                                     "Uplink rate %s KB/s exceed maxup %s KB/s" % (
+                                         speedTestRes['up'], self.guestQos['guest']['up']))
         else:
             self.assertTrue(res2gConn, "Association wasnot successful.")
 
@@ -10366,7 +10483,6 @@ class AP_WIRELESS_RELAY_CLEAR_CHAN(TestCase):
         }
         api.setWifi(self.dut, self.__name__, **option2g)
         api.setWifi(self.dut, self.__name__, **option5g)
-        self.device = getAdbDevices()
 
     @classmethod
     def tearDownClass(self):
@@ -10377,13 +10493,14 @@ class AP_WIRELESS_RELAY_CLEAR_CHAN(TestCase):
 
     def assoc_clear_sta_2g(self):
 
-        res2gConn = setAdbClearSta(self.device[0], v.SSID, "2g", self.__class__.__name__)
+        res2gConn = setAdbClearSta(v.ANDROID_SERIAL_NUM, v.SSID, "2g", self.__class__.__name__)
         if res2gConn:
-            result = getAdbShellWlan(self.device[0], self.__class__.__name__)
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             if result['ip'] == '':
                 self.fail(msg='no ip address got.')
             else:
-                resPingPercent = getAdbPingStatus(self.device[0], v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
+                resPingPercent = getAdbPingStatus(v.ANDROID_SERIAL_NUM, v.PING_TARGET, v.PING_COUNT,
+                                                  self.__class__.__name__)
                 self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
                                         "Ping responsed percent werenot good enough.")
         else:
@@ -10391,13 +10508,14 @@ class AP_WIRELESS_RELAY_CLEAR_CHAN(TestCase):
 
     def assoc_clear_sta_5g(self):
 
-        res5gConn = setAdbClearSta(self.device[0], v.SSID_5G, "5g", self.__class__.__name__)
+        res5gConn = setAdbClearSta(v.ANDROID_SERIAL_NUM, v.SSID_5G, "5g", self.__class__.__name__)
         if res5gConn:
-            result = getAdbShellWlan(self.device[0], self.__class__.__name__)
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             if result['ip'] == '':
                 self.fail(msg='no ip address got.')
             else:
-                resPingPercent = getAdbPingStatus(self.device[0], v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
+                resPingPercent = getAdbPingStatus(v.ANDROID_SERIAL_NUM, v.PING_TARGET, v.PING_COUNT,
+                                                  self.__class__.__name__)
                 self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
                                         "Ping responsed percent werenot good enough.")
         else:
@@ -10430,8 +10548,6 @@ class AP_WIRELESS_RELAY_PSK2(TestCase):
         }
         api.setWifiAp(self.dut, self.__name__, **option)
 
-        self.device = getAdbDevices()
-
     @classmethod
     def tearDownClass(self):
 
@@ -10441,13 +10557,14 @@ class AP_WIRELESS_RELAY_PSK2(TestCase):
 
     def assoc_psk2_sta_2g(self):
 
-        res2gConn = setAdbPsk2Sta(self.device[0], v.WIRELESS_RELAY_SSID, v.KEY, "2g", self.__class__.__name__)
+        res2gConn = setAdbPsk2Sta(v.ANDROID_SERIAL_NUM, v.WIRELESS_RELAY_SSID, v.KEY, "2g", self.__class__.__name__)
         if res2gConn:
-            result = getAdbShellWlan(self.device[0], self.__class__.__name__)
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             if result['ip'] == '':
                 self.fail(msg='no ip address got.')
             else:
-                resPingPercent = getAdbPingStatus(self.device[0], v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
+                resPingPercent = getAdbPingStatus(v.ANDROID_SERIAL_NUM, v.PING_TARGET, v.PING_COUNT,
+                                                  self.__class__.__name__)
                 self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
                                         "Ping responsed percent werenot good enough.")
         else:
@@ -10455,13 +10572,14 @@ class AP_WIRELESS_RELAY_PSK2(TestCase):
 
     def assoc_psk2_sta_5g(self):
 
-        res5gConn = setAdbPsk2Sta(self.device[0], v.WIRELESS_RELAY_SSID_5G, v.KEY, "5g", self.__class__.__name__)
+        res5gConn = setAdbPsk2Sta(v.ANDROID_SERIAL_NUM, v.WIRELESS_RELAY_SSID_5G, v.KEY, "5g", self.__class__.__name__)
         if res5gConn:
-            result = getAdbShellWlan(self.device[0], self.__class__.__name__)
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             if result['ip'] == '':
                 self.fail(msg='no ip address got.')
             else:
-                resPingPercent = getAdbPingStatus(self.device[0], v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
+                resPingPercent = getAdbPingStatus(v.ANDROID_SERIAL_NUM, v.PING_TARGET, v.PING_COUNT,
+                                                  self.__class__.__name__)
                 self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
                                         "Ping responsed percent werenot good enough.")
         else:
@@ -10494,25 +10612,23 @@ class AP_WIRELESS_RELAY_MIXEDPSK(TestCase):
         }
         api.setWifiAp(self.dut, self.__name__, **option)
 
-        self.device = getAdbDevices()
-
     @classmethod
     def tearDownClass(self):
 
         api.setDisableAp(self.dut, self.__name__)
 
-
         self.dut.close()
 
     def assoc_psk2_sta_2g(self):
 
-        res2gConn = setAdbPsk2Sta(self.device[0], v.WIRELESS_RELAY_SSID, v.KEY, "2g", self.__class__.__name__)
+        res2gConn = setAdbPsk2Sta(v.ANDROID_SERIAL_NUM, v.WIRELESS_RELAY_SSID, v.KEY, "2g", self.__class__.__name__)
         if res2gConn:
-            result = getAdbShellWlan(self.device[0], self.__class__.__name__)
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             if result['ip'] == '':
                 self.fail(msg='no ip address got.')
             else:
-                resPingPercent = getAdbPingStatus(self.device[0], v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
+                resPingPercent = getAdbPingStatus(v.ANDROID_SERIAL_NUM, v.PING_TARGET, v.PING_COUNT,
+                                                  self.__class__.__name__)
                 self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
                                         "Ping responsed percent werenot good enough.")
         else:
@@ -10520,13 +10636,14 @@ class AP_WIRELESS_RELAY_MIXEDPSK(TestCase):
 
     def assoc_psk2_sta_5g(self):
 
-        res5gConn = setAdbPsk2Sta(self.device[0], v.WIRELESS_RELAY_SSID_5G, v.KEY, "5g", self.__class__.__name__)
+        res5gConn = setAdbPsk2Sta(v.ANDROID_SERIAL_NUM, v.WIRELESS_RELAY_SSID_5G, v.KEY, "5g", self.__class__.__name__)
         if res5gConn:
-            result = getAdbShellWlan(self.device[0], self.__class__.__name__)
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             if result['ip'] == '':
                 self.fail(msg='no ip address got.')
             else:
-                resPingPercent = getAdbPingStatus(self.device[0], v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
+                resPingPercent = getAdbPingStatus(v.ANDROID_SERIAL_NUM, v.PING_TARGET, v.PING_COUNT,
+                                                  self.__class__.__name__)
                 self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
                                         "Ping responsed percent werenot good enough.")
         else:
@@ -10534,13 +10651,14 @@ class AP_WIRELESS_RELAY_MIXEDPSK(TestCase):
 
     def assoc_psk_sta_2g(self):
 
-        res2gConn = setAdbPskSta(self.device[0], v.WIRELESS_RELAY_SSID, v.KEY, "2g", self.__class__.__name__)
+        res2gConn = setAdbPskSta(v.ANDROID_SERIAL_NUM, v.WIRELESS_RELAY_SSID, v.KEY, "2g", self.__class__.__name__)
         if res2gConn:
-            result = getAdbShellWlan(self.device[0], self.__class__.__name__)
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             if result['ip'] == '':
                 self.fail(msg='no ip address got.')
             else:
-                resPingPercent = getAdbPingStatus(self.device[0], v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
+                resPingPercent = getAdbPingStatus(v.ANDROID_SERIAL_NUM, v.PING_TARGET, v.PING_COUNT,
+                                                  self.__class__.__name__)
                 self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
                                         "Ping responsed percent werenot good enough.")
         else:
@@ -10548,13 +10666,14 @@ class AP_WIRELESS_RELAY_MIXEDPSK(TestCase):
 
     def assoc_psk_sta_5g(self):
 
-        res5gConn = setAdbPskSta(self.device[0], v.WIRELESS_RELAY_SSID_5G, v.KEY, "5g", self.__class__.__name__)
+        res5gConn = setAdbPskSta(v.ANDROID_SERIAL_NUM, v.WIRELESS_RELAY_SSID_5G, v.KEY, "5g", self.__class__.__name__)
         if res5gConn:
-            result = getAdbShellWlan(self.device[0], self.__class__.__name__)
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             if result['ip'] == '':
                 self.fail(msg='no ip address got.')
             else:
-                resPingPercent = getAdbPingStatus(self.device[0], v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
+                resPingPercent = getAdbPingStatus(v.ANDROID_SERIAL_NUM, v.PING_TARGET, v.PING_COUNT,
+                                                  self.__class__.__name__)
                 self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
                                         "Ping responsed percent werenot good enough.")
         else:
@@ -10562,13 +10681,14 @@ class AP_WIRELESS_RELAY_MIXEDPSK(TestCase):
 
     def assoc_tkippsk2_sta_2g(self):
 
-        res2gConn = setAdbTkipPsk2Sta(self.device[0], v.WIRELESS_RELAY_SSID, v.KEY, "2g", self.__class__.__name__)
+        res2gConn = setAdbTkipPsk2Sta(v.ANDROID_SERIAL_NUM, v.WIRELESS_RELAY_SSID, v.KEY, "2g", self.__class__.__name__)
         if res2gConn:
-            result = getAdbShellWlan(self.device[0], self.__class__.__name__)
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             if result['ip'] == '':
                 self.fail(msg='no ip address got.')
             else:
-                resPingPercent = getAdbPingStatus(self.device[0], v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
+                resPingPercent = getAdbPingStatus(v.ANDROID_SERIAL_NUM, v.PING_TARGET, v.PING_COUNT,
+                                                  self.__class__.__name__)
                 self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
                                         "Ping responsed percent werenot good enough.")
         else:
@@ -10576,13 +10696,15 @@ class AP_WIRELESS_RELAY_MIXEDPSK(TestCase):
 
     def assoc_tkippsk2_sta_5g(self):
 
-        res5gConn = setAdbTkipPsk2Sta(self.device[0], v.WIRELESS_RELAY_SSID_5G, v.KEY, "5g", self.__class__.__name__)
+        res5gConn = setAdbTkipPsk2Sta(v.ANDROID_SERIAL_NUM, v.WIRELESS_RELAY_SSID_5G, v.KEY, "5g",
+                                      self.__class__.__name__)
         if res5gConn:
-            result = getAdbShellWlan(self.device[0], self.__class__.__name__)
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             if result['ip'] == '':
                 self.fail(msg='no ip address got.')
             else:
-                resPingPercent = getAdbPingStatus(self.device[0], v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
+                resPingPercent = getAdbPingStatus(v.ANDROID_SERIAL_NUM, v.PING_TARGET, v.PING_COUNT,
+                                                  self.__class__.__name__)
                 self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
                                         "Ping responsed percent werenot good enough.")
         else:
@@ -10590,13 +10712,14 @@ class AP_WIRELESS_RELAY_MIXEDPSK(TestCase):
 
     def assoc_tkippsk_sta_2g(self):
 
-        res2gConn = setAdbTkipPskSta(self.device[0], v.WIRELESS_RELAY_SSID, v.KEY, "2g", self.__class__.__name__)
+        res2gConn = setAdbTkipPskSta(v.ANDROID_SERIAL_NUM, v.WIRELESS_RELAY_SSID, v.KEY, "2g", self.__class__.__name__)
         if res2gConn:
-            result = getAdbShellWlan(self.device[0], self.__class__.__name__)
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             if result['ip'] == '':
                 self.fail(msg='no ip address got.')
             else:
-                resPingPercent = getAdbPingStatus(self.device[0], v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
+                resPingPercent = getAdbPingStatus(v.ANDROID_SERIAL_NUM, v.PING_TARGET, v.PING_COUNT,
+                                                  self.__class__.__name__)
                 self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
                                         "Ping responsed percent werenot good enough.")
         else:
@@ -10604,13 +10727,15 @@ class AP_WIRELESS_RELAY_MIXEDPSK(TestCase):
 
     def assoc_tkippsk_sta_5g(self):
 
-        res5gConn = setAdbTkipPskSta(self.device[0], v.WIRELESS_RELAY_SSID_5G, v.KEY, "5g", self.__class__.__name__)
+        res5gConn = setAdbTkipPskSta(v.ANDROID_SERIAL_NUM, v.WIRELESS_RELAY_SSID_5G, v.KEY, "5g",
+                                     self.__class__.__name__)
         if res5gConn:
-            result = getAdbShellWlan(self.device[0], self.__class__.__name__)
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             if result['ip'] == '':
                 self.fail(msg='no ip address got.')
             else:
-                resPingPercent = getAdbPingStatus(self.device[0], v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
+                resPingPercent = getAdbPingStatus(v.ANDROID_SERIAL_NUM, v.PING_TARGET, v.PING_COUNT,
+                                                  self.__class__.__name__)
                 self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
                                         "Ping responsed percent werenot good enough.")
         else:
@@ -10661,8 +10786,6 @@ class AP_WIRELESS_RELAY_MIXEDPSK_SSIDHIDE(TestCase):
         api.setWifi(self.dut, self.__name__, **option2g)
         api.setWifi(self.dut, self.__name__, **option5g)
 
-        self.device = getAdbDevices()
-
     @classmethod
     def tearDownClass(self):
 
@@ -10672,13 +10795,14 @@ class AP_WIRELESS_RELAY_MIXEDPSK_SSIDHIDE(TestCase):
 
     def assoc_psk2_sta_2g(self):
 
-        res2gConn = setAdbPsk2Sta(self.device[0], v.SSID, v.KEY, "2g", self.__class__.__name__)
+        res2gConn = setAdbPsk2Sta(v.ANDROID_SERIAL_NUM, v.SSID, v.KEY, "2g", self.__class__.__name__)
         if res2gConn:
-            result = getAdbShellWlan(self.device[0], self.__class__.__name__)
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             if result['ip'] == '':
                 self.fail(msg='no ip address got.')
             else:
-                resPingPercent = getAdbPingStatus(self.device[0], v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
+                resPingPercent = getAdbPingStatus(v.ANDROID_SERIAL_NUM, v.PING_TARGET, v.PING_COUNT,
+                                                  self.__class__.__name__)
                 self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
                                         "Ping responsed percent werenot good enough.")
         else:
@@ -10686,13 +10810,14 @@ class AP_WIRELESS_RELAY_MIXEDPSK_SSIDHIDE(TestCase):
 
     def assoc_psk2_sta_5g(self):
 
-        res5gConn = setAdbPsk2Sta(self.device[0], v.SSID_5G, v.KEY, "5g", self.__class__.__name__)
+        res5gConn = setAdbPsk2Sta(v.ANDROID_SERIAL_NUM, v.SSID_5G, v.KEY, "5g", self.__class__.__name__)
         if res5gConn:
-            result = getAdbShellWlan(self.device[0], self.__class__.__name__)
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             if result['ip'] == '':
                 self.fail(msg='no ip address got.')
             else:
-                resPingPercent = getAdbPingStatus(self.device[0], v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
+                resPingPercent = getAdbPingStatus(v.ANDROID_SERIAL_NUM, v.PING_TARGET, v.PING_COUNT,
+                                                  self.__class__.__name__)
                 self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
                                         "Ping responsed percent werenot good enough.")
         else:
@@ -10700,13 +10825,14 @@ class AP_WIRELESS_RELAY_MIXEDPSK_SSIDHIDE(TestCase):
 
     def assoc_psk_sta_2g(self):
 
-        res2gConn = setAdbPskSta(self.device[0], v.SSID, v.KEY, "2g", self.__class__.__name__)
+        res2gConn = setAdbPskSta(v.ANDROID_SERIAL_NUM, v.SSID, v.KEY, "2g", self.__class__.__name__)
         if res2gConn:
-            result = getAdbShellWlan(self.device[0], self.__class__.__name__)
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             if result['ip'] == '':
                 self.fail(msg='no ip address got.')
             else:
-                resPingPercent = getAdbPingStatus(self.device[0], v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
+                resPingPercent = getAdbPingStatus(v.ANDROID_SERIAL_NUM, v.PING_TARGET, v.PING_COUNT,
+                                                  self.__class__.__name__)
                 self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
                                         "Ping responsed percent werenot good enough.")
         else:
@@ -10714,13 +10840,14 @@ class AP_WIRELESS_RELAY_MIXEDPSK_SSIDHIDE(TestCase):
 
     def assoc_psk_sta_5g(self):
 
-        res5gConn = setAdbPskSta(self.device[0], v.SSID_5G, v.KEY, "5g", self.__class__.__name__)
+        res5gConn = setAdbPskSta(v.ANDROID_SERIAL_NUM, v.SSID_5G, v.KEY, "5g", self.__class__.__name__)
         if res5gConn:
-            result = getAdbShellWlan(self.device[0], self.__class__.__name__)
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             if result['ip'] == '':
                 self.fail(msg='no ip address got.')
             else:
-                resPingPercent = getAdbPingStatus(self.device[0], v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
+                resPingPercent = getAdbPingStatus(v.ANDROID_SERIAL_NUM, v.PING_TARGET, v.PING_COUNT,
+                                                  self.__class__.__name__)
                 self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
                                         "Ping responsed percent werenot good enough.")
         else:
@@ -10728,13 +10855,14 @@ class AP_WIRELESS_RELAY_MIXEDPSK_SSIDHIDE(TestCase):
 
     def assoc_tkippsk2_sta_2g(self):
 
-        res2gConn = setAdbTkipPsk2Sta(self.device[0], v.SSID, v.KEY, "2g", self.__class__.__name__)
+        res2gConn = setAdbTkipPsk2Sta(v.ANDROID_SERIAL_NUM, v.SSID, v.KEY, "2g", self.__class__.__name__)
         if res2gConn:
-            result = getAdbShellWlan(self.device[0], self.__class__.__name__)
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             if result['ip'] == '':
                 self.fail(msg='no ip address got.')
             else:
-                resPingPercent = getAdbPingStatus(self.device[0], v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
+                resPingPercent = getAdbPingStatus(v.ANDROID_SERIAL_NUM, v.PING_TARGET, v.PING_COUNT,
+                                                  self.__class__.__name__)
                 self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
                                         "Ping responsed percent werenot good enough.")
         else:
@@ -10742,13 +10870,14 @@ class AP_WIRELESS_RELAY_MIXEDPSK_SSIDHIDE(TestCase):
 
     def assoc_tkippsk2_sta_5g(self):
 
-        res5gConn = setAdbTkipPsk2Sta(self.device[0], v.SSID_5G, v.KEY, "5g", self.__class__.__name__)
+        res5gConn = setAdbTkipPsk2Sta(v.ANDROID_SERIAL_NUM, v.SSID_5G, v.KEY, "5g", self.__class__.__name__)
         if res5gConn:
-            result = getAdbShellWlan(self.device[0], self.__class__.__name__)
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             if result['ip'] == '':
                 self.fail(msg='no ip address got.')
             else:
-                resPingPercent = getAdbPingStatus(self.device[0], v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
+                resPingPercent = getAdbPingStatus(v.ANDROID_SERIAL_NUM, v.PING_TARGET, v.PING_COUNT,
+                                                  self.__class__.__name__)
                 self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
                                         "Ping responsed percent werenot good enough.")
         else:
@@ -10756,13 +10885,14 @@ class AP_WIRELESS_RELAY_MIXEDPSK_SSIDHIDE(TestCase):
 
     def assoc_tkippsk_sta_2g(self):
 
-        res2gConn = setAdbTkipPskSta(self.device[0], v.SSID, v.KEY, "2g", self.__class__.__name__)
+        res2gConn = setAdbTkipPskSta(v.ANDROID_SERIAL_NUM, v.SSID, v.KEY, "2g", self.__class__.__name__)
         if res2gConn:
-            result = getAdbShellWlan(self.device[0], self.__class__.__name__)
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             if result['ip'] == '':
                 self.fail(msg='no ip address got.')
             else:
-                resPingPercent = getAdbPingStatus(self.device[0], v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
+                resPingPercent = getAdbPingStatus(v.ANDROID_SERIAL_NUM, v.PING_TARGET, v.PING_COUNT,
+                                                  self.__class__.__name__)
                 self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
                                         "Ping responsed percent werenot good enough.")
         else:
@@ -10770,13 +10900,14 @@ class AP_WIRELESS_RELAY_MIXEDPSK_SSIDHIDE(TestCase):
 
     def assoc_tkippsk_sta_5g(self):
 
-        res5gConn = setAdbTkipPskSta(self.device[0], v.SSID_5G, v.KEY, "5g", self.__class__.__name__)
+        res5gConn = setAdbTkipPskSta(v.ANDROID_SERIAL_NUM, v.SSID_5G, v.KEY, "5g", self.__class__.__name__)
         if res5gConn:
-            result = getAdbShellWlan(self.device[0], self.__class__.__name__)
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             if result['ip'] == '':
                 self.fail(msg='no ip address got.')
             else:
-                resPingPercent = getAdbPingStatus(self.device[0], v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
+                resPingPercent = getAdbPingStatus(v.ANDROID_SERIAL_NUM, v.PING_TARGET, v.PING_COUNT,
+                                                  self.__class__.__name__)
                 self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
                                         "Ping responsed percent werenot good enough.")
         else:
@@ -10810,25 +10941,24 @@ class AP_WIRELESS_RELAY_MIXEDPSK_SSIDSPEC(TestCase):
         }
         api.setWifiAp(self.dut, self.__name__, **option)
 
-        self.device = getAdbDevices()
-
     @classmethod
     def tearDownClass(self):
 
         api.setDisableAp(self.dut, self.__name__)
 
-
         self.dut.close()
 
     def assoc_psk2_sta_ssidspec_2g(self):
 
-        res2gConn = setAdbPsk2Sta(self.device[0], v.WIRELESS_RELAY_SPECIAL_SSID, v.KEY, "2g", self.__class__.__name__)
+        res2gConn = setAdbPsk2Sta(v.ANDROID_SERIAL_NUM, v.WIRELESS_RELAY_SPECIAL_SSID, v.KEY, "2g",
+                                  self.__class__.__name__)
         if res2gConn:
-            result = getAdbShellWlan(self.device[0], self.__class__.__name__)
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             if result['ip'] == '':
                 self.fail(msg='no ip address got.')
             else:
-                resPingPercent = getAdbPingStatus(self.device[0], v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
+                resPingPercent = getAdbPingStatus(v.ANDROID_SERIAL_NUM, v.PING_TARGET, v.PING_COUNT,
+                                                  self.__class__.__name__)
                 self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
                                         "Ping responsed percent werenot good enough.")
         else:
@@ -10836,13 +10966,15 @@ class AP_WIRELESS_RELAY_MIXEDPSK_SSIDSPEC(TestCase):
 
     def assoc_psk2_sta_ssidspec_5g(self):
 
-        res5gConn = setAdbPsk2Sta(self.device[0], v.WIRELESS_RELAY_SPECIAL_SSID_5G, v.KEY, "5g", self.__class__.__name__)
+        res5gConn = setAdbPsk2Sta(v.ANDROID_SERIAL_NUM, v.WIRELESS_RELAY_SPECIAL_SSID_5G, v.KEY, "5g",
+                                  self.__class__.__name__)
         if res5gConn:
-            result = getAdbShellWlan(self.device[0], self.__class__.__name__)
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             if result['ip'] == '':
                 self.fail(msg='no ip address got.')
             else:
-                resPingPercent = getAdbPingStatus(self.device[0], v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
+                resPingPercent = getAdbPingStatus(v.ANDROID_SERIAL_NUM, v.PING_TARGET, v.PING_COUNT,
+                                                  self.__class__.__name__)
                 self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
                                         "Ping responsed percent werenot good enough.")
         else:
@@ -10850,13 +10982,15 @@ class AP_WIRELESS_RELAY_MIXEDPSK_SSIDSPEC(TestCase):
 
     def assoc_psk_sta_ssidspec_2g(self):
 
-        res2gConn = setAdbPskSta(self.device[0], v.WIRELESS_RELAY_SPECIAL_SSID, v.KEY, "2g", self.__class__.__name__)
+        res2gConn = setAdbPskSta(v.ANDROID_SERIAL_NUM, v.WIRELESS_RELAY_SPECIAL_SSID, v.KEY, "2g",
+                                 self.__class__.__name__)
         if res2gConn:
-            result = getAdbShellWlan(self.device[0], self.__class__.__name__)
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             if result['ip'] == '':
                 self.fail(msg='no ip address got.')
             else:
-                resPingPercent = getAdbPingStatus(self.device[0], v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
+                resPingPercent = getAdbPingStatus(v.ANDROID_SERIAL_NUM, v.PING_TARGET, v.PING_COUNT,
+                                                  self.__class__.__name__)
                 self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
                                         "Ping responsed percent werenot good enough.")
         else:
@@ -10864,13 +10998,15 @@ class AP_WIRELESS_RELAY_MIXEDPSK_SSIDSPEC(TestCase):
 
     def assoc_psk_sta_ssidspec_5g(self):
 
-        res5gConn = setAdbPskSta(self.device[0], v.WIRELESS_RELAY_SPECIAL_SSID_5G, v.KEY, "5g", self.__class__.__name__)
+        res5gConn = setAdbPskSta(v.ANDROID_SERIAL_NUM, v.WIRELESS_RELAY_SPECIAL_SSID_5G, v.KEY, "5g",
+                                 self.__class__.__name__)
         if res5gConn:
-            result = getAdbShellWlan(self.device[0], self.__class__.__name__)
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             if result['ip'] == '':
                 self.fail(msg='no ip address got.')
             else:
-                resPingPercent = getAdbPingStatus(self.device[0], v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
+                resPingPercent = getAdbPingStatus(v.ANDROID_SERIAL_NUM, v.PING_TARGET, v.PING_COUNT,
+                                                  self.__class__.__name__)
                 self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
                                         "Ping responsed percent werenot good enough.")
         else:
@@ -10878,52 +11014,60 @@ class AP_WIRELESS_RELAY_MIXEDPSK_SSIDSPEC(TestCase):
 
     def assoc_tkippsk2_sta_ssidspec_2g(self):
 
-        res2gConn = setAdbTkipPsk2Sta(self.device[0], v.WIRELESS_RELAY_SPECIAL_SSID, v.KEY, "2g", self.__class__.__name__)
+        res2gConn = setAdbTkipPsk2Sta(v.ANDROID_SERIAL_NUM, v.WIRELESS_RELAY_SPECIAL_SSID, v.KEY, "2g",
+                                      self.__class__.__name__)
         if res2gConn:
-            result = getAdbShellWlan(self.device[0], self.__class__.__name__)
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             if result['ip'] == '':
                 self.fail(msg='no ip address got.')
             else:
-                resPingPercent = getAdbPingStatus(self.device[0], v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
+                resPingPercent = getAdbPingStatus(v.ANDROID_SERIAL_NUM, v.PING_TARGET, v.PING_COUNT,
+                                                  self.__class__.__name__)
                 self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
                                         "Ping responsed percent werenot good enough.")
         else:
             self.assertTrue(res2gConn, "Association wasnot successful.")
 
     def assoc_tkippsk2_sta_ssidspec_5g(self):
-        res5gConn = setAdbTkipPsk2Sta(self.device[0], v.WIRELESS_RELAY_SPECIAL_SSID_5G, v.KEY, "5g", self.__class__.__name__)
+        res5gConn = setAdbTkipPsk2Sta(v.ANDROID_SERIAL_NUM, v.WIRELESS_RELAY_SPECIAL_SSID_5G, v.KEY, "5g",
+                                      self.__class__.__name__)
         if res5gConn:
-            result = getAdbShellWlan(self.device[0], self.__class__.__name__)
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             if result['ip'] == '':
                 self.fail(msg='no ip address got.')
             else:
-                resPingPercent = getAdbPingStatus(self.device[0], v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
+                resPingPercent = getAdbPingStatus(v.ANDROID_SERIAL_NUM, v.PING_TARGET, v.PING_COUNT,
+                                                  self.__class__.__name__)
                 self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
                                         "Ping responsed percent werenot good enough.")
         else:
             self.assertTrue(res5gConn, "Association wasnot successful.")
 
     def assoc_tkippsk_sta_ssidspec_2g(self):
-        res2gConn = setAdbTkipPskSta(self.device[0], v.WIRELESS_RELAY_SPECIAL_SSID, v.KEY, "2g", self.__class__.__name__)
+        res2gConn = setAdbTkipPskSta(v.ANDROID_SERIAL_NUM, v.WIRELESS_RELAY_SPECIAL_SSID, v.KEY, "2g",
+                                     self.__class__.__name__)
         if res2gConn:
-            result = getAdbShellWlan(self.device[0], self.__class__.__name__)
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             if result['ip'] == '':
                 self.fail(msg='no ip address got.')
             else:
-                resPingPercent = getAdbPingStatus(self.device[0], v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
+                resPingPercent = getAdbPingStatus(v.ANDROID_SERIAL_NUM, v.PING_TARGET, v.PING_COUNT,
+                                                  self.__class__.__name__)
                 self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
                                         "Ping responsed percent werenot good enough.")
         else:
             self.assertTrue(res2gConn, "Association wasnot successful.")
 
     def assoc_tkippsk_sta_ssidspec_5g(self):
-        res5gConn = setAdbTkipPskSta(self.device[0], v.WIRELESS_RELAY_SPECIAL_SSID_5G, v.KEY, "5g", self.__class__.__name__)
+        res5gConn = setAdbTkipPskSta(v.ANDROID_SERIAL_NUM, v.WIRELESS_RELAY_SPECIAL_SSID_5G, v.KEY, "5g",
+                                     self.__class__.__name__)
         if res5gConn:
-            result = getAdbShellWlan(self.device[0], self.__class__.__name__)
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             if result['ip'] == '':
                 self.fail(msg='no ip address got.')
             else:
-                resPingPercent = getAdbPingStatus(self.device[0], v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
+                resPingPercent = getAdbPingStatus(v.ANDROID_SERIAL_NUM, v.PING_TARGET, v.PING_COUNT,
+                                                  self.__class__.__name__)
                 self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
                                         "Ping responsed percent werenot good enough.")
         else:
@@ -10957,8 +11101,6 @@ class AP_WIRELESS_RELAY_MIXEDPSK_KEYSPEC(TestCase):
         }
         api.setWifiAp(self.dut, self.__name__, **option)
 
-        self.device = getAdbDevices()
-
     @classmethod
     def tearDownClass(self):
 
@@ -10968,13 +11110,15 @@ class AP_WIRELESS_RELAY_MIXEDPSK_KEYSPEC(TestCase):
 
     def assoc_psk2_sta_keyspec_2g(self):
 
-        res2gConn = setAdbPsk2Sta(self.device[0], v.WIRELESS_RELAY_SSID, v.SPECIAL_KEY, "2g", self.__class__.__name__)
+        res2gConn = setAdbPsk2Sta(v.ANDROID_SERIAL_NUM, v.WIRELESS_RELAY_SSID, v.SPECIAL_KEY, "2g",
+                                  self.__class__.__name__)
         if res2gConn:
-            result = getAdbShellWlan(self.device[0], self.__class__.__name__)
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             if result['ip'] == '':
                 self.fail(msg='no ip address got.')
             else:
-                resPingPercent = getAdbPingStatus(self.device[0], v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
+                resPingPercent = getAdbPingStatus(v.ANDROID_SERIAL_NUM, v.PING_TARGET, v.PING_COUNT,
+                                                  self.__class__.__name__)
                 self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
                                         "Ping responsed percent werenot good enough.")
         else:
@@ -10982,13 +11126,15 @@ class AP_WIRELESS_RELAY_MIXEDPSK_KEYSPEC(TestCase):
 
     def assoc_psk2_sta_keyspec_5g(self):
 
-        res2gConn = setAdbPsk2Sta(self.device[0], v.WIRELESS_RELAY_SSID_5G, v.SPECIAL_KEY, "5g", self.__class__.__name__)
+        res2gConn = setAdbPsk2Sta(v.ANDROID_SERIAL_NUM, v.WIRELESS_RELAY_SSID_5G, v.SPECIAL_KEY, "5g",
+                                  self.__class__.__name__)
         if res2gConn:
-            result = getAdbShellWlan(self.device[0], self.__class__.__name__)
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             if result['ip'] == '':
                 self.fail(msg='no ip address got.')
             else:
-                resPingPercent = getAdbPingStatus(self.device[0], v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
+                resPingPercent = getAdbPingStatus(v.ANDROID_SERIAL_NUM, v.PING_TARGET, v.PING_COUNT,
+                                                  self.__class__.__name__)
                 self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
                                         "Ping responsed percent werenot good enough.")
         else:
@@ -10996,13 +11142,15 @@ class AP_WIRELESS_RELAY_MIXEDPSK_KEYSPEC(TestCase):
 
     def assoc_psk_sta_keyspec_2g(self):
 
-        res2gConn = setAdbPskSta(self.device[0], v.WIRELESS_RELAY_SSID, v.SPECIAL_KEY, "2g", self.__class__.__name__)
+        res2gConn = setAdbPskSta(v.ANDROID_SERIAL_NUM, v.WIRELESS_RELAY_SSID, v.SPECIAL_KEY, "2g",
+                                 self.__class__.__name__)
         if res2gConn:
-            result = getAdbShellWlan(self.device[0], self.__class__.__name__)
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             if result['ip'] == '':
                 self.fail(msg='no ip address got.')
             else:
-                resPingPercent = getAdbPingStatus(self.device[0], v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
+                resPingPercent = getAdbPingStatus(v.ANDROID_SERIAL_NUM, v.PING_TARGET, v.PING_COUNT,
+                                                  self.__class__.__name__)
                 self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
                                         "Ping responsed percent werenot good enough.")
         else:
@@ -11010,13 +11158,15 @@ class AP_WIRELESS_RELAY_MIXEDPSK_KEYSPEC(TestCase):
 
     def assoc_psk_sta_keyspec_5g(self):
 
-        res2gConn = setAdbPskSta(self.device[0], v.WIRELESS_RELAY_SSID_5G, v.SPECIAL_KEY, "5g", self.__class__.__name__)
+        res2gConn = setAdbPskSta(v.ANDROID_SERIAL_NUM, v.WIRELESS_RELAY_SSID_5G, v.SPECIAL_KEY, "5g",
+                                 self.__class__.__name__)
         if res2gConn:
-            result = getAdbShellWlan(self.device[0], self.__class__.__name__)
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             if result['ip'] == '':
                 self.fail(msg='no ip address got.')
             else:
-                resPingPercent = getAdbPingStatus(self.device[0], v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
+                resPingPercent = getAdbPingStatus(v.ANDROID_SERIAL_NUM, v.PING_TARGET, v.PING_COUNT,
+                                                  self.__class__.__name__)
                 self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
                                         "Ping responsed percent werenot good enough.")
         else:
@@ -11024,13 +11174,15 @@ class AP_WIRELESS_RELAY_MIXEDPSK_KEYSPEC(TestCase):
 
     def assoc_tkippsk2_sta_keyspec_2g(self):
 
-        res2gConn = setAdbTkipPsk2Sta(self.device[0], v.WIRELESS_RELAY_SSID, v.SPECIAL_KEY, "2g", self.__class__.__name__)
+        res2gConn = setAdbTkipPsk2Sta(v.ANDROID_SERIAL_NUM, v.WIRELESS_RELAY_SSID, v.SPECIAL_KEY, "2g",
+                                      self.__class__.__name__)
         if res2gConn:
-            result = getAdbShellWlan(self.device[0], self.__class__.__name__)
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             if result['ip'] == '':
                 self.fail(msg='no ip address got.')
             else:
-                resPingPercent = getAdbPingStatus(self.device[0], v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
+                resPingPercent = getAdbPingStatus(v.ANDROID_SERIAL_NUM, v.PING_TARGET, v.PING_COUNT,
+                                                  self.__class__.__name__)
                 self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
                                         "Ping responsed percent werenot good enough.")
         else:
@@ -11038,13 +11190,15 @@ class AP_WIRELESS_RELAY_MIXEDPSK_KEYSPEC(TestCase):
 
     def assoc_tkippsk2_sta_keyspec_5g(self):
 
-        res2gConn = setAdbTkipPsk2Sta(self.device[0], v.WIRELESS_RELAY_SSID_5G, v.SPECIAL_KEY, "5g", self.__class__.__name__)
+        res2gConn = setAdbTkipPsk2Sta(v.ANDROID_SERIAL_NUM, v.WIRELESS_RELAY_SSID_5G, v.SPECIAL_KEY, "5g",
+                                      self.__class__.__name__)
         if res2gConn:
-            result = getAdbShellWlan(self.device[0], self.__class__.__name__)
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             if result['ip'] == '':
                 self.fail(msg='no ip address got.')
             else:
-                resPingPercent = getAdbPingStatus(self.device[0], v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
+                resPingPercent = getAdbPingStatus(v.ANDROID_SERIAL_NUM, v.PING_TARGET, v.PING_COUNT,
+                                                  self.__class__.__name__)
                 self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
                                         "Ping responsed percent werenot good enough.")
         else:
@@ -11052,13 +11206,15 @@ class AP_WIRELESS_RELAY_MIXEDPSK_KEYSPEC(TestCase):
 
     def assoc_tkippsk_sta_keyspec_2g(self):
 
-        res2gConn = setAdbTkipPskSta(self.device[0], v.WIRELESS_RELAY_SSID, v.SPECIAL_KEY, "2g", self.__class__.__name__)
+        res2gConn = setAdbTkipPskSta(v.ANDROID_SERIAL_NUM, v.WIRELESS_RELAY_SSID, v.SPECIAL_KEY, "2g",
+                                     self.__class__.__name__)
         if res2gConn:
-            result = getAdbShellWlan(self.device[0], self.__class__.__name__)
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             if result['ip'] == '':
                 self.fail(msg='no ip address got.')
             else:
-                resPingPercent = getAdbPingStatus(self.device[0], v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
+                resPingPercent = getAdbPingStatus(v.ANDROID_SERIAL_NUM, v.PING_TARGET, v.PING_COUNT,
+                                                  self.__class__.__name__)
                 self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
                                         "Ping responsed percent werenot good enough.")
         else:
@@ -11066,13 +11222,15 @@ class AP_WIRELESS_RELAY_MIXEDPSK_KEYSPEC(TestCase):
 
     def assoc_tkippsk_sta_keyspec_5g(self):
 
-        res2gConn = setAdbTkipPskSta(self.device[0], v.WIRELESS_RELAY_SSID_5G, v.SPECIAL_KEY, "5g", self.__class__.__name__)
+        res2gConn = setAdbTkipPskSta(v.ANDROID_SERIAL_NUM, v.WIRELESS_RELAY_SSID_5G, v.SPECIAL_KEY, "5g",
+                                     self.__class__.__name__)
         if res2gConn:
-            result = getAdbShellWlan(self.device[0], self.__class__.__name__)
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             if result['ip'] == '':
                 self.fail(msg='no ip address got.')
             else:
-                resPingPercent = getAdbPingStatus(self.device[0], v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
+                resPingPercent = getAdbPingStatus(v.ANDROID_SERIAL_NUM, v.PING_TARGET, v.PING_COUNT,
+                                                  self.__class__.__name__)
                 self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
                                         "Ping responsed percent werenot good enough.")
         else:
@@ -11106,8 +11264,6 @@ class AP_WIRELESS_RELAY_MIXEDPSK_SSIDCHINESE(TestCase):
         }
         api.setWifiAp(self.dut, self.__name__, **option)
 
-        self.device = getAdbDevices()
-
     @classmethod
     def tearDownClass(self):
 
@@ -11117,13 +11273,15 @@ class AP_WIRELESS_RELAY_MIXEDPSK_SSIDCHINESE(TestCase):
 
     def assoc_psk2_sta_ssidchinese_2g(self):
 
-        res2gConn = setAdbPsk2Sta(self.device[0], v.WIRELESS_RELAY_CHINESE_SSID, v.KEY, "2g", self.__class__.__name__)
+        res2gConn = setAdbPsk2Sta(v.ANDROID_SERIAL_NUM, v.WIRELESS_RELAY_CHINESE_SSID, v.KEY, "2g",
+                                  self.__class__.__name__)
         if res2gConn:
-            result = getAdbShellWlan(self.device[0], self.__class__.__name__)
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             if result['ip'] == '':
                 self.fail(msg='no ip address got.')
             else:
-                resPingPercent = getAdbPingStatus(self.device[0], v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
+                resPingPercent = getAdbPingStatus(v.ANDROID_SERIAL_NUM, v.PING_TARGET, v.PING_COUNT,
+                                                  self.__class__.__name__)
                 self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
                                         "Ping responsed percent werenot good enough.")
         else:
@@ -11131,13 +11289,15 @@ class AP_WIRELESS_RELAY_MIXEDPSK_SSIDCHINESE(TestCase):
 
     def assoc_psk2_sta_ssidchinese_5g(self):
 
-        res5gConn = setAdbPsk2Sta(self.device[0], v.WIRELESS_RELAY_CHINESE_SSID_5G, v.KEY, "5g", self.__class__.__name__)
+        res5gConn = setAdbPsk2Sta(v.ANDROID_SERIAL_NUM, v.WIRELESS_RELAY_CHINESE_SSID_5G, v.KEY, "5g",
+                                  self.__class__.__name__)
         if res5gConn:
-            result = getAdbShellWlan(self.device[0], self.__class__.__name__)
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             if result['ip'] == '':
                 self.fail(msg='no ip address got.')
             else:
-                resPingPercent = getAdbPingStatus(self.device[0], v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
+                resPingPercent = getAdbPingStatus(v.ANDROID_SERIAL_NUM, v.PING_TARGET, v.PING_COUNT,
+                                                  self.__class__.__name__)
                 self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
                                         "Ping responsed percent werenot good enough.")
         else:
@@ -11145,13 +11305,15 @@ class AP_WIRELESS_RELAY_MIXEDPSK_SSIDCHINESE(TestCase):
 
     def assoc_psk_sta_ssidchinese_2g(self):
 
-        res2gConn = setAdbPskSta(self.device[0], v.WIRELESS_RELAY_CHINESE_SSID, v.KEY, "2g", self.__class__.__name__)
+        res2gConn = setAdbPskSta(v.ANDROID_SERIAL_NUM, v.WIRELESS_RELAY_CHINESE_SSID, v.KEY, "2g",
+                                 self.__class__.__name__)
         if res2gConn:
-            result = getAdbShellWlan(self.device[0], self.__class__.__name__)
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             if result['ip'] == '':
                 self.fail(msg='no ip address got.')
             else:
-                resPingPercent = getAdbPingStatus(self.device[0], v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
+                resPingPercent = getAdbPingStatus(v.ANDROID_SERIAL_NUM, v.PING_TARGET, v.PING_COUNT,
+                                                  self.__class__.__name__)
                 self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
                                         "Ping responsed percent werenot good enough.")
         else:
@@ -11159,13 +11321,15 @@ class AP_WIRELESS_RELAY_MIXEDPSK_SSIDCHINESE(TestCase):
 
     def assoc_psk_sta_ssidchinese_5g(self):
 
-        res5gConn = setAdbPskSta(self.device[0], v.WIRELESS_RELAY_CHINESE_SSID_5G, v.KEY, "5g", self.__class__.__name__)
+        res5gConn = setAdbPskSta(v.ANDROID_SERIAL_NUM, v.WIRELESS_RELAY_CHINESE_SSID_5G, v.KEY, "5g",
+                                 self.__class__.__name__)
         if res5gConn:
-            result = getAdbShellWlan(self.device[0], self.__class__.__name__)
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             if result['ip'] == '':
                 self.fail(msg='no ip address got.')
             else:
-                resPingPercent = getAdbPingStatus(self.device[0], v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
+                resPingPercent = getAdbPingStatus(v.ANDROID_SERIAL_NUM, v.PING_TARGET, v.PING_COUNT,
+                                                  self.__class__.__name__)
                 self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
                                         "Ping responsed percent werenot good enough.")
         else:
@@ -11173,52 +11337,60 @@ class AP_WIRELESS_RELAY_MIXEDPSK_SSIDCHINESE(TestCase):
 
     def assoc_tkippsk2_sta_ssidchinese_2g(self):
 
-        res2gConn = setAdbTkipPsk2Sta(self.device[0], v.WIRELESS_RELAY_CHINESE_SSID, v.KEY, "2g", self.__class__.__name__)
+        res2gConn = setAdbTkipPsk2Sta(v.ANDROID_SERIAL_NUM, v.WIRELESS_RELAY_CHINESE_SSID, v.KEY, "2g",
+                                      self.__class__.__name__)
         if res2gConn:
-            result = getAdbShellWlan(self.device[0], self.__class__.__name__)
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             if result['ip'] == '':
                 self.fail(msg='no ip address got.')
             else:
-                resPingPercent = getAdbPingStatus(self.device[0], v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
+                resPingPercent = getAdbPingStatus(v.ANDROID_SERIAL_NUM, v.PING_TARGET, v.PING_COUNT,
+                                                  self.__class__.__name__)
                 self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
                                         "Ping responsed percent werenot good enough.")
         else:
             self.assertTrue(res2gConn, "Association wasnot successful.")
 
     def assoc_tkippsk2_sta_ssidchinese_5g(self):
-        res5gConn = setAdbTkipPsk2Sta(self.device[0], v.WIRELESS_RELAY_CHINESE_SSID_5G, v.KEY, "5g", self.__class__.__name__)
+        res5gConn = setAdbTkipPsk2Sta(v.ANDROID_SERIAL_NUM, v.WIRELESS_RELAY_CHINESE_SSID_5G, v.KEY, "5g",
+                                      self.__class__.__name__)
         if res5gConn:
-            result = getAdbShellWlan(self.device[0], self.__class__.__name__)
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             if result['ip'] == '':
                 self.fail(msg='no ip address got.')
             else:
-                resPingPercent = getAdbPingStatus(self.device[0], v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
+                resPingPercent = getAdbPingStatus(v.ANDROID_SERIAL_NUM, v.PING_TARGET, v.PING_COUNT,
+                                                  self.__class__.__name__)
                 self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
                                         "Ping responsed percent werenot good enough.")
         else:
             self.assertTrue(res5gConn, "Association wasnot successful.")
 
     def assoc_tkippsk_sta_ssidchinese_2g(self):
-        res2gConn = setAdbTkipPskSta(self.device[0], v.WIRELESS_RELAY_CHINESE_SSID, v.KEY, "2g", self.__class__.__name__)
+        res2gConn = setAdbTkipPskSta(v.ANDROID_SERIAL_NUM, v.WIRELESS_RELAY_CHINESE_SSID, v.KEY, "2g",
+                                     self.__class__.__name__)
         if res2gConn:
-            result = getAdbShellWlan(self.device[0], self.__class__.__name__)
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             if result['ip'] == '':
                 self.fail(msg='no ip address got.')
             else:
-                resPingPercent = getAdbPingStatus(self.device[0], v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
+                resPingPercent = getAdbPingStatus(v.ANDROID_SERIAL_NUM, v.PING_TARGET, v.PING_COUNT,
+                                                  self.__class__.__name__)
                 self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
                                         "Ping responsed percent werenot good enough.")
         else:
             self.assertTrue(res2gConn, "Association wasnot successful.")
 
     def assoc_tkippsk_sta_ssidchinese_5g(self):
-        res5gConn = setAdbTkipPskSta(self.device[0], v.WIRELESS_RELAY_CHINESE_SSID_5G, v.KEY, "5g", self.__class__.__name__)
+        res5gConn = setAdbTkipPskSta(v.ANDROID_SERIAL_NUM, v.WIRELESS_RELAY_CHINESE_SSID_5G, v.KEY, "5g",
+                                     self.__class__.__name__)
         if res5gConn:
-            result = getAdbShellWlan(self.device[0], self.__class__.__name__)
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             if result['ip'] == '':
                 self.fail(msg='no ip address got.')
             else:
-                resPingPercent = getAdbPingStatus(self.device[0], v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
+                resPingPercent = getAdbPingStatus(v.ANDROID_SERIAL_NUM, v.PING_TARGET, v.PING_COUNT,
+                                                  self.__class__.__name__)
                 self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
                                         "Ping responsed percent werenot good enough.")
         else:
@@ -11266,8 +11438,6 @@ class AP_WIRELESS_RELAY_CLEAR_LOW(TestCase):
         api.setWifi(self.dut, self.__name__, **option2g)
         api.setWifi(self.dut, self.__name__, **option5g)
 
-        self.device = getAdbDevices()
-
     @classmethod
     def tearDownClass(self):
 
@@ -11277,13 +11447,14 @@ class AP_WIRELESS_RELAY_CLEAR_LOW(TestCase):
 
     def assoc_clear_sta_2g(self):
 
-        res2gConn = setAdbClearSta(self.device[0], v.SSID, "2g", self.__class__.__name__)
+        res2gConn = setAdbClearSta(v.ANDROID_SERIAL_NUM, v.SSID, "2g", self.__class__.__name__)
         if res2gConn:
-            result = getAdbShellWlan(self.device[0], self.__class__.__name__)
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             if result['ip'] == '':
                 self.fail(msg='no ip address got.')
             else:
-                resPingPercent = getAdbPingStatus(self.device[0], v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
+                resPingPercent = getAdbPingStatus(v.ANDROID_SERIAL_NUM, v.PING_TARGET, v.PING_COUNT,
+                                                  self.__class__.__name__)
                 self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
                                         "Ping responsed percent werenot good enough.")
         else:
@@ -11291,13 +11462,14 @@ class AP_WIRELESS_RELAY_CLEAR_LOW(TestCase):
 
     def assoc_clear_sta_5g(self):
 
-        res5gConn = setAdbClearSta(self.device[0], v.SSID_5G, "5g", self.__class__.__name__)
+        res5gConn = setAdbClearSta(v.ANDROID_SERIAL_NUM, v.SSID_5G, "5g", self.__class__.__name__)
         if res5gConn:
-            result = getAdbShellWlan(self.device[0], self.__class__.__name__)
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             if result['ip'] == '':
                 self.fail(msg='no ip address got.')
             else:
-                resPingPercent = getAdbPingStatus(self.device[0], v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
+                resPingPercent = getAdbPingStatus(v.ANDROID_SERIAL_NUM, v.PING_TARGET, v.PING_COUNT,
+                                                  self.__class__.__name__)
                 self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
                                         "Ping responsed percent werenot good enough.")
         else:
@@ -11343,8 +11515,6 @@ class AP_WIRELESS_RELAY_CLEAR_MID(TestCase):
         api.setWifi(self.dut, self.__name__, **option2g)
         api.setWifi(self.dut, self.__name__, **option5g)
 
-        self.device = getAdbDevices()
-
     @classmethod
     def tearDownClass(self):
 
@@ -11354,13 +11524,14 @@ class AP_WIRELESS_RELAY_CLEAR_MID(TestCase):
 
     def assoc_clear_sta_2g(self):
 
-        res2gConn = setAdbClearSta(self.device[0], v.SSID, "2g", self.__class__.__name__)
+        res2gConn = setAdbClearSta(v.ANDROID_SERIAL_NUM, v.SSID, "2g", self.__class__.__name__)
         if res2gConn:
-            result = getAdbShellWlan(self.device[0], self.__class__.__name__)
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             if result['ip'] == '':
                 self.fail(msg='no ip address got.')
             else:
-                resPingPercent = getAdbPingStatus(self.device[0], v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
+                resPingPercent = getAdbPingStatus(v.ANDROID_SERIAL_NUM, v.PING_TARGET, v.PING_COUNT,
+                                                  self.__class__.__name__)
                 self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
                                         "Ping responsed percent werenot good enough.")
         else:
@@ -11368,13 +11539,14 @@ class AP_WIRELESS_RELAY_CLEAR_MID(TestCase):
 
     def assoc_clear_sta_5g(self):
 
-        res5gConn = setAdbClearSta(self.device[0], v.SSID_5G, "5g", self.__class__.__name__)
+        res5gConn = setAdbClearSta(v.ANDROID_SERIAL_NUM, v.SSID_5G, "5g", self.__class__.__name__)
         if res5gConn:
-            result = getAdbShellWlan(self.device[0], self.__class__.__name__)
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             if result['ip'] == '':
                 self.fail(msg='no ip address got.')
             else:
-                resPingPercent = getAdbPingStatus(self.device[0], v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
+                resPingPercent = getAdbPingStatus(v.ANDROID_SERIAL_NUM, v.PING_TARGET, v.PING_COUNT,
+                                                  self.__class__.__name__)
                 self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
                                         "Ping responsed percent werenot good enough.")
         else:
@@ -11421,7 +11593,6 @@ class AP_WIRELESS_RELAY_CLEAR_HIGH(TestCase):
         }
         api.setWifi(self.dut, self.__name__, **option2g)
         api.setWifi(self.dut, self.__name__, **option5g)
-        self.device = getAdbDevices()
 
     @classmethod
     def tearDownClass(self):
@@ -11432,13 +11603,14 @@ class AP_WIRELESS_RELAY_CLEAR_HIGH(TestCase):
 
     def assoc_clear_sta_2g(self):
 
-        res2gConn = setAdbClearSta(self.device[0], v.SSID, "2g", self.__class__.__name__)
+        res2gConn = setAdbClearSta(v.ANDROID_SERIAL_NUM, v.SSID, "2g", self.__class__.__name__)
         if res2gConn:
-            result = getAdbShellWlan(self.device[0], self.__class__.__name__)
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             if result['ip'] == '':
                 self.fail(msg='no ip address got.')
             else:
-                resPingPercent = getAdbPingStatus(self.device[0], v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
+                resPingPercent = getAdbPingStatus(v.ANDROID_SERIAL_NUM, v.PING_TARGET, v.PING_COUNT,
+                                                  self.__class__.__name__)
                 self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
                                         "Ping responsed percent werenot good enough.")
         else:
@@ -11446,13 +11618,14 @@ class AP_WIRELESS_RELAY_CLEAR_HIGH(TestCase):
 
     def assoc_clear_sta_5g(self):
 
-        res5gConn = setAdbClearSta(self.device[0], v.SSID_5G, "5g", self.__class__.__name__)
+        res5gConn = setAdbClearSta(v.ANDROID_SERIAL_NUM, v.SSID_5G, "5g", self.__class__.__name__)
         if res5gConn:
-            result = getAdbShellWlan(self.device[0], self.__class__.__name__)
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             if result['ip'] == '':
                 self.fail(msg='no ip address got.')
             else:
-                resPingPercent = getAdbPingStatus(self.device[0], v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
+                resPingPercent = getAdbPingStatus(v.ANDROID_SERIAL_NUM, v.PING_TARGET, v.PING_COUNT,
+                                                  self.__class__.__name__)
                 self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
                                         "Ping responsed percent werenot good enough.")
         else:
@@ -11558,8 +11731,6 @@ class AP_WIRELESS_RELAY_MIXEDPSK_CHAN_BW80(TestCase):
 
         api.setWifi(self.dut, self.__name__, **option5g)
 
-        self.device = getAdbDevices()
-
     @classmethod
     def tearDownClass(self):
 
@@ -11569,13 +11740,14 @@ class AP_WIRELESS_RELAY_MIXEDPSK_CHAN_BW80(TestCase):
 
     def assoc_psk2_sta_5g(self):
 
-        res5gConn = setAdbPsk2Sta(self.device[0], v.SSID_5G, v.KEY, "5g", self.__class__.__name__)
+        res5gConn = setAdbPsk2Sta(v.ANDROID_SERIAL_NUM, v.SSID_5G, v.KEY, "5g", self.__class__.__name__)
         if res5gConn:
-            result = getAdbShellWlan(self.device[0], self.__class__.__name__)
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             if result['ip'] == '':
                 self.fail(msg='no ip address got.')
             else:
-                resPingPercent = getAdbPingStatus(self.device[0], v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
+                resPingPercent = getAdbPingStatus(v.ANDROID_SERIAL_NUM, v.PING_TARGET, v.PING_COUNT,
+                                                  self.__class__.__name__)
                 self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
                                         "Ping responsed percent werenot good enough.")
         else:
@@ -11583,13 +11755,14 @@ class AP_WIRELESS_RELAY_MIXEDPSK_CHAN_BW80(TestCase):
 
     def assoc_psk_sta_5g(self):
 
-        res5gConn = setAdbPskSta(self.device[0], v.SSID_5G, v.KEY, "5g", self.__class__.__name__)
+        res5gConn = setAdbPskSta(v.ANDROID_SERIAL_NUM, v.SSID_5G, v.KEY, "5g", self.__class__.__name__)
         if res5gConn:
-            result = getAdbShellWlan(self.device[0], self.__class__.__name__)
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             if result['ip'] == '':
                 self.fail(msg='no ip address got.')
             else:
-                resPingPercent = getAdbPingStatus(self.device[0], v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
+                resPingPercent = getAdbPingStatus(v.ANDROID_SERIAL_NUM, v.PING_TARGET, v.PING_COUNT,
+                                                  self.__class__.__name__)
                 self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
                                         "Ping responsed percent werenot good enough.")
         else:
@@ -11597,13 +11770,14 @@ class AP_WIRELESS_RELAY_MIXEDPSK_CHAN_BW80(TestCase):
 
     def assoc_tkippsk2_sta_5g(self):
 
-        res5gConn = setAdbTkipPsk2Sta(self.device[0], v.SSID_5G, v.KEY, "5g", self.__class__.__name__)
+        res5gConn = setAdbTkipPsk2Sta(v.ANDROID_SERIAL_NUM, v.SSID_5G, v.KEY, "5g", self.__class__.__name__)
         if res5gConn:
-            result = getAdbShellWlan(self.device[0], self.__class__.__name__)
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             if result['ip'] == '':
                 self.fail(msg='no ip address got.')
             else:
-                resPingPercent = getAdbPingStatus(self.device[0], v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
+                resPingPercent = getAdbPingStatus(v.ANDROID_SERIAL_NUM, v.PING_TARGET, v.PING_COUNT,
+                                                  self.__class__.__name__)
                 self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
                                         "Ping responsed percent werenot good enough.")
         else:
@@ -11611,13 +11785,14 @@ class AP_WIRELESS_RELAY_MIXEDPSK_CHAN_BW80(TestCase):
 
     def assoc_tkippsk_sta_5g(self):
 
-        res5gConn = setAdbTkipPskSta(self.device[0], v.SSID_5G, v.KEY, "5g", self.__class__.__name__)
+        res5gConn = setAdbTkipPskSta(v.ANDROID_SERIAL_NUM, v.SSID_5G, v.KEY, "5g", self.__class__.__name__)
         if res5gConn:
-            result = getAdbShellWlan(self.device[0], self.__class__.__name__)
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             if result['ip'] == '':
                 self.fail(msg='no ip address got.')
             else:
-                resPingPercent = getAdbPingStatus(self.device[0], v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
+                resPingPercent = getAdbPingStatus(v.ANDROID_SERIAL_NUM, v.PING_TARGET, v.PING_COUNT,
+                                                  self.__class__.__name__)
                 self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
                                         "Ping responsed percent werenot good enough.")
         else:
@@ -11670,8 +11845,6 @@ class AP_WIRELESS_RELAY_MIXEDPSK_CHAN_BW40(TestCase):
         api.setWifi(self.dut, self.__name__, **option2g)
         api.setWifi(self.dut, self.__name__, **option5g)
 
-        self.device = getAdbDevices()
-
     @classmethod
     def tearDownClass(self):
 
@@ -11681,13 +11854,14 @@ class AP_WIRELESS_RELAY_MIXEDPSK_CHAN_BW40(TestCase):
 
     def assoc_psk2_sta_5g(self):
 
-        res5gConn = setAdbPsk2Sta(self.device[0], v.SSID_5G, v.KEY, "5g", self.__class__.__name__)
+        res5gConn = setAdbPsk2Sta(v.ANDROID_SERIAL_NUM, v.SSID_5G, v.KEY, "5g", self.__class__.__name__)
         if res5gConn:
-            result = getAdbShellWlan(self.device[0], self.__class__.__name__)
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             if result['ip'] == '':
                 self.fail(msg='no ip address got.')
             else:
-                resPingPercent = getAdbPingStatus(self.device[0], v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
+                resPingPercent = getAdbPingStatus(v.ANDROID_SERIAL_NUM, v.PING_TARGET, v.PING_COUNT,
+                                                  self.__class__.__name__)
                 self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
                                         "Ping responsed percent werenot good enough.")
         else:
@@ -11695,13 +11869,14 @@ class AP_WIRELESS_RELAY_MIXEDPSK_CHAN_BW40(TestCase):
 
     def assoc_psk_sta_5g(self):
 
-        res5gConn = setAdbPskSta(self.device[0], v.SSID_5G, v.KEY, "5g", self.__class__.__name__)
+        res5gConn = setAdbPskSta(v.ANDROID_SERIAL_NUM, v.SSID_5G, v.KEY, "5g", self.__class__.__name__)
         if res5gConn:
-            result = getAdbShellWlan(self.device[0], self.__class__.__name__)
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             if result['ip'] == '':
                 self.fail(msg='no ip address got.')
             else:
-                resPingPercent = getAdbPingStatus(self.device[0], v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
+                resPingPercent = getAdbPingStatus(v.ANDROID_SERIAL_NUM, v.PING_TARGET, v.PING_COUNT,
+                                                  self.__class__.__name__)
                 self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
                                         "Ping responsed percent werenot good enough.")
         else:
@@ -11709,13 +11884,14 @@ class AP_WIRELESS_RELAY_MIXEDPSK_CHAN_BW40(TestCase):
 
     def assoc_tkippsk2_sta_5g(self):
 
-        res5gConn = setAdbTkipPsk2Sta(self.device[0], v.SSID_5G, v.KEY, "5g", self.__class__.__name__)
+        res5gConn = setAdbTkipPsk2Sta(v.ANDROID_SERIAL_NUM, v.SSID_5G, v.KEY, "5g", self.__class__.__name__)
         if res5gConn:
-            result = getAdbShellWlan(self.device[0], self.__class__.__name__)
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             if result['ip'] == '':
                 self.fail(msg='no ip address got.')
             else:
-                resPingPercent = getAdbPingStatus(self.device[0], v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
+                resPingPercent = getAdbPingStatus(v.ANDROID_SERIAL_NUM, v.PING_TARGET, v.PING_COUNT,
+                                                  self.__class__.__name__)
                 self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
                                         "Ping responsed percent werenot good enough.")
         else:
@@ -11723,13 +11899,14 @@ class AP_WIRELESS_RELAY_MIXEDPSK_CHAN_BW40(TestCase):
 
     def assoc_tkippsk_sta_5g(self):
 
-        res5gConn = setAdbTkipPskSta(self.device[0], v.SSID_5G, v.KEY, "5g", self.__class__.__name__)
+        res5gConn = setAdbTkipPskSta(v.ANDROID_SERIAL_NUM, v.SSID_5G, v.KEY, "5g", self.__class__.__name__)
         if res5gConn:
-            result = getAdbShellWlan(self.device[0], self.__class__.__name__)
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             if result['ip'] == '':
                 self.fail(msg='no ip address got.')
             else:
-                resPingPercent = getAdbPingStatus(self.device[0], v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
+                resPingPercent = getAdbPingStatus(v.ANDROID_SERIAL_NUM, v.PING_TARGET, v.PING_COUNT,
+                                                  self.__class__.__name__)
                 self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
                                         "Ping responsed percent werenot good enough.")
         else:
@@ -11737,13 +11914,14 @@ class AP_WIRELESS_RELAY_MIXEDPSK_CHAN_BW40(TestCase):
 
     def assoc_psk2_sta_2g(self):
 
-        res2gConn = setAdbPsk2Sta(self.device[0], v.SSID, v.KEY, "2g", self.__class__.__name__)
+        res2gConn = setAdbPsk2Sta(v.ANDROID_SERIAL_NUM, v.SSID, v.KEY, "2g", self.__class__.__name__)
         if res2gConn:
-            result = getAdbShellWlan(self.device[0], self.__class__.__name__)
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             if result['ip'] == '':
                 self.fail(msg='no ip address got.')
             else:
-                resPingPercent = getAdbPingStatus(self.device[0], v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
+                resPingPercent = getAdbPingStatus(v.ANDROID_SERIAL_NUM, v.PING_TARGET, v.PING_COUNT,
+                                                  self.__class__.__name__)
                 self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
                                         "Ping responsed percent werenot good enough.")
         else:
@@ -11751,13 +11929,14 @@ class AP_WIRELESS_RELAY_MIXEDPSK_CHAN_BW40(TestCase):
 
     def assoc_psk_sta_2g(self):
 
-        res2gConn = setAdbPskSta(self.device[0], v.SSID, v.KEY, "2g", self.__class__.__name__)
+        res2gConn = setAdbPskSta(v.ANDROID_SERIAL_NUM, v.SSID, v.KEY, "2g", self.__class__.__name__)
         if res2gConn:
-            result = getAdbShellWlan(self.device[0], self.__class__.__name__)
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             if result['ip'] == '':
                 self.fail(msg='no ip address got.')
             else:
-                resPingPercent = getAdbPingStatus(self.device[0], v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
+                resPingPercent = getAdbPingStatus(v.ANDROID_SERIAL_NUM, v.PING_TARGET, v.PING_COUNT,
+                                                  self.__class__.__name__)
                 self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
                                         "Ping responsed percent werenot good enough.")
         else:
@@ -11765,13 +11944,14 @@ class AP_WIRELESS_RELAY_MIXEDPSK_CHAN_BW40(TestCase):
 
     def assoc_tkippsk2_sta_2g(self):
 
-        res2gConn = setAdbTkipPsk2Sta(self.device[0], v.SSID, v.KEY, "2g", self.__class__.__name__)
+        res2gConn = setAdbTkipPsk2Sta(v.ANDROID_SERIAL_NUM, v.SSID, v.KEY, "2g", self.__class__.__name__)
         if res2gConn:
-            result = getAdbShellWlan(self.device[0], self.__class__.__name__)
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             if result['ip'] == '':
                 self.fail(msg='no ip address got.')
             else:
-                resPingPercent = getAdbPingStatus(self.device[0], v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
+                resPingPercent = getAdbPingStatus(v.ANDROID_SERIAL_NUM, v.PING_TARGET, v.PING_COUNT,
+                                                  self.__class__.__name__)
                 self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
                                         "Ping responsed percent werenot good enough.")
         else:
@@ -11779,13 +11959,14 @@ class AP_WIRELESS_RELAY_MIXEDPSK_CHAN_BW40(TestCase):
 
     def assoc_tkippsk_sta_2g(self):
 
-        res2gConn = setAdbTkipPskSta(self.device[0], v.SSID, v.KEY, "2g", self.__class__.__name__)
+        res2gConn = setAdbTkipPskSta(v.ANDROID_SERIAL_NUM, v.SSID, v.KEY, "2g", self.__class__.__name__)
         if res2gConn:
-            result = getAdbShellWlan(self.device[0], self.__class__.__name__)
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             if result['ip'] == '':
                 self.fail(msg='no ip address got.')
             else:
-                resPingPercent = getAdbPingStatus(self.device[0], v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
+                resPingPercent = getAdbPingStatus(v.ANDROID_SERIAL_NUM, v.PING_TARGET, v.PING_COUNT,
+                                                  self.__class__.__name__)
                 self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
                                         "Ping responsed percent werenot good enough.")
         else:
@@ -11838,8 +12019,6 @@ class AP_WIRELESS_RELAY_MIXEDPSK_CHAN_BW20(TestCase):
         api.setWifi(self.dut, self.__name__, **option2g)
         api.setWifi(self.dut, self.__name__, **option5g)
 
-        self.device = getAdbDevices()
-
     @classmethod
     def tearDownClass(self):
 
@@ -11849,13 +12028,14 @@ class AP_WIRELESS_RELAY_MIXEDPSK_CHAN_BW20(TestCase):
 
     def assoc_psk2_sta_5g(self):
 
-        res5gConn = setAdbPsk2Sta(self.device[0], v.SSID_5G, v.KEY, "5g", self.__class__.__name__)
+        res5gConn = setAdbPsk2Sta(v.ANDROID_SERIAL_NUM, v.SSID_5G, v.KEY, "5g", self.__class__.__name__)
         if res5gConn:
-            result = getAdbShellWlan(self.device[0], self.__class__.__name__)
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             if result['ip'] == '':
                 self.fail(msg='no ip address got.')
             else:
-                resPingPercent = getAdbPingStatus(self.device[0], v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
+                resPingPercent = getAdbPingStatus(v.ANDROID_SERIAL_NUM, v.PING_TARGET, v.PING_COUNT,
+                                                  self.__class__.__name__)
                 self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
                                         "Ping responsed percent werenot good enough.")
         else:
@@ -11863,13 +12043,14 @@ class AP_WIRELESS_RELAY_MIXEDPSK_CHAN_BW20(TestCase):
 
     def assoc_psk_sta_5g(self):
 
-        res5gConn = setAdbPskSta(self.device[0], v.SSID_5G, v.KEY, "5g", self.__class__.__name__)
+        res5gConn = setAdbPskSta(v.ANDROID_SERIAL_NUM, v.SSID_5G, v.KEY, "5g", self.__class__.__name__)
         if res5gConn:
-            result = getAdbShellWlan(self.device[0], self.__class__.__name__)
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             if result['ip'] == '':
                 self.fail(msg='no ip address got.')
             else:
-                resPingPercent = getAdbPingStatus(self.device[0], v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
+                resPingPercent = getAdbPingStatus(v.ANDROID_SERIAL_NUM, v.PING_TARGET, v.PING_COUNT,
+                                                  self.__class__.__name__)
                 self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
                                         "Ping responsed percent werenot good enough.")
         else:
@@ -11877,13 +12058,14 @@ class AP_WIRELESS_RELAY_MIXEDPSK_CHAN_BW20(TestCase):
 
     def assoc_tkippsk2_sta_5g(self):
 
-        res5gConn = setAdbTkipPsk2Sta(self.device[0], v.SSID_5G, v.KEY, "5g", self.__class__.__name__)
+        res5gConn = setAdbTkipPsk2Sta(v.ANDROID_SERIAL_NUM, v.SSID_5G, v.KEY, "5g", self.__class__.__name__)
         if res5gConn:
-            result = getAdbShellWlan(self.device[0], self.__class__.__name__)
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             if result['ip'] == '':
                 self.fail(msg='no ip address got.')
             else:
-                resPingPercent = getAdbPingStatus(self.device[0], v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
+                resPingPercent = getAdbPingStatus(v.ANDROID_SERIAL_NUM, v.PING_TARGET, v.PING_COUNT,
+                                                  self.__class__.__name__)
                 self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
                                         "Ping responsed percent werenot good enough.")
         else:
@@ -11891,13 +12073,14 @@ class AP_WIRELESS_RELAY_MIXEDPSK_CHAN_BW20(TestCase):
 
     def assoc_tkippsk_sta_5g(self):
 
-        res5gConn = setAdbTkipPskSta(self.device[0], v.SSID_5G, v.KEY, "5g", self.__class__.__name__)
+        res5gConn = setAdbTkipPskSta(v.ANDROID_SERIAL_NUM, v.SSID_5G, v.KEY, "5g", self.__class__.__name__)
         if res5gConn:
-            result = getAdbShellWlan(self.device[0], self.__class__.__name__)
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             if result['ip'] == '':
                 self.fail(msg='no ip address got.')
             else:
-                resPingPercent = getAdbPingStatus(self.device[0], v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
+                resPingPercent = getAdbPingStatus(v.ANDROID_SERIAL_NUM, v.PING_TARGET, v.PING_COUNT,
+                                                  self.__class__.__name__)
                 self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
                                         "Ping responsed percent werenot good enough.")
         else:
@@ -11905,13 +12088,14 @@ class AP_WIRELESS_RELAY_MIXEDPSK_CHAN_BW20(TestCase):
 
     def assoc_psk2_sta_2g(self):
 
-        res2gConn = setAdbPsk2Sta(self.device[0], v.SSID, v.KEY, "2g", self.__class__.__name__)
+        res2gConn = setAdbPsk2Sta(v.ANDROID_SERIAL_NUM, v.SSID, v.KEY, "2g", self.__class__.__name__)
         if res2gConn:
-            result = getAdbShellWlan(self.device[0], self.__class__.__name__)
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             if result['ip'] == '':
                 self.fail(msg='no ip address got.')
             else:
-                resPingPercent = getAdbPingStatus(self.device[0], v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
+                resPingPercent = getAdbPingStatus(v.ANDROID_SERIAL_NUM, v.PING_TARGET, v.PING_COUNT,
+                                                  self.__class__.__name__)
                 self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
                                         "Ping responsed percent werenot good enough.")
         else:
@@ -11919,13 +12103,14 @@ class AP_WIRELESS_RELAY_MIXEDPSK_CHAN_BW20(TestCase):
 
     def assoc_psk_sta_2g(self):
 
-        res2gConn = setAdbPskSta(self.device[0], v.SSID, v.KEY, "2g", self.__class__.__name__)
+        res2gConn = setAdbPskSta(v.ANDROID_SERIAL_NUM, v.SSID, v.KEY, "2g", self.__class__.__name__)
         if res2gConn:
-            result = getAdbShellWlan(self.device[0], self.__class__.__name__)
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             if result['ip'] == '':
                 self.fail(msg='no ip address got.')
             else:
-                resPingPercent = getAdbPingStatus(self.device[0], v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
+                resPingPercent = getAdbPingStatus(v.ANDROID_SERIAL_NUM, v.PING_TARGET, v.PING_COUNT,
+                                                  self.__class__.__name__)
                 self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
                                         "Ping responsed percent werenot good enough.")
         else:
@@ -11933,13 +12118,14 @@ class AP_WIRELESS_RELAY_MIXEDPSK_CHAN_BW20(TestCase):
 
     def assoc_tkippsk2_sta_2g(self):
 
-        res2gConn = setAdbTkipPsk2Sta(self.device[0], v.SSID, v.KEY, "2g", self.__class__.__name__)
+        res2gConn = setAdbTkipPsk2Sta(v.ANDROID_SERIAL_NUM, v.SSID, v.KEY, "2g", self.__class__.__name__)
         if res2gConn:
-            result = getAdbShellWlan(self.device[0], self.__class__.__name__)
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             if result['ip'] == '':
                 self.fail(msg='no ip address got.')
             else:
-                resPingPercent = getAdbPingStatus(self.device[0], v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
+                resPingPercent = getAdbPingStatus(v.ANDROID_SERIAL_NUM, v.PING_TARGET, v.PING_COUNT,
+                                                  self.__class__.__name__)
                 self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
                                         "Ping responsed percent werenot good enough.")
         else:
@@ -11947,13 +12133,14 @@ class AP_WIRELESS_RELAY_MIXEDPSK_CHAN_BW20(TestCase):
 
     def assoc_tkippsk_sta_2g(self):
 
-        res2gConn = setAdbTkipPskSta(self.device[0], v.SSID, v.KEY, "2g", self.__class__.__name__)
+        res2gConn = setAdbTkipPskSta(v.ANDROID_SERIAL_NUM, v.SSID, v.KEY, "2g", self.__class__.__name__)
         if res2gConn:
-            result = getAdbShellWlan(self.device[0], self.__class__.__name__)
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             if result['ip'] == '':
                 self.fail(msg='no ip address got.')
             else:
-                resPingPercent = getAdbPingStatus(self.device[0], v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
+                resPingPercent = getAdbPingStatus(v.ANDROID_SERIAL_NUM, v.PING_TARGET, v.PING_COUNT,
+                                                  self.__class__.__name__)
                 self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
                                         "Ping responsed percent werenot good enough.")
         else:
@@ -11994,8 +12181,6 @@ class AP_WIRELESS_RELAY_MIXEDPSK_BSD(TestCase):
         }
         api.setAllWifi(self.dut, self.__name__, **option)
 
-        self.device = getAdbDevices()
-
     @classmethod
     def tearDownClass(self):
 
@@ -12017,8 +12202,8 @@ class AP_WIRELESS_RELAY_MIXEDPSK_BSD(TestCase):
     def assoc_psk2_near_field_sta(self):
         count = 0
         while count <= 1:
-            resConn = setAdbPsk2Sta(self.device[0], v.SSID, v.KEY, "2g", self.__class__.__name__)
-            resConn2 = chkAdb5gFreq(self.device[0], self.__class__.__name__)
+            resConn = setAdbPsk2Sta(v.ANDROID_SERIAL_NUM, v.SSID, v.KEY, "2g", self.__class__.__name__)
+            resConn2 = chkAdb5gFreq(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             if resConn and resConn2:
                 break
             else:
@@ -12027,17 +12212,17 @@ class AP_WIRELESS_RELAY_MIXEDPSK_BSD(TestCase):
 
         self.assertTrue(resConn, msg="Association wasnot successful.")
         self.assertTrue(resConn2, msg="STA doesnot associate with 5g")
-        result = getAdbShellWlan(self.device[0], self.__class__.__name__)
+        result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
         self.assertIsNot(result['ip'], "", msg='no ip address got.')
-        resPingPercent = getAdbPingStatus(self.device[0], v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
+        resPingPercent = getAdbPingStatus(v.ANDROID_SERIAL_NUM, v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
         self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
                                 "Ping responsed percent werenot good enough.")
 
     def assoc_psk_near_field_sta(self):
         count = 0
         while count <= 1:
-            resConn = setAdbPskSta(self.device[0], v.SSID, v.KEY, "2g", self.__class__.__name__)
-            resConn2 = chkAdb5gFreq(self.device[0], self.__class__.__name__)
+            resConn = setAdbPskSta(v.ANDROID_SERIAL_NUM, v.SSID, v.KEY, "2g", self.__class__.__name__)
+            resConn2 = chkAdb5gFreq(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             if resConn and resConn2:
                 break
             else:
@@ -12046,17 +12231,17 @@ class AP_WIRELESS_RELAY_MIXEDPSK_BSD(TestCase):
 
         self.assertTrue(resConn, msg="Association wasnot successful.")
         self.assertTrue(resConn2, msg="STA doesnot associate with 5g")
-        result = getAdbShellWlan(self.device[0], self.__class__.__name__)
+        result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
         self.assertIsNot(result['ip'], "", msg='no ip address got.')
-        resPingPercent = getAdbPingStatus(self.device[0], v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
+        resPingPercent = getAdbPingStatus(v.ANDROID_SERIAL_NUM, v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
         self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
                                 "Ping responsed percent werenot good enough.")
 
     def assoc_tkippsk2_near_field_sta(self):
         count = 0
         while count <= 1:
-            resConn = setAdbTkipPsk2Sta(self.device[0], v.SSID, v.KEY, "2g", self.__class__.__name__)
-            resConn2 = chkAdb5gFreq(self.device[0], self.__class__.__name__)
+            resConn = setAdbTkipPsk2Sta(v.ANDROID_SERIAL_NUM, v.SSID, v.KEY, "2g", self.__class__.__name__)
+            resConn2 = chkAdb5gFreq(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             if resConn and resConn2:
                 break
             else:
@@ -12065,17 +12250,17 @@ class AP_WIRELESS_RELAY_MIXEDPSK_BSD(TestCase):
 
         self.assertTrue(resConn, msg="Association wasnot successful.")
         self.assertTrue(resConn2, msg="STA doesnot associate with 5g")
-        result = getAdbShellWlan(self.device[0], self.__class__.__name__)
+        result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
         self.assertIsNot(result['ip'], "", msg='no ip address got.')
-        resPingPercent = getAdbPingStatus(self.device[0], v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
+        resPingPercent = getAdbPingStatus(v.ANDROID_SERIAL_NUM, v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
         self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
                                 "Ping responsed percent werenot good enough.")
 
     def assoc_tkippsk_near_field_sta(self):
         count = 0
         while count <= 1:
-            resConn = setAdbTkipPskSta(self.device[0], v.SSID, v.KEY, "2g", self.__class__.__name__)
-            resConn2 = chkAdb5gFreq(self.device[0], self.__class__.__name__)
+            resConn = setAdbTkipPskSta(v.ANDROID_SERIAL_NUM, v.SSID, v.KEY, "2g", self.__class__.__name__)
+            resConn2 = chkAdb5gFreq(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             if resConn and resConn2:
                 break
             else:
@@ -12084,9 +12269,9 @@ class AP_WIRELESS_RELAY_MIXEDPSK_BSD(TestCase):
 
         self.assertTrue(resConn, msg="Association wasnot successful.")
         self.assertTrue(resConn2, msg="STA doesnot associate with 5g")
-        result = getAdbShellWlan(self.device[0], self.__class__.__name__)
+        result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
         self.assertIsNot(result['ip'], "", msg='no ip address got.')
-        resPingPercent = getAdbPingStatus(self.device[0], v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
+        resPingPercent = getAdbPingStatus(v.ANDROID_SERIAL_NUM, v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
         self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
                                 "Ping responsed percent werenot good enough.")
 
@@ -12126,8 +12311,6 @@ class AP_WIRELESS_RELAY_MIXEDPSK_BSD_SSIDHIDE(TestCase):
         }
         api.setAllWifi(self.dut, self.__name__, **option)
 
-        self.device = getAdbDevices()
-
     @classmethod
     def tearDownClass(self):
 
@@ -12149,8 +12332,8 @@ class AP_WIRELESS_RELAY_MIXEDPSK_BSD_SSIDHIDE(TestCase):
     def assoc_psk2_near_field_sta(self):
         count = 0
         while count <= 1:
-            resConn = setAdbPsk2Sta(self.device[0], v.SSID, v.KEY, "2g", self.__class__.__name__)
-            resConn2 = chkAdb5gFreq(self.device[0], self.__class__.__name__)
+            resConn = setAdbPsk2Sta(v.ANDROID_SERIAL_NUM, v.SSID, v.KEY, "2g", self.__class__.__name__)
+            resConn2 = chkAdb5gFreq(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             if resConn and resConn2:
                 break
             else:
@@ -12159,17 +12342,17 @@ class AP_WIRELESS_RELAY_MIXEDPSK_BSD_SSIDHIDE(TestCase):
 
         self.assertTrue(resConn, msg="Association wasnot successful.")
         self.assertTrue(resConn2, msg="STA doesnot associate with 5g")
-        result = getAdbShellWlan(self.device[0], self.__class__.__name__)
+        result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
         self.assertIsNot(result['ip'], "", msg='no ip address got.')
-        resPingPercent = getAdbPingStatus(self.device[0], v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
+        resPingPercent = getAdbPingStatus(v.ANDROID_SERIAL_NUM, v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
         self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
                                 "Ping responsed percent werenot good enough.")
 
     def assoc_psk_near_field_sta(self):
         count = 0
         while count <= 1:
-            resConn = setAdbPskSta(self.device[0], v.SSID, v.KEY, "2g", self.__class__.__name__)
-            resConn2 = chkAdb5gFreq(self.device[0], self.__class__.__name__)
+            resConn = setAdbPskSta(v.ANDROID_SERIAL_NUM, v.SSID, v.KEY, "2g", self.__class__.__name__)
+            resConn2 = chkAdb5gFreq(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             if resConn and resConn2:
                 break
             else:
@@ -12178,17 +12361,17 @@ class AP_WIRELESS_RELAY_MIXEDPSK_BSD_SSIDHIDE(TestCase):
 
         self.assertTrue(resConn, msg="Association wasnot successful.")
         self.assertTrue(resConn2, msg="STA doesnot associate with 5g")
-        result = getAdbShellWlan(self.device[0], self.__class__.__name__)
+        result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
         self.assertIsNot(result['ip'], "", msg='no ip address got.')
-        resPingPercent = getAdbPingStatus(self.device[0], v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
+        resPingPercent = getAdbPingStatus(v.ANDROID_SERIAL_NUM, v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
         self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
                                 "Ping responsed percent werenot good enough.")
 
     def assoc_tkippsk2_near_field_sta(self):
         count = 0
         while count <= 1:
-            resConn = setAdbTkipPsk2Sta(self.device[0], v.SSID, v.KEY, "2g", self.__class__.__name__)
-            resConn2 = chkAdb5gFreq(self.device[0], self.__class__.__name__)
+            resConn = setAdbTkipPsk2Sta(v.ANDROID_SERIAL_NUM, v.SSID, v.KEY, "2g", self.__class__.__name__)
+            resConn2 = chkAdb5gFreq(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             if resConn and resConn2:
                 break
             else:
@@ -12197,17 +12380,17 @@ class AP_WIRELESS_RELAY_MIXEDPSK_BSD_SSIDHIDE(TestCase):
 
         self.assertTrue(resConn, msg="Association wasnot successful.")
         self.assertTrue(resConn2, msg="STA doesnot associate with 5g")
-        result = getAdbShellWlan(self.device[0], self.__class__.__name__)
+        result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
         self.assertIsNot(result['ip'], "", msg='no ip address got.')
-        resPingPercent = getAdbPingStatus(self.device[0], v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
+        resPingPercent = getAdbPingStatus(v.ANDROID_SERIAL_NUM, v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
         self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
                                 "Ping responsed percent werenot good enough.")
 
     def assoc_tkippsk_near_field_sta(self):
         count = 0
         while count <= 1:
-            resConn = setAdbTkipPskSta(self.device[0], v.SSID, v.KEY, "2g", self.__class__.__name__)
-            resConn2 = chkAdb5gFreq(self.device[0], self.__class__.__name__)
+            resConn = setAdbTkipPskSta(v.ANDROID_SERIAL_NUM, v.SSID, v.KEY, "2g", self.__class__.__name__)
+            resConn2 = chkAdb5gFreq(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             if resConn and resConn2:
                 break
             else:
@@ -12216,9 +12399,9 @@ class AP_WIRELESS_RELAY_MIXEDPSK_BSD_SSIDHIDE(TestCase):
 
         self.assertTrue(resConn, msg="Association wasnot successful.")
         self.assertTrue(resConn2, msg="STA doesnot associate with 5g")
-        result = getAdbShellWlan(self.device[0], self.__class__.__name__)
+        result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
         self.assertIsNot(result['ip'], "", msg='no ip address got.')
-        resPingPercent = getAdbPingStatus(self.device[0], v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
+        resPingPercent = getAdbPingStatus(v.ANDROID_SERIAL_NUM, v.PING_TARGET, v.PING_COUNT, self.__class__.__name__)
         self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
                                 "Ping responsed percent werenot good enough.")
 
@@ -12250,8 +12433,6 @@ class AP_WIRELESS_RELAY_SSIDHIDE(TestCase):
         }
         api.setWifiAp(self.dut, self.__name__, **option)
 
-        self.device = getAdbDevices()
-
     @classmethod
     def tearDownClass(self):
 
@@ -12268,7 +12449,7 @@ class AP_WIRELESS_RELAY_SSIDHIDE(TestCase):
         }
         api.setWifi(self.dut, self.__class__.__name__, **option2g)
 
-        ret2g = chkAdbScanSsidNoExist(self.device[0], v.SSID, self.__class__.__name__)
+        ret2g = chkAdbScanSsidNoExist(v.ANDROID_SERIAL_NUM, v.SSID, self.__class__.__name__)
 
         option2g = {
             'wifiIndex': 1,
@@ -12290,7 +12471,7 @@ class AP_WIRELESS_RELAY_SSIDHIDE(TestCase):
 
         api.setWifi(self.dut, self.__class__.__name__, **option5g)
 
-        ret5g = chkAdbScanSsidNoExist(self.device[0], v.SSID_5G, self.__class__.__name__)
+        ret5g = chkAdbScanSsidNoExist(v.ANDROID_SERIAL_NUM, v.SSID_5G, self.__class__.__name__)
 
         option5g = {
             'wifiIndex': 2,
@@ -12311,7 +12492,7 @@ class AP_WIRELESS_RELAY_SSIDHIDE(TestCase):
         }
         api.setWifi(self.dut, self.__class__.__name__, **option2g)
 
-        ret2g = chkAdbScanSsidNoExist(self.device[0], v.SSID, self.__class__.__name__)
+        ret2g = chkAdbScanSsidNoExist(v.ANDROID_SERIAL_NUM, v.SSID, self.__class__.__name__)
 
         option2g = {
             'wifiIndex': 1,
@@ -12332,7 +12513,7 @@ class AP_WIRELESS_RELAY_SSIDHIDE(TestCase):
         }
         api.setWifi(self.dut, self.__class__.__name__, **option5g)
 
-        ret5g = chkAdbScanSsidNoExist(self.device[0], v.SSID_5G, self.__class__.__name__)
+        ret5g = chkAdbScanSsidNoExist(v.ANDROID_SERIAL_NUM, v.SSID_5G, self.__class__.__name__)
 
         option5g = {
             'wifiIndex': 2,
@@ -12353,7 +12534,7 @@ class AP_WIRELESS_RELAY_SSIDHIDE(TestCase):
         }
         api.setWifi(self.dut, self.__class__.__name__, **option2g)
 
-        ret2g = chkAdbScanSsidNoExist(self.device[0], v.SSID, self.__class__.__name__)
+        ret2g = chkAdbScanSsidNoExist(v.ANDROID_SERIAL_NUM, v.SSID, self.__class__.__name__)
 
         option2g = {
             'wifiIndex': 1,
@@ -12374,7 +12555,7 @@ class AP_WIRELESS_RELAY_SSIDHIDE(TestCase):
         }
         api.setWifi(self.dut, self.__class__.__name__, **option5g)
 
-        ret5g = chkAdbScanSsidNoExist(self.device[0], v.SSID_5G, self.__class__.__name__)
+        ret5g = chkAdbScanSsidNoExist(v.ANDROID_SERIAL_NUM, v.SSID_5G, self.__class__.__name__)
 
         option5g = {
             'wifiIndex': 2,
@@ -12413,8 +12594,6 @@ class AP_WIRELESS_RELAY_BSD_SSIDHIDE(TestCase):
         }
         api.setWifiAp(self.dut, self.__name__, **option)
 
-        self.device = getAdbDevices()
-
     @classmethod
     def tearDownClass(self):
 
@@ -12431,7 +12610,7 @@ class AP_WIRELESS_RELAY_BSD_SSIDHIDE(TestCase):
         }
         api.setAllWifi(self.dut, self.__class__.__name__, **option)
 
-        ret = setAdbScanSsidNoExist(self.device[0], "normal", "2g", self.__class__.__name__)
+        ret = setAdbScanSsidNoExist(v.ANDROID_SERIAL_NUM, "normal", "2g", self.__class__.__name__)
 
         api.setAllWifi(self.dut, self.__class__.__name__)
 
@@ -12448,7 +12627,7 @@ class AP_WIRELESS_RELAY_BSD_SSIDHIDE(TestCase):
         }
         api.setAllWifi(self.dut, self.__class__.__name__, **option)
 
-        ret = setAdbScanSsidNoExist(self.device[0], "normal", "2g", self.__class__.__name__)
+        ret = setAdbScanSsidNoExist(v.ANDROID_SERIAL_NUM, "normal", "2g", self.__class__.__name__)
 
         api.setAllWifi(self.dut, self.__class__.__name__)
 
@@ -12465,7 +12644,7 @@ class AP_WIRELESS_RELAY_BSD_SSIDHIDE(TestCase):
         }
         api.setAllWifi(self.dut, self.__class__.__name__, **option)
 
-        ret = setAdbScanSsidNoExist(self.device[0], "normal", "2g", self.__class__.__name__)
+        ret = setAdbScanSsidNoExist(v.ANDROID_SERIAL_NUM, "normal", "2g", self.__class__.__name__)
 
         api.setAllWifi(self.dut, self.__class__.__name__)
 
@@ -12476,7 +12655,6 @@ class AP_WIRELESS_RELAY_BSD_SSIDHIDE(TestCase):
 class AP_WIRELESS_RELAY_CONFIG_CHECK(TestCase):
     @classmethod
     def setUpClass(self):
-
         self.dut = api.HttpClient()
         ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
 
@@ -12537,7 +12715,6 @@ class AP_WIRELESS_RELAY_CONFIG_CHECK(TestCase):
 
     @classmethod
     def tearDownClass(self):
-
         option2g = {
             'wifiIndex': 1,
             'on': 0,
@@ -12552,22 +12729,24 @@ class AP_WIRELESS_RELAY_CONFIG_CHECK(TestCase):
         self.dut.close()
 
     def config_check_2g(self):
-
         routerConf2g = api.getWifiDetailDic(self.dut, self.__class__.__name__, "2g")
 
-        self.assertDictEqual(routerConf2g, self.option2g, msg="Wireless relay module switch back to normal router module, wifi config should not be changed.")
+        self.assertDictEqual(routerConf2g, self.option2g,
+                             msg="Wireless relay module switch back to normal router module, wifi config should not be changed.")
 
     def config_check_5g(self):
         routerConf5g = api.getWifiDetailDic(self.dut, self.__class__.__name__, "5g")
 
-        self.assertDictEqual(routerConf5g, self.option5g, msg="Wireless relay module switch back to normal router module, wifi config should not be changed.")
+        self.assertDictEqual(routerConf5g, self.option5g,
+                             msg="Wireless relay module switch back to normal router module, wifi config should not be changed.")
 
     def config_check_guest(self):
         routerConfGuest = api.getWifiDetailDic(self.dut, self.__class__.__name__, "guest")
 
         self.optionGuest["on"] = "0"
         self.assertDictEqual(self.relayConfGuest, {}, msg="Wireless relay module should not support guest wifi")
-        self.assertDictEqual(routerConfGuest, self.optionGuest, msg="Wireless relay switch back to normal router module, guest wifi should be turned off.")
+        self.assertDictEqual(routerConfGuest, self.optionGuest,
+                             msg="Wireless relay switch back to normal router module, guest wifi should be turned off.")
 
 
 class AP_WIRELESS_RELAY_SCAN(TestCase):
@@ -12605,7 +12784,8 @@ class AP_WIRELESS_RELAY_SCAN(TestCase):
 
         result = api.setWifiAp(self.dut, self.__class__.__name__, **wifiInfo)
 
-        self.assertEqual(result['code'], 0, msg='Switching to wireless relay module should be successful using wifi info scaned')
+        self.assertEqual(result['code'], 0,
+                         msg='Switching to wireless relay module should be successful using wifi info scaned')
 
         api.setDisableAp(self.dut, self.__class__.__name__)
 
@@ -12634,7 +12814,8 @@ class AP_WIRELESS_RELAY_SCAN(TestCase):
 
         result = api.setWifiAp(self.dut, self.__class__.__name__, **wifiInfo)
 
-        self.assertEqual(result['code'], 0, msg='Switching to wireless relay module should be successful using wifi info scaned')
+        self.assertEqual(result['code'], 0,
+                         msg='Switching to wireless relay module should be successful using wifi info scaned')
 
         api.setDisableAp(self.dut, self.__class__.__name__)
 
@@ -12677,8 +12858,7 @@ class AP_MIXEDPSK_WEB_ACCESS(TestCase):
         api.setWifi(self.dut, self.__name__, **option2g)
         api.setWifi(self.dut, self.__name__, **option5g)
 
-        self.device = getAdbDevices()
-        wlanInfo = getAdbShellWlan(self.device[0], self.__name__)
+        wlanInfo = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__name__)
         self.staMac = wlanInfo["mac"].upper()
 
         option = {
@@ -12705,16 +12885,16 @@ class AP_MIXEDPSK_WEB_ACCESS(TestCase):
 
         option = {
             'open': 0,
-            }
+        }
 
         api.setWebAccessOpt(self.dut, self.__name__, **option)
 
         self.dut.close()
 
     def assoc_psk2_sta_access_web_2g(self):
-        res2gConn = setAdbPsk2Sta(self.device[0], v.SSID, v.KEY, "2g", self.__class__.__name__)
+        res2gConn = setAdbPsk2Sta(v.ANDROID_SERIAL_NUM, v.SSID, v.KEY, "2g", self.__class__.__name__)
         if res2gConn:
-            ret1 = chkAdbShellUrlAccess(self.device[0], v.CHECK_ACCESS_URL, self.__class__.__name__)
+            ret1 = chkAdbShellUrlAccess(v.ANDROID_SERIAL_NUM, v.CHECK_ACCESS_URL, self.__class__.__name__)
 
             option = {
                 'open': 1,
@@ -12724,13 +12904,13 @@ class AP_MIXEDPSK_WEB_ACCESS(TestCase):
 
             api.setWebAccessOpt(self.dut, self.__class__.__name__, **option)
 
-            ret2 = chkAdbShellUrlAccess(self.device[0], v.CHECK_ACCESS_URL, self.__class__.__name__)
+            ret2 = chkAdbShellUrlAccess(v.ANDROID_SERIAL_NUM, v.CHECK_ACCESS_URL, self.__class__.__name__)
 
             option = {
                 'open': 1,
                 'opt': 0,
                 'mac': self.staMac,
-                }
+            }
 
             api.setWebAccessOpt(self.dut, self.__class__.__name__, **option)
             if ret1 is False:
@@ -12740,9 +12920,9 @@ class AP_MIXEDPSK_WEB_ACCESS(TestCase):
             self.assertTrue(res2gConn, "Association wasnot successful.")
 
     def assoc_psk_sta_access_web_2g(self):
-        res2gConn = setAdbPskSta(self.device[0], v.SSID, v.KEY, "2g", self.__class__.__name__)
+        res2gConn = setAdbPskSta(v.ANDROID_SERIAL_NUM, v.SSID, v.KEY, "2g", self.__class__.__name__)
         if res2gConn:
-            ret1 = chkAdbShellUrlAccess(self.device[0], v.CHECK_ACCESS_URL, self.__class__.__name__)
+            ret1 = chkAdbShellUrlAccess(v.ANDROID_SERIAL_NUM, v.CHECK_ACCESS_URL, self.__class__.__name__)
 
             option = {
                 'open': 1,
@@ -12752,13 +12932,13 @@ class AP_MIXEDPSK_WEB_ACCESS(TestCase):
 
             api.setWebAccessOpt(self.dut, self.__class__.__name__, **option)
 
-            ret2 = chkAdbShellUrlAccess(self.device[0], v.CHECK_ACCESS_URL, self.__class__.__name__)
+            ret2 = chkAdbShellUrlAccess(v.ANDROID_SERIAL_NUM, v.CHECK_ACCESS_URL, self.__class__.__name__)
 
             option = {
                 'open': 1,
                 'opt': 0,
                 'mac': self.staMac,
-                }
+            }
 
             api.setWebAccessOpt(self.dut, self.__class__.__name__, **option)
             if ret1 is False:
@@ -12768,9 +12948,9 @@ class AP_MIXEDPSK_WEB_ACCESS(TestCase):
             self.assertTrue(res2gConn, "Association wasnot successful.")
 
     def assoc_tkippsk2_sta_access_web_2g(self):
-        res2gConn = setAdbTkipPsk2Sta(self.device[0], v.SSID, v.KEY, "2g", self.__class__.__name__)
+        res2gConn = setAdbTkipPsk2Sta(v.ANDROID_SERIAL_NUM, v.SSID, v.KEY, "2g", self.__class__.__name__)
         if res2gConn:
-            ret1 = chkAdbShellUrlAccess(self.device[0], v.CHECK_ACCESS_URL, self.__class__.__name__)
+            ret1 = chkAdbShellUrlAccess(v.ANDROID_SERIAL_NUM, v.CHECK_ACCESS_URL, self.__class__.__name__)
 
             option = {
                 'open': 1,
@@ -12780,13 +12960,13 @@ class AP_MIXEDPSK_WEB_ACCESS(TestCase):
 
             api.setWebAccessOpt(self.dut, self.__class__.__name__, **option)
 
-            ret2 = chkAdbShellUrlAccess(self.device[0], v.CHECK_ACCESS_URL, self.__class__.__name__)
+            ret2 = chkAdbShellUrlAccess(v.ANDROID_SERIAL_NUM, v.CHECK_ACCESS_URL, self.__class__.__name__)
 
             option = {
                 'open': 1,
                 'opt': 0,
                 'mac': self.staMac,
-                }
+            }
 
             api.setWebAccessOpt(self.dut, self.__class__.__name__, **option)
             if ret1 is False:
@@ -12796,9 +12976,9 @@ class AP_MIXEDPSK_WEB_ACCESS(TestCase):
             self.assertTrue(res2gConn, "Association wasnot successful.")
 
     def assoc_tkippsk_sta_access_web_2g(self):
-        res2gConn = setAdbTkipPskSta(self.device[0], v.SSID, v.KEY, "2g", self.__class__.__name__)
+        res2gConn = setAdbTkipPskSta(v.ANDROID_SERIAL_NUM, v.SSID, v.KEY, "2g", self.__class__.__name__)
         if res2gConn:
-            ret1 = chkAdbShellUrlAccess(self.device[0], v.CHECK_ACCESS_URL, self.__class__.__name__)
+            ret1 = chkAdbShellUrlAccess(v.ANDROID_SERIAL_NUM, v.CHECK_ACCESS_URL, self.__class__.__name__)
 
             option = {
                 'open': 1,
@@ -12808,13 +12988,13 @@ class AP_MIXEDPSK_WEB_ACCESS(TestCase):
 
             api.setWebAccessOpt(self.dut, self.__class__.__name__, **option)
 
-            ret2 = chkAdbShellUrlAccess(self.device[0], v.CHECK_ACCESS_URL, self.__class__.__name__)
+            ret2 = chkAdbShellUrlAccess(v.ANDROID_SERIAL_NUM, v.CHECK_ACCESS_URL, self.__class__.__name__)
 
             option = {
                 'open': 1,
                 'opt': 0,
                 'mac': self.staMac,
-                }
+            }
 
             api.setWebAccessOpt(self.dut, self.__class__.__name__, **option)
             if ret1 is False:
@@ -12824,9 +13004,9 @@ class AP_MIXEDPSK_WEB_ACCESS(TestCase):
             self.assertTrue(res2gConn, "Association wasnot successful.")
 
     def assoc_psk2_sta_access_web_5g(self):
-        res5gConn = setAdbPsk2Sta(self.device[0], v.SSID_5G, v.KEY, "5g", self.__class__.__name__)
+        res5gConn = setAdbPsk2Sta(v.ANDROID_SERIAL_NUM, v.SSID_5G, v.KEY, "5g", self.__class__.__name__)
         if res5gConn:
-            ret1 = chkAdbShellUrlAccess(self.device[0], v.CHECK_ACCESS_URL, self.__class__.__name__)
+            ret1 = chkAdbShellUrlAccess(v.ANDROID_SERIAL_NUM, v.CHECK_ACCESS_URL, self.__class__.__name__)
 
             option = {
                 'open': 1,
@@ -12836,13 +13016,13 @@ class AP_MIXEDPSK_WEB_ACCESS(TestCase):
 
             api.setWebAccessOpt(self.dut, self.__class__.__name__, **option)
 
-            ret2 = chkAdbShellUrlAccess(self.device[0], v.CHECK_ACCESS_URL, self.__class__.__name__)
+            ret2 = chkAdbShellUrlAccess(v.ANDROID_SERIAL_NUM, v.CHECK_ACCESS_URL, self.__class__.__name__)
 
             option = {
                 'open': 1,
                 'opt': 0,
                 'mac': self.staMac,
-                }
+            }
 
             api.setWebAccessOpt(self.dut, self.__class__.__name__, **option)
             if ret1 is False:
@@ -12852,9 +13032,9 @@ class AP_MIXEDPSK_WEB_ACCESS(TestCase):
             self.assertTrue(res5gConn, "Association wasnot successful.")
 
     def assoc_psk_sta_access_web_5g(self):
-        res5gConn = setAdbPskSta(self.device[0], v.SSID_5G, v.KEY, "5g", self.__class__.__name__)
+        res5gConn = setAdbPskSta(v.ANDROID_SERIAL_NUM, v.SSID_5G, v.KEY, "5g", self.__class__.__name__)
         if res5gConn:
-            ret1 = chkAdbShellUrlAccess(self.device[0], v.CHECK_ACCESS_URL, self.__class__.__name__)
+            ret1 = chkAdbShellUrlAccess(v.ANDROID_SERIAL_NUM, v.CHECK_ACCESS_URL, self.__class__.__name__)
 
             option = {
                 'open': 1,
@@ -12864,13 +13044,13 @@ class AP_MIXEDPSK_WEB_ACCESS(TestCase):
 
             api.setWebAccessOpt(self.dut, self.__class__.__name__, **option)
 
-            ret2 = chkAdbShellUrlAccess(self.device[0], v.CHECK_ACCESS_URL, self.__class__.__name__)
+            ret2 = chkAdbShellUrlAccess(v.ANDROID_SERIAL_NUM, v.CHECK_ACCESS_URL, self.__class__.__name__)
 
             option = {
                 'open': 1,
                 'opt': 0,
                 'mac': self.staMac,
-                }
+            }
 
             api.setWebAccessOpt(self.dut, self.__class__.__name__, **option)
             if ret1 is False:
@@ -12880,9 +13060,9 @@ class AP_MIXEDPSK_WEB_ACCESS(TestCase):
             self.assertTrue(res5gConn, "Association wasnot successful.")
 
     def assoc_tkippsk2_sta_access_web_5g(self):
-        res5gConn = setAdbTkipPsk2Sta(self.device[0], v.SSID_5G, v.KEY, "5g", self.__class__.__name__)
+        res5gConn = setAdbTkipPsk2Sta(v.ANDROID_SERIAL_NUM, v.SSID_5G, v.KEY, "5g", self.__class__.__name__)
         if res5gConn:
-            ret1 = chkAdbShellUrlAccess(self.device[0], v.CHECK_ACCESS_URL, self.__class__.__name__)
+            ret1 = chkAdbShellUrlAccess(v.ANDROID_SERIAL_NUM, v.CHECK_ACCESS_URL, self.__class__.__name__)
 
             option = {
                 'open': 1,
@@ -12892,13 +13072,13 @@ class AP_MIXEDPSK_WEB_ACCESS(TestCase):
 
             api.setWebAccessOpt(self.dut, self.__class__.__name__, **option)
 
-            ret2 = chkAdbShellUrlAccess(self.device[0], v.CHECK_ACCESS_URL, self.__class__.__name__)
+            ret2 = chkAdbShellUrlAccess(v.ANDROID_SERIAL_NUM, v.CHECK_ACCESS_URL, self.__class__.__name__)
 
             option = {
                 'open': 1,
                 'opt': 0,
                 'mac': self.staMac,
-                }
+            }
 
             api.setWebAccessOpt(self.dut, self.__class__.__name__, **option)
             if ret1 is False:
@@ -12908,9 +13088,9 @@ class AP_MIXEDPSK_WEB_ACCESS(TestCase):
             self.assertTrue(res5gConn, "Association wasnot successful.")
 
     def assoc_tkippsk_sta_access_web_5g(self):
-        res5gConn = setAdbTkipPskSta(self.device[0], v.SSID_5G, v.KEY, "5g", self.__class__.__name__)
+        res5gConn = setAdbTkipPskSta(v.ANDROID_SERIAL_NUM, v.SSID_5G, v.KEY, "5g", self.__class__.__name__)
         if res5gConn:
-            ret1 = chkAdbShellUrlAccess(self.device[0], v.CHECK_ACCESS_URL, self.__class__.__name__)
+            ret1 = chkAdbShellUrlAccess(v.ANDROID_SERIAL_NUM, v.CHECK_ACCESS_URL, self.__class__.__name__)
 
             option = {
                 'open': 1,
@@ -12920,13 +13100,13 @@ class AP_MIXEDPSK_WEB_ACCESS(TestCase):
 
             api.setWebAccessOpt(self.dut, self.__class__.__name__, **option)
 
-            ret2 = chkAdbShellUrlAccess(self.device[0], v.CHECK_ACCESS_URL, self.__class__.__name__)
+            ret2 = chkAdbShellUrlAccess(v.ANDROID_SERIAL_NUM, v.CHECK_ACCESS_URL, self.__class__.__name__)
 
             option = {
                 'open': 1,
                 'opt': 0,
                 'mac': self.staMac,
-                }
+            }
 
             api.setWebAccessOpt(self.dut, self.__class__.__name__, **option)
             if ret1 is False:
@@ -12940,7 +13120,7 @@ class AP_CHECK(TestCase):
     @classmethod
     def setUpClass(self):
 
-        self.dut = SshClient(v.CONNECTION_TYPE)
+        self.dut = ShellClient(v.CONNECTION_TYPE)
         ret1 = self.dut.connect(v.HOST, v.USR, v.PASSWD)
         self.dut2 = api.HttpClient()
         ret2 = self.dut2.connect(host=v.HOST, password=v.WEB_PWD)
@@ -12980,7 +13160,7 @@ class AP_CHECK(TestCase):
             t.sleep(60)
             while 1:
                 try:
-                    self.dut = SshClient(v.CONNECTION_TYPE)
+                    self.dut = ShellClient(v.CONNECTION_TYPE)
                     ret = self.dut.connect(v.HOST, v.USR, v.PASSWD)
                     if ret is True:
                         chkCount = 0
@@ -13010,7 +13190,7 @@ class AP_CHECK(TestCase):
                 txPower5g = getWlanTxPower(self.dut, "5g", self.__class__.__name__)
                 t.sleep(1)
 
-            if power2g <= (txPower2g-5) or power5g <= (txPower5g-5):
+            if power2g <= (txPower2g - 5) or power5g <= (txPower5g - 5):
                 loop = 0
                 while loop < 120:
                     getWlanLastEstPower(self.dut, v.DUT_MODULE, "2g", self.__class__.__name__)
@@ -13033,7 +13213,7 @@ class AP_CHECK(TestCase):
                 t.sleep(60)
                 while 1:
                     try:
-                        self.dut = SshClient(v.CONNECTION_TYPE)
+                        self.dut = ShellClient(v.CONNECTION_TYPE)
                         ret = self.dut.connect(v.HOST, v.USR, v.PASSWD)
                         if ret is True:
                             chkCount = 0
@@ -13063,7 +13243,7 @@ class AP_CHECK(TestCase):
                 txPower5g = getWlanTxPower(self.dut, "5g", self.__class__.__name__)
                 t.sleep(1)
 
-            if power2g <= (txPower2g-5) or power5g <= (txPower5g-5):
+            if power2g <= (txPower2g - 5) or power5g <= (txPower5g - 5):
                 loop = 0
                 while loop < 120:
                     getWlanLastEstPower(self.dut, v.DUT_MODULE, "2g", self.__class__.__name__)
@@ -13083,7 +13263,7 @@ class AP_CHECK(TestCase):
             t.sleep(60)
             while 1:
                 try:
-                    self.dut = SshClient(v.CONNECTION_TYPE)
+                    self.dut = ShellClient(v.CONNECTION_TYPE)
                     ret = self.dut.connect(v.HOST, v.USR, v.PASSWD)
                     if ret is True:
                         chkCount = 0
@@ -13103,7 +13283,7 @@ class AP_CHECK(TestCase):
                 except Exception, e:
                     raise e
 
-            #router_init
+            # router_init
             option = {
                 'name': 'peanuts',
                 'locale': '公司',
@@ -13128,7 +13308,7 @@ class AP_CHECK(TestCase):
                 t.sleep(1)
 
             loop = 0
-            while power2g <= (txPower2g-5) or power5g <= (txPower5g-5):
+            while power2g <= (txPower2g - 5) or power5g <= (txPower5g - 5):
                 t.sleep(10)
                 power2g = getWlanLastEstPower(self.dut, v.DUT_MODULE, "2g", self.__class__.__name__)
                 txPower2g = getWlanTxPower(self.dut, "2g", self.__class__.__name__)

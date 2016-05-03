@@ -1,6 +1,0 @@
-#/cgi-bin/luci/;stok=token/api/xqnetwork/wifi_detail? {'wifiIndex':1}
-/cgi-bin/luci/;stok=token/api/xqnetwork/wifi_detail_all
-#/cgi-bin/luci/;stok=token/api/xqsystem/main_status_for_app
-#/cgi-bin/luci/;stok=token/api/xqsystem/detection_ts
-#/cgi-bin/luci/;stok=token/api/xqnetwork/set_wifi? {'wifiIndex':1,'on':1,'ssid':'`~!@#$%^&*() =+\|]}[{\'";:/?.>,<','pwd':'12345678','encryption':'mixed-psk','channel':'1','bandwidth':'20','hidden':'0','txpwr':'mid'}
-

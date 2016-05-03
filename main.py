@@ -60,11 +60,7 @@ class ToolBook(wx.Toolbook):
                 page2 = MemoryTrackPage(self)
                 self.AddPage(page2, tool, imageId=imageIdGenerator.next())
 
-            # elif tool == v.TOOL_LIST[2]:
-            #     page3 = LogCollectionPage(self)
-            #     self.AddPage(page3, tool, imageId=imageIdGenerator.next())
-
-            elif tool == v.TOOL_LIST[3]:
+            elif tool == v.TOOL_LIST[2]:
                 page4 = TestSuitePage(self)
                 self.AddPage(page4, tool, imageId=imageIdGenerator.next())
 
@@ -108,28 +104,28 @@ class GeneralPage(wx.Panel):
         self.type.SetSelection(0)
         self.Bind(wx.EVT_CHOICE, self.EvtChoice, self.type)
 
-        connLbl = wx.StaticText(self, -1, "Connection type:")
-        self.conn = wx.Choice(self, -1, choices=["SSH", "Telnet", "Serial", "fac" ])
+        connLbl = wx.StaticText(self, -1, "Shell:")
+        self.conn = wx.Choice(self, -1, choices=["SSH", "Telnet", "Serial", "Factory"])
         self.conn.SetSelection(0)
         self.Bind(wx.EVT_CHOICE, self.EvtChoice3, self.conn)
 
-        ipLbl = wx.StaticText(self, -1, 'Host IP:')
+        ipLbl = wx.StaticText(self, -1, 'Host:')
         self.ip = wx.TextCtrl(self, -1, '')
         self.ip.SetValue(v.HOST)
 
-        sshUsrLbl = wx.StaticText(self, -1, 'User name:')
-        self.sshUsr = wx.TextCtrl(self, -1, '')
-        self.sshUsr.SetValue(v.USR)
+        shellUsrLbl = wx.StaticText(self, -1, 'User:')
+        self.shellUsr = wx.TextCtrl(self, -1, '')
+        self.shellUsr.SetValue(v.USR)
 
-        sshPasswdLbl = wx.StaticText(self, -1, 'Password:')
-        self.sshPasswd = wx.TextCtrl(self, -1, '')
-        self.sshPasswd.SetValue(v.PASSWD)
+        shellPasswdLbl = wx.StaticText(self, -1, 'Password:')
+        self.shellPasswd = wx.TextCtrl(self, -1, '')
+        self.shellPasswd.SetValue(v.PASSWD)
 
-        webPasswdLbl = wx.StaticText(self, -1, 'Web password:')
+        webPasswdLbl = wx.StaticText(self, -1, 'Web Password:')
         self.webPasswd = wx.TextCtrl(self, -1, '')
         self.webPasswd.SetValue(v.WEB_PWD)
 
-        serialPortLbl = wx.StaticText(self, -1, 'Serial port:')
+        serialPortLbl = wx.StaticText(self, -1, 'Serial:')
         self.serialNum = []
         if len(co.getSerialPort()) is 0:
             self.serialNum.append("None")
@@ -152,36 +148,36 @@ class GeneralPage(wx.Panel):
                        wx.ALIGN_RIGHT | wx.TOP | wx.LEFT, 10)
         connSizer2.Add(ipLbl, 0,
                        wx.ALIGN_RIGHT | wx.TOP | wx.LEFT, 10)
-        connSizer2.Add(sshUsrLbl, 0,
+        connSizer2.Add(shellUsrLbl, 0,
                        wx.ALIGN_RIGHT | wx.TOP | wx.LEFT, 10)
-        connSizer2.Add(sshPasswdLbl, 0,
+        connSizer2.Add(shellPasswdLbl, 0,
                        wx.ALIGN_RIGHT | wx.TOP | wx.LEFT | wx.BOTTOM, 10)
 
         connSizer3 = wx.BoxSizer(wx.VERTICAL)
         connSizer3.Add(self.type, 0,
-                       wx.ALIGN_LEFT | wx.TOP | wx.LEFT, 2)
+                       wx.ALIGN_LEFT | wx.TOP | wx.LEFT, 4)
         connSizer3.Add(self.ip, 0,
                        wx.ALIGN_LEFT | wx.TOP | wx.LEFT, 4)
-        connSizer3.Add(self.sshUsr, 0,
+        connSizer3.Add(self.shellUsr, 0,
                        wx.ALIGN_LEFT | wx.TOP | wx.LEFT, 4)
-        connSizer3.Add(self.sshPasswd, 0,
+        connSizer3.Add(self.shellPasswd, 0,
                        wx.ALIGN_LEFT | wx.TOP | wx.LEFT, 4)
 
         # right column
         connSizer4 = wx.BoxSizer(wx.VERTICAL)
         connSizer4.Add(connLbl, 0,
                        wx.ALIGN_RIGHT | wx.TOP | wx.LEFT, 10)
-        connSizer4.Add(webPasswdLbl, 0,
-                       wx.ALIGN_RIGHT | wx.TOP | wx.LEFT, 10)
         connSizer4.Add(serialPortLbl, 0,
+                       wx.ALIGN_RIGHT | wx.TOP | wx.LEFT, 10)
+        connSizer4.Add(webPasswdLbl, 0,
                        wx.ALIGN_RIGHT | wx.TOP | wx.LEFT, 10)
 
         connSizer5 = wx.BoxSizer(wx.VERTICAL)
         connSizer5.Add(self.conn, 0,
-                       wx.ALIGN_LEFT | wx.TOP | wx.LEFT, 2)
-        connSizer5.Add(self.webPasswd, 0,
                        wx.ALIGN_LEFT | wx.TOP | wx.LEFT, 4)
         connSizer5.Add(self.serialPort, 0,
+                       wx.ALIGN_LEFT | wx.TOP | wx.LEFT, 4)
+        connSizer5.Add(self.webPasswd, 0,
                        wx.ALIGN_LEFT | wx.TOP | wx.LEFT, 4)
 
         connSizer.Add(connSizer2, 0, wx.LEFT, 5)
@@ -191,9 +187,18 @@ class GeneralPage(wx.Panel):
 
         # sta connection ctrl
         staTypeLbl = wx.StaticText(self, -1, 'Device:')
-        self.staType = wx.Choice(self, -1, choices=['Android'])
-        self.staType.SetSelection(0)
-        self.Bind(wx.EVT_CHOICE, self.EvtChoice2, self.staType)
+        staSerialNumList = list()
+        if len(co.getAdbDevicesModel()) is 0:
+            staSerialNumList.append("None")
+        else:
+            staSerialNumList = co.getAdbDevicesModel().keys()
+        self.staSerialNum = wx.Choice(self, -1, choices=staSerialNumList)
+        self.staSerialNum.SetSelection(0)
+        v.ANDROID_SERIAL_NUM = staSerialNumList[0]
+        self.Bind(wx.EVT_CHOICE, self.EvtChoice2, self.staSerialNum)
+
+        self.staModel = wx.StaticText(self, -1, '')
+        self.staModel.SetForegroundColour("gray")
 
         staCountLbl = wx.StaticText(self, -1, 'Count:')
         self.staCount = wx.TextCtrl(self, -1, '')
@@ -209,20 +214,20 @@ class GeneralPage(wx.Panel):
         staConnSizer2.Add(staCountLbl, 0,
                           wx.ALIGN_RIGHT | wx.TOP | wx.LEFT, 10)
 
-
         staConnSizer3 = wx.BoxSizer(wx.VERTICAL)
-        staConnSizer3.Add(self.staType, 0,
-                          wx.ALIGN_LEFT | wx.TOP | wx.LEFT, 2)
+        staConnSizer3.Add(self.staSerialNum, 0,
+                          wx.ALIGN_LEFT | wx.TOP | wx.LEFT, 4)
         staConnSizer3.Add(self.staCount, 0,
                           wx.ALIGN_LEFT | wx.TOP | wx.LEFT, 4)
 
         staConnSizer.Add(staConnSizer2, 0, wx.LEFT, 5)
         staConnSizer.Add(staConnSizer3, 0, wx.LEFT, 2)
+        staConnSizer.Add(self.staModel, 0, wx.LEFT | wx.TOP, 2 | 4)
 
         mainSizer = wx.BoxSizer(wx.VERTICAL)
         mainSizer.Add(connSizer, 0, wx.ALL, 10)
         mainSizer.Add(staConnSizer, 0, wx.ALL, 10)
-        mainSizer.Add(btnSizer, 0, wx.TOP, 106)
+        mainSizer.Add(btnSizer, 0, wx.TOP, 104)
 
         self.SetSizer(mainSizer)
         mainSizer.Fit(self)
@@ -236,42 +241,33 @@ class GeneralPage(wx.Panel):
     def EvtChoice2(self, event):
         self.saveBtn.Enable(True)
         v.SAVE_BTN_FLAG = False
-        v.STA_MODULE = event.GetString()
-        if v.STA_MODULE == "Android":
-            self.staIp.Enable(False)
-            self.staSshUsr.Enable(False)
-            self.staSshPasswd.Enable(False)
-        # elif v.STA_MODULE == "R1CM & Android":
-        #     self.staIp.Enable(True)
-        #     self.staSshUsr.Enable(True)
-        #     self.staSshPasswd.Enable(True)
+        v.ANDROID_SERIAL_NUM = event.GetString()
 
     def EvtChoice3(self, event):
         self.saveBtn.Enable(True)
         v.SAVE_BTN_FLAG = False
         type = event.GetString()
-        self.sshUsr.Enable(True)
-        self.sshPasswd.Enable(True)
+        self.shellUsr.Enable(True)
+        self.shellPasswd.Enable(True)
         self.serialPort.Enable(False)
         if type == "Telnet":
             v.CONNECTION_TYPE = 2
         elif type == "SSH":
             v.CONNECTION_TYPE = 1
-        elif type == "fac":
+        elif type == "Factory":
             v.CONNECTION_TYPE = 2
-            self.sshUsr.Enable(False)
-            self.sshPasswd.Enable(False)
+            self.shellUsr.Enable(False)
+            self.shellPasswd.Enable(False)
         elif type == "Serial":
             v.CONNECTION_TYPE = 3
-            self.sshUsr.Enable(False)
-            self.sshPasswd.Enable(False)
+            self.shellUsr.Enable(False)
+            self.shellPasswd.Enable(False)
             self.serialPort.Enable(True)
 
     def EvtChoice4(self, event):
         self.saveBtn.Enable(True)
         v.SAVE_BTN_FLAG = False
         v.SERIAL_PORT = event.GetString()
-
 
     def connectionCheckThread(self, connectiontype, ip=None, port=None, user=None, password=None):
         result, self.hardware = co.connectionCheck(connectiontype, ip=ip, user=user, password=password)
@@ -310,19 +306,19 @@ class GeneralPage(wx.Panel):
         self.saveBtn.Enable(False)
         if v.DUT_MODULE is not None:
             v.HOST = self.ip.GetValue()
-            v.USR = self.sshUsr.GetValue()
-            v.PASSWD = self.sshPasswd.GetValue()
+            v.USR = self.shellUsr.GetValue()
+            v.PASSWD = self.shellPasswd.GetValue()
             v.WEB_PWD = self.webPasswd.GetValue()
             dutConn = threading.Thread(target=self.connectionCheckThread, kwargs={'connectiontype': v.CONNECTION_TYPE,
                                                                                   'ip': v.HOST, 'user': v.USR,
                                                                                   'password': v.PASSWD})
             dutConn.start()
-
-        if v.STA_MODULE is 'Android':
+        if v.ANDROID_SERIAL_NUM is not None:
             v.STA_COUNT = self.staCount.GetValue()
             dutConn = threading.Thread(target=self.adbDeviceCheckThread, args=(v.STA_COUNT,))
             dutConn.start()
-
+            v.ANDROID_MODEL = co.getAdbDeviceModel(v.ANDROID_SERIAL_NUM)
+            self.staModel.SetLabel(v.ANDROID_MODEL)
 
     def EvtTextChange(self, event):
         self.saveBtn.Enable(True)
@@ -441,202 +437,12 @@ class MemoryTrackPage(wx.Panel):
         frame.Close(True)
 
 
-# class LogCollectionPage(wx.Panel):
-#     def __init__(self, parent):
-#         wx.Window.__init__(self, parent, -1, style=wx.BORDER_STATIC)
-#         wx.StaticText(self, -1, "Log Collection", wx.Point(10, 10))
-#
-#         self.applyBtn = wx.Button(self, -1, 'Apply')
-#         self.cancelBtn = wx.Button(self, -1, 'Cancel')
-#         self.Bind(wx.EVT_BUTTON, self.EvtLogCollection, self.applyBtn)
-#         self.Bind(wx.EVT_BUTTON, self.EvtClose, self.cancelBtn)
-#         self.systemCheck = wx.CheckBox(self, -1, 'Collect system log information')
-#         self.networkCheck = wx.CheckBox(self, -1, 'Collect network log information')
-#         self.wifiCheck = wx.CheckBox(self, -1, 'Collect wifi log information')
-#         self.cfgCheck = wx.CheckBox(self, -1, 'Collect UCI config information')
-#         self.statCheck = wx.CheckBox(self, -1, 'Collect forwarding statistic log information')
-#
-#         logBox = wx.StaticBox(self, -1, 'Log Collection', size=(580, -1))
-#         logSizer = wx.StaticBoxSizer(logBox, wx.VERTICAL)
-#         logSizer.Add(self.systemCheck, 0, wx.LEFT | wx.TOP, 10)
-#         logSizer.Add(self.networkCheck, 0, wx.LEFT | wx.TOP, 10)
-#         logSizer.Add(self.wifiCheck, 0, wx.LEFT | wx.TOP, 10)
-#         logSizer.Add(self.cfgCheck, 0, wx.LEFT | wx.TOP, 10)
-#         logSizer.Add(self.statCheck, 0, wx.LEFT | wx.TOP | wx.BOTTOM, 10)
-#
-#         btnSizer = wx.BoxSizer(wx.HORIZONTAL)
-#         btnSizer.Add(self.applyBtn, 0, wx.LEFT, 400)
-#         btnSizer.Add(self.cancelBtn, 0, wx.LEFT, 15)
-#
-#         mainSizer = wx.BoxSizer(wx.VERTICAL)
-#         mainSizer.Add(logSizer, 0, wx.ALL, 10)
-#         mainSizer.Add(btnSizer, 0, wx.TOP, 186)
-#
-#         self.SetSizer(mainSizer)
-#         mainSizer.Fit(self)
-#         mainSizer.SetSizeHints(self)
-#
-#     def EvtLogCollection(self, event):
-#
-#         if not v.SAVE_BTN_FLAG:
-#             dlg5 = wx.MessageDialog(self, 'General page settings have not been saved yet!',
-#                                     'Info',
-#                                     wx.OK | wx.ICON_INFORMATION | wx.STAY_ON_TOP
-#                                     # wx.YES_NO | wx.NO_DEFAULT | wx.CANCEL | wx.ICON_INFORMATION
-#                                     )
-#             dlg5.ShowModal()
-#             dlg5.Destroy()
-#             return
-#
-#         # if v.CONNECTION_TYPE == 1:
-#         ssh = co.SshCommand(v.CONNECTION_TYPE)
-#         ret = ssh.connect(v.HOST, v.USR, v.PASSWD)
-#
-#         if ret:
-#             logList = []
-#             # model = ssh.command(v.GET_MODEL)
-#             # model = model[0].strip('\n')
-#
-#             if self.systemCheck.IsChecked() is True:
-#                 # collect system info
-#                 logList.append('system_log')
-#
-#             if self.networkCheck.IsChecked() is True:
-#                 # collect network info
-#                 logList.append('network_log')
-#
-#             if self.wifiCheck.IsChecked() is True:
-#                 # collect wifi info
-#                 if v.DUT_MODULE == 'R1D' or v.DUT_MODULE == 'R2D':
-#                     logList.append('r1d_wifi2G_log')
-#                     logList.append('r1d_wifi5G_log')
-#
-#                 elif v.DUT_MODULE == "R1CM":
-#                     logList.append('r1c_wifi2G_log')
-#                     logList.append('r1c_wifi5G_log')
-#
-#                 elif v.DUT_MODULE == "R3":
-#                     logList.append('r3_wifi2G_log')
-#                     logList.append('r3_wifi5G_log')
-#
-#                 elif v.DUT_MODULE == "R1CL":
-#                     logList.append("r1cl_wifi2G_log")
-#
-#
-#             if self.cfgCheck.IsChecked() is True:
-#                 # collect cfg
-#                 logList.append('uci_config')
-#
-#             if self.statCheck.IsChecked() is True:
-#
-#                 if v.DUT_MODULE == 'R1D' or v.DUT_MODULE == 'R2D':
-#                     logList.append('r1d_forward_statistic_log')
-#
-#                 elif v.DUT_MODULE == "R1CM":
-#                     logList.append('r1c_forward_statistic_log')
-#
-#                 elif v.DUT_MODULE == "R3":
-#                     logList.append('r3_forward_statistic_log')
-#
-#                 elif v.DUT_MODULE == "R1CL":
-#                     logList.append("r1cl_forward_statistic_log")
-#
-#             if len(logList) == 0:  # all checkboxs arenot selected
-#                 dlg4 = wx.MessageDialog(self, 'One item should be selected at least!',
-#                                         'Info',
-#                                         wx.OK | wx.ICON_INFORMATION | wx.STAY_ON_TOP
-#                                         # wx.YES_NO | wx.NO_DEFAULT | wx.CANCEL | wx.ICON_INFORMATION
-#                                         )
-#                 dlg4.ShowModal()
-#                 dlg4.Destroy()
-#                 ssh.close()
-#                 return
-#
-#             self.dlg = wx.ProgressDialog('Log collecting progress',
-#                                          'Starting...',
-#                                          maximum=len(logList),
-#                                          parent=self,
-#                                          style=0
-#                                                | wx.PD_APP_MODAL
-#                                                | wx.PD_CAN_ABORT
-#                                                ##                        | wx.PD_CAN_SKIP
-#                                                | wx.PD_ELAPSED_TIME
-#                                                | wx.PD_REMAINING_TIME
-#                                                | wx.PD_AUTO_HIDE
-#                                          )
-#
-#             c = 0
-#             keepGoing = True
-#             fileCreateTime = t.strftime('_%Y.%m.%d %H.%M.%S', t.localtime())
-#             saveLogPath = os.getcwd() + os.sep + 'LOG_COLLECTION' + fileCreateTime + os.sep
-#             if not os.path.exists(saveLogPath):
-#                 os.makedirs(saveLogPath)
-#
-#             while keepGoing and c < len(logList):
-#                 retDic = OrderedDict()
-#                 ll = logList[c]
-#                 wx.Yield()  # refresh progress
-#                 (keepGoing, skip) = self.dlg.Update(c + 1, ll)
-#
-#                 commands = getattr(data_old, ll)
-#
-#                 for command in commands:
-#                     try:
-#                         retDic.update(ssh.getTitleResDic(command))
-#                     except Exception, e:
-#                         dlg4 = wx.MessageDialog(self.dlg, 'Connection is failed, please check your network!',
-#                                                 'Info',
-#                                                 wx.OK | wx.ICON_INFORMATION | wx.STAY_ON_TOP
-#                                                 )
-#
-#                         dlg4.ShowModal()
-#                         dlg4.Destroy()
-#                         ssh.close()
-#                         self.dlg.Destroy()
-#                         return
-#
-#                 f = open(saveLogPath + ll + '.txt', 'a')
-#                 for index in retDic:
-#                     f.write(index)
-#                     f.writelines(retDic[index])
-#                 c += 1
-#                 ##                        f.flush()
-#                 ##                        os.fsync(f)
-#                 f.close()
-#
-#             ssh.close()
-#             self.dlg.Destroy()
-#
-#         elif not ret:
-#             dlg3 = wx.MessageDialog(self, 'Connection is failed. please check your remote settings!',
-#                                     'Info',
-#                                     wx.OK | wx.ICON_INFORMATION | wx.STAY_ON_TOP
-#                                     # wx.YES_NO | wx.NO_DEFAULT | wx.CANCEL | wx.ICON_INFORMATION
-#                                     )
-#             dlg3.ShowModal()
-#             dlg3.Destroy()
-#             return
-#
-#             # elif v.CONNECTION_TYPE == 2:
-#             # self.dlg2 = wx.MessageDialog(self, 'Serial-port is not supported now!',
-#             # 'Info',
-#             # wx.OK | wx.ICON_INFORMATION | wx.STAY_ON_TOP
-#             # # wx.YES_NO | wx.NO_DEFAULT | wx.CANCEL | wx.ICON_INFORMATION
-#             # )
-#             # self.dlg2.ShowModal()
-#             #     self.dlg2.Destroy()
-#             #     return
-#
-#     def EvtClose(self, event):
-#         frame.Close(True)
-
-
 class TestSuitePage(wx.Panel):
     def __init__(self, parent):
         wx.Window.__init__(self, parent, -1, style=wx.BORDER_STATIC)
         ##        wx.StaticText(self, -1, "Test suite", wx.Point(10, 10))
         ##        self.tree = wx.TreeCtrl(self, size = (340,330))
-        self.tree = CT.CustomTreeCtrl(self, size=(340, 303),
+        self.tree = CT.CustomTreeCtrl(self, size=(540, 303),
                                       style=
                                       wx.BORDER_SIMPLE
                                       | wx.WANTS_CHARS,
@@ -758,12 +564,12 @@ class TestSuitePage(wx.Panel):
     def TextTestRunnerFailCheck(self, jobID, abortEvent, testcase, count):
         # process testcases tend to find error or failed cases,
         # then add them to suitefailed and process it until count times
-        ssh = co.SshCommand(v.CONNECTION_TYPE)
-        ssh.connect(v.HOST, v.USR, v.PASSWD)
+        shell = co.ShellCommand(v.CONNECTION_TYPE)
+        shell.connect(v.HOST, v.USR, v.PASSWD)
         # save file in windows, default code is gbk
-        self.report = ssh.setReportName().decode("utf8").encode("gbk")
-        self.reportFile = (ssh.setReportName() + ".log").decode("utf8").encode("gbk")
-        self.mailTitle = ssh.setMailTitle()
+        self.report = shell.setReportName().decode("utf8").encode("gbk")
+        self.reportFile = (shell.setReportName() + ".log").decode("utf8").encode("gbk")
+        self.mailTitle = shell.setMailTitle()
 
         # curTime = t.strftime('%Y.%m.%d %H.%M.%S', t.localtime())
         f = open(self.reportFile, 'a')
@@ -837,8 +643,10 @@ class TestSuitePage(wx.Panel):
                 os.rename(v.TEST_SUITE_LOG_PATH, self.report)
             else:
                 os.rename(v.TEST_SUITE_LOG_PATH, self.report + str(random.random()))
-        if testKeepGoing is False:
+        if testKeepGoing is False: # click cancel
             os.system("taskkill /F /IM python.exe | taskkill /F /T /IM adb.exe")
+        else: # reboot android device
+            co.setAdbReboot(v.ANDROID_SERIAL_NUM, v.DEVICE_STATUS_LOG)
         self.abortEvent.set()
         self.dlg.Destroy()
 

@@ -17,7 +17,7 @@ import binascii
 import var as v
 
 
-class SshClient(object):
+class ShellClient(object):
     def __init__(self, connection):
         self.connectionType = connection
 
@@ -155,7 +155,7 @@ class SshClient(object):
             self.ser.close()
 
 
-class SshCommand(SshClient):
+class ShellCommand(ShellClient):
     def getPidList(self):
         self.outPidList = []
         out = self.command('ps w | grep -v [[]')
@@ -282,7 +282,7 @@ def getSerialPort():
 
 
 def connectionCheck(connectiontype, ip=None, port=None, user=None, password=None):
-    client = SshCommand(connectiontype)
+    client = ShellCommand(connectiontype)
     result = client.connect(ip, user, password)
     if result is True:
         hardware = client.getHardware()
@@ -917,6 +917,7 @@ def setReset(terminal, logname):
     command = "env -i sleep 4 && nvram set restore_defaults=1 && nvram commit && reboot & >/dev/null 2>/dev/null"
     setConfig(terminal, command, logname)
 
+
 def setCopyFile(terminal, logname, **kargs):
     command = 'cp %s %s'%(kargs['src'], kargs['dst'])
     setConfig(terminal, command, logname)
@@ -925,6 +926,26 @@ def setCopyFile(terminal, logname, **kargs):
 def setMvFile(terminal, logname, **kargs):
     command = 'mv %s %s'%(kargs['src'], kargs['dst'])
     setConfig(terminal, command, logname)
+
+
+def setIperfFlow(target, interval, time, logname):
+    if os.path.exists(v.IPERF_PATH):
+        pass
+    else:
+        raise Exception("iperf doesnot exist! please copy iperf dir to the path same as peanuts.")
+
+    command = "iperf.exe -c " + target
+    if interval != "":
+        command = command + " -i " + interval
+    if time != "":
+        command = command + " -t " + time
+
+    command += " -r -w 2m -f m"
+    ret = setShell(command, cwd=v.IPERF_PATH, timeout=3*int(time), logname=logname)
+    # os.chdir(v.DEFAULT_PATH)
+    if len(ret) == 0:
+        return False
+    return True
 
 
 def setAdbClearStaConn(device, ssid, radio, logname):
@@ -1577,24 +1598,9 @@ class SetAdbIperfOn(threading.Thread):
         setAdbIperfOn(self.device, self.logname)
 
 
-def setIperfFlow(target, interval, time, logname):
-    if os.path.exists(v.IPERF_PATH):
-        pass
-    else:
-        raise Exception("iperf doesnot exist! please copy iperf dir to the path same as peanuts.")
-
-    command = "iperf.exe -c " + target
-    if interval != "":
-        command = command + " -i " + interval
-    if time != "":
-        command = command + " -t " + time
-
-    command += " -r -w 2m -f m"
-    ret = setShell(command, cwd=v.IPERF_PATH, timeout=3*int(time), logname=logname)
-    # os.chdir(v.DEFAULT_PATH)
-    if len(ret) == 0:
-        return False
-    return True
+def setAdbReboot(device, logname):
+    command = "reboot"
+    setAdbShell(device, command, logname)
 
 
 def getAdbDevices():
@@ -1613,6 +1619,26 @@ def getAdbDevices():
             if m:
                 result.append(m.group(1))
     return result
+
+
+def getAdbDevicesModel():
+    adbNumList = getAdbDevices()
+    modelDict = dict()
+    command = "getprop ro.product.model"
+    if len(adbNumList) is not 0:
+        for num in adbNumList:
+            modelDict[num] = setAdbShell(num, command, v.DEVICE_STATUS_LOG)[0]
+        return modelDict
+    else:
+        return modelDict
+
+
+def getAdbDeviceModel(serialnum):
+    command = "getprop ro.product.model"
+    ret = setAdbShell(serialnum, command, v.DEVICE_STATUS_LOG)
+    if len(ret) is not 0:
+        return ret[0]
+    return ""
 
 
 def getAdbAndroidVersion(device, logname):
@@ -1825,6 +1851,6 @@ if __name__ == '__main__':
     v.HOST = "192.168.31.1"
     v.USR = "root"
     v.PASSWD = "admin"
-    terminal = SshCommand(v.CONNECTION_TYPE)
+    terminal = ShellCommand(v.CONNECTION_TYPE)
     ret = terminal.connect(v.HOST, v.USR, v.PASSWD)
-    print getWlanTxPower(terminal, "2g", "a")
+    print getAdbDevicesModel()

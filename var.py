@@ -1,7 +1,9 @@
 # -*- coding: utf8 -*-
 from common import *
 
-TOOL_LIST = ["General", "Memory Tracking", "Log Collection", "Test Suite"]
+VER = '3.4.1'
+
+TOOL_LIST = ["General", "Memory Tracking", "Test Suite"]
 
 # ----------------General-----------------
 
@@ -19,6 +21,8 @@ STA_COUNT = "1"
 SERIAL_PORT = ""
 BAUDRATE = 115200
 
+ANDROID_SERIAL_NUM = ''
+ANDROID_MODEL = ''
 
 """
 connection_type = 1 represent ssh
@@ -27,8 +31,6 @@ connection_type = 1 represent ssh
 """
 CONNECTION_TYPE = 1
 STA_CONNECTION_TYPE = 1
-
-VER = '3.3.5'
 
 # ----------------Memory Tracking-----------------
 
@@ -53,7 +55,6 @@ GET_MODEL = 'uci get /usr/share/xiaoqiang/xiaoqiang_version.version.HARDWARE'
 # ----------------Test Suite-----------------
 
 DUT_MODULE = 'R1D'
-STA_MODULE = 'Android'
 
 INTF_2G = 'wl1'
 INTF_5G = 'wl0'

@@ -711,7 +711,7 @@ treeThroughputApi = [
     ],
     "AP_PSK2_CHAN11_BW20_THROUGHPUT",
     [
-        "assoc2_sta_throughput_2g",
+        "assoc_sta_throughput_2g",
     ],
     "AP_PSK2_CHAN13_BW20_THROUGHPUT",
     [

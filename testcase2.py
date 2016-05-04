@@ -23,13 +23,13 @@ class AP_CLEAR_CHAN(TestCase):
             'wifiIndex': 1,
             'ssid': v.SSID,
             'encryption': 'none',
-            'channel': v.CHANNEL,
+            'channel': v.CHANNEL11,
         }
         option5g = {
             'wifiIndex': 2,
             'ssid': v.SSID_5G,
             'encryption': 'none',
-            'channel': v.CHANNEL_5G,
+            'channel': v.CHANNEL149,
         }
         api.setWifi(self.dut, self.__name__, **option2g)
         api.setWifi(self.dut, self.__name__, **option5g)
@@ -403,7 +403,7 @@ class AP_CLEAR_LOW_TXPOWER(TestCase):
             'wifiIndex': 1,
             'ssid': v.SSID,
             'encryption': 'none',
-            'channel': v.CHANNEL2,
+            'channel': v.CHANNEL1,
             'txpwr': 'min',
         }
         api.setWifi(self.dut2, self.__class__.__name__, **option2g)
@@ -446,7 +446,7 @@ class AP_CLEAR_LOW_TXPOWER(TestCase):
             'wifiIndex': 1,
             'ssid': v.SSID,
             'encryption': 'none',
-            'channel': v.CHANNEL3,
+            'channel': v.CHANNEL6,
             'txpwr': 'min',
         }
         api.setWifi(self.dut2, self.__class__.__name__, **option2g)
@@ -490,7 +490,7 @@ class AP_CLEAR_LOW_TXPOWER(TestCase):
             'wifiIndex': 1,
             'ssid': v.SSID,
             'encryption': 'none',
-            'channel': v.CHANNEL,
+            'channel': v.CHANNEL11,
             'txpwr': 'min',
         }
         api.setWifi(self.dut2, self.__class__.__name__, **option2g)
@@ -578,7 +578,7 @@ class AP_CLEAR_LOW_TXPOWER(TestCase):
             'wifiIndex': 2,
             'ssid': v.SSID_5G,
             'encryption': 'none',
-            'channel': v.CHANNEL2_5G,
+            'channel': v.CHANNEL36,
             'txpwr': 'min',
         }
         api.setWifi(self.dut2, self.__class__.__name__, **option5g)
@@ -612,7 +612,7 @@ class AP_CLEAR_LOW_TXPOWER(TestCase):
             'wifiIndex': 2,
             'ssid': v.SSID_5G,
             'encryption': 'none',
-            'channel': v.CHANNEL3_5G,
+            'channel': v.CHANNEL52,
             'txpwr': 'min',
         }
         api.setWifi(self.dut2, self.__class__.__name__, **option5g)
@@ -646,7 +646,7 @@ class AP_CLEAR_LOW_TXPOWER(TestCase):
             'wifiIndex': 2,
             'ssid': v.SSID_5G,
             'encryption': 'none',
-            'channel': v.CHANNEL_5G,
+            'channel': v.CHANNEL149,
             'txpwr': 'min',
         }
         api.setWifi(self.dut2, self.__class__.__name__, **option5g)
@@ -680,7 +680,7 @@ class AP_CLEAR_LOW_TXPOWER(TestCase):
             'wifiIndex': 2,
             'ssid': v.SSID_5G,
             'encryption': 'none',
-            'channel': v.CHANNEL4_5G,
+            'channel': v.CHANNEL165,
             'txpwr': 'min',
         }
         api.setWifi(self.dut2, self.__class__.__name__, **option5g)
@@ -821,7 +821,7 @@ class AP_CLEAR_MID_TXPOWER(TestCase):
             'wifiIndex': 1,
             'ssid': v.SSID,
             'encryption': 'none',
-            'channel': v.CHANNEL2,
+            'channel': v.CHANNEL1,
             'txpwr': 'mid',
         }
         api.setWifi(self.dut2, self.__class__.__name__, **option2g)
@@ -865,7 +865,7 @@ class AP_CLEAR_MID_TXPOWER(TestCase):
             'wifiIndex': 1,
             'ssid': v.SSID,
             'encryption': 'none',
-            'channel': v.CHANNEL3,
+            'channel': v.CHANNEL6,
             'txpwr': 'mid',
         }
         api.setWifi(self.dut2, self.__class__.__name__, **option2g)
@@ -909,7 +909,7 @@ class AP_CLEAR_MID_TXPOWER(TestCase):
             'wifiIndex': 1,
             'ssid': v.SSID,
             'encryption': 'none',
-            'channel': v.CHANNEL,
+            'channel': v.CHANNEL11,
             'txpwr': 'mid',
         }
         api.setWifi(self.dut2, self.__class__.__name__, **option2g)
@@ -996,7 +996,7 @@ class AP_CLEAR_MID_TXPOWER(TestCase):
             'wifiIndex': 2,
             'ssid': v.SSID_5G,
             'encryption': 'none',
-            'channel': v.CHANNEL2_5G,
+            'channel': v.CHANNEL36,
             'txpwr': 'mid',
         }
         api.setWifi(self.dut2, self.__class__.__name__, **option5g)
@@ -1030,7 +1030,7 @@ class AP_CLEAR_MID_TXPOWER(TestCase):
             'wifiIndex': 2,
             'ssid': v.SSID_5G,
             'encryption': 'none',
-            'channel': v.CHANNEL3_5G,
+            'channel': v.CHANNEL52,
             'txpwr': 'mid',
         }
         api.setWifi(self.dut2, self.__class__.__name__, **option5g)
@@ -1065,7 +1065,7 @@ class AP_CLEAR_MID_TXPOWER(TestCase):
             'wifiIndex': 2,
             'ssid': v.SSID_5G,
             'encryption': 'none',
-            'channel': v.CHANNEL_5G,
+            'channel': v.CHANNEL149,
             'txpwr': 'mid',
         }
         api.setWifi(self.dut2, self.__class__.__name__, **option5g)
@@ -1099,7 +1099,7 @@ class AP_CLEAR_MID_TXPOWER(TestCase):
             'wifiIndex': 2,
             'ssid': v.SSID_5G,
             'encryption': 'none',
-            'channel': v.CHANNEL4_5G,
+            'channel': v.CHANNEL165,
             'txpwr': 'mid',
         }
         api.setWifi(self.dut2, self.__class__.__name__, **option5g)
@@ -1238,7 +1238,7 @@ class AP_CLEAR_HIGH_TXPOWER(TestCase):
             'wifiIndex': 1,
             'ssid': v.SSID,
             'encryption': 'none',
-            'channel': v.CHANNEL2,
+            'channel': v.CHANNEL1,
             'txpwr': 'max',
         }
         api.setWifi(self.dut2, self.__class__.__name__, **option2g)
@@ -1281,7 +1281,7 @@ class AP_CLEAR_HIGH_TXPOWER(TestCase):
             'wifiIndex': 1,
             'ssid': v.SSID,
             'encryption': 'none',
-            'channel': v.CHANNEL3,
+            'channel': v.CHANNEL6,
             'txpwr': 'max',
         }
         api.setWifi(self.dut2, self.__class__.__name__, **option2g)
@@ -1324,7 +1324,7 @@ class AP_CLEAR_HIGH_TXPOWER(TestCase):
             'wifiIndex': 1,
             'ssid': v.SSID,
             'encryption': 'none',
-            'channel': v.CHANNEL,
+            'channel': v.CHANNEL11,
             'txpwr': 'max',
         }
         api.setWifi(self.dut2, self.__class__.__name__, **option2g)
@@ -1410,7 +1410,7 @@ class AP_CLEAR_HIGH_TXPOWER(TestCase):
             'wifiIndex': 2,
             'ssid': v.SSID_5G,
             'encryption': 'none',
-            'channel': v.CHANNEL2_5G,
+            'channel': v.CHANNEL36,
             'txpwr': 'max',
         }
         api.setWifi(self.dut2, self.__class__.__name__, **option5g)
@@ -1445,7 +1445,7 @@ class AP_CLEAR_HIGH_TXPOWER(TestCase):
             'wifiIndex': 2,
             'ssid': v.SSID_5G,
             'encryption': 'none',
-            'channel': v.CHANNEL3_5G,
+            'channel': v.CHANNEL52,
             'txpwr': 'max',
         }
         api.setWifi(self.dut2, self.__class__.__name__, **option5g)
@@ -1480,7 +1480,7 @@ class AP_CLEAR_HIGH_TXPOWER(TestCase):
             'wifiIndex': 2,
             'ssid': v.SSID_5G,
             'encryption': 'none',
-            'channel': v.CHANNEL_5G,
+            'channel': v.CHANNEL149,
             'txpwr': 'max',
         }
         api.setWifi(self.dut2, self.__class__.__name__, **option5g)
@@ -1514,7 +1514,7 @@ class AP_CLEAR_HIGH_TXPOWER(TestCase):
             'wifiIndex': 2,
             'ssid': v.SSID_5G,
             'encryption': 'none',
-            'channel': v.CHANNEL4_5G,
+            'channel': v.CHANNEL165,
             'txpwr': 'max',
         }
         api.setWifi(self.dut2, self.__class__.__name__, **option5g)
@@ -1615,13 +1615,13 @@ class AP_CLEAR_CHAN_WHITELIST(TestCase):
             'wifiIndex': 1,
             'ssid': v.SSID,
             'encryption': 'none',
-            'channel': v.CHANNEL,
+            'channel': v.CHANNEL11,
         }
         option5g = {
             'wifiIndex': 2,
             'ssid': v.SSID_5G,
             'encryption': 'none',
-            'channel': v.CHANNEL_5G,
+            'channel': v.CHANNEL149,
         }
         api.setWifi(self.dut, self.__name__, **option2g)
         api.setWifi(self.dut, self.__name__, **option5g)
@@ -1793,13 +1793,13 @@ class AP_CLEAR_CHAN_BLACKLIST(TestCase):
             'wifiIndex': 1,
             'ssid': v.SSID,
             'encryption': 'none',
-            'channel': v.CHANNEL,
+            'channel': v.CHANNEL11,
         }
         option5g = {
             'wifiIndex': 2,
             'ssid': v.SSID_5G,
             'encryption': 'none',
-            'channel': v.CHANNEL_5G,
+            'channel': v.CHANNEL149,
         }
         api.setWifi(self.dut, self.__name__, **option2g)
         api.setWifi(self.dut, self.__name__, **option5g)
@@ -1913,295 +1913,6 @@ class AP_CLEAR_CHAN_BLACKLIST(TestCase):
         self.assertFalse(res5gConn, "Association wasnot supposed to be successful which sta in blacklist.")
 
 
-class AP_CLEAR_CHAN1_36_FLOW(TestCase):
-    @classmethod
-    def setUpClass(self):
-
-        self.dut = api.HttpClient()
-        ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
-        ret2 = chkAdbDevicesCount(1)
-
-        if ret1 is False:
-            raise Exception("Http connection is failed. please check your remote settings.")
-
-        if ret2 is False:
-            raise Exception("USB devices arenot ready!")
-
-        option2g = {
-            'wifiIndex': 1,
-            'ssid': v.SSID,
-            'channel': v.CHANNEL2,
-        }
-        option5g = {
-            'wifiIndex': 2,
-            'ssid': v.SSID_5G,
-            'channel': v.CHANNEL2_5G
-        }
-
-        api.setWifi(self.dut, self.__name__, **option2g)
-        api.setWifi(self.dut, self.__name__, **option5g)
-
-    @classmethod
-    def tearDownClass(self):
-        option2g = {
-            'wifiIndex': 1,
-            'on': 0,
-        }
-        option5g = {
-            'wifiIndex': 2,
-            'on': 0
-        }
-        api.setWifi(self.dut, self.__name__, **option2g)
-        api.setWifi(self.dut, self.__name__, **option5g)
-        self.dut.close()
-
-    def assoc_clear_sta_flow_2g(self):
-
-        res2gConn = setAdbClearStaConn(v.ANDROID_SERIAL_NUM, "normal", "2g", self.__class__.__name__)
-
-        if res2gConn is True:
-            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
-            iperfOn = SetAdbIperfOn(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
-            iperfOn.start()
-            t.sleep(3.0)
-            ret = setIperfFlow(result["ip"], v.IPERF_INTERVAL, v.IPERF_TIME, self.__class__.__name__)
-            self.assertTrue(ret, "Excute iperf flow error, connection refused.")
-
-        else:
-            self.assertTrue(res2gConn, "Connecting wifi is failed.")
-
-    def assoc_clear_sta_flow_5g(self):
-
-        res2gConn = setAdbClearStaConn(v.ANDROID_SERIAL_NUM, "normal", "5g", self.__class__.__name__)
-
-        if res2gConn is True:
-            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
-            iperfOn = SetAdbIperfOn(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
-            iperfOn.start()
-            t.sleep(3.0)
-            ret = setIperfFlow(result["ip"], v.IPERF_INTERVAL, v.IPERF_TIME, self.__class__.__name__)
-            self.assertTrue(ret, "Excute iperf flow error, connection refused.")
-
-        else:
-            self.assertTrue(res2gConn, "Connecting wifi is failed.")
-
-
-class AP_CLEAR_CHAN6_52_FLOW(TestCase):
-    @classmethod
-    def setUpClass(self):
-
-        self.dut = api.HttpClient()
-        ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
-        ret2 = chkAdbDevicesCount(1)
-
-        if ret1 is False:
-            raise Exception("Http connection is failed. please check your remote settings.")
-
-        if ret2 is False:
-            raise Exception("USB devices arenot ready!")
-        option2g = {
-            'wifiIndex': 1,
-            'ssid': v.SSID,
-            'channel': v.CHANNEL3,
-        }
-        option5g = {
-            'wifiIndex': 2,
-            'ssid': v.SSID_5G,
-            'channel': v.CHANNEL3_5G
-        }
-
-        api.setWifi(self.dut, self.__name__, **option2g)
-        api.setWifi(self.dut, self.__name__, **option5g)
-
-    @classmethod
-    def tearDownClass(self):
-        option2g = {
-            'wifiIndex': 1,
-            'on': 0,
-        }
-        option5g = {
-            'wifiIndex': 2,
-            'on': 0
-        }
-        api.setWifi(self.dut, self.__name__, **option2g)
-        api.setWifi(self.dut, self.__name__, **option5g)
-        self.dut.close()
-
-    def assoc_clear_sta_flow_2g(self):
-
-        res2gConn = setAdbClearStaConn(v.ANDROID_SERIAL_NUM, "normal", "2g", self.__class__.__name__)
-
-        if res2gConn is True:
-            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
-            iperfOn = SetAdbIperfOn(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
-            iperfOn.start()
-            t.sleep(3.0)
-            ret = setIperfFlow(result["ip"], v.IPERF_INTERVAL, v.IPERF_TIME, self.__class__.__name__)
-            self.assertTrue(ret, "Excute iperf flow error, connection refused.")
-
-        else:
-            self.assertTrue(res2gConn, "Connecting wifi is failed.")
-
-    def assoc_clear_sta_flow_5g(self):
-
-        res2gConn = setAdbClearStaConn(v.ANDROID_SERIAL_NUM, "normal", "5g", self.__class__.__name__)
-
-        if res2gConn is True:
-            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
-            iperfOn = SetAdbIperfOn(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
-            iperfOn.start()
-            t.sleep(3.0)
-            ret = setIperfFlow(result["ip"], v.IPERF_INTERVAL, v.IPERF_TIME, self.__class__.__name__)
-            self.assertTrue(ret, "Excute iperf flow error, connection refused.")
-
-        else:
-            self.assertTrue(res2gConn, "Connecting wifi is failed.")
-
-
-class AP_CLEAR_CHAN11_149_FLOW(TestCase):
-    @classmethod
-    def setUpClass(self):
-
-        self.dut = api.HttpClient()
-        ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
-        ret2 = chkAdbDevicesCount(1)
-
-        if ret1 is False:
-            raise Exception("Http connection is failed. please check your remote settings.")
-
-        if ret2 is False:
-            raise Exception("USB devices arenot ready!")
-        option2g = {
-            'wifiIndex': 1,
-            'ssid': v.SSID,
-            'channel': v.CHANNEL,
-        }
-        option5g = {
-            'wifiIndex': 2,
-            'ssid': v.SSID_5G,
-            'channel': v.CHANNEL_5G
-        }
-
-        api.setWifi(self.dut, self.__name__, **option2g)
-        api.setWifi(self.dut, self.__name__, **option5g)
-
-    @classmethod
-    def tearDownClass(self):
-        option2g = {
-            'wifiIndex': 1,
-            'on': 0,
-        }
-        option5g = {
-            'wifiIndex': 2,
-            'on': 0
-        }
-        api.setWifi(self.dut, self.__name__, **option2g)
-        api.setWifi(self.dut, self.__name__, **option5g)
-        self.dut.close()
-
-    def assoc_clear_sta_flow_2g(self):
-
-        res2gConn = setAdbClearStaConn(v.ANDROID_SERIAL_NUM, "normal", "2g", self.__class__.__name__)
-
-        if res2gConn is True:
-            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
-            iperfOn = SetAdbIperfOn(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
-            iperfOn.start()
-            t.sleep(3.0)
-            ret = setIperfFlow(result["ip"], v.IPERF_INTERVAL, v.IPERF_TIME, self.__class__.__name__)
-            self.assertTrue(ret, "Excute iperf flow error, connection refused.")
-
-        else:
-            self.assertTrue(res2gConn, "Connecting wifi is failed.")
-
-    def assoc_clear_sta_flow_5g(self):
-
-        res2gConn = setAdbClearStaConn(v.ANDROID_SERIAL_NUM, "normal", "5g", self.__class__.__name__)
-
-        if res2gConn is True:
-            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
-            iperfOn = SetAdbIperfOn(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
-            iperfOn.start()
-            t.sleep(3.0)
-            ret = setIperfFlow(result["ip"], v.IPERF_INTERVAL, v.IPERF_TIME, self.__class__.__name__)
-            self.assertTrue(ret, "Excute iperf flow error, connection refused.")
-
-        else:
-            self.assertTrue(res2gConn, "Connecting wifi is failed.")
-
-
-class AP_CLEAR_CHAN13_165_FLOW(TestCase):
-    @classmethod
-    def setUpClass(self):
-
-        self.dut = api.HttpClient()
-        ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
-        ret2 = chkAdbDevicesCount(1)
-
-        if ret1 is False:
-            raise Exception("Http connection is failed. please check your remote settings.")
-
-        if ret2 is False:
-            raise Exception("USB devices arenot ready!")
-        option2g = {
-            'wifiIndex': 1,
-            'ssid': v.SSID,
-            'channel': v.CHANNEL4,
-        }
-        option5g = {
-            'wifiIndex': 2,
-            'ssid': v.SSID_5G,
-            'channel': v.CHANNEL4_5G
-        }
-
-        api.setWifi(self.dut, self.__name__, **option2g)
-        api.setWifi(self.dut, self.__name__, **option5g)
-
-    @classmethod
-    def tearDownClass(self):
-        option2g = {
-            'wifiIndex': 1,
-            'on': 0,
-        }
-        option5g = {
-            'wifiIndex': 2,
-            'on': 0
-        }
-        api.setWifi(self.dut, self.__name__, **option2g)
-        api.setWifi(self.dut, self.__name__, **option5g)
-        self.dut.close()
-
-    def assoc_clear_sta_flow_2g(self):
-
-        res2gConn = setAdbClearStaConn(v.ANDROID_SERIAL_NUM, "normal", "2g", self.__class__.__name__)
-
-        if res2gConn is True:
-            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
-            iperfOn = SetAdbIperfOn(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
-            iperfOn.start()
-            t.sleep(3.0)
-            ret = setIperfFlow(result["ip"], v.IPERF_INTERVAL, v.IPERF_TIME, self.__class__.__name__)
-            self.assertTrue(ret, "Excute iperf flow error, connection refused.")
-
-        else:
-            self.assertTrue(res2gConn, "Connecting wifi is failed.")
-
-    def assoc_clear_sta_flow_5g(self):
-
-        res2gConn = setAdbClearStaConn(v.ANDROID_SERIAL_NUM, "normal", "5g", self.__class__.__name__)
-
-        if res2gConn is True:
-            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
-            iperfOn = SetAdbIperfOn(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
-            iperfOn.start()
-            t.sleep(3.0)
-            ret = setIperfFlow(result["ip"], v.IPERF_INTERVAL, v.IPERF_TIME, self.__class__.__name__)
-            self.assertTrue(ret, "Excute iperf flow error, connection refused.")
-
-        else:
-            self.assertTrue(res2gConn, "Connecting wifi is failed.")
-
-
 class AP_CLEAR_CHAN_REPEAT(TestCase):
     @classmethod
     def setUpClass(self):
@@ -2218,12 +1929,12 @@ class AP_CLEAR_CHAN_REPEAT(TestCase):
         option2g = {
             'wifiIndex': 1,
             'ssid': v.SSID,
-            'channel': v.CHANNEL,
+            'channel': v.CHANNEL11,
         }
         option5g = {
             'wifiIndex': 2,
             'ssid': v.SSID_5G,
-            'channel': v.CHANNEL_5G
+            'channel': v.CHANNEL149
         }
 
         api.setWifi(self.dut, self.__name__, **option2g)
@@ -2271,14 +1982,14 @@ class AP_PSK2_CHAN(TestCase):
         option2g = {
             'wifiIndex': 1,
             'ssid': v.SSID,
-            'channel': v.CHANNEL,
+            'channel': v.CHANNEL11,
             'encryption': 'psk2',
             'pwd': v.KEY
         }
         option5g = {
             'wifiIndex': 2,
             'ssid': v.SSID_5G,
-            'channel': v.CHANNEL_5G,
+            'channel': v.CHANNEL149,
             'encryption': 'psk2',
             'pwd': v.KEY
         }
@@ -2331,310 +2042,6 @@ class AP_PSK2_CHAN(TestCase):
             self.assertTrue(res5gConn, "Association wasnot successful.")
 
 
-class AP_PSK2_CHAN1_36_FLOW(TestCase):
-    @classmethod
-    def setUpClass(self):
-
-        self.dut = api.HttpClient()
-        ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
-        ret2 = chkAdbDevicesCount(1)
-
-        if ret1 is False:
-            raise Exception("Http connection is failed. please check your remote settings.")
-
-        if ret2 is False:
-            raise Exception("USB devices arenot ready!")
-        option2g = {
-            'wifiIndex': 1,
-            'ssid': v.SSID,
-            'channel': v.CHANNEL2,
-            'encryption': 'psk2',
-            'pwd': v.KEY
-        }
-        option5g = {
-            'wifiIndex': 2,
-            'ssid': v.SSID_5G,
-            'channel': v.CHANNEL2_5G,
-            'encryption': 'psk2',
-            'pwd': v.KEY
-        }
-
-        api.setWifi(self.dut, self.__name__, **option2g)
-        api.setWifi(self.dut, self.__name__, **option5g)
-
-    @classmethod
-    def tearDownClass(self):
-        option2g = {
-            'wifiIndex': 1,
-            'on': 0,
-        }
-        option5g = {
-            'wifiIndex': 2,
-            'on': 0
-        }
-        api.setWifi(self.dut, self.__name__, **option2g)
-        api.setWifi(self.dut, self.__name__, **option5g)
-        self.dut.close()
-
-    def assoc_psk2_sta_flow_2g(self):
-
-        res2gConn = setAdbPsk2StaConn(v.ANDROID_SERIAL_NUM, "normal", "2g", self.__class__.__name__)
-
-        if res2gConn is True:
-            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
-            iperfOn = SetAdbIperfOn(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
-            iperfOn.start()
-            t.sleep(3.0)
-            ret = setIperfFlow(result["ip"], v.IPERF_INTERVAL, v.IPERF_TIME, self.__class__.__name__)
-            self.assertTrue(ret, "Excute iperf flow error, connection refused.")
-
-        else:
-            self.assertTrue(res2gConn, "Connecting wifi is failed.")
-
-    def assoc_psk2_sta_flow_5g(self):
-
-        res2gConn = setAdbPsk2StaConn(v.ANDROID_SERIAL_NUM, "normal", "5g", self.__class__.__name__)
-
-        if res2gConn is True:
-            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
-            iperfOn = SetAdbIperfOn(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
-            iperfOn.start()
-            t.sleep(3.0)
-            ret = setIperfFlow(result["ip"], v.IPERF_INTERVAL, v.IPERF_TIME, self.__class__.__name__)
-            self.assertTrue(ret, "Excute iperf flow error, connection refused.")
-
-        else:
-            self.assertTrue(res2gConn, "Connecting wifi is failed.")
-
-
-class AP_PSK2_CHAN6_52_FLOW(TestCase):
-    @classmethod
-    def setUpClass(self):
-
-        self.dut = api.HttpClient()
-        ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
-        ret2 = chkAdbDevicesCount(1)
-
-        if ret1 is False:
-            raise Exception("Http connection is failed. please check your remote settings.")
-
-        if ret2 is False:
-            raise Exception("USB devices arenot ready!")
-        option2g = {
-            'wifiIndex': 1,
-            'ssid': v.SSID,
-            'channel': v.CHANNEL3,
-            'encryption': 'psk2',
-            'pwd': v.KEY
-        }
-        option5g = {
-            'wifiIndex': 2,
-            'ssid': v.SSID_5G,
-            'channel': v.CHANNEL3_5G,
-            'encryption': 'psk2',
-            'pwd': v.KEY
-        }
-
-        api.setWifi(self.dut, self.__name__, **option2g)
-        api.setWifi(self.dut, self.__name__, **option5g)
-
-    @classmethod
-    def tearDownClass(self):
-        option2g = {
-            'wifiIndex': 1,
-            'on': 0,
-        }
-        option5g = {
-            'wifiIndex': 2,
-            'on': 0
-        }
-        api.setWifi(self.dut, self.__name__, **option2g)
-        api.setWifi(self.dut, self.__name__, **option5g)
-        self.dut.close()
-
-    def assoc_psk2_sta_flow_2g(self):
-
-        res2gConn = setAdbPsk2StaConn(v.ANDROID_SERIAL_NUM, "normal", "2g", self.__class__.__name__)
-
-        if res2gConn is True:
-            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
-            iperfOn = SetAdbIperfOn(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
-            iperfOn.start()
-            t.sleep(3.0)
-            ret = setIperfFlow(result["ip"], v.IPERF_INTERVAL, v.IPERF_TIME, self.__class__.__name__)
-            self.assertTrue(ret, "Excute iperf flow error, connection refused.")
-
-        else:
-            self.assertTrue(res2gConn, "Connecting wifi is failed.")
-
-    def assoc_psk2_sta_flow_5g(self):
-
-        res2gConn = setAdbPsk2StaConn(v.ANDROID_SERIAL_NUM, "normal", "5g", self.__class__.__name__)
-
-        if res2gConn is True:
-            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
-            iperfOn = SetAdbIperfOn(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
-            iperfOn.start()
-            t.sleep(3.0)
-            ret = setIperfFlow(result["ip"], v.IPERF_INTERVAL, v.IPERF_TIME, self.__class__.__name__)
-            self.assertTrue(ret, "Excute iperf flow error, connection refused.")
-
-        else:
-            self.assertTrue(res2gConn, "Connecting wifi is failed.")
-
-
-class AP_PSK2_CHAN11_149_FLOW(TestCase):
-    @classmethod
-    def setUpClass(self):
-
-        self.dut = api.HttpClient()
-        ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
-        ret2 = chkAdbDevicesCount(1)
-
-        if ret1 is False:
-            raise Exception("Http connection is failed. please check your remote settings.")
-
-        if ret2 is False:
-            raise Exception("USB devices arenot ready!")
-        option2g = {
-            'wifiIndex': 1,
-            'ssid': v.SSID,
-            'channel': v.CHANNEL,
-            'encryption': 'psk2',
-            'pwd': v.KEY
-        }
-        option5g = {
-            'wifiIndex': 2,
-            'ssid': v.SSID_5G,
-            'channel': v.CHANNEL_5G,
-            'encryption': 'psk2',
-            'pwd': v.KEY
-        }
-
-        api.setWifi(self.dut, self.__name__, **option2g)
-        api.setWifi(self.dut, self.__name__, **option5g)
-
-    @classmethod
-    def tearDownClass(self):
-        option2g = {
-            'wifiIndex': 1,
-            'on': 0,
-        }
-        option5g = {
-            'wifiIndex': 2,
-            'on': 0
-        }
-        api.setWifi(self.dut, self.__name__, **option2g)
-        api.setWifi(self.dut, self.__name__, **option5g)
-        self.dut.close()
-
-    def assoc_psk2_sta_flow_2g(self):
-
-        res2gConn = setAdbPsk2StaConn(v.ANDROID_SERIAL_NUM, "normal", "2g", self.__class__.__name__)
-
-        if res2gConn is True:
-            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
-            iperfOn = SetAdbIperfOn(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
-            iperfOn.start()
-            t.sleep(3.0)
-            ret = setIperfFlow(result["ip"], v.IPERF_INTERVAL, v.IPERF_TIME, self.__class__.__name__)
-            self.assertTrue(ret, "Excute iperf flow error, connection refused.")
-
-        else:
-            self.assertTrue(res2gConn, "Connecting wifi is failed.")
-
-    def assoc_psk2_sta_flow_5g(self):
-
-        res2gConn = setAdbPsk2StaConn(v.ANDROID_SERIAL_NUM, "normal", "5g", self.__class__.__name__)
-
-        if res2gConn is True:
-            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
-            iperfOn = SetAdbIperfOn(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
-            iperfOn.start()
-            t.sleep(3.0)
-            ret = setIperfFlow(result["ip"], v.IPERF_INTERVAL, v.IPERF_TIME, self.__class__.__name__)
-            self.assertTrue(ret, "Excute iperf flow error, connection refused.")
-
-        else:
-            self.assertTrue(res2gConn, "Connecting wifi is failed.")
-
-
-class AP_PSK2_CHAN13_165_FLOW(TestCase):
-    @classmethod
-    def setUpClass(self):
-
-        self.dut = api.HttpClient()
-        ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
-        ret2 = chkAdbDevicesCount(1)
-
-        if ret1 is False:
-            raise Exception("Http connection is failed. please check your remote settings.")
-
-        if ret2 is False:
-            raise Exception("USB devices arenot ready!")
-        option2g = {
-            'wifiIndex': 1,
-            'ssid': v.SSID,
-            'channel': v.CHANNEL4,
-            'encryption': 'psk2',
-            'pwd': v.KEY
-        }
-        option5g = {
-            'wifiIndex': 2,
-            'ssid': v.SSID_5G,
-            'channel': v.CHANNEL4_5G,
-            'encryption': 'psk2',
-            'pwd': v.KEY
-        }
-
-        api.setWifi(self.dut, self.__name__, **option2g)
-        api.setWifi(self.dut, self.__name__, **option5g)
-
-    @classmethod
-    def tearDownClass(self):
-        option2g = {
-            'wifiIndex': 1,
-            'on': 0,
-        }
-        option5g = {
-            'wifiIndex': 2,
-            'on': 0
-        }
-        api.setWifi(self.dut, self.__name__, **option2g)
-        api.setWifi(self.dut, self.__name__, **option5g)
-        self.dut.close()
-
-    def assoc_psk2_sta_flow_2g(self):
-
-        res2gConn = setAdbPsk2StaConn(v.ANDROID_SERIAL_NUM, "normal", "2g", self.__class__.__name__)
-
-        if res2gConn is True:
-            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
-            iperfOn = SetAdbIperfOn(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
-            iperfOn.start()
-            t.sleep(3.0)
-            ret = setIperfFlow(result["ip"], v.IPERF_INTERVAL, v.IPERF_TIME, self.__class__.__name__)
-            self.assertTrue(ret, "Excute iperf flow error, connection refused.")
-
-        else:
-            self.assertTrue(res2gConn, "Connecting wifi is failed.")
-
-    def assoc_psk2_sta_flow_5g(self):
-
-        res2gConn = setAdbPsk2StaConn(v.ANDROID_SERIAL_NUM, "normal", "5g", self.__class__.__name__)
-
-        if res2gConn is True:
-            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
-            iperfOn = SetAdbIperfOn(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
-            iperfOn.start()
-            t.sleep(3.0)
-            ret = setIperfFlow(result["ip"], v.IPERF_INTERVAL, v.IPERF_TIME, self.__class__.__name__)
-            self.assertTrue(ret, "Excute iperf flow error, connection refused.")
-
-        else:
-            self.assertTrue(res2gConn, "Connecting wifi is failed.")
-
-
 class AP_PSK2_CHAN_REPEAT(TestCase):
     @classmethod
     def setUpClass(self):
@@ -2651,14 +2058,14 @@ class AP_PSK2_CHAN_REPEAT(TestCase):
         option2g = {
             'wifiIndex': 1,
             'ssid': v.SSID,
-            'channel': v.CHANNEL,
+            'channel': v.CHANNEL11,
             'encryption': 'psk2',
             'pwd': v.KEY
         }
         option5g = {
             'wifiIndex': 2,
             'ssid': v.SSID_5G,
-            'channel': v.CHANNEL_5G,
+            'channel': v.CHANNEL149,
             'encryption': 'psk2',
             'pwd': v.KEY
         }
@@ -2708,14 +2115,14 @@ class AP_MIXEDPSK_CHAN(TestCase):
         option2g = {
             'wifiIndex': 1,
             'ssid': v.SSID,
-            'channel': v.CHANNEL,
+            'channel': v.CHANNEL11,
             'encryption': 'mixed-psk',
             'pwd': v.KEY
         }
         option5g = {
             'wifiIndex': 2,
             'ssid': v.SSID_5G,
-            'channel': v.CHANNEL_5G,
+            'channel': v.CHANNEL149,
             'encryption': 'mixed-psk',
             'pwd': v.KEY
         }
@@ -2873,7 +2280,7 @@ class AP_MIXEDPSK_CHAN_BW80(TestCase):
         option5g = {
             'wifiIndex': 2,
             'ssid': v.SSID_5G,
-            'channel': v.CHANNEL_5G,
+            'channel': v.CHANNEL149,
             'encryption': 'mixed-psk',
             'pwd': v.KEY,
             'bandwidth': '80',
@@ -2966,7 +2373,7 @@ class AP_MIXEDPSK_CHAN_BW40(TestCase):
         option2g = {
             'wifiIndex': 1,
             'ssid': v.SSID,
-            'channel': v.CHANNEL,
+            'channel': v.CHANNEL11,
             'encryption': 'mixed-psk',
             'pwd': v.KEY,
             'bandwidth': '40'
@@ -2974,7 +2381,7 @@ class AP_MIXEDPSK_CHAN_BW40(TestCase):
         option5g = {
             'wifiIndex': 2,
             'ssid': v.SSID_5G,
-            'channel': v.CHANNEL_5G,
+            'channel': v.CHANNEL149,
             'encryption': 'mixed-psk',
             'pwd': v.KEY,
             'bandwidth': '40'
@@ -3133,7 +2540,7 @@ class AP_MIXEDPSK_CHAN_BW20(TestCase):
         option2g = {
             'wifiIndex': 1,
             'ssid': v.SSID,
-            'channel': v.CHANNEL,
+            'channel': v.CHANNEL11,
             'encryption': 'mixed-psk',
             'pwd': v.KEY,
             'bandwidth': '20'
@@ -3141,7 +2548,7 @@ class AP_MIXEDPSK_CHAN_BW20(TestCase):
         option5g = {
             'wifiIndex': 2,
             'ssid': v.SSID_5G,
-            'channel': v.CHANNEL_5G,
+            'channel': v.CHANNEL149,
             'encryption': 'mixed-psk',
             'pwd': v.KEY,
             'bandwidth': '20'
@@ -3301,14 +2708,14 @@ class AP_MIXEDPSK_CHAN_SSIDSPEC(TestCase):
         option2g = {
             'wifiIndex': 1,
             'ssid': v.SPECIAL_SSID,
-            'channel': v.CHANNEL,
+            'channel': v.CHANNEL11,
             'encryption': 'mixed-psk',
             'pwd': v.KEY
         }
         option5g = {
             'wifiIndex': 2,
             'ssid': v.SPECIAL_SSID_5G,
-            'channel': v.CHANNEL_5G,
+            'channel': v.CHANNEL149,
             'encryption': 'mixed-psk',
             'pwd': v.KEY
         }
@@ -3464,14 +2871,14 @@ class AP_MIXEDPSK_CHAN_KEYSPEC(TestCase):
         option2g = {
             'wifiIndex': 1,
             'ssid': v.SSID,
-            'channel': v.CHANNEL,
+            'channel': v.CHANNEL11,
             'encryption': 'mixed-psk',
             'pwd': v.SPECIAL_KEY
         }
         option5g = {
             'wifiIndex': 2,
             'ssid': v.SSID_5G,
-            'channel': v.CHANNEL_5G,
+            'channel': v.CHANNEL149,
             'encryption': 'mixed-psk',
             'pwd': v.SPECIAL_KEY
         }
@@ -3630,14 +3037,14 @@ class AP_MIXEDPSK_CHAN_SSIDCHINESE(TestCase):
         option2g = {
             'wifiIndex': 1,
             'ssid': v.CHINESE_SSID,
-            'channel': v.CHANNEL,
+            'channel': v.CHANNEL11,
             'encryption': 'mixed-psk',
             'pwd': v.KEY
         }
         option5g = {
             'wifiIndex': 2,
             'ssid': v.CHINESE_SSID_5G,
-            'channel': v.CHANNEL_5G,
+            'channel': v.CHANNEL149,
             'encryption': 'mixed-psk',
             'pwd': v.KEY
         }
@@ -3777,670 +3184,6 @@ class AP_MIXEDPSK_CHAN_SSIDCHINESE(TestCase):
             self.assertTrue(res5gConn, "Association wasnot successful.")
 
 
-class AP_MIXEDPSK_CHAN1_36_FLOW(TestCase):
-    @classmethod
-    def setUpClass(self):
-
-        self.dut = api.HttpClient()
-        ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
-        ret2 = chkAdbDevicesCount(1)
-
-        if ret1 is False:
-            raise Exception("Http connection is failed. please check your remote settings.")
-
-        if ret2 is False:
-            raise Exception("USB devices arenot ready!")
-        option2g = {
-            'wifiIndex': 1,
-            'ssid': v.SSID,
-            'channel': v.CHANNEL2,
-            'encryption': 'mixed-psk',
-            'pwd': v.KEY
-        }
-        option5g = {
-            'wifiIndex': 2,
-            'ssid': v.SSID_5G,
-            'channel': v.CHANNEL2_5G,
-            'encryption': 'mixed-psk',
-            'pwd': v.KEY
-        }
-
-        api.setWifi(self.dut, self.__name__, **option2g)
-        api.setWifi(self.dut, self.__name__, **option5g)
-
-    @classmethod
-    def tearDownClass(self):
-        option2g = {
-            'wifiIndex': 1,
-            'on': 0,
-        }
-        option5g = {
-            'wifiIndex': 2,
-            'on': 0
-        }
-        api.setWifi(self.dut, self.__name__, **option2g)
-        api.setWifi(self.dut, self.__name__, **option5g)
-        self.dut.close()
-
-    def assoc_psk2_sta_flow_2g(self):
-
-        res2gConn = setAdbPsk2StaConn(v.ANDROID_SERIAL_NUM, "normal", "2g", self.__class__.__name__)
-
-        if res2gConn is True:
-            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
-            iperfOn = SetAdbIperfOn(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
-            iperfOn.start()
-            t.sleep(3.0)
-            ret = setIperfFlow(result["ip"], v.IPERF_INTERVAL, v.IPERF_TIME, self.__class__.__name__)
-            self.assertTrue(ret, "Excute iperf flow error, connection refused.")
-
-        else:
-            self.assertTrue(res2gConn, "Connecting wifi is failed.")
-
-    def assoc_psk2_sta_flow_5g(self):
-
-        res2gConn = setAdbPsk2StaConn(v.ANDROID_SERIAL_NUM, "normal", "5g", self.__class__.__name__)
-
-        if res2gConn is True:
-            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
-            iperfOn = SetAdbIperfOn(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
-            iperfOn.start()
-            t.sleep(3.0)
-            ret = setIperfFlow(result["ip"], v.IPERF_INTERVAL, v.IPERF_TIME, self.__class__.__name__)
-            self.assertTrue(ret, "Excute iperf flow error, connection refused.")
-
-        else:
-            self.assertTrue(res2gConn, "Connecting wifi is failed.")
-
-    def assoc_psk_sta_flow_2g(self):
-
-        res2gConn = setAdbPskStaConn(v.ANDROID_SERIAL_NUM, "normal", "2g", self.__class__.__name__)
-
-        if res2gConn is True:
-            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
-            iperfOn = SetAdbIperfOn(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
-            iperfOn.start()
-            t.sleep(3.0)
-            ret = setIperfFlow(result["ip"], v.IPERF_INTERVAL, v.IPERF_TIME, self.__class__.__name__)
-            self.assertTrue(ret, "Excute iperf flow error, connection refused.")
-
-        else:
-            self.assertTrue(res2gConn, "Connecting wifi is failed.")
-
-    def assoc_psk_sta_flow_5g(self):
-
-        res2gConn = setAdbPskStaConn(v.ANDROID_SERIAL_NUM, "normal", "5g", self.__class__.__name__)
-
-        if res2gConn is True:
-            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
-            iperfOn = SetAdbIperfOn(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
-            iperfOn.start()
-            t.sleep(3.0)
-            ret = setIperfFlow(result["ip"], v.IPERF_INTERVAL, v.IPERF_TIME, self.__class__.__name__)
-            self.assertTrue(ret, "Excute iperf flow error, connection refused.")
-
-        else:
-            self.assertTrue(res2gConn, "Connecting wifi is failed.")
-
-    def assoc_tkippsk2_sta_flow_2g(self):
-
-        res2gConn = setAdbTkipPsk2StaConn(v.ANDROID_SERIAL_NUM, "normal", "2g", self.__class__.__name__)
-
-        if res2gConn is True:
-            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
-            iperfOn = SetAdbIperfOn(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
-            iperfOn.start()
-            t.sleep(3.0)
-            ret = setIperfFlow(result["ip"], v.IPERF_INTERVAL, v.IPERF_TIME, self.__class__.__name__)
-            self.assertTrue(ret, "Excute iperf flow error, connection refused.")
-
-        else:
-            self.assertTrue(res2gConn, "Connecting wifi is failed.")
-
-    def assoc_tkippsk2_sta_flow_5g(self):
-
-        res2gConn = setAdbTkipPsk2StaConn(v.ANDROID_SERIAL_NUM, "normal", "5g", self.__class__.__name__)
-
-        if res2gConn is True:
-            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
-            iperfOn = SetAdbIperfOn(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
-            iperfOn.start()
-            t.sleep(3.0)
-            ret = setIperfFlow(result["ip"], v.IPERF_INTERVAL, v.IPERF_TIME, self.__class__.__name__)
-            self.assertTrue(ret, "Excute iperf flow error, connection refused.")
-
-        else:
-            self.assertTrue(res2gConn, "Connecting wifi is failed.")
-
-    def assoc_tkippsk_sta_flow_2g(self):
-
-        res2gConn = setAdbTkipPskStaConn(v.ANDROID_SERIAL_NUM, "normal", "2g", self.__class__.__name__)
-
-        if res2gConn is True:
-            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
-            iperfOn = SetAdbIperfOn(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
-            iperfOn.start()
-            t.sleep(3.0)
-            ret = setIperfFlow(result["ip"], v.IPERF_INTERVAL, v.IPERF_TIME, self.__class__.__name__)
-            self.assertTrue(ret, "Excute iperf flow error, connection refused.")
-
-        else:
-            self.assertTrue(res2gConn, "Connecting wifi is failed.")
-
-    def assoc_tkippsk_sta_flow_5g(self):
-
-        res2gConn = setAdbTkipPskStaConn(v.ANDROID_SERIAL_NUM, "normal", "5g", self.__class__.__name__)
-
-        if res2gConn is True:
-            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
-            iperfOn = SetAdbIperfOn(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
-            iperfOn.start()
-            t.sleep(3.0)
-            ret = setIperfFlow(result["ip"], v.IPERF_INTERVAL, v.IPERF_TIME, self.__class__.__name__)
-            self.assertTrue(ret, "Excute iperf flow error, connection refused.")
-
-        else:
-            self.assertTrue(res2gConn, "Connecting wifi is failed.")
-
-
-class AP_MIXEDPSK_CHAN6_52_FLOW(TestCase):
-    @classmethod
-    def setUpClass(self):
-
-        self.dut = api.HttpClient()
-        ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
-        ret2 = chkAdbDevicesCount(1)
-
-        if ret1 is False:
-            raise Exception("Http connection is failed. please check your remote settings.")
-
-        if ret2 is False:
-            raise Exception("USB devices arenot ready!")
-        option2g = {
-            'wifiIndex': 1,
-            'ssid': v.SSID,
-            'channel': v.CHANNEL3,
-            'encryption': 'mixed-psk',
-            'pwd': v.KEY
-        }
-        option5g = {
-            'wifiIndex': 2,
-            'ssid': v.SSID_5G,
-            'channel': v.CHANNEL3_5G,
-            'encryption': 'mixed-psk',
-            'pwd': v.KEY
-        }
-
-        api.setWifi(self.dut, self.__name__, **option2g)
-        api.setWifi(self.dut, self.__name__, **option5g)
-
-    @classmethod
-    def tearDownClass(self):
-        option2g = {
-            'wifiIndex': 1,
-            'on': 0,
-        }
-        option5g = {
-            'wifiIndex': 2,
-            'on': 0
-        }
-        api.setWifi(self.dut, self.__name__, **option2g)
-        api.setWifi(self.dut, self.__name__, **option5g)
-        self.dut.close()
-
-    def assoc_psk2_sta_flow_2g(self):
-
-        res2gConn = setAdbPsk2StaConn(v.ANDROID_SERIAL_NUM, "normal", "2g", self.__class__.__name__)
-
-        if res2gConn is True:
-            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
-            iperfOn = SetAdbIperfOn(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
-            iperfOn.start()
-            t.sleep(3.0)
-            ret = setIperfFlow(result["ip"], v.IPERF_INTERVAL, v.IPERF_TIME, self.__class__.__name__)
-            self.assertTrue(ret, "Excute iperf flow error, connection refused.")
-
-        else:
-            self.assertTrue(res2gConn, "Connecting wifi is failed.")
-
-    def assoc_psk2_sta_flow_5g(self):
-
-        res2gConn = setAdbPsk2StaConn(v.ANDROID_SERIAL_NUM, "normal", "5g", self.__class__.__name__)
-
-        if res2gConn is True:
-            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
-            iperfOn = SetAdbIperfOn(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
-            iperfOn.start()
-            t.sleep(3.0)
-            ret = setIperfFlow(result["ip"], v.IPERF_INTERVAL, v.IPERF_TIME, self.__class__.__name__)
-            self.assertTrue(ret, "Excute iperf flow error, connection refused.")
-
-        else:
-            self.assertTrue(res2gConn, "Connecting wifi is failed.")
-
-    def assoc_psk_sta_flow_2g(self):
-
-        res2gConn = setAdbPskStaConn(v.ANDROID_SERIAL_NUM, "normal", "2g", self.__class__.__name__)
-
-        if res2gConn is True:
-            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
-            iperfOn = SetAdbIperfOn(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
-            iperfOn.start()
-            t.sleep(3.0)
-            ret = setIperfFlow(result["ip"], v.IPERF_INTERVAL, v.IPERF_TIME, self.__class__.__name__)
-            self.assertTrue(ret, "Excute iperf flow error, connection refused.")
-
-        else:
-            self.assertTrue(res2gConn, "Connecting wifi is failed.")
-
-    def assoc_psk_sta_flow_5g(self):
-
-        res2gConn = setAdbPskStaConn(v.ANDROID_SERIAL_NUM, "normal", "5g", self.__class__.__name__)
-
-        if res2gConn is True:
-            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
-            iperfOn = SetAdbIperfOn(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
-            iperfOn.start()
-            t.sleep(3.0)
-            ret = setIperfFlow(result["ip"], v.IPERF_INTERVAL, v.IPERF_TIME, self.__class__.__name__)
-            self.assertTrue(ret, "Excute iperf flow error, connection refused.")
-
-        else:
-            self.assertTrue(res2gConn, "Connecting wifi is failed.")
-
-    def assoc_tkippsk2_sta_flow_2g(self):
-
-        res2gConn = setAdbTkipPsk2StaConn(v.ANDROID_SERIAL_NUM, "normal", "2g", self.__class__.__name__)
-
-        if res2gConn is True:
-            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
-            iperfOn = SetAdbIperfOn(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
-            iperfOn.start()
-            t.sleep(3.0)
-            ret = setIperfFlow(result["ip"], v.IPERF_INTERVAL, v.IPERF_TIME, self.__class__.__name__)
-            self.assertTrue(ret, "Excute iperf flow error, connection refused.")
-
-        else:
-            self.assertTrue(res2gConn, "Connecting wifi is failed.")
-
-    def assoc_tkippsk2_sta_flow_5g(self):
-
-        res2gConn = setAdbTkipPsk2StaConn(v.ANDROID_SERIAL_NUM, "normal", "5g", self.__class__.__name__)
-
-        if res2gConn is True:
-            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
-            iperfOn = SetAdbIperfOn(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
-            iperfOn.start()
-            t.sleep(3.0)
-            ret = setIperfFlow(result["ip"], v.IPERF_INTERVAL, v.IPERF_TIME, self.__class__.__name__)
-            self.assertTrue(ret, "Excute iperf flow error, connection refused.")
-
-        else:
-            self.assertTrue(res2gConn, "Connecting wifi is failed.")
-
-    def assoc_tkippsk_sta_flow_2g(self):
-
-        res2gConn = setAdbTkipPskStaConn(v.ANDROID_SERIAL_NUM, "normal", "2g", self.__class__.__name__)
-
-        if res2gConn is True:
-            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
-            iperfOn = SetAdbIperfOn(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
-            iperfOn.start()
-            t.sleep(3.0)
-            ret = setIperfFlow(result["ip"], v.IPERF_INTERVAL, v.IPERF_TIME, self.__class__.__name__)
-            self.assertTrue(ret, "Excute iperf flow error, connection refused.")
-
-        else:
-            self.assertTrue(res2gConn, "Connecting wifi is failed.")
-
-    def assoc_tkippsk_sta_flow_5g(self):
-
-        res2gConn = setAdbTkipPskStaConn(v.ANDROID_SERIAL_NUM, "normal", "5g", self.__class__.__name__)
-
-        if res2gConn is True:
-            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
-            iperfOn = SetAdbIperfOn(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
-            iperfOn.start()
-            t.sleep(3.0)
-            ret = setIperfFlow(result["ip"], v.IPERF_INTERVAL, v.IPERF_TIME, self.__class__.__name__)
-            self.assertTrue(ret, "Excute iperf flow error, connection refused.")
-
-        else:
-            self.assertTrue(res2gConn, "Connecting wifi is failed.")
-
-
-class AP_MIXEDPSK_CHAN11_149_FLOW(TestCase):
-    @classmethod
-    def setUpClass(self):
-
-        self.dut = api.HttpClient()
-        ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
-        ret2 = chkAdbDevicesCount(1)
-
-        if ret1 is False:
-            raise Exception("Http connection is failed. please check your remote settings.")
-
-        if ret2 is False:
-            raise Exception("USB devices arenot ready!")
-        option2g = {
-            'wifiIndex': 1,
-            'ssid': v.SSID,
-            'channel': v.CHANNEL,
-            'encryption': 'mixed-psk',
-            'pwd': v.KEY
-        }
-        option5g = {
-            'wifiIndex': 2,
-            'ssid': v.SSID_5G,
-            'channel': v.CHANNEL_5G,
-            'encryption': 'mixed-psk',
-            'pwd': v.KEY
-        }
-
-        api.setWifi(self.dut, self.__name__, **option2g)
-        api.setWifi(self.dut, self.__name__, **option5g)
-
-    @classmethod
-    def tearDownClass(self):
-        option2g = {
-            'wifiIndex': 1,
-            'on': 0,
-        }
-        option5g = {
-            'wifiIndex': 2,
-            'on': 0
-        }
-        api.setWifi(self.dut, self.__name__, **option2g)
-        api.setWifi(self.dut, self.__name__, **option5g)
-        self.dut.close()
-
-    def assoc_psk2_sta_flow_2g(self):
-
-        res2gConn = setAdbPsk2StaConn(v.ANDROID_SERIAL_NUM, "normal", "2g", self.__class__.__name__)
-
-        if res2gConn is True:
-            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
-            iperfOn = SetAdbIperfOn(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
-            iperfOn.start()
-            t.sleep(3.0)
-            ret = setIperfFlow(result["ip"], v.IPERF_INTERVAL, v.IPERF_TIME, self.__class__.__name__)
-            self.assertTrue(ret, "Excute iperf flow error, connection refused.")
-
-        else:
-            self.assertTrue(res2gConn, "Connecting wifi is failed.")
-
-    def assoc_psk2_sta_flow_5g(self):
-
-        res2gConn = setAdbPsk2StaConn(v.ANDROID_SERIAL_NUM, "normal", "5g", self.__class__.__name__)
-
-        if res2gConn is True:
-            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
-            iperfOn = SetAdbIperfOn(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
-            iperfOn.start()
-            t.sleep(3.0)
-            ret = setIperfFlow(result["ip"], v.IPERF_INTERVAL, v.IPERF_TIME, self.__class__.__name__)
-            self.assertTrue(ret, "Excute iperf flow error, connection refused.")
-
-        else:
-            self.assertTrue(res2gConn, "Connecting wifi is failed.")
-
-    def assoc_psk_sta_flow_2g(self):
-
-        res2gConn = setAdbPskStaConn(v.ANDROID_SERIAL_NUM, "normal", "2g", self.__class__.__name__)
-
-        if res2gConn is True:
-            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
-            iperfOn = SetAdbIperfOn(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
-            iperfOn.start()
-            t.sleep(3.0)
-            ret = setIperfFlow(result["ip"], v.IPERF_INTERVAL, v.IPERF_TIME, self.__class__.__name__)
-            self.assertTrue(ret, "Excute iperf flow error, connection refused.")
-
-        else:
-            self.assertTrue(res2gConn, "Connecting wifi is failed.")
-
-    def assoc_psk_sta_flow_5g(self):
-
-        res2gConn = setAdbPskStaConn(v.ANDROID_SERIAL_NUM, "normal", "5g", self.__class__.__name__)
-
-        if res2gConn is True:
-            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
-            iperfOn = SetAdbIperfOn(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
-            iperfOn.start()
-            t.sleep(3.0)
-            ret = setIperfFlow(result["ip"], v.IPERF_INTERVAL, v.IPERF_TIME, self.__class__.__name__)
-            self.assertTrue(ret, "Excute iperf flow error, connection refused.")
-
-        else:
-            self.assertTrue(res2gConn, "Connecting wifi is failed.")
-
-    def assoc_tkippsk2_sta_flow_2g(self):
-
-        res2gConn = setAdbTkipPsk2StaConn(v.ANDROID_SERIAL_NUM, "normal", "2g", self.__class__.__name__)
-
-        if res2gConn is True:
-            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
-            iperfOn = SetAdbIperfOn(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
-            iperfOn.start()
-            t.sleep(3.0)
-            ret = setIperfFlow(result["ip"], v.IPERF_INTERVAL, v.IPERF_TIME, self.__class__.__name__)
-            self.assertTrue(ret, "Excute iperf flow error, connection refused.")
-
-        else:
-            self.assertTrue(res2gConn, "Connecting wifi is failed.")
-
-    def assoc_tkippsk2_sta_flow_5g(self):
-
-        res2gConn = setAdbTkipPsk2StaConn(v.ANDROID_SERIAL_NUM, "normal", "5g", self.__class__.__name__)
-
-        if res2gConn is True:
-            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
-            iperfOn = SetAdbIperfOn(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
-            iperfOn.start()
-            t.sleep(3.0)
-            ret = setIperfFlow(result["ip"], v.IPERF_INTERVAL, v.IPERF_TIME, self.__class__.__name__)
-            self.assertTrue(ret, "Excute iperf flow error, connection refused.")
-
-        else:
-            self.assertTrue(res2gConn, "Connecting wifi is failed.")
-
-    def assoc_tkippsk_sta_flow_2g(self):
-
-        res2gConn = setAdbTkipPskStaConn(v.ANDROID_SERIAL_NUM, "normal", "2g", self.__class__.__name__)
-
-        if res2gConn is True:
-            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
-            iperfOn = SetAdbIperfOn(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
-            iperfOn.start()
-            t.sleep(3.0)
-            ret = setIperfFlow(result["ip"], v.IPERF_INTERVAL, v.IPERF_TIME, self.__class__.__name__)
-            self.assertTrue(ret, "Excute iperf flow error, connection refused.")
-
-        else:
-            self.assertTrue(res2gConn, "Connecting wifi is failed.")
-
-    def assoc_tkippsk_sta_flow_5g(self):
-
-        res2gConn = setAdbTkipPskStaConn(v.ANDROID_SERIAL_NUM, "normal", "5g", self.__class__.__name__)
-
-        if res2gConn is True:
-            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
-            iperfOn = SetAdbIperfOn(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
-            iperfOn.start()
-            t.sleep(3.0)
-            ret = setIperfFlow(result["ip"], v.IPERF_INTERVAL, v.IPERF_TIME, self.__class__.__name__)
-            self.assertTrue(ret, "Excute iperf flow error, connection refused.")
-
-        else:
-            self.assertTrue(res2gConn, "Connecting wifi is failed.")
-
-
-class AP_MIXEDPSK_CHAN13_165_FLOW(TestCase):
-    @classmethod
-    def setUpClass(self):
-
-        self.dut = api.HttpClient()
-        ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
-        ret2 = chkAdbDevicesCount(1)
-
-        if ret1 is False:
-            raise Exception("Http connection is failed. please check your remote settings.")
-
-        if ret2 is False:
-            raise Exception("USB devices arenot ready!")
-        option2g = {
-            'wifiIndex': 1,
-            'ssid': v.SSID,
-            'channel': v.CHANNEL4,
-            'encryption': 'mixed-psk',
-            'pwd': v.KEY
-        }
-        option5g = {
-            'wifiIndex': 2,
-            'ssid': v.SSID_5G,
-            'channel': v.CHANNEL4_5G,
-            'encryption': 'mixed-psk',
-            'pwd': v.KEY
-        }
-
-        api.setWifi(self.dut, self.__name__, **option2g)
-        api.setWifi(self.dut, self.__name__, **option5g)
-
-    @classmethod
-    def tearDownClass(self):
-        option2g = {
-            'wifiIndex': 1,
-            'on': 0,
-        }
-        option5g = {
-            'wifiIndex': 2,
-            'on': 0
-        }
-        api.setWifi(self.dut, self.__name__, **option2g)
-        api.setWifi(self.dut, self.__name__, **option5g)
-        self.dut.close()
-
-    def assoc_psk2_sta_flow_2g(self):
-
-        res2gConn = setAdbPsk2StaConn(v.ANDROID_SERIAL_NUM, "normal", "2g", self.__class__.__name__)
-
-        if res2gConn is True:
-            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
-            iperfOn = SetAdbIperfOn(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
-            iperfOn.start()
-            t.sleep(3.0)
-            ret = setIperfFlow(result["ip"], v.IPERF_INTERVAL, v.IPERF_TIME, self.__class__.__name__)
-            self.assertTrue(ret, "Excute iperf flow error, connection refused.")
-
-        else:
-            self.assertTrue(res2gConn, "Connecting wifi is failed.")
-
-    def assoc_psk2_sta_flow_5g(self):
-
-        res2gConn = setAdbPsk2StaConn(v.ANDROID_SERIAL_NUM, "normal", "5g", self.__class__.__name__)
-
-        if res2gConn is True:
-            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
-            iperfOn = SetAdbIperfOn(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
-            iperfOn.start()
-            t.sleep(3.0)
-            ret = setIperfFlow(result["ip"], v.IPERF_INTERVAL, v.IPERF_TIME, self.__class__.__name__)
-            self.assertTrue(ret, "Excute iperf flow error, connection refused.")
-
-        else:
-            self.assertTrue(res2gConn, "Connecting wifi is failed.")
-
-    def assoc_psk_sta_flow_2g(self):
-
-        res2gConn = setAdbPskStaConn(v.ANDROID_SERIAL_NUM, "normal", "2g", self.__class__.__name__)
-
-        if res2gConn is True:
-            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
-            iperfOn = SetAdbIperfOn(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
-            iperfOn.start()
-            t.sleep(3.0)
-            ret = setIperfFlow(result["ip"], v.IPERF_INTERVAL, v.IPERF_TIME, self.__class__.__name__)
-            self.assertTrue(ret, "Excute iperf flow error, connection refused.")
-
-        else:
-            self.assertTrue(res2gConn, "Connecting wifi is failed.")
-
-    def assoc_psk_sta_flow_5g(self):
-
-        res2gConn = setAdbPskStaConn(v.ANDROID_SERIAL_NUM, "normal", "5g", self.__class__.__name__)
-
-        if res2gConn is True:
-            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
-            iperfOn = SetAdbIperfOn(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
-            iperfOn.start()
-            t.sleep(3.0)
-            ret = setIperfFlow(result["ip"], v.IPERF_INTERVAL, v.IPERF_TIME, self.__class__.__name__)
-            self.assertTrue(ret, "Excute iperf flow error, connection refused.")
-
-        else:
-            self.assertTrue(res2gConn, "Connecting wifi is failed.")
-
-    def assoc_tkippsk2_sta_flow_2g(self):
-
-        res2gConn = setAdbTkipPsk2StaConn(v.ANDROID_SERIAL_NUM, "normal", "2g", self.__class__.__name__)
-
-        if res2gConn is True:
-            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
-            iperfOn = SetAdbIperfOn(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
-            iperfOn.start()
-            t.sleep(3.0)
-            ret = setIperfFlow(result["ip"], v.IPERF_INTERVAL, v.IPERF_TIME, self.__class__.__name__)
-            self.assertTrue(ret, "Excute iperf flow error, connection refused.")
-
-        else:
-            self.assertTrue(res2gConn, "Connecting wifi is failed.")
-
-    def assoc_tkippsk2_sta_flow_5g(self):
-
-        res2gConn = setAdbTkipPsk2StaConn(v.ANDROID_SERIAL_NUM, "normal", "5g", self.__class__.__name__)
-
-        if res2gConn is True:
-            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
-            iperfOn = SetAdbIperfOn(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
-            iperfOn.start()
-            t.sleep(3.0)
-            ret = setIperfFlow(result["ip"], v.IPERF_INTERVAL, v.IPERF_TIME, self.__class__.__name__)
-            self.assertTrue(ret, "Excute iperf flow error, connection refused.")
-
-        else:
-            self.assertTrue(res2gConn, "Connecting wifi is failed.")
-
-    def assoc_tkippsk_sta_flow_2g(self):
-
-        res2gConn = setAdbTkipPskStaConn(v.ANDROID_SERIAL_NUM, "normal", "2g", self.__class__.__name__)
-
-        if res2gConn is True:
-            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
-            iperfOn = SetAdbIperfOn(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
-            iperfOn.start()
-            t.sleep(3.0)
-            ret = setIperfFlow(result["ip"], v.IPERF_INTERVAL, v.IPERF_TIME, self.__class__.__name__)
-            self.assertTrue(ret, "Excute iperf flow error, connection refused.")
-
-        else:
-            self.assertTrue(res2gConn, "Connecting wifi is failed.")
-
-    def assoc_tkippsk_sta_flow_5g(self):
-
-        res2gConn = setAdbTkipPskStaConn(v.ANDROID_SERIAL_NUM, "normal", "5g", self.__class__.__name__)
-
-        if res2gConn is True:
-            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
-            iperfOn = SetAdbIperfOn(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
-            iperfOn.start()
-            t.sleep(3.0)
-            ret = setIperfFlow(result["ip"], v.IPERF_INTERVAL, v.IPERF_TIME, self.__class__.__name__)
-            self.assertTrue(ret, "Excute iperf flow error, connection refused.")
-
-        else:
-            self.assertTrue(res2gConn, "Connecting wifi is failed.")
-
-
 class AP_MIXEDPSK_CHAN_REPEAT(TestCase):
     @classmethod
     def setUpClass(self):
@@ -4457,14 +3200,14 @@ class AP_MIXEDPSK_CHAN_REPEAT(TestCase):
         option2g = {
             'wifiIndex': 1,
             'ssid': v.SSID,
-            'channel': v.CHANNEL,
+            'channel': v.CHANNEL11,
             'encryption': 'mixed-psk',
             'pwd': v.KEY
         }
         option5g = {
             'wifiIndex': 2,
             'ssid': v.SSID_5G,
-            'channel': v.CHANNEL_5G,
+            'channel': v.CHANNEL149,
             'encryption': 'mixed-psk',
             'pwd': v.KEY
         }
@@ -6353,13 +5096,13 @@ class AP_RELAY_CLEAR_CHAN(TestCase):
             'wifiIndex': 1,
             'ssid': v.SSID,
             'encryption': 'none',
-            'channel': v.CHANNEL,
+            'channel': v.CHANNEL11,
         }
         option5g = {
             'wifiIndex': 2,
             'ssid': v.SSID_5G,
             'encryption': 'none',
-            'channel': v.CHANNEL_5G,
+            'channel': v.CHANNEL149,
         }
         api.setWifi(self.dut, self.__name__, **option2g)
         api.setWifi(self.dut, self.__name__, **option5g)
@@ -6759,7 +5502,7 @@ class AP_RELAY_CLEAR_LOW_TXPOWER(TestCase):
             'wifiIndex': 1,
             'ssid': v.SSID,
             'encryption': 'none',
-            'channel': v.CHANNEL2,
+            'channel': v.CHANNEL1,
             'txpwr': 'min',
         }
         api.setWifi(self.dut2, self.__class__.__name__, **option2g)
@@ -6802,7 +5545,7 @@ class AP_RELAY_CLEAR_LOW_TXPOWER(TestCase):
             'wifiIndex': 1,
             'ssid': v.SSID,
             'encryption': 'none',
-            'channel': v.CHANNEL3,
+            'channel': v.CHANNEL6,
             'txpwr': 'min',
         }
         api.setWifi(self.dut2, self.__class__.__name__, **option2g)
@@ -6846,7 +5589,7 @@ class AP_RELAY_CLEAR_LOW_TXPOWER(TestCase):
             'wifiIndex': 1,
             'ssid': v.SSID,
             'encryption': 'none',
-            'channel': v.CHANNEL,
+            'channel': v.CHANNEL11,
             'txpwr': 'min',
         }
         api.setWifi(self.dut2, self.__class__.__name__, **option2g)
@@ -6934,7 +5677,7 @@ class AP_RELAY_CLEAR_LOW_TXPOWER(TestCase):
             'wifiIndex': 2,
             'ssid': v.SSID_5G,
             'encryption': 'none',
-            'channel': v.CHANNEL2_5G,
+            'channel': v.CHANNEL36,
             'txpwr': 'min',
         }
         api.setWifi(self.dut2, self.__class__.__name__, **option5g)
@@ -6968,7 +5711,7 @@ class AP_RELAY_CLEAR_LOW_TXPOWER(TestCase):
             'wifiIndex': 2,
             'ssid': v.SSID_5G,
             'encryption': 'none',
-            'channel': v.CHANNEL3_5G,
+            'channel': v.CHANNEL52,
             'txpwr': 'min',
         }
         api.setWifi(self.dut2, self.__class__.__name__, **option5g)
@@ -7002,7 +5745,7 @@ class AP_RELAY_CLEAR_LOW_TXPOWER(TestCase):
             'wifiIndex': 2,
             'ssid': v.SSID_5G,
             'encryption': 'none',
-            'channel': v.CHANNEL_5G,
+            'channel': v.CHANNEL149,
             'txpwr': 'min',
         }
         api.setWifi(self.dut2, self.__class__.__name__, **option5g)
@@ -7036,7 +5779,7 @@ class AP_RELAY_CLEAR_LOW_TXPOWER(TestCase):
             'wifiIndex': 2,
             'ssid': v.SSID_5G,
             'encryption': 'none',
-            'channel': v.CHANNEL4_5G,
+            'channel': v.CHANNEL165,
             'txpwr': 'min',
         }
         api.setWifi(self.dut2, self.__class__.__name__, **option5g)
@@ -7185,7 +5928,7 @@ class AP_RELAY_CLEAR_MID_TXPOWER(TestCase):
             'wifiIndex': 1,
             'ssid': v.SSID,
             'encryption': 'none',
-            'channel': v.CHANNEL2,
+            'channel': v.CHANNEL1,
             'txpwr': 'mid',
         }
         api.setWifi(self.dut2, self.__class__.__name__, **option2g)
@@ -7229,7 +5972,7 @@ class AP_RELAY_CLEAR_MID_TXPOWER(TestCase):
             'wifiIndex': 1,
             'ssid': v.SSID,
             'encryption': 'none',
-            'channel': v.CHANNEL3,
+            'channel': v.CHANNEL6,
             'txpwr': 'mid',
         }
         api.setWifi(self.dut2, self.__class__.__name__, **option2g)
@@ -7273,7 +6016,7 @@ class AP_RELAY_CLEAR_MID_TXPOWER(TestCase):
             'wifiIndex': 1,
             'ssid': v.SSID,
             'encryption': 'none',
-            'channel': v.CHANNEL,
+            'channel': v.CHANNEL11,
             'txpwr': 'mid',
         }
         api.setWifi(self.dut2, self.__class__.__name__, **option2g)
@@ -7360,7 +6103,7 @@ class AP_RELAY_CLEAR_MID_TXPOWER(TestCase):
             'wifiIndex': 2,
             'ssid': v.SSID_5G,
             'encryption': 'none',
-            'channel': v.CHANNEL2_5G,
+            'channel': v.CHANNEL36,
             'txpwr': 'mid',
         }
         api.setWifi(self.dut2, self.__class__.__name__, **option5g)
@@ -7394,7 +6137,7 @@ class AP_RELAY_CLEAR_MID_TXPOWER(TestCase):
             'wifiIndex': 2,
             'ssid': v.SSID_5G,
             'encryption': 'none',
-            'channel': v.CHANNEL3_5G,
+            'channel': v.CHANNEL52,
             'txpwr': 'mid',
         }
         api.setWifi(self.dut2, self.__class__.__name__, **option5g)
@@ -7429,7 +6172,7 @@ class AP_RELAY_CLEAR_MID_TXPOWER(TestCase):
             'wifiIndex': 2,
             'ssid': v.SSID_5G,
             'encryption': 'none',
-            'channel': v.CHANNEL_5G,
+            'channel': v.CHANNEL149,
             'txpwr': 'mid',
         }
         api.setWifi(self.dut2, self.__class__.__name__, **option5g)
@@ -7463,7 +6206,7 @@ class AP_RELAY_CLEAR_MID_TXPOWER(TestCase):
             'wifiIndex': 2,
             'ssid': v.SSID_5G,
             'encryption': 'none',
-            'channel': v.CHANNEL4_5G,
+            'channel': v.CHANNEL165,
             'txpwr': 'mid',
         }
         api.setWifi(self.dut2, self.__class__.__name__, **option5g)
@@ -7610,7 +6353,7 @@ class AP_RELAY_CLEAR_HIGH_TXPOWER(TestCase):
             'wifiIndex': 1,
             'ssid': v.SSID,
             'encryption': 'none',
-            'channel': v.CHANNEL2,
+            'channel': v.CHANNEL1,
             'txpwr': 'max',
         }
         api.setWifi(self.dut2, self.__class__.__name__, **option2g)
@@ -7653,7 +6396,7 @@ class AP_RELAY_CLEAR_HIGH_TXPOWER(TestCase):
             'wifiIndex': 1,
             'ssid': v.SSID,
             'encryption': 'none',
-            'channel': v.CHANNEL3,
+            'channel': v.CHANNEL6,
             'txpwr': 'max',
         }
         api.setWifi(self.dut2, self.__class__.__name__, **option2g)
@@ -7696,7 +6439,7 @@ class AP_RELAY_CLEAR_HIGH_TXPOWER(TestCase):
             'wifiIndex': 1,
             'ssid': v.SSID,
             'encryption': 'none',
-            'channel': v.CHANNEL,
+            'channel': v.CHANNEL11,
             'txpwr': 'max',
         }
         api.setWifi(self.dut2, self.__class__.__name__, **option2g)
@@ -7782,7 +6525,7 @@ class AP_RELAY_CLEAR_HIGH_TXPOWER(TestCase):
             'wifiIndex': 2,
             'ssid': v.SSID_5G,
             'encryption': 'none',
-            'channel': v.CHANNEL2_5G,
+            'channel': v.CHANNEL36,
             'txpwr': 'max',
         }
         api.setWifi(self.dut2, self.__class__.__name__, **option5g)
@@ -7817,7 +6560,7 @@ class AP_RELAY_CLEAR_HIGH_TXPOWER(TestCase):
             'wifiIndex': 2,
             'ssid': v.SSID_5G,
             'encryption': 'none',
-            'channel': v.CHANNEL3_5G,
+            'channel': v.CHANNEL52,
             'txpwr': 'max',
         }
         api.setWifi(self.dut2, self.__class__.__name__, **option5g)
@@ -7852,7 +6595,7 @@ class AP_RELAY_CLEAR_HIGH_TXPOWER(TestCase):
             'wifiIndex': 2,
             'ssid': v.SSID_5G,
             'encryption': 'none',
-            'channel': v.CHANNEL_5G,
+            'channel': v.CHANNEL149,
             'txpwr': 'max',
         }
         api.setWifi(self.dut2, self.__class__.__name__, **option5g)
@@ -7886,7 +6629,7 @@ class AP_RELAY_CLEAR_HIGH_TXPOWER(TestCase):
             'wifiIndex': 2,
             'ssid': v.SSID_5G,
             'encryption': 'none',
-            'channel': v.CHANNEL4_5G,
+            'channel': v.CHANNEL165,
             'txpwr': 'max',
         }
         api.setWifi(self.dut2, self.__class__.__name__, **option5g)
@@ -8243,7 +6986,7 @@ class AP_RELAY_MIXEDPSK_CHAN_BW80(TestCase):
         option5g = {
             'wifiIndex': 2,
             'ssid': v.SSID_5G,
-            'channel': v.CHANNEL_5G,
+            'channel': v.CHANNEL149,
             'encryption': 'mixed-psk',
             'pwd': v.KEY,
             'bandwidth': '80',
@@ -8343,7 +7086,7 @@ class AP_RELAY_MIXEDPSK_CHAN_BW40(TestCase):
         option2g = {
             'wifiIndex': 1,
             'ssid': v.SSID,
-            'channel': v.CHANNEL,
+            'channel': v.CHANNEL11,
             'encryption': 'mixed-psk',
             'pwd': v.KEY,
             'bandwidth': '40'
@@ -8351,7 +7094,7 @@ class AP_RELAY_MIXEDPSK_CHAN_BW40(TestCase):
         option5g = {
             'wifiIndex': 2,
             'ssid': v.SSID_5G,
-            'channel': v.CHANNEL_5G,
+            'channel': v.CHANNEL149,
             'encryption': 'mixed-psk',
             'pwd': v.KEY,
             'bandwidth': '40'
@@ -8517,7 +7260,7 @@ class AP_RELAY_MIXEDPSK_CHAN_BW20(TestCase):
         option2g = {
             'wifiIndex': 1,
             'ssid': v.SSID,
-            'channel': v.CHANNEL,
+            'channel': v.CHANNEL11,
             'encryption': 'mixed-psk',
             'pwd': v.KEY,
             'bandwidth': '20'
@@ -8525,7 +7268,7 @@ class AP_RELAY_MIXEDPSK_CHAN_BW20(TestCase):
         option5g = {
             'wifiIndex': 2,
             'ssid': v.SSID_5G,
-            'channel': v.CHANNEL_5G,
+            'channel': v.CHANNEL149,
             'encryption': 'mixed-psk',
             'pwd': v.KEY,
             'bandwidth': '20'
@@ -9828,7 +8571,7 @@ class AP_RELAY_CONFIG_CHECK(TestCase):
             'ssid': v.SSID,
             'pwd': v.KEY,
             'encryption': 'mixed-psk',
-            'channel': v.CHANNEL,
+            'channel': v.CHANNEL11,
             'bandwidth': '20',
             'hidden': "0",
             'txpwr': 'max'
@@ -9840,7 +8583,7 @@ class AP_RELAY_CONFIG_CHECK(TestCase):
             'ssid': v.SSID_5G,
             'pwd': v.KEY,
             'encryption': 'psk2',
-            'channel': v.CHANNEL_5G,
+            'channel': v.CHANNEL149,
             'bandwidth': '40',
             'hidden': "0",
             'txpwr': 'min'
@@ -10473,13 +9216,13 @@ class AP_WIRELESS_RELAY_CLEAR_CHAN(TestCase):
             'wifiIndex': 1,
             'ssid': v.SSID,
             'encryption': 'none',
-            'channel': v.CHANNEL,
+            'channel': v.CHANNEL11,
         }
         option5g = {
             'wifiIndex': 2,
             'ssid': v.SSID_5G,
             'encryption': 'none',
-            'channel': v.CHANNEL_5G,
+            'channel': v.CHANNEL149,
         }
         api.setWifi(self.dut, self.__name__, **option2g)
         api.setWifi(self.dut, self.__name__, **option5g)
@@ -11723,7 +10466,7 @@ class AP_WIRELESS_RELAY_MIXEDPSK_CHAN_BW80(TestCase):
         option5g = {
             'wifiIndex': 2,
             'ssid': v.SSID_5G,
-            'channel': v.CHANNEL_5G,
+            'channel': v.CHANNEL149,
             'encryption': 'mixed-psk',
             'pwd': v.KEY,
             'bandwidth': '80',
@@ -11828,7 +10571,7 @@ class AP_WIRELESS_RELAY_MIXEDPSK_CHAN_BW40(TestCase):
         option2g = {
             'wifiIndex': 1,
             'ssid': v.SSID,
-            'channel': v.CHANNEL,
+            'channel': v.CHANNEL11,
             'encryption': 'mixed-psk',
             'pwd': v.KEY,
             'bandwidth': '40'
@@ -11836,7 +10579,7 @@ class AP_WIRELESS_RELAY_MIXEDPSK_CHAN_BW40(TestCase):
         option5g = {
             'wifiIndex': 2,
             'ssid': v.SSID_5G,
-            'channel': v.CHANNEL_5G,
+            'channel': v.CHANNEL149,
             'encryption': 'mixed-psk',
             'pwd': v.KEY,
             'bandwidth': '40'
@@ -12002,7 +10745,7 @@ class AP_WIRELESS_RELAY_MIXEDPSK_CHAN_BW20(TestCase):
         option2g = {
             'wifiIndex': 1,
             'ssid': v.SSID,
-            'channel': v.CHANNEL,
+            'channel': v.CHANNEL11,
             'encryption': 'mixed-psk',
             'pwd': v.KEY,
             'bandwidth': '20'
@@ -12010,7 +10753,7 @@ class AP_WIRELESS_RELAY_MIXEDPSK_CHAN_BW20(TestCase):
         option5g = {
             'wifiIndex': 2,
             'ssid': v.SSID_5G,
-            'channel': v.CHANNEL_5G,
+            'channel': v.CHANNEL149,
             'encryption': 'mixed-psk',
             'pwd': v.KEY,
             'bandwidth': '20'
@@ -12667,7 +11410,7 @@ class AP_WIRELESS_RELAY_CONFIG_CHECK(TestCase):
             'ssid': v.SSID,
             'pwd': v.KEY,
             'encryption': 'mixed-psk',
-            'channel': v.CHANNEL,
+            'channel': v.CHANNEL11,
             'bandwidth': '20',
             'hidden': "0",
             'txpwr': 'max'
@@ -12679,7 +11422,7 @@ class AP_WIRELESS_RELAY_CONFIG_CHECK(TestCase):
             'ssid': v.SSID_5G,
             'pwd': v.KEY,
             'encryption': 'psk2',
-            'channel': v.CHANNEL_5G,
+            'channel': v.CHANNEL149,
             'bandwidth': '40',
             'hidden': "0",
             'txpwr': 'min'
@@ -13116,6 +11859,1938 @@ class AP_MIXEDPSK_WEB_ACCESS(TestCase):
             self.assertTrue(res5gConn, "Association wasnot successful.")
 
 
+class AP_CLEAR_CHAN1_BW20_THROUGHPUT(TestCase):
+    @classmethod
+    def setUpClass(self):
+
+        self.dut = api.HttpClient()
+        ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
+        ret2 = chkAdbDevicesCount(1)
+
+        if ret1 is False:
+            raise Exception("Http connection is failed. please check your remote settings.")
+
+        if ret2 is False:
+            raise Exception("USB devices arenot ready!")
+
+        option2g = {
+            'wifiIndex': 1,
+            'ssid': v.SSID,
+            'channel': v.CHANNEL1,
+            'bandwidth': '20'
+        }
+        api.setWifi(self.dut, self.__name__, **option2g)
+
+    @classmethod
+    def tearDownClass(self):
+        option2g = {
+            'wifiIndex': 1,
+            'on': 0,
+        }
+        api.setWifi(self.dut, self.__name__, **option2g)
+        self.dut.close()
+
+    def assoc_sta_throughput_2g(self):
+        res2gConn = setAdbClearSta(v.ANDROID_SERIAL_NUM, v.SSID, "2g", self.__class__.__name__)
+
+        if res2gConn is True:
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
+            iperfOn = SetAdbIperfOn(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
+            iperfOn.start()
+            t.sleep(3.0)
+            ret = setIperfFlow(result["ip"], v.IPERF_INTERVAL, v.IPERF_TIME, self.__class__.__name__)
+            self.assertTrue(ret, "Excute iperf flow error, connection refused.")
+        else:
+            self.assertTrue(res2gConn, "Connecting wifi is failed.")
+
+
+class AP_CLEAR_CHAN6_BW20_THROUGHPUT(TestCase):
+    @classmethod
+    def setUpClass(self):
+
+        self.dut = api.HttpClient()
+        ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
+        ret2 = chkAdbDevicesCount(1)
+
+        if ret1 is False:
+            raise Exception("Http connection is failed. please check your remote settings.")
+
+        if ret2 is False:
+            raise Exception("USB devices arenot ready!")
+
+        option2g = {
+            'wifiIndex': 1,
+            'ssid': v.SSID,
+            'channel': v.CHANNEL6,
+            'bandwidth': '20'
+        }
+        api.setWifi(self.dut, self.__name__, **option2g)
+
+    @classmethod
+    def tearDownClass(self):
+        option2g = {
+            'wifiIndex': 1,
+            'on': 0,
+        }
+        api.setWifi(self.dut, self.__name__, **option2g)
+        self.dut.close()
+
+    def assoc_sta_throughput_2g(self):
+        res2gConn = setAdbClearSta(v.ANDROID_SERIAL_NUM, v.SSID, "2g", self.__class__.__name__)
+
+        if res2gConn is True:
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
+            iperfOn = SetAdbIperfOn(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
+            iperfOn.start()
+            t.sleep(3.0)
+            ret = setIperfFlow(result["ip"], v.IPERF_INTERVAL, v.IPERF_TIME, self.__class__.__name__)
+            self.assertTrue(ret, "Excute iperf flow error, connection refused.")
+        else:
+            self.assertTrue(res2gConn, "Connecting wifi is failed.")
+
+
+class AP_CLEAR_CHAN11_BW20_THROUGHPUT(TestCase):
+    @classmethod
+    def setUpClass(self):
+
+        self.dut = api.HttpClient()
+        ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
+        ret2 = chkAdbDevicesCount(1)
+
+        if ret1 is False:
+            raise Exception("Http connection is failed. please check your remote settings.")
+
+        if ret2 is False:
+            raise Exception("USB devices arenot ready!")
+
+        option2g = {
+            'wifiIndex': 1,
+            'ssid': v.SSID,
+            'channel': v.CHANNEL11,
+            'bandwidth': '20'
+        }
+        api.setWifi(self.dut, self.__name__, **option2g)
+
+    @classmethod
+    def tearDownClass(self):
+        option2g = {
+            'wifiIndex': 1,
+            'on': 0,
+        }
+        api.setWifi(self.dut, self.__name__, **option2g)
+        self.dut.close()
+
+    def assoc_sta_throughput_2g(self):
+        res2gConn = setAdbClearSta(v.ANDROID_SERIAL_NUM, v.SSID, "2g", self.__class__.__name__)
+
+        if res2gConn is True:
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
+            iperfOn = SetAdbIperfOn(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
+            iperfOn.start()
+            t.sleep(3.0)
+            ret = setIperfFlow(result["ip"], v.IPERF_INTERVAL, v.IPERF_TIME, self.__class__.__name__)
+            self.assertTrue(ret, "Excute iperf flow error, connection refused.")
+        else:
+            self.assertTrue(res2gConn, "Connecting wifi is failed.")
+
+
+class AP_CLEAR_CHAN13_BW20_THROUGHPUT(TestCase):
+    @classmethod
+    def setUpClass(self):
+
+        self.dut = api.HttpClient()
+        ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
+        ret2 = chkAdbDevicesCount(1)
+
+        if ret1 is False:
+            raise Exception("Http connection is failed. please check your remote settings.")
+
+        if ret2 is False:
+            raise Exception("USB devices arenot ready!")
+
+        option2g = {
+            'wifiIndex': 1,
+            'ssid': v.SSID,
+            'channel': v.CHANNEL13,
+            'bandwidth': '20'
+        }
+        api.setWifi(self.dut, self.__name__, **option2g)
+
+    @classmethod
+    def tearDownClass(self):
+        option2g = {
+            'wifiIndex': 1,
+            'on': 0,
+        }
+        api.setWifi(self.dut, self.__name__, **option2g)
+        self.dut.close()
+
+    def assoc_sta_throughput_2g(self):
+        res2gConn = setAdbClearSta(v.ANDROID_SERIAL_NUM, v.SSID, "2g", self.__class__.__name__)
+
+        if res2gConn is True:
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
+            iperfOn = SetAdbIperfOn(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
+            iperfOn.start()
+            t.sleep(3.0)
+            ret = setIperfFlow(result["ip"], v.IPERF_INTERVAL, v.IPERF_TIME, self.__class__.__name__)
+            self.assertTrue(ret, "Excute iperf flow error, connection refused.")
+        else:
+            self.assertTrue(res2gConn, "Connecting wifi is failed.")
+
+
+class AP_CLEAR_CHAN1_BW40_THROUGHPUT(TestCase):
+    @classmethod
+    def setUpClass(self):
+
+        self.dut = api.HttpClient()
+        ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
+        ret2 = chkAdbDevicesCount(1)
+
+        if ret1 is False:
+            raise Exception("Http connection is failed. please check your remote settings.")
+
+        if ret2 is False:
+            raise Exception("USB devices arenot ready!")
+
+        option2g = {
+            'wifiIndex': 1,
+            'ssid': v.SSID,
+            'channel': v.CHANNEL1,
+            'bandwidth': '40'
+        }
+        api.setWifi(self.dut, self.__name__, **option2g)
+
+    @classmethod
+    def tearDownClass(self):
+        option2g = {
+            'wifiIndex': 1,
+            'on': 0,
+        }
+        api.setWifi(self.dut, self.__name__, **option2g)
+        self.dut.close()
+
+    def assoc_sta_throughput_2g(self):
+        res2gConn = setAdbClearSta(v.ANDROID_SERIAL_NUM, v.SSID, "2g", self.__class__.__name__)
+
+        if res2gConn is True:
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
+            iperfOn = SetAdbIperfOn(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
+            iperfOn.start()
+            t.sleep(3.0)
+            ret = setIperfFlow(result["ip"], v.IPERF_INTERVAL, v.IPERF_TIME, self.__class__.__name__)
+            self.assertTrue(ret, "Excute iperf flow error, connection refused.")
+        else:
+            self.assertTrue(res2gConn, "Connecting wifi is failed.")
+
+
+class AP_CLEAR_CHAN6_BW40_THROUGHPUT(TestCase):
+    @classmethod
+    def setUpClass(self):
+
+        self.dut = api.HttpClient()
+        ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
+        ret2 = chkAdbDevicesCount(1)
+
+        if ret1 is False:
+            raise Exception("Http connection is failed. please check your remote settings.")
+
+        if ret2 is False:
+            raise Exception("USB devices arenot ready!")
+
+        option2g = {
+            'wifiIndex': 1,
+            'ssid': v.SSID,
+            'channel': v.CHANNEL6,
+            'bandwidth': '40'
+        }
+        api.setWifi(self.dut, self.__name__, **option2g)
+
+    @classmethod
+    def tearDownClass(self):
+        option2g = {
+            'wifiIndex': 1,
+            'on': 0,
+        }
+        api.setWifi(self.dut, self.__name__, **option2g)
+        self.dut.close()
+
+    def assoc_sta_throughput_2g(self):
+        res2gConn = setAdbClearSta(v.ANDROID_SERIAL_NUM, v.SSID, "2g", self.__class__.__name__)
+
+        if res2gConn is True:
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
+            iperfOn = SetAdbIperfOn(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
+            iperfOn.start()
+            t.sleep(3.0)
+            ret = setIperfFlow(result["ip"], v.IPERF_INTERVAL, v.IPERF_TIME, self.__class__.__name__)
+            self.assertTrue(ret, "Excute iperf flow error, connection refused.")
+        else:
+            self.assertTrue(res2gConn, "Connecting wifi is failed.")
+
+
+class AP_CLEAR_CHAN11_BW40_THROUGHPUT(TestCase):
+    @classmethod
+    def setUpClass(self):
+
+        self.dut = api.HttpClient()
+        ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
+        ret2 = chkAdbDevicesCount(1)
+
+        if ret1 is False:
+            raise Exception("Http connection is failed. please check your remote settings.")
+
+        if ret2 is False:
+            raise Exception("USB devices arenot ready!")
+
+        option2g = {
+            'wifiIndex': 1,
+            'ssid': v.SSID,
+            'channel': v.CHANNEL11,
+            'bandwidth': '40'
+        }
+        api.setWifi(self.dut, self.__name__, **option2g)
+
+    @classmethod
+    def tearDownClass(self):
+        option2g = {
+            'wifiIndex': 1,
+            'on': 0,
+        }
+        api.setWifi(self.dut, self.__name__, **option2g)
+        self.dut.close()
+
+    def assoc_sta_throughput_2g(self):
+        res2gConn = setAdbClearSta(v.ANDROID_SERIAL_NUM, v.SSID, "2g", self.__class__.__name__)
+
+        if res2gConn is True:
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
+            iperfOn = SetAdbIperfOn(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
+            iperfOn.start()
+            t.sleep(3.0)
+            ret = setIperfFlow(result["ip"], v.IPERF_INTERVAL, v.IPERF_TIME, self.__class__.__name__)
+            self.assertTrue(ret, "Excute iperf flow error, connection refused.")
+        else:
+            self.assertTrue(res2gConn, "Connecting wifi is failed.")
+
+
+class AP_CLEAR_CHAN13_BW40_THROUGHPUT(TestCase):
+    @classmethod
+    def setUpClass(self):
+
+        self.dut = api.HttpClient()
+        ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
+        ret2 = chkAdbDevicesCount(1)
+
+        if ret1 is False:
+            raise Exception("Http connection is failed. please check your remote settings.")
+
+        if ret2 is False:
+            raise Exception("USB devices arenot ready!")
+
+        option2g = {
+            'wifiIndex': 1,
+            'ssid': v.SSID,
+            'channel': v.CHANNEL13,
+            'bandwidth': '40'
+        }
+        api.setWifi(self.dut, self.__name__, **option2g)
+
+    @classmethod
+    def tearDownClass(self):
+        option2g = {
+            'wifiIndex': 1,
+            'on': 0,
+        }
+        api.setWifi(self.dut, self.__name__, **option2g)
+        self.dut.close()
+
+    def assoc_sta_throughput_2g(self):
+        res2gConn = setAdbClearSta(v.ANDROID_SERIAL_NUM, v.SSID, "2g", self.__class__.__name__)
+
+        if res2gConn is True:
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
+            iperfOn = SetAdbIperfOn(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
+            iperfOn.start()
+            t.sleep(3.0)
+            ret = setIperfFlow(result["ip"], v.IPERF_INTERVAL, v.IPERF_TIME, self.__class__.__name__)
+            self.assertTrue(ret, "Excute iperf flow error, connection refused.")
+        else:
+            self.assertTrue(res2gConn, "Connecting wifi is failed.")
+
+
+class AP_PSK2_CHAN1_BW20_THROUGHPUT(TestCase):
+    @classmethod
+    def setUpClass(self):
+
+        self.dut = api.HttpClient()
+        ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
+        ret2 = chkAdbDevicesCount(1)
+
+        if ret1 is False:
+            raise Exception("Http connection is failed. please check your remote settings.")
+
+        if ret2 is False:
+            raise Exception("USB devices arenot ready!")
+
+        option2g = {
+            'wifiIndex': 1,
+            'ssid': v.SSID,
+            'channel': v.CHANNEL1,
+            'bandwidth': '20',
+            'encryption': 'psk2',
+            'pwd': v.KEY,
+        }
+        api.setWifi(self.dut, self.__name__, **option2g)
+
+    @classmethod
+    def tearDownClass(self):
+        option2g = {
+            'wifiIndex': 1,
+            'on': 0,
+        }
+        api.setWifi(self.dut, self.__name__, **option2g)
+        self.dut.close()
+
+    def assoc_sta_throughput_2g(self):
+        res2gConn = setAdbPsk2Sta(v.ANDROID_SERIAL_NUM, v.SSID, v.KEY, "2g", self.__class__.__name__)
+
+        if res2gConn is True:
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
+            iperfOn = SetAdbIperfOn(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
+            iperfOn.start()
+            t.sleep(3.0)
+            ret = setIperfFlow(result["ip"], v.IPERF_INTERVAL, v.IPERF_TIME, self.__class__.__name__)
+            self.assertTrue(ret, "Excute iperf flow error, connection refused.")
+        else:
+            self.assertTrue(res2gConn, "Connecting wifi is failed.")
+
+
+class AP_PSK2_CHAN6_BW20_THROUGHPUT(TestCase):
+    @classmethod
+    def setUpClass(self):
+
+        self.dut = api.HttpClient()
+        ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
+        ret2 = chkAdbDevicesCount(1)
+
+        if ret1 is False:
+            raise Exception("Http connection is failed. please check your remote settings.")
+
+        if ret2 is False:
+            raise Exception("USB devices arenot ready!")
+
+        option2g = {
+            'wifiIndex': 1,
+            'ssid': v.SSID,
+            'channel': v.CHANNEL6,
+            'bandwidth': '20',
+            'encryption': 'psk2',
+            'pwd': v.KEY,
+        }
+        api.setWifi(self.dut, self.__name__, **option2g)
+
+    @classmethod
+    def tearDownClass(self):
+        option2g = {
+            'wifiIndex': 1,
+            'on': 0,
+        }
+        api.setWifi(self.dut, self.__name__, **option2g)
+        self.dut.close()
+
+    def assoc_sta_throughput_2g(self):
+        res2gConn = setAdbPsk2Sta(v.ANDROID_SERIAL_NUM, v.SSID, v.KEY, "2g", self.__class__.__name__)
+
+        if res2gConn is True:
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
+            iperfOn = SetAdbIperfOn(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
+            iperfOn.start()
+            t.sleep(3.0)
+            ret = setIperfFlow(result["ip"], v.IPERF_INTERVAL, v.IPERF_TIME, self.__class__.__name__)
+            self.assertTrue(ret, "Excute iperf flow error, connection refused.")
+        else:
+            self.assertTrue(res2gConn, "Connecting wifi is failed.")
+
+
+class AP_PSK2_CHAN11_BW20_THROUGHPUT(TestCase):
+    @classmethod
+    def setUpClass(self):
+
+        self.dut = api.HttpClient()
+        ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
+        ret2 = chkAdbDevicesCount(1)
+
+        if ret1 is False:
+            raise Exception("Http connection is failed. please check your remote settings.")
+
+        if ret2 is False:
+            raise Exception("USB devices arenot ready!")
+
+        option2g = {
+            'wifiIndex': 1,
+            'ssid': v.SSID,
+            'channel': v.CHANNEL11,
+            'bandwidth': '20',
+            'encryption': 'psk2',
+            'pwd': v.KEY,
+        }
+        api.setWifi(self.dut, self.__name__, **option2g)
+
+    @classmethod
+    def tearDownClass(self):
+        option2g = {
+            'wifiIndex': 1,
+            'on': 0,
+        }
+        api.setWifi(self.dut, self.__name__, **option2g)
+        self.dut.close()
+
+    def assoc_sta_throughput_2g(self):
+        res2gConn = setAdbPsk2Sta(v.ANDROID_SERIAL_NUM, v.SSID, v.KEY, "2g", self.__class__.__name__)
+
+        if res2gConn is True:
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
+            iperfOn = SetAdbIperfOn(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
+            iperfOn.start()
+            t.sleep(3.0)
+            ret = setIperfFlow(result["ip"], v.IPERF_INTERVAL, v.IPERF_TIME, self.__class__.__name__)
+            self.assertTrue(ret, "Excute iperf flow error, connection refused.")
+        else:
+            self.assertTrue(res2gConn, "Connecting wifi is failed.")
+
+
+class AP_PSK2_CHAN13_BW20_THROUGHPUT(TestCase):
+    @classmethod
+    def setUpClass(self):
+
+        self.dut = api.HttpClient()
+        ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
+        ret2 = chkAdbDevicesCount(1)
+
+        if ret1 is False:
+            raise Exception("Http connection is failed. please check your remote settings.")
+
+        if ret2 is False:
+            raise Exception("USB devices arenot ready!")
+
+        option2g = {
+            'wifiIndex': 1,
+            'ssid': v.SSID,
+            'channel': v.CHANNEL13,
+            'bandwidth': '20',
+            'encryption': 'psk2',
+            'pwd': v.KEY,
+        }
+        api.setWifi(self.dut, self.__name__, **option2g)
+
+    @classmethod
+    def tearDownClass(self):
+        option2g = {
+            'wifiIndex': 1,
+            'on': 0,
+        }
+        api.setWifi(self.dut, self.__name__, **option2g)
+        self.dut.close()
+
+    def assoc_sta_throughput_2g(self):
+        res2gConn = setAdbPsk2Sta(v.ANDROID_SERIAL_NUM, v.SSID, v.KEY, "2g", self.__class__.__name__)
+
+        if res2gConn is True:
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
+            iperfOn = SetAdbIperfOn(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
+            iperfOn.start()
+            t.sleep(3.0)
+            ret = setIperfFlow(result["ip"], v.IPERF_INTERVAL, v.IPERF_TIME, self.__class__.__name__)
+            self.assertTrue(ret, "Excute iperf flow error, connection refused.")
+        else:
+            self.assertTrue(res2gConn, "Connecting wifi is failed.")
+
+
+class AP_PSK2_CHAN1_BW40_THROUGHPUT(TestCase):
+    @classmethod
+    def setUpClass(self):
+
+        self.dut = api.HttpClient()
+        ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
+        ret2 = chkAdbDevicesCount(1)
+
+        if ret1 is False:
+            raise Exception("Http connection is failed. please check your remote settings.")
+
+        if ret2 is False:
+            raise Exception("USB devices arenot ready!")
+
+        option2g = {
+            'wifiIndex': 1,
+            'ssid': v.SSID,
+            'channel': v.CHANNEL1,
+            'bandwidth': '40',
+            'encryption': 'psk2',
+            'pwd': v.KEY,
+        }
+        api.setWifi(self.dut, self.__name__, **option2g)
+
+    @classmethod
+    def tearDownClass(self):
+        option2g = {
+            'wifiIndex': 1,
+            'on': 0,
+        }
+        api.setWifi(self.dut, self.__name__, **option2g)
+        self.dut.close()
+
+    def assoc_sta_throughput_2g(self):
+        res2gConn = setAdbPsk2Sta(v.ANDROID_SERIAL_NUM, v.SSID, v.KEY, "2g", self.__class__.__name__)
+
+        if res2gConn is True:
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
+            iperfOn = SetAdbIperfOn(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
+            iperfOn.start()
+            t.sleep(3.0)
+            ret = setIperfFlow(result["ip"], v.IPERF_INTERVAL, v.IPERF_TIME, self.__class__.__name__)
+            self.assertTrue(ret, "Excute iperf flow error, connection refused.")
+        else:
+            self.assertTrue(res2gConn, "Connecting wifi is failed.")
+
+
+class AP_PSK2_CHAN6_BW40_THROUGHPUT(TestCase):
+    @classmethod
+    def setUpClass(self):
+
+        self.dut = api.HttpClient()
+        ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
+        ret2 = chkAdbDevicesCount(1)
+
+        if ret1 is False:
+            raise Exception("Http connection is failed. please check your remote settings.")
+
+        if ret2 is False:
+            raise Exception("USB devices arenot ready!")
+
+        option2g = {
+            'wifiIndex': 1,
+            'ssid': v.SSID,
+            'channel': v.CHANNEL6,
+            'bandwidth': '40',
+            'encryption': 'psk2',
+            'pwd': v.KEY,
+        }
+        api.setWifi(self.dut, self.__name__, **option2g)
+
+    @classmethod
+    def tearDownClass(self):
+        option2g = {
+            'wifiIndex': 1,
+            'on': 0,
+        }
+        api.setWifi(self.dut, self.__name__, **option2g)
+        self.dut.close()
+
+    def assoc_sta_throughput_2g(self):
+        res2gConn = setAdbPsk2Sta(v.ANDROID_SERIAL_NUM, v.SSID, v.KEY, "2g", self.__class__.__name__)
+
+        if res2gConn is True:
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
+            iperfOn = SetAdbIperfOn(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
+            iperfOn.start()
+            t.sleep(3.0)
+            ret = setIperfFlow(result["ip"], v.IPERF_INTERVAL, v.IPERF_TIME, self.__class__.__name__)
+            self.assertTrue(ret, "Excute iperf flow error, connection refused.")
+        else:
+            self.assertTrue(res2gConn, "Connecting wifi is failed.")
+
+
+class AP_PSK2_CHAN11_BW40_THROUGHPUT(TestCase):
+    @classmethod
+    def setUpClass(self):
+
+        self.dut = api.HttpClient()
+        ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
+        ret2 = chkAdbDevicesCount(1)
+
+        if ret1 is False:
+            raise Exception("Http connection is failed. please check your remote settings.")
+
+        if ret2 is False:
+            raise Exception("USB devices arenot ready!")
+
+        option2g = {
+            'wifiIndex': 1,
+            'ssid': v.SSID,
+            'channel': v.CHANNEL11,
+            'bandwidth': '40',
+            'encryption': 'psk2',
+            'pwd': v.KEY,
+        }
+        api.setWifi(self.dut, self.__name__, **option2g)
+
+    @classmethod
+    def tearDownClass(self):
+        option2g = {
+            'wifiIndex': 1,
+            'on': 0,
+        }
+        api.setWifi(self.dut, self.__name__, **option2g)
+        self.dut.close()
+
+    def assoc_sta_throughput_2g(self):
+        res2gConn = setAdbPsk2Sta(v.ANDROID_SERIAL_NUM, v.SSID, v.KEY, "2g", self.__class__.__name__)
+
+        if res2gConn is True:
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
+            iperfOn = SetAdbIperfOn(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
+            iperfOn.start()
+            t.sleep(3.0)
+            ret = setIperfFlow(result["ip"], v.IPERF_INTERVAL, v.IPERF_TIME, self.__class__.__name__)
+            self.assertTrue(ret, "Excute iperf flow error, connection refused.")
+        else:
+            self.assertTrue(res2gConn, "Connecting wifi is failed.")
+
+
+class AP_PSK2_CHAN13_BW40_THROUGHPUT(TestCase):
+    @classmethod
+    def setUpClass(self):
+
+        self.dut = api.HttpClient()
+        ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
+        ret2 = chkAdbDevicesCount(1)
+
+        if ret1 is False:
+            raise Exception("Http connection is failed. please check your remote settings.")
+
+        if ret2 is False:
+            raise Exception("USB devices arenot ready!")
+
+        option2g = {
+            'wifiIndex': 1,
+            'ssid': v.SSID,
+            'channel': v.CHANNEL13,
+            'bandwidth': '40',
+            'encryption': 'psk2',
+            'pwd': v.KEY,
+        }
+        api.setWifi(self.dut, self.__name__, **option2g)
+
+    @classmethod
+    def tearDownClass(self):
+        option2g = {
+            'wifiIndex': 1,
+            'on': 0,
+        }
+        api.setWifi(self.dut, self.__name__, **option2g)
+        self.dut.close()
+
+    def assoc_sta_throughput_2g(self):
+        res2gConn = setAdbPsk2Sta(v.ANDROID_SERIAL_NUM, v.SSID, v.KEY, "2g", self.__class__.__name__)
+
+        if res2gConn is True:
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
+            iperfOn = SetAdbIperfOn(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
+            iperfOn.start()
+            t.sleep(3.0)
+            ret = setIperfFlow(result["ip"], v.IPERF_INTERVAL, v.IPERF_TIME, self.__class__.__name__)
+            self.assertTrue(ret, "Excute iperf flow error, connection refused.")
+        else:
+            self.assertTrue(res2gConn, "Connecting wifi is failed.")
+
+
+class AP_CLEAR_CHAN36_BW20_THROUGHPUT(TestCase):
+    @classmethod
+    def setUpClass(self):
+
+        self.dut = api.HttpClient()
+        ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
+        ret2 = chkAdbDevicesCount(1)
+
+        if ret1 is False:
+            raise Exception("Http connection is failed. please check your remote settings.")
+
+        if ret2 is False:
+            raise Exception("USB devices arenot ready!")
+
+        option5g = {
+            'wifiIndex': 2,
+            'ssid': v.SSID_5G,
+            'channel': v.CHANNEL36,
+            'bandwidth': '20'
+        }
+        api.setWifi(self.dut, self.__name__, **option5g)
+
+    @classmethod
+    def tearDownClass(self):
+        option5g = {
+            'wifiIndex': 2,
+            'on': 0,
+        }
+        api.setWifi(self.dut, self.__name__, **option5g)
+        self.dut.close()
+
+    def assoc_sta_throughput_5g(self):
+        res5gConn = setAdbClearSta(v.ANDROID_SERIAL_NUM, v.SSID_5G, "5g", self.__class__.__name__)
+
+        if res5gConn is True:
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
+            iperfOn = SetAdbIperfOn(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
+            iperfOn.start()
+            t.sleep(3.0)
+            ret = setIperfFlow(result["ip"], v.IPERF_INTERVAL, v.IPERF_TIME, self.__class__.__name__)
+            self.assertTrue(ret, "Excute iperf flow error, connection refused.")
+        else:
+            self.assertTrue(res5gConn, "Connecting wifi is failed.")
+
+
+class AP_CLEAR_CHAN52_BW20_THROUGHPUT(TestCase):
+    @classmethod
+    def setUpClass(self):
+
+        self.dut = api.HttpClient()
+        ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
+        ret2 = chkAdbDevicesCount(1)
+
+        if ret1 is False:
+            raise Exception("Http connection is failed. please check your remote settings.")
+
+        if ret2 is False:
+            raise Exception("USB devices arenot ready!")
+
+        option5g = {
+            'wifiIndex': 2,
+            'ssid': v.SSID_5G,
+            'channel': v.CHANNEL52,
+            'bandwidth': '20'
+        }
+        api.setWifi(self.dut, self.__name__, **option5g)
+
+    @classmethod
+    def tearDownClass(self):
+        option5g = {
+            'wifiIndex': 2,
+            'on': 0,
+        }
+        api.setWifi(self.dut, self.__name__, **option5g)
+        self.dut.close()
+
+    def assoc_sta_throughput_5g(self):
+        res5gConn = setAdbClearSta(v.ANDROID_SERIAL_NUM, v.SSID_5G, "5g", self.__class__.__name__)
+
+        if res5gConn is True:
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
+            iperfOn = SetAdbIperfOn(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
+            iperfOn.start()
+            t.sleep(3.0)
+            ret = setIperfFlow(result["ip"], v.IPERF_INTERVAL, v.IPERF_TIME, self.__class__.__name__)
+            self.assertTrue(ret, "Excute iperf flow error, connection refused.")
+        else:
+            self.assertTrue(res5gConn, "Connecting wifi is failed.")
+
+
+class AP_CLEAR_CHAN149_BW20_THROUGHPUT(TestCase):
+    @classmethod
+    def setUpClass(self):
+
+        self.dut = api.HttpClient()
+        ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
+        ret2 = chkAdbDevicesCount(1)
+
+        if ret1 is False:
+            raise Exception("Http connection is failed. please check your remote settings.")
+
+        if ret2 is False:
+            raise Exception("USB devices arenot ready!")
+
+        option5g = {
+            'wifiIndex': 2,
+            'ssid': v.SSID_5G,
+            'channel': v.CHANNEL149,
+            'bandwidth': '20'
+        }
+        api.setWifi(self.dut, self.__name__, **option5g)
+
+    @classmethod
+    def tearDownClass(self):
+        option5g = {
+            'wifiIndex': 2,
+            'on': 0,
+        }
+        api.setWifi(self.dut, self.__name__, **option5g)
+        self.dut.close()
+
+    def assoc_sta_throughput_5g(self):
+        res5gConn = setAdbClearSta(v.ANDROID_SERIAL_NUM, v.SSID_5G, "5g", self.__class__.__name__)
+
+        if res5gConn is True:
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
+            iperfOn = SetAdbIperfOn(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
+            iperfOn.start()
+            t.sleep(3.0)
+            ret = setIperfFlow(result["ip"], v.IPERF_INTERVAL, v.IPERF_TIME, self.__class__.__name__)
+            self.assertTrue(ret, "Excute iperf flow error, connection refused.")
+        else:
+            self.assertTrue(res5gConn, "Connecting wifi is failed.")
+
+
+class AP_CLEAR_CHAN165_BW20_THROUGHPUT(TestCase):
+    @classmethod
+    def setUpClass(self):
+
+        self.dut = api.HttpClient()
+        ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
+        ret2 = chkAdbDevicesCount(1)
+
+        if ret1 is False:
+            raise Exception("Http connection is failed. please check your remote settings.")
+
+        if ret2 is False:
+            raise Exception("USB devices arenot ready!")
+
+        option5g = {
+            'wifiIndex': 2,
+            'ssid': v.SSID_5G,
+            'channel': v.CHANNEL165,
+            'bandwidth': '20'
+        }
+        api.setWifi(self.dut, self.__name__, **option5g)
+
+    @classmethod
+    def tearDownClass(self):
+        option5g = {
+            'wifiIndex': 2,
+            'on': 0,
+        }
+        api.setWifi(self.dut, self.__name__, **option5g)
+        self.dut.close()
+
+    def assoc_sta_throughput_5g(self):
+        res5gConn = setAdbClearSta(v.ANDROID_SERIAL_NUM, v.SSID_5G, "5g", self.__class__.__name__)
+
+        if res5gConn is True:
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
+            iperfOn = SetAdbIperfOn(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
+            iperfOn.start()
+            t.sleep(3.0)
+            ret = setIperfFlow(result["ip"], v.IPERF_INTERVAL, v.IPERF_TIME, self.__class__.__name__)
+            self.assertTrue(ret, "Excute iperf flow error, connection refused.")
+        else:
+            self.assertTrue(res5gConn, "Connecting wifi is failed.")
+
+
+class AP_CLEAR_CHAN36_BW40_THROUGHPUT(TestCase):
+    @classmethod
+    def setUpClass(self):
+
+        self.dut = api.HttpClient()
+        ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
+        ret2 = chkAdbDevicesCount(1)
+
+        if ret1 is False:
+            raise Exception("Http connection is failed. please check your remote settings.")
+
+        if ret2 is False:
+            raise Exception("USB devices arenot ready!")
+
+        option5g = {
+            'wifiIndex': 2,
+            'ssid': v.SSID_5G,
+            'channel': v.CHANNEL36,
+            'bandwidth': '40'
+        }
+        api.setWifi(self.dut, self.__name__, **option5g)
+
+    @classmethod
+    def tearDownClass(self):
+        option5g = {
+            'wifiIndex': 2,
+            'on': 0,
+        }
+        api.setWifi(self.dut, self.__name__, **option5g)
+        self.dut.close()
+
+    def assoc_sta_throughput_5g(self):
+        res5gConn = setAdbClearSta(v.ANDROID_SERIAL_NUM, v.SSID_5G, "5g", self.__class__.__name__)
+
+        if res5gConn is True:
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
+            iperfOn = SetAdbIperfOn(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
+            iperfOn.start()
+            t.sleep(3.0)
+            ret = setIperfFlow(result["ip"], v.IPERF_INTERVAL, v.IPERF_TIME, self.__class__.__name__)
+            self.assertTrue(ret, "Excute iperf flow error, connection refused.")
+        else:
+            self.assertTrue(res5gConn, "Connecting wifi is failed.")
+
+
+class AP_CLEAR_CHAN44_BW40_THROUGHPUT(TestCase):
+    @classmethod
+    def setUpClass(self):
+
+        self.dut = api.HttpClient()
+        ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
+        ret2 = chkAdbDevicesCount(1)
+
+        if ret1 is False:
+            raise Exception("Http connection is failed. please check your remote settings.")
+
+        if ret2 is False:
+            raise Exception("USB devices arenot ready!")
+
+        option5g = {
+            'wifiIndex': 2,
+            'ssid': v.SSID_5G,
+            'channel': v.CHANNEL44,
+            'bandwidth': '40'
+        }
+        api.setWifi(self.dut, self.__name__, **option5g)
+
+    @classmethod
+    def tearDownClass(self):
+        option5g = {
+            'wifiIndex': 2,
+            'on': 0,
+        }
+        api.setWifi(self.dut, self.__name__, **option5g)
+        self.dut.close()
+
+    def assoc_sta_throughput_5g(self):
+        res5gConn = setAdbClearSta(v.ANDROID_SERIAL_NUM, v.SSID_5G, "5g", self.__class__.__name__)
+
+        if res5gConn is True:
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
+            iperfOn = SetAdbIperfOn(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
+            iperfOn.start()
+            t.sleep(3.0)
+            ret = setIperfFlow(result["ip"], v.IPERF_INTERVAL, v.IPERF_TIME, self.__class__.__name__)
+            self.assertTrue(ret, "Excute iperf flow error, connection refused.")
+        else:
+            self.assertTrue(res5gConn, "Connecting wifi is failed.")
+
+
+class AP_CLEAR_CHAN52_BW40_THROUGHPUT(TestCase):
+    @classmethod
+    def setUpClass(self):
+
+        self.dut = api.HttpClient()
+        ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
+        ret2 = chkAdbDevicesCount(1)
+
+        if ret1 is False:
+            raise Exception("Http connection is failed. please check your remote settings.")
+
+        if ret2 is False:
+            raise Exception("USB devices arenot ready!")
+
+        option5g = {
+            'wifiIndex': 2,
+            'ssid': v.SSID_5G,
+            'channel': v.CHANNEL52,
+            'bandwidth': '40'
+        }
+        api.setWifi(self.dut, self.__name__, **option5g)
+
+    @classmethod
+    def tearDownClass(self):
+        option5g = {
+            'wifiIndex': 2,
+            'on': 0,
+        }
+        api.setWifi(self.dut, self.__name__, **option5g)
+        self.dut.close()
+
+    def assoc_sta_throughput_5g(self):
+        res5gConn = setAdbClearSta(v.ANDROID_SERIAL_NUM, v.SSID_5G, "5g", self.__class__.__name__)
+
+        if res5gConn is True:
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
+            iperfOn = SetAdbIperfOn(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
+            iperfOn.start()
+            t.sleep(3.0)
+            ret = setIperfFlow(result["ip"], v.IPERF_INTERVAL, v.IPERF_TIME, self.__class__.__name__)
+            self.assertTrue(ret, "Excute iperf flow error, connection refused.")
+        else:
+            self.assertTrue(res5gConn, "Connecting wifi is failed.")
+
+
+class AP_CLEAR_CHAN60_BW40_THROUGHPUT(TestCase):
+    @classmethod
+    def setUpClass(self):
+
+        self.dut = api.HttpClient()
+        ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
+        ret2 = chkAdbDevicesCount(1)
+
+        if ret1 is False:
+            raise Exception("Http connection is failed. please check your remote settings.")
+
+        if ret2 is False:
+            raise Exception("USB devices arenot ready!")
+
+        option5g = {
+            'wifiIndex': 2,
+            'ssid': v.SSID_5G,
+            'channel': v.CHANNEL60,
+            'bandwidth': '40'
+        }
+        api.setWifi(self.dut, self.__name__, **option5g)
+
+    @classmethod
+    def tearDownClass(self):
+        option5g = {
+            'wifiIndex': 2,
+            'on': 0,
+        }
+        api.setWifi(self.dut, self.__name__, **option5g)
+        self.dut.close()
+
+    def assoc_sta_throughput_5g(self):
+        res5gConn = setAdbClearSta(v.ANDROID_SERIAL_NUM, v.SSID_5G, "5g", self.__class__.__name__)
+
+        if res5gConn is True:
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
+            iperfOn = SetAdbIperfOn(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
+            iperfOn.start()
+            t.sleep(3.0)
+            ret = setIperfFlow(result["ip"], v.IPERF_INTERVAL, v.IPERF_TIME, self.__class__.__name__)
+            self.assertTrue(ret, "Excute iperf flow error, connection refused.")
+        else:
+            self.assertTrue(res5gConn, "Connecting wifi is failed.")
+
+
+class AP_CLEAR_CHAN149_BW40_THROUGHPUT(TestCase):
+    @classmethod
+    def setUpClass(self):
+
+        self.dut = api.HttpClient()
+        ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
+        ret2 = chkAdbDevicesCount(1)
+
+        if ret1 is False:
+            raise Exception("Http connection is failed. please check your remote settings.")
+
+        if ret2 is False:
+            raise Exception("USB devices arenot ready!")
+
+        option5g = {
+            'wifiIndex': 2,
+            'ssid': v.SSID_5G,
+            'channel': v.CHANNEL149,
+            'bandwidth': '40'
+        }
+        api.setWifi(self.dut, self.__name__, **option5g)
+
+    @classmethod
+    def tearDownClass(self):
+        option5g = {
+            'wifiIndex': 2,
+            'on': 0,
+        }
+        api.setWifi(self.dut, self.__name__, **option5g)
+        self.dut.close()
+
+    def assoc_sta_throughput_5g(self):
+        res5gConn = setAdbClearSta(v.ANDROID_SERIAL_NUM, v.SSID_5G, "5g", self.__class__.__name__)
+
+        if res5gConn is True:
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
+            iperfOn = SetAdbIperfOn(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
+            iperfOn.start()
+            t.sleep(3.0)
+            ret = setIperfFlow(result["ip"], v.IPERF_INTERVAL, v.IPERF_TIME, self.__class__.__name__)
+            self.assertTrue(ret, "Excute iperf flow error, connection refused.")
+        else:
+            self.assertTrue(res5gConn, "Connecting wifi is failed.")
+
+
+class AP_CLEAR_CHAN157_BW40_THROUGHPUT(TestCase):
+    @classmethod
+    def setUpClass(self):
+
+        self.dut = api.HttpClient()
+        ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
+        ret2 = chkAdbDevicesCount(1)
+
+        if ret1 is False:
+            raise Exception("Http connection is failed. please check your remote settings.")
+
+        if ret2 is False:
+            raise Exception("USB devices arenot ready!")
+
+        option5g = {
+            'wifiIndex': 2,
+            'ssid': v.SSID_5G,
+            'channel': v.CHANNEL157,
+            'bandwidth': '40'
+        }
+        api.setWifi(self.dut, self.__name__, **option5g)
+
+    @classmethod
+    def tearDownClass(self):
+        option5g = {
+            'wifiIndex': 2,
+            'on': 0,
+        }
+        api.setWifi(self.dut, self.__name__, **option5g)
+        self.dut.close()
+
+    def assoc_sta_throughput_5g(self):
+        res5gConn = setAdbClearSta(v.ANDROID_SERIAL_NUM, v.SSID_5G, "5g", self.__class__.__name__)
+
+        if res5gConn is True:
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
+            iperfOn = SetAdbIperfOn(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
+            iperfOn.start()
+            t.sleep(3.0)
+            ret = setIperfFlow(result["ip"], v.IPERF_INTERVAL, v.IPERF_TIME, self.__class__.__name__)
+            self.assertTrue(ret, "Excute iperf flow error, connection refused.")
+        else:
+            self.assertTrue(res5gConn, "Connecting wifi is failed.")
+
+
+class AP_CLEAR_CHAN36_BW80_THROUGHPUT(TestCase):
+    @classmethod
+    def setUpClass(self):
+
+        self.dut = api.HttpClient()
+        ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
+        ret2 = chkAdbDevicesCount(1)
+
+        if ret1 is False:
+            raise Exception("Http connection is failed. please check your remote settings.")
+
+        if ret2 is False:
+            raise Exception("USB devices arenot ready!")
+
+        option5g = {
+            'wifiIndex': 2,
+            'ssid': v.SSID_5G,
+            'channel': v.CHANNEL36,
+            'bandwidth': '80'
+        }
+        api.setWifi(self.dut, self.__name__, **option5g)
+
+    @classmethod
+    def tearDownClass(self):
+        option5g = {
+            'wifiIndex': 2,
+            'on': 0,
+        }
+        api.setWifi(self.dut, self.__name__, **option5g)
+        self.dut.close()
+
+    def assoc_sta_throughput_5g(self):
+        res5gConn = setAdbClearSta(v.ANDROID_SERIAL_NUM, v.SSID_5G, "5g", self.__class__.__name__)
+
+        if res5gConn is True:
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
+            iperfOn = SetAdbIperfOn(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
+            iperfOn.start()
+            t.sleep(3.0)
+            ret = setIperfFlow(result["ip"], v.IPERF_INTERVAL, v.IPERF_TIME, self.__class__.__name__)
+            self.assertTrue(ret, "Excute iperf flow error, connection refused.")
+        else:
+            self.assertTrue(res5gConn, "Connecting wifi is failed.")
+
+
+class AP_CLEAR_CHAN52_BW80_THROUGHPUT(TestCase):
+    @classmethod
+    def setUpClass(self):
+
+        self.dut = api.HttpClient()
+        ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
+        ret2 = chkAdbDevicesCount(1)
+
+        if ret1 is False:
+            raise Exception("Http connection is failed. please check your remote settings.")
+
+        if ret2 is False:
+            raise Exception("USB devices arenot ready!")
+
+        option5g = {
+            'wifiIndex': 2,
+            'ssid': v.SSID_5G,
+            'channel': v.CHANNEL52,
+            'bandwidth': '80'
+        }
+        api.setWifi(self.dut, self.__name__, **option5g)
+
+    @classmethod
+    def tearDownClass(self):
+        option5g = {
+            'wifiIndex': 2,
+            'on': 0,
+        }
+        api.setWifi(self.dut, self.__name__, **option5g)
+        self.dut.close()
+
+    def assoc_sta_throughput_5g(self):
+        res5gConn = setAdbClearSta(v.ANDROID_SERIAL_NUM, v.SSID_5G, "5g", self.__class__.__name__)
+
+        if res5gConn is True:
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
+            iperfOn = SetAdbIperfOn(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
+            iperfOn.start()
+            t.sleep(3.0)
+            ret = setIperfFlow(result["ip"], v.IPERF_INTERVAL, v.IPERF_TIME, self.__class__.__name__)
+            self.assertTrue(ret, "Excute iperf flow error, connection refused.")
+        else:
+            self.assertTrue(res5gConn, "Connecting wifi is failed.")
+
+
+class AP_CLEAR_CHAN149_BW80_THROUGHPUT(TestCase):
+    @classmethod
+    def setUpClass(self):
+
+        self.dut = api.HttpClient()
+        ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
+        ret2 = chkAdbDevicesCount(1)
+
+        if ret1 is False:
+            raise Exception("Http connection is failed. please check your remote settings.")
+
+        if ret2 is False:
+            raise Exception("USB devices arenot ready!")
+
+        option5g = {
+            'wifiIndex': 2,
+            'ssid': v.SSID_5G,
+            'channel': v.CHANNEL149,
+            'bandwidth': '80'
+        }
+        api.setWifi(self.dut, self.__name__, **option5g)
+
+    @classmethod
+    def tearDownClass(self):
+        option5g = {
+            'wifiIndex': 2,
+            'on': 0,
+        }
+        api.setWifi(self.dut, self.__name__, **option5g)
+        self.dut.close()
+
+    def assoc_sta_throughput_5g(self):
+        res5gConn = setAdbClearSta(v.ANDROID_SERIAL_NUM, v.SSID_5G, "5g", self.__class__.__name__)
+
+        if res5gConn is True:
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
+            iperfOn = SetAdbIperfOn(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
+            iperfOn.start()
+            t.sleep(3.0)
+            ret = setIperfFlow(result["ip"], v.IPERF_INTERVAL, v.IPERF_TIME, self.__class__.__name__)
+            self.assertTrue(ret, "Excute iperf flow error, connection refused.")
+        else:
+            self.assertTrue(res5gConn, "Connecting wifi is failed.")
+
+
+class AP_PSK2_CHAN36_BW20_THROUGHPUT(TestCase):
+    @classmethod
+    def setUpClass(self):
+
+        self.dut = api.HttpClient()
+        ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
+        ret2 = chkAdbDevicesCount(1)
+
+        if ret1 is False:
+            raise Exception("Http connection is failed. please check your remote settings.")
+
+        if ret2 is False:
+            raise Exception("USB devices arenot ready!")
+
+        option5g = {
+            'wifiIndex': 2,
+            'ssid': v.SSID_5G,
+            'channel': v.CHANNEL36,
+            'bandwidth': '20',
+            'encryption': 'psk2',
+            'pwd': v.KEY,
+        }
+        api.setWifi(self.dut, self.__name__, **option5g)
+
+    @classmethod
+    def tearDownClass(self):
+        option5g = {
+            'wifiIndex': 2,
+            'on': 0,
+        }
+        api.setWifi(self.dut, self.__name__, **option5g)
+        self.dut.close()
+
+    def assoc_sta_throughput_5g(self):
+        res5gConn = setAdbPsk2Sta(v.ANDROID_SERIAL_NUM, v.SSID_5G, v.KEY, "5g", self.__class__.__name__)
+
+        if res5gConn is True:
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
+            iperfOn = SetAdbIperfOn(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
+            iperfOn.start()
+            t.sleep(3.0)
+            ret = setIperfFlow(result["ip"], v.IPERF_INTERVAL, v.IPERF_TIME, self.__class__.__name__)
+            self.assertTrue(ret, "Excute iperf flow error, connection refused.")
+        else:
+            self.assertTrue(res5gConn, "Connecting wifi is failed.")
+
+
+class AP_PSK2_CHAN52_BW20_THROUGHPUT(TestCase):
+    @classmethod
+    def setUpClass(self):
+
+        self.dut = api.HttpClient()
+        ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
+        ret2 = chkAdbDevicesCount(1)
+
+        if ret1 is False:
+            raise Exception("Http connection is failed. please check your remote settings.")
+
+        if ret2 is False:
+            raise Exception("USB devices arenot ready!")
+
+        option5g = {
+            'wifiIndex': 2,
+            'ssid': v.SSID_5G,
+            'channel': v.CHANNEL52,
+            'bandwidth': '20',
+            'encryption': 'psk2',
+            'pwd': v.KEY,
+        }
+        api.setWifi(self.dut, self.__name__, **option5g)
+
+    @classmethod
+    def tearDownClass(self):
+        option5g = {
+            'wifiIndex': 2,
+            'on': 0,
+        }
+        api.setWifi(self.dut, self.__name__, **option5g)
+        self.dut.close()
+
+    def assoc_sta_throughput_5g(self):
+        res5gConn = setAdbPsk2Sta(v.ANDROID_SERIAL_NUM, v.SSID_5G, v.KEY, "5g", self.__class__.__name__)
+
+        if res5gConn is True:
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
+            iperfOn = SetAdbIperfOn(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
+            iperfOn.start()
+            t.sleep(3.0)
+            ret = setIperfFlow(result["ip"], v.IPERF_INTERVAL, v.IPERF_TIME, self.__class__.__name__)
+            self.assertTrue(ret, "Excute iperf flow error, connection refused.")
+        else:
+            self.assertTrue(res5gConn, "Connecting wifi is failed.")
+
+
+class AP_PSK2_CHAN149_BW20_THROUGHPUT(TestCase):
+    @classmethod
+    def setUpClass(self):
+
+        self.dut = api.HttpClient()
+        ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
+        ret2 = chkAdbDevicesCount(1)
+
+        if ret1 is False:
+            raise Exception("Http connection is failed. please check your remote settings.")
+
+        if ret2 is False:
+            raise Exception("USB devices arenot ready!")
+
+        option5g = {
+            'wifiIndex': 2,
+            'ssid': v.SSID_5G,
+            'channel': v.CHANNEL149,
+            'bandwidth': '20',
+            'encryption': 'psk2',
+            'pwd': v.KEY,
+        }
+        api.setWifi(self.dut, self.__name__, **option5g)
+
+    @classmethod
+    def tearDownClass(self):
+        option5g = {
+            'wifiIndex': 2,
+            'on': 0,
+        }
+        api.setWifi(self.dut, self.__name__, **option5g)
+        self.dut.close()
+
+    def assoc_sta_throughput_5g(self):
+        res5gConn = setAdbPsk2Sta(v.ANDROID_SERIAL_NUM, v.SSID_5G, v.KEY, "5g", self.__class__.__name__)
+
+        if res5gConn is True:
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
+            iperfOn = SetAdbIperfOn(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
+            iperfOn.start()
+            t.sleep(3.0)
+            ret = setIperfFlow(result["ip"], v.IPERF_INTERVAL, v.IPERF_TIME, self.__class__.__name__)
+            self.assertTrue(ret, "Excute iperf flow error, connection refused.")
+        else:
+            self.assertTrue(res5gConn, "Connecting wifi is failed.")
+
+
+class AP_PSK2_CHAN165_BW20_THROUGHPUT(TestCase):
+    @classmethod
+    def setUpClass(self):
+
+        self.dut = api.HttpClient()
+        ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
+        ret2 = chkAdbDevicesCount(1)
+
+        if ret1 is False:
+            raise Exception("Http connection is failed. please check your remote settings.")
+
+        if ret2 is False:
+            raise Exception("USB devices arenot ready!")
+
+        option5g = {
+            'wifiIndex': 2,
+            'ssid': v.SSID_5G,
+            'channel': v.CHANNEL165,
+            'bandwidth': '20',
+            'encryption': 'psk2',
+            'pwd': v.KEY,
+        }
+        api.setWifi(self.dut, self.__name__, **option5g)
+
+    @classmethod
+    def tearDownClass(self):
+        option5g = {
+            'wifiIndex': 2,
+            'on': 0,
+        }
+        api.setWifi(self.dut, self.__name__, **option5g)
+        self.dut.close()
+
+    def assoc_sta_throughput_5g(self):
+        res5gConn = setAdbPsk2Sta(v.ANDROID_SERIAL_NUM, v.SSID_5G, v.KEY, "5g", self.__class__.__name__)
+
+        if res5gConn is True:
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
+            iperfOn = SetAdbIperfOn(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
+            iperfOn.start()
+            t.sleep(3.0)
+            ret = setIperfFlow(result["ip"], v.IPERF_INTERVAL, v.IPERF_TIME, self.__class__.__name__)
+            self.assertTrue(ret, "Excute iperf flow error, connection refused.")
+        else:
+            self.assertTrue(res5gConn, "Connecting wifi is failed.")
+
+
+class AP_PSK2_CHAN36_BW40_THROUGHPUT(TestCase):
+    @classmethod
+    def setUpClass(self):
+
+        self.dut = api.HttpClient()
+        ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
+        ret2 = chkAdbDevicesCount(1)
+
+        if ret1 is False:
+            raise Exception("Http connection is failed. please check your remote settings.")
+
+        if ret2 is False:
+            raise Exception("USB devices arenot ready!")
+
+        option5g = {
+            'wifiIndex': 2,
+            'ssid': v.SSID_5G,
+            'channel': v.CHANNEL36,
+            'bandwidth': '40',
+            'encryption': 'psk2',
+            'pwd': v.KEY,
+        }
+        api.setWifi(self.dut, self.__name__, **option5g)
+
+    @classmethod
+    def tearDownClass(self):
+        option5g = {
+            'wifiIndex': 2,
+            'on': 0,
+        }
+        api.setWifi(self.dut, self.__name__, **option5g)
+        self.dut.close()
+
+    def assoc_sta_throughput_5g(self):
+        res5gConn = setAdbPsk2Sta(v.ANDROID_SERIAL_NUM, v.SSID_5G, v.KEY, "5g", self.__class__.__name__)
+
+        if res5gConn is True:
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
+            iperfOn = SetAdbIperfOn(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
+            iperfOn.start()
+            t.sleep(3.0)
+            ret = setIperfFlow(result["ip"], v.IPERF_INTERVAL, v.IPERF_TIME, self.__class__.__name__)
+            self.assertTrue(ret, "Excute iperf flow error, connection refused.")
+        else:
+            self.assertTrue(res5gConn, "Connecting wifi is failed.")
+
+
+class AP_PSK2_CHAN44_BW40_THROUGHPUT(TestCase):
+    @classmethod
+    def setUpClass(self):
+
+        self.dut = api.HttpClient()
+        ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
+        ret2 = chkAdbDevicesCount(1)
+
+        if ret1 is False:
+            raise Exception("Http connection is failed. please check your remote settings.")
+
+        if ret2 is False:
+            raise Exception("USB devices arenot ready!")
+
+        option5g = {
+            'wifiIndex': 2,
+            'ssid': v.SSID_5G,
+            'channel': v.CHANNEL44,
+            'bandwidth': '40',
+            'encryption': 'psk2',
+            'pwd': v.KEY,
+        }
+        api.setWifi(self.dut, self.__name__, **option5g)
+
+    @classmethod
+    def tearDownClass(self):
+        option5g = {
+            'wifiIndex': 2,
+            'on': 0,
+        }
+        api.setWifi(self.dut, self.__name__, **option5g)
+        self.dut.close()
+
+    def assoc_sta_throughput_5g(self):
+        res5gConn = setAdbPsk2Sta(v.ANDROID_SERIAL_NUM, v.SSID_5G, v.KEY, "5g", self.__class__.__name__)
+
+        if res5gConn is True:
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
+            iperfOn = SetAdbIperfOn(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
+            iperfOn.start()
+            t.sleep(3.0)
+            ret = setIperfFlow(result["ip"], v.IPERF_INTERVAL, v.IPERF_TIME, self.__class__.__name__)
+            self.assertTrue(ret, "Excute iperf flow error, connection refused.")
+        else:
+            self.assertTrue(res5gConn, "Connecting wifi is failed.")
+
+
+class AP_PSK2_CHAN52_BW40_THROUGHPUT(TestCase):
+    @classmethod
+    def setUpClass(self):
+
+        self.dut = api.HttpClient()
+        ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
+        ret2 = chkAdbDevicesCount(1)
+
+        if ret1 is False:
+            raise Exception("Http connection is failed. please check your remote settings.")
+
+        if ret2 is False:
+            raise Exception("USB devices arenot ready!")
+
+        option5g = {
+            'wifiIndex': 2,
+            'ssid': v.SSID_5G,
+            'channel': v.CHANNEL52,
+            'bandwidth': '40',
+            'encryption': 'psk2',
+            'pwd': v.KEY,
+        }
+        api.setWifi(self.dut, self.__name__, **option5g)
+
+    @classmethod
+    def tearDownClass(self):
+        option5g = {
+            'wifiIndex': 2,
+            'on': 0,
+        }
+        api.setWifi(self.dut, self.__name__, **option5g)
+        self.dut.close()
+
+    def assoc_sta_throughput_5g(self):
+        res5gConn = setAdbPsk2Sta(v.ANDROID_SERIAL_NUM, v.SSID_5G, v.KEY, "5g", self.__class__.__name__)
+
+        if res5gConn is True:
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
+            iperfOn = SetAdbIperfOn(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
+            iperfOn.start()
+            t.sleep(3.0)
+            ret = setIperfFlow(result["ip"], v.IPERF_INTERVAL, v.IPERF_TIME, self.__class__.__name__)
+            self.assertTrue(ret, "Excute iperf flow error, connection refused.")
+        else:
+            self.assertTrue(res5gConn, "Connecting wifi is failed.")
+
+
+class AP_PSK2_CHAN60_BW40_THROUGHPUT(TestCase):
+    @classmethod
+    def setUpClass(self):
+
+        self.dut = api.HttpClient()
+        ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
+        ret2 = chkAdbDevicesCount(1)
+
+        if ret1 is False:
+            raise Exception("Http connection is failed. please check your remote settings.")
+
+        if ret2 is False:
+            raise Exception("USB devices arenot ready!")
+
+        option5g = {
+            'wifiIndex': 2,
+            'ssid': v.SSID_5G,
+            'channel': v.CHANNEL60,
+            'bandwidth': '40',
+            'encryption': 'psk2',
+            'pwd': v.KEY,
+        }
+        api.setWifi(self.dut, self.__name__, **option5g)
+
+    @classmethod
+    def tearDownClass(self):
+        option5g = {
+            'wifiIndex': 2,
+            'on': 0,
+        }
+        api.setWifi(self.dut, self.__name__, **option5g)
+        self.dut.close()
+
+    def assoc_sta_throughput_5g(self):
+        res5gConn = setAdbPsk2Sta(v.ANDROID_SERIAL_NUM, v.SSID_5G, v.KEY, "5g", self.__class__.__name__)
+
+        if res5gConn is True:
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
+            iperfOn = SetAdbIperfOn(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
+            iperfOn.start()
+            t.sleep(3.0)
+            ret = setIperfFlow(result["ip"], v.IPERF_INTERVAL, v.IPERF_TIME, self.__class__.__name__)
+            self.assertTrue(ret, "Excute iperf flow error, connection refused.")
+        else:
+            self.assertTrue(res5gConn, "Connecting wifi is failed.")
+
+
+class AP_PSK2_CHAN149_BW40_THROUGHPUT(TestCase):
+    @classmethod
+    def setUpClass(self):
+
+        self.dut = api.HttpClient()
+        ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
+        ret2 = chkAdbDevicesCount(1)
+
+        if ret1 is False:
+            raise Exception("Http connection is failed. please check your remote settings.")
+
+        if ret2 is False:
+            raise Exception("USB devices arenot ready!")
+
+        option5g = {
+            'wifiIndex': 2,
+            'ssid': v.SSID_5G,
+            'channel': v.CHANNEL149,
+            'bandwidth': '40',
+            'encryption': 'psk2',
+            'pwd': v.KEY,
+        }
+        api.setWifi(self.dut, self.__name__, **option5g)
+
+    @classmethod
+    def tearDownClass(self):
+        option5g = {
+            'wifiIndex': 2,
+            'on': 0,
+        }
+        api.setWifi(self.dut, self.__name__, **option5g)
+        self.dut.close()
+
+    def assoc_sta_throughput_5g(self):
+        res5gConn = setAdbPsk2Sta(v.ANDROID_SERIAL_NUM, v.SSID_5G, v.KEY, "5g", self.__class__.__name__)
+
+        if res5gConn is True:
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
+            iperfOn = SetAdbIperfOn(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
+            iperfOn.start()
+            t.sleep(3.0)
+            ret = setIperfFlow(result["ip"], v.IPERF_INTERVAL, v.IPERF_TIME, self.__class__.__name__)
+            self.assertTrue(ret, "Excute iperf flow error, connection refused.")
+        else:
+            self.assertTrue(res5gConn, "Connecting wifi is failed.")
+
+
+class AP_PSK2_CHAN157_BW40_THROUGHPUT(TestCase):
+    @classmethod
+    def setUpClass(self):
+
+        self.dut = api.HttpClient()
+        ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
+        ret2 = chkAdbDevicesCount(1)
+
+        if ret1 is False:
+            raise Exception("Http connection is failed. please check your remote settings.")
+
+        if ret2 is False:
+            raise Exception("USB devices arenot ready!")
+
+        option5g = {
+            'wifiIndex': 2,
+            'ssid': v.SSID_5G,
+            'channel': v.CHANNEL157,
+            'bandwidth': '40',
+            'encryption': 'psk2',
+            'pwd': v.KEY,
+        }
+        api.setWifi(self.dut, self.__name__, **option5g)
+
+    @classmethod
+    def tearDownClass(self):
+        option5g = {
+            'wifiIndex': 2,
+            'on': 0,
+        }
+        api.setWifi(self.dut, self.__name__, **option5g)
+        self.dut.close()
+
+    def assoc_sta_throughput_5g(self):
+        res5gConn = setAdbPsk2Sta(v.ANDROID_SERIAL_NUM, v.SSID_5G, v.KEY, "5g", self.__class__.__name__)
+
+        if res5gConn is True:
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
+            iperfOn = SetAdbIperfOn(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
+            iperfOn.start()
+            t.sleep(3.0)
+            ret = setIperfFlow(result["ip"], v.IPERF_INTERVAL, v.IPERF_TIME, self.__class__.__name__)
+            self.assertTrue(ret, "Excute iperf flow error, connection refused.")
+        else:
+            self.assertTrue(res5gConn, "Connecting wifi is failed.")
+
+
+class AP_PSK2_CHAN36_BW80_THROUGHPUT(TestCase):
+    @classmethod
+    def setUpClass(self):
+
+        self.dut = api.HttpClient()
+        ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
+        ret2 = chkAdbDevicesCount(1)
+
+        if ret1 is False:
+            raise Exception("Http connection is failed. please check your remote settings.")
+
+        if ret2 is False:
+            raise Exception("USB devices arenot ready!")
+
+        option5g = {
+            'wifiIndex': 2,
+            'ssid': v.SSID_5G,
+            'channel': v.CHANNEL36,
+            'bandwidth': '80',
+            'encryption': 'psk2',
+            'pwd': v.KEY,
+        }
+        api.setWifi(self.dut, self.__name__, **option5g)
+
+    @classmethod
+    def tearDownClass(self):
+        option5g = {
+            'wifiIndex': 2,
+            'on': 0,
+        }
+        api.setWifi(self.dut, self.__name__, **option5g)
+        self.dut.close()
+
+    def assoc_sta_throughput_5g(self):
+        res5gConn = setAdbPsk2Sta(v.ANDROID_SERIAL_NUM, v.SSID_5G, v.KEY, "5g", self.__class__.__name__)
+
+        if res5gConn is True:
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
+            iperfOn = SetAdbIperfOn(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
+            iperfOn.start()
+            t.sleep(3.0)
+            ret = setIperfFlow(result["ip"], v.IPERF_INTERVAL, v.IPERF_TIME, self.__class__.__name__)
+            self.assertTrue(ret, "Excute iperf flow error, connection refused.")
+        else:
+            self.assertTrue(res5gConn, "Connecting wifi is failed.")
+
+
+class AP_PSK2_CHAN52_BW80_THROUGHPUT(TestCase):
+    @classmethod
+    def setUpClass(self):
+
+        self.dut = api.HttpClient()
+        ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
+        ret2 = chkAdbDevicesCount(1)
+
+        if ret1 is False:
+            raise Exception("Http connection is failed. please check your remote settings.")
+
+        if ret2 is False:
+            raise Exception("USB devices arenot ready!")
+
+        option5g = {
+            'wifiIndex': 2,
+            'ssid': v.SSID_5G,
+            'channel': v.CHANNEL52,
+            'bandwidth': '80',
+            'encryption': 'psk2',
+            'pwd': v.KEY,
+        }
+        api.setWifi(self.dut, self.__name__, **option5g)
+
+    @classmethod
+    def tearDownClass(self):
+        option5g = {
+            'wifiIndex': 2,
+            'on': 0,
+        }
+        api.setWifi(self.dut, self.__name__, **option5g)
+        self.dut.close()
+
+    def assoc_sta_throughput_5g(self):
+        res5gConn = setAdbPsk2Sta(v.ANDROID_SERIAL_NUM, v.SSID_5G, v.KEY, "5g", self.__class__.__name__)
+
+        if res5gConn is True:
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
+            iperfOn = SetAdbIperfOn(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
+            iperfOn.start()
+            t.sleep(3.0)
+            ret = setIperfFlow(result["ip"], v.IPERF_INTERVAL, v.IPERF_TIME, self.__class__.__name__)
+            self.assertTrue(ret, "Excute iperf flow error, connection refused.")
+        else:
+            self.assertTrue(res5gConn, "Connecting wifi is failed.")
+
+
+class AP_PSK2_CHAN149_BW80_THROUGHPUT(TestCase):
+    @classmethod
+    def setUpClass(self):
+
+        self.dut = api.HttpClient()
+        ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
+        ret2 = chkAdbDevicesCount(1)
+
+        if ret1 is False:
+            raise Exception("Http connection is failed. please check your remote settings.")
+
+        if ret2 is False:
+            raise Exception("USB devices arenot ready!")
+
+        option5g = {
+            'wifiIndex': 2,
+            'ssid': v.SSID_5G,
+            'channel': v.CHANNEL149,
+            'bandwidth': '80',
+            'encryption': 'psk2',
+            'pwd': v.KEY,
+        }
+        api.setWifi(self.dut, self.__name__, **option5g)
+
+    @classmethod
+    def tearDownClass(self):
+        option5g = {
+            'wifiIndex': 2,
+            'on': 0,
+        }
+        api.setWifi(self.dut, self.__name__, **option5g)
+        self.dut.close()
+
+    def assoc_sta_throughput_5g(self):
+        res5gConn = setAdbPsk2Sta(v.ANDROID_SERIAL_NUM, v.SSID_5G, v.KEY, "5g", self.__class__.__name__)
+
+        if res5gConn is True:
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
+            iperfOn = SetAdbIperfOn(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
+            iperfOn.start()
+            t.sleep(3.0)
+            ret = setIperfFlow(result["ip"], v.IPERF_INTERVAL, v.IPERF_TIME, self.__class__.__name__)
+            self.assertTrue(ret, "Excute iperf flow error, connection refused.")
+        else:
+            self.assertTrue(res5gConn, "Connecting wifi is failed.")
+
+
 class AP_CHECK(TestCase):
     @classmethod
     def setUpClass(self):
@@ -13136,14 +13811,14 @@ class AP_CHECK(TestCase):
             'ssid': 'peanuts_check',
             'encryption': 'mixed-psk',
             'pwd': v.KEY,
-            'channel': v.CHANNEL,
+            'channel': v.CHANNEL11,
         }
         option5g = {
             'wifiIndex': 2,
             'ssid': 'peanuts_check',
             'encryption': 'mixed',
             'pwd': v.KEY,
-            'channel': v.CHANNEL_5G,
+            'channel': v.CHANNEL149,
         }
         api.setWifi(self.dut2, self.__name__, **option2g)
         api.setWifi(self.dut2, self.__name__, **option5g)

@@ -9,7 +9,7 @@ from common import *
 import processreport as pr
 
 
-def sendMail(to_list, sub, content, attach1=None, attach2=None, pic_list=None):  #to_list：收件人；sub：主题；content：邮件内容
+def sendMail(to_list, sub, content, attach1=None, attach2=None, attach3=None, pic_list=None):  #to_list：收件人；sub：主题；content：邮件内容
 
     me="<"+v.MAIL_USER+"@"+v.MAIL_POSTFIX+">"   #收到信后，将按照设置显示
     msg = MIMEMultipart()   #创建一个实例
@@ -31,22 +31,28 @@ def sendMail(to_list, sub, content, attach1=None, attach2=None, pic_list=None): 
         att2.add_header('Content-Disposition', 'attachment', filename="Memory Tracking.xlsx")
         msg.attach(att2)
 
-    #attach2
-    att3 = MIMEText(content, _subtype='html', _charset='utf8')
-    msg.attach(att3)
+    if attach3 is not None:
+        # xlsx类型附件
+        att3 = MIMEApplication(open(attach3, 'rb').read())
+        att3.add_header('Content-Disposition', 'attachment', filename="Throughput.xlsx")
+        msg.attach(att3)
 
-    #attach3
+    #attach4
+    att4 = MIMEText(content, _subtype='html', _charset='utf8')
+    msg.attach(att4)
+
+    #attach5
     if pic_list is not None:
         cnt = 0
         for pic in pic_list:
             cnt += 1
             fp = open(pic, "rb")
-            att4 = MIMEImage(fp.read(), _subtype="png")
+            att5 = MIMEImage(fp.read(), _subtype="png")
             fp.close()
-            att4.add_header('Content-ID', '<'+pic+'>')
-            att4["Content-Type"] = 'application/octet-stream'
-            att4["Content-Disposition"] = 'attachment; filename="chart.png"'
-            msg.attach(att4)
+            att5.add_header('Content-ID', '<'+pic+'>')
+            att5["Content-Type"] = 'application/octet-stream'
+            att5["Content-Disposition"] = 'attachment; filename="chart.png"'
+            msg.attach(att5)
 
     try:
         s = smtplib.SMTP()
@@ -60,7 +66,7 @@ def sendMail(to_list, sub, content, attach1=None, attach2=None, pic_list=None): 
         return False
 
 
-def generateMail(maillist, title, queue=None, attach1=None, attach2=None):
+def generateMail(maillist, title, queue=None, attach1=None, attach2=None, attach3=None):
     if queue is not None:
         argsdic = queue.get(True)
         module = argsdic.get('module')
@@ -70,19 +76,17 @@ def generateMail(maillist, title, queue=None, attach1=None, attach2=None):
     print argsdic
     content1 = """
         <p>本次自动化成功执行用例 %(sum)d 个，通过%(ranpass)d 个，通过率 %(percent)0.2f%%。有%(error)d个脚本执行错误，共用时 %(time)0.2f 小时 </p>
-        <p>无线终端尝试上线 %(onlinesum)d 次，成功上线 %(onlinepass)d 次，上线率 %(onlinepercent)0.2f%%。</p>
+        <p>无线终端尝试上线 %(onlinesum)d 次，成功上线 %(onlinepass)d 次，上线率 %(onlinepercent)0.2f%%</p>
         """ % argsdic
 
     content4 = """
-        <p>覆盖模块：%s。</p>
+        <p>覆盖模块：%s</p>
         """ % "".join(module)
 
     content2 = """
-        <p>wifi吞吐测试结果如下：</p>
-        <p><img src="cid:throughput.png" alt="throughput.png" /></p>
-        <p><img src="cid:throughput_in_AES.png" alt="throughput_in_AES.png" /></p>
-        <p><img src="cid:throughput_in_Clear.png" alt="throughput_in_Clear.png" /></p>
-        <p><img src="cid:throughput_in_TKIP.png" alt="throughput_in_TKIP.png" /></p>
+        <p>wifi吞吐测试概览如下，详细数据请查看附件：</p>
+        <p><img src="cid:throughput_2g.png" alt="throughput_2g.png" /></p>
+        <p><img src="cid:throughput_5g.png" alt="throughput_5g.png" /></p>
         """
     content3 = """
         <p>系统状态如下：</p>
@@ -97,25 +101,21 @@ def generateMail(maillist, title, queue=None, attach1=None, attach2=None):
         contents = "{0}{1}{2}".format(content1, content4, content3)
         if os.path.isfile(v.MAIL_PIC2):
             piclist.append(v.MAIL_PIC2)
-            if os.path.isfile(v.MAIL_PIC3%"AES"):
-                piclist.append(v.MAIL_PIC3%"AES")
-            if os.path.isfile(v.MAIL_PIC3%"TKIP"):
-                piclist.append(v.MAIL_PIC3%"TKIP")
-            if os.path.isfile(v.MAIL_PIC3%"Clear"):
-                piclist.append(v.MAIL_PIC3%"Clear")
+            if os.path.isfile(v.MAIL_PIC3):
+                piclist.append(v.MAIL_PIC3)
             contents = "{0}{1}{2}{3}".format(content1, content4, content2, content3)
-        return sendMail(maillist, title, contents, attach1, attach2, piclist)
+        return sendMail(maillist, title, contents, attach1, attach2, attach3, piclist)
 
 
 if __name__ == '__main__':
     import multiprocessing as mp
-    report = "R3L daily build 2.5.58.log".decode("utf8").encode("gbk")
+    report = "report.log".decode("utf8").encode("gbk")
     q = mp.Queue() # tranlate test result to generateMail
     ret = pr.ProcessReport(report, q)
     ret.start()
     ret.join()
 
-    if generateMail(["liujia5@xiaomi.com"], "test", q, report, v.MAIL_XLSX):
+    if generateMail(["liujia5@xiaomi.com"], "test", q, report, v.MAIL_XLSX, v.TEST_SUITE_LOG_PATH + v.MAIL_THROUGHPUT_XLSX):
         print "successful"
     else:
         print "failed"

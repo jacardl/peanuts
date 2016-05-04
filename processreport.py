@@ -129,474 +129,48 @@ class GetTestResult(threading.Thread):
         self.running = False
 
 
-class GetFlowLog(threading.Thread):
-    """
-    {'tx2gClear': 50.9, 'rx2gTkip': 17.7, 'tx5gAes': 93.27, 'rx2gClear': 42.4, 'tx5gTkip': 26.4, 'rx2gAes': 39.1,
-    'tx5gClear': 93.6, 'tx2gAes': 47.83, 'rx5gTkip': 19.8, 'rx5gAes': 52.2, 'tx2gTkip': 26.45, 'rx5gClear': 57.4}
-
-    """
-    def __init__(self, report):
-        threading.Thread.__init__(self)
-        self.running = False
-        self.reportName = report
-        self.logPath = v.TEST_SUITE_LOG_PATH
-        self.result = {
-            "tx2gAes": [],
-            "rx2gAes": [],
-            "tx2gTkip": [],
-            "rx2gTkip": [],
-            "tx2gClear": [],
-            "rx2gClear": [],
-            "tx5gAes": [],
-            "rx5gAes": [],
-            "tx5gTkip": [],
-            "rx5gTkip": [],
-            "tx5gClear": [],
-            "rx5gClear": [],
-            }
-        self.resultAes = {
-            "tx1": [],
-            "rx1": [],
-            "tx6": [],
-            "rx6": [],
-            "tx11": [],
-            "rx11": [],
-            "tx13": [],
-            "rx13": [],
-            "tx36": [],
-            "rx36": [],
-            "tx52": [],
-            "rx52": [],
-            "tx149": [],
-            "rx149": [],
-            "tx165": [],
-            "rx165": [],
-            }
-        self.resultTkip = {
-            "tx1": [],
-            "rx1": [],
-            "tx6": [],
-            "rx6": [],
-            "tx11": [],
-            "rx11": [],
-            "tx13": [],
-            "rx13": [],
-            "tx36": [],
-            "rx36": [],
-            "tx52": [],
-            "rx52": [],
-            "tx149": [],
-            "rx149": [],
-            "tx165": [],
-            "rx165": [],
-            }
-        self.resultClear = {
-            "tx1": [],
-            "rx1": [],
-            "tx6": [],
-            "rx6": [],
-            "tx11": [],
-            "rx11": [],
-            "tx13": [],
-            "rx13": [],
-            "tx36": [],
-            "rx36": [],
-            "tx52": [],
-            "rx52": [],
-            "tx149": [],
-            "rx149": [],
-            "tx165": [],
-            "rx165": [],
-            }
-
-    def run(self):
-        self.running = True
-        logFile = None
-        logFileList = list()
-        report = open(self.reportName)
-        for line in report:
-            if not line.isspace():
-                m = re.search('testcase.*\.(AP_.*_FLOW\d?)', line)
-                if m:
-                    logFile = m.group(1) + ".log"
-                    logFile = self.logPath + logFile
-                    if logFile not in logFileList:
-                        logFileList.append(logFile)
-        report.close()
-        if len(logFileList) != 0:
-            sw = {
-                "2gpsk2tx": 'self.result["tx2gAes"].extend(ret["2gpsk2tx"])',
-                "2gpsk2rx": 'self.result["rx2gAes"].extend(ret["2gpsk2rx"])',
-                "5gpsk2tx": 'self.result["tx5gAes"].extend(ret["5gpsk2tx"])',
-                "5gpsk2rx": 'self.result["rx5gAes"].extend(ret["5gpsk2rx"])',
-                "2gpsktx": 'self.result["tx2gAes"].extend(ret["2gpsktx"])',
-                "2gpskrx": 'self.result["rx2gAes"].extend(ret["2gpskrx"])',
-                "5gpsktx": 'self.result["tx5gAes"].extend(ret["5gpsktx"])',
-                "5gpskrx": 'self.result["rx5gAes"].extend(ret["5gpskrx"])',
-                "2gtkippsk2tx": 'self.result["tx2gTkip"].extend(ret["2gtkippsk2tx"])',
-                "2gtkippsk2rx": 'self.result["rx2gTkip"].extend(ret["2gtkippsk2rx"])',
-                "5gtkippsk2tx": 'self.result["tx5gTkip"].extend(ret["5gtkippsk2tx"])',
-                "5gtkippsk2rx": 'self.result["rx5gTkip"].extend(ret["5gtkippsk2rx"])',
-                "2gtkippsktx": 'self.result["tx2gTkip"].extend(ret["2gtkippsktx"])',
-                "2gtkippskrx": 'self.result["rx2gTkip"].extend(ret["2gtkippskrx"])',
-                "5gtkippsktx": 'self.result["tx5gTkip"].extend(ret["5gtkippsktx"])',
-                "5gtkippskrx": 'self.result["rx5gTkip"].extend(ret["5gtkippskrx"])',
-                "2gcleartx": 'self.result["tx2gClear"].extend(ret["2gcleartx"])',
-                "2gclearrx": 'self.result["rx2gClear"].extend(ret["2gclearrx"])',
-                "5gcleartx": 'self.result["tx5gClear"].extend(ret["5gcleartx"])',
-                "5gclearrx": 'self.result["rx5gClear"].extend(ret["5gclearrx"])',
-                }
-            sw2 = {
-                "tx1psk2": 'self.resultAes["tx1"].extend(ret2["tx1psk2"])',
-                "rx1psk2": 'self.resultAes["rx1"].extend(ret2["rx1psk2"])',
-                "tx6psk2": 'self.resultAes["tx6"].extend(ret2["tx6psk2"])',
-                "rx6psk2": 'self.resultAes["rx6"].extend(ret2["rx6psk2"])',
-                "tx11psk2": 'self.resultAes["tx11"].extend(ret2["tx11psk2"])',
-                "rx11psk2": 'self.resultAes["rx11"].extend(ret2["rx11psk2"])',
-                "tx13psk2": 'self.resultAes["tx13"].extend(ret2["tx13psk2"])',
-                "rx13psk2": 'self.resultAes["rx13"].extend(ret2["rx13psk2"])',
-                "tx1psk": 'self.resultAes["tx1"].extend(ret2["tx1psk"])',
-                "rx1psk": 'self.resultAes["rx1"].extend(ret2["rx1psk"])',
-                "tx6psk": 'self.resultAes["tx6"].extend(ret2["tx6psk"])',
-                "rx6psk": 'self.resultAes["rx6"].extend(ret2["rx6psk"])',
-                "tx11psk": 'self.resultAes["tx11"].extend(ret2["tx11psk"])',
-                "rx11psk": 'self.resultAes["rx11"].extend(ret2["rx11psk"])',
-                "tx13psk": 'self.resultAes["tx13"].extend(ret2["tx13psk"])',
-                "rx13psk": 'self.resultAes["rx13"].extend(ret2["rx13psk"])',
-                "tx1tkippsk2": 'self.resultTkip["tx1"].extend(ret2["tx1tkippsk2"])',
-                "rx1tkippsk2": 'self.resultTkip["rx1"].extend(ret2["rx1tkippsk2"])',
-                "tx6tkippsk2": 'self.resultTkip["tx6"].extend(ret2["tx6tkippsk2"])',
-                "rx6tkippsk2": 'self.resultTkip["rx6"].extend(ret2["rx6tkippsk2"])',
-                "tx11tkippsk2": 'self.resultTkip["tx11"].extend(ret2["tx11tkippsk2"])',
-                "rx11tkippsk2": 'self.resultTkip["rx11"].extend(ret2["rx11tkippsk2"])',
-                "tx13tkippsk2": 'self.resultTkip["tx13"].extend(ret2["tx13tkippsk2"])',
-                "rx13tkippsk2": 'self.resultTkip["rx13"].extend(ret2["rx13tkippsk2"])',
-                "tx1tkippsk": 'self.resultTkip["tx1"].extend(ret2["tx1tkippsk"])',
-                "rx1tkippsk": 'self.resultTkip["rx1"].extend(ret2["rx1tkippsk"])',
-                "tx6tkippsk": 'self.resultTkip["tx6"].extend(ret2["tx6tkippsk"])',
-                "rx6tkippsk": 'self.resultTkip["rx6"].extend(ret2["rx6tkippsk"])',
-                "tx11tkippsk": 'self.resultTkip["tx11"].extend(ret2["tx11tkippsk"])',
-                "rx11tkippsk": 'self.resultTkip["rx11"].extend(ret2["rx11tkippsk"])',
-                "tx13tkippsk": 'self.resultTkip["tx13"].extend(ret2["tx13tkippsk"])',
-                "rx13tkippsk": 'self.resultTkip["rx13"].extend(ret2["rx13tkippsk"])',
-                "tx1clear": 'self.resultClear["tx1"].extend(ret2["tx1clear"])',
-                "rx1clear": 'self.resultClear["rx1"].extend(ret2["rx1clear"])',
-                "tx6clear": 'self.resultClear["tx6"].extend(ret2["tx6clear"])',
-                "rx6clear": 'self.resultClear["rx6"].extend(ret2["rx6clear"])',
-                "tx11clear": 'self.resultClear["tx11"].extend(ret2["tx11clear"])',
-                "rx11clear": 'self.resultClear["rx11"].extend(ret2["rx11clear"])',
-                "tx13clear": 'self.resultClear["tx13"].extend(ret2["tx13clear"])',
-                "rx13clear": 'self.resultClear["rx13"].extend(ret2["rx13clear"])',
-
-                "tx36psk2": 'self.resultAes["tx36"].extend(ret2["tx36psk2"])',
-                "rx36psk2": 'self.resultAes["rx36"].extend(ret2["rx36psk2"])',
-                "tx52psk2": 'self.resultAes["tx52"].extend(ret2["tx52psk2"])',
-                "rx52psk2": 'self.resultAes["rx52"].extend(ret2["rx52psk2"])',
-                "tx149psk2": 'self.resultAes["tx149"].extend(ret2["tx149psk2"])',
-                "rx149psk2": 'self.resultAes["rx149"].extend(ret2["rx149psk2"])',
-                "tx165psk2": 'self.resultAes["tx165"].extend(ret2["tx165psk2"])',
-                "rx165psk2": 'self.resultAes["rx165"].extend(ret2["rx165psk2"])',
-                "tx36psk": 'self.resultAes["tx36"].extend(ret2["tx36psk"])',
-                "rx36psk": 'self.resultAes["rx36"].extend(ret2["rx36psk"])',
-                "tx52psk": 'self.resultAes["tx52"].extend(ret2["tx52psk"])',
-                "rx52psk": 'self.resultAes["rx52"].extend(ret2["rx52psk"])',
-                "tx149psk": 'self.resultAes["tx149"].extend(ret2["tx149psk"])',
-                "rx149psk": 'self.resultAes["rx149"].extend(ret2["rx149psk"])',
-                "tx165psk": 'self.resultAes["tx165"].extend(ret2["tx165psk"])',
-                "rx165psk": 'self.resultAes["rx165"].extend(ret2["rx165psk"])',
-                "tx36tkippsk2": 'self.resultTkip["tx36"].extend(ret2["tx36tkippsk2"])',
-                "rx36tkippsk2": 'self.resultTkip["rx36"].extend(ret2["rx36tkippsk2"])',
-                "tx52tkippsk2": 'self.resultTkip["tx52"].extend(ret2["tx52tkippsk2"])',
-                "rx52tkippsk2": 'self.resultTkip["rx52"].extend(ret2["rx52tkippsk2"])',
-                "tx149tkippsk2": 'self.resultTkip["tx149"].extend(ret2["tx149tkippsk2"])',
-                "rx149tkippsk2": 'self.resultTkip["rx149"].extend(ret2["rx149tkippsk2"])',
-                "tx165tkippsk2": 'self.resultTkip["tx165"].extend(ret2["tx165tkippsk2"])',
-                "rx165tkippsk2": 'self.resultTkip["rx165"].extend(ret2["rx165tkippsk2"])',
-                "tx36tkippsk": 'self.resultTkip["tx36"].extend(ret2["tx36tkippsk"])',
-                "rx36tkippsk": 'self.resultTkip["rx36"].extend(ret2["rx36tkippsk"])',
-                "tx52tkippsk": 'self.resultTkip["tx52"].extend(ret2["tx52tkippsk"])',
-                "rx52tkippsk": 'self.resultTkip["rx52"].extend(ret2["rx52tkippsk"])',
-                "tx149tkippsk": 'self.resultTkip["tx149"].extend(ret2["tx149tkippsk"])',
-                "rx149tkippsk": 'self.resultTkip["rx149"].extend(ret2["rx149tkippsk"])',
-                "tx165tkippsk": 'self.resultTkip["tx165"].extend(ret2["tx165tkippsk"])',
-                "rx165tkippsk": 'self.resultTkip["rx165"].extend(ret2["rx165tkippsk"])',
-                "tx36clear": 'self.resultClear["tx36"].extend(ret2["tx36clear"])',
-                "rx36clear": 'self.resultClear["rx36"].extend(ret2["rx36clear"])',
-                "tx52clear": 'self.resultClear["tx52"].extend(ret2["tx52clear"])',
-                "rx52clear": 'self.resultClear["rx52"].extend(ret2["rx52clear"])',
-                "tx149clear": 'self.resultClear["tx149"].extend(ret2["tx149clear"])',
-                "rx149clear": 'self.resultClear["rx149"].extend(ret2["rx149clear"])',
-                "tx165clear": 'self.resultClear["tx165"].extend(ret2["tx165clear"])',
-                "rx165clear": 'self.resultClear["rx165"].extend(ret2["rx165clear"])',
-            }
-            for lf in logFileList:
-                ret = getFlowLogVerbose(lf)
-                ret2 = getChannelFlowLogVerbose(lf)
-                for key in ret.iterkeys():
-                    eval(sw.get(key))
-                for key in ret2.iterkeys():
-                    eval(sw2.get(key))
-            for key, value in self.result.iteritems():
-                if len(value) is not 0:
-                    ave = round(float(reduce(lambda i, j: float(i)+float(j), value))/len(value), 2)
-                    self.result[key] = ave
-                else:
-                    self.result[key] = 0
-            drawFlowLog(self.result)
-
-            for key, value in self.resultAes.iteritems():
-                if len(value) is not 0:
-                    ave = round(float(reduce(lambda i, j: float(i)+float(j), value))/len(value), 2)
-                    self.resultAes[key] = ave
-                else:
-                    self.resultAes[key] = 0
-            drawChannelFlowLog(self.resultAes, "AES")
-
-            for key, value in self.resultTkip.iteritems():
-                if len(value) is not 0:
-                    ave = round(float(reduce(lambda i, j: float(i)+float(j), value))/len(value), 2)
-                    self.resultTkip[key] = ave
-                else:
-                    self.resultTkip[key] = 0
-            drawChannelFlowLog(self.resultTkip, "TKIP")
-
-            for key, value in self.resultClear.iteritems():
-                if len(value) is not 0:
-                    ave = round(float(reduce(lambda i, j: float(i)+float(j), value))/len(value), 2)
-                    self.resultClear[key] = ave
-                else:
-                    self.resultClear[key] = 0
-            drawChannelFlowLog(self.resultClear, "Clear")
-            self.stop()
-        else:
-            self.stop()
-
-    def stop(self):
-        self.running = False
-
-
-def getFlowLogVerbose(logfile):
-    """
-    OrderedDict([('2gpsk2tx', ['47.7']), ('2gpsk2rx', ['38.8']), ('5gpsk2tx', ['92.8']), ('5gpsk2rx', ['47.0'])])
-    :param logfile:
-    :return:
-    """
-    rfEncrypto = None
-    result = OrderedDict()
-    try:
-        log = open(logfile)
-        for line in log:
-            if not line.isspace():
-                m = re.search('#test_assoc_(.*)_sta -e radio (\dg)', line)
-                if m:
-                    rfEncrypto = m.group(2) + m.group(1)  # 2gclear/2gpsk2...
-                    key1 = rfEncrypto + "tx"
-                    key2 = rfEncrypto + "rx"
-                    if not key1 in result:
-                        result[key1] = []
-                        result[key2] = []
-                    count1 = 2
-                    count2 = 0
-                n = re.search('\s0.0-\d{1,4}.*\s(\d{1,3}\.?\d{1,2})?\sMbits/sec', line)
-                if n:
-                    count2 += 1
-                    if count1 - count2 == 1:
-                        tx = n.group(1)
-                        result[rfEncrypto + "tx"].append(tx)
-                    elif count2 == count1:
-                        rx = n.group(1)
-                        result[rfEncrypto + "rx"].append(rx)
-        log.close()
-    except IOError as e:
-        raise e
-    return result
-
-
-def getChannelFlowLogVerbose(logfile):
-    """
-    OrderedDict([('tx1clear', ['28.9']), ('rx1clear', ['2.37']), ('tx36clear', ['126']), ('rx36clear', ['167'])])
-    """
-    channel2 = None
-    channel5 = None
-    m = re.search('CHAN(\d{1,3})_(\d{1,3})', logfile)
-    if m:
-        channel2 = m.group(1)
-        channel5 = m.group(2)
-
-    result = OrderedDict()
-    try:
-        log = open(logfile)
-        for line in log:
-            if not line.isspace():
-                m = re.search('#test_assoc_(.*)_sta -e radio (\dg)', line)
-                if m:
-                    encrypto = m.group(1)
-                    rf = m.group(2)
-                    if rf == "2g":
-                        key1 = 'tx' + channel2 + encrypto
-                        key2 = 'rx' + channel2 + encrypto
-                        if not key1 in result:
-                            result[key1] = []
-                            result[key2] = []
-                    elif rf == "5g":
-                        key1 = 'tx' + channel5 + encrypto
-                        key2 = 'rx' + channel5 + encrypto
-                        if not key1 in result:
-                            result[key1] = []
-                            result[key2] = []
-                    count1 = 2
-                    count2 = 0
-                n = re.search('\s0\.0-\d{1,4}.*\s(\d{1,3}(\.\d{1,2})?)\sMbits/sec', line)
-                if n:
-                    count2 += 1
-                    if count1 - count2 == 1:
-                        tx = n.group(1)
-                        sw2 = {
-                            "2g": "result['tx' + channel2 + encrypto].append(tx)",
-                            "5g": "result['tx' + channel5 + encrypto].append(tx)",
-                        }
-                        eval(sw2.get(rf))
-                    elif count2 == count1:
-                        rx = n.group(1)
-                        sw3 = {
-                            "2g": "result['rx' + channel2 + encrypto].append(rx)",
-                            "5g": "result['rx' + channel5 + encrypto].append(rx)",
-                        }
-                        eval(sw3.get(rf))
-        log.close()
-    except IOError as e:
-        raise e
-    return result
-
-
-def drawFlowLog(data):
-    bar_width = 0.42
-    opacity = 0.4
-    index = np.arange(6)
-    ret = data
-
-    tx = list()
-    rx = list()
-
-    tx.append(ret.get("tx5gAes"))
-    tx.append(ret.get("tx5gClear"))
-    tx.append(ret.get("tx5gTkip"))
-    tx.append(ret.get("tx2gAes"))
-    tx.append(ret.get("tx2gClear"))
-    tx.append(ret.get("tx2gTkip"))
-
-    rx.append(ret.get("rx5gAes"))
-    rx.append(ret.get("rx5gClear"))
-    rx.append(ret.get("rx5gTkip"))
-    rx.append(ret.get("rx2gAes"))
-    rx.append(ret.get("rx2gClear"))
-    rx.append(ret.get("rx2gTkip"))
-
-    fig, ax = plt.subplots(figsize=(12, 6))
-    print "draw flow chart"
-    # plt.subplots_adjust(left=0.08, right=0.95)
-    rects1 = plt.bar(index, tx, bar_width,
-                     alpha=opacity,
-                     color='b',
-                     label='Tx'
-                     )
-
-    rects2 = plt.bar(index + bar_width, rx, bar_width,
-                     alpha=opacity,
-                     color='r',
-                     label='Rx'
-                     )
-
-    def autolabel(rects):
-        # attach some text labels
-        for rect in rects:
-            height = rect.get_height()
-            ax.text(rect.get_x()+rect.get_width()/2., 0.75*height, '%.1f'%float(height),
-                    ha='center', va='bottom')
-
-    autolabel(rects1)
-    autolabel(rects2)
-
-    plt.xlabel('Radio & Cipher Suite')
-    plt.ylabel('Mbps')
-    plt.suptitle(v.MAIL_PIC2.split(".")[0].title())
-    plt.xticks(index + bar_width, ('5g_AES', '5g_Clear', '5g_TKIP',  '2.4g_AES', '2.4g_Clear', '2.4g_TKIP',))
-    plt.legend()
-
-    # plt.show()
-    plt.savefig(v.MAIL_PIC2)
-    plt.close()
-
-
-def drawChannelFlowLog(data, encrypto):
-    bar_width = 0.42
-    opacity = 0.4
-    index = np.arange(8)
-    ret = data
-    title = v.MAIL_PIC3.split(".")[0]%encrypto
-    title = title.replace("_", " ")
-    tx = list()
-    rx = list()
-    tx.append(ret.get("tx36"))
-    tx.append(ret.get("tx52"))
-    tx.append(ret.get("tx149"))
-    tx.append(ret.get("tx165"))
-    tx.append(ret.get("tx1"))
-    tx.append(ret.get("tx6"))
-    tx.append(ret.get("tx11"))
-    tx.append(ret.get("tx13"))
-    rx.append(ret.get("rx36"))
-    rx.append(ret.get("rx52"))
-    rx.append(ret.get("rx149"))
-    rx.append(ret.get("rx165"))
-    rx.append(ret.get("rx1"))
-    rx.append(ret.get("rx6"))
-    rx.append(ret.get("rx11"))
-    rx.append(ret.get("rx13"))
-
-    fig, ax = plt.subplots(figsize=(12, 6))
-    print "draw channel flow in %s"%encrypto
-    # plt.subplots_adjust(left=0.08, right=0.95)
-    rects1 = plt.bar(index, tx, bar_width,
-                     alpha=opacity,
-                     color='b',
-                     label='Tx'
-                     )
-
-    rects2 = plt.bar(index + bar_width, rx, bar_width,
-                     alpha=opacity,
-                     color='r',
-                     label='Rx'
-                     )
-
-    def autolabel(rects):
-        # attach some text labels
-        for rect in rects:
-            height = rect.get_height()
-            ax.text(rect.get_x()+rect.get_width()/2., 0.75*height, '%.1f'%float(height),
-                    ha='center', va='bottom')
-
-    autolabel(rects1)
-    autolabel(rects2)
-
-    plt.xlabel('Channel')
-    plt.ylabel('Mbps')
-    # plt.title(title)
-    plt.suptitle(title.title())
-    plt.xticks(index + bar_width, ('36', '52', '149', '165', '1', '6', '11', '13'))
-    plt.legend()
-
-    # plt.show()
-    picName = v.MAIL_PIC3%encrypto
-    plt.savefig(picName)
-    plt.close()
-
-
 class GetThroughputLog(threading.Thread):
     def __init__(self, report):
         threading.Thread.__init__(self)
         self.reportName = report
         self.logPath = v.TEST_SUITE_LOG_PATH
+        self.result2g = {
+            '20tx': [],
+            '20rx': [],
+            '40tx': [],
+            '40rx': [],
+        }
+        self.result5g = {
+            '20tx': [],
+            '40tx': [],
+            '80tx': [],
+            '20rx': [],
+            '40rx': [],
+            '80rx': [],
+        }
+        self.sw = {
+            'CH1 20M': "self.result2g['20tx'].append(speedDict['tx']), self.result2g['20rx'].append(speedDict['rx'])",
+            'CH6 20M': "self.result2g['20tx'].append(speedDict['tx']), self.result2g['20rx'].append(speedDict['rx'])",
+            'CH11 20M': "self.result2g['20tx'].append(speedDict['tx']), self.result2g['20rx'].append(speedDict['rx'])",
+            'CH13 20M': "self.result2g['20tx'].append(speedDict['tx']), self.result2g['20rx'].append(speedDict['rx'])",
+            'CH1 40M': "self.result2g['40tx'].append(speedDict['tx']), self.result2g['40rx'].append(speedDict['rx'])",
+            'CH6 40M': "self.result2g['40tx'].append(speedDict['tx']), self.result2g['40rx'].append(speedDict['rx'])",
+            'CH11 40M': "self.result2g['40tx'].append(speedDict['tx']), self.result2g['40rx'].append(speedDict['rx'])",
+            'CH13 40M': "self.result2g['40tx'].append(speedDict['tx']), self.result2g['40rx'].append(speedDict['rx'])",
+            'CH36 20M': "self.result5g['20tx'].append(speedDict['tx']), self.result5g['20rx'].append(speedDict['rx'])",
+            'CH52 20M': "self.result5g['20tx'].append(speedDict['tx']), self.result5g['20rx'].append(speedDict['rx'])",
+            'CH149 20M': "self.result5g['20tx'].append(speedDict['tx']), self.result5g['20rx'].append(speedDict['rx'])",
+            'CH165 20M': "self.result5g['20tx'].append(speedDict['tx']), self.result5g['20rx'].append(speedDict['rx'])",
+            'CH36 40M': "self.result5g['40tx'].append(speedDict['tx']), self.result5g['40rx'].append(speedDict['rx'])",
+            'CH44 40M': "self.result5g['40tx'].append(speedDict['tx']), self.result5g['40rx'].append(speedDict['rx'])",
+            'CH52 40M': "self.result5g['40tx'].append(speedDict['tx']), self.result5g['40rx'].append(speedDict['rx'])",
+            'CH60 40M': "self.result5g['40tx'].append(speedDict['tx']), self.result5g['40rx'].append(speedDict['rx'])",
+            'CH149 40M': "self.result5g['40tx'].append(speedDict['tx']), self.result5g['40rx'].append(speedDict['rx'])",
+            'CH157 40M': "self.result5g['40tx'].append(speedDict['tx']), self.result5g['40rx'].append(speedDict['rx'])",
+            'CH36 80M': "self.result5g['80tx'].append(speedDict['tx']), self.result5g['80rx'].append(speedDict['rx'])",
+            'CH52 80M': "self.result5g['80tx'].append(speedDict['tx']), self.result5g['80rx'].append(speedDict['rx'])",
+            'CH149 80M': "self.result5g['80tx'].append(speedDict['tx']), self.result5g['80rx'].append(speedDict['rx'])",
+        }
 
     def run(self):
         indexList = list()
@@ -620,6 +194,7 @@ class GetThroughputLog(threading.Thread):
         ws = wb["Sheet1"]
         for tu in indexList:
             speedDict = getThroughputLogVerbose(tu[0])
+            eval(self.sw.get(tu[1]))
             for cell in ws.get_cell_collection():
                 if tu[1] == cell.value:
                     x = cell.row
@@ -640,6 +215,23 @@ class GetThroughputLog(threading.Thread):
                     ws.cell(row=x, column=y).value = speedDict['rx']
                     break
         wb.save(self.logPath + v.MAIL_THROUGHPUT_XLSX)
+
+        for key, value in self.result2g.iteritems():
+            if len(value) is not 0:
+                ave = round(float(reduce(lambda i, j: float(i)+float(j), value))/len(value), 2)
+                self.result2g[key] = ave
+            else:
+                self.result2g[key] = 0
+
+        for key, value in self.result5g.iteritems():
+            if len(value) is not 0:
+                ave = round(float(reduce(lambda i, j: float(i)+float(j), value))/len(value), 2)
+                self.result5g[key] = ave
+            else:
+                self.result5g[key] = 0
+
+        drawThroughput2g(self.result2g)
+        drawThroughput5g(self.result5g)
 
 
 def getThroughputLogVerbose(logfile):
@@ -664,6 +256,107 @@ def getThroughputLogVerbose(logfile):
         raise e
     return result
 
+
+def drawThroughput2g(data):
+    bar_width = 0.42
+    opacity = 0.4
+    index = np.arange(2)
+    ret = data
+
+    tx = list()
+    rx = list()
+
+    tx.append(ret.get("20tx"))
+    tx.append(ret.get("40tx"))
+    rx.append(ret.get("20rx"))
+    rx.append(ret.get("40rx"))
+
+    fig, ax = plt.subplots(figsize=(8, 6))
+    print "draw 2.4g throughput chart"
+    # plt.subplots_adjust(left=0.08, right=0.95)
+    rects1 = plt.bar(index, tx, bar_width,
+                     alpha=opacity,
+                     color='b',
+                     label='Tx'
+                     )
+
+    rects2 = plt.bar(index + bar_width, rx, bar_width,
+                     alpha=opacity,
+                     color='r',
+                     label='Rx'
+                     )
+
+    def autolabel(rects):
+        # attach some text labels
+        for rect in rects:
+            height = rect.get_height()
+            ax.text(rect.get_x()+rect.get_width()/2., 0.75*height, '%.1f'%float(height),
+                    ha='center', va='bottom')
+
+    autolabel(rects1)
+    autolabel(rects2)
+
+    plt.xlabel('Bandwidth')
+    plt.ylabel('Mbps')
+    plt.suptitle(v.MAIL_PIC2.split(".")[0].title())
+    plt.xticks(index + bar_width, ('20MHz', '40MHz',))
+    plt.legend()
+
+    # plt.show()
+    plt.savefig(v.MAIL_PIC2)
+    plt.close()
+
+
+def drawThroughput5g(data):
+    bar_width = 0.42
+    opacity = 0.4
+    index = np.arange(3)
+    ret = data
+
+    tx = list()
+    rx = list()
+
+    tx.append(ret.get("20tx"))
+    tx.append(ret.get("40tx"))
+    tx.append(ret.get("80tx"))
+    rx.append(ret.get("20rx"))
+    rx.append(ret.get("40rx"))
+    rx.append(ret.get("80rx"))
+
+    fig, ax = plt.subplots(figsize=(8, 6))
+    print "draw 5g throughputchart"
+    # plt.subplots_adjust(left=0.08, right=0.95)
+    rects1 = plt.bar(index, tx, bar_width,
+                     alpha=opacity,
+                     color='b',
+                     label='Tx'
+                     )
+
+    rects2 = plt.bar(index + bar_width, rx, bar_width,
+                     alpha=opacity,
+                     color='r',
+                     label='Rx'
+                     )
+
+    def autolabel(rects):
+        # attach some text labels
+        for rect in rects:
+            height = rect.get_height()
+            ax.text(rect.get_x()+rect.get_width()/2., 0.75*height, '%.1f'%float(height),
+                    ha='center', va='bottom')
+
+    autolabel(rects1)
+    autolabel(rects2)
+
+    plt.xlabel('Bandwidth')
+    plt.ylabel('Mbps')
+    plt.suptitle(v.MAIL_PIC3.split(".")[0].title())
+    plt.xticks(index + bar_width, ('20MHz', '40MHz', '80MHz'))
+    plt.legend()
+
+    # plt.show()
+    plt.savefig(v.MAIL_PIC3)
+    plt.close()
 
 
 class GetOnlineLog(threading.Thread):
@@ -747,7 +440,8 @@ class GetTestModule(threading.Thread):
                             if self.moduleDict.get(module) not in self.result:
                                 self.result.append(self.moduleDict.get(module))
                                 self.result.append('，')
-        del self.result[-1]
+        if len(self.result) > 0:
+            del self.result[-1]
         f.close()
         self.stop()
 

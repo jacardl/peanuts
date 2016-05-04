@@ -675,7 +675,7 @@ class TestSuitePage(wx.Panel):
 
             if v.SEND_MAIL == 1:
                 # add Queue to communicate with processreport process
-                sm.generateMail(v.MAILTO_LIST, self.mailTitle, q, self.reportFile, v.MAIL_XLSX)
+                sm.generateMail(v.MAILTO_LIST, self.mailTitle, q, self.reportFile, v.MAIL_XLSX, v.TEST_SUITE_LOG_PATH + v.MAIL_THROUGHPUT_XLSX)
 
             files = os.listdir(v.DEFAULT_PATH)
             for file in files:

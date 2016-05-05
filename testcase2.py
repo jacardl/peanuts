@@ -9216,7 +9216,6 @@ class AP_WIRELESS_RELAY_CLEAR_CHAN(TestCase):
             'wifiIndex': 1,
             'ssid': v.SSID,
             'encryption': 'none',
-            'channel': v.CHANNEL11,
         }
         option5g = {
             'wifiIndex': 2,
@@ -10571,7 +10570,6 @@ class AP_WIRELESS_RELAY_MIXEDPSK_CHAN_BW40(TestCase):
         option2g = {
             'wifiIndex': 1,
             'ssid': v.SSID,
-            'channel': v.CHANNEL11,
             'encryption': 'mixed-psk',
             'pwd': v.KEY,
             'bandwidth': '40'
@@ -10745,7 +10743,6 @@ class AP_WIRELESS_RELAY_MIXEDPSK_CHAN_BW20(TestCase):
         option2g = {
             'wifiIndex': 1,
             'ssid': v.SSID,
-            'channel': v.CHANNEL11,
             'encryption': 'mixed-psk',
             'pwd': v.KEY,
             'bandwidth': '20'

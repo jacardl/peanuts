@@ -13,6 +13,7 @@ import threading
 import var as v
 import common
 
+
 def getWebLoginNonce():
     """
     type : Client 的类型，0[web] 1[Android] 2[iOS] 3[Mac] 4[PC]
@@ -1132,9 +1133,10 @@ if __name__ == '__main__':
     option = {
         'ssid': 'MI-MAC',
     }
-    v.HOST = '192.168.130.1'
+    v.HOST = '192.168.15.111'
     v.WEB_PWD = '12345678'
     webclient = HttpClient()
     webclient.connect(host=v.HOST, password=v.WEB_PWD)
-    setUploadLog(webclient, 'a')
+    # setWifiAp(webclient, "a")
+    setDisableAp(webclient, 'a')
     webclient.close()

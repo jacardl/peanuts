@@ -74,42 +74,46 @@ def generateMail(maillist, title, queue=None, attach1=None, attach2=None, attach
         raise Exception
 
     print argsdic
-    content1 = """
-        <p>本次自动化成功执行用例 %(sum)d 个，通过%(ranpass)d 个，通过率 %(percent)0.2f%%。有%(error)d个脚本执行错误，共用时 %(time)0.2f 小时 </p>
-        <p>无线终端尝试上线 %(onlinesum)d 次，成功上线 %(onlinepass)d 次，上线率 %(onlinepercent)0.2f%%</p>
-        """ % argsdic
+    content5 = """
+        <p>无线终端：%s</p>
+        """ % v.ANDROID_MODEL
 
     content4 = """
         <p>覆盖模块：%s</p>
         """ % "".join(module)
 
+    content1 = """
+        <p>本次自动化成功执行用例 %(sum)d 个，通过%(ranpass)d 个，通过率 %(percent)0.2f%%。有%(error)d个脚本执行错误，共用时 %(time)0.2f 小时。无线终端尝试上线 %(onlinesum)d 次，成功上线 %(onlinepass)d 次，上线率 %(onlinepercent)0.2f%%</p>
+        """ % argsdic
+
     content2 = """
-        <p>wifi吞吐测试概览如下，详细数据请查看附件：</p>
+        <p>wifi吞吐测试概览如下，详细数据查看附件：</p>
         <p><img src="cid:throughput_2g.png" alt="throughput_2g.png" /></p>
         <p><img src="cid:throughput_5g.png" alt="throughput_5g.png" /></p>
         """
     content3 = """
-        <p>系统状态如下：</p>
+        <p>系统状态如下，详细数据查看附件：</p>
         <p><img src="cid:total_memory_used.png" alt="total_memory_used.png" /></p>
         <p><img src="cid:current_cpu_load.png" alt="current_cpu_load.png" /></p>
-        <p><span style="font-size:12px;">此为系统自动发送，请勿回复，测试报告及内存跟踪详情查看附件。</span></p>
+        <p><span style="font-size:12px;">此为系统自动发送，请勿回复。</span></p>
         """
     piclist = list()
     if os.path.isfile(v.MAIL_PIC1) and os.path.isfile(v.MAIL_PIC4):
         piclist.append(v.MAIL_PIC1)
         piclist.append(v.MAIL_PIC4)
-        contents = "{0}{1}{2}".format(content1, content4, content3)
+        contents = "{0}{1}{2}{3}".format(content5, content4, content1, content3)
         if os.path.isfile(v.MAIL_PIC2):
             piclist.append(v.MAIL_PIC2)
             if os.path.isfile(v.MAIL_PIC3):
                 piclist.append(v.MAIL_PIC3)
-            contents = "{0}{1}{2}{3}".format(content1, content4, content2, content3)
+            contents = "{0}{1}{2}{3}{4}".format(content5, content4, content1, content2, content3)
         return sendMail(maillist, title, contents, attach1, attach2, attach3, piclist)
 
 
 if __name__ == '__main__':
     import multiprocessing as mp
-    report = "report.log".decode("utf8").encode("gbk")
+    v.ANDROID_MODEL = "Mi4 LTE"
+    report = "R2D 开发版OTA 2.13.16.log".decode("utf8").encode("gbk")
     q = mp.Queue() # tranlate test result to generateMail
     ret = pr.ProcessReport(report, q)
     ret.start()

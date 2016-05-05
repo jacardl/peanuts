@@ -1,5 +1,5 @@
 # ------------------- data for the treectrl--------------------
-
+# when change treeApi, must change processreport.GetTestModule
 treeBasicApi = [
     "AP_CLEAR_CHAN",
     [

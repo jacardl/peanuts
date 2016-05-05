@@ -421,7 +421,7 @@ class GetTestModule(threading.Thread):
             'treeWirelessRelayApi':'无线中继',
             'treeAccessControlApi':'接入控制',
             'treeQosApi':'智能限速',
-            'treeFlowApi':'WiFi吞吐',
+            'treeThroughputApi':'WiFi吞吐',
             'treeStressApi':'压力测试',
             'treeOthersApi':'其他',
         }

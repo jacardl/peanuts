@@ -232,9 +232,9 @@ class GetThroughputLog(threading.Thread):
             for tu in indexList:
                 speedDict = getThroughputLogVerbose(tu[0])
                 # collect draw chart data
-                if tu[3] is "DUT":
+                if tu[3] == "DUT":
                     eval(self.dut.get(tu[1]))
-                elif tu[3] is "LAN":
+                elif tu[3] == "LAN":
                     eval(self.lan.get(tu[1]))
 
                 for cell in wb[tu[3]].get_cell_collection():
@@ -252,7 +252,7 @@ class GetThroughputLog(threading.Thread):
                             y += 2
                             while wb[tu[3]].cell(row=x, column=y).value is not None:
                                 x += 1
-                                wb[tu[3]].cell(row=x, column=y).value = speedDict["tx"]
+                            wb[tu[3]].cell(row=x, column=y).value = speedDict["tx"]
                         y += 2
                         wb[tu[3]].cell(row=x, column=y).value = speedDict['rx']
                         break
@@ -317,7 +317,7 @@ def getThroughputLogVerbose(logfile):
 
 
 def drawThroughput2g(data, picname):
-    bar_width = 0.42
+    bar_width = 0.3
     opacity = 0.4
     index = np.arange(2)
     ret = data
@@ -330,8 +330,8 @@ def drawThroughput2g(data, picname):
     rx.append(ret.get("20rx"))
     rx.append(ret.get("40rx"))
 
-    fig, ax = plt.subplots(figsize=(8, 6))
-    print "draw 2.4g throughput chart"
+    fig, ax = plt.subplots(figsize=(6, 6))
+    print "draw %s chart" % picname
     # plt.subplots_adjust(left=0.08, right=0.95)
     rects1 = plt.bar(index, tx, bar_width,
                      alpha=opacity,
@@ -355,8 +355,8 @@ def drawThroughput2g(data, picname):
     autolabel(rects1)
     autolabel(rects2)
 
-    plt.xlabel('Bandwidth')
-    plt.ylabel('Mbps')
+    plt.xlabel('Bandwidth', fontsize=12)
+    plt.ylabel('Mbps', fontsize=12)
     plt.suptitle(picname.split(".")[0].title())
     plt.xticks(index + bar_width, ('20MHz', '40MHz',))
     plt.legend()
@@ -367,7 +367,7 @@ def drawThroughput2g(data, picname):
 
 
 def drawThroughput5g(data, picname):
-    bar_width = 0.42
+    bar_width = 0.3
     opacity = 0.4
     index = np.arange(3)
     ret = data
@@ -382,8 +382,8 @@ def drawThroughput5g(data, picname):
     rx.append(ret.get("40rx"))
     rx.append(ret.get("80rx"))
 
-    fig, ax = plt.subplots(figsize=(8, 6))
-    print "draw 5g throughputchart"
+    fig, ax = plt.subplots(figsize=(6, 6))
+    print "draw %s chart" % picname
     # plt.subplots_adjust(left=0.08, right=0.95)
     rects1 = plt.bar(index, tx, bar_width,
                      alpha=opacity,
@@ -407,8 +407,8 @@ def drawThroughput5g(data, picname):
     autolabel(rects1)
     autolabel(rects2)
 
-    plt.xlabel('Bandwidth')
-    plt.ylabel('Mbps')
+    plt.xlabel('Bandwidth', fontsize=12)
+    plt.ylabel('Mbps', fontsize=12)
     plt.suptitle(picname.split(".")[0].title())
     plt.xticks(index + bar_width, ('20MHz', '40MHz', '80MHz'))
     plt.legend()

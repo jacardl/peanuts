@@ -88,8 +88,8 @@ def generateMail(maillist, title, queue=None, attach1=None, attach2=None, attach
 
     content2 = """
         <p>WiFi吞吐测试概览如下，详细数据查看附件：</p>
-        <p><img src="cid:throughput_2g.png" alt="throughput_2g.png" /></p>
-        <p><img src="cid:throughput_5g.png" alt="throughput_5g.png" /></p>
+        <p><img src="cid:dut_to_2g.png" alt="dut_to_2g.png" /><img src="cid:dut_to_5g.png" alt="dut_to_5g.png" /></p>
+        <p><img src="cid:lan_to_2g.png" alt="lan_to_2g.png" /><img src="cid:lan_to_5g.png" alt="lan_to_5g.png" /></p>
         """
     content3 = """
         <p>系统状态如下，详细数据查看附件：</p>
@@ -104,8 +104,12 @@ def generateMail(maillist, title, queue=None, attach1=None, attach2=None, attach
         contents = "{0}{1}{2}{3}".format(content5, content4, content1, content3)
         if os.path.isfile(v.MAIL_PIC2):
             piclist.append(v.MAIL_PIC2)
-            if os.path.isfile(v.MAIL_PIC3):
-                piclist.append(v.MAIL_PIC3)
+        if os.path.isfile(v.MAIL_PIC3):
+            piclist.append(v.MAIL_PIC3)
+        if os.path.isfile(v.MAIL_PIC5):
+            piclist.append(v.MAIL_PIC5)
+        if os.path.isfile(v.MAIL_PIC6):
+            piclist.append(v.MAIL_PIC6)
             contents = "{0}{1}{2}{3}{4}".format(content5, content4, content1, content2, content3)
         return sendMail(maillist, title, contents, attach1, attach2, attach3, piclist)
 
@@ -113,7 +117,7 @@ def generateMail(maillist, title, queue=None, attach1=None, attach2=None, attach
 if __name__ == '__main__':
     import multiprocessing as mp
     v.ANDROID_MODEL = "Mi4 LTE"
-    report = "R2D 开发版OTA 2.13.16.log".decode("utf8").encode("gbk")
+    report = "report.log".decode("utf8").encode("gbk")
     q = mp.Queue() # tranlate test result to generateMail
     ret = pr.ProcessReport(report, q)
     ret.start()

@@ -121,9 +121,11 @@ MAIL_POSTFIX="xiaomi.com"  #发件箱的后缀
 MAILFROM_LIST = "robot@xiaomi.com"
 
 MAIL_PIC1 = "total_memory_used.png"
-MAIL_PIC2 = "throughput_2g.png"
-MAIL_PIC3 = "throughput_5g.png"
+MAIL_PIC2 = "dut_to_2g.png"
+MAIL_PIC3 = "dut_to_5g.png"
 MAIL_PIC4 = "current_cpu_load.png"
+MAIL_PIC5 = "lan_to_2g.png"
+MAIL_PIC6 = "lan_to_5g.png"
 MAIL_XLSX = "memory_tracking.xlsx"
 MAIL_THROUGHPUT_XLSX = "throughput.xlsx"
 

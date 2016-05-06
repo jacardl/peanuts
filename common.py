@@ -948,6 +948,19 @@ def setIperfFlow(target, interval, time, logname):
     return True
 
 
+def setIperfFlow2(terminal, target, interval, time, logname):
+    command = "iperf -c " + target
+    if interval != "":
+        command = command + " -i " + interval
+    if time != "":
+        command = command + " -t " + time
+    command += " -r -w 2m -f m"
+    ret = setGet(terminal, command, logname)
+    if len(ret) == 0:
+        return False
+    return True
+
+
 def setAdbClearStaConn(device, ssid, radio, logname):
     if radio is "2g":
         if ssid is "normal":

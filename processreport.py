@@ -133,13 +133,13 @@ class GetThroughputLog(threading.Thread):
         threading.Thread.__init__(self)
         self.reportName = report
         self.logPath = v.TEST_SUITE_LOG_PATH
-        self.result2g = {
+        self.dut2g = {
             '20tx': [],
             '20rx': [],
             '40tx': [],
             '40rx': [],
         }
-        self.result5g = {
+        self.dut5g = {
             '20tx': [],
             '40tx': [],
             '80tx': [],
@@ -147,28 +147,65 @@ class GetThroughputLog(threading.Thread):
             '40rx': [],
             '80rx': [],
         }
-        self.sw = {
-            'CH1 20M': "self.result2g['20tx'].append(speedDict['tx']), self.result2g['20rx'].append(speedDict['rx'])",
-            'CH6 20M': "self.result2g['20tx'].append(speedDict['tx']), self.result2g['20rx'].append(speedDict['rx'])",
-            'CH11 20M': "self.result2g['20tx'].append(speedDict['tx']), self.result2g['20rx'].append(speedDict['rx'])",
-            'CH13 20M': "self.result2g['20tx'].append(speedDict['tx']), self.result2g['20rx'].append(speedDict['rx'])",
-            'CH1 40M': "self.result2g['40tx'].append(speedDict['tx']), self.result2g['40rx'].append(speedDict['rx'])",
-            'CH6 40M': "self.result2g['40tx'].append(speedDict['tx']), self.result2g['40rx'].append(speedDict['rx'])",
-            'CH11 40M': "self.result2g['40tx'].append(speedDict['tx']), self.result2g['40rx'].append(speedDict['rx'])",
-            'CH13 40M': "self.result2g['40tx'].append(speedDict['tx']), self.result2g['40rx'].append(speedDict['rx'])",
-            'CH36 20M': "self.result5g['20tx'].append(speedDict['tx']), self.result5g['20rx'].append(speedDict['rx'])",
-            'CH52 20M': "self.result5g['20tx'].append(speedDict['tx']), self.result5g['20rx'].append(speedDict['rx'])",
-            'CH149 20M': "self.result5g['20tx'].append(speedDict['tx']), self.result5g['20rx'].append(speedDict['rx'])",
-            'CH165 20M': "self.result5g['20tx'].append(speedDict['tx']), self.result5g['20rx'].append(speedDict['rx'])",
-            'CH36 40M': "self.result5g['40tx'].append(speedDict['tx']), self.result5g['40rx'].append(speedDict['rx'])",
-            'CH44 40M': "self.result5g['40tx'].append(speedDict['tx']), self.result5g['40rx'].append(speedDict['rx'])",
-            'CH52 40M': "self.result5g['40tx'].append(speedDict['tx']), self.result5g['40rx'].append(speedDict['rx'])",
-            'CH60 40M': "self.result5g['40tx'].append(speedDict['tx']), self.result5g['40rx'].append(speedDict['rx'])",
-            'CH149 40M': "self.result5g['40tx'].append(speedDict['tx']), self.result5g['40rx'].append(speedDict['rx'])",
-            'CH157 40M': "self.result5g['40tx'].append(speedDict['tx']), self.result5g['40rx'].append(speedDict['rx'])",
-            'CH36 80M': "self.result5g['80tx'].append(speedDict['tx']), self.result5g['80rx'].append(speedDict['rx'])",
-            'CH52 80M': "self.result5g['80tx'].append(speedDict['tx']), self.result5g['80rx'].append(speedDict['rx'])",
-            'CH149 80M': "self.result5g['80tx'].append(speedDict['tx']), self.result5g['80rx'].append(speedDict['rx'])",
+        self.lan2g = {
+            '20tx': [],
+            '20rx': [],
+            '40tx': [],
+            '40rx': [],
+        }
+        self.lan5g = {
+            '20tx': [],
+            '40tx': [],
+            '80tx': [],
+            '20rx': [],
+            '40rx': [],
+            '80rx': [],
+        }
+        self.dut = {
+            'CH1 20M': "self.dut2g['20tx'].append(speedDict['tx']), self.dut2g['20rx'].append(speedDict['rx'])",
+            'CH6 20M': "self.dut2g['20tx'].append(speedDict['tx']), self.dut2g['20rx'].append(speedDict['rx'])",
+            'CH11 20M': "self.dut2g['20tx'].append(speedDict['tx']), self.dut2g['20rx'].append(speedDict['rx'])",
+            'CH13 20M': "self.dut2g['20tx'].append(speedDict['tx']), self.dut2g['20rx'].append(speedDict['rx'])",
+            'CH1 40M': "self.dut2g['40tx'].append(speedDict['tx']), self.dut2g['40rx'].append(speedDict['rx'])",
+            'CH6 40M': "self.dut2g['40tx'].append(speedDict['tx']), self.dut2g['40rx'].append(speedDict['rx'])",
+            'CH11 40M': "self.dut2g['40tx'].append(speedDict['tx']), self.dut2g['40rx'].append(speedDict['rx'])",
+            'CH13 40M': "self.dut2g['40tx'].append(speedDict['tx']), self.dut2g['40rx'].append(speedDict['rx'])",
+            'CH36 20M': "self.dut5g['20tx'].append(speedDict['tx']), self.dut5g['20rx'].append(speedDict['rx'])",
+            'CH52 20M': "self.dut5g['20tx'].append(speedDict['tx']), self.dut5g['20rx'].append(speedDict['rx'])",
+            'CH149 20M': "self.dut5g['20tx'].append(speedDict['tx']), self.dut5g['20rx'].append(speedDict['rx'])",
+            'CH165 20M': "self.dut5g['20tx'].append(speedDict['tx']), self.dut5g['20rx'].append(speedDict['rx'])",
+            'CH36 40M': "self.dut5g['40tx'].append(speedDict['tx']), self.dut5g['40rx'].append(speedDict['rx'])",
+            'CH44 40M': "self.dut5g['40tx'].append(speedDict['tx']), self.dut5g['40rx'].append(speedDict['rx'])",
+            'CH52 40M': "self.dut5g['40tx'].append(speedDict['tx']), self.dut5g['40rx'].append(speedDict['rx'])",
+            'CH60 40M': "self.dut5g['40tx'].append(speedDict['tx']), self.dut5g['40rx'].append(speedDict['rx'])",
+            'CH149 40M': "self.dut5g['40tx'].append(speedDict['tx']), self.dut5g['40rx'].append(speedDict['rx'])",
+            'CH157 40M': "self.dut5g['40tx'].append(speedDict['tx']), self.dut5g['40rx'].append(speedDict['rx'])",
+            'CH36 80M': "self.dut5g['80tx'].append(speedDict['tx']), self.dut5g['80rx'].append(speedDict['rx'])",
+            'CH52 80M': "self.dut5g['80tx'].append(speedDict['tx']), self.dut5g['80rx'].append(speedDict['rx'])",
+            'CH149 80M': "self.dut5g['80tx'].append(speedDict['tx']), self.dut5g['80rx'].append(speedDict['rx'])",
+        }
+        self.lan = {
+            'CH1 20M': "self.lan2g['20tx'].append(speedDict['tx']), self.lan2g['20rx'].append(speedDict['rx'])",
+            'CH6 20M': "self.lan2g['20tx'].append(speedDict['tx']), self.lan2g['20rx'].append(speedDict['rx'])",
+            'CH11 20M': "self.lan2g['20tx'].append(speedDict['tx']), self.lan2g['20rx'].append(speedDict['rx'])",
+            'CH13 20M': "self.lan2g['20tx'].append(speedDict['tx']), self.lan2g['20rx'].append(speedDict['rx'])",
+            'CH1 40M': "self.lan2g['40tx'].append(speedDict['tx']), self.lan2g['40rx'].append(speedDict['rx'])",
+            'CH6 40M': "self.lan2g['40tx'].append(speedDict['tx']), self.lan2g['40rx'].append(speedDict['rx'])",
+            'CH11 40M': "self.lan2g['40tx'].append(speedDict['tx']), self.lan2g['40rx'].append(speedDict['rx'])",
+            'CH13 40M': "self.lan2g['40tx'].append(speedDict['tx']), self.lan2g['40rx'].append(speedDict['rx'])",
+            'CH36 20M': "self.lan5g['20tx'].append(speedDict['tx']), self.lan5g['20rx'].append(speedDict['rx'])",
+            'CH52 20M': "self.lan5g['20tx'].append(speedDict['tx']), self.lan5g['20rx'].append(speedDict['rx'])",
+            'CH149 20M': "self.lan5g['20tx'].append(speedDict['tx']), self.lan5g['20rx'].append(speedDict['rx'])",
+            'CH165 20M': "self.lan5g['20tx'].append(speedDict['tx']), self.lan5g['20rx'].append(speedDict['rx'])",
+            'CH36 40M': "self.lan5g['40tx'].append(speedDict['tx']), self.lan5g['40rx'].append(speedDict['rx'])",
+            'CH44 40M': "self.lan5g['40tx'].append(speedDict['tx']), self.lan5g['40rx'].append(speedDict['rx'])",
+            'CH52 40M': "self.lan5g['40tx'].append(speedDict['tx']), self.lan5g['40rx'].append(speedDict['rx'])",
+            'CH60 40M': "self.lan5g['40tx'].append(speedDict['tx']), self.lan5g['40rx'].append(speedDict['rx'])",
+            'CH149 40M': "self.lan5g['40tx'].append(speedDict['tx']), self.lan5g['40rx'].append(speedDict['rx'])",
+            'CH157 40M': "self.lan5g['40tx'].append(speedDict['tx']), self.lan5g['40rx'].append(speedDict['rx'])",
+            'CH36 80M': "self.lan5g['80tx'].append(speedDict['tx']), self.lan5g['80rx'].append(speedDict['rx'])",
+            'CH52 80M': "self.lan5g['80tx'].append(speedDict['tx']), self.lan5g['80rx'].append(speedDict['rx'])",
+            'CH149 80M': "self.lan5g['80tx'].append(speedDict['tx']), self.lan5g['80rx'].append(speedDict['rx'])",
         }
 
     def run(self):
@@ -176,12 +213,13 @@ class GetThroughputLog(threading.Thread):
         report = open(self.reportName)
         for line in report:
             if not line.isspace():
-                m = re.search('AP_(.*)_CHAN(\d{1,3})_BW(\d{2})_THROUGHPUT', line)
+                m = re.search('AP_(.*)_CHAN(\d{1,3})_BW(\d{2})_((.*)_)?THROUGHPUT', line)
                 if m:
                     logFile = self.logPath + m.group(0) + ".log"
                     chanBW = "CH" + m.group(2) + " " + m.group(3) + "M" # CH36 20M
                     encrypto = m.group(1) # CLEAR or PSK2
-                    infoTuple = (logFile, chanBW, encrypto)
+                    sheet = m.group(5) # infoTuple[3] is sheet name
+                    infoTuple = (logFile, chanBW, encrypto, sheet)
                     if infoTuple not in indexList:
                         indexList.append(infoTuple)
         report.close()
@@ -191,47 +229,68 @@ class GetThroughputLog(threading.Thread):
             except:
                 print "specified file no exists!"
                 return
-            ws = wb["Sheet1"]
             for tu in indexList:
                 speedDict = getThroughputLogVerbose(tu[0])
-                eval(self.sw.get(tu[1]))
-                for cell in ws.get_cell_collection():
+                # collect draw chart data
+                if tu[3] is "DUT":
+                    eval(self.dut.get(tu[1]))
+                elif tu[3] is "LAN":
+                    eval(self.lan.get(tu[1]))
+
+                for cell in wb[tu[3]].get_cell_collection():
                     if tu[1] == cell.value:
                         x = cell.row
                         y = column_index_from_string(cell.column)
                         if tu[2] == "PSK2":
                             x += 3
                             y += 1
-                            while ws.cell(row=x, column=y).value is not None:
+                            while wb[tu[3]].cell(row=x, column=y).value is not None:
                                 x += 1
-                            ws.cell(row=x, column=y).value = speedDict["tx"]
+                            wb[tu[3]].cell(row=x, column=y).value = speedDict["tx"]
                         elif tu[2] == "CLEAR":
                             x += 3
                             y += 2
-                            while ws.cell(row=x, column=y).value is not None:
+                            while wb[tu[3]].cell(row=x, column=y).value is not None:
                                 x += 1
-                            ws.cell(row=x, column=y).value = speedDict["tx"]
+                                wb[tu[3]].cell(row=x, column=y).value = speedDict["tx"]
                         y += 2
-                        ws.cell(row=x, column=y).value = speedDict['rx']
+                        wb[tu[3]].cell(row=x, column=y).value = speedDict['rx']
                         break
             wb.save(self.logPath + v.MAIL_THROUGHPUT_XLSX)
 
-            for key, value in self.result2g.iteritems():
+            for key, value in self.dut2g.iteritems():
                 if len(value) is not 0:
                     ave = round(float(reduce(lambda i, j: float(i)+float(j), value))/len(value), 2)
-                    self.result2g[key] = ave
+                    self.dut2g[key] = ave
                 else:
-                    self.result2g[key] = 0
+                    self.dut2g[key] = 0
 
-            for key, value in self.result5g.iteritems():
+            for key, value in self.dut5g.iteritems():
                 if len(value) is not 0:
                     ave = round(float(reduce(lambda i, j: float(i)+float(j), value))/len(value), 2)
-                    self.result5g[key] = ave
+                    self.dut5g[key] = ave
                 else:
-                    self.result5g[key] = 0
+                    self.dut5g[key] = 0
 
-            drawThroughput2g(self.result2g)
-            drawThroughput5g(self.result5g)
+            drawThroughput2g(self.dut2g, v.MAIL_PIC2)
+            drawThroughput5g(self.dut5g, v.MAIL_PIC3)
+
+            for key, value in self.lan2g.iteritems():
+                if len(value) is not 0:
+                    ave = round(float(reduce(lambda i, j: float(i)+float(j), value))/len(value), 2)
+                    self.lan2g[key] = ave
+                else:
+                    self.lan2g[key] = 0
+
+            for key, value in self.lan5g.iteritems():
+                if len(value) is not 0:
+                    ave = round(float(reduce(lambda i, j: float(i)+float(j), value))/len(value), 2)
+                    self.lan5g[key] = ave
+                else:
+                    self.lan5g[key] = 0
+
+            drawThroughput2g(self.lan5g, v.MAIL_PIC5)
+            drawThroughput5g(self.lan5g, v.MAIL_PIC6)
 
 
 def getThroughputLogVerbose(logfile):
@@ -257,7 +316,7 @@ def getThroughputLogVerbose(logfile):
     return result
 
 
-def drawThroughput2g(data):
+def drawThroughput2g(data, picname):
     bar_width = 0.42
     opacity = 0.4
     index = np.arange(2)
@@ -298,16 +357,16 @@ def drawThroughput2g(data):
 
     plt.xlabel('Bandwidth')
     plt.ylabel('Mbps')
-    plt.suptitle(v.MAIL_PIC2.split(".")[0].title())
+    plt.suptitle(picname.split(".")[0].title())
     plt.xticks(index + bar_width, ('20MHz', '40MHz',))
     plt.legend()
 
     # plt.show()
-    plt.savefig(v.MAIL_PIC2)
+    plt.savefig(picname)
     plt.close()
 
 
-def drawThroughput5g(data):
+def drawThroughput5g(data, picname):
     bar_width = 0.42
     opacity = 0.4
     index = np.arange(3)
@@ -350,12 +409,12 @@ def drawThroughput5g(data):
 
     plt.xlabel('Bandwidth')
     plt.ylabel('Mbps')
-    plt.suptitle(v.MAIL_PIC3.split(".")[0].title())
+    plt.suptitle(picname.split(".")[0].title())
     plt.xticks(index + bar_width, ('20MHz', '40MHz', '80MHz'))
     plt.legend()
 
     # plt.show()
-    plt.savefig(v.MAIL_PIC3)
+    plt.savefig(picname)
     plt.close()
 
 

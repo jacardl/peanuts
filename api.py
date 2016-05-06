@@ -292,7 +292,7 @@ def setCheckFromFile(terminal, file, logname):
     apifile.close()
 
 
-def setWifi(terminal, logname, **kwargs):
+def setWifi2(terminal, logname, **kwargs):
     """
     wifiIndex (1/2)
     on (0/1)
@@ -350,6 +350,53 @@ def setWifi(terminal, logname, **kwargs):
                 status = str(detailAll['info'][index-1]['status'])
                 curTime = int(t.time())
     return ret
+
+
+def setWifi(terminal, logname, **kwargs):
+    option = {
+        'wifiIndex': 1,
+        'on': 1,
+        'ssid': 'peanuts',
+        'pwd': '',
+        'encryption': 'none',
+        'channel': '0',
+        'bandwidth': '0',
+        'hidden': 0,
+        'txpwr': 'mid'
+    }
+    option.update(kwargs)
+    api = '/cgi-bin/luci/;stok=token/api/xqnetwork/set_wifi'
+    detailAll = getWifiDetailAll(terminal, logname)
+    index = option['wifiIndex']
+    if index is 3 and detailAll['info'][-1].get('device') is None:
+        ret = setCheck(terminal, logname, api, **option)
+        t.sleep(30)
+        if ret:
+            lastTime = int(t.time())
+            curTime = int(t.time())
+            detailAll2 = getWifiDetailAll(terminal, logname)
+            status = str(detailAll2['info'][-1]['status'])
+            while status != str(option.get('on')) and curTime - lastTime <= 50:
+                t.sleep(5)
+                detailAll2 = getWifiDetailAll(terminal, logname)
+                status = str(detailAll2['info'][-1]['status'])
+                curTime = int(t.time())
+        return ret
+
+    elif len(detailAll['info']) >= index and detailAll['info'][index-1].get('device') is not None:
+        ret = setCheck(terminal, logname, api, **option)
+        t.sleep(30)
+        if ret:
+            lastTime = int(t.time())
+            curTime = int(t.time())
+            detailAll3 = getWifiDetailAll(terminal, logname)
+            status = str(detailAll3['info'][index-1]['status'])
+            while status != str(option.get('on')) and curTime - lastTime <= 50:
+                t.sleep(5)
+                detailAll3 = getWifiDetailAll(terminal, logname)
+                status = str(detailAll3['info'][index-1]['status'])
+                curTime = int(t.time())
+        return ret
 
 
 def setAllWifi(terminal, logname, **kwargs):

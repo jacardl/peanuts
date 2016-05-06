@@ -406,7 +406,7 @@ def setAdbShell(device, command, logname):
         f.close()
 
 
-def setShell(command, cwd=None, timeout=30, logname=None):
+def setOSShell(command, cwd=None, timeout=30, logname=None):
     if not os.path.exists(v.TEST_SUITE_LOG_PATH):
         os.makedirs(v.TEST_SUITE_LOG_PATH)
 
@@ -941,7 +941,7 @@ def setIperfFlow(target, interval, time, logname):
         command = command + " -t " + time
 
     command += " -r -w 2m -f m"
-    ret = setShell(command, cwd=v.IPERF_PATH, timeout=3*int(time), logname=logname)
+    ret = setOSShell(command, cwd=v.IPERF_PATH, timeout=3*int(time), logname=logname)
     # os.chdir(v.DEFAULT_PATH)
     if len(ret) == 0:
         return False

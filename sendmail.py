@@ -87,7 +87,7 @@ def generateMail(maillist, title, queue=None, attach1=None, attach2=None, attach
         """ % argsdic
 
     content2 = """
-        <p>wifi吞吐测试概览如下，详细数据查看附件：</p>
+        <p>WiFi吞吐测试概览如下，详细数据查看附件：</p>
         <p><img src="cid:throughput_2g.png" alt="throughput_2g.png" /></p>
         <p><img src="cid:throughput_5g.png" alt="throughput_5g.png" /></p>
         """

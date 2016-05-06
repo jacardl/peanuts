@@ -381,8 +381,9 @@ def setWifi(terminal, logname, **kwargs):
                 detailAll2 = getWifiDetailAll(terminal, logname)
                 status = str(detailAll2['info'][-1]['status'])
                 curTime = int(t.time())
+        return ret
 
-    elif detailAll['info'][index-1].get('device') is not None:
+    elif len(detailAll['info']) >= index and detailAll['info'][index-1].get('device') is not None:
         ret = setCheck(terminal, logname, api, **option)
         t.sleep(30)
         if ret:
@@ -395,7 +396,7 @@ def setWifi(terminal, logname, **kwargs):
                 detailAll3 = getWifiDetailAll(terminal, logname)
                 status = str(detailAll3['info'][index-1]['status'])
                 curTime = int(t.time())
-    return ret
+        return ret
 
 
 def setAllWifi(terminal, logname, **kwargs):

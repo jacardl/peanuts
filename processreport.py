@@ -23,7 +23,6 @@ class ProcessReport(mp.Process):
         self.running = True
         time = GetTimeUsed(self.report)
         test = GetTestResult(self.report)
-        # flow = GetFlowLog(self.report)
         throughput = GetThroughputLog(self.report)
         online = GetOnlineLog(self.report)
         module = GetTestModule(self.report)
@@ -186,52 +185,53 @@ class GetThroughputLog(threading.Thread):
                     if infoTuple not in indexList:
                         indexList.append(infoTuple)
         report.close()
-        try:
-            wb = load_workbook(v.MAIL_THROUGHPUT_XLSX)
-        except:
-            print "specified file no exists!"
-            return
-        ws = wb["Sheet1"]
-        for tu in indexList:
-            speedDict = getThroughputLogVerbose(tu[0])
-            eval(self.sw.get(tu[1]))
-            for cell in ws.get_cell_collection():
-                if tu[1] == cell.value:
-                    x = cell.row
-                    y = column_index_from_string(cell.column)
-                    if tu[2] == "PSK2":
-                        x += 3
-                        y += 1
-                        while ws.cell(row=x, column=y).value is not None:
-                            x += 1
-                        ws.cell(row=x, column=y).value = speedDict["tx"]
-                    elif tu[2] == "CLEAR":
-                        x += 3
+        if len(indexList) is not 0:
+            try:
+                wb = load_workbook(v.MAIL_THROUGHPUT_XLSX)
+            except:
+                print "specified file no exists!"
+                return
+            ws = wb["Sheet1"]
+            for tu in indexList:
+                speedDict = getThroughputLogVerbose(tu[0])
+                eval(self.sw.get(tu[1]))
+                for cell in ws.get_cell_collection():
+                    if tu[1] == cell.value:
+                        x = cell.row
+                        y = column_index_from_string(cell.column)
+                        if tu[2] == "PSK2":
+                            x += 3
+                            y += 1
+                            while ws.cell(row=x, column=y).value is not None:
+                                x += 1
+                            ws.cell(row=x, column=y).value = speedDict["tx"]
+                        elif tu[2] == "CLEAR":
+                            x += 3
+                            y += 2
+                            while ws.cell(row=x, column=y).value is not None:
+                                x += 1
+                            ws.cell(row=x, column=y).value = speedDict["tx"]
                         y += 2
-                        while ws.cell(row=x, column=y).value is not None:
-                            x += 1
-                        ws.cell(row=x, column=y).value = speedDict["tx"]
-                    y += 2
-                    ws.cell(row=x, column=y).value = speedDict['rx']
-                    break
-        wb.save(self.logPath + v.MAIL_THROUGHPUT_XLSX)
+                        ws.cell(row=x, column=y).value = speedDict['rx']
+                        break
+            wb.save(self.logPath + v.MAIL_THROUGHPUT_XLSX)
 
-        for key, value in self.result2g.iteritems():
-            if len(value) is not 0:
-                ave = round(float(reduce(lambda i, j: float(i)+float(j), value))/len(value), 2)
-                self.result2g[key] = ave
-            else:
-                self.result2g[key] = 0
+            for key, value in self.result2g.iteritems():
+                if len(value) is not 0:
+                    ave = round(float(reduce(lambda i, j: float(i)+float(j), value))/len(value), 2)
+                    self.result2g[key] = ave
+                else:
+                    self.result2g[key] = 0
 
-        for key, value in self.result5g.iteritems():
-            if len(value) is not 0:
-                ave = round(float(reduce(lambda i, j: float(i)+float(j), value))/len(value), 2)
-                self.result5g[key] = ave
-            else:
-                self.result5g[key] = 0
+            for key, value in self.result5g.iteritems():
+                if len(value) is not 0:
+                    ave = round(float(reduce(lambda i, j: float(i)+float(j), value))/len(value), 2)
+                    self.result5g[key] = ave
+                else:
+                    self.result5g[key] = 0
 
-        drawThroughput2g(self.result2g)
-        drawThroughput5g(self.result5g)
+            drawThroughput2g(self.result2g)
+            drawThroughput5g(self.result5g)
 
 
 def getThroughputLogVerbose(logfile):

@@ -11865,7 +11865,7 @@ class AP_CLEAR_CHAN1_BW20_DUT_THROUGHPUT(TestCase):
         ret2 = chkAdbDevicesCount(1)
 
         self.dut2 = ShellClient(v.CONNECTION_TYPE)
-        ret3 = self.dut.connect(v.HOST, v.USR, v.PASSWD)
+        ret3 = self.dut2.connect(v.HOST, v.USR, v.PASSWD)
 
         if ret3 is False:
             raise Exception('Connection is failed. please check your remote settings.')
@@ -11917,7 +11917,7 @@ class AP_CLEAR_CHAN6_BW20_DUT_THROUGHPUT(TestCase):
         ret2 = chkAdbDevicesCount(1)
 
         self.dut2 = ShellClient(v.CONNECTION_TYPE)
-        ret3 = self.dut.connect(v.HOST, v.USR, v.PASSWD)
+        ret3 = self.dut2.connect(v.HOST, v.USR, v.PASSWD)
 
         if ret3 is False:
             raise Exception('Connection is failed. please check your remote settings.')
@@ -11969,7 +11969,7 @@ class AP_CLEAR_CHAN11_BW20_DUT_THROUGHPUT(TestCase):
         ret2 = chkAdbDevicesCount(1)
 
         self.dut2 = ShellClient(v.CONNECTION_TYPE)
-        ret3 = self.dut.connect(v.HOST, v.USR, v.PASSWD)
+        ret3 = self.dut2.connect(v.HOST, v.USR, v.PASSWD)
 
         if ret3 is False:
             raise Exception('Connection is failed. please check your remote settings.')
@@ -12021,7 +12021,7 @@ class AP_CLEAR_CHAN13_BW20_DUT_THROUGHPUT(TestCase):
         ret2 = chkAdbDevicesCount(1)
 
         self.dut2 = ShellClient(v.CONNECTION_TYPE)
-        ret3 = self.dut.connect(v.HOST, v.USR, v.PASSWD)
+        ret3 = self.dut2.connect(v.HOST, v.USR, v.PASSWD)
 
         if ret3 is False:
             raise Exception('Connection is failed. please check your remote settings.')
@@ -12073,7 +12073,7 @@ class AP_CLEAR_CHAN1_BW40_DUT_THROUGHPUT(TestCase):
         ret2 = chkAdbDevicesCount(1)
 
         self.dut2 = ShellClient(v.CONNECTION_TYPE)
-        ret3 = self.dut.connect(v.HOST, v.USR, v.PASSWD)
+        ret3 = self.dut2.connect(v.HOST, v.USR, v.PASSWD)
 
         if ret3 is False:
             raise Exception('Connection is failed. please check your remote settings.')
@@ -12125,7 +12125,7 @@ class AP_CLEAR_CHAN6_BW40_DUT_THROUGHPUT(TestCase):
         ret2 = chkAdbDevicesCount(1)
 
         self.dut2 = ShellClient(v.CONNECTION_TYPE)
-        ret3 = self.dut.connect(v.HOST, v.USR, v.PASSWD)
+        ret3 = self.dut2.connect(v.HOST, v.USR, v.PASSWD)
 
         if ret3 is False:
             raise Exception('Connection is failed. please check your remote settings.')
@@ -12177,7 +12177,7 @@ class AP_CLEAR_CHAN11_BW40_DUT_THROUGHPUT(TestCase):
         ret2 = chkAdbDevicesCount(1)
 
         self.dut2 = ShellClient(v.CONNECTION_TYPE)
-        ret3 = self.dut.connect(v.HOST, v.USR, v.PASSWD)
+        ret3 = self.dut2.connect(v.HOST, v.USR, v.PASSWD)
 
         if ret3 is False:
             raise Exception('Connection is failed. please check your remote settings.')
@@ -12229,7 +12229,7 @@ class AP_CLEAR_CHAN13_BW40_DUT_THROUGHPUT(TestCase):
         ret2 = chkAdbDevicesCount(1)
 
         self.dut2 = ShellClient(v.CONNECTION_TYPE)
-        ret3 = self.dut.connect(v.HOST, v.USR, v.PASSWD)
+        ret3 = self.dut2.connect(v.HOST, v.USR, v.PASSWD)
 
         if ret3 is False:
             raise Exception('Connection is failed. please check your remote settings.')
@@ -12281,7 +12281,7 @@ class AP_PSK2_CHAN1_BW20_DUT_THROUGHPUT(TestCase):
         ret2 = chkAdbDevicesCount(1)
 
         self.dut2 = ShellClient(v.CONNECTION_TYPE)
-        ret3 = self.dut.connect(v.HOST, v.USR, v.PASSWD)
+        ret3 = self.dut2.connect(v.HOST, v.USR, v.PASSWD)
 
         if ret3 is False:
             raise Exception('Connection is failed. please check your remote settings.')
@@ -12335,7 +12335,7 @@ class AP_PSK2_CHAN6_BW20_DUT_THROUGHPUT(TestCase):
         ret2 = chkAdbDevicesCount(1)
 
         self.dut2 = ShellClient(v.CONNECTION_TYPE)
-        ret3 = self.dut.connect(v.HOST, v.USR, v.PASSWD)
+        ret3 = self.dut2.connect(v.HOST, v.USR, v.PASSWD)
 
         if ret3 is False:
             raise Exception('Connection is failed. please check your remote settings.')
@@ -12389,7 +12389,7 @@ class AP_PSK2_CHAN11_BW20_DUT_THROUGHPUT(TestCase):
         ret2 = chkAdbDevicesCount(1)
 
         self.dut2 = ShellClient(v.CONNECTION_TYPE)
-        ret3 = self.dut.connect(v.HOST, v.USR, v.PASSWD)
+        ret3 = self.dut2.connect(v.HOST, v.USR, v.PASSWD)
 
         if ret3 is False:
             raise Exception('Connection is failed. please check your remote settings.')
@@ -12443,7 +12443,7 @@ class AP_PSK2_CHAN13_BW20_DUT_THROUGHPUT(TestCase):
         ret2 = chkAdbDevicesCount(1)
 
         self.dut2 = ShellClient(v.CONNECTION_TYPE)
-        ret3 = self.dut.connect(v.HOST, v.USR, v.PASSWD)
+        ret3 = self.dut2.connect(v.HOST, v.USR, v.PASSWD)
 
         if ret3 is False:
             raise Exception('Connection is failed. please check your remote settings.')
@@ -12497,7 +12497,7 @@ class AP_PSK2_CHAN1_BW40_DUT_THROUGHPUT(TestCase):
         ret2 = chkAdbDevicesCount(1)
 
         self.dut2 = ShellClient(v.CONNECTION_TYPE)
-        ret3 = self.dut.connect(v.HOST, v.USR, v.PASSWD)
+        ret3 = self.dut2.connect(v.HOST, v.USR, v.PASSWD)
 
         if ret3 is False:
             raise Exception('Connection is failed. please check your remote settings.')
@@ -12551,7 +12551,7 @@ class AP_PSK2_CHAN6_BW40_DUT_THROUGHPUT(TestCase):
         ret2 = chkAdbDevicesCount(1)
 
         self.dut2 = ShellClient(v.CONNECTION_TYPE)
-        ret3 = self.dut.connect(v.HOST, v.USR, v.PASSWD)
+        ret3 = self.dut2.connect(v.HOST, v.USR, v.PASSWD)
 
         if ret3 is False:
             raise Exception('Connection is failed. please check your remote settings.')
@@ -12605,7 +12605,7 @@ class AP_PSK2_CHAN11_BW40_DUT_THROUGHPUT(TestCase):
         ret2 = chkAdbDevicesCount(1)
 
         self.dut2 = ShellClient(v.CONNECTION_TYPE)
-        ret3 = self.dut.connect(v.HOST, v.USR, v.PASSWD)
+        ret3 = self.dut2.connect(v.HOST, v.USR, v.PASSWD)
 
         if ret3 is False:
             raise Exception('Connection is failed. please check your remote settings.')
@@ -12659,7 +12659,7 @@ class AP_PSK2_CHAN13_BW40_DUT_THROUGHPUT(TestCase):
         ret2 = chkAdbDevicesCount(1)
 
         self.dut2 = ShellClient(v.CONNECTION_TYPE)
-        ret3 = self.dut.connect(v.HOST, v.USR, v.PASSWD)
+        ret3 = self.dut2.connect(v.HOST, v.USR, v.PASSWD)
 
         if ret3 is False:
             raise Exception('Connection is failed. please check your remote settings.')
@@ -12713,7 +12713,7 @@ class AP_CLEAR_CHAN36_BW20_DUT_THROUGHPUT(TestCase):
         ret2 = chkAdbDevicesCount(1)
 
         self.dut2 = ShellClient(v.CONNECTION_TYPE)
-        ret3 = self.dut.connect(v.HOST, v.USR, v.PASSWD)
+        ret3 = self.dut2.connect(v.HOST, v.USR, v.PASSWD)
 
         if ret3 is False:
             raise Exception('Connection is failed. please check your remote settings.')
@@ -12765,7 +12765,7 @@ class AP_CLEAR_CHAN52_BW20_DUT_THROUGHPUT(TestCase):
         ret2 = chkAdbDevicesCount(1)
 
         self.dut2 = ShellClient(v.CONNECTION_TYPE)
-        ret3 = self.dut.connect(v.HOST, v.USR, v.PASSWD)
+        ret3 = self.dut2.connect(v.HOST, v.USR, v.PASSWD)
 
         if ret3 is False:
             raise Exception('Connection is failed. please check your remote settings.')
@@ -12817,7 +12817,7 @@ class AP_CLEAR_CHAN149_BW20_DUT_THROUGHPUT(TestCase):
         ret2 = chkAdbDevicesCount(1)
 
         self.dut2 = ShellClient(v.CONNECTION_TYPE)
-        ret3 = self.dut.connect(v.HOST, v.USR, v.PASSWD)
+        ret3 = self.dut2.connect(v.HOST, v.USR, v.PASSWD)
 
         if ret3 is False:
             raise Exception('Connection is failed. please check your remote settings.')
@@ -12869,7 +12869,7 @@ class AP_CLEAR_CHAN165_BW20_DUT_THROUGHPUT(TestCase):
         ret2 = chkAdbDevicesCount(1)
 
         self.dut2 = ShellClient(v.CONNECTION_TYPE)
-        ret3 = self.dut.connect(v.HOST, v.USR, v.PASSWD)
+        ret3 = self.dut2.connect(v.HOST, v.USR, v.PASSWD)
 
         if ret3 is False:
             raise Exception('Connection is failed. please check your remote settings.')
@@ -12921,7 +12921,7 @@ class AP_CLEAR_CHAN36_BW40_DUT_THROUGHPUT(TestCase):
         ret2 = chkAdbDevicesCount(1)
 
         self.dut2 = ShellClient(v.CONNECTION_TYPE)
-        ret3 = self.dut.connect(v.HOST, v.USR, v.PASSWD)
+        ret3 = self.dut2.connect(v.HOST, v.USR, v.PASSWD)
 
         if ret3 is False:
             raise Exception('Connection is failed. please check your remote settings.')
@@ -12973,7 +12973,7 @@ class AP_CLEAR_CHAN44_BW40_DUT_THROUGHPUT(TestCase):
         ret2 = chkAdbDevicesCount(1)
 
         self.dut2 = ShellClient(v.CONNECTION_TYPE)
-        ret3 = self.dut.connect(v.HOST, v.USR, v.PASSWD)
+        ret3 = self.dut2.connect(v.HOST, v.USR, v.PASSWD)
 
         if ret3 is False:
             raise Exception('Connection is failed. please check your remote settings.')
@@ -13025,7 +13025,7 @@ class AP_CLEAR_CHAN52_BW40_DUT_THROUGHPUT(TestCase):
         ret2 = chkAdbDevicesCount(1)
 
         self.dut2 = ShellClient(v.CONNECTION_TYPE)
-        ret3 = self.dut.connect(v.HOST, v.USR, v.PASSWD)
+        ret3 = self.dut2.connect(v.HOST, v.USR, v.PASSWD)
 
         if ret3 is False:
             raise Exception('Connection is failed. please check your remote settings.')
@@ -13077,7 +13077,7 @@ class AP_CLEAR_CHAN60_BW40_DUT_THROUGHPUT(TestCase):
         ret2 = chkAdbDevicesCount(1)
 
         self.dut2 = ShellClient(v.CONNECTION_TYPE)
-        ret3 = self.dut.connect(v.HOST, v.USR, v.PASSWD)
+        ret3 = self.dut2.connect(v.HOST, v.USR, v.PASSWD)
 
         if ret3 is False:
             raise Exception('Connection is failed. please check your remote settings.')
@@ -13129,7 +13129,7 @@ class AP_CLEAR_CHAN149_BW40_DUT_THROUGHPUT(TestCase):
         ret2 = chkAdbDevicesCount(1)
 
         self.dut2 = ShellClient(v.CONNECTION_TYPE)
-        ret3 = self.dut.connect(v.HOST, v.USR, v.PASSWD)
+        ret3 = self.dut2.connect(v.HOST, v.USR, v.PASSWD)
 
         if ret3 is False:
             raise Exception('Connection is failed. please check your remote settings.')
@@ -13181,7 +13181,7 @@ class AP_CLEAR_CHAN157_BW40_DUT_THROUGHPUT(TestCase):
         ret2 = chkAdbDevicesCount(1)
 
         self.dut2 = ShellClient(v.CONNECTION_TYPE)
-        ret3 = self.dut.connect(v.HOST, v.USR, v.PASSWD)
+        ret3 = self.dut2.connect(v.HOST, v.USR, v.PASSWD)
 
         if ret3 is False:
             raise Exception('Connection is failed. please check your remote settings.')
@@ -13233,7 +13233,7 @@ class AP_CLEAR_CHAN36_BW80_DUT_THROUGHPUT(TestCase):
         ret2 = chkAdbDevicesCount(1)
 
         self.dut2 = ShellClient(v.CONNECTION_TYPE)
-        ret3 = self.dut.connect(v.HOST, v.USR, v.PASSWD)
+        ret3 = self.dut2.connect(v.HOST, v.USR, v.PASSWD)
 
         if ret3 is False:
             raise Exception('Connection is failed. please check your remote settings.')
@@ -13285,7 +13285,7 @@ class AP_CLEAR_CHAN52_BW80_DUT_THROUGHPUT(TestCase):
         ret2 = chkAdbDevicesCount(1)
 
         self.dut2 = ShellClient(v.CONNECTION_TYPE)
-        ret3 = self.dut.connect(v.HOST, v.USR, v.PASSWD)
+        ret3 = self.dut2.connect(v.HOST, v.USR, v.PASSWD)
 
         if ret3 is False:
             raise Exception('Connection is failed. please check your remote settings.')
@@ -13337,7 +13337,7 @@ class AP_CLEAR_CHAN149_BW80_DUT_THROUGHPUT(TestCase):
         ret2 = chkAdbDevicesCount(1)
 
         self.dut2 = ShellClient(v.CONNECTION_TYPE)
-        ret3 = self.dut.connect(v.HOST, v.USR, v.PASSWD)
+        ret3 = self.dut2.connect(v.HOST, v.USR, v.PASSWD)
 
         if ret3 is False:
             raise Exception('Connection is failed. please check your remote settings.')
@@ -13389,7 +13389,7 @@ class AP_PSK2_CHAN36_BW20_DUT_THROUGHPUT(TestCase):
         ret2 = chkAdbDevicesCount(1)
 
         self.dut2 = ShellClient(v.CONNECTION_TYPE)
-        ret3 = self.dut.connect(v.HOST, v.USR, v.PASSWD)
+        ret3 = self.dut2.connect(v.HOST, v.USR, v.PASSWD)
 
         if ret3 is False:
             raise Exception('Connection is failed. please check your remote settings.')
@@ -13443,7 +13443,7 @@ class AP_PSK2_CHAN52_BW20_DUT_THROUGHPUT(TestCase):
         ret2 = chkAdbDevicesCount(1)
 
         self.dut2 = ShellClient(v.CONNECTION_TYPE)
-        ret3 = self.dut.connect(v.HOST, v.USR, v.PASSWD)
+        ret3 = self.dut2.connect(v.HOST, v.USR, v.PASSWD)
 
         if ret3 is False:
             raise Exception('Connection is failed. please check your remote settings.')
@@ -13497,7 +13497,7 @@ class AP_PSK2_CHAN149_BW20_DUT_THROUGHPUT(TestCase):
         ret2 = chkAdbDevicesCount(1)
 
         self.dut2 = ShellClient(v.CONNECTION_TYPE)
-        ret3 = self.dut.connect(v.HOST, v.USR, v.PASSWD)
+        ret3 = self.dut2.connect(v.HOST, v.USR, v.PASSWD)
 
         if ret3 is False:
             raise Exception('Connection is failed. please check your remote settings.')
@@ -13551,7 +13551,7 @@ class AP_PSK2_CHAN165_BW20_DUT_THROUGHPUT(TestCase):
         ret2 = chkAdbDevicesCount(1)
 
         self.dut2 = ShellClient(v.CONNECTION_TYPE)
-        ret3 = self.dut.connect(v.HOST, v.USR, v.PASSWD)
+        ret3 = self.dut2.connect(v.HOST, v.USR, v.PASSWD)
 
         if ret3 is False:
             raise Exception('Connection is failed. please check your remote settings.')
@@ -13605,7 +13605,7 @@ class AP_PSK2_CHAN36_BW40_DUT_THROUGHPUT(TestCase):
         ret2 = chkAdbDevicesCount(1)
 
         self.dut2 = ShellClient(v.CONNECTION_TYPE)
-        ret3 = self.dut.connect(v.HOST, v.USR, v.PASSWD)
+        ret3 = self.dut2.connect(v.HOST, v.USR, v.PASSWD)
 
         if ret3 is False:
             raise Exception('Connection is failed. please check your remote settings.')
@@ -13659,7 +13659,7 @@ class AP_PSK2_CHAN44_BW40_DUT_THROUGHPUT(TestCase):
         ret2 = chkAdbDevicesCount(1)
 
         self.dut2 = ShellClient(v.CONNECTION_TYPE)
-        ret3 = self.dut.connect(v.HOST, v.USR, v.PASSWD)
+        ret3 = self.dut2.connect(v.HOST, v.USR, v.PASSWD)
 
         if ret3 is False:
             raise Exception('Connection is failed. please check your remote settings.')
@@ -13713,7 +13713,7 @@ class AP_PSK2_CHAN52_BW40_DUT_THROUGHPUT(TestCase):
         ret2 = chkAdbDevicesCount(1)
 
         self.dut2 = ShellClient(v.CONNECTION_TYPE)
-        ret3 = self.dut.connect(v.HOST, v.USR, v.PASSWD)
+        ret3 = self.dut2.connect(v.HOST, v.USR, v.PASSWD)
 
         if ret3 is False:
             raise Exception('Connection is failed. please check your remote settings.')
@@ -13767,7 +13767,7 @@ class AP_PSK2_CHAN60_BW40_DUT_THROUGHPUT(TestCase):
         ret2 = chkAdbDevicesCount(1)
 
         self.dut2 = ShellClient(v.CONNECTION_TYPE)
-        ret3 = self.dut.connect(v.HOST, v.USR, v.PASSWD)
+        ret3 = self.dut2.connect(v.HOST, v.USR, v.PASSWD)
 
         if ret3 is False:
             raise Exception('Connection is failed. please check your remote settings.')
@@ -13821,7 +13821,7 @@ class AP_PSK2_CHAN149_BW40_DUT_THROUGHPUT(TestCase):
         ret2 = chkAdbDevicesCount(1)
 
         self.dut2 = ShellClient(v.CONNECTION_TYPE)
-        ret3 = self.dut.connect(v.HOST, v.USR, v.PASSWD)
+        ret3 = self.dut2.connect(v.HOST, v.USR, v.PASSWD)
 
         if ret3 is False:
             raise Exception('Connection is failed. please check your remote settings.')
@@ -13875,7 +13875,7 @@ class AP_PSK2_CHAN157_BW40_DUT_THROUGHPUT(TestCase):
         ret2 = chkAdbDevicesCount(1)
 
         self.dut2 = ShellClient(v.CONNECTION_TYPE)
-        ret3 = self.dut.connect(v.HOST, v.USR, v.PASSWD)
+        ret3 = self.dut2.connect(v.HOST, v.USR, v.PASSWD)
 
         if ret3 is False:
             raise Exception('Connection is failed. please check your remote settings.')
@@ -13929,7 +13929,7 @@ class AP_PSK2_CHAN36_BW80_DUT_THROUGHPUT(TestCase):
         ret2 = chkAdbDevicesCount(1)
 
         self.dut2 = ShellClient(v.CONNECTION_TYPE)
-        ret3 = self.dut.connect(v.HOST, v.USR, v.PASSWD)
+        ret3 = self.dut2.connect(v.HOST, v.USR, v.PASSWD)
 
         if ret3 is False:
             raise Exception('Connection is failed. please check your remote settings.')
@@ -13983,7 +13983,7 @@ class AP_PSK2_CHAN52_BW80_DUT_THROUGHPUT(TestCase):
         ret2 = chkAdbDevicesCount(1)
 
         self.dut2 = ShellClient(v.CONNECTION_TYPE)
-        ret3 = self.dut.connect(v.HOST, v.USR, v.PASSWD)
+        ret3 = self.dut2.connect(v.HOST, v.USR, v.PASSWD)
 
         if ret3 is False:
             raise Exception('Connection is failed. please check your remote settings.')
@@ -14037,7 +14037,7 @@ class AP_PSK2_CHAN149_BW80_DUT_THROUGHPUT(TestCase):
         ret2 = chkAdbDevicesCount(1)
 
         self.dut2 = ShellClient(v.CONNECTION_TYPE)
-        ret3 = self.dut.connect(v.HOST, v.USR, v.PASSWD)
+        ret3 = self.dut2.connect(v.HOST, v.USR, v.PASSWD)
 
         if ret3 is False:
             raise Exception('Connection is failed. please check your remote settings.')

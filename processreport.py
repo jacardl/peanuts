@@ -272,8 +272,15 @@ class GetThroughputLog(threading.Thread):
                 else:
                     self.dut5g[key] = 0
 
-            drawThroughput2g(self.dut2g, v.MAIL_PIC2)
-            drawThroughput5g(self.dut5g, v.MAIL_PIC3)
+            # draw chart
+            for value in self.dut2g.values():
+                if isinstance(value, float):
+                    drawThroughput2g(self.dut2g, v.MAIL_PIC2)
+                    break
+            for value in self.dut5g.values():
+                if isinstance(value, float):
+                    drawThroughput5g(self.dut5g, v.MAIL_PIC3)
+                    break
 
             for key, value in self.lan2g.iteritems():
                 if len(value) is not 0:
@@ -289,8 +296,15 @@ class GetThroughputLog(threading.Thread):
                 else:
                     self.lan5g[key] = 0
 
-            drawThroughput2g(self.lan5g, v.MAIL_PIC5)
-            drawThroughput5g(self.lan5g, v.MAIL_PIC6)
+            # draw chart
+            for value in self.lan2g.values():
+                if isinstance(value, float):
+                    drawThroughput2g(self.lan2g, v.MAIL_PIC5)
+                    break
+            for value in self.lan5g.values():
+                if isinstance(value, float):
+                    drawThroughput5g(self.lan5g, v.MAIL_PIC6)
+                    break
 
 
 def getThroughputLogVerbose(logfile):

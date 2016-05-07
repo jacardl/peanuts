@@ -302,7 +302,7 @@ def getThroughputLogVerbose(logfile):
         log = open(logfile)
         for line in log:
             if not line.isspace():
-                m = re.search('\s0.0-\d{1,4}.*\s(\d{1,3}\.?\d{1,2})?\sMbits/sec', line)
+                m = re.search('0\.0-\d{1,4}.*\s(\d{1,3}\.?\d{1,2})?\sMbits/sec', line)
                 if m:
                     if result['tx'] is 0:
                         result['tx'] = m.group(1)
@@ -522,9 +522,20 @@ if __name__ == '__main__':
     #     print time.time()
     # print getFlowLogVerbose("E:\peanuts\AP_MIXEDPSK_CHAN1_36_FLOW.log")
     # print getChannelFlowLogVerbose("E:\peanuts\AP_MIXEDPSK_CHAN1_36_FLOW.log")
-    info = GetThroughputLog("report.log".decode("utf8").encode("gbk"))
-    info.start()
-    info.join()
+    # info = GetThroughputLog("report.log".decode("utf8").encode("gbk"))
+    # info.start()
+    # info.join()
+    print getThroughputLogVerbose('ttt.log'.decode("utf8").encode("gbk"))
+    # f = open('test.log')
+    # ret = f.readlines()
+    # f.close()
+    # f2 = open('ttt.log', 'a')
+    # for l in xrange(len(ret)):
+    #     ret[l] = re.sub('\r', '\n', ret[l])
+    # a = ret
+    # f2.writelines(ret)
+    # f2.close()
+
 
 
 

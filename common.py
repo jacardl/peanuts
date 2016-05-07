@@ -80,7 +80,7 @@ class ShellClient(object):
 
             stdin, stdout, stderr = self.client.exec_command(cmd)
             self.out = stdout.readlines()  # input and output are unicode
-            for index in range(len(self.out)):
+            for index in xrange(len(self.out)):
                 try:
                     self.out[index] = self.out[index].encode("utf8")
                 except Exception, e:
@@ -93,7 +93,7 @@ class ShellClient(object):
                 cmd = cmd.decode("utf-8")
                 cmd = cmd.encode("utf-8")
             self.tn.write(cmd + "\n")
-            self.out = self.tn.read_until("root@XiaoQiang:", 60)
+            self.out = self.tn.read_until("root@XiaoQiang:", 200)
             self.out = self.out.split("\n")
             del self.out[0]  # del command and :~#
             del self.out[-1]
@@ -362,6 +362,8 @@ def setGet(terminal, command, logname):
         f = open(v.TEST_SUITE_LOG_PATH + logname + '.log', 'a')
         f.write(curTime + '~#Get from ' + terminal.hostname + '#')
         f.write(command + '\n')
+        for index in xrange(len(ret)):
+            ret[index] = re.sub('\r', '\n', ret[index])
         f.writelines(ret)
         f.write('\n')
         f.close()

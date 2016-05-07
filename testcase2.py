@@ -11901,7 +11901,7 @@ class AP_CLEAR_CHAN1_BW20_DUT_THROUGHPUT(TestCase):
             result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             iperfOn = SetAdbIperfOn(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             iperfOn.start()
-            t.sleep(3.0)
+            t.sleep(4.0)
             ret = setIperfFlow2(self.dut2, result["ip"], v.IPERF_INTERVAL, v.IPERF_TIME, self.__class__.__name__)
             self.assertTrue(ret, "Excute iperf flow error, connection refused.")
         else:

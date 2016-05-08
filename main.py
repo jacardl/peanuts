@@ -633,11 +633,12 @@ class TestSuitePage(wx.Panel):
             t.sleep(0.1)
             # set testKeepGoing to False when click cancel
 
-        # if os.path.exists(v.TEST_SUITE_LOG_PATH):
-        #     if not os.path.exists(v.REPORT_NAME):
-        #         os.rename(v.TEST_SUITE_LOG_PATH, v.REPORT_NAME)
-        #     else:
-        #         os.rename(v.TEST_SUITE_LOG_PATH, v.REPORT_FILE_NAME + str(random.random()))
+        if os.path.exists(v.TEST_SUITE_LOG_PATH):
+            if not os.path.exists(v.REPORT_NAME):
+                os.rename(v.TEST_SUITE_LOG_PATH, v.REPORT_NAME)
+            else:
+                os.rename(v.TEST_SUITE_LOG_PATH, v.REPORT_FILE_NAME + str(random.random()))
+
         if testKeepGoing is False: # click cancel
             os.system("taskkill /F /IM python.exe | taskkill /F /T /IM adb.exe")
         else: # reboot android device

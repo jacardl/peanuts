@@ -267,6 +267,9 @@ class GeneralPage(wx.Panel):
     def connectionCheckThread(self, connectiontype, ip=None, port=None, user=None, password=None):
         result, reportName = co.connectionCheck(connectiontype, ip=ip, user=user, password=password)
         v.REPORT_NAME = reportName
+        v.REPORT_FILE_NAME = (v.REPORT_NAME + ".log").decode("utf8").encode("gbk")
+        v.MAIL_TITLE = "【" + v.REPORT_NAME + "】自动化测试报告"
+
         if result:
             v.SAVE_BTN_FLAG = True
             dlgOk = wx.MessageDialog(self, 'Connection is OK ! \n'

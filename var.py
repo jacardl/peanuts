@@ -75,7 +75,7 @@ KEY = generateRandomString(WORD_RANGE, 63)
 SPECIAL_KEY = generateRandomString(SPEC_RANGE, 63)
 
 REPORT_NAME = ""
-REPORT_FILE_NAME = (REPORT_NAME + ".log").decode("utf8").encode("gbk")
+REPORT_FILE_NAME = ""
 TEST_SUITE_LOG_PATH = os.getcwd() + os.sep + "TEST_SUITE_LOG" + os.sep
 IPERF_PATH = os.getcwd() + os.sep + "iperf" + os.sep
 DEFAULT_PATH = os.getcwd() + os.sep
@@ -121,7 +121,7 @@ MAIL_USER = "robot"    #用户名
 MAIL_PASS = ""   #口令
 MAIL_POSTFIX="xiaomi.com"  #发件箱的后缀
 MAILFROM_LIST = "robot@xiaomi.com"
-MAIL_TITLE = "【" + REPORT_NAME + "】自动化测试报告"
+MAIL_TITLE = ""
 
 MAIL_PIC1 = TEST_SUITE_LOG_PATH + "total_memory_used.png"
 MAIL_PIC2 = TEST_SUITE_LOG_PATH + "dut_to_2g.png"

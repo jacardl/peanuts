@@ -4,7 +4,7 @@ from email.mime.text import MIMEText
 from email.mime.image import MIMEImage
 from email.mime.multipart import MIMEMultipart
 from email.mime.application import MIMEApplication
-import var as v
+
 from common import *
 import processreport as pr
 
@@ -123,7 +123,7 @@ if __name__ == '__main__':
     ret.start()
     ret.join()
 
-    if generateMail(["liujia5@xiaomi.com"], "test", q, report, v.MAIL_XLSX, v.TEST_SUITE_LOG_PATH + v.MAIL_THROUGHPUT_XLSX):
+    if generateMail(["liujia5@xiaomi.com"], "test", q, report, v.MAIL_XLSX, v.MAIL_THROUGHPUT_XLSX):
         print "successful"
     else:
         print "failed"

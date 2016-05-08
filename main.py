@@ -668,27 +668,30 @@ class TestSuitePage(wx.Panel):
             self.procReport.start()
             self.procReport.join()
 
-            while not os.path.exists(v.DEFAULT_PATH + v.MAIL_PIC1) or \
-                    not os.path.exists(v.DEFAULT_PATH + v.MAIL_PIC4):
+            while not os.path.exists(v.MAIL_PIC1) or not os.path.exists(v.MAIL_PIC4):
                 print "wait for draw memory/cpu chart"
                 t.sleep(1)
 
             if v.SEND_MAIL == 1:
-                # add Queue to communicate with processreport process
-                sm.generateMail(v.MAILTO_LIST, self.mailTitle, q, self.reportFile, v.MAIL_XLSX, v.TEST_SUITE_LOG_PATH + v.MAIL_THROUGHPUT_XLSX)
-
-            files = os.listdir(v.DEFAULT_PATH)
-            for file in files:
-                if os.path.splitext(file)[1] == ".png":
-                    try:
-                        shutil.move(file, v.TEST_SUITE_LOG_PATH)
-                    except Exception, e:
-                        print "shutil.move " + file + str(e)
-                elif file == v.MAIL_XLSX:
-                    try:
-                        shutil.move(file, v.TEST_SUITE_LOG_PATH)
-                    except Exception, e:
-                        print "shutil.move" + file + str(e)
+                if os.path.exists(v.MAIL_THROUGHPUT_XLSX):
+                    # add Queue to communicate with processreport process
+                    sm.generateMail(v.MAILTO_LIST, self.mailTitle, q, self.reportFile,
+                                    v.MAIL_XLSX, v.MAIL_THROUGHPUT_XLSX)
+                else:
+                    sm.generateMail(v.MAILTO_LIST, self.mailTitle, q, self.reportFile, v.MAIL_XLSX)
+            #
+            # files = os.listdir(v.DEFAULT_PATH)
+            # for file in files:
+            #     if os.path.splitext(file)[1] == ".png":
+            #         try:
+            #             shutil.move(file, v.TEST_SUITE_LOG_PATH)
+            #         except Exception, e:
+            #             print "shutil.move " + file + str(e)
+            #     elif file == v.MAIL_XLSX:
+            #         try:
+            #             shutil.move(file, v.TEST_SUITE_LOG_PATH)
+            #         except Exception, e:
+            #             print "shutil.move" + file + str(e)
             # quit execution test dlg
             self.runFlag = False
 

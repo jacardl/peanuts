@@ -50,12 +50,6 @@ INTF_2G = 'wl1'
 INTF_5G = 'wl0'
 INTF_GUEST = 'guest'
 
-TEST_SUITE_LOG_PATH = os.getcwd() + os.sep + 'LOG_TEST_SUITE' + os.sep
-IPERF_PATH = os.getcwd() + os.sep + "iperf" + os.sep
-DEFAULT_PATH = os.getcwd() + os.sep
-SSH_LOG_PATH = DEFAULT_PATH + "ssh_connection.log"
-DEVICE_STATUS_LOG = "device_status_log"
-
 WORD_RANGE = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-_"
 SPEC_RANGE = '`~!@#$%^&*() =+\\|]}[{\'\";:/?.>,<'
 CHINESE_RANGE = "宣室求贤访逐臣贾生才调更无伦可怜夜半虚前席不问苍生问鬼神"
@@ -79,6 +73,12 @@ WIRELESS_RELAY_CHINESE_SSID_5G = WIRELESS_RELAY_CHINESE_SSID + "_5G"
 
 KEY = generateRandomString(WORD_RANGE, 63)
 SPECIAL_KEY = generateRandomString(SPEC_RANGE, 63)
+
+TEST_SUITE_LOG_PATH = os.getcwd() + os.sep + 'TEST_SUITE_LOG' + os.sep
+IPERF_PATH = os.getcwd() + os.sep + "iperf" + os.sep
+DEFAULT_PATH = os.getcwd() + os.sep
+SSH_LOG_PATH = DEFAULT_PATH + "ssh_connection.log"
+DEVICE_STATUS_LOG = "device_status_log"
 
 PING_PERCENT_PASS = 100
 PING_COUNT = 5
@@ -120,15 +120,15 @@ MAIL_PASS = ""   #口令
 MAIL_POSTFIX="xiaomi.com"  #发件箱的后缀
 MAILFROM_LIST = "robot@xiaomi.com"
 
-MAIL_PIC1 = "total_memory_used.png"
-MAIL_PIC2 = "dut_to_2g.png"
-MAIL_PIC3 = "dut_to_5g.png"
-MAIL_PIC4 = "current_cpu_load.png"
-MAIL_PIC5 = "lan_to_2g.png"
-MAIL_PIC6 = "lan_to_5g.png"
-MAIL_XLSX = "memory_tracking.xlsx"
-MAIL_THROUGHPUT_XLSX = "throughput.xlsx"
-
+MAIL_PIC1 = TEST_SUITE_LOG_PATH + "total_memory_used.png"
+MAIL_PIC2 = TEST_SUITE_LOG_PATH + "dut_to_2g.png"
+MAIL_PIC3 = TEST_SUITE_LOG_PATH + "dut_to_5g.png"
+MAIL_PIC4 = TEST_SUITE_LOG_PATH + "current_cpu_load.png"
+MAIL_PIC5 = TEST_SUITE_LOG_PATH + "lan_to_2g.png"
+MAIL_PIC6 = TEST_SUITE_LOG_PATH + "lan_to_5g.png"
+MAIL_XLSX = TEST_SUITE_LOG_PATH + "memory_tracking.xlsx"
+MAIL_THROUGHPUT_XLSX_ORIGINAL = "throughput.xlsx"
+MAIL_THROUGHPUT_XLSX = TEST_SUITE_LOG_PATH + MAIL_THROUGHPUT_XLSX_ORIGINAL
 
 MEM_MONITOR_INTERVAL = 300
 

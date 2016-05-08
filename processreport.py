@@ -225,7 +225,7 @@ class GetThroughputLog(threading.Thread):
         report.close()
         if len(indexList) is not 0:
             try:
-                wb = load_workbook(v.MAIL_THROUGHPUT_XLSX)
+                wb = load_workbook(v.MAIL_THROUGHPUT_XLSX_ORIGINAL)
             except:
                 print "specified file no exists!"
                 return
@@ -256,7 +256,7 @@ class GetThroughputLog(threading.Thread):
                         y += 2
                         wb[tu[3]].cell(row=x, column=y).value = speedDict['rx']
                         break
-            wb.save(self.logPath + v.MAIL_THROUGHPUT_XLSX)
+            wb.save(v.MAIL_THROUGHPUT_XLSX)
 
             for key, value in self.dut2g.iteritems():
                 if len(value) is not 0:
@@ -539,7 +539,7 @@ if __name__ == '__main__':
     # info = GetThroughputLog("report.log".decode("utf8").encode("gbk"))
     # info.start()
     # info.join()
-    print getThroughputLogVerbose('ttt.log'.decode("utf8").encode("gbk"))
+    # print getThroughputLogVerbose('ttt.log'.decode("utf8").encode("gbk"))
     # f = open('test.log')
     # ret = f.readlines()
     # f.close()
@@ -549,6 +549,7 @@ if __name__ == '__main__':
     # a = ret
     # f2.writelines(ret)
     # f2.close()
+    print v.TEST_SUITE_LOG_PATH
 
 
 

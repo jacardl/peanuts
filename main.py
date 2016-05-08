@@ -186,11 +186,7 @@ class GeneralPage(wx.Panel):
 
         # sta connection ctrl
         staTypeLbl = wx.StaticText(self, -1, 'Device:')
-        staSerialNumList = list()
-        if len(co.getAdbDevicesModel()) is 0:
-            staSerialNumList.append("None")
-        else:
-            staSerialNumList = co.getAdbDevicesModel().keys()
+        staSerialNumList = co.getAdbDevices()
         self.staSerialNum = wx.Choice(self, -1, choices=staSerialNumList)
         self.staSerialNum.SetSelection(0)
         v.ANDROID_SERIAL_NUM = staSerialNumList[0]
@@ -274,7 +270,7 @@ class GeneralPage(wx.Panel):
         if result:
             v.SAVE_BTN_FLAG = True
             dlgOk = wx.MessageDialog(self, 'Connection is OK ! \n'
-                                           'DUT is %s !'%reportName,
+                                           'DUT is %s !'%(v.REPORT_NAME.split()[0]),
                                      'Info',
                                      wx.OK | wx.ICON_INFORMATION | wx.STAY_ON_TOP
                                      )
@@ -313,7 +309,7 @@ class GeneralPage(wx.Panel):
                                                                                   'ip': v.HOST, 'user': v.USR,
                                                                                   'password': v.PASSWD})
             dutConn.start()
-            dutConn.join()
+
         if v.ANDROID_SERIAL_NUM is not None:
             v.STA_COUNT = self.staCount.GetValue()
             dutConn = threading.Thread(target=self.adbDeviceCheckThread, args=(v.STA_COUNT,))

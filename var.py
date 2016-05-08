@@ -76,7 +76,7 @@ SPECIAL_KEY = generateRandomString(SPEC_RANGE, 63)
 
 REPORT_NAME = ""
 REPORT_FILE_NAME = (REPORT_NAME + ".log").decode("utf8").encode("gbk")
-TEST_SUITE_LOG_PATH = os.getcwd() + os.sep + REPORT_NAME + os.sep
+TEST_SUITE_LOG_PATH = os.getcwd() + os.sep + "TEST_SUITE_LOG" + os.sep
 IPERF_PATH = os.getcwd() + os.sep + "iperf" + os.sep
 DEFAULT_PATH = os.getcwd() + os.sep
 SSH_LOG_PATH = DEFAULT_PATH + "ssh_connection.log"

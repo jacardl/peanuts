@@ -256,8 +256,8 @@ class ShellCommand(ShellClient):
             if n:
                 result["channel"] = n.group(1)
         channelDic = {"current": " daily build ",
-                      "stable": " 开发版OTA ",
-                      "release": " 稳定版OTA "}
+                      "stable": " 开发版 ",
+                      "release": " 稳定版 "}
         result["channel"] = channelDic.get(result["channel"])
         return result
 

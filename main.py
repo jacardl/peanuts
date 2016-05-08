@@ -269,11 +269,12 @@ class GeneralPage(wx.Panel):
         v.SERIAL_PORT = event.GetString()
 
     def connectionCheckThread(self, connectiontype, ip=None, port=None, user=None, password=None):
-        result, self.hardware = co.connectionCheck(connectiontype, ip=ip, user=user, password=password)
+        result, reportName = co.connectionCheck(connectiontype, ip=ip, user=user, password=password)
+        v.REPORT_NAME = reportName
         if result:
             v.SAVE_BTN_FLAG = True
             dlgOk = wx.MessageDialog(self, 'Connection is OK ! \n'
-                                           'DUT is %s !'%self.hardware,
+                                           'DUT is %s !'%reportName,
                                      'Info',
                                      wx.OK | wx.ICON_INFORMATION | wx.STAY_ON_TOP
                                      )
@@ -312,6 +313,7 @@ class GeneralPage(wx.Panel):
                                                                                   'ip': v.HOST, 'user': v.USR,
                                                                                   'password': v.PASSWD})
             dutConn.start()
+            dutConn.join()
         if v.ANDROID_SERIAL_NUM is not None:
             v.STA_COUNT = self.staCount.GetValue()
             dutConn = threading.Thread(target=self.adbDeviceCheckThread, args=(v.STA_COUNT,))
@@ -563,16 +565,10 @@ class TestSuitePage(wx.Panel):
     def TextTestRunnerFailCheck(self, jobID, abortEvent, testcase, count):
         # process testcases tend to find error or failed cases,
         # then add them to suitefailed and process it until count times
-        shell = co.ShellCommand(v.CONNECTION_TYPE)
-        shell.connect(v.HOST, v.USR, v.PASSWD)
         # save file in windows, default code is gbk
-        self.report = shell.setReportName().decode("utf8").encode("gbk")
-        self.reportFile = (self.report + ".log").decode("utf8").encode("gbk")
-        self.mailTitle = shell.setMailTitle()
-        shell.close()
 
         # curTime = t.strftime('%Y.%m.%d %H.%M.%S', t.localtime())
-        f = open(self.reportFile, 'a')
+        f = open(v.REPORT_FILE_NAME, 'a')
         runner = TextTestRunner(f, verbosity=2)
         res = runner.run(testcase)
         errors = res.errors
@@ -638,11 +634,11 @@ class TestSuitePage(wx.Panel):
             t.sleep(0.1)
             # set testKeepGoing to False when click cancel
 
-        if os.path.exists(v.TEST_SUITE_LOG_PATH):
-            if not os.path.exists(self.report):
-                os.rename(v.TEST_SUITE_LOG_PATH, self.report)
-            else:
-                os.rename(v.TEST_SUITE_LOG_PATH, self.report + str(random.random()))
+        # if os.path.exists(v.TEST_SUITE_LOG_PATH):
+        #     if not os.path.exists(v.REPORT_NAME):
+        #         os.rename(v.TEST_SUITE_LOG_PATH, v.REPORT_NAME)
+        #     else:
+        #         os.rename(v.TEST_SUITE_LOG_PATH, v.REPORT_FILE_NAME + str(random.random()))
         if testKeepGoing is False: # click cancel
             os.system("taskkill /F /IM python.exe | taskkill /F /T /IM adb.exe")
         else: # reboot android device
@@ -664,7 +660,7 @@ class TestSuitePage(wx.Panel):
                 self.memMonXlsx.join()
 
             q = mp.Queue() # tranlate test result to generateMail
-            self.procReport = pr.ProcessReport(self.reportFile, q)
+            self.procReport = pr.ProcessReport(v.REPORT_FILE_NAME, q)
             self.procReport.start()
             self.procReport.join()
 
@@ -675,10 +671,10 @@ class TestSuitePage(wx.Panel):
             if v.SEND_MAIL == 1:
                 if os.path.exists(v.MAIL_THROUGHPUT_XLSX):
                     # add Queue to communicate with processreport process
-                    sm.generateMail(v.MAILTO_LIST, self.mailTitle, q, self.reportFile,
+                    sm.generateMail(v.MAILTO_LIST, v.MAIL_TITLE, q, v.REPORT_FILE_NAME,
                                     v.MAIL_XLSX, v.MAIL_THROUGHPUT_XLSX)
                 else:
-                    sm.generateMail(v.MAILTO_LIST, self.mailTitle, q, self.reportFile, v.MAIL_XLSX)
+                    sm.generateMail(v.MAILTO_LIST, v.MAIL_TITLE, q, v.REPORT_FILE_NAME, v.MAIL_XLSX)
             self.runFlag = False
 
         except Exception, e:

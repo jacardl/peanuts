@@ -285,11 +285,11 @@ def connectionCheck(connectiontype, ip=None, port=None, user=None, password=None
     client = ShellCommand(connectiontype)
     result = client.connect(ip, user, password)
     if result is True:
-        hardware = client.getHardware()
-        if hardware == "":
+        reportName = client.setReportName()
+        if reportName == "":
             return False, ""
         client.close()
-        return result, hardware
+        return result, reportName
     elif result is False:
         return result, ""
 

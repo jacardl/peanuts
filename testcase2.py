@@ -2,7 +2,6 @@
 from unittest import *
 
 import api
-import var as v
 from common import *
 
 

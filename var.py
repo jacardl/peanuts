@@ -74,7 +74,8 @@ WIRELESS_RELAY_CHINESE_SSID_5G = WIRELESS_RELAY_CHINESE_SSID + "_5G"
 KEY = generateRandomString(WORD_RANGE, 63)
 SPECIAL_KEY = generateRandomString(SPEC_RANGE, 63)
 
-TEST_SUITE_LOG_PATH = os.getcwd() + os.sep + 'TEST_SUITE_LOG' + os.sep
+REPORT_NAME = ""
+TEST_SUITE_LOG_PATH = os.getcwd() + os.sep + REPORT_NAME + os.sep
 IPERF_PATH = os.getcwd() + os.sep + "iperf" + os.sep
 DEFAULT_PATH = os.getcwd() + os.sep
 SSH_LOG_PATH = DEFAULT_PATH + "ssh_connection.log"

@@ -7,7 +7,6 @@ from collections import *
 import wx
 import wx.lib.agw.customtreectrl as CT
 import wx.lib.delayedresult as delayedresult
-import shutil
 import random
 import multiprocessing as mp
 import var as v
@@ -568,8 +567,9 @@ class TestSuitePage(wx.Panel):
         shell.connect(v.HOST, v.USR, v.PASSWD)
         # save file in windows, default code is gbk
         self.report = shell.setReportName().decode("utf8").encode("gbk")
-        self.reportFile = (shell.setReportName() + ".log").decode("utf8").encode("gbk")
+        self.reportFile = (self.report + ".log").decode("utf8").encode("gbk")
         self.mailTitle = shell.setMailTitle()
+        shell.close()
 
         # curTime = t.strftime('%Y.%m.%d %H.%M.%S', t.localtime())
         f = open(self.reportFile, 'a')
@@ -679,20 +679,6 @@ class TestSuitePage(wx.Panel):
                                     v.MAIL_XLSX, v.MAIL_THROUGHPUT_XLSX)
                 else:
                     sm.generateMail(v.MAILTO_LIST, self.mailTitle, q, self.reportFile, v.MAIL_XLSX)
-            #
-            # files = os.listdir(v.DEFAULT_PATH)
-            # for file in files:
-            #     if os.path.splitext(file)[1] == ".png":
-            #         try:
-            #             shutil.move(file, v.TEST_SUITE_LOG_PATH)
-            #         except Exception, e:
-            #             print "shutil.move " + file + str(e)
-            #     elif file == v.MAIL_XLSX:
-            #         try:
-            #             shutil.move(file, v.TEST_SUITE_LOG_PATH)
-            #         except Exception, e:
-            #             print "shutil.move" + file + str(e)
-            # quit execution test dlg
             self.runFlag = False
 
         except Exception, e:

@@ -1841,6 +1841,14 @@ def chkAdbDevicesCount(count):
         return False
 
 
+def chkAdbDevice(serialnum):
+    ret = getAdbDevices()
+    if serialnum in ret:
+        return True
+    else:
+        return False
+
+
 def chkAdb2gFreq(device, logname):
     command = "am instrument -e class com.peanutswifi.ApplicationTest#test_2g_freq -w com.peanutswifi.test/com.peanutswifi.MyTestRunner"
     ret = setAdbShell(device, command, logname)

@@ -45,8 +45,7 @@ def sendMail(to_list, sub, content, attach1=None, attach2=None, attach3=None, pi
             fp = open(pic, "rb")
             att5 = MIMEImage(fp.read(), _subtype="png")
             fp.close()
-            # att5.add_header('Content-ID', '<'+pic+'>')
-            att5.add_header('Content-ID', pic)
+            att5.add_header('Content-ID', pic.split('\\')[-1])
             # att5["Content-Type"] = 'application/octet-stream'
             att5["Content-Type"] = 'image/png'
             msg.attach(att5)
@@ -93,25 +92,26 @@ def generateMail(maillist, title, queue=None, attach1=None, attach2=None, attach
 
     content5 = """
         <img src="cid:%s" alt="%s" />
-        """ % (v.MAIL_PIC2, v.MAIL_PIC2)
+        """ % (v.MAIL_PIC2.split('\\')[-1], v.MAIL_PIC2.split('\\')[-1])
 
     content6 = """
         <img src="cid:%s" alt="%s" />
-        """ % (v.MAIL_PIC5, v.MAIL_PIC5)
+        """ % (v.MAIL_PIC5.split('\\')[-1], v.MAIL_PIC5.split('\\')[-1])
 
     content7 = """
         <img src="cid:%s" alt="%s" />
-        """% (v.MAIL_PIC3, v.MAIL_PIC3)
+        """% (v.MAIL_PIC3.split('\\')[-1], v.MAIL_PIC3.split('\\')[-1])
 
     content8 = """
         <img src="cid:%s" alt="%s" />
-        """% (v.MAIL_PIC6, v.MAIL_PIC6)
+        """% (v.MAIL_PIC6.split('\\')[-1], v.MAIL_PIC6.split('\\')[-1])
 
     content9 = """
         <p><img src="cid:%s" alt="%s" /></p>
         <p><img src="cid:%s" alt="%s" /></p>
         <p><span style="font-size:12px;">此为系统自动发送，请勿回复。</span></p>
-        """ % (v.MAIL_PIC1, v.MAIL_PIC1, v.MAIL_PIC4, v.MAIL_PIC4)
+        """ % (v.MAIL_PIC1.split('\\')[-1], v.MAIL_PIC1.split('\\')[-1], v.MAIL_PIC4.split('\\')[-1],
+               v.MAIL_PIC4.split('\\')[-1])
 
     piclist = list()
     contents = content1 + content2 + content3

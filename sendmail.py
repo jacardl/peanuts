@@ -123,10 +123,10 @@ def generateMail(maillist, title, queue=None, attach1=None, attach2=None, attach
         contents += content6
     if os.path.isfile(v.MAIL_PIC3):
         piclist.append(v.MAIL_PIC3)
-        contents += content8
         contents += content7
     if os.path.isfile(v.MAIL_PIC6):
         piclist.append(v.MAIL_PIC6)
+        contents += content8
     if os.path.isfile(v.MAIL_PIC1) and os.path.isfile(v.MAIL_PIC4):
         piclist.append(v.MAIL_PIC1)
         piclist.append(v.MAIL_PIC4)

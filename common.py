@@ -1861,11 +1861,11 @@ def chkAdb5gFreq(device, logname):
     return False
 
 
-if __name__ == '__main__':
-    v.CONNECTION_TYPE = 2
-    v.HOST = "192.168.31.1"
-    v.USR = "root"
-    v.PASSWD = "admin"
-    terminal = ShellCommand(v.CONNECTION_TYPE)
-    ret = terminal.connect(v.HOST, v.USR, v.PASSWD)
-    print getAdbDevicesModel()
+# if __name__ == '__main__':
+#     v.CONNECTION_TYPE = 2
+#     v.HOST = "192.168.31.1"
+#     v.USR = "root"
+#     v.PASSWD = "admin"
+#     terminal = ShellCommand(v.CONNECTION_TYPE)
+#     ret = terminal.connect(v.HOST, v.USR, v.PASSWD)
+#     print getAdbDevicesModel()

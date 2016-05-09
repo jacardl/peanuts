@@ -266,9 +266,10 @@ class GeneralPage(wx.Panel):
 
     def connectionCheckThread(self, connectiontype, ip=None, port=None, user=None, password=None):
         result, reportName = co.connectionCheck(connectiontype, ip=ip, user=user, password=password)
-        v.REPORT_NAME = reportName
-        v.REPORT_FILE_NAME = (v.REPORT_NAME + ".log").decode("utf8").encode("gbk")
-        v.MAIL_TITLE = "【" + v.REPORT_NAME + "】自动化测试报告"
+        # file name for windows should be gbk encoded
+        v.REPORT_NAME = reportName.decode("utf8").encode("gbk")
+        v.REPORT_FILE_NAME = (reportName + ".log").decode("utf8").encode("gbk")
+        v.MAIL_TITLE = "【" + reportName + "】自动化测试报告"
 
         if result:
             v.SAVE_BTN_FLAG = True
@@ -637,7 +638,7 @@ class TestSuitePage(wx.Panel):
             if not os.path.exists(v.REPORT_NAME):
                 os.rename(v.TEST_SUITE_LOG_PATH, v.REPORT_NAME)
             else:
-                os.rename(v.TEST_SUITE_LOG_PATH, v.REPORT_FILE_NAME + str(random.random()))
+                os.rename(v.TEST_SUITE_LOG_PATH, v.REPORT_FILE_NAME + "_" + str(random.randint(1, 9999)))
 
         if testKeepGoing is False: # click cancel
             os.system("taskkill /F /IM python.exe | taskkill /F /T /IM adb.exe")
@@ -825,8 +826,6 @@ class Frame(wx.Frame):
         self.Center()
         self.SetIcon(images.logo.GetIcon())
         bookFrame = ToolBook(self, -1)
-
-##        wx.StaticBitmap(bookFrame, -1, images.logo.GetBitmap(), (520,5))
 
 # when use multiprocess module on windows platform, " 'if __name__ == '__main__' "should be added
 if __name__ == '__main__':

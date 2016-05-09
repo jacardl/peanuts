@@ -331,7 +331,7 @@ def getThroughputLogVerbose(logfile):
 
 
 def drawThroughput2g(data, picname):
-    bar_width = 0.3
+    bar_width = 0.2
     opacity = 0.4
     index = np.arange(2)
     ret = data
@@ -344,19 +344,19 @@ def drawThroughput2g(data, picname):
     rx.append(ret.get("20rx"))
     rx.append(ret.get("40rx"))
 
-    fig, ax = plt.subplots(figsize=(6, 6))
+    fig, ax = plt.subplots(figsize=(6, 4))
     print "draw %s chart" % picname
     # plt.subplots_adjust(left=0.08, right=0.95)
     rects1 = plt.bar(index, tx, bar_width,
                      alpha=opacity,
                      color='b',
-                     label='Tx'
+                     label='Tx',
                      )
 
     rects2 = plt.bar(index + bar_width, rx, bar_width,
                      alpha=opacity,
                      color='r',
-                     label='Rx'
+                     label='Rx',
                      )
 
     def autolabel(rects):
@@ -364,16 +364,17 @@ def drawThroughput2g(data, picname):
         for rect in rects:
             height = rect.get_height()
             ax.text(rect.get_x()+rect.get_width()/2., 0.75*height, '%.1f'%float(height),
-                    ha='center', va='bottom')
+                    ha='center', va='bottom', fontsize=10)
 
     autolabel(rects1)
     autolabel(rects2)
 
-    plt.xlabel('Bandwidth', fontsize=12)
-    plt.ylabel('Mbps', fontsize=12)
-    plt.suptitle(picname.split(".")[0].title())
-    plt.xticks(index + bar_width, ('20MHz', '40MHz',))
-    plt.legend()
+    plt.xlabel('Bandwidth', fontsize=10)
+    plt.ylabel('Mbps', fontsize=10)
+    plt.suptitle(picname.split(".")[0].split('\\')[-1].title(), fontsize=10)
+    plt.xticks(index + bar_width, ('20MHz', '40MHz',), fontsize=10)
+    plt.yticks(fontsize=10)
+    plt.legend(prop={'size': 10})
 
     # plt.show()
     plt.savefig(picname)
@@ -381,7 +382,7 @@ def drawThroughput2g(data, picname):
 
 
 def drawThroughput5g(data, picname):
-    bar_width = 0.3
+    bar_width = 0.2
     opacity = 0.4
     index = np.arange(3)
     ret = data
@@ -396,7 +397,7 @@ def drawThroughput5g(data, picname):
     rx.append(ret.get("40rx"))
     rx.append(ret.get("80rx"))
 
-    fig, ax = plt.subplots(figsize=(6, 6))
+    fig, ax = plt.subplots(figsize=(6, 4))
     print "draw %s chart" % picname
     # plt.subplots_adjust(left=0.08, right=0.95)
     rects1 = plt.bar(index, tx, bar_width,
@@ -416,16 +417,17 @@ def drawThroughput5g(data, picname):
         for rect in rects:
             height = rect.get_height()
             ax.text(rect.get_x()+rect.get_width()/2., 0.75*height, '%.1f'%float(height),
-                    ha='center', va='bottom')
+                    ha='center', va='bottom', fontsize=10)
 
     autolabel(rects1)
     autolabel(rects2)
 
-    plt.xlabel('Bandwidth', fontsize=12)
-    plt.ylabel('Mbps', fontsize=12)
-    plt.suptitle(picname.split(".")[0].title())
-    plt.xticks(index + bar_width, ('20MHz', '40MHz', '80MHz'))
-    plt.legend()
+    plt.xlabel('Bandwidth', fontsize=10)
+    plt.ylabel('Mbps', fontsize=10)
+    plt.suptitle(picname.split(".")[0].split('\\')[-1].title(), fontsize=10)
+    plt.xticks(index + bar_width, ('20MHz', '40MHz', '80MHz'), fontsize=10)
+    plt.yticks(fontsize=10)
+    plt.legend(prop={'size': 10})
 
     # plt.show()
     plt.savefig(picname)
@@ -539,7 +541,7 @@ if __name__ == '__main__':
     # info = GetThroughputLog("report.log".decode("utf8").encode("gbk"))
     # info.start()
     # info.join()
-    # print getThroughputLogVerbose('ttt.log'.decode("utf8").encode("gbk"))
+    print getThroughputLogVerbose('ttt.log'.decode("utf8").encode("gbk"))
     # f = open('test.log')
     # ret = f.readlines()
     # f.close()
@@ -549,7 +551,6 @@ if __name__ == '__main__':
     # a = ret
     # f2.writelines(ret)
     # f2.close()
-    print v.TEST_SUITE_LOG_PATH
 
 
 

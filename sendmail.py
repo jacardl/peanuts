@@ -37,10 +37,6 @@ def sendMail(to_list, sub, content, attach1=None, attach2=None, attach3=None, pi
         att3.add_header('Content-Disposition', 'attachment', filename="Throughput.xlsx")
         msg.attach(att3)
 
-    #attach4
-    att4 = MIMEText(content, _subtype='html', _charset='utf8')
-    msg.attach(att4)
-
     #attach5
     if pic_list is not None:
         cnt = 0
@@ -49,10 +45,14 @@ def sendMail(to_list, sub, content, attach1=None, attach2=None, attach3=None, pi
             fp = open(pic, "rb")
             att5 = MIMEImage(fp.read(), _subtype="png")
             fp.close()
-            att5.add_header('Content-ID', '<'+pic+'>')
-            att5["Content-Type"] = 'application/octet-stream'
-            att5["Content-Disposition"] = 'attachment; filename="chart.png"'
+            att5.add_header('Content-ID', pic.split('\\')[-1])
+            # att5["Content-Type"] = 'application/octet-stream'
+            att5["Content-Type"] = 'image/png'
             msg.attach(att5)
+
+    #attach4
+    att4 = MIMEText(content, _subtype='html', _charset='utf8')
+    msg.attach(att4)
 
     try:
         s = smtplib.SMTP()
@@ -74,52 +74,77 @@ def generateMail(maillist, title, queue=None, attach1=None, attach2=None, attach
         raise Exception
 
     print argsdic
-    content5 = """
+    content1 = """
         <p>无线终端：%s</p>
         """ % v.ANDROID_MODEL
 
-    content4 = """
+    content2 = """
         <p>覆盖模块：%s</p>
         """ % "".join(module)
 
-    content1 = """
+    content3 = """
         <p>本次自动化成功执行用例 %(sum)d 个，通过%(ranpass)d 个，通过率 %(percent)0.2f%%。有%(error)d个脚本执行错误，共用时 %(time)0.2f 小时。无线终端尝试上线 %(onlinesum)d 次，成功上线 %(onlinepass)d 次，上线率 %(onlinepercent)0.2f%%</p>
         """ % argsdic
 
-    content2 = """
-        <p>WiFi吞吐测试概览如下，详细数据查看附件：</p>
-        <p><img src="cid:throughput_2g.png" alt="throughput_2g.png" /></p>
-        <p><img src="cid:throughput_5g.png" alt="throughput_5g.png" /></p>
+    content4 = """
+        <p>WiFi 吞吐测试概览如下，详细数据查看附件：</p>
         """
-    content3 = """
-        <p>系统状态如下，详细数据查看附件：</p>
-        <p><img src="cid:total_memory_used.png" alt="total_memory_used.png" /></p>
-        <p><img src="cid:current_cpu_load.png" alt="current_cpu_load.png" /></p>
+
+    content5 = """
+        <img src="cid:%s" alt="%s" />
+        """ % (v.MAIL_PIC2.split('\\')[-1], v.MAIL_PIC2.split('\\')[-1])
+
+    content6 = """
+        <img src="cid:%s" alt="%s" />
+        """ % (v.MAIL_PIC5.split('\\')[-1], v.MAIL_PIC5.split('\\')[-1])
+
+    content7 = """
+        <img src="cid:%s" alt="%s" />
+        """% (v.MAIL_PIC3.split('\\')[-1], v.MAIL_PIC3.split('\\')[-1])
+
+    content8 = """
+        <img src="cid:%s" alt="%s" />
+        """% (v.MAIL_PIC6.split('\\')[-1], v.MAIL_PIC6.split('\\')[-1])
+
+    content9 = """
+        <p><img src="cid:%s" alt="%s" /></p>
+        <p><img src="cid:%s" alt="%s" /></p>
         <p><span style="font-size:12px;">此为系统自动发送，请勿回复。</span></p>
-        """
+        """ % (v.MAIL_PIC1.split('\\')[-1], v.MAIL_PIC1.split('\\')[-1], v.MAIL_PIC4.split('\\')[-1],
+               v.MAIL_PIC4.split('\\')[-1])
+
     piclist = list()
+    contents = content1 + content2 + content3
+    if os.path.isfile(v.MAIL_PIC2):
+        piclist.append(v.MAIL_PIC2)
+        contents += content5
+    if os.path.isfile(v.MAIL_PIC5):
+        piclist.append(v.MAIL_PIC5)
+        contents += content6
+    if os.path.isfile(v.MAIL_PIC3):
+        piclist.append(v.MAIL_PIC3)
+        contents += content7
+    if os.path.isfile(v.MAIL_PIC6):
+        piclist.append(v.MAIL_PIC6)
+        contents += content8
     if os.path.isfile(v.MAIL_PIC1) and os.path.isfile(v.MAIL_PIC4):
         piclist.append(v.MAIL_PIC1)
         piclist.append(v.MAIL_PIC4)
-        contents = "{0}{1}{2}{3}".format(content5, content4, content1, content3)
-        if os.path.isfile(v.MAIL_PIC2):
-            piclist.append(v.MAIL_PIC2)
-            if os.path.isfile(v.MAIL_PIC3):
-                piclist.append(v.MAIL_PIC3)
-            contents = "{0}{1}{2}{3}{4}".format(content5, content4, content1, content2, content3)
-        return sendMail(maillist, title, contents, attach1, attach2, attach3, piclist)
+        contents += content9
+
+    return sendMail(maillist, title, contents, attach1, attach2, attach3, piclist)
 
 
 if __name__ == '__main__':
     import multiprocessing as mp
     v.ANDROID_MODEL = "Mi4 LTE"
-    report = "R2D 开发版OTA 2.13.16.log".decode("utf8").encode("gbk")
+    report = "R2D 开发版 2.13.16.log".decode("utf8").encode("gbk")
     q = mp.Queue() # tranlate test result to generateMail
     ret = pr.ProcessReport(report, q)
     ret.start()
     ret.join()
 
-    if generateMail(["liujia5@xiaomi.com"], "test", q, report, v.MAIL_XLSX, v.TEST_SUITE_LOG_PATH + v.MAIL_THROUGHPUT_XLSX):
+    if generateMail(["liujia5@xiaomi.com"], "test", q, report, v.MAIL_XLSX, v.MAIL_THROUGHPUT_XLSX):
         print "successful"
     else:
         print "failed"

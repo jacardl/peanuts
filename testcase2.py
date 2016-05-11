@@ -2,7 +2,6 @@
 from unittest import *
 
 import api
-import var as v
 from common import *
 
 
@@ -11,13 +10,13 @@ class AP_CLEAR_CHAN(TestCase):
     def setUpClass(self):
         self.dut = api.HttpClient()
         ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
-        ret2 = chkAdbDevicesCount(1)
+        ret2 = chkAdbDevice(v.ANDROID_SERIAL_NUM)
 
         if ret1 is False:
             raise Exception("Http connection is failed. please check your remote settings.")
 
         if ret2 is False:
-            raise Exception("USB devices arenot ready!")
+            raise Exception("Device %s is not ready!" % v.ANDROID_SERIAL_NUM)
 
         option2g = {
             'wifiIndex': 1,
@@ -84,13 +83,13 @@ class AP_CLEAR_LOW(TestCase):
     def setUpClass(self):
         self.dut = api.HttpClient()
         ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
-        ret2 = chkAdbDevicesCount(1)
+        ret2 = chkAdbDevice(v.ANDROID_SERIAL_NUM)
 
         if ret1 is False:
             raise Exception("Http connection is failed. please check your remote settings.")
 
         if ret2 is False:
-            raise Exception("USB devices arenot ready!")
+            raise Exception("Device %s is not ready!" % v.ANDROID_SERIAL_NUM)
 
         option2g = {
             'wifiIndex': 1,
@@ -157,13 +156,13 @@ class AP_CLEAR_MID(TestCase):
     def setUpClass(self):
         self.dut = api.HttpClient()
         ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
-        ret2 = chkAdbDevicesCount(1)
+        ret2 = chkAdbDevice(v.ANDROID_SERIAL_NUM)
 
         if ret1 is False:
             raise Exception("Http connection is failed. please check your remote settings.")
 
         if ret2 is False:
-            raise Exception("USB devices arenot ready!")
+            raise Exception("Device %s is not ready!" % v.ANDROID_SERIAL_NUM)
 
         option2g = {
             'wifiIndex': 1,
@@ -228,13 +227,13 @@ class AP_CLEAR_HIGH(TestCase):
     def setUpClass(self):
         self.dut = api.HttpClient()
         ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
-        ret2 = chkAdbDevicesCount(1)
+        ret2 = chkAdbDevice(v.ANDROID_SERIAL_NUM)
 
         if ret1 is False:
             raise Exception("Http connection is failed. please check your remote settings.")
 
         if ret2 is False:
-            raise Exception("USB devices arenot ready!")
+            raise Exception("Device %s is not ready!" % v.ANDROID_SERIAL_NUM)
 
         option2g = {
             'wifiIndex': 1,
@@ -1604,13 +1603,13 @@ class AP_CLEAR_CHAN_WHITELIST(TestCase):
     def setUpClass(self):
         self.dut = api.HttpClient()
         ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
-        ret2 = chkAdbDevicesCount(1)
+        ret2 = chkAdbDevice(v.ANDROID_SERIAL_NUM)
 
         if ret1 is False:
             raise Exception("Http connection is failed. please check your remote settings.")
 
         if ret2 is False:
-            raise Exception("USB devices arenot ready!")
+            raise Exception("Device %s is not ready!" % v.ANDROID_SERIAL_NUM)
         option2g = {
             'wifiIndex': 1,
             'ssid': v.SSID,
@@ -1781,13 +1780,13 @@ class AP_CLEAR_CHAN_BLACKLIST(TestCase):
     def setUpClass(self):
         self.dut = api.HttpClient()
         ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
-        ret2 = chkAdbDevicesCount(1)
+        ret2 = chkAdbDevice(v.ANDROID_SERIAL_NUM)
 
         if ret1 is False:
             raise Exception("Http connection is failed. please check your remote settings.")
 
         if ret2 is False:
-            raise Exception("USB devices arenot ready!")
+            raise Exception("Device %s is not ready!" % v.ANDROID_SERIAL_NUM)
 
         option2g = {
             'wifiIndex': 1,
@@ -1919,13 +1918,13 @@ class AP_CLEAR_CHAN_REPEAT(TestCase):
 
         self.dut = api.HttpClient()
         ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
-        ret2 = chkAdbDevicesCount(1)
+        ret2 = chkAdbDevice(v.ANDROID_SERIAL_NUM)
 
         if ret1 is False:
             raise Exception("Http connection is failed. please check your remote settings.")
 
         if ret2 is False:
-            raise Exception("USB devices arenot ready!")
+            raise Exception("Device %s is not ready!" % v.ANDROID_SERIAL_NUM)
         option2g = {
             'wifiIndex': 1,
             'ssid': v.SSID,
@@ -1972,13 +1971,13 @@ class AP_PSK2_CHAN(TestCase):
     def setUpClass(self):
         self.dut = api.HttpClient()
         ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
-        ret2 = chkAdbDevicesCount(1)
+        ret2 = chkAdbDevice(v.ANDROID_SERIAL_NUM)
 
         if ret1 is False:
             raise Exception("Http connection is failed. please check your remote settings.")
 
         if ret2 is False:
-            raise Exception("USB devices arenot ready!")
+            raise Exception("Device %s is not ready!" % v.ANDROID_SERIAL_NUM)
         option2g = {
             'wifiIndex': 1,
             'ssid': v.SSID,
@@ -2048,13 +2047,13 @@ class AP_PSK2_CHAN_REPEAT(TestCase):
 
         self.dut = api.HttpClient()
         ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
-        ret2 = chkAdbDevicesCount(1)
+        ret2 = chkAdbDevice(v.ANDROID_SERIAL_NUM)
 
         if ret1 is False:
             raise Exception("Http connection is failed. please check your remote settings.")
 
         if ret2 is False:
-            raise Exception("USB devices arenot ready!")
+            raise Exception("Device %s is not ready!" % v.ANDROID_SERIAL_NUM)
         option2g = {
             'wifiIndex': 1,
             'ssid': v.SSID,
@@ -2105,13 +2104,13 @@ class AP_MIXEDPSK_CHAN(TestCase):
     def setUpClass(self):
         self.dut = api.HttpClient()
         ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
-        ret2 = chkAdbDevicesCount(1)
+        ret2 = chkAdbDevice(v.ANDROID_SERIAL_NUM)
 
         if ret1 is False:
             raise Exception("Http connection is failed. please check your remote settings.")
 
         if ret2 is False:
-            raise Exception("USB devices arenot ready!")
+            raise Exception("Device %s is not ready!" % v.ANDROID_SERIAL_NUM)
         option2g = {
             'wifiIndex': 1,
             'ssid': v.SSID,
@@ -2270,13 +2269,13 @@ class AP_MIXEDPSK_CHAN_BW80(TestCase):
     def setUpClass(self):
         self.dut = api.HttpClient()
         ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
-        ret2 = chkAdbDevicesCount(1)
+        ret2 = chkAdbDevice(v.ANDROID_SERIAL_NUM)
 
         if ret1 is False:
             raise Exception("Http connection is failed. please check your remote settings.")
 
         if ret2 is False:
-            raise Exception("USB devices arenot ready!")
+            raise Exception("Device %s is not ready!" % v.ANDROID_SERIAL_NUM)
         option5g = {
             'wifiIndex': 2,
             'ssid': v.SSID_5G,
@@ -2363,13 +2362,13 @@ class AP_MIXEDPSK_CHAN_BW40(TestCase):
     def setUpClass(self):
         self.dut = api.HttpClient()
         ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
-        ret2 = chkAdbDevicesCount(1)
+        ret2 = chkAdbDevice(v.ANDROID_SERIAL_NUM)
 
         if ret1 is False:
             raise Exception("Http connection is failed. please check your remote settings.")
 
         if ret2 is False:
-            raise Exception("USB devices arenot ready!")
+            raise Exception("Device %s is not ready!" % v.ANDROID_SERIAL_NUM)
         option2g = {
             'wifiIndex': 1,
             'ssid': v.SSID,
@@ -2530,13 +2529,13 @@ class AP_MIXEDPSK_CHAN_BW20(TestCase):
     def setUpClass(self):
         self.dut = api.HttpClient()
         ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
-        ret2 = chkAdbDevicesCount(1)
+        ret2 = chkAdbDevice(v.ANDROID_SERIAL_NUM)
 
         if ret1 is False:
             raise Exception("Http connection is failed. please check your remote settings.")
 
         if ret2 is False:
-            raise Exception("USB devices arenot ready!")
+            raise Exception("Device %s is not ready!" % v.ANDROID_SERIAL_NUM)
         option2g = {
             'wifiIndex': 1,
             'ssid': v.SSID,
@@ -2698,13 +2697,13 @@ class AP_MIXEDPSK_CHAN_SSIDSPEC(TestCase):
 
         self.dut = api.HttpClient()
         ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
-        ret2 = chkAdbDevicesCount(1)
+        ret2 = chkAdbDevice(v.ANDROID_SERIAL_NUM)
 
         if ret1 is False:
             raise Exception("Http connection is failed. please check your remote settings.")
 
         if ret2 is False:
-            raise Exception("USB devices arenot ready!")
+            raise Exception("Device %s is not ready!" % v.ANDROID_SERIAL_NUM)
         option2g = {
             'wifiIndex': 1,
             'ssid': v.SPECIAL_SSID,
@@ -2861,13 +2860,13 @@ class AP_MIXEDPSK_CHAN_KEYSPEC(TestCase):
 
         self.dut = api.HttpClient()
         ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
-        ret2 = chkAdbDevicesCount(1)
+        ret2 = chkAdbDevice(v.ANDROID_SERIAL_NUM)
 
         if ret1 is False:
             raise Exception("Http connection is failed. please check your remote settings.")
 
         if ret2 is False:
-            raise Exception("USB devices arenot ready!")
+            raise Exception("Device %s is not ready!" % v.ANDROID_SERIAL_NUM)
         option2g = {
             'wifiIndex': 1,
             'ssid': v.SSID,
@@ -3027,13 +3026,13 @@ class AP_MIXEDPSK_CHAN_SSIDCHINESE(TestCase):
 
         self.dut = api.HttpClient()
         ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
-        ret2 = chkAdbDevicesCount(1)
+        ret2 = chkAdbDevice(v.ANDROID_SERIAL_NUM)
 
         if ret1 is False:
             raise Exception("Http connection is failed. please check your remote settings.")
 
         if ret2 is False:
-            raise Exception("USB devices arenot ready!")
+            raise Exception("Device %s is not ready!" % v.ANDROID_SERIAL_NUM)
         option2g = {
             'wifiIndex': 1,
             'ssid': v.CHINESE_SSID,
@@ -3190,13 +3189,13 @@ class AP_MIXEDPSK_CHAN_REPEAT(TestCase):
 
         self.dut = api.HttpClient()
         ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
-        ret2 = chkAdbDevicesCount(1)
+        ret2 = chkAdbDevice(v.ANDROID_SERIAL_NUM)
 
         if ret1 is False:
             raise Exception("Http connection is failed. please check your remote settings.")
 
         if ret2 is False:
-            raise Exception("USB devices arenot ready!")
+            raise Exception("Device %s is not ready!" % v.ANDROID_SERIAL_NUM)
         option2g = {
             'wifiIndex': 1,
             'ssid': v.SSID,
@@ -3283,13 +3282,13 @@ class AP_MIXEDPSK_BSD(TestCase):
     def setUpClass(self):
         self.dut = api.HttpClient()
         ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
-        ret2 = chkAdbDevicesCount(1)
+        ret2 = chkAdbDevice(v.ANDROID_SERIAL_NUM)
 
         if ret1 is False:
             raise Exception("Http connection is failed. please check your remote settings.")
 
         if ret2 is False:
-            raise Exception("USB devices arenot ready!")
+            raise Exception("Device %s is not ready!" % v.ANDROID_SERIAL_NUM)
         option = {
             'bsd': 1,
             'ssid1': v.SSID,
@@ -3395,13 +3394,13 @@ class AP_MIXEDPSK_BSD_SSIDHIDE(TestCase):
     def setUpClass(self):
         self.dut = api.HttpClient()
         ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
-        ret2 = chkAdbDevicesCount(1)
+        ret2 = chkAdbDevice(v.ANDROID_SERIAL_NUM)
 
         if ret1 is False:
             raise Exception("Http connection is failed. please check your remote settings.")
 
         if ret2 is False:
-            raise Exception("USB devices arenot ready!")
+            raise Exception("Device %s is not ready!" % v.ANDROID_SERIAL_NUM)
 
         option = {
             'ssid': v.ROOT_AP_SSID,
@@ -3568,13 +3567,13 @@ class AP_MIXEDPSK_BSD_SSIDSPEC(TestCase):
 
         self.dut = api.HttpClient()
         ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
-        ret2 = chkAdbDevicesCount(1)
+        ret2 = chkAdbDevice(v.ANDROID_SERIAL_NUM)
 
         if ret1 is False:
             raise Exception("Http connection is failed. please check your remote settings.")
 
         if ret2 is False:
-            raise Exception("USB devices arenot ready!")
+            raise Exception("Device %s is not ready!" % v.ANDROID_SERIAL_NUM)
 
         option = {
             'bsd': 1,
@@ -3683,13 +3682,13 @@ class AP_MIXEDPSK_BSD_KEYSPEC(TestCase):
 
         self.dut = api.HttpClient()
         ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
-        ret2 = chkAdbDevicesCount(1)
+        ret2 = chkAdbDevice(v.ANDROID_SERIAL_NUM)
 
         if ret1 is False:
             raise Exception("Http connection is failed. please check your remote settings.")
 
         if ret2 is False:
-            raise Exception("USB devices arenot ready!")
+            raise Exception("Device %s is not ready!" % v.ANDROID_SERIAL_NUM)
 
         option = {
             'bsd': 1,
@@ -3798,13 +3797,13 @@ class AP_MIXEDPSK_BSD_SSIDCHINESE(TestCase):
 
         self.dut = api.HttpClient()
         ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
-        ret2 = chkAdbDevicesCount(1)
+        ret2 = chkAdbDevice(v.ANDROID_SERIAL_NUM)
 
         if ret1 is False:
             raise Exception("Http connection is failed. please check your remote settings.")
 
         if ret2 is False:
-            raise Exception("USB devices arenot ready!")
+            raise Exception("Device %s is not ready!" % v.ANDROID_SERIAL_NUM)
 
         option = {
             'bsd': 1,
@@ -3912,13 +3911,13 @@ class AP_MIXEDPSK_BSD_WHITELIST(TestCase):
     def setUpClass(self):
         self.dut = api.HttpClient()
         ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
-        ret2 = chkAdbDevicesCount(1)
+        ret2 = chkAdbDevice(v.ANDROID_SERIAL_NUM)
 
         if ret1 is False:
             raise Exception("Http connection is failed. please check your remote settings.")
 
         if ret2 is False:
-            raise Exception("USB devices arenot ready!")
+            raise Exception("Device %s is not ready!" % v.ANDROID_SERIAL_NUM)
         option = {
             'bsd': 1,
             'ssid1': v.SSID,
@@ -4003,13 +4002,13 @@ class AP_MIXEDPSK_BSD_BLACKLIST(TestCase):
     def setUpClass(self):
         self.dut = api.HttpClient()
         ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
-        ret2 = chkAdbDevicesCount(1)
+        ret2 = chkAdbDevice(v.ANDROID_SERIAL_NUM)
 
         if ret1 is False:
             raise Exception("Http connection is failed. please check your remote settings.")
 
         if ret2 is False:
-            raise Exception("USB devices arenot ready!")
+            raise Exception("Device %s is not ready!" % v.ANDROID_SERIAL_NUM)
         option = {
             'bsd': 1,
             'ssid1': v.SSID,
@@ -4088,13 +4087,13 @@ class AP_MIXEDPSK_BSD_SSIDHIDE(TestCase):
     def setUpClass(self):
         self.dut = api.HttpClient()
         ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
-        ret2 = chkAdbDevicesCount(1)
+        ret2 = chkAdbDevice(v.ANDROID_SERIAL_NUM)
 
         if ret1 is False:
             raise Exception("Http connection is failed. please check your remote settings.")
 
         if ret2 is False:
-            raise Exception("USB devices arenot ready!")
+            raise Exception("Device %s is not ready!" % v.ANDROID_SERIAL_NUM)
         option = {
             'bsd': 1,
             'ssid1': v.SSID,
@@ -4204,13 +4203,13 @@ class AP_GUEST_CLEAR(TestCase):
     def setUpClass(self):
         self.dut = api.HttpClient()
         ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
-        ret2 = chkAdbDevicesCount(1)
+        ret2 = chkAdbDevice(v.ANDROID_SERIAL_NUM)
 
         if ret1 is False:
             raise Exception("Http connection is failed. please check your remote settings.")
 
         if ret2 is False:
-            raise Exception("USB devices arenot ready!")
+            raise Exception("Device %s is not ready!" % v.ANDROID_SERIAL_NUM)
         optionGuest = {
             'wifiIndex': 3,
             'ssid': v.GUEST_SSID,
@@ -4248,13 +4247,13 @@ class AP_GUEST_PSK2(TestCase):
     def setUpClass(self):
         self.dut = api.HttpClient()
         ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
-        ret2 = chkAdbDevicesCount(1)
+        ret2 = chkAdbDevice(v.ANDROID_SERIAL_NUM)
 
         if ret1 is False:
             raise Exception("Http connection is failed. please check your remote settings.")
 
         if ret2 is False:
-            raise Exception("USB devices arenot ready!")
+            raise Exception("Device %s is not ready!" % v.ANDROID_SERIAL_NUM)
         optionGuest = {
             'wifiIndex': 3,
             'ssid': v.GUEST_SSID,
@@ -4293,13 +4292,13 @@ class AP_GUEST_MIXEDPSK(TestCase):
     def setUpClass(self):
         self.dut = api.HttpClient()
         ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
-        ret2 = chkAdbDevicesCount(1)
+        ret2 = chkAdbDevice(v.ANDROID_SERIAL_NUM)
 
         if ret1 is False:
             raise Exception("Http connection is failed. please check your remote settings.")
 
         if ret2 is False:
-            raise Exception("USB devices arenot ready!")
+            raise Exception("Device %s is not ready!" % v.ANDROID_SERIAL_NUM)
         optionGuest = {
             'wifiIndex': 3,
             'ssid': v.GUEST_SSID,
@@ -4383,13 +4382,13 @@ class AP_GUEST_CLEAR_WHITELIST(TestCase):
     def setUpClass(self):
         self.dut = api.HttpClient()
         ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
-        ret2 = chkAdbDevicesCount(1)
+        ret2 = chkAdbDevice(v.ANDROID_SERIAL_NUM)
 
         if ret1 is False:
             raise Exception("Http connection is failed. please check your remote settings.")
 
         if ret2 is False:
-            raise Exception("USB devices arenot ready!")
+            raise Exception("Device %s is not ready!" % v.ANDROID_SERIAL_NUM)
 
         optionGuest = {
             'wifiIndex': 3,
@@ -4486,13 +4485,13 @@ class AP_GUEST_CLEAR_BLACKLIST(TestCase):
     def setUpClass(self):
         self.dut = api.HttpClient()
         ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
-        ret2 = chkAdbDevicesCount(1)
+        ret2 = chkAdbDevice(v.ANDROID_SERIAL_NUM)
 
         if ret1 is False:
             raise Exception("Http connection is failed. please check your remote settings.")
 
         if ret2 is False:
-            raise Exception("USB devices arenot ready!")
+            raise Exception("Device %s is not ready!" % v.ANDROID_SERIAL_NUM)
         optionGuest = {
             'wifiIndex': 3,
             'ssid': v.GUEST_SSID,
@@ -4564,13 +4563,13 @@ class AP_GUEST_CLEAR_REPEAT(TestCase):
 
         self.dut = api.HttpClient()
         ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
-        ret2 = chkAdbDevicesCount(1)
+        ret2 = chkAdbDevice(v.ANDROID_SERIAL_NUM)
 
         if ret1 is False:
             raise Exception("Http connection is failed. please check your remote settings.")
 
         if ret2 is False:
-            raise Exception("USB devices arenot ready!")
+            raise Exception("Device %s is not ready!" % v.ANDROID_SERIAL_NUM)
         optionGuest = {
             'wifiIndex': 3,
             'ssid': v.GUEST_SSID,
@@ -4600,13 +4599,13 @@ class AP_GUEST_MIXEDPSK_REPEAT(TestCase):
 
         self.dut = api.HttpClient()
         ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
-        ret2 = chkAdbDevicesCount(1)
+        ret2 = chkAdbDevice(v.ANDROID_SERIAL_NUM)
 
         if ret1 is False:
             raise Exception("Http connection is failed. please check your remote settings.")
 
         if ret2 is False:
-            raise Exception("USB devices arenot ready!")
+            raise Exception("Device %s is not ready!" % v.ANDROID_SERIAL_NUM)
         optionGuest = {
             'wifiIndex': 3,
             'ssid': v.GUEST_SSID,
@@ -4655,13 +4654,13 @@ class AP_GUEST_PSK2_REPEAT(TestCase):
 
         self.dut = api.HttpClient()
         ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
-        ret2 = chkAdbDevicesCount(1)
+        ret2 = chkAdbDevice(v.ANDROID_SERIAL_NUM)
 
         if ret1 is False:
             raise Exception("Http connection is failed. please check your remote settings.")
 
         if ret2 is False:
-            raise Exception("USB devices arenot ready!")
+            raise Exception("Device %s is not ready!" % v.ANDROID_SERIAL_NUM)
         optionGuest = {
             'wifiIndex': 3,
             'ssid': v.GUEST_SSID,
@@ -4692,13 +4691,13 @@ class AP_SSIDHIDE(TestCase):
 
         self.dut = api.HttpClient()
         ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
-        ret2 = chkAdbDevicesCount(1)
+        ret2 = chkAdbDevice(v.ANDROID_SERIAL_NUM)
 
         if ret1 is False:
             raise Exception("Http connection is failed. please check your remote settings.")
 
         if ret2 is False:
-            raise Exception("USB devices arenot ready!")
+            raise Exception("Device %s is not ready!" % v.ANDROID_SERIAL_NUM)
 
     @classmethod
     def tearDownClass(self):
@@ -4836,13 +4835,13 @@ class AP_MIXEDPSK_SSIDHIDE(TestCase):
     def setUpClass(self):
         self.dut = api.HttpClient()
         ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
-        ret2 = chkAdbDevicesCount(1)
+        ret2 = chkAdbDevice(v.ANDROID_SERIAL_NUM)
 
         if ret1 is False:
             raise Exception("Http connection is failed. please check your remote settings.")
 
         if ret2 is False:
-            raise Exception("USB devices arenot ready!")
+            raise Exception("Device %s is not ready!" % v.ANDROID_SERIAL_NUM)
         option2g = {
             'wifiIndex': 1,
             'ssid': v.SSID,
@@ -5002,13 +5001,13 @@ class AP_BSD_SSIDHIDE(TestCase):
 
         self.dut = api.HttpClient()
         ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
-        ret2 = chkAdbDevicesCount(1)
+        ret2 = chkAdbDevice(v.ANDROID_SERIAL_NUM)
 
         if ret1 is False:
             raise Exception("Http connection is failed. please check your remote settings.")
 
         if ret2 is False:
-            raise Exception("USB devices arenot ready!")
+            raise Exception("Device %s is not ready!" % v.ANDROID_SERIAL_NUM)
 
     @classmethod
     def tearDownClass(self):
@@ -5082,13 +5081,13 @@ class AP_RELAY_CLEAR_CHAN(TestCase):
     def setUpClass(self):
         self.dut = api.HttpClient()
         ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
-        ret2 = chkAdbDevicesCount(1)
+        ret2 = chkAdbDevice(v.ANDROID_SERIAL_NUM)
 
         if ret1 is False:
             raise Exception("Http connection is failed. please check your remote settings.")
 
         if ret2 is False:
-            raise Exception("USB devices arenot ready!")
+            raise Exception("Device %s is not ready!" % v.ANDROID_SERIAL_NUM)
 
         api.setLanAp(self.dut, self.__name__)
 
@@ -5160,13 +5159,13 @@ class AP_RELAY_CLEAR_LOW(TestCase):
     def setUpClass(self):
         self.dut = api.HttpClient()
         ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
-        ret2 = chkAdbDevicesCount(1)
+        ret2 = chkAdbDevice(v.ANDROID_SERIAL_NUM)
 
         if ret1 is False:
             raise Exception("Http connection is failed. please check your remote settings.")
 
         if ret2 is False:
-            raise Exception("USB devices arenot ready!")
+            raise Exception("Device %s is not ready!" % v.ANDROID_SERIAL_NUM)
 
         api.setLanAp(self.dut, self.__name__)
 
@@ -5238,13 +5237,13 @@ class AP_RELAY_CLEAR_MID(TestCase):
     def setUpClass(self):
         self.dut = api.HttpClient()
         ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
-        ret2 = chkAdbDevicesCount(1)
+        ret2 = chkAdbDevice(v.ANDROID_SERIAL_NUM)
 
         if ret1 is False:
             raise Exception("Http connection is failed. please check your remote settings.")
 
         if ret2 is False:
-            raise Exception("USB devices arenot ready!")
+            raise Exception("Device %s is not ready!" % v.ANDROID_SERIAL_NUM)
 
         api.setLanAp(self.dut, self.__name__)
 
@@ -5314,13 +5313,13 @@ class AP_RELAY_CLEAR_HIGH(TestCase):
     def setUpClass(self):
         self.dut = api.HttpClient()
         ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
-        ret2 = chkAdbDevicesCount(1)
+        ret2 = chkAdbDevice(v.ANDROID_SERIAL_NUM)
 
         if ret1 is False:
             raise Exception("Http connection is failed. please check your remote settings.")
 
         if ret2 is False:
-            raise Exception("USB devices arenot ready!")
+            raise Exception("Device %s is not ready!" % v.ANDROID_SERIAL_NUM)
 
         api.setLanAp(self.dut, self.__name__)
 
@@ -6724,13 +6723,13 @@ class AP_RELAY_PSK2(TestCase):
     def setUpClass(self):
         self.dut = api.HttpClient()
         ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
-        ret2 = chkAdbDevicesCount(1)
+        ret2 = chkAdbDevice(v.ANDROID_SERIAL_NUM)
 
         if ret1 is False:
             raise Exception("Http connection is failed. please check your remote settings.")
 
         if ret2 is False:
-            raise Exception("USB devices arenot ready!")
+            raise Exception("Device %s is not ready!" % v.ANDROID_SERIAL_NUM)
 
         api.setLanAp(self.dut, self.__name__)
 
@@ -6803,13 +6802,13 @@ class AP_RELAY_MIXEDPSK(TestCase):
     def setUpClass(self):
         self.dut = api.HttpClient()
         ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
-        ret2 = chkAdbDevicesCount(1)
+        ret2 = chkAdbDevice(v.ANDROID_SERIAL_NUM)
 
         if ret1 is False:
             raise Exception("Http connection is failed. please check your remote settings.")
 
         if ret2 is False:
-            raise Exception("USB devices arenot ready!")
+            raise Exception("Device %s is not ready!" % v.ANDROID_SERIAL_NUM)
 
         api.setLanAp(self.dut, self.__name__)
 
@@ -6973,7 +6972,7 @@ class AP_RELAY_MIXEDPSK_CHAN_BW80(TestCase):
     def setUpClass(self):
         self.dut = api.HttpClient()
         ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
-        ret2 = chkAdbDevicesCount(1)
+        ret2 = chkAdbDevice(v.ANDROID_SERIAL_NUM)
 
         api.setLanAp(self.dut, self.__name__)
 
@@ -6981,7 +6980,7 @@ class AP_RELAY_MIXEDPSK_CHAN_BW80(TestCase):
             raise Exception("Http connection is failed. please check your remote settings.")
 
         if ret2 is False:
-            raise Exception("USB devices arenot ready!")
+            raise Exception("Device %s is not ready!" % v.ANDROID_SERIAL_NUM)
 
         option5g = {
             'wifiIndex': 2,
@@ -7073,13 +7072,13 @@ class AP_RELAY_MIXEDPSK_CHAN_BW40(TestCase):
     def setUpClass(self):
         self.dut = api.HttpClient()
         ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
-        ret2 = chkAdbDevicesCount(1)
+        ret2 = chkAdbDevice(v.ANDROID_SERIAL_NUM)
 
         if ret1 is False:
             raise Exception("Http connection is failed. please check your remote settings.")
 
         if ret2 is False:
-            raise Exception("USB devices arenot ready!")
+            raise Exception("Device %s is not ready!" % v.ANDROID_SERIAL_NUM)
 
         api.setLanAp(self.dut, self.__name__)
 
@@ -7247,7 +7246,7 @@ class AP_RELAY_MIXEDPSK_CHAN_BW20(TestCase):
     def setUpClass(self):
         self.dut = api.HttpClient()
         ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
-        ret2 = chkAdbDevicesCount(1)
+        ret2 = chkAdbDevice(v.ANDROID_SERIAL_NUM)
 
         api.setLanAp(self.dut, self.__name__)
 
@@ -7255,7 +7254,7 @@ class AP_RELAY_MIXEDPSK_CHAN_BW20(TestCase):
             raise Exception("Http connection is failed. please check your remote settings.")
 
         if ret2 is False:
-            raise Exception("USB devices arenot ready!")
+            raise Exception("Device %s is not ready!" % v.ANDROID_SERIAL_NUM)
 
         option2g = {
             'wifiIndex': 1,
@@ -7422,7 +7421,7 @@ class AP_RELAY_MIXEDPSK_SSIDSPEC(TestCase):
 
         self.dut = api.HttpClient()
         ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
-        ret2 = chkAdbDevicesCount(1)
+        ret2 = chkAdbDevice(v.ANDROID_SERIAL_NUM)
 
         api.setLanAp(self.dut, self.__name__)
 
@@ -7430,7 +7429,7 @@ class AP_RELAY_MIXEDPSK_SSIDSPEC(TestCase):
             raise Exception("Http connection is failed. please check your remote settings.")
 
         if ret2 is False:
-            raise Exception("USB devices arenot ready!")
+            raise Exception("Device %s is not ready!" % v.ANDROID_SERIAL_NUM)
 
         option2g = {
             'wifiIndex': 1,
@@ -7590,7 +7589,7 @@ class AP_RELAY_MIXEDPSK_KEYSPEC(TestCase):
 
         self.dut = api.HttpClient()
         ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
-        ret2 = chkAdbDevicesCount(1)
+        ret2 = chkAdbDevice(v.ANDROID_SERIAL_NUM)
 
         api.setLanAp(self.dut, self.__name__)
 
@@ -7598,7 +7597,7 @@ class AP_RELAY_MIXEDPSK_KEYSPEC(TestCase):
             raise Exception("Http connection is failed. please check your remote settings.")
 
         if ret2 is False:
-            raise Exception("USB devices arenot ready!")
+            raise Exception("Device %s is not ready!" % v.ANDROID_SERIAL_NUM)
 
         option2g = {
             'wifiIndex': 1,
@@ -7761,7 +7760,7 @@ class AP_RELAY_MIXEDPSK_SSIDCHINESE(TestCase):
 
         self.dut = api.HttpClient()
         ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
-        ret2 = chkAdbDevicesCount(1)
+        ret2 = chkAdbDevice(v.ANDROID_SERIAL_NUM)
 
         api.setLanAp(self.dut, self.__name__)
 
@@ -7769,7 +7768,7 @@ class AP_RELAY_MIXEDPSK_SSIDCHINESE(TestCase):
             raise Exception("Http connection is failed. please check your remote settings.")
 
         if ret2 is False:
-            raise Exception("USB devices arenot ready!")
+            raise Exception("Device %s is not ready!" % v.ANDROID_SERIAL_NUM)
 
         option2g = {
             'wifiIndex': 1,
@@ -7928,7 +7927,7 @@ class AP_RELAY_MIXEDPSK_BSD(TestCase):
     def setUpClass(self):
         self.dut = api.HttpClient()
         ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
-        ret2 = chkAdbDevicesCount(1)
+        ret2 = chkAdbDevice(v.ANDROID_SERIAL_NUM)
 
         api.setLanAp(self.dut, self.__name__)
 
@@ -7936,7 +7935,7 @@ class AP_RELAY_MIXEDPSK_BSD(TestCase):
             raise Exception("Http connection is failed. please check your remote settings.")
 
         if ret2 is False:
-            raise Exception("USB devices arenot ready!")
+            raise Exception("Device %s is not ready!" % v.ANDROID_SERIAL_NUM)
 
         option = {
             'bsd': 1,
@@ -8046,7 +8045,7 @@ class AP_RELAY_MIXEDPSK_BSD_SSIDHIDE(TestCase):
     def setUpClass(self):
         self.dut = api.HttpClient()
         ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
-        ret2 = chkAdbDevicesCount(1)
+        ret2 = chkAdbDevice(v.ANDROID_SERIAL_NUM)
 
         api.setLanAp(self.dut, self.__name__)
 
@@ -8054,7 +8053,7 @@ class AP_RELAY_MIXEDPSK_BSD_SSIDHIDE(TestCase):
             raise Exception("Http connection is failed. please check your remote settings.")
 
         if ret2 is False:
-            raise Exception("USB devices arenot ready!")
+            raise Exception("Device %s is not ready!" % v.ANDROID_SERIAL_NUM)
 
         option = {
             'bsd': 1,
@@ -8166,13 +8165,13 @@ class AP_RELAY_SSIDHIDE(TestCase):
 
         self.dut = api.HttpClient()
         ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
-        ret2 = chkAdbDevicesCount(1)
+        ret2 = chkAdbDevice(v.ANDROID_SERIAL_NUM)
 
         if ret1 is False:
             raise Exception("Http connection is failed. please check your remote settings.")
 
         if ret2 is False:
-            raise Exception("USB devices arenot ready!")
+            raise Exception("Device %s is not ready!" % v.ANDROID_SERIAL_NUM)
 
         api.setLanAp(self.dut, self.__name__)
 
@@ -8315,7 +8314,7 @@ class AP_RELAY_MIXEDPSK_SSIDHIDE(TestCase):
     def setUpClass(self):
         self.dut = api.HttpClient()
         ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
-        ret2 = chkAdbDevicesCount(1)
+        ret2 = chkAdbDevice(v.ANDROID_SERIAL_NUM)
 
         api.setLanAp(self.dut, self.__name__)
 
@@ -8323,7 +8322,7 @@ class AP_RELAY_MIXEDPSK_SSIDHIDE(TestCase):
             raise Exception("Http connection is failed. please check your remote settings.")
 
         if ret2 is False:
-            raise Exception("USB devices arenot ready!")
+            raise Exception("Device %s is not ready!" % v.ANDROID_SERIAL_NUM)
 
         option2g = {
             'wifiIndex': 1,
@@ -8488,13 +8487,13 @@ class AP_RELAY_BSD_SSIDHIDE(TestCase):
 
         self.dut = api.HttpClient()
         ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
-        ret2 = chkAdbDevicesCount(1)
+        ret2 = chkAdbDevice(v.ANDROID_SERIAL_NUM)
 
         if ret1 is False:
             raise Exception("Http connection is failed. please check your remote settings.")
 
         if ret2 is False:
-            raise Exception("USB devices arenot ready!")
+            raise Exception("Device %s is not ready!" % v.ANDROID_SERIAL_NUM)
 
         api.setLanAp(self.dut, self.__name__)
 
@@ -8666,13 +8665,13 @@ class AP_QOS_MIXEDPSK(TestCase):
     def setUpClass(self):
         self.dut = api.HttpClient()
         ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
-        ret2 = chkAdbDevicesCount(1)
+        ret2 = chkAdbDevice(v.ANDROID_SERIAL_NUM)
 
         if ret1 is False:
             raise Exception("Http connection is failed. please check your remote settings.")
 
         if ret2 is False:
-            raise Exception("USB devices arenot ready!")
+            raise Exception("Device %s is not ready!" % v.ANDROID_SERIAL_NUM)
 
         option2g = {
             'wifiIndex': 1,
@@ -8871,13 +8870,13 @@ class AP_QOS_CLEAR(TestCase):
     def setUpClass(self):
         self.dut = api.HttpClient()
         ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
-        ret2 = chkAdbDevicesCount(1)
+        ret2 = chkAdbDevice(v.ANDROID_SERIAL_NUM)
 
         if ret1 is False:
             raise Exception("Http connection is failed. please check your remote settings.")
 
         if ret2 is False:
-            raise Exception("USB devices arenot ready!")
+            raise Exception("Device %s is not ready!" % v.ANDROID_SERIAL_NUM)
 
         option2g = {
             'wifiIndex': 1,
@@ -8972,13 +8971,13 @@ class AP_QOS_PSK2(TestCase):
     def setUpClass(self):
         self.dut = api.HttpClient()
         ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
-        ret2 = chkAdbDevicesCount(1)
+        ret2 = chkAdbDevice(v.ANDROID_SERIAL_NUM)
 
         if ret1 is False:
             raise Exception("Http connection is failed. please check your remote settings.")
 
         if ret2 is False:
-            raise Exception("USB devices arenot ready!")
+            raise Exception("Device %s is not ready!" % v.ANDROID_SERIAL_NUM)
 
         option2g = {
             'wifiIndex': 1,
@@ -9075,13 +9074,13 @@ class AP_QOS_GUEST_MIXEDPSK(TestCase):
     def setUpClass(self):
         self.dut = api.HttpClient()
         ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
-        ret2 = chkAdbDevicesCount(1)
+        ret2 = chkAdbDevice(v.ANDROID_SERIAL_NUM)
 
         if ret1 is False:
             raise Exception("Http connection is failed. please check your remote settings.")
 
         if ret2 is False:
-            raise Exception("USB devices arenot ready!")
+            raise Exception("Device %s is not ready!" % v.ANDROID_SERIAL_NUM)
         optionGuest = {
             'wifiIndex': 3,
             'ssid': v.GUEST_SSID,
@@ -9192,13 +9191,13 @@ class AP_WIRELESS_RELAY_CLEAR_CHAN(TestCase):
     def setUpClass(self):
         self.dut = api.HttpClient()
         ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
-        ret2 = chkAdbDevicesCount(1)
+        ret2 = chkAdbDevice(v.ANDROID_SERIAL_NUM)
 
         if ret1 is False:
             raise Exception("Http connection is failed. please check your remote settings.")
 
         if ret2 is False:
-            raise Exception("USB devices arenot ready!")
+            raise Exception("Device %s is not ready!" % v.ANDROID_SERIAL_NUM)
 
         option = {
             'ssid': v.ROOT_AP_SSID,
@@ -9269,13 +9268,13 @@ class AP_WIRELESS_RELAY_PSK2(TestCase):
     def setUpClass(self):
         self.dut = api.HttpClient()
         ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
-        ret2 = chkAdbDevicesCount(1)
+        ret2 = chkAdbDevice(v.ANDROID_SERIAL_NUM)
 
         if ret1 is False:
             raise Exception("Http connection is failed. please check your remote settings.")
 
         if ret2 is False:
-            raise Exception("USB devices arenot ready!")
+            raise Exception("Device %s is not ready!" % v.ANDROID_SERIAL_NUM)
 
         option = {
             'ssid': v.ROOT_AP_SSID,
@@ -9333,13 +9332,13 @@ class AP_WIRELESS_RELAY_MIXEDPSK(TestCase):
     def setUpClass(self):
         self.dut = api.HttpClient()
         ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
-        ret2 = chkAdbDevicesCount(1)
+        ret2 = chkAdbDevice(v.ANDROID_SERIAL_NUM)
 
         if ret1 is False:
             raise Exception("Http connection is failed. please check your remote settings.")
 
         if ret2 is False:
-            raise Exception("USB devices arenot ready!")
+            raise Exception("Device %s is not ready!" % v.ANDROID_SERIAL_NUM)
 
         option = {
             'ssid': v.ROOT_AP_SSID,
@@ -9489,13 +9488,13 @@ class AP_WIRELESS_RELAY_MIXEDPSK_SSIDHIDE(TestCase):
     def setUpClass(self):
         self.dut = api.HttpClient()
         ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
-        ret2 = chkAdbDevicesCount(1)
+        ret2 = chkAdbDevice(v.ANDROID_SERIAL_NUM)
 
         if ret1 is False:
             raise Exception("Http connection is failed. please check your remote settings.")
 
         if ret2 is False:
-            raise Exception("USB devices arenot ready!")
+            raise Exception("Device %s is not ready!" % v.ANDROID_SERIAL_NUM)
 
         option = {
             'ssid': v.ROOT_AP_SSID,
@@ -9662,13 +9661,13 @@ class AP_WIRELESS_RELAY_MIXEDPSK_SSIDSPEC(TestCase):
 
         self.dut = api.HttpClient()
         ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
-        ret2 = chkAdbDevicesCount(1)
+        ret2 = chkAdbDevice(v.ANDROID_SERIAL_NUM)
 
         if ret1 is False:
             raise Exception("Http connection is failed. please check your remote settings.")
 
         if ret2 is False:
-            raise Exception("USB devices arenot ready!")
+            raise Exception("Device %s is not ready!" % v.ANDROID_SERIAL_NUM)
 
         option = {
             'ssid': v.ROOT_AP_SSID,
@@ -9822,13 +9821,13 @@ class AP_WIRELESS_RELAY_MIXEDPSK_KEYSPEC(TestCase):
 
         self.dut = api.HttpClient()
         ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
-        ret2 = chkAdbDevicesCount(1)
+        ret2 = chkAdbDevice(v.ANDROID_SERIAL_NUM)
 
         if ret1 is False:
             raise Exception("Http connection is failed. please check your remote settings.")
 
         if ret2 is False:
-            raise Exception("USB devices arenot ready!")
+            raise Exception("Device %s is not ready!" % v.ANDROID_SERIAL_NUM)
 
         option = {
             'ssid': v.ROOT_AP_SSID,
@@ -9985,13 +9984,13 @@ class AP_WIRELESS_RELAY_MIXEDPSK_SSIDCHINESE(TestCase):
 
         self.dut = api.HttpClient()
         ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
-        ret2 = chkAdbDevicesCount(1)
+        ret2 = chkAdbDevice(v.ANDROID_SERIAL_NUM)
 
         if ret1 is False:
             raise Exception("Http connection is failed. please check your remote settings.")
 
         if ret2 is False:
-            raise Exception("USB devices arenot ready!")
+            raise Exception("Device %s is not ready!" % v.ANDROID_SERIAL_NUM)
 
         option = {
             'ssid': v.ROOT_AP_SSID,
@@ -10144,13 +10143,13 @@ class AP_WIRELESS_RELAY_CLEAR_LOW(TestCase):
     def setUpClass(self):
         self.dut = api.HttpClient()
         ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
-        ret2 = chkAdbDevicesCount(1)
+        ret2 = chkAdbDevice(v.ANDROID_SERIAL_NUM)
 
         if ret1 is False:
             raise Exception("Http connection is failed. please check your remote settings.")
 
         if ret2 is False:
-            raise Exception("USB devices arenot ready!")
+            raise Exception("Device %s is not ready!" % v.ANDROID_SERIAL_NUM)
 
         option = {
             'ssid': v.ROOT_AP_SSID,
@@ -10223,13 +10222,13 @@ class AP_WIRELESS_RELAY_CLEAR_MID(TestCase):
     def setUpClass(self):
         self.dut = api.HttpClient()
         ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
-        ret2 = chkAdbDevicesCount(1)
+        ret2 = chkAdbDevice(v.ANDROID_SERIAL_NUM)
 
         if ret1 is False:
             raise Exception("Http connection is failed. please check your remote settings.")
 
         if ret2 is False:
-            raise Exception("USB devices arenot ready!")
+            raise Exception("Device %s is not ready!" % v.ANDROID_SERIAL_NUM)
 
         option = {
             'ssid': v.ROOT_AP_SSID,
@@ -10300,13 +10299,13 @@ class AP_WIRELESS_RELAY_CLEAR_HIGH(TestCase):
     def setUpClass(self):
         self.dut = api.HttpClient()
         ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
-        ret2 = chkAdbDevicesCount(1)
+        ret2 = chkAdbDevice(v.ANDROID_SERIAL_NUM)
 
         if ret1 is False:
             raise Exception("Http connection is failed. please check your remote settings.")
 
         if ret2 is False:
-            raise Exception("USB devices arenot ready!")
+            raise Exception("Device %s is not ready!" % v.ANDROID_SERIAL_NUM)
 
         option = {
             'ssid': v.ROOT_AP_SSID,
@@ -10441,13 +10440,13 @@ class AP_WIRELESS_RELAY_MIXEDPSK_CHAN_BW80(TestCase):
     def setUpClass(self):
         self.dut = api.HttpClient()
         ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
-        ret2 = chkAdbDevicesCount(1)
+        ret2 = chkAdbDevice(v.ANDROID_SERIAL_NUM)
 
         if ret1 is False:
             raise Exception("Http connection is failed. please check your remote settings.")
 
         if ret2 is False:
-            raise Exception("USB devices arenot ready!")
+            raise Exception("Device %s is not ready!" % v.ANDROID_SERIAL_NUM)
 
         option = {
             'ssid': v.ROOT_AP_SSID,
@@ -10546,13 +10545,13 @@ class AP_WIRELESS_RELAY_MIXEDPSK_CHAN_BW40(TestCase):
     def setUpClass(self):
         self.dut = api.HttpClient()
         ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
-        ret2 = chkAdbDevicesCount(1)
+        ret2 = chkAdbDevice(v.ANDROID_SERIAL_NUM)
 
         if ret1 is False:
             raise Exception("Http connection is failed. please check your remote settings.")
 
         if ret2 is False:
-            raise Exception("USB devices arenot ready!")
+            raise Exception("Device %s is not ready!" % v.ANDROID_SERIAL_NUM)
 
         option = {
             'ssid': v.ROOT_AP_SSID,
@@ -10719,13 +10718,13 @@ class AP_WIRELESS_RELAY_MIXEDPSK_CHAN_BW20(TestCase):
     def setUpClass(self):
         self.dut = api.HttpClient()
         ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
-        ret2 = chkAdbDevicesCount(1)
+        ret2 = chkAdbDevice(v.ANDROID_SERIAL_NUM)
 
         if ret1 is False:
             raise Exception("Http connection is failed. please check your remote settings.")
 
         if ret2 is False:
-            raise Exception("USB devices arenot ready!")
+            raise Exception("Device %s is not ready!" % v.ANDROID_SERIAL_NUM)
 
         option = {
             'ssid': v.ROOT_AP_SSID,
@@ -10892,13 +10891,13 @@ class AP_WIRELESS_RELAY_MIXEDPSK_BSD(TestCase):
     def setUpClass(self):
         self.dut = api.HttpClient()
         ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
-        ret2 = chkAdbDevicesCount(1)
+        ret2 = chkAdbDevice(v.ANDROID_SERIAL_NUM)
 
         if ret1 is False:
             raise Exception("Http connection is failed. please check your remote settings.")
 
         if ret2 is False:
-            raise Exception("USB devices arenot ready!")
+            raise Exception("Device %s is not ready!" % v.ANDROID_SERIAL_NUM)
 
         option = {
             'ssid': v.ROOT_AP_SSID,
@@ -11021,13 +11020,13 @@ class AP_WIRELESS_RELAY_MIXEDPSK_BSD_SSIDHIDE(TestCase):
     def setUpClass(self):
         self.dut = api.HttpClient()
         ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
-        ret2 = chkAdbDevicesCount(1)
+        ret2 = chkAdbDevice(v.ANDROID_SERIAL_NUM)
 
         if ret1 is False:
             raise Exception("Http connection is failed. please check your remote settings.")
 
         if ret2 is False:
-            raise Exception("USB devices arenot ready!")
+            raise Exception("Device %s is not ready!" % v.ANDROID_SERIAL_NUM)
 
         option = {
             'ssid': v.ROOT_AP_SSID,
@@ -11152,13 +11151,13 @@ class AP_WIRELESS_RELAY_SSIDHIDE(TestCase):
 
         self.dut = api.HttpClient()
         ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
-        ret2 = chkAdbDevicesCount(1)
+        ret2 = chkAdbDevice(v.ANDROID_SERIAL_NUM)
 
         if ret1 is False:
             raise Exception("Http connection is failed. please check your remote settings.")
 
         if ret2 is False:
-            raise Exception("USB devices arenot ready!")
+            raise Exception("Device %s is not ready!" % v.ANDROID_SERIAL_NUM)
 
         option = {
             'ssid': v.ROOT_AP_SSID,
@@ -11313,13 +11312,13 @@ class AP_WIRELESS_RELAY_BSD_SSIDHIDE(TestCase):
 
         self.dut = api.HttpClient()
         ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
-        ret2 = chkAdbDevicesCount(1)
+        ret2 = chkAdbDevice(v.ANDROID_SERIAL_NUM)
 
         if ret1 is False:
             raise Exception("Http connection is failed. please check your remote settings.")
 
         if ret2 is False:
-            raise Exception("USB devices arenot ready!")
+            raise Exception("Device %s is not ready!" % v.ANDROID_SERIAL_NUM)
 
         option = {
             'ssid': v.ROOT_AP_SSID,
@@ -11574,13 +11573,13 @@ class AP_MIXEDPSK_WEB_ACCESS(TestCase):
     def setUpClass(self):
         self.dut = api.HttpClient()
         ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
-        ret2 = chkAdbDevicesCount(1)
+        ret2 = chkAdbDevice(v.ANDROID_SERIAL_NUM)
 
         if ret1 is False:
             raise Exception("Http connection is failed. please check your remote settings.")
 
         if ret2 is False:
-            raise Exception("USB devices arenot ready!")
+            raise Exception("Device %s is not ready!" % v.ANDROID_SERIAL_NUM)
 
         option2g = {
             'wifiIndex': 1,
@@ -11856,19 +11855,2245 @@ class AP_MIXEDPSK_WEB_ACCESS(TestCase):
             self.assertTrue(res5gConn, "Association wasnot successful.")
 
 
-class AP_CLEAR_CHAN1_BW20_THROUGHPUT(TestCase):
+class AP_CLEAR_CHAN1_BW20_DUT_THROUGHPUT(TestCase):
     @classmethod
     def setUpClass(self):
 
         self.dut = api.HttpClient()
         ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
-        ret2 = chkAdbDevicesCount(1)
+        ret2 = chkAdbDevice(v.ANDROID_SERIAL_NUM)
+
+        self.dut2 = ShellClient(v.CONNECTION_TYPE)
+        ret3 = self.dut2.connect(v.HOST, v.USR, v.PASSWD)
+
+        if ret3 is False:
+            raise Exception('Connection is failed. please check your remote settings.')
 
         if ret1 is False:
             raise Exception("Http connection is failed. please check your remote settings.")
 
         if ret2 is False:
-            raise Exception("USB devices arenot ready!")
+            raise Exception("Device %s is not ready!" % v.ANDROID_SERIAL_NUM)
+
+        option2g = {
+            'wifiIndex': 1,
+            'ssid': v.SSID,
+            'channel': v.CHANNEL1,
+            'bandwidth': '20'
+        }
+        api.setWifi(self.dut, self.__name__, **option2g)
+
+    @classmethod
+    def tearDownClass(self):
+        option2g = {
+            'wifiIndex': 1,
+            'on': 0,
+        }
+        api.setWifi(self.dut, self.__name__, **option2g)
+        self.dut.close()
+        self.dut2.close()
+
+    def assoc_sta_throughput_2g(self):
+        res2gConn = setAdbClearSta(v.ANDROID_SERIAL_NUM, v.SSID, "2g", self.__class__.__name__)
+
+        if res2gConn is True:
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
+            iperfOn = SetAdbIperfOn(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
+            iperfOn.start()
+            t.sleep(4.0)
+            ret = setIperfFlow2(self.dut2, result["ip"], v.IPERF_INTERVAL, v.IPERF_TIME, self.__class__.__name__)
+            self.assertTrue(ret, "Excute iperf flow error, connection refused.")
+        else:
+            self.assertTrue(res2gConn, "Connecting wifi is failed.")
+
+
+class AP_CLEAR_CHAN6_BW20_DUT_THROUGHPUT(TestCase):
+    @classmethod
+    def setUpClass(self):
+
+        self.dut = api.HttpClient()
+        ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
+        ret2 = chkAdbDevice(v.ANDROID_SERIAL_NUM)
+
+        self.dut2 = ShellClient(v.CONNECTION_TYPE)
+        ret3 = self.dut2.connect(v.HOST, v.USR, v.PASSWD)
+
+        if ret3 is False:
+            raise Exception('Connection is failed. please check your remote settings.')
+
+        if ret1 is False:
+            raise Exception("Http connection is failed. please check your remote settings.")
+
+        if ret2 is False:
+            raise Exception("Device %s is not ready!" % v.ANDROID_SERIAL_NUM)
+
+        option2g = {
+            'wifiIndex': 1,
+            'ssid': v.SSID,
+            'channel': v.CHANNEL6,
+            'bandwidth': '20'
+        }
+        api.setWifi(self.dut, self.__name__, **option2g)
+
+    @classmethod
+    def tearDownClass(self):
+        option2g = {
+            'wifiIndex': 1,
+            'on': 0,
+        }
+        api.setWifi(self.dut, self.__name__, **option2g)
+        self.dut.close()
+        self.dut2.close()
+
+    def assoc_sta_throughput_2g(self):
+        res2gConn = setAdbClearSta(v.ANDROID_SERIAL_NUM, v.SSID, "2g", self.__class__.__name__)
+
+        if res2gConn is True:
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
+            iperfOn = SetAdbIperfOn(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
+            iperfOn.start()
+            t.sleep(4.0)
+            ret = setIperfFlow2(self.dut2, result["ip"], v.IPERF_INTERVAL, v.IPERF_TIME, self.__class__.__name__)
+            self.assertTrue(ret, "Excute iperf flow error, connection refused.")
+        else:
+            self.assertTrue(res2gConn, "Connecting wifi is failed.")
+
+
+class AP_CLEAR_CHAN11_BW20_DUT_THROUGHPUT(TestCase):
+    @classmethod
+    def setUpClass(self):
+
+        self.dut = api.HttpClient()
+        ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
+        ret2 = chkAdbDevice(v.ANDROID_SERIAL_NUM)
+
+        self.dut2 = ShellClient(v.CONNECTION_TYPE)
+        ret3 = self.dut2.connect(v.HOST, v.USR, v.PASSWD)
+
+        if ret3 is False:
+            raise Exception('Connection is failed. please check your remote settings.')
+
+        if ret1 is False:
+            raise Exception("Http connection is failed. please check your remote settings.")
+
+        if ret2 is False:
+            raise Exception("Device %s is not ready!" % v.ANDROID_SERIAL_NUM)
+
+        option2g = {
+            'wifiIndex': 1,
+            'ssid': v.SSID,
+            'channel': v.CHANNEL11,
+            'bandwidth': '20'
+        }
+        api.setWifi(self.dut, self.__name__, **option2g)
+
+    @classmethod
+    def tearDownClass(self):
+        option2g = {
+            'wifiIndex': 1,
+            'on': 0,
+        }
+        api.setWifi(self.dut, self.__name__, **option2g)
+        self.dut.close()
+        self.dut2.close()
+
+    def assoc_sta_throughput_2g(self):
+        res2gConn = setAdbClearSta(v.ANDROID_SERIAL_NUM, v.SSID, "2g", self.__class__.__name__)
+
+        if res2gConn is True:
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
+            iperfOn = SetAdbIperfOn(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
+            iperfOn.start()
+            t.sleep(4.0)
+            ret = setIperfFlow2(self.dut2, result["ip"], v.IPERF_INTERVAL, v.IPERF_TIME, self.__class__.__name__)
+            self.assertTrue(ret, "Excute iperf flow error, connection refused.")
+        else:
+            self.assertTrue(res2gConn, "Connecting wifi is failed.")
+
+
+class AP_CLEAR_CHAN13_BW20_DUT_THROUGHPUT(TestCase):
+    @classmethod
+    def setUpClass(self):
+
+        self.dut = api.HttpClient()
+        ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
+        ret2 = chkAdbDevice(v.ANDROID_SERIAL_NUM)
+
+        self.dut2 = ShellClient(v.CONNECTION_TYPE)
+        ret3 = self.dut2.connect(v.HOST, v.USR, v.PASSWD)
+
+        if ret3 is False:
+            raise Exception('Connection is failed. please check your remote settings.')
+
+        if ret1 is False:
+            raise Exception("Http connection is failed. please check your remote settings.")
+
+        if ret2 is False:
+            raise Exception("Device %s is not ready!" % v.ANDROID_SERIAL_NUM)
+
+        option2g = {
+            'wifiIndex': 1,
+            'ssid': v.SSID,
+            'channel': v.CHANNEL13,
+            'bandwidth': '20'
+        }
+        api.setWifi(self.dut, self.__name__, **option2g)
+
+    @classmethod
+    def tearDownClass(self):
+        option2g = {
+            'wifiIndex': 1,
+            'on': 0,
+        }
+        api.setWifi(self.dut, self.__name__, **option2g)
+        self.dut.close()
+        self.dut2.close()
+
+    def assoc_sta_throughput_2g(self):
+        res2gConn = setAdbClearSta(v.ANDROID_SERIAL_NUM, v.SSID, "2g", self.__class__.__name__)
+
+        if res2gConn is True:
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
+            iperfOn = SetAdbIperfOn(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
+            iperfOn.start()
+            t.sleep(4.0)
+            ret = setIperfFlow2(self.dut2, result["ip"], v.IPERF_INTERVAL, v.IPERF_TIME, self.__class__.__name__)
+            self.assertTrue(ret, "Excute iperf flow error, connection refused.")
+        else:
+            self.assertTrue(res2gConn, "Connecting wifi is failed.")
+
+
+class AP_CLEAR_CHAN1_BW40_DUT_THROUGHPUT(TestCase):
+    @classmethod
+    def setUpClass(self):
+
+        self.dut = api.HttpClient()
+        ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
+        ret2 = chkAdbDevice(v.ANDROID_SERIAL_NUM)
+
+        self.dut2 = ShellClient(v.CONNECTION_TYPE)
+        ret3 = self.dut2.connect(v.HOST, v.USR, v.PASSWD)
+
+        if ret3 is False:
+            raise Exception('Connection is failed. please check your remote settings.')
+
+        if ret1 is False:
+            raise Exception("Http connection is failed. please check your remote settings.")
+
+        if ret2 is False:
+            raise Exception("Device %s is not ready!" % v.ANDROID_SERIAL_NUM)
+
+        option2g = {
+            'wifiIndex': 1,
+            'ssid': v.SSID,
+            'channel': v.CHANNEL1,
+            'bandwidth': '40'
+        }
+        api.setWifi(self.dut, self.__name__, **option2g)
+
+    @classmethod
+    def tearDownClass(self):
+        option2g = {
+            'wifiIndex': 1,
+            'on': 0,
+        }
+        api.setWifi(self.dut, self.__name__, **option2g)
+        self.dut.close()
+        self.dut2.close()
+
+    def assoc_sta_throughput_2g(self):
+        res2gConn = setAdbClearSta(v.ANDROID_SERIAL_NUM, v.SSID, "2g", self.__class__.__name__)
+
+        if res2gConn is True:
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
+            iperfOn = SetAdbIperfOn(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
+            iperfOn.start()
+            t.sleep(4.0)
+            ret = setIperfFlow2(self.dut2, result["ip"], v.IPERF_INTERVAL, v.IPERF_TIME, self.__class__.__name__)
+            self.assertTrue(ret, "Excute iperf flow error, connection refused.")
+        else:
+            self.assertTrue(res2gConn, "Connecting wifi is failed.")
+
+
+class AP_CLEAR_CHAN6_BW40_DUT_THROUGHPUT(TestCase):
+    @classmethod
+    def setUpClass(self):
+
+        self.dut = api.HttpClient()
+        ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
+        ret2 = chkAdbDevice(v.ANDROID_SERIAL_NUM)
+
+        self.dut2 = ShellClient(v.CONNECTION_TYPE)
+        ret3 = self.dut2.connect(v.HOST, v.USR, v.PASSWD)
+
+        if ret3 is False:
+            raise Exception('Connection is failed. please check your remote settings.')
+
+        if ret1 is False:
+            raise Exception("Http connection is failed. please check your remote settings.")
+
+        if ret2 is False:
+            raise Exception("Device %s is not ready!" % v.ANDROID_SERIAL_NUM)
+
+        option2g = {
+            'wifiIndex': 1,
+            'ssid': v.SSID,
+            'channel': v.CHANNEL6,
+            'bandwidth': '40'
+        }
+        api.setWifi(self.dut, self.__name__, **option2g)
+
+    @classmethod
+    def tearDownClass(self):
+        option2g = {
+            'wifiIndex': 1,
+            'on': 0,
+        }
+        api.setWifi(self.dut, self.__name__, **option2g)
+        self.dut.close()
+        self.dut2.close()
+
+    def assoc_sta_throughput_2g(self):
+        res2gConn = setAdbClearSta(v.ANDROID_SERIAL_NUM, v.SSID, "2g", self.__class__.__name__)
+
+        if res2gConn is True:
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
+            iperfOn = SetAdbIperfOn(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
+            iperfOn.start()
+            t.sleep(4.0)
+            ret = setIperfFlow2(self.dut2, result["ip"], v.IPERF_INTERVAL, v.IPERF_TIME, self.__class__.__name__)
+            self.assertTrue(ret, "Excute iperf flow error, connection refused.")
+        else:
+            self.assertTrue(res2gConn, "Connecting wifi is failed.")
+
+
+class AP_CLEAR_CHAN11_BW40_DUT_THROUGHPUT(TestCase):
+    @classmethod
+    def setUpClass(self):
+
+        self.dut = api.HttpClient()
+        ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
+        ret2 = chkAdbDevice(v.ANDROID_SERIAL_NUM)
+
+        self.dut2 = ShellClient(v.CONNECTION_TYPE)
+        ret3 = self.dut2.connect(v.HOST, v.USR, v.PASSWD)
+
+        if ret3 is False:
+            raise Exception('Connection is failed. please check your remote settings.')
+
+        if ret1 is False:
+            raise Exception("Http connection is failed. please check your remote settings.")
+
+        if ret2 is False:
+            raise Exception("Device %s is not ready!" % v.ANDROID_SERIAL_NUM)
+
+        option2g = {
+            'wifiIndex': 1,
+            'ssid': v.SSID,
+            'channel': v.CHANNEL11,
+            'bandwidth': '40'
+        }
+        api.setWifi(self.dut, self.__name__, **option2g)
+
+    @classmethod
+    def tearDownClass(self):
+        option2g = {
+            'wifiIndex': 1,
+            'on': 0,
+        }
+        api.setWifi(self.dut, self.__name__, **option2g)
+        self.dut.close()
+        self.dut2.close()
+
+    def assoc_sta_throughput_2g(self):
+        res2gConn = setAdbClearSta(v.ANDROID_SERIAL_NUM, v.SSID, "2g", self.__class__.__name__)
+
+        if res2gConn is True:
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
+            iperfOn = SetAdbIperfOn(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
+            iperfOn.start()
+            t.sleep(4.0)
+            ret = setIperfFlow2(self.dut2, result["ip"], v.IPERF_INTERVAL, v.IPERF_TIME, self.__class__.__name__)
+            self.assertTrue(ret, "Excute iperf flow error, connection refused.")
+        else:
+            self.assertTrue(res2gConn, "Connecting wifi is failed.")
+
+
+class AP_CLEAR_CHAN13_BW40_DUT_THROUGHPUT(TestCase):
+    @classmethod
+    def setUpClass(self):
+
+        self.dut = api.HttpClient()
+        ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
+        ret2 = chkAdbDevice(v.ANDROID_SERIAL_NUM)
+
+        self.dut2 = ShellClient(v.CONNECTION_TYPE)
+        ret3 = self.dut2.connect(v.HOST, v.USR, v.PASSWD)
+
+        if ret3 is False:
+            raise Exception('Connection is failed. please check your remote settings.')
+
+        if ret1 is False:
+            raise Exception("Http connection is failed. please check your remote settings.")
+
+        if ret2 is False:
+            raise Exception("Device %s is not ready!" % v.ANDROID_SERIAL_NUM)
+
+        option2g = {
+            'wifiIndex': 1,
+            'ssid': v.SSID,
+            'channel': v.CHANNEL13,
+            'bandwidth': '40'
+        }
+        api.setWifi(self.dut, self.__name__, **option2g)
+
+    @classmethod
+    def tearDownClass(self):
+        option2g = {
+            'wifiIndex': 1,
+            'on': 0,
+        }
+        api.setWifi(self.dut, self.__name__, **option2g)
+        self.dut.close()
+        self.dut2.close()
+
+    def assoc_sta_throughput_2g(self):
+        res2gConn = setAdbClearSta(v.ANDROID_SERIAL_NUM, v.SSID, "2g", self.__class__.__name__)
+
+        if res2gConn is True:
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
+            iperfOn = SetAdbIperfOn(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
+            iperfOn.start()
+            t.sleep(4.0)
+            ret = setIperfFlow2(self.dut2, result["ip"], v.IPERF_INTERVAL, v.IPERF_TIME, self.__class__.__name__)
+            self.assertTrue(ret, "Excute iperf flow error, connection refused.")
+        else:
+            self.assertTrue(res2gConn, "Connecting wifi is failed.")
+
+
+class AP_PSK2_CHAN1_BW20_DUT_THROUGHPUT(TestCase):
+    @classmethod
+    def setUpClass(self):
+
+        self.dut = api.HttpClient()
+        ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
+        ret2 = chkAdbDevice(v.ANDROID_SERIAL_NUM)
+
+        self.dut2 = ShellClient(v.CONNECTION_TYPE)
+        ret3 = self.dut2.connect(v.HOST, v.USR, v.PASSWD)
+
+        if ret3 is False:
+            raise Exception('Connection is failed. please check your remote settings.')
+
+        if ret1 is False:
+            raise Exception("Http connection is failed. please check your remote settings.")
+
+        if ret2 is False:
+            raise Exception("Device %s is not ready!" % v.ANDROID_SERIAL_NUM)
+
+        option2g = {
+            'wifiIndex': 1,
+            'ssid': v.SSID,
+            'channel': v.CHANNEL1,
+            'bandwidth': '20',
+            'encryption': 'psk2',
+            'pwd': v.KEY,
+        }
+        api.setWifi(self.dut, self.__name__, **option2g)
+
+    @classmethod
+    def tearDownClass(self):
+        option2g = {
+            'wifiIndex': 1,
+            'on': 0,
+        }
+        api.setWifi(self.dut, self.__name__, **option2g)
+        self.dut.close()
+        self.dut2.close()
+
+    def assoc_sta_throughput_2g(self):
+        res2gConn = setAdbPsk2Sta(v.ANDROID_SERIAL_NUM, v.SSID, v.KEY, "2g", self.__class__.__name__)
+
+        if res2gConn is True:
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
+            iperfOn = SetAdbIperfOn(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
+            iperfOn.start()
+            t.sleep(4.0)
+            ret = setIperfFlow2(self.dut2, result["ip"], v.IPERF_INTERVAL, v.IPERF_TIME, self.__class__.__name__)
+            self.assertTrue(ret, "Excute iperf flow error, connection refused.")
+        else:
+            self.assertTrue(res2gConn, "Connecting wifi is failed.")
+
+
+class AP_PSK2_CHAN6_BW20_DUT_THROUGHPUT(TestCase):
+    @classmethod
+    def setUpClass(self):
+
+        self.dut = api.HttpClient()
+        ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
+        ret2 = chkAdbDevice(v.ANDROID_SERIAL_NUM)
+
+        self.dut2 = ShellClient(v.CONNECTION_TYPE)
+        ret3 = self.dut2.connect(v.HOST, v.USR, v.PASSWD)
+
+        if ret3 is False:
+            raise Exception('Connection is failed. please check your remote settings.')
+
+        if ret1 is False:
+            raise Exception("Http connection is failed. please check your remote settings.")
+
+        if ret2 is False:
+            raise Exception("Device %s is not ready!" % v.ANDROID_SERIAL_NUM)
+
+        option2g = {
+            'wifiIndex': 1,
+            'ssid': v.SSID,
+            'channel': v.CHANNEL6,
+            'bandwidth': '20',
+            'encryption': 'psk2',
+            'pwd': v.KEY,
+        }
+        api.setWifi(self.dut, self.__name__, **option2g)
+
+    @classmethod
+    def tearDownClass(self):
+        option2g = {
+            'wifiIndex': 1,
+            'on': 0,
+        }
+        api.setWifi(self.dut, self.__name__, **option2g)
+        self.dut.close()
+        self.dut2.close()
+
+    def assoc_sta_throughput_2g(self):
+        res2gConn = setAdbPsk2Sta(v.ANDROID_SERIAL_NUM, v.SSID, v.KEY, "2g", self.__class__.__name__)
+
+        if res2gConn is True:
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
+            iperfOn = SetAdbIperfOn(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
+            iperfOn.start()
+            t.sleep(4.0)
+            ret = setIperfFlow2(self.dut2, result["ip"], v.IPERF_INTERVAL, v.IPERF_TIME, self.__class__.__name__)
+            self.assertTrue(ret, "Excute iperf flow error, connection refused.")
+        else:
+            self.assertTrue(res2gConn, "Connecting wifi is failed.")
+
+
+class AP_PSK2_CHAN11_BW20_DUT_THROUGHPUT(TestCase):
+    @classmethod
+    def setUpClass(self):
+
+        self.dut = api.HttpClient()
+        ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
+        ret2 = chkAdbDevice(v.ANDROID_SERIAL_NUM)
+
+        self.dut2 = ShellClient(v.CONNECTION_TYPE)
+        ret3 = self.dut2.connect(v.HOST, v.USR, v.PASSWD)
+
+        if ret3 is False:
+            raise Exception('Connection is failed. please check your remote settings.')
+
+        if ret1 is False:
+            raise Exception("Http connection is failed. please check your remote settings.")
+
+        if ret2 is False:
+            raise Exception("Device %s is not ready!" % v.ANDROID_SERIAL_NUM)
+
+        option2g = {
+            'wifiIndex': 1,
+            'ssid': v.SSID,
+            'channel': v.CHANNEL11,
+            'bandwidth': '20',
+            'encryption': 'psk2',
+            'pwd': v.KEY,
+        }
+        api.setWifi(self.dut, self.__name__, **option2g)
+
+    @classmethod
+    def tearDownClass(self):
+        option2g = {
+            'wifiIndex': 1,
+            'on': 0,
+        }
+        api.setWifi(self.dut, self.__name__, **option2g)
+        self.dut.close()
+        self.dut2.close()
+
+    def assoc_sta_throughput_2g(self):
+        res2gConn = setAdbPsk2Sta(v.ANDROID_SERIAL_NUM, v.SSID, v.KEY, "2g", self.__class__.__name__)
+
+        if res2gConn is True:
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
+            iperfOn = SetAdbIperfOn(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
+            iperfOn.start()
+            t.sleep(4.0)
+            ret = setIperfFlow2(self.dut2, result["ip"], v.IPERF_INTERVAL, v.IPERF_TIME, self.__class__.__name__)
+            self.assertTrue(ret, "Excute iperf flow error, connection refused.")
+        else:
+            self.assertTrue(res2gConn, "Connecting wifi is failed.")
+
+
+class AP_PSK2_CHAN13_BW20_DUT_THROUGHPUT(TestCase):
+    @classmethod
+    def setUpClass(self):
+
+        self.dut = api.HttpClient()
+        ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
+        ret2 = chkAdbDevice(v.ANDROID_SERIAL_NUM)
+
+        self.dut2 = ShellClient(v.CONNECTION_TYPE)
+        ret3 = self.dut2.connect(v.HOST, v.USR, v.PASSWD)
+
+        if ret3 is False:
+            raise Exception('Connection is failed. please check your remote settings.')
+
+        if ret1 is False:
+            raise Exception("Http connection is failed. please check your remote settings.")
+
+        if ret2 is False:
+            raise Exception("Device %s is not ready!" % v.ANDROID_SERIAL_NUM)
+
+        option2g = {
+            'wifiIndex': 1,
+            'ssid': v.SSID,
+            'channel': v.CHANNEL13,
+            'bandwidth': '20',
+            'encryption': 'psk2',
+            'pwd': v.KEY,
+        }
+        api.setWifi(self.dut, self.__name__, **option2g)
+
+    @classmethod
+    def tearDownClass(self):
+        option2g = {
+            'wifiIndex': 1,
+            'on': 0,
+        }
+        api.setWifi(self.dut, self.__name__, **option2g)
+        self.dut.close()
+        self.dut2.close()
+
+    def assoc_sta_throughput_2g(self):
+        res2gConn = setAdbPsk2Sta(v.ANDROID_SERIAL_NUM, v.SSID, v.KEY, "2g", self.__class__.__name__)
+
+        if res2gConn is True:
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
+            iperfOn = SetAdbIperfOn(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
+            iperfOn.start()
+            t.sleep(4.0)
+            ret = setIperfFlow2(self.dut2, result["ip"], v.IPERF_INTERVAL, v.IPERF_TIME, self.__class__.__name__)
+            self.assertTrue(ret, "Excute iperf flow error, connection refused.")
+        else:
+            self.assertTrue(res2gConn, "Connecting wifi is failed.")
+
+
+class AP_PSK2_CHAN1_BW40_DUT_THROUGHPUT(TestCase):
+    @classmethod
+    def setUpClass(self):
+
+        self.dut = api.HttpClient()
+        ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
+        ret2 = chkAdbDevice(v.ANDROID_SERIAL_NUM)
+
+        self.dut2 = ShellClient(v.CONNECTION_TYPE)
+        ret3 = self.dut2.connect(v.HOST, v.USR, v.PASSWD)
+
+        if ret3 is False:
+            raise Exception('Connection is failed. please check your remote settings.')
+
+        if ret1 is False:
+            raise Exception("Http connection is failed. please check your remote settings.")
+
+        if ret2 is False:
+            raise Exception("Device %s is not ready!" % v.ANDROID_SERIAL_NUM)
+
+        option2g = {
+            'wifiIndex': 1,
+            'ssid': v.SSID,
+            'channel': v.CHANNEL1,
+            'bandwidth': '40',
+            'encryption': 'psk2',
+            'pwd': v.KEY,
+        }
+        api.setWifi(self.dut, self.__name__, **option2g)
+
+    @classmethod
+    def tearDownClass(self):
+        option2g = {
+            'wifiIndex': 1,
+            'on': 0,
+        }
+        api.setWifi(self.dut, self.__name__, **option2g)
+        self.dut.close()
+        self.dut2.close()
+
+    def assoc_sta_throughput_2g(self):
+        res2gConn = setAdbPsk2Sta(v.ANDROID_SERIAL_NUM, v.SSID, v.KEY, "2g", self.__class__.__name__)
+
+        if res2gConn is True:
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
+            iperfOn = SetAdbIperfOn(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
+            iperfOn.start()
+            t.sleep(4.0)
+            ret = setIperfFlow2(self.dut2, result["ip"], v.IPERF_INTERVAL, v.IPERF_TIME, self.__class__.__name__)
+            self.assertTrue(ret, "Excute iperf flow error, connection refused.")
+        else:
+            self.assertTrue(res2gConn, "Connecting wifi is failed.")
+
+
+class AP_PSK2_CHAN6_BW40_DUT_THROUGHPUT(TestCase):
+    @classmethod
+    def setUpClass(self):
+
+        self.dut = api.HttpClient()
+        ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
+        ret2 = chkAdbDevice(v.ANDROID_SERIAL_NUM)
+
+        self.dut2 = ShellClient(v.CONNECTION_TYPE)
+        ret3 = self.dut2.connect(v.HOST, v.USR, v.PASSWD)
+
+        if ret3 is False:
+            raise Exception('Connection is failed. please check your remote settings.')
+
+        if ret1 is False:
+            raise Exception("Http connection is failed. please check your remote settings.")
+
+        if ret2 is False:
+            raise Exception("Device %s is not ready!" % v.ANDROID_SERIAL_NUM)
+
+        option2g = {
+            'wifiIndex': 1,
+            'ssid': v.SSID,
+            'channel': v.CHANNEL6,
+            'bandwidth': '40',
+            'encryption': 'psk2',
+            'pwd': v.KEY,
+        }
+        api.setWifi(self.dut, self.__name__, **option2g)
+
+    @classmethod
+    def tearDownClass(self):
+        option2g = {
+            'wifiIndex': 1,
+            'on': 0,
+        }
+        api.setWifi(self.dut, self.__name__, **option2g)
+        self.dut.close()
+        self.dut2.close()
+
+    def assoc_sta_throughput_2g(self):
+        res2gConn = setAdbPsk2Sta(v.ANDROID_SERIAL_NUM, v.SSID, v.KEY, "2g", self.__class__.__name__)
+
+        if res2gConn is True:
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
+            iperfOn = SetAdbIperfOn(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
+            iperfOn.start()
+            t.sleep(4.0)
+            ret = setIperfFlow2(self.dut2, result["ip"], v.IPERF_INTERVAL, v.IPERF_TIME, self.__class__.__name__)
+            self.assertTrue(ret, "Excute iperf flow error, connection refused.")
+        else:
+            self.assertTrue(res2gConn, "Connecting wifi is failed.")
+
+
+class AP_PSK2_CHAN11_BW40_DUT_THROUGHPUT(TestCase):
+    @classmethod
+    def setUpClass(self):
+
+        self.dut = api.HttpClient()
+        ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
+        ret2 = chkAdbDevice(v.ANDROID_SERIAL_NUM)
+
+        self.dut2 = ShellClient(v.CONNECTION_TYPE)
+        ret3 = self.dut2.connect(v.HOST, v.USR, v.PASSWD)
+
+        if ret3 is False:
+            raise Exception('Connection is failed. please check your remote settings.')
+
+        if ret1 is False:
+            raise Exception("Http connection is failed. please check your remote settings.")
+
+        if ret2 is False:
+            raise Exception("Device %s is not ready!" % v.ANDROID_SERIAL_NUM)
+
+        option2g = {
+            'wifiIndex': 1,
+            'ssid': v.SSID,
+            'channel': v.CHANNEL11,
+            'bandwidth': '40',
+            'encryption': 'psk2',
+            'pwd': v.KEY,
+        }
+        api.setWifi(self.dut, self.__name__, **option2g)
+
+    @classmethod
+    def tearDownClass(self):
+        option2g = {
+            'wifiIndex': 1,
+            'on': 0,
+        }
+        api.setWifi(self.dut, self.__name__, **option2g)
+        self.dut.close()
+        self.dut2.close()
+
+    def assoc_sta_throughput_2g(self):
+        res2gConn = setAdbPsk2Sta(v.ANDROID_SERIAL_NUM, v.SSID, v.KEY, "2g", self.__class__.__name__)
+
+        if res2gConn is True:
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
+            iperfOn = SetAdbIperfOn(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
+            iperfOn.start()
+            t.sleep(4.0)
+            ret = setIperfFlow2(self.dut2, result["ip"], v.IPERF_INTERVAL, v.IPERF_TIME, self.__class__.__name__)
+            self.assertTrue(ret, "Excute iperf flow error, connection refused.")
+        else:
+            self.assertTrue(res2gConn, "Connecting wifi is failed.")
+
+
+class AP_PSK2_CHAN13_BW40_DUT_THROUGHPUT(TestCase):
+    @classmethod
+    def setUpClass(self):
+
+        self.dut = api.HttpClient()
+        ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
+        ret2 = chkAdbDevice(v.ANDROID_SERIAL_NUM)
+
+        self.dut2 = ShellClient(v.CONNECTION_TYPE)
+        ret3 = self.dut2.connect(v.HOST, v.USR, v.PASSWD)
+
+        if ret3 is False:
+            raise Exception('Connection is failed. please check your remote settings.')
+
+        if ret1 is False:
+            raise Exception("Http connection is failed. please check your remote settings.")
+
+        if ret2 is False:
+            raise Exception("Device %s is not ready!" % v.ANDROID_SERIAL_NUM)
+
+        option2g = {
+            'wifiIndex': 1,
+            'ssid': v.SSID,
+            'channel': v.CHANNEL13,
+            'bandwidth': '40',
+            'encryption': 'psk2',
+            'pwd': v.KEY,
+        }
+        api.setWifi(self.dut, self.__name__, **option2g)
+
+    @classmethod
+    def tearDownClass(self):
+        option2g = {
+            'wifiIndex': 1,
+            'on': 0,
+        }
+        api.setWifi(self.dut, self.__name__, **option2g)
+        self.dut.close()
+        self.dut2.close()
+
+    def assoc_sta_throughput_2g(self):
+        res2gConn = setAdbPsk2Sta(v.ANDROID_SERIAL_NUM, v.SSID, v.KEY, "2g", self.__class__.__name__)
+
+        if res2gConn is True:
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
+            iperfOn = SetAdbIperfOn(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
+            iperfOn.start()
+            t.sleep(4.0)
+            ret = setIperfFlow2(self.dut2, result["ip"], v.IPERF_INTERVAL, v.IPERF_TIME, self.__class__.__name__)
+            self.assertTrue(ret, "Excute iperf flow error, connection refused.")
+        else:
+            self.assertTrue(res2gConn, "Connecting wifi is failed.")
+
+
+class AP_CLEAR_CHAN36_BW20_DUT_THROUGHPUT(TestCase):
+    @classmethod
+    def setUpClass(self):
+
+        self.dut = api.HttpClient()
+        ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
+        ret2 = chkAdbDevice(v.ANDROID_SERIAL_NUM)
+
+        self.dut2 = ShellClient(v.CONNECTION_TYPE)
+        ret3 = self.dut2.connect(v.HOST, v.USR, v.PASSWD)
+
+        if ret3 is False:
+            raise Exception('Connection is failed. please check your remote settings.')
+
+        if ret1 is False:
+            raise Exception("Http connection is failed. please check your remote settings.")
+
+        if ret2 is False:
+            raise Exception("Device %s is not ready!" % v.ANDROID_SERIAL_NUM)
+
+        option5g = {
+            'wifiIndex': 2,
+            'ssid': v.SSID_5G,
+            'channel': v.CHANNEL36,
+            'bandwidth': '20'
+        }
+        api.setWifi(self.dut, self.__name__, **option5g)
+
+    @classmethod
+    def tearDownClass(self):
+        option5g = {
+            'wifiIndex': 2,
+            'on': 0,
+        }
+        api.setWifi(self.dut, self.__name__, **option5g)
+        self.dut.close()
+        self.dut2.close()
+
+    def assoc_sta_throughput_5g(self):
+        res5gConn = setAdbClearSta(v.ANDROID_SERIAL_NUM, v.SSID_5G, "5g", self.__class__.__name__)
+
+        if res5gConn is True:
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
+            iperfOn = SetAdbIperfOn(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
+            iperfOn.start()
+            t.sleep(4.0)
+            ret = setIperfFlow2(self.dut2, result["ip"], v.IPERF_INTERVAL, v.IPERF_TIME, self.__class__.__name__)
+            self.assertTrue(ret, "Excute iperf flow error, connection refused.")
+        else:
+            self.assertTrue(res5gConn, "Connecting wifi is failed.")
+
+
+class AP_CLEAR_CHAN52_BW20_DUT_THROUGHPUT(TestCase):
+    @classmethod
+    def setUpClass(self):
+
+        self.dut = api.HttpClient()
+        ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
+        ret2 = chkAdbDevice(v.ANDROID_SERIAL_NUM)
+
+        self.dut2 = ShellClient(v.CONNECTION_TYPE)
+        ret3 = self.dut2.connect(v.HOST, v.USR, v.PASSWD)
+
+        if ret3 is False:
+            raise Exception('Connection is failed. please check your remote settings.')
+
+        if ret1 is False:
+            raise Exception("Http connection is failed. please check your remote settings.")
+
+        if ret2 is False:
+            raise Exception("Device %s is not ready!" % v.ANDROID_SERIAL_NUM)
+
+        option5g = {
+            'wifiIndex': 2,
+            'ssid': v.SSID_5G,
+            'channel': v.CHANNEL52,
+            'bandwidth': '20'
+        }
+        api.setWifi(self.dut, self.__name__, **option5g)
+
+    @classmethod
+    def tearDownClass(self):
+        option5g = {
+            'wifiIndex': 2,
+            'on': 0,
+        }
+        api.setWifi(self.dut, self.__name__, **option5g)
+        self.dut.close()
+        self.dut2.close()
+
+    def assoc_sta_throughput_5g(self):
+        res5gConn = setAdbClearSta(v.ANDROID_SERIAL_NUM, v.SSID_5G, "5g", self.__class__.__name__)
+
+        if res5gConn is True:
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
+            iperfOn = SetAdbIperfOn(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
+            iperfOn.start()
+            t.sleep(4.0)
+            ret = setIperfFlow2(self.dut2, result["ip"], v.IPERF_INTERVAL, v.IPERF_TIME, self.__class__.__name__)
+            self.assertTrue(ret, "Excute iperf flow error, connection refused.")
+        else:
+            self.assertTrue(res5gConn, "Connecting wifi is failed.")
+
+
+class AP_CLEAR_CHAN149_BW20_DUT_THROUGHPUT(TestCase):
+    @classmethod
+    def setUpClass(self):
+
+        self.dut = api.HttpClient()
+        ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
+        ret2 = chkAdbDevice(v.ANDROID_SERIAL_NUM)
+
+        self.dut2 = ShellClient(v.CONNECTION_TYPE)
+        ret3 = self.dut2.connect(v.HOST, v.USR, v.PASSWD)
+
+        if ret3 is False:
+            raise Exception('Connection is failed. please check your remote settings.')
+
+        if ret1 is False:
+            raise Exception("Http connection is failed. please check your remote settings.")
+
+        if ret2 is False:
+            raise Exception("Device %s is not ready!" % v.ANDROID_SERIAL_NUM)
+
+        option5g = {
+            'wifiIndex': 2,
+            'ssid': v.SSID_5G,
+            'channel': v.CHANNEL149,
+            'bandwidth': '20'
+        }
+        api.setWifi(self.dut, self.__name__, **option5g)
+
+    @classmethod
+    def tearDownClass(self):
+        option5g = {
+            'wifiIndex': 2,
+            'on': 0,
+        }
+        api.setWifi(self.dut, self.__name__, **option5g)
+        self.dut.close()
+        self.dut2.close()
+
+    def assoc_sta_throughput_5g(self):
+        res5gConn = setAdbClearSta(v.ANDROID_SERIAL_NUM, v.SSID_5G, "5g", self.__class__.__name__)
+
+        if res5gConn is True:
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
+            iperfOn = SetAdbIperfOn(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
+            iperfOn.start()
+            t.sleep(4.0)
+            ret = setIperfFlow2(self.dut2, result["ip"], v.IPERF_INTERVAL, v.IPERF_TIME, self.__class__.__name__)
+            self.assertTrue(ret, "Excute iperf flow error, connection refused.")
+        else:
+            self.assertTrue(res5gConn, "Connecting wifi is failed.")
+
+
+class AP_CLEAR_CHAN165_BW20_DUT_THROUGHPUT(TestCase):
+    @classmethod
+    def setUpClass(self):
+
+        self.dut = api.HttpClient()
+        ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
+        ret2 = chkAdbDevice(v.ANDROID_SERIAL_NUM)
+
+        self.dut2 = ShellClient(v.CONNECTION_TYPE)
+        ret3 = self.dut2.connect(v.HOST, v.USR, v.PASSWD)
+
+        if ret3 is False:
+            raise Exception('Connection is failed. please check your remote settings.')
+
+        if ret1 is False:
+            raise Exception("Http connection is failed. please check your remote settings.")
+
+        if ret2 is False:
+            raise Exception("Device %s is not ready!" % v.ANDROID_SERIAL_NUM)
+
+        option5g = {
+            'wifiIndex': 2,
+            'ssid': v.SSID_5G,
+            'channel': v.CHANNEL165,
+            'bandwidth': '20'
+        }
+        api.setWifi(self.dut, self.__name__, **option5g)
+
+    @classmethod
+    def tearDownClass(self):
+        option5g = {
+            'wifiIndex': 2,
+            'on': 0,
+        }
+        api.setWifi(self.dut, self.__name__, **option5g)
+        self.dut.close()
+        self.dut2.close()
+
+    def assoc_sta_throughput_5g(self):
+        res5gConn = setAdbClearSta(v.ANDROID_SERIAL_NUM, v.SSID_5G, "5g", self.__class__.__name__)
+
+        if res5gConn is True:
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
+            iperfOn = SetAdbIperfOn(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
+            iperfOn.start()
+            t.sleep(4.0)
+            ret = setIperfFlow2(self.dut2, result["ip"], v.IPERF_INTERVAL, v.IPERF_TIME, self.__class__.__name__)
+            self.assertTrue(ret, "Excute iperf flow error, connection refused.")
+        else:
+            self.assertTrue(res5gConn, "Connecting wifi is failed.")
+
+
+class AP_CLEAR_CHAN36_BW40_DUT_THROUGHPUT(TestCase):
+    @classmethod
+    def setUpClass(self):
+
+        self.dut = api.HttpClient()
+        ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
+        ret2 = chkAdbDevice(v.ANDROID_SERIAL_NUM)
+
+        self.dut2 = ShellClient(v.CONNECTION_TYPE)
+        ret3 = self.dut2.connect(v.HOST, v.USR, v.PASSWD)
+
+        if ret3 is False:
+            raise Exception('Connection is failed. please check your remote settings.')
+
+        if ret1 is False:
+            raise Exception("Http connection is failed. please check your remote settings.")
+
+        if ret2 is False:
+            raise Exception("Device %s is not ready!" % v.ANDROID_SERIAL_NUM)
+
+        option5g = {
+            'wifiIndex': 2,
+            'ssid': v.SSID_5G,
+            'channel': v.CHANNEL36,
+            'bandwidth': '40'
+        }
+        api.setWifi(self.dut, self.__name__, **option5g)
+
+    @classmethod
+    def tearDownClass(self):
+        option5g = {
+            'wifiIndex': 2,
+            'on': 0,
+        }
+        api.setWifi(self.dut, self.__name__, **option5g)
+        self.dut.close()
+        self.dut2.close()
+
+    def assoc_sta_throughput_5g(self):
+        res5gConn = setAdbClearSta(v.ANDROID_SERIAL_NUM, v.SSID_5G, "5g", self.__class__.__name__)
+
+        if res5gConn is True:
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
+            iperfOn = SetAdbIperfOn(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
+            iperfOn.start()
+            t.sleep(4.0)
+            ret = setIperfFlow2(self.dut2, result["ip"], v.IPERF_INTERVAL, v.IPERF_TIME, self.__class__.__name__)
+            self.assertTrue(ret, "Excute iperf flow error, connection refused.")
+        else:
+            self.assertTrue(res5gConn, "Connecting wifi is failed.")
+
+
+class AP_CLEAR_CHAN44_BW40_DUT_THROUGHPUT(TestCase):
+    @classmethod
+    def setUpClass(self):
+
+        self.dut = api.HttpClient()
+        ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
+        ret2 = chkAdbDevice(v.ANDROID_SERIAL_NUM)
+
+        self.dut2 = ShellClient(v.CONNECTION_TYPE)
+        ret3 = self.dut2.connect(v.HOST, v.USR, v.PASSWD)
+
+        if ret3 is False:
+            raise Exception('Connection is failed. please check your remote settings.')
+
+        if ret1 is False:
+            raise Exception("Http connection is failed. please check your remote settings.")
+
+        if ret2 is False:
+            raise Exception("Device %s is not ready!" % v.ANDROID_SERIAL_NUM)
+
+        option5g = {
+            'wifiIndex': 2,
+            'ssid': v.SSID_5G,
+            'channel': v.CHANNEL44,
+            'bandwidth': '40'
+        }
+        api.setWifi(self.dut, self.__name__, **option5g)
+
+    @classmethod
+    def tearDownClass(self):
+        option5g = {
+            'wifiIndex': 2,
+            'on': 0,
+        }
+        api.setWifi(self.dut, self.__name__, **option5g)
+        self.dut.close()
+        self.dut2.close()
+
+    def assoc_sta_throughput_5g(self):
+        res5gConn = setAdbClearSta(v.ANDROID_SERIAL_NUM, v.SSID_5G, "5g", self.__class__.__name__)
+
+        if res5gConn is True:
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
+            iperfOn = SetAdbIperfOn(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
+            iperfOn.start()
+            t.sleep(4.0)
+            ret = setIperfFlow2(self.dut2, result["ip"], v.IPERF_INTERVAL, v.IPERF_TIME, self.__class__.__name__)
+            self.assertTrue(ret, "Excute iperf flow error, connection refused.")
+        else:
+            self.assertTrue(res5gConn, "Connecting wifi is failed.")
+
+
+class AP_CLEAR_CHAN52_BW40_DUT_THROUGHPUT(TestCase):
+    @classmethod
+    def setUpClass(self):
+
+        self.dut = api.HttpClient()
+        ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
+        ret2 = chkAdbDevice(v.ANDROID_SERIAL_NUM)
+
+        self.dut2 = ShellClient(v.CONNECTION_TYPE)
+        ret3 = self.dut2.connect(v.HOST, v.USR, v.PASSWD)
+
+        if ret3 is False:
+            raise Exception('Connection is failed. please check your remote settings.')
+
+        if ret1 is False:
+            raise Exception("Http connection is failed. please check your remote settings.")
+
+        if ret2 is False:
+            raise Exception("Device %s is not ready!" % v.ANDROID_SERIAL_NUM)
+
+        option5g = {
+            'wifiIndex': 2,
+            'ssid': v.SSID_5G,
+            'channel': v.CHANNEL52,
+            'bandwidth': '40'
+        }
+        api.setWifi(self.dut, self.__name__, **option5g)
+
+    @classmethod
+    def tearDownClass(self):
+        option5g = {
+            'wifiIndex': 2,
+            'on': 0,
+        }
+        api.setWifi(self.dut, self.__name__, **option5g)
+        self.dut.close()
+        self.dut2.close()
+
+    def assoc_sta_throughput_5g(self):
+        res5gConn = setAdbClearSta(v.ANDROID_SERIAL_NUM, v.SSID_5G, "5g", self.__class__.__name__)
+
+        if res5gConn is True:
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
+            iperfOn = SetAdbIperfOn(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
+            iperfOn.start()
+            t.sleep(4.0)
+            ret = setIperfFlow2(self.dut2, result["ip"], v.IPERF_INTERVAL, v.IPERF_TIME, self.__class__.__name__)
+            self.assertTrue(ret, "Excute iperf flow error, connection refused.")
+        else:
+            self.assertTrue(res5gConn, "Connecting wifi is failed.")
+
+
+class AP_CLEAR_CHAN60_BW40_DUT_THROUGHPUT(TestCase):
+    @classmethod
+    def setUpClass(self):
+
+        self.dut = api.HttpClient()
+        ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
+        ret2 = chkAdbDevice(v.ANDROID_SERIAL_NUM)
+
+        self.dut2 = ShellClient(v.CONNECTION_TYPE)
+        ret3 = self.dut2.connect(v.HOST, v.USR, v.PASSWD)
+
+        if ret3 is False:
+            raise Exception('Connection is failed. please check your remote settings.')
+
+        if ret1 is False:
+            raise Exception("Http connection is failed. please check your remote settings.")
+
+        if ret2 is False:
+            raise Exception("Device %s is not ready!" % v.ANDROID_SERIAL_NUM)
+
+        option5g = {
+            'wifiIndex': 2,
+            'ssid': v.SSID_5G,
+            'channel': v.CHANNEL60,
+            'bandwidth': '40'
+        }
+        api.setWifi(self.dut, self.__name__, **option5g)
+
+    @classmethod
+    def tearDownClass(self):
+        option5g = {
+            'wifiIndex': 2,
+            'on': 0,
+        }
+        api.setWifi(self.dut, self.__name__, **option5g)
+        self.dut.close()
+        self.dut2.close()
+
+    def assoc_sta_throughput_5g(self):
+        res5gConn = setAdbClearSta(v.ANDROID_SERIAL_NUM, v.SSID_5G, "5g", self.__class__.__name__)
+
+        if res5gConn is True:
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
+            iperfOn = SetAdbIperfOn(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
+            iperfOn.start()
+            t.sleep(4.0)
+            ret = setIperfFlow2(self.dut2, result["ip"], v.IPERF_INTERVAL, v.IPERF_TIME, self.__class__.__name__)
+            self.assertTrue(ret, "Excute iperf flow error, connection refused.")
+        else:
+            self.assertTrue(res5gConn, "Connecting wifi is failed.")
+
+
+class AP_CLEAR_CHAN149_BW40_DUT_THROUGHPUT(TestCase):
+    @classmethod
+    def setUpClass(self):
+
+        self.dut = api.HttpClient()
+        ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
+        ret2 = chkAdbDevice(v.ANDROID_SERIAL_NUM)
+
+        self.dut2 = ShellClient(v.CONNECTION_TYPE)
+        ret3 = self.dut2.connect(v.HOST, v.USR, v.PASSWD)
+
+        if ret3 is False:
+            raise Exception('Connection is failed. please check your remote settings.')
+
+        if ret1 is False:
+            raise Exception("Http connection is failed. please check your remote settings.")
+
+        if ret2 is False:
+            raise Exception("Device %s is not ready!" % v.ANDROID_SERIAL_NUM)
+
+        option5g = {
+            'wifiIndex': 2,
+            'ssid': v.SSID_5G,
+            'channel': v.CHANNEL149,
+            'bandwidth': '40'
+        }
+        api.setWifi(self.dut, self.__name__, **option5g)
+
+    @classmethod
+    def tearDownClass(self):
+        option5g = {
+            'wifiIndex': 2,
+            'on': 0,
+        }
+        api.setWifi(self.dut, self.__name__, **option5g)
+        self.dut.close()
+        self.dut2.close()
+
+    def assoc_sta_throughput_5g(self):
+        res5gConn = setAdbClearSta(v.ANDROID_SERIAL_NUM, v.SSID_5G, "5g", self.__class__.__name__)
+
+        if res5gConn is True:
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
+            iperfOn = SetAdbIperfOn(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
+            iperfOn.start()
+            t.sleep(4.0)
+            ret = setIperfFlow2(self.dut2, result["ip"], v.IPERF_INTERVAL, v.IPERF_TIME, self.__class__.__name__)
+            self.assertTrue(ret, "Excute iperf flow error, connection refused.")
+        else:
+            self.assertTrue(res5gConn, "Connecting wifi is failed.")
+
+
+class AP_CLEAR_CHAN157_BW40_DUT_THROUGHPUT(TestCase):
+    @classmethod
+    def setUpClass(self):
+
+        self.dut = api.HttpClient()
+        ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
+        ret2 = chkAdbDevice(v.ANDROID_SERIAL_NUM)
+
+        self.dut2 = ShellClient(v.CONNECTION_TYPE)
+        ret3 = self.dut2.connect(v.HOST, v.USR, v.PASSWD)
+
+        if ret3 is False:
+            raise Exception('Connection is failed. please check your remote settings.')
+
+        if ret1 is False:
+            raise Exception("Http connection is failed. please check your remote settings.")
+
+        if ret2 is False:
+            raise Exception("Device %s is not ready!" % v.ANDROID_SERIAL_NUM)
+
+        option5g = {
+            'wifiIndex': 2,
+            'ssid': v.SSID_5G,
+            'channel': v.CHANNEL157,
+            'bandwidth': '40'
+        }
+        api.setWifi(self.dut, self.__name__, **option5g)
+
+    @classmethod
+    def tearDownClass(self):
+        option5g = {
+            'wifiIndex': 2,
+            'on': 0,
+        }
+        api.setWifi(self.dut, self.__name__, **option5g)
+        self.dut.close()
+        self.dut2.close()
+
+    def assoc_sta_throughput_5g(self):
+        res5gConn = setAdbClearSta(v.ANDROID_SERIAL_NUM, v.SSID_5G, "5g", self.__class__.__name__)
+
+        if res5gConn is True:
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
+            iperfOn = SetAdbIperfOn(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
+            iperfOn.start()
+            t.sleep(4.0)
+            ret = setIperfFlow2(self.dut2, result["ip"], v.IPERF_INTERVAL, v.IPERF_TIME, self.__class__.__name__)
+            self.assertTrue(ret, "Excute iperf flow error, connection refused.")
+        else:
+            self.assertTrue(res5gConn, "Connecting wifi is failed.")
+
+
+class AP_CLEAR_CHAN36_BW80_DUT_THROUGHPUT(TestCase):
+    @classmethod
+    def setUpClass(self):
+
+        self.dut = api.HttpClient()
+        ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
+        ret2 = chkAdbDevice(v.ANDROID_SERIAL_NUM)
+
+        self.dut2 = ShellClient(v.CONNECTION_TYPE)
+        ret3 = self.dut2.connect(v.HOST, v.USR, v.PASSWD)
+
+        if ret3 is False:
+            raise Exception('Connection is failed. please check your remote settings.')
+
+        if ret1 is False:
+            raise Exception("Http connection is failed. please check your remote settings.")
+
+        if ret2 is False:
+            raise Exception("Device %s is not ready!" % v.ANDROID_SERIAL_NUM)
+
+        option5g = {
+            'wifiIndex': 2,
+            'ssid': v.SSID_5G,
+            'channel': v.CHANNEL36,
+            'bandwidth': '80'
+        }
+        api.setWifi(self.dut, self.__name__, **option5g)
+
+    @classmethod
+    def tearDownClass(self):
+        option5g = {
+            'wifiIndex': 2,
+            'on': 0,
+        }
+        api.setWifi(self.dut, self.__name__, **option5g)
+        self.dut.close()
+        self.dut2.close()
+
+    def assoc_sta_throughput_5g(self):
+        res5gConn = setAdbClearSta(v.ANDROID_SERIAL_NUM, v.SSID_5G, "5g", self.__class__.__name__)
+
+        if res5gConn is True:
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
+            iperfOn = SetAdbIperfOn(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
+            iperfOn.start()
+            t.sleep(4.0)
+            ret = setIperfFlow2(self.dut2, result["ip"], v.IPERF_INTERVAL, v.IPERF_TIME, self.__class__.__name__)
+            self.assertTrue(ret, "Excute iperf flow error, connection refused.")
+        else:
+            self.assertTrue(res5gConn, "Connecting wifi is failed.")
+
+
+class AP_CLEAR_CHAN52_BW80_DUT_THROUGHPUT(TestCase):
+    @classmethod
+    def setUpClass(self):
+
+        self.dut = api.HttpClient()
+        ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
+        ret2 = chkAdbDevice(v.ANDROID_SERIAL_NUM)
+
+        self.dut2 = ShellClient(v.CONNECTION_TYPE)
+        ret3 = self.dut2.connect(v.HOST, v.USR, v.PASSWD)
+
+        if ret3 is False:
+            raise Exception('Connection is failed. please check your remote settings.')
+
+        if ret1 is False:
+            raise Exception("Http connection is failed. please check your remote settings.")
+
+        if ret2 is False:
+            raise Exception("Device %s is not ready!" % v.ANDROID_SERIAL_NUM)
+
+        option5g = {
+            'wifiIndex': 2,
+            'ssid': v.SSID_5G,
+            'channel': v.CHANNEL52,
+            'bandwidth': '80'
+        }
+        api.setWifi(self.dut, self.__name__, **option5g)
+
+    @classmethod
+    def tearDownClass(self):
+        option5g = {
+            'wifiIndex': 2,
+            'on': 0,
+        }
+        api.setWifi(self.dut, self.__name__, **option5g)
+        self.dut.close()
+        self.dut2.close()
+
+    def assoc_sta_throughput_5g(self):
+        res5gConn = setAdbClearSta(v.ANDROID_SERIAL_NUM, v.SSID_5G, "5g", self.__class__.__name__)
+
+        if res5gConn is True:
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
+            iperfOn = SetAdbIperfOn(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
+            iperfOn.start()
+            t.sleep(4.0)
+            ret = setIperfFlow2(self.dut2, result["ip"], v.IPERF_INTERVAL, v.IPERF_TIME, self.__class__.__name__)
+            self.assertTrue(ret, "Excute iperf flow error, connection refused.")
+        else:
+            self.assertTrue(res5gConn, "Connecting wifi is failed.")
+
+
+class AP_CLEAR_CHAN149_BW80_DUT_THROUGHPUT(TestCase):
+    @classmethod
+    def setUpClass(self):
+
+        self.dut = api.HttpClient()
+        ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
+        ret2 = chkAdbDevice(v.ANDROID_SERIAL_NUM)
+
+        self.dut2 = ShellClient(v.CONNECTION_TYPE)
+        ret3 = self.dut2.connect(v.HOST, v.USR, v.PASSWD)
+
+        if ret3 is False:
+            raise Exception('Connection is failed. please check your remote settings.')
+
+        if ret1 is False:
+            raise Exception("Http connection is failed. please check your remote settings.")
+
+        if ret2 is False:
+            raise Exception("Device %s is not ready!" % v.ANDROID_SERIAL_NUM)
+
+        option5g = {
+            'wifiIndex': 2,
+            'ssid': v.SSID_5G,
+            'channel': v.CHANNEL149,
+            'bandwidth': '80'
+        }
+        api.setWifi(self.dut, self.__name__, **option5g)
+
+    @classmethod
+    def tearDownClass(self):
+        option5g = {
+            'wifiIndex': 2,
+            'on': 0,
+        }
+        api.setWifi(self.dut, self.__name__, **option5g)
+        self.dut.close()
+        self.dut2.close()
+
+    def assoc_sta_throughput_5g(self):
+        res5gConn = setAdbClearSta(v.ANDROID_SERIAL_NUM, v.SSID_5G, "5g", self.__class__.__name__)
+
+        if res5gConn is True:
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
+            iperfOn = SetAdbIperfOn(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
+            iperfOn.start()
+            t.sleep(4.0)
+            ret = setIperfFlow2(self.dut2, result["ip"], v.IPERF_INTERVAL, v.IPERF_TIME, self.__class__.__name__)
+            self.assertTrue(ret, "Excute iperf flow error, connection refused.")
+        else:
+            self.assertTrue(res5gConn, "Connecting wifi is failed.")
+
+
+class AP_PSK2_CHAN36_BW20_DUT_THROUGHPUT(TestCase):
+    @classmethod
+    def setUpClass(self):
+
+        self.dut = api.HttpClient()
+        ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
+        ret2 = chkAdbDevice(v.ANDROID_SERIAL_NUM)
+
+        self.dut2 = ShellClient(v.CONNECTION_TYPE)
+        ret3 = self.dut2.connect(v.HOST, v.USR, v.PASSWD)
+
+        if ret3 is False:
+            raise Exception('Connection is failed. please check your remote settings.')
+
+        if ret1 is False:
+            raise Exception("Http connection is failed. please check your remote settings.")
+
+        if ret2 is False:
+            raise Exception("Device %s is not ready!" % v.ANDROID_SERIAL_NUM)
+
+        option5g = {
+            'wifiIndex': 2,
+            'ssid': v.SSID_5G,
+            'channel': v.CHANNEL36,
+            'bandwidth': '20',
+            'encryption': 'psk2',
+            'pwd': v.KEY,
+        }
+        api.setWifi(self.dut, self.__name__, **option5g)
+
+    @classmethod
+    def tearDownClass(self):
+        option5g = {
+            'wifiIndex': 2,
+            'on': 0,
+        }
+        api.setWifi(self.dut, self.__name__, **option5g)
+        self.dut.close()
+        self.dut2.close()
+
+    def assoc_sta_throughput_5g(self):
+        res5gConn = setAdbPsk2Sta(v.ANDROID_SERIAL_NUM, v.SSID_5G, v.KEY, "5g", self.__class__.__name__)
+
+        if res5gConn is True:
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
+            iperfOn = SetAdbIperfOn(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
+            iperfOn.start()
+            t.sleep(4.0)
+            ret = setIperfFlow2(self.dut2, result["ip"], v.IPERF_INTERVAL, v.IPERF_TIME, self.__class__.__name__)
+            self.assertTrue(ret, "Excute iperf flow error, connection refused.")
+        else:
+            self.assertTrue(res5gConn, "Connecting wifi is failed.")
+
+
+class AP_PSK2_CHAN52_BW20_DUT_THROUGHPUT(TestCase):
+    @classmethod
+    def setUpClass(self):
+
+        self.dut = api.HttpClient()
+        ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
+        ret2 = chkAdbDevice(v.ANDROID_SERIAL_NUM)
+
+        self.dut2 = ShellClient(v.CONNECTION_TYPE)
+        ret3 = self.dut2.connect(v.HOST, v.USR, v.PASSWD)
+
+        if ret3 is False:
+            raise Exception('Connection is failed. please check your remote settings.')
+
+        if ret1 is False:
+            raise Exception("Http connection is failed. please check your remote settings.")
+
+        if ret2 is False:
+            raise Exception("Device %s is not ready!" % v.ANDROID_SERIAL_NUM)
+
+        option5g = {
+            'wifiIndex': 2,
+            'ssid': v.SSID_5G,
+            'channel': v.CHANNEL52,
+            'bandwidth': '20',
+            'encryption': 'psk2',
+            'pwd': v.KEY,
+        }
+        api.setWifi(self.dut, self.__name__, **option5g)
+
+    @classmethod
+    def tearDownClass(self):
+        option5g = {
+            'wifiIndex': 2,
+            'on': 0,
+        }
+        api.setWifi(self.dut, self.__name__, **option5g)
+        self.dut.close()
+        self.dut2.close()
+
+    def assoc_sta_throughput_5g(self):
+        res5gConn = setAdbPsk2Sta(v.ANDROID_SERIAL_NUM, v.SSID_5G, v.KEY, "5g", self.__class__.__name__)
+
+        if res5gConn is True:
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
+            iperfOn = SetAdbIperfOn(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
+            iperfOn.start()
+            t.sleep(4.0)
+            ret = setIperfFlow2(self.dut2, result["ip"], v.IPERF_INTERVAL, v.IPERF_TIME, self.__class__.__name__)
+            self.assertTrue(ret, "Excute iperf flow error, connection refused.")
+        else:
+            self.assertTrue(res5gConn, "Connecting wifi is failed.")
+
+
+class AP_PSK2_CHAN149_BW20_DUT_THROUGHPUT(TestCase):
+    @classmethod
+    def setUpClass(self):
+
+        self.dut = api.HttpClient()
+        ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
+        ret2 = chkAdbDevice(v.ANDROID_SERIAL_NUM)
+
+        self.dut2 = ShellClient(v.CONNECTION_TYPE)
+        ret3 = self.dut2.connect(v.HOST, v.USR, v.PASSWD)
+
+        if ret3 is False:
+            raise Exception('Connection is failed. please check your remote settings.')
+
+        if ret1 is False:
+            raise Exception("Http connection is failed. please check your remote settings.")
+
+        if ret2 is False:
+            raise Exception("Device %s is not ready!" % v.ANDROID_SERIAL_NUM)
+
+        option5g = {
+            'wifiIndex': 2,
+            'ssid': v.SSID_5G,
+            'channel': v.CHANNEL149,
+            'bandwidth': '20',
+            'encryption': 'psk2',
+            'pwd': v.KEY,
+        }
+        api.setWifi(self.dut, self.__name__, **option5g)
+
+    @classmethod
+    def tearDownClass(self):
+        option5g = {
+            'wifiIndex': 2,
+            'on': 0,
+        }
+        api.setWifi(self.dut, self.__name__, **option5g)
+        self.dut.close()
+        self.dut2.close()
+
+    def assoc_sta_throughput_5g(self):
+        res5gConn = setAdbPsk2Sta(v.ANDROID_SERIAL_NUM, v.SSID_5G, v.KEY, "5g", self.__class__.__name__)
+
+        if res5gConn is True:
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
+            iperfOn = SetAdbIperfOn(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
+            iperfOn.start()
+            t.sleep(4.0)
+            ret = setIperfFlow2(self.dut2, result["ip"], v.IPERF_INTERVAL, v.IPERF_TIME, self.__class__.__name__)
+            self.assertTrue(ret, "Excute iperf flow error, connection refused.")
+        else:
+            self.assertTrue(res5gConn, "Connecting wifi is failed.")
+
+
+class AP_PSK2_CHAN165_BW20_DUT_THROUGHPUT(TestCase):
+    @classmethod
+    def setUpClass(self):
+
+        self.dut = api.HttpClient()
+        ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
+        ret2 = chkAdbDevice(v.ANDROID_SERIAL_NUM)
+
+        self.dut2 = ShellClient(v.CONNECTION_TYPE)
+        ret3 = self.dut2.connect(v.HOST, v.USR, v.PASSWD)
+
+        if ret3 is False:
+            raise Exception('Connection is failed. please check your remote settings.')
+
+        if ret1 is False:
+            raise Exception("Http connection is failed. please check your remote settings.")
+
+        if ret2 is False:
+            raise Exception("Device %s is not ready!" % v.ANDROID_SERIAL_NUM)
+
+        option5g = {
+            'wifiIndex': 2,
+            'ssid': v.SSID_5G,
+            'channel': v.CHANNEL165,
+            'bandwidth': '20',
+            'encryption': 'psk2',
+            'pwd': v.KEY,
+        }
+        api.setWifi(self.dut, self.__name__, **option5g)
+
+    @classmethod
+    def tearDownClass(self):
+        option5g = {
+            'wifiIndex': 2,
+            'on': 0,
+        }
+        api.setWifi(self.dut, self.__name__, **option5g)
+        self.dut.close()
+        self.dut2.close()
+
+    def assoc_sta_throughput_5g(self):
+        res5gConn = setAdbPsk2Sta(v.ANDROID_SERIAL_NUM, v.SSID_5G, v.KEY, "5g", self.__class__.__name__)
+
+        if res5gConn is True:
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
+            iperfOn = SetAdbIperfOn(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
+            iperfOn.start()
+            t.sleep(4.0)
+            ret = setIperfFlow2(self.dut2, result["ip"], v.IPERF_INTERVAL, v.IPERF_TIME, self.__class__.__name__)
+            self.assertTrue(ret, "Excute iperf flow error, connection refused.")
+        else:
+            self.assertTrue(res5gConn, "Connecting wifi is failed.")
+
+
+class AP_PSK2_CHAN36_BW40_DUT_THROUGHPUT(TestCase):
+    @classmethod
+    def setUpClass(self):
+
+        self.dut = api.HttpClient()
+        ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
+        ret2 = chkAdbDevice(v.ANDROID_SERIAL_NUM)
+
+        self.dut2 = ShellClient(v.CONNECTION_TYPE)
+        ret3 = self.dut2.connect(v.HOST, v.USR, v.PASSWD)
+
+        if ret3 is False:
+            raise Exception('Connection is failed. please check your remote settings.')
+
+        if ret1 is False:
+            raise Exception("Http connection is failed. please check your remote settings.")
+
+        if ret2 is False:
+            raise Exception("Device %s is not ready!" % v.ANDROID_SERIAL_NUM)
+
+        option5g = {
+            'wifiIndex': 2,
+            'ssid': v.SSID_5G,
+            'channel': v.CHANNEL36,
+            'bandwidth': '40',
+            'encryption': 'psk2',
+            'pwd': v.KEY,
+        }
+        api.setWifi(self.dut, self.__name__, **option5g)
+
+    @classmethod
+    def tearDownClass(self):
+        option5g = {
+            'wifiIndex': 2,
+            'on': 0,
+        }
+        api.setWifi(self.dut, self.__name__, **option5g)
+        self.dut.close()
+        self.dut2.close()
+
+    def assoc_sta_throughput_5g(self):
+        res5gConn = setAdbPsk2Sta(v.ANDROID_SERIAL_NUM, v.SSID_5G, v.KEY, "5g", self.__class__.__name__)
+
+        if res5gConn is True:
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
+            iperfOn = SetAdbIperfOn(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
+            iperfOn.start()
+            t.sleep(4.0)
+            ret = setIperfFlow2(self.dut2, result["ip"], v.IPERF_INTERVAL, v.IPERF_TIME, self.__class__.__name__)
+            self.assertTrue(ret, "Excute iperf flow error, connection refused.")
+        else:
+            self.assertTrue(res5gConn, "Connecting wifi is failed.")
+
+
+class AP_PSK2_CHAN44_BW40_DUT_THROUGHPUT(TestCase):
+    @classmethod
+    def setUpClass(self):
+
+        self.dut = api.HttpClient()
+        ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
+        ret2 = chkAdbDevice(v.ANDROID_SERIAL_NUM)
+
+        self.dut2 = ShellClient(v.CONNECTION_TYPE)
+        ret3 = self.dut2.connect(v.HOST, v.USR, v.PASSWD)
+
+        if ret3 is False:
+            raise Exception('Connection is failed. please check your remote settings.')
+
+        if ret1 is False:
+            raise Exception("Http connection is failed. please check your remote settings.")
+
+        if ret2 is False:
+            raise Exception("Device %s is not ready!" % v.ANDROID_SERIAL_NUM)
+
+        option5g = {
+            'wifiIndex': 2,
+            'ssid': v.SSID_5G,
+            'channel': v.CHANNEL44,
+            'bandwidth': '40',
+            'encryption': 'psk2',
+            'pwd': v.KEY,
+        }
+        api.setWifi(self.dut, self.__name__, **option5g)
+
+    @classmethod
+    def tearDownClass(self):
+        option5g = {
+            'wifiIndex': 2,
+            'on': 0,
+        }
+        api.setWifi(self.dut, self.__name__, **option5g)
+        self.dut.close()
+        self.dut2.close()
+
+    def assoc_sta_throughput_5g(self):
+        res5gConn = setAdbPsk2Sta(v.ANDROID_SERIAL_NUM, v.SSID_5G, v.KEY, "5g", self.__class__.__name__)
+
+        if res5gConn is True:
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
+            iperfOn = SetAdbIperfOn(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
+            iperfOn.start()
+            t.sleep(4.0)
+            ret = setIperfFlow2(self.dut2, result["ip"], v.IPERF_INTERVAL, v.IPERF_TIME, self.__class__.__name__)
+            self.assertTrue(ret, "Excute iperf flow error, connection refused.")
+        else:
+            self.assertTrue(res5gConn, "Connecting wifi is failed.")
+
+
+class AP_PSK2_CHAN52_BW40_DUT_THROUGHPUT(TestCase):
+    @classmethod
+    def setUpClass(self):
+
+        self.dut = api.HttpClient()
+        ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
+        ret2 = chkAdbDevice(v.ANDROID_SERIAL_NUM)
+
+        self.dut2 = ShellClient(v.CONNECTION_TYPE)
+        ret3 = self.dut2.connect(v.HOST, v.USR, v.PASSWD)
+
+        if ret3 is False:
+            raise Exception('Connection is failed. please check your remote settings.')
+
+        if ret1 is False:
+            raise Exception("Http connection is failed. please check your remote settings.")
+
+        if ret2 is False:
+            raise Exception("Device %s is not ready!" % v.ANDROID_SERIAL_NUM)
+
+        option5g = {
+            'wifiIndex': 2,
+            'ssid': v.SSID_5G,
+            'channel': v.CHANNEL52,
+            'bandwidth': '40',
+            'encryption': 'psk2',
+            'pwd': v.KEY,
+        }
+        api.setWifi(self.dut, self.__name__, **option5g)
+
+    @classmethod
+    def tearDownClass(self):
+        option5g = {
+            'wifiIndex': 2,
+            'on': 0,
+        }
+        api.setWifi(self.dut, self.__name__, **option5g)
+        self.dut.close()
+        self.dut2.close()
+
+    def assoc_sta_throughput_5g(self):
+        res5gConn = setAdbPsk2Sta(v.ANDROID_SERIAL_NUM, v.SSID_5G, v.KEY, "5g", self.__class__.__name__)
+
+        if res5gConn is True:
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
+            iperfOn = SetAdbIperfOn(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
+            iperfOn.start()
+            t.sleep(4.0)
+            ret = setIperfFlow2(self.dut2, result["ip"], v.IPERF_INTERVAL, v.IPERF_TIME, self.__class__.__name__)
+            self.assertTrue(ret, "Excute iperf flow error, connection refused.")
+        else:
+            self.assertTrue(res5gConn, "Connecting wifi is failed.")
+
+
+class AP_PSK2_CHAN60_BW40_DUT_THROUGHPUT(TestCase):
+    @classmethod
+    def setUpClass(self):
+
+        self.dut = api.HttpClient()
+        ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
+        ret2 = chkAdbDevice(v.ANDROID_SERIAL_NUM)
+
+        self.dut2 = ShellClient(v.CONNECTION_TYPE)
+        ret3 = self.dut2.connect(v.HOST, v.USR, v.PASSWD)
+
+        if ret3 is False:
+            raise Exception('Connection is failed. please check your remote settings.')
+
+        if ret1 is False:
+            raise Exception("Http connection is failed. please check your remote settings.")
+
+        if ret2 is False:
+            raise Exception("Device %s is not ready!" % v.ANDROID_SERIAL_NUM)
+
+        option5g = {
+            'wifiIndex': 2,
+            'ssid': v.SSID_5G,
+            'channel': v.CHANNEL60,
+            'bandwidth': '40',
+            'encryption': 'psk2',
+            'pwd': v.KEY,
+        }
+        api.setWifi(self.dut, self.__name__, **option5g)
+
+    @classmethod
+    def tearDownClass(self):
+        option5g = {
+            'wifiIndex': 2,
+            'on': 0,
+        }
+        api.setWifi(self.dut, self.__name__, **option5g)
+        self.dut.close()
+        self.dut2.close()
+
+    def assoc_sta_throughput_5g(self):
+        res5gConn = setAdbPsk2Sta(v.ANDROID_SERIAL_NUM, v.SSID_5G, v.KEY, "5g", self.__class__.__name__)
+
+        if res5gConn is True:
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
+            iperfOn = SetAdbIperfOn(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
+            iperfOn.start()
+            t.sleep(4.0)
+            ret = setIperfFlow2(self.dut2, result["ip"], v.IPERF_INTERVAL, v.IPERF_TIME, self.__class__.__name__)
+            self.assertTrue(ret, "Excute iperf flow error, connection refused.")
+        else:
+            self.assertTrue(res5gConn, "Connecting wifi is failed.")
+
+
+class AP_PSK2_CHAN149_BW40_DUT_THROUGHPUT(TestCase):
+    @classmethod
+    def setUpClass(self):
+
+        self.dut = api.HttpClient()
+        ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
+        ret2 = chkAdbDevice(v.ANDROID_SERIAL_NUM)
+
+        self.dut2 = ShellClient(v.CONNECTION_TYPE)
+        ret3 = self.dut2.connect(v.HOST, v.USR, v.PASSWD)
+
+        if ret3 is False:
+            raise Exception('Connection is failed. please check your remote settings.')
+
+        if ret1 is False:
+            raise Exception("Http connection is failed. please check your remote settings.")
+
+        if ret2 is False:
+            raise Exception("Device %s is not ready!" % v.ANDROID_SERIAL_NUM)
+
+        option5g = {
+            'wifiIndex': 2,
+            'ssid': v.SSID_5G,
+            'channel': v.CHANNEL149,
+            'bandwidth': '40',
+            'encryption': 'psk2',
+            'pwd': v.KEY,
+        }
+        api.setWifi(self.dut, self.__name__, **option5g)
+
+    @classmethod
+    def tearDownClass(self):
+        option5g = {
+            'wifiIndex': 2,
+            'on': 0,
+        }
+        api.setWifi(self.dut, self.__name__, **option5g)
+        self.dut.close()
+        self.dut2.close()
+
+    def assoc_sta_throughput_5g(self):
+        res5gConn = setAdbPsk2Sta(v.ANDROID_SERIAL_NUM, v.SSID_5G, v.KEY, "5g", self.__class__.__name__)
+
+        if res5gConn is True:
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
+            iperfOn = SetAdbIperfOn(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
+            iperfOn.start()
+            t.sleep(4.0)
+            ret = setIperfFlow2(self.dut2, result["ip"], v.IPERF_INTERVAL, v.IPERF_TIME, self.__class__.__name__)
+            self.assertTrue(ret, "Excute iperf flow error, connection refused.")
+        else:
+            self.assertTrue(res5gConn, "Connecting wifi is failed.")
+
+
+class AP_PSK2_CHAN157_BW40_DUT_THROUGHPUT(TestCase):
+    @classmethod
+    def setUpClass(self):
+
+        self.dut = api.HttpClient()
+        ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
+        ret2 = chkAdbDevice(v.ANDROID_SERIAL_NUM)
+
+        self.dut2 = ShellClient(v.CONNECTION_TYPE)
+        ret3 = self.dut2.connect(v.HOST, v.USR, v.PASSWD)
+
+        if ret3 is False:
+            raise Exception('Connection is failed. please check your remote settings.')
+
+        if ret1 is False:
+            raise Exception("Http connection is failed. please check your remote settings.")
+
+        if ret2 is False:
+            raise Exception("Device %s is not ready!" % v.ANDROID_SERIAL_NUM)
+
+        option5g = {
+            'wifiIndex': 2,
+            'ssid': v.SSID_5G,
+            'channel': v.CHANNEL157,
+            'bandwidth': '40',
+            'encryption': 'psk2',
+            'pwd': v.KEY,
+        }
+        api.setWifi(self.dut, self.__name__, **option5g)
+
+    @classmethod
+    def tearDownClass(self):
+        option5g = {
+            'wifiIndex': 2,
+            'on': 0,
+        }
+        api.setWifi(self.dut, self.__name__, **option5g)
+        self.dut.close()
+        self.dut2.close()
+
+    def assoc_sta_throughput_5g(self):
+        res5gConn = setAdbPsk2Sta(v.ANDROID_SERIAL_NUM, v.SSID_5G, v.KEY, "5g", self.__class__.__name__)
+
+        if res5gConn is True:
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
+            iperfOn = SetAdbIperfOn(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
+            iperfOn.start()
+            t.sleep(4.0)
+            ret = setIperfFlow2(self.dut2, result["ip"], v.IPERF_INTERVAL, v.IPERF_TIME, self.__class__.__name__)
+            self.assertTrue(ret, "Excute iperf flow error, connection refused.")
+        else:
+            self.assertTrue(res5gConn, "Connecting wifi is failed.")
+
+
+class AP_PSK2_CHAN36_BW80_DUT_THROUGHPUT(TestCase):
+    @classmethod
+    def setUpClass(self):
+
+        self.dut = api.HttpClient()
+        ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
+        ret2 = chkAdbDevice(v.ANDROID_SERIAL_NUM)
+
+        self.dut2 = ShellClient(v.CONNECTION_TYPE)
+        ret3 = self.dut2.connect(v.HOST, v.USR, v.PASSWD)
+
+        if ret3 is False:
+            raise Exception('Connection is failed. please check your remote settings.')
+
+        if ret1 is False:
+            raise Exception("Http connection is failed. please check your remote settings.")
+
+        if ret2 is False:
+            raise Exception("Device %s is not ready!" % v.ANDROID_SERIAL_NUM)
+
+        option5g = {
+            'wifiIndex': 2,
+            'ssid': v.SSID_5G,
+            'channel': v.CHANNEL36,
+            'bandwidth': '80',
+            'encryption': 'psk2',
+            'pwd': v.KEY,
+        }
+        api.setWifi(self.dut, self.__name__, **option5g)
+
+    @classmethod
+    def tearDownClass(self):
+        option5g = {
+            'wifiIndex': 2,
+            'on': 0,
+        }
+        api.setWifi(self.dut, self.__name__, **option5g)
+        self.dut.close()
+        self.dut2.close()
+
+    def assoc_sta_throughput_5g(self):
+        res5gConn = setAdbPsk2Sta(v.ANDROID_SERIAL_NUM, v.SSID_5G, v.KEY, "5g", self.__class__.__name__)
+
+        if res5gConn is True:
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
+            iperfOn = SetAdbIperfOn(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
+            iperfOn.start()
+            t.sleep(4.0)
+            ret = setIperfFlow2(self.dut2, result["ip"], v.IPERF_INTERVAL, v.IPERF_TIME, self.__class__.__name__)
+            self.assertTrue(ret, "Excute iperf flow error, connection refused.")
+        else:
+            self.assertTrue(res5gConn, "Connecting wifi is failed.")
+
+
+class AP_PSK2_CHAN52_BW80_DUT_THROUGHPUT(TestCase):
+    @classmethod
+    def setUpClass(self):
+
+        self.dut = api.HttpClient()
+        ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
+        ret2 = chkAdbDevice(v.ANDROID_SERIAL_NUM)
+
+        self.dut2 = ShellClient(v.CONNECTION_TYPE)
+        ret3 = self.dut2.connect(v.HOST, v.USR, v.PASSWD)
+
+        if ret3 is False:
+            raise Exception('Connection is failed. please check your remote settings.')
+
+        if ret1 is False:
+            raise Exception("Http connection is failed. please check your remote settings.")
+
+        if ret2 is False:
+            raise Exception("Device %s is not ready!" % v.ANDROID_SERIAL_NUM)
+
+        option5g = {
+            'wifiIndex': 2,
+            'ssid': v.SSID_5G,
+            'channel': v.CHANNEL52,
+            'bandwidth': '80',
+            'encryption': 'psk2',
+            'pwd': v.KEY,
+        }
+        api.setWifi(self.dut, self.__name__, **option5g)
+
+    @classmethod
+    def tearDownClass(self):
+        option5g = {
+            'wifiIndex': 2,
+            'on': 0,
+        }
+        api.setWifi(self.dut, self.__name__, **option5g)
+        self.dut.close()
+        self.dut2.close()
+
+    def assoc_sta_throughput_5g(self):
+        res5gConn = setAdbPsk2Sta(v.ANDROID_SERIAL_NUM, v.SSID_5G, v.KEY, "5g", self.__class__.__name__)
+
+        if res5gConn is True:
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
+            iperfOn = SetAdbIperfOn(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
+            iperfOn.start()
+            t.sleep(4.0)
+            ret = setIperfFlow2(self.dut2, result["ip"], v.IPERF_INTERVAL, v.IPERF_TIME, self.__class__.__name__)
+            self.assertTrue(ret, "Excute iperf flow error, connection refused.")
+        else:
+            self.assertTrue(res5gConn, "Connecting wifi is failed.")
+
+
+class AP_PSK2_CHAN149_BW80_DUT_THROUGHPUT(TestCase):
+    @classmethod
+    def setUpClass(self):
+
+        self.dut = api.HttpClient()
+        ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
+        ret2 = chkAdbDevice(v.ANDROID_SERIAL_NUM)
+
+        self.dut2 = ShellClient(v.CONNECTION_TYPE)
+        ret3 = self.dut2.connect(v.HOST, v.USR, v.PASSWD)
+
+        if ret3 is False:
+            raise Exception('Connection is failed. please check your remote settings.')
+
+        if ret1 is False:
+            raise Exception("Http connection is failed. please check your remote settings.")
+
+        if ret2 is False:
+            raise Exception("Device %s is not ready!" % v.ANDROID_SERIAL_NUM)
+
+        option5g = {
+            'wifiIndex': 2,
+            'ssid': v.SSID_5G,
+            'channel': v.CHANNEL149,
+            'bandwidth': '80',
+            'encryption': 'psk2',
+            'pwd': v.KEY,
+        }
+        api.setWifi(self.dut, self.__name__, **option5g)
+
+    @classmethod
+    def tearDownClass(self):
+        option5g = {
+            'wifiIndex': 2,
+            'on': 0,
+        }
+        api.setWifi(self.dut, self.__name__, **option5g)
+        self.dut.close()
+        self.dut2.close()
+
+    def assoc_sta_throughput_5g(self):
+        res5gConn = setAdbPsk2Sta(v.ANDROID_SERIAL_NUM, v.SSID_5G, v.KEY, "5g", self.__class__.__name__)
+
+        if res5gConn is True:
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
+            iperfOn = SetAdbIperfOn(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
+            iperfOn.start()
+            t.sleep(4.0)
+            ret = setIperfFlow2(self.dut2, result["ip"], v.IPERF_INTERVAL, v.IPERF_TIME, self.__class__.__name__)
+            self.assertTrue(ret, "Excute iperf flow error, connection refused.")
+        else:
+            self.assertTrue(res5gConn, "Connecting wifi is failed.")
+
+
+class AP_CLEAR_CHAN1_BW20_LAN_THROUGHPUT(TestCase):
+    @classmethod
+    def setUpClass(self):
+
+        self.dut = api.HttpClient()
+        ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
+        ret2 = chkAdbDevice(v.ANDROID_SERIAL_NUM)
+
+        if ret1 is False:
+            raise Exception("Http connection is failed. please check your remote settings.")
+
+        if ret2 is False:
+            raise Exception("Device %s is not ready!" % v.ANDROID_SERIAL_NUM)
 
         option2g = {
             'wifiIndex': 1,
@@ -11901,19 +14126,19 @@ class AP_CLEAR_CHAN1_BW20_THROUGHPUT(TestCase):
             self.assertTrue(res2gConn, "Connecting wifi is failed.")
 
 
-class AP_CLEAR_CHAN6_BW20_THROUGHPUT(TestCase):
+class AP_CLEAR_CHAN6_BW20_LAN_THROUGHPUT(TestCase):
     @classmethod
     def setUpClass(self):
 
         self.dut = api.HttpClient()
         ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
-        ret2 = chkAdbDevicesCount(1)
+        ret2 = chkAdbDevice(v.ANDROID_SERIAL_NUM)
 
         if ret1 is False:
             raise Exception("Http connection is failed. please check your remote settings.")
 
         if ret2 is False:
-            raise Exception("USB devices arenot ready!")
+            raise Exception("Device %s is not ready!" % v.ANDROID_SERIAL_NUM)
 
         option2g = {
             'wifiIndex': 1,
@@ -11946,19 +14171,19 @@ class AP_CLEAR_CHAN6_BW20_THROUGHPUT(TestCase):
             self.assertTrue(res2gConn, "Connecting wifi is failed.")
 
 
-class AP_CLEAR_CHAN11_BW20_THROUGHPUT(TestCase):
+class AP_CLEAR_CHAN11_BW20_LAN_THROUGHPUT(TestCase):
     @classmethod
     def setUpClass(self):
 
         self.dut = api.HttpClient()
         ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
-        ret2 = chkAdbDevicesCount(1)
+        ret2 = chkAdbDevice(v.ANDROID_SERIAL_NUM)
 
         if ret1 is False:
             raise Exception("Http connection is failed. please check your remote settings.")
 
         if ret2 is False:
-            raise Exception("USB devices arenot ready!")
+            raise Exception("Device %s is not ready!" % v.ANDROID_SERIAL_NUM)
 
         option2g = {
             'wifiIndex': 1,
@@ -11991,19 +14216,19 @@ class AP_CLEAR_CHAN11_BW20_THROUGHPUT(TestCase):
             self.assertTrue(res2gConn, "Connecting wifi is failed.")
 
 
-class AP_CLEAR_CHAN13_BW20_THROUGHPUT(TestCase):
+class AP_CLEAR_CHAN13_BW20_LAN_THROUGHPUT(TestCase):
     @classmethod
     def setUpClass(self):
 
         self.dut = api.HttpClient()
         ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
-        ret2 = chkAdbDevicesCount(1)
+        ret2 = chkAdbDevice(v.ANDROID_SERIAL_NUM)
 
         if ret1 is False:
             raise Exception("Http connection is failed. please check your remote settings.")
 
         if ret2 is False:
-            raise Exception("USB devices arenot ready!")
+            raise Exception("Device %s is not ready!" % v.ANDROID_SERIAL_NUM)
 
         option2g = {
             'wifiIndex': 1,
@@ -12036,19 +14261,19 @@ class AP_CLEAR_CHAN13_BW20_THROUGHPUT(TestCase):
             self.assertTrue(res2gConn, "Connecting wifi is failed.")
 
 
-class AP_CLEAR_CHAN1_BW40_THROUGHPUT(TestCase):
+class AP_CLEAR_CHAN1_BW40_LAN_THROUGHPUT(TestCase):
     @classmethod
     def setUpClass(self):
 
         self.dut = api.HttpClient()
         ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
-        ret2 = chkAdbDevicesCount(1)
+        ret2 = chkAdbDevice(v.ANDROID_SERIAL_NUM)
 
         if ret1 is False:
             raise Exception("Http connection is failed. please check your remote settings.")
 
         if ret2 is False:
-            raise Exception("USB devices arenot ready!")
+            raise Exception("Device %s is not ready!" % v.ANDROID_SERIAL_NUM)
 
         option2g = {
             'wifiIndex': 1,
@@ -12081,19 +14306,19 @@ class AP_CLEAR_CHAN1_BW40_THROUGHPUT(TestCase):
             self.assertTrue(res2gConn, "Connecting wifi is failed.")
 
 
-class AP_CLEAR_CHAN6_BW40_THROUGHPUT(TestCase):
+class AP_CLEAR_CHAN6_BW40_LAN_THROUGHPUT(TestCase):
     @classmethod
     def setUpClass(self):
 
         self.dut = api.HttpClient()
         ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
-        ret2 = chkAdbDevicesCount(1)
+        ret2 = chkAdbDevice(v.ANDROID_SERIAL_NUM)
 
         if ret1 is False:
             raise Exception("Http connection is failed. please check your remote settings.")
 
         if ret2 is False:
-            raise Exception("USB devices arenot ready!")
+            raise Exception("Device %s is not ready!" % v.ANDROID_SERIAL_NUM)
 
         option2g = {
             'wifiIndex': 1,
@@ -12126,19 +14351,19 @@ class AP_CLEAR_CHAN6_BW40_THROUGHPUT(TestCase):
             self.assertTrue(res2gConn, "Connecting wifi is failed.")
 
 
-class AP_CLEAR_CHAN11_BW40_THROUGHPUT(TestCase):
+class AP_CLEAR_CHAN11_BW40_LAN_THROUGHPUT(TestCase):
     @classmethod
     def setUpClass(self):
 
         self.dut = api.HttpClient()
         ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
-        ret2 = chkAdbDevicesCount(1)
+        ret2 = chkAdbDevice(v.ANDROID_SERIAL_NUM)
 
         if ret1 is False:
             raise Exception("Http connection is failed. please check your remote settings.")
 
         if ret2 is False:
-            raise Exception("USB devices arenot ready!")
+            raise Exception("Device %s is not ready!" % v.ANDROID_SERIAL_NUM)
 
         option2g = {
             'wifiIndex': 1,
@@ -12171,19 +14396,19 @@ class AP_CLEAR_CHAN11_BW40_THROUGHPUT(TestCase):
             self.assertTrue(res2gConn, "Connecting wifi is failed.")
 
 
-class AP_CLEAR_CHAN13_BW40_THROUGHPUT(TestCase):
+class AP_CLEAR_CHAN13_BW40_LAN_THROUGHPUT(TestCase):
     @classmethod
     def setUpClass(self):
 
         self.dut = api.HttpClient()
         ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
-        ret2 = chkAdbDevicesCount(1)
+        ret2 = chkAdbDevice(v.ANDROID_SERIAL_NUM)
 
         if ret1 is False:
             raise Exception("Http connection is failed. please check your remote settings.")
 
         if ret2 is False:
-            raise Exception("USB devices arenot ready!")
+            raise Exception("Device %s is not ready!" % v.ANDROID_SERIAL_NUM)
 
         option2g = {
             'wifiIndex': 1,
@@ -12216,19 +14441,19 @@ class AP_CLEAR_CHAN13_BW40_THROUGHPUT(TestCase):
             self.assertTrue(res2gConn, "Connecting wifi is failed.")
 
 
-class AP_PSK2_CHAN1_BW20_THROUGHPUT(TestCase):
+class AP_PSK2_CHAN1_BW20_LAN_THROUGHPUT(TestCase):
     @classmethod
     def setUpClass(self):
 
         self.dut = api.HttpClient()
         ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
-        ret2 = chkAdbDevicesCount(1)
+        ret2 = chkAdbDevice(v.ANDROID_SERIAL_NUM)
 
         if ret1 is False:
             raise Exception("Http connection is failed. please check your remote settings.")
 
         if ret2 is False:
-            raise Exception("USB devices arenot ready!")
+            raise Exception("Device %s is not ready!" % v.ANDROID_SERIAL_NUM)
 
         option2g = {
             'wifiIndex': 1,
@@ -12263,19 +14488,19 @@ class AP_PSK2_CHAN1_BW20_THROUGHPUT(TestCase):
             self.assertTrue(res2gConn, "Connecting wifi is failed.")
 
 
-class AP_PSK2_CHAN6_BW20_THROUGHPUT(TestCase):
+class AP_PSK2_CHAN6_BW20_LAN_THROUGHPUT(TestCase):
     @classmethod
     def setUpClass(self):
 
         self.dut = api.HttpClient()
         ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
-        ret2 = chkAdbDevicesCount(1)
+        ret2 = chkAdbDevice(v.ANDROID_SERIAL_NUM)
 
         if ret1 is False:
             raise Exception("Http connection is failed. please check your remote settings.")
 
         if ret2 is False:
-            raise Exception("USB devices arenot ready!")
+            raise Exception("Device %s is not ready!" % v.ANDROID_SERIAL_NUM)
 
         option2g = {
             'wifiIndex': 1,
@@ -12310,19 +14535,19 @@ class AP_PSK2_CHAN6_BW20_THROUGHPUT(TestCase):
             self.assertTrue(res2gConn, "Connecting wifi is failed.")
 
 
-class AP_PSK2_CHAN11_BW20_THROUGHPUT(TestCase):
+class AP_PSK2_CHAN11_BW20_LAN_THROUGHPUT(TestCase):
     @classmethod
     def setUpClass(self):
 
         self.dut = api.HttpClient()
         ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
-        ret2 = chkAdbDevicesCount(1)
+        ret2 = chkAdbDevice(v.ANDROID_SERIAL_NUM)
 
         if ret1 is False:
             raise Exception("Http connection is failed. please check your remote settings.")
 
         if ret2 is False:
-            raise Exception("USB devices arenot ready!")
+            raise Exception("Device %s is not ready!" % v.ANDROID_SERIAL_NUM)
 
         option2g = {
             'wifiIndex': 1,
@@ -12357,19 +14582,19 @@ class AP_PSK2_CHAN11_BW20_THROUGHPUT(TestCase):
             self.assertTrue(res2gConn, "Connecting wifi is failed.")
 
 
-class AP_PSK2_CHAN13_BW20_THROUGHPUT(TestCase):
+class AP_PSK2_CHAN13_BW20_LAN_THROUGHPUT(TestCase):
     @classmethod
     def setUpClass(self):
 
         self.dut = api.HttpClient()
         ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
-        ret2 = chkAdbDevicesCount(1)
+        ret2 = chkAdbDevice(v.ANDROID_SERIAL_NUM)
 
         if ret1 is False:
             raise Exception("Http connection is failed. please check your remote settings.")
 
         if ret2 is False:
-            raise Exception("USB devices arenot ready!")
+            raise Exception("Device %s is not ready!" % v.ANDROID_SERIAL_NUM)
 
         option2g = {
             'wifiIndex': 1,
@@ -12404,19 +14629,19 @@ class AP_PSK2_CHAN13_BW20_THROUGHPUT(TestCase):
             self.assertTrue(res2gConn, "Connecting wifi is failed.")
 
 
-class AP_PSK2_CHAN1_BW40_THROUGHPUT(TestCase):
+class AP_PSK2_CHAN1_BW40_LAN_THROUGHPUT(TestCase):
     @classmethod
     def setUpClass(self):
 
         self.dut = api.HttpClient()
         ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
-        ret2 = chkAdbDevicesCount(1)
+        ret2 = chkAdbDevice(v.ANDROID_SERIAL_NUM)
 
         if ret1 is False:
             raise Exception("Http connection is failed. please check your remote settings.")
 
         if ret2 is False:
-            raise Exception("USB devices arenot ready!")
+            raise Exception("Device %s is not ready!" % v.ANDROID_SERIAL_NUM)
 
         option2g = {
             'wifiIndex': 1,
@@ -12451,19 +14676,19 @@ class AP_PSK2_CHAN1_BW40_THROUGHPUT(TestCase):
             self.assertTrue(res2gConn, "Connecting wifi is failed.")
 
 
-class AP_PSK2_CHAN6_BW40_THROUGHPUT(TestCase):
+class AP_PSK2_CHAN6_BW40_LAN_THROUGHPUT(TestCase):
     @classmethod
     def setUpClass(self):
 
         self.dut = api.HttpClient()
         ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
-        ret2 = chkAdbDevicesCount(1)
+        ret2 = chkAdbDevice(v.ANDROID_SERIAL_NUM)
 
         if ret1 is False:
             raise Exception("Http connection is failed. please check your remote settings.")
 
         if ret2 is False:
-            raise Exception("USB devices arenot ready!")
+            raise Exception("Device %s is not ready!" % v.ANDROID_SERIAL_NUM)
 
         option2g = {
             'wifiIndex': 1,
@@ -12498,19 +14723,19 @@ class AP_PSK2_CHAN6_BW40_THROUGHPUT(TestCase):
             self.assertTrue(res2gConn, "Connecting wifi is failed.")
 
 
-class AP_PSK2_CHAN11_BW40_THROUGHPUT(TestCase):
+class AP_PSK2_CHAN11_BW40_LAN_THROUGHPUT(TestCase):
     @classmethod
     def setUpClass(self):
 
         self.dut = api.HttpClient()
         ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
-        ret2 = chkAdbDevicesCount(1)
+        ret2 = chkAdbDevice(v.ANDROID_SERIAL_NUM)
 
         if ret1 is False:
             raise Exception("Http connection is failed. please check your remote settings.")
 
         if ret2 is False:
-            raise Exception("USB devices arenot ready!")
+            raise Exception("Device %s is not ready!" % v.ANDROID_SERIAL_NUM)
 
         option2g = {
             'wifiIndex': 1,
@@ -12545,19 +14770,19 @@ class AP_PSK2_CHAN11_BW40_THROUGHPUT(TestCase):
             self.assertTrue(res2gConn, "Connecting wifi is failed.")
 
 
-class AP_PSK2_CHAN13_BW40_THROUGHPUT(TestCase):
+class AP_PSK2_CHAN13_BW40_LAN_THROUGHPUT(TestCase):
     @classmethod
     def setUpClass(self):
 
         self.dut = api.HttpClient()
         ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
-        ret2 = chkAdbDevicesCount(1)
+        ret2 = chkAdbDevice(v.ANDROID_SERIAL_NUM)
 
         if ret1 is False:
             raise Exception("Http connection is failed. please check your remote settings.")
 
         if ret2 is False:
-            raise Exception("USB devices arenot ready!")
+            raise Exception("Device %s is not ready!" % v.ANDROID_SERIAL_NUM)
 
         option2g = {
             'wifiIndex': 1,
@@ -12592,19 +14817,19 @@ class AP_PSK2_CHAN13_BW40_THROUGHPUT(TestCase):
             self.assertTrue(res2gConn, "Connecting wifi is failed.")
 
 
-class AP_CLEAR_CHAN36_BW20_THROUGHPUT(TestCase):
+class AP_CLEAR_CHAN36_BW20_LAN_THROUGHPUT(TestCase):
     @classmethod
     def setUpClass(self):
 
         self.dut = api.HttpClient()
         ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
-        ret2 = chkAdbDevicesCount(1)
+        ret2 = chkAdbDevice(v.ANDROID_SERIAL_NUM)
 
         if ret1 is False:
             raise Exception("Http connection is failed. please check your remote settings.")
 
         if ret2 is False:
-            raise Exception("USB devices arenot ready!")
+            raise Exception("Device %s is not ready!" % v.ANDROID_SERIAL_NUM)
 
         option5g = {
             'wifiIndex': 2,
@@ -12637,19 +14862,19 @@ class AP_CLEAR_CHAN36_BW20_THROUGHPUT(TestCase):
             self.assertTrue(res5gConn, "Connecting wifi is failed.")
 
 
-class AP_CLEAR_CHAN52_BW20_THROUGHPUT(TestCase):
+class AP_CLEAR_CHAN52_BW20_LAN_THROUGHPUT(TestCase):
     @classmethod
     def setUpClass(self):
 
         self.dut = api.HttpClient()
         ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
-        ret2 = chkAdbDevicesCount(1)
+        ret2 = chkAdbDevice(v.ANDROID_SERIAL_NUM)
 
         if ret1 is False:
             raise Exception("Http connection is failed. please check your remote settings.")
 
         if ret2 is False:
-            raise Exception("USB devices arenot ready!")
+            raise Exception("Device %s is not ready!" % v.ANDROID_SERIAL_NUM)
 
         option5g = {
             'wifiIndex': 2,
@@ -12682,19 +14907,19 @@ class AP_CLEAR_CHAN52_BW20_THROUGHPUT(TestCase):
             self.assertTrue(res5gConn, "Connecting wifi is failed.")
 
 
-class AP_CLEAR_CHAN149_BW20_THROUGHPUT(TestCase):
+class AP_CLEAR_CHAN149_BW20_LAN_THROUGHPUT(TestCase):
     @classmethod
     def setUpClass(self):
 
         self.dut = api.HttpClient()
         ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
-        ret2 = chkAdbDevicesCount(1)
+        ret2 = chkAdbDevice(v.ANDROID_SERIAL_NUM)
 
         if ret1 is False:
             raise Exception("Http connection is failed. please check your remote settings.")
 
         if ret2 is False:
-            raise Exception("USB devices arenot ready!")
+            raise Exception("Device %s is not ready!" % v.ANDROID_SERIAL_NUM)
 
         option5g = {
             'wifiIndex': 2,
@@ -12727,19 +14952,19 @@ class AP_CLEAR_CHAN149_BW20_THROUGHPUT(TestCase):
             self.assertTrue(res5gConn, "Connecting wifi is failed.")
 
 
-class AP_CLEAR_CHAN165_BW20_THROUGHPUT(TestCase):
+class AP_CLEAR_CHAN165_BW20_LAN_THROUGHPUT(TestCase):
     @classmethod
     def setUpClass(self):
 
         self.dut = api.HttpClient()
         ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
-        ret2 = chkAdbDevicesCount(1)
+        ret2 = chkAdbDevice(v.ANDROID_SERIAL_NUM)
 
         if ret1 is False:
             raise Exception("Http connection is failed. please check your remote settings.")
 
         if ret2 is False:
-            raise Exception("USB devices arenot ready!")
+            raise Exception("Device %s is not ready!" % v.ANDROID_SERIAL_NUM)
 
         option5g = {
             'wifiIndex': 2,
@@ -12772,19 +14997,19 @@ class AP_CLEAR_CHAN165_BW20_THROUGHPUT(TestCase):
             self.assertTrue(res5gConn, "Connecting wifi is failed.")
 
 
-class AP_CLEAR_CHAN36_BW40_THROUGHPUT(TestCase):
+class AP_CLEAR_CHAN36_BW40_LAN_THROUGHPUT(TestCase):
     @classmethod
     def setUpClass(self):
 
         self.dut = api.HttpClient()
         ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
-        ret2 = chkAdbDevicesCount(1)
+        ret2 = chkAdbDevice(v.ANDROID_SERIAL_NUM)
 
         if ret1 is False:
             raise Exception("Http connection is failed. please check your remote settings.")
 
         if ret2 is False:
-            raise Exception("USB devices arenot ready!")
+            raise Exception("Device %s is not ready!" % v.ANDROID_SERIAL_NUM)
 
         option5g = {
             'wifiIndex': 2,
@@ -12817,19 +15042,19 @@ class AP_CLEAR_CHAN36_BW40_THROUGHPUT(TestCase):
             self.assertTrue(res5gConn, "Connecting wifi is failed.")
 
 
-class AP_CLEAR_CHAN44_BW40_THROUGHPUT(TestCase):
+class AP_CLEAR_CHAN44_BW40_LAN_THROUGHPUT(TestCase):
     @classmethod
     def setUpClass(self):
 
         self.dut = api.HttpClient()
         ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
-        ret2 = chkAdbDevicesCount(1)
+        ret2 = chkAdbDevice(v.ANDROID_SERIAL_NUM)
 
         if ret1 is False:
             raise Exception("Http connection is failed. please check your remote settings.")
 
         if ret2 is False:
-            raise Exception("USB devices arenot ready!")
+            raise Exception("Device %s is not ready!" % v.ANDROID_SERIAL_NUM)
 
         option5g = {
             'wifiIndex': 2,
@@ -12862,19 +15087,19 @@ class AP_CLEAR_CHAN44_BW40_THROUGHPUT(TestCase):
             self.assertTrue(res5gConn, "Connecting wifi is failed.")
 
 
-class AP_CLEAR_CHAN52_BW40_THROUGHPUT(TestCase):
+class AP_CLEAR_CHAN52_BW40_LAN_THROUGHPUT(TestCase):
     @classmethod
     def setUpClass(self):
 
         self.dut = api.HttpClient()
         ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
-        ret2 = chkAdbDevicesCount(1)
+        ret2 = chkAdbDevice(v.ANDROID_SERIAL_NUM)
 
         if ret1 is False:
             raise Exception("Http connection is failed. please check your remote settings.")
 
         if ret2 is False:
-            raise Exception("USB devices arenot ready!")
+            raise Exception("Device %s is not ready!" % v.ANDROID_SERIAL_NUM)
 
         option5g = {
             'wifiIndex': 2,
@@ -12907,19 +15132,19 @@ class AP_CLEAR_CHAN52_BW40_THROUGHPUT(TestCase):
             self.assertTrue(res5gConn, "Connecting wifi is failed.")
 
 
-class AP_CLEAR_CHAN60_BW40_THROUGHPUT(TestCase):
+class AP_CLEAR_CHAN60_BW40_LAN_THROUGHPUT(TestCase):
     @classmethod
     def setUpClass(self):
 
         self.dut = api.HttpClient()
         ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
-        ret2 = chkAdbDevicesCount(1)
+        ret2 = chkAdbDevice(v.ANDROID_SERIAL_NUM)
 
         if ret1 is False:
             raise Exception("Http connection is failed. please check your remote settings.")
 
         if ret2 is False:
-            raise Exception("USB devices arenot ready!")
+            raise Exception("Device %s is not ready!" % v.ANDROID_SERIAL_NUM)
 
         option5g = {
             'wifiIndex': 2,
@@ -12952,19 +15177,19 @@ class AP_CLEAR_CHAN60_BW40_THROUGHPUT(TestCase):
             self.assertTrue(res5gConn, "Connecting wifi is failed.")
 
 
-class AP_CLEAR_CHAN149_BW40_THROUGHPUT(TestCase):
+class AP_CLEAR_CHAN149_BW40_LAN_THROUGHPUT(TestCase):
     @classmethod
     def setUpClass(self):
 
         self.dut = api.HttpClient()
         ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
-        ret2 = chkAdbDevicesCount(1)
+        ret2 = chkAdbDevice(v.ANDROID_SERIAL_NUM)
 
         if ret1 is False:
             raise Exception("Http connection is failed. please check your remote settings.")
 
         if ret2 is False:
-            raise Exception("USB devices arenot ready!")
+            raise Exception("Device %s is not ready!" % v.ANDROID_SERIAL_NUM)
 
         option5g = {
             'wifiIndex': 2,
@@ -12997,19 +15222,19 @@ class AP_CLEAR_CHAN149_BW40_THROUGHPUT(TestCase):
             self.assertTrue(res5gConn, "Connecting wifi is failed.")
 
 
-class AP_CLEAR_CHAN157_BW40_THROUGHPUT(TestCase):
+class AP_CLEAR_CHAN157_BW40_LAN_THROUGHPUT(TestCase):
     @classmethod
     def setUpClass(self):
 
         self.dut = api.HttpClient()
         ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
-        ret2 = chkAdbDevicesCount(1)
+        ret2 = chkAdbDevice(v.ANDROID_SERIAL_NUM)
 
         if ret1 is False:
             raise Exception("Http connection is failed. please check your remote settings.")
 
         if ret2 is False:
-            raise Exception("USB devices arenot ready!")
+            raise Exception("Device %s is not ready!" % v.ANDROID_SERIAL_NUM)
 
         option5g = {
             'wifiIndex': 2,
@@ -13042,19 +15267,19 @@ class AP_CLEAR_CHAN157_BW40_THROUGHPUT(TestCase):
             self.assertTrue(res5gConn, "Connecting wifi is failed.")
 
 
-class AP_CLEAR_CHAN36_BW80_THROUGHPUT(TestCase):
+class AP_CLEAR_CHAN36_BW80_LAN_THROUGHPUT(TestCase):
     @classmethod
     def setUpClass(self):
 
         self.dut = api.HttpClient()
         ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
-        ret2 = chkAdbDevicesCount(1)
+        ret2 = chkAdbDevice(v.ANDROID_SERIAL_NUM)
 
         if ret1 is False:
             raise Exception("Http connection is failed. please check your remote settings.")
 
         if ret2 is False:
-            raise Exception("USB devices arenot ready!")
+            raise Exception("Device %s is not ready!" % v.ANDROID_SERIAL_NUM)
 
         option5g = {
             'wifiIndex': 2,
@@ -13087,19 +15312,19 @@ class AP_CLEAR_CHAN36_BW80_THROUGHPUT(TestCase):
             self.assertTrue(res5gConn, "Connecting wifi is failed.")
 
 
-class AP_CLEAR_CHAN52_BW80_THROUGHPUT(TestCase):
+class AP_CLEAR_CHAN52_BW80_LAN_THROUGHPUT(TestCase):
     @classmethod
     def setUpClass(self):
 
         self.dut = api.HttpClient()
         ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
-        ret2 = chkAdbDevicesCount(1)
+        ret2 = chkAdbDevice(v.ANDROID_SERIAL_NUM)
 
         if ret1 is False:
             raise Exception("Http connection is failed. please check your remote settings.")
 
         if ret2 is False:
-            raise Exception("USB devices arenot ready!")
+            raise Exception("Device %s is not ready!" % v.ANDROID_SERIAL_NUM)
 
         option5g = {
             'wifiIndex': 2,
@@ -13132,19 +15357,19 @@ class AP_CLEAR_CHAN52_BW80_THROUGHPUT(TestCase):
             self.assertTrue(res5gConn, "Connecting wifi is failed.")
 
 
-class AP_CLEAR_CHAN149_BW80_THROUGHPUT(TestCase):
+class AP_CLEAR_CHAN149_BW80_LAN_THROUGHPUT(TestCase):
     @classmethod
     def setUpClass(self):
 
         self.dut = api.HttpClient()
         ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
-        ret2 = chkAdbDevicesCount(1)
+        ret2 = chkAdbDevice(v.ANDROID_SERIAL_NUM)
 
         if ret1 is False:
             raise Exception("Http connection is failed. please check your remote settings.")
 
         if ret2 is False:
-            raise Exception("USB devices arenot ready!")
+            raise Exception("Device %s is not ready!" % v.ANDROID_SERIAL_NUM)
 
         option5g = {
             'wifiIndex': 2,
@@ -13177,19 +15402,19 @@ class AP_CLEAR_CHAN149_BW80_THROUGHPUT(TestCase):
             self.assertTrue(res5gConn, "Connecting wifi is failed.")
 
 
-class AP_PSK2_CHAN36_BW20_THROUGHPUT(TestCase):
+class AP_PSK2_CHAN36_BW20_LAN_THROUGHPUT(TestCase):
     @classmethod
     def setUpClass(self):
 
         self.dut = api.HttpClient()
         ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
-        ret2 = chkAdbDevicesCount(1)
+        ret2 = chkAdbDevice(v.ANDROID_SERIAL_NUM)
 
         if ret1 is False:
             raise Exception("Http connection is failed. please check your remote settings.")
 
         if ret2 is False:
-            raise Exception("USB devices arenot ready!")
+            raise Exception("Device %s is not ready!" % v.ANDROID_SERIAL_NUM)
 
         option5g = {
             'wifiIndex': 2,
@@ -13224,19 +15449,19 @@ class AP_PSK2_CHAN36_BW20_THROUGHPUT(TestCase):
             self.assertTrue(res5gConn, "Connecting wifi is failed.")
 
 
-class AP_PSK2_CHAN52_BW20_THROUGHPUT(TestCase):
+class AP_PSK2_CHAN52_BW20_LAN_THROUGHPUT(TestCase):
     @classmethod
     def setUpClass(self):
 
         self.dut = api.HttpClient()
         ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
-        ret2 = chkAdbDevicesCount(1)
+        ret2 = chkAdbDevice(v.ANDROID_SERIAL_NUM)
 
         if ret1 is False:
             raise Exception("Http connection is failed. please check your remote settings.")
 
         if ret2 is False:
-            raise Exception("USB devices arenot ready!")
+            raise Exception("Device %s is not ready!" % v.ANDROID_SERIAL_NUM)
 
         option5g = {
             'wifiIndex': 2,
@@ -13271,19 +15496,19 @@ class AP_PSK2_CHAN52_BW20_THROUGHPUT(TestCase):
             self.assertTrue(res5gConn, "Connecting wifi is failed.")
 
 
-class AP_PSK2_CHAN149_BW20_THROUGHPUT(TestCase):
+class AP_PSK2_CHAN149_BW20_LAN_THROUGHPUT(TestCase):
     @classmethod
     def setUpClass(self):
 
         self.dut = api.HttpClient()
         ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
-        ret2 = chkAdbDevicesCount(1)
+        ret2 = chkAdbDevice(v.ANDROID_SERIAL_NUM)
 
         if ret1 is False:
             raise Exception("Http connection is failed. please check your remote settings.")
 
         if ret2 is False:
-            raise Exception("USB devices arenot ready!")
+            raise Exception("Device %s is not ready!" % v.ANDROID_SERIAL_NUM)
 
         option5g = {
             'wifiIndex': 2,
@@ -13318,19 +15543,19 @@ class AP_PSK2_CHAN149_BW20_THROUGHPUT(TestCase):
             self.assertTrue(res5gConn, "Connecting wifi is failed.")
 
 
-class AP_PSK2_CHAN165_BW20_THROUGHPUT(TestCase):
+class AP_PSK2_CHAN165_BW20_LAN_THROUGHPUT(TestCase):
     @classmethod
     def setUpClass(self):
 
         self.dut = api.HttpClient()
         ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
-        ret2 = chkAdbDevicesCount(1)
+        ret2 = chkAdbDevice(v.ANDROID_SERIAL_NUM)
 
         if ret1 is False:
             raise Exception("Http connection is failed. please check your remote settings.")
 
         if ret2 is False:
-            raise Exception("USB devices arenot ready!")
+            raise Exception("Device %s is not ready!" % v.ANDROID_SERIAL_NUM)
 
         option5g = {
             'wifiIndex': 2,
@@ -13365,19 +15590,19 @@ class AP_PSK2_CHAN165_BW20_THROUGHPUT(TestCase):
             self.assertTrue(res5gConn, "Connecting wifi is failed.")
 
 
-class AP_PSK2_CHAN36_BW40_THROUGHPUT(TestCase):
+class AP_PSK2_CHAN36_BW40_LAN_THROUGHPUT(TestCase):
     @classmethod
     def setUpClass(self):
 
         self.dut = api.HttpClient()
         ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
-        ret2 = chkAdbDevicesCount(1)
+        ret2 = chkAdbDevice(v.ANDROID_SERIAL_NUM)
 
         if ret1 is False:
             raise Exception("Http connection is failed. please check your remote settings.")
 
         if ret2 is False:
-            raise Exception("USB devices arenot ready!")
+            raise Exception("Device %s is not ready!" % v.ANDROID_SERIAL_NUM)
 
         option5g = {
             'wifiIndex': 2,
@@ -13412,19 +15637,19 @@ class AP_PSK2_CHAN36_BW40_THROUGHPUT(TestCase):
             self.assertTrue(res5gConn, "Connecting wifi is failed.")
 
 
-class AP_PSK2_CHAN44_BW40_THROUGHPUT(TestCase):
+class AP_PSK2_CHAN44_BW40_LAN_THROUGHPUT(TestCase):
     @classmethod
     def setUpClass(self):
 
         self.dut = api.HttpClient()
         ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
-        ret2 = chkAdbDevicesCount(1)
+        ret2 = chkAdbDevice(v.ANDROID_SERIAL_NUM)
 
         if ret1 is False:
             raise Exception("Http connection is failed. please check your remote settings.")
 
         if ret2 is False:
-            raise Exception("USB devices arenot ready!")
+            raise Exception("Device %s is not ready!" % v.ANDROID_SERIAL_NUM)
 
         option5g = {
             'wifiIndex': 2,
@@ -13459,19 +15684,19 @@ class AP_PSK2_CHAN44_BW40_THROUGHPUT(TestCase):
             self.assertTrue(res5gConn, "Connecting wifi is failed.")
 
 
-class AP_PSK2_CHAN52_BW40_THROUGHPUT(TestCase):
+class AP_PSK2_CHAN52_BW40_LAN_THROUGHPUT(TestCase):
     @classmethod
     def setUpClass(self):
 
         self.dut = api.HttpClient()
         ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
-        ret2 = chkAdbDevicesCount(1)
+        ret2 = chkAdbDevice(v.ANDROID_SERIAL_NUM)
 
         if ret1 is False:
             raise Exception("Http connection is failed. please check your remote settings.")
 
         if ret2 is False:
-            raise Exception("USB devices arenot ready!")
+            raise Exception("Device %s is not ready!" % v.ANDROID_SERIAL_NUM)
 
         option5g = {
             'wifiIndex': 2,
@@ -13506,19 +15731,19 @@ class AP_PSK2_CHAN52_BW40_THROUGHPUT(TestCase):
             self.assertTrue(res5gConn, "Connecting wifi is failed.")
 
 
-class AP_PSK2_CHAN60_BW40_THROUGHPUT(TestCase):
+class AP_PSK2_CHAN60_BW40_LAN_THROUGHPUT(TestCase):
     @classmethod
     def setUpClass(self):
 
         self.dut = api.HttpClient()
         ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
-        ret2 = chkAdbDevicesCount(1)
+        ret2 = chkAdbDevice(v.ANDROID_SERIAL_NUM)
 
         if ret1 is False:
             raise Exception("Http connection is failed. please check your remote settings.")
 
         if ret2 is False:
-            raise Exception("USB devices arenot ready!")
+            raise Exception("Device %s is not ready!" % v.ANDROID_SERIAL_NUM)
 
         option5g = {
             'wifiIndex': 2,
@@ -13553,19 +15778,19 @@ class AP_PSK2_CHAN60_BW40_THROUGHPUT(TestCase):
             self.assertTrue(res5gConn, "Connecting wifi is failed.")
 
 
-class AP_PSK2_CHAN149_BW40_THROUGHPUT(TestCase):
+class AP_PSK2_CHAN149_BW40_LAN_THROUGHPUT(TestCase):
     @classmethod
     def setUpClass(self):
 
         self.dut = api.HttpClient()
         ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
-        ret2 = chkAdbDevicesCount(1)
+        ret2 = chkAdbDevice(v.ANDROID_SERIAL_NUM)
 
         if ret1 is False:
             raise Exception("Http connection is failed. please check your remote settings.")
 
         if ret2 is False:
-            raise Exception("USB devices arenot ready!")
+            raise Exception("Device %s is not ready!" % v.ANDROID_SERIAL_NUM)
 
         option5g = {
             'wifiIndex': 2,
@@ -13600,19 +15825,19 @@ class AP_PSK2_CHAN149_BW40_THROUGHPUT(TestCase):
             self.assertTrue(res5gConn, "Connecting wifi is failed.")
 
 
-class AP_PSK2_CHAN157_BW40_THROUGHPUT(TestCase):
+class AP_PSK2_CHAN157_BW40_LAN_THROUGHPUT(TestCase):
     @classmethod
     def setUpClass(self):
 
         self.dut = api.HttpClient()
         ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
-        ret2 = chkAdbDevicesCount(1)
+        ret2 = chkAdbDevice(v.ANDROID_SERIAL_NUM)
 
         if ret1 is False:
             raise Exception("Http connection is failed. please check your remote settings.")
 
         if ret2 is False:
-            raise Exception("USB devices arenot ready!")
+            raise Exception("Device %s is not ready!" % v.ANDROID_SERIAL_NUM)
 
         option5g = {
             'wifiIndex': 2,
@@ -13647,19 +15872,19 @@ class AP_PSK2_CHAN157_BW40_THROUGHPUT(TestCase):
             self.assertTrue(res5gConn, "Connecting wifi is failed.")
 
 
-class AP_PSK2_CHAN36_BW80_THROUGHPUT(TestCase):
+class AP_PSK2_CHAN36_BW80_LAN_THROUGHPUT(TestCase):
     @classmethod
     def setUpClass(self):
 
         self.dut = api.HttpClient()
         ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
-        ret2 = chkAdbDevicesCount(1)
+        ret2 = chkAdbDevice(v.ANDROID_SERIAL_NUM)
 
         if ret1 is False:
             raise Exception("Http connection is failed. please check your remote settings.")
 
         if ret2 is False:
-            raise Exception("USB devices arenot ready!")
+            raise Exception("Device %s is not ready!" % v.ANDROID_SERIAL_NUM)
 
         option5g = {
             'wifiIndex': 2,
@@ -13694,19 +15919,19 @@ class AP_PSK2_CHAN36_BW80_THROUGHPUT(TestCase):
             self.assertTrue(res5gConn, "Connecting wifi is failed.")
 
 
-class AP_PSK2_CHAN52_BW80_THROUGHPUT(TestCase):
+class AP_PSK2_CHAN52_BW80_LAN_THROUGHPUT(TestCase):
     @classmethod
     def setUpClass(self):
 
         self.dut = api.HttpClient()
         ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
-        ret2 = chkAdbDevicesCount(1)
+        ret2 = chkAdbDevice(v.ANDROID_SERIAL_NUM)
 
         if ret1 is False:
             raise Exception("Http connection is failed. please check your remote settings.")
 
         if ret2 is False:
-            raise Exception("USB devices arenot ready!")
+            raise Exception("Device %s is not ready!" % v.ANDROID_SERIAL_NUM)
 
         option5g = {
             'wifiIndex': 2,
@@ -13741,19 +15966,19 @@ class AP_PSK2_CHAN52_BW80_THROUGHPUT(TestCase):
             self.assertTrue(res5gConn, "Connecting wifi is failed.")
 
 
-class AP_PSK2_CHAN149_BW80_THROUGHPUT(TestCase):
+class AP_PSK2_CHAN149_BW80_LAN_THROUGHPUT(TestCase):
     @classmethod
     def setUpClass(self):
 
         self.dut = api.HttpClient()
         ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
-        ret2 = chkAdbDevicesCount(1)
+        ret2 = chkAdbDevice(v.ANDROID_SERIAL_NUM)
 
         if ret1 is False:
             raise Exception("Http connection is failed. please check your remote settings.")
 
         if ret2 is False:
-            raise Exception("USB devices arenot ready!")
+            raise Exception("Device %s is not ready!" % v.ANDROID_SERIAL_NUM)
 
         option5g = {
             'wifiIndex': 2,

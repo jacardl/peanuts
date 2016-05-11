@@ -7,7 +7,6 @@ from collections import *
 import wx
 import wx.lib.agw.customtreectrl as CT
 import wx.lib.delayedresult as delayedresult
-import shutil
 import random
 import multiprocessing as mp
 import var as v
@@ -187,11 +186,7 @@ class GeneralPage(wx.Panel):
 
         # sta connection ctrl
         staTypeLbl = wx.StaticText(self, -1, 'Device:')
-        staSerialNumList = list()
-        if len(co.getAdbDevicesModel()) is 0:
-            staSerialNumList.append("None")
-        else:
-            staSerialNumList = co.getAdbDevicesModel().keys()
+        staSerialNumList = co.getAdbDevices()
         self.staSerialNum = wx.Choice(self, -1, choices=staSerialNumList)
         self.staSerialNum.SetSelection(0)
         v.ANDROID_SERIAL_NUM = staSerialNumList[0]
@@ -270,11 +265,16 @@ class GeneralPage(wx.Panel):
         v.SERIAL_PORT = event.GetString()
 
     def connectionCheckThread(self, connectiontype, ip=None, port=None, user=None, password=None):
-        result, self.hardware = co.connectionCheck(connectiontype, ip=ip, user=user, password=password)
+        result, reportName = co.connectionCheck(connectiontype, ip=ip, user=user, password=password)
+        # file name for windows should be gbk encoded
+        v.REPORT_NAME = reportName.decode("utf8").encode("gbk")
+        v.REPORT_FILE_NAME = (reportName + ".log").decode("utf8").encode("gbk")
+        v.MAIL_TITLE = "【" + reportName + "】自动化测试报告"
+
         if result:
             v.SAVE_BTN_FLAG = True
             dlgOk = wx.MessageDialog(self, 'Connection is OK ! \n'
-                                           'DUT is %s !'%self.hardware,
+                                           'DUT is %s !'%(v.REPORT_NAME.split()[0]),
                                      'Info',
                                      wx.OK | wx.ICON_INFORMATION | wx.STAY_ON_TOP
                                      )
@@ -313,6 +313,7 @@ class GeneralPage(wx.Panel):
                                                                                   'ip': v.HOST, 'user': v.USR,
                                                                                   'password': v.PASSWD})
             dutConn.start()
+
         if v.ANDROID_SERIAL_NUM is not None:
             v.STA_COUNT = self.staCount.GetValue()
             dutConn = threading.Thread(target=self.adbDeviceCheckThread, args=(v.STA_COUNT,))
@@ -564,15 +565,10 @@ class TestSuitePage(wx.Panel):
     def TextTestRunnerFailCheck(self, jobID, abortEvent, testcase, count):
         # process testcases tend to find error or failed cases,
         # then add them to suitefailed and process it until count times
-        shell = co.ShellCommand(v.CONNECTION_TYPE)
-        shell.connect(v.HOST, v.USR, v.PASSWD)
         # save file in windows, default code is gbk
-        self.report = shell.setReportName().decode("utf8").encode("gbk")
-        self.reportFile = (shell.setReportName() + ".log").decode("utf8").encode("gbk")
-        self.mailTitle = shell.setMailTitle()
 
         # curTime = t.strftime('%Y.%m.%d %H.%M.%S', t.localtime())
-        f = open(self.reportFile, 'a')
+        f = open(v.REPORT_FILE_NAME, 'a')
         runner = TextTestRunner(f, verbosity=2)
         res = runner.run(testcase)
         errors = res.errors
@@ -639,10 +635,11 @@ class TestSuitePage(wx.Panel):
             # set testKeepGoing to False when click cancel
 
         if os.path.exists(v.TEST_SUITE_LOG_PATH):
-            if not os.path.exists(self.report):
-                os.rename(v.TEST_SUITE_LOG_PATH, self.report)
+            if not os.path.exists(v.REPORT_NAME):
+                os.rename(v.TEST_SUITE_LOG_PATH, v.REPORT_NAME)
             else:
-                os.rename(v.TEST_SUITE_LOG_PATH, self.report + str(random.random()))
+                os.rename(v.TEST_SUITE_LOG_PATH, v.REPORT_FILE_NAME + "_" + str(random.randint(1, 9999)))
+
         if testKeepGoing is False: # click cancel
             os.system("taskkill /F /IM python.exe | taskkill /F /T /IM adb.exe")
         else: # reboot android device
@@ -664,32 +661,21 @@ class TestSuitePage(wx.Panel):
                 self.memMonXlsx.join()
 
             q = mp.Queue() # tranlate test result to generateMail
-            self.procReport = pr.ProcessReport(self.reportFile, q)
+            self.procReport = pr.ProcessReport(v.REPORT_FILE_NAME, q)
             self.procReport.start()
             self.procReport.join()
 
-            while not os.path.exists(v.DEFAULT_PATH + v.MAIL_PIC1) or \
-                    not os.path.exists(v.DEFAULT_PATH + v.MAIL_PIC4):
+            while not os.path.exists(v.MAIL_PIC1) or not os.path.exists(v.MAIL_PIC4):
                 print "wait for draw memory/cpu chart"
                 t.sleep(1)
 
             if v.SEND_MAIL == 1:
-                # add Queue to communicate with processreport process
-                sm.generateMail(v.MAILTO_LIST, self.mailTitle, q, self.reportFile, v.MAIL_XLSX, v.TEST_SUITE_LOG_PATH + v.MAIL_THROUGHPUT_XLSX)
-
-            files = os.listdir(v.DEFAULT_PATH)
-            for file in files:
-                if os.path.splitext(file)[1] == ".png":
-                    try:
-                        shutil.move(file, v.TEST_SUITE_LOG_PATH)
-                    except Exception, e:
-                        print "shutil.move " + file + str(e)
-                elif file == v.MAIL_XLSX:
-                    try:
-                        shutil.move(file, v.TEST_SUITE_LOG_PATH)
-                    except Exception, e:
-                        print "shutil.move" + file + str(e)
-            # quit execution test dlg
+                if os.path.exists(v.MAIL_THROUGHPUT_XLSX):
+                    # add Queue to communicate with processreport process
+                    sm.generateMail(v.MAILTO_LIST, v.MAIL_TITLE, q, v.REPORT_FILE_NAME,
+                                    v.MAIL_XLSX, v.MAIL_THROUGHPUT_XLSX)
+                else:
+                    sm.generateMail(v.MAILTO_LIST, v.MAIL_TITLE, q, v.REPORT_FILE_NAME, v.MAIL_XLSX)
             self.runFlag = False
 
         except Exception, e:
@@ -840,8 +826,6 @@ class Frame(wx.Frame):
         self.Center()
         self.SetIcon(images.logo.GetIcon())
         bookFrame = ToolBook(self, -1)
-
-##        wx.StaticBitmap(bookFrame, -1, images.logo.GetBitmap(), (520,5))
 
 # when use multiprocess module on windows platform, " 'if __name__ == '__main__' "should be added
 if __name__ == '__main__':

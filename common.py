@@ -80,7 +80,7 @@ class ShellClient(object):
 
             stdin, stdout, stderr = self.client.exec_command(cmd)
             self.out = stdout.readlines()  # input and output are unicode
-            for index in range(len(self.out)):
+            for index in xrange(len(self.out)):
                 try:
                     self.out[index] = self.out[index].encode("utf8")
                 except Exception, e:
@@ -93,7 +93,7 @@ class ShellClient(object):
                 cmd = cmd.decode("utf-8")
                 cmd = cmd.encode("utf-8")
             self.tn.write(cmd + "\n")
-            self.out = self.tn.read_until("root@XiaoQiang:", 60)
+            self.out = self.tn.read_until("root@XiaoQiang:", 200)
             self.out = self.out.split("\n")
             del self.out[0]  # del command and :~#
             del self.out[-1]
@@ -256,8 +256,8 @@ class ShellCommand(ShellClient):
             if n:
                 result["channel"] = n.group(1)
         channelDic = {"current": " daily build ",
-                      "stable": " 开发版OTA ",
-                      "release": " 稳定版OTA "}
+                      "stable": " 开发版 ",
+                      "release": " 稳定版 "}
         result["channel"] = channelDic.get(result["channel"])
         return result
 
@@ -285,11 +285,11 @@ def connectionCheck(connectiontype, ip=None, port=None, user=None, password=None
     client = ShellCommand(connectiontype)
     result = client.connect(ip, user, password)
     if result is True:
-        hardware = client.getHardware()
-        if hardware == "":
+        reportName = client.setReportName()
+        if reportName == "":
             return False, ""
         client.close()
-        return result, hardware
+        return result, reportName
     elif result is False:
         return result, ""
 
@@ -362,6 +362,8 @@ def setGet(terminal, command, logname):
         f = open(v.TEST_SUITE_LOG_PATH + logname + '.log', 'a')
         f.write(curTime + '~#Get from ' + terminal.hostname + '#')
         f.write(command + '\n')
+        for index in xrange(len(ret)):
+            ret[index] = re.sub('\r', '\n', ret[index])
         f.writelines(ret)
         f.write('\n')
         f.close()
@@ -943,6 +945,19 @@ def setIperfFlow(target, interval, time, logname):
     command += " -r -w 2m -f m"
     ret = setOSShell(command, cwd=v.IPERF_PATH, timeout=3*int(time), logname=logname)
     # os.chdir(v.DEFAULT_PATH)
+    if len(ret) == 0:
+        return False
+    return True
+
+
+def setIperfFlow2(terminal, target, interval, time, logname):
+    command = "iperf -c " + target
+    if interval != "":
+        command = command + " -i " + interval
+    if time != "":
+        command = command + " -t " + time
+    command += " -r -w 2m -f m"
+    ret = setGet(terminal, command, logname)
     if len(ret) == 0:
         return False
     return True
@@ -1826,6 +1841,14 @@ def chkAdbDevicesCount(count):
         return False
 
 
+def chkAdbDevice(serialnum):
+    ret = getAdbDevices()
+    if serialnum in ret:
+        return True
+    else:
+        return False
+
+
 def chkAdb2gFreq(device, logname):
     command = "am instrument -e class com.peanutswifi.ApplicationTest#test_2g_freq -w com.peanutswifi.test/com.peanutswifi.MyTestRunner"
     ret = setAdbShell(device, command, logname)
@@ -1846,11 +1869,11 @@ def chkAdb5gFreq(device, logname):
     return False
 
 
-if __name__ == '__main__':
-    v.CONNECTION_TYPE = 2
-    v.HOST = "192.168.31.1"
-    v.USR = "root"
-    v.PASSWD = "admin"
-    terminal = ShellCommand(v.CONNECTION_TYPE)
-    ret = terminal.connect(v.HOST, v.USR, v.PASSWD)
-    print getAdbDevicesModel()
+# if __name__ == '__main__':
+#     v.CONNECTION_TYPE = 2
+#     v.HOST = "192.168.31.1"
+#     v.USR = "root"
+#     v.PASSWD = "admin"
+#     terminal = ShellCommand(v.CONNECTION_TYPE)
+#     ret = terminal.connect(v.HOST, v.USR, v.PASSWD)
+#     print getAdbDevicesModel()

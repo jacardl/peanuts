@@ -3389,178 +3389,6 @@ class AP_MIXEDPSK_BSD(TestCase):
                                 "Ping responsed percent werenot good enough.")
 
 
-class AP_MIXEDPSK_BSD_SSIDHIDE(TestCase):
-    @classmethod
-    def setUpClass(self):
-        self.dut = api.HttpClient()
-        ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
-        ret2 = chkAdbDevice(v.ANDROID_SERIAL_NUM)
-
-        if ret1 is False:
-            raise Exception("Http connection is failed. please check your remote settings.")
-
-        if ret2 is False:
-            raise Exception("Device %s is not ready!" % v.ANDROID_SERIAL_NUM)
-
-        option = {
-            'ssid': v.ROOT_AP_SSID,
-            'encryption': 'WPA2PSK',
-            'enctype': 'TKIPAES',
-            'password': v.ROOT_AP_PWD,
-            'channel': v.ROOT_AP_CHANNEL,
-            'bandwidth': '20',
-            'nssid': v.SSID,
-            'nencryption': 'mixed-psk',
-            'npassword': v.KEY,
-        }
-        api.setWifiAp(self.dut, self.__name__, **option)
-
-        option2g = {
-            'wifiIndex': 1,
-            'ssid': v.SSID,
-            'encryption': 'mixed-psk',
-            'pwd': v.KEY,
-            'hidden': 1,
-        }
-        option5g = {
-            'wifiIndex': 2,
-            'ssid': v.SSID_5G,
-            'encryption': 'mixed-psk',
-            'pwd': v.KEY,
-            'hidden': 1,
-        }
-
-        api.setWifi(self.dut, self.__name__, **option2g)
-        api.setWifi(self.dut, self.__name__, **option5g)
-
-    @classmethod
-    def tearDownClass(self):
-
-        api.setDisableAp(self.dut, self.__name__)
-
-        self.dut.close()
-
-    def assoc_psk2_sta_2g(self):
-
-        res2gConn = setAdbPsk2Sta(v.ANDROID_SERIAL_NUM, v.SSID, v.KEY, "2g", self.__class__.__name__)
-        if res2gConn:
-            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
-            if result['ip'] == '':
-                self.fail(msg='no ip address got.')
-            else:
-                resPingPercent = getAdbPingStatus(v.ANDROID_SERIAL_NUM, v.PING_TARGET, v.PING_COUNT,
-                                                  self.__class__.__name__)
-                self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
-                                        "Ping responsed percent werenot good enough.")
-        else:
-            self.assertTrue(res2gConn, "Association wasnot successful.")
-
-    def assoc_psk2_sta_5g(self):
-
-        res5gConn = setAdbPsk2Sta(v.ANDROID_SERIAL_NUM, v.SSID_5G, v.KEY, "5g", self.__class__.__name__)
-        if res5gConn:
-            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
-            if result['ip'] == '':
-                self.fail(msg='no ip address got.')
-            else:
-                resPingPercent = getAdbPingStatus(v.ANDROID_SERIAL_NUM, v.PING_TARGET, v.PING_COUNT,
-                                                  self.__class__.__name__)
-                self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
-                                        "Ping responsed percent werenot good enough.")
-        else:
-            self.assertTrue(res5gConn, "Association wasnot successful.")
-
-    def assoc_psk_sta_2g(self):
-
-        res2gConn = setAdbPskSta(v.ANDROID_SERIAL_NUM, v.SSID, v.KEY, "2g", self.__class__.__name__)
-        if res2gConn:
-            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
-            if result['ip'] == '':
-                self.fail(msg='no ip address got.')
-            else:
-                resPingPercent = getAdbPingStatus(v.ANDROID_SERIAL_NUM, v.PING_TARGET, v.PING_COUNT,
-                                                  self.__class__.__name__)
-                self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
-                                        "Ping responsed percent werenot good enough.")
-        else:
-            self.assertTrue(res2gConn, "Association wasnot successful.")
-
-    def assoc_psk_sta_5g(self):
-
-        res5gConn = setAdbPskSta(v.ANDROID_SERIAL_NUM, v.SSID_5G, v.KEY, "5g", self.__class__.__name__)
-        if res5gConn:
-            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
-            if result['ip'] == '':
-                self.fail(msg='no ip address got.')
-            else:
-                resPingPercent = getAdbPingStatus(v.ANDROID_SERIAL_NUM, v.PING_TARGET, v.PING_COUNT,
-                                                  self.__class__.__name__)
-                self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
-                                        "Ping responsed percent werenot good enough.")
-        else:
-            self.assertTrue(res5gConn, "Association wasnot successful.")
-
-    def assoc_tkippsk2_sta_2g(self):
-
-        res2gConn = setAdbTkipPsk2Sta(v.ANDROID_SERIAL_NUM, v.SSID, v.KEY, "2g", self.__class__.__name__)
-        if res2gConn:
-            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
-            if result['ip'] == '':
-                self.fail(msg='no ip address got.')
-            else:
-                resPingPercent = getAdbPingStatus(v.ANDROID_SERIAL_NUM, v.PING_TARGET, v.PING_COUNT,
-                                                  self.__class__.__name__)
-                self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
-                                        "Ping responsed percent werenot good enough.")
-        else:
-            self.assertTrue(res2gConn, "Association wasnot successful.")
-
-    def assoc_tkippsk2_sta_5g(self):
-
-        res5gConn = setAdbTkipPsk2Sta(v.ANDROID_SERIAL_NUM, v.SSID_5G, v.KEY, "5g", self.__class__.__name__)
-        if res5gConn:
-            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
-            if result['ip'] == '':
-                self.fail(msg='no ip address got.')
-            else:
-                resPingPercent = getAdbPingStatus(v.ANDROID_SERIAL_NUM, v.PING_TARGET, v.PING_COUNT,
-                                                  self.__class__.__name__)
-                self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
-                                        "Ping responsed percent werenot good enough.")
-        else:
-            self.assertTrue(res5gConn, "Association wasnot successful.")
-
-    def assoc_tkippsk_sta_2g(self):
-
-        res2gConn = setAdbTkipPskSta(v.ANDROID_SERIAL_NUM, v.SSID, v.KEY, "2g", self.__class__.__name__)
-        if res2gConn:
-            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
-            if result['ip'] == '':
-                self.fail(msg='no ip address got.')
-            else:
-                resPingPercent = getAdbPingStatus(v.ANDROID_SERIAL_NUM, v.PING_TARGET, v.PING_COUNT,
-                                                  self.__class__.__name__)
-                self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
-                                        "Ping responsed percent werenot good enough.")
-        else:
-            self.assertTrue(res2gConn, "Association wasnot successful.")
-
-    def assoc_tkippsk_sta_5g(self):
-
-        res5gConn = setAdbTkipPskSta(v.ANDROID_SERIAL_NUM, v.SSID_5G, v.KEY, "5g", self.__class__.__name__)
-        if res5gConn:
-            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
-            if result['ip'] == '':
-                self.fail(msg='no ip address got.')
-            else:
-                resPingPercent = getAdbPingStatus(v.ANDROID_SERIAL_NUM, v.PING_TARGET, v.PING_COUNT,
-                                                  self.__class__.__name__)
-                self.assertGreaterEqual(resPingPercent['pass'], v.PING_PERCENT_PASS,
-                                        "Ping responsed percent werenot good enough.")
-        else:
-            self.assertTrue(res5gConn, "Association wasnot successful.")
-
-
 class AP_MIXEDPSK_BSD_SSIDSPEC(TestCase):
     @classmethod
     def setUpClass(self):
@@ -9189,6 +9017,7 @@ class AP_QOS_GUEST_MIXEDPSK(TestCase):
 class AP_WIRELESS_RELAY_CLEAR_CHAN(TestCase):
     @classmethod
     def setUpClass(self):
+        self.tmpHOST = v.HOST
         self.dut = api.HttpClient()
         ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
         ret2 = chkAdbDevice(v.ANDROID_SERIAL_NUM)
@@ -9229,7 +9058,7 @@ class AP_WIRELESS_RELAY_CLEAR_CHAN(TestCase):
     def tearDownClass(self):
 
         api.setDisableAp(self.dut, self.__name__)
-
+        v.HOST = self.tmpHOST
         self.dut.close()
 
     def assoc_clear_sta_2g(self):
@@ -9266,6 +9095,7 @@ class AP_WIRELESS_RELAY_CLEAR_CHAN(TestCase):
 class AP_WIRELESS_RELAY_PSK2(TestCase):
     @classmethod
     def setUpClass(self):
+        self.tmpHOST = v.HOST
         self.dut = api.HttpClient()
         ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
         ret2 = chkAdbDevice(v.ANDROID_SERIAL_NUM)
@@ -9293,6 +9123,7 @@ class AP_WIRELESS_RELAY_PSK2(TestCase):
     def tearDownClass(self):
 
         api.setDisableAp(self.dut, self.__name__)
+        v.HOST = self.tmpHOST
 
         self.dut.close()
 
@@ -9330,6 +9161,7 @@ class AP_WIRELESS_RELAY_PSK2(TestCase):
 class AP_WIRELESS_RELAY_MIXEDPSK(TestCase):
     @classmethod
     def setUpClass(self):
+        self.tmpHOST = v.HOST
         self.dut = api.HttpClient()
         ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
         ret2 = chkAdbDevice(v.ANDROID_SERIAL_NUM)
@@ -9357,6 +9189,7 @@ class AP_WIRELESS_RELAY_MIXEDPSK(TestCase):
     def tearDownClass(self):
 
         api.setDisableAp(self.dut, self.__name__)
+        v.HOST = self.tmpHOST
 
         self.dut.close()
 
@@ -9486,6 +9319,7 @@ class AP_WIRELESS_RELAY_MIXEDPSK(TestCase):
 class AP_WIRELESS_RELAY_MIXEDPSK_SSIDHIDE(TestCase):
     @classmethod
     def setUpClass(self):
+        self.tmpHOST = v.HOST
         self.dut = api.HttpClient()
         ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
         ret2 = chkAdbDevice(v.ANDROID_SERIAL_NUM)
@@ -9531,6 +9365,7 @@ class AP_WIRELESS_RELAY_MIXEDPSK_SSIDHIDE(TestCase):
     def tearDownClass(self):
 
         api.setDisableAp(self.dut, self.__name__)
+        v.HOST = self.tmpHOST
 
         self.dut.close()
 
@@ -9658,6 +9493,7 @@ class AP_WIRELESS_RELAY_MIXEDPSK_SSIDHIDE(TestCase):
 class AP_WIRELESS_RELAY_MIXEDPSK_SSIDSPEC(TestCase):
     @classmethod
     def setUpClass(self):
+        self.tmpHOST = v.HOST
 
         self.dut = api.HttpClient()
         ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
@@ -9686,6 +9522,7 @@ class AP_WIRELESS_RELAY_MIXEDPSK_SSIDSPEC(TestCase):
     def tearDownClass(self):
 
         api.setDisableAp(self.dut, self.__name__)
+        v.HOST = self.tmpHOST
 
         self.dut.close()
 
@@ -9818,6 +9655,7 @@ class AP_WIRELESS_RELAY_MIXEDPSK_SSIDSPEC(TestCase):
 class AP_WIRELESS_RELAY_MIXEDPSK_KEYSPEC(TestCase):
     @classmethod
     def setUpClass(self):
+        self.tmpHOST = v.HOST
 
         self.dut = api.HttpClient()
         ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
@@ -9846,6 +9684,7 @@ class AP_WIRELESS_RELAY_MIXEDPSK_KEYSPEC(TestCase):
     def tearDownClass(self):
 
         api.setDisableAp(self.dut, self.__name__)
+        v.HOST = self.tmpHOST
 
         self.dut.close()
 
@@ -9981,6 +9820,7 @@ class AP_WIRELESS_RELAY_MIXEDPSK_KEYSPEC(TestCase):
 class AP_WIRELESS_RELAY_MIXEDPSK_SSIDCHINESE(TestCase):
     @classmethod
     def setUpClass(self):
+        self.tmpHOST = v.HOST
 
         self.dut = api.HttpClient()
         ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
@@ -10009,6 +9849,7 @@ class AP_WIRELESS_RELAY_MIXEDPSK_SSIDCHINESE(TestCase):
     def tearDownClass(self):
 
         api.setDisableAp(self.dut, self.__name__)
+        v.HOST = self.tmpHOST
 
         self.dut.close()
 
@@ -10141,6 +9982,7 @@ class AP_WIRELESS_RELAY_MIXEDPSK_SSIDCHINESE(TestCase):
 class AP_WIRELESS_RELAY_CLEAR_LOW(TestCase):
     @classmethod
     def setUpClass(self):
+        self.tmpHOST = v.HOST
         self.dut = api.HttpClient()
         ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
         ret2 = chkAdbDevice(v.ANDROID_SERIAL_NUM)
@@ -10183,6 +10025,7 @@ class AP_WIRELESS_RELAY_CLEAR_LOW(TestCase):
     def tearDownClass(self):
 
         api.setDisableAp(self.dut, self.__name__)
+        v.HOST = self.tmpHOST
 
         self.dut.close()
 
@@ -10220,6 +10063,7 @@ class AP_WIRELESS_RELAY_CLEAR_LOW(TestCase):
 class AP_WIRELESS_RELAY_CLEAR_MID(TestCase):
     @classmethod
     def setUpClass(self):
+        self.tmpHOST = v.HOST
         self.dut = api.HttpClient()
         ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
         ret2 = chkAdbDevice(v.ANDROID_SERIAL_NUM)
@@ -10260,6 +10104,7 @@ class AP_WIRELESS_RELAY_CLEAR_MID(TestCase):
     def tearDownClass(self):
 
         api.setDisableAp(self.dut, self.__name__)
+        v.HOST = self.tmpHOST
 
         self.dut.close()
 
@@ -10297,6 +10142,7 @@ class AP_WIRELESS_RELAY_CLEAR_MID(TestCase):
 class AP_WIRELESS_RELAY_CLEAR_HIGH(TestCase):
     @classmethod
     def setUpClass(self):
+        self.tmpHOST = v.HOST
         self.dut = api.HttpClient()
         ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
         ret2 = chkAdbDevice(v.ANDROID_SERIAL_NUM)
@@ -10339,6 +10185,7 @@ class AP_WIRELESS_RELAY_CLEAR_HIGH(TestCase):
     def tearDownClass(self):
 
         api.setDisableAp(self.dut, self.__name__)
+        v.HOST = self.tmpHOST
 
         self.dut.close()
 
@@ -10376,6 +10223,7 @@ class AP_WIRELESS_RELAY_CLEAR_HIGH(TestCase):
 class AP_WIRELESS_RELAY_CLEAR_CHANSELECTION(TestCase):
     @classmethod
     def setUpClass(self):
+        self.tmpHOST = v.HOST
 
         self.dut = api.HttpClient()
         ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
@@ -10399,6 +10247,7 @@ class AP_WIRELESS_RELAY_CLEAR_CHANSELECTION(TestCase):
     def tearDownClass(self):
 
         api.setDisableAp(self.dut, self.__name__)
+        v.HOST = self.tmpHOST
 
         self.dut.close()
 
@@ -10438,6 +10287,7 @@ class AP_WIRELESS_RELAY_CLEAR_CHANSELECTION(TestCase):
 class AP_WIRELESS_RELAY_MIXEDPSK_CHAN_BW80(TestCase):
     @classmethod
     def setUpClass(self):
+        self.tmpHOST = v.HOST
         self.dut = api.HttpClient()
         ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
         ret2 = chkAdbDevice(v.ANDROID_SERIAL_NUM)
@@ -10476,6 +10326,7 @@ class AP_WIRELESS_RELAY_MIXEDPSK_CHAN_BW80(TestCase):
     def tearDownClass(self):
 
         api.setDisableAp(self.dut, self.__name__)
+        v.HOST = self.tmpHOST
 
         self.dut.close()
 
@@ -10543,6 +10394,7 @@ class AP_WIRELESS_RELAY_MIXEDPSK_CHAN_BW80(TestCase):
 class AP_WIRELESS_RELAY_MIXEDPSK_CHAN_BW40(TestCase):
     @classmethod
     def setUpClass(self):
+        self.tmpHOST = v.HOST
         self.dut = api.HttpClient()
         ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
         ret2 = chkAdbDevice(v.ANDROID_SERIAL_NUM)
@@ -10589,6 +10441,7 @@ class AP_WIRELESS_RELAY_MIXEDPSK_CHAN_BW40(TestCase):
     def tearDownClass(self):
 
         api.setDisableAp(self.dut, self.__name__)
+        v.HOST = self.tmpHOST
 
         self.dut.close()
 
@@ -10716,6 +10569,7 @@ class AP_WIRELESS_RELAY_MIXEDPSK_CHAN_BW40(TestCase):
 class AP_WIRELESS_RELAY_MIXEDPSK_CHAN_BW20(TestCase):
     @classmethod
     def setUpClass(self):
+        self.tmpHOST = v.HOST
         self.dut = api.HttpClient()
         ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
         ret2 = chkAdbDevice(v.ANDROID_SERIAL_NUM)
@@ -10762,6 +10616,7 @@ class AP_WIRELESS_RELAY_MIXEDPSK_CHAN_BW20(TestCase):
     def tearDownClass(self):
 
         api.setDisableAp(self.dut, self.__name__)
+        v.HOST = self.tmpHOST
 
         self.dut.close()
 
@@ -10889,6 +10744,7 @@ class AP_WIRELESS_RELAY_MIXEDPSK_CHAN_BW20(TestCase):
 class AP_WIRELESS_RELAY_MIXEDPSK_BSD(TestCase):
     @classmethod
     def setUpClass(self):
+        self.tmpHOST = v.HOST
         self.dut = api.HttpClient()
         ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
         ret2 = chkAdbDevice(v.ANDROID_SERIAL_NUM)
@@ -10924,6 +10780,7 @@ class AP_WIRELESS_RELAY_MIXEDPSK_BSD(TestCase):
     def tearDownClass(self):
 
         api.setDisableAp(self.dut, self.__name__)
+        v.HOST = self.tmpHOST
 
         api.setAllWifi(self.dut, self.__name__)
         option2g = {
@@ -11018,6 +10875,7 @@ class AP_WIRELESS_RELAY_MIXEDPSK_BSD(TestCase):
 class AP_WIRELESS_RELAY_MIXEDPSK_BSD_SSIDHIDE(TestCase):
     @classmethod
     def setUpClass(self):
+        self.tmpHOST = v.HOST
         self.dut = api.HttpClient()
         ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
         ret2 = chkAdbDevice(v.ANDROID_SERIAL_NUM)
@@ -11054,6 +10912,7 @@ class AP_WIRELESS_RELAY_MIXEDPSK_BSD_SSIDHIDE(TestCase):
     def tearDownClass(self):
 
         api.setDisableAp(self.dut, self.__name__)
+        v.HOST = self.tmpHOST
 
         api.setAllWifi(self.dut, self.__name__)
         option2g = {
@@ -11148,6 +11007,7 @@ class AP_WIRELESS_RELAY_MIXEDPSK_BSD_SSIDHIDE(TestCase):
 class AP_WIRELESS_RELAY_SSIDHIDE(TestCase):
     @classmethod
     def setUpClass(self):
+        self.tmpHOST = v.HOST
 
         self.dut = api.HttpClient()
         ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
@@ -11176,6 +11036,7 @@ class AP_WIRELESS_RELAY_SSIDHIDE(TestCase):
     def tearDownClass(self):
 
         api.setDisableAp(self.dut, self.__name__)
+        v.HOST = self.tmpHOST
 
         self.dut.close()
 
@@ -11309,6 +11170,7 @@ class AP_WIRELESS_RELAY_SSIDHIDE(TestCase):
 class AP_WIRELESS_RELAY_BSD_SSIDHIDE(TestCase):
     @classmethod
     def setUpClass(self):
+        self.tmpHOST = v.HOST
 
         self.dut = api.HttpClient()
         ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
@@ -11337,6 +11199,7 @@ class AP_WIRELESS_RELAY_BSD_SSIDHIDE(TestCase):
     def tearDownClass(self):
 
         api.setDisableAp(self.dut, self.__name__)
+        v.HOST = self.tmpHOST
 
         self.dut.close()
 
@@ -11394,6 +11257,7 @@ class AP_WIRELESS_RELAY_BSD_SSIDHIDE(TestCase):
 class AP_WIRELESS_RELAY_CONFIG_CHECK(TestCase):
     @classmethod
     def setUpClass(self):
+        self.tmpHOST = v.HOST
         self.dut = api.HttpClient()
         ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
 
@@ -11451,6 +11315,7 @@ class AP_WIRELESS_RELAY_CONFIG_CHECK(TestCase):
         self.relayConfGuest = api.getWifiDetailDic(self.dut, self.__name__, "guest")
 
         api.setDisableAp(self.dut, self.__name__)
+        v.HOST = self.tmpHOST
 
     @classmethod
     def tearDownClass(self):
@@ -11491,6 +11356,7 @@ class AP_WIRELESS_RELAY_CONFIG_CHECK(TestCase):
 class AP_WIRELESS_RELAY_SCAN(TestCase):
     @classmethod
     def setUpClass(self):
+        self.tmpHOST = v.HOST
         self.dut = api.HttpClient()
         ret = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
         if ret is False:

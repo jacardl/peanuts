@@ -306,6 +306,7 @@ class GeneralPage(wx.Panel):
         self.saveBtn.Enable(False)
         if v.DUT_MODULE is not None:
             v.HOST = self.ip.GetValue()
+            v.HOST_ORIGINAL = self.ip.GetValue()
             v.USR = self.shellUsr.GetValue()
             v.PASSWD = self.shellPasswd.GetValue()
             v.WEB_PWD = self.webPasswd.GetValue()

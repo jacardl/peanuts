@@ -11,6 +11,7 @@ SAVE_BTN_FLAG = False  # represent save button pressed or not
 
 DUT_MODULE = 'R1D'
 HOST = "192.168.31.1"
+HOST_ORIGINAL = ""
 USR = "root"
 PASSWD = "admin"
 

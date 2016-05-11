@@ -4907,6 +4907,7 @@ class AP_BSD_SSIDHIDE(TestCase):
 class AP_RELAY_CLEAR_CHAN(TestCase):
     @classmethod
     def setUpClass(self):
+        self.tmpHOST = v.HOST
         self.dut = api.HttpClient()
         ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
         ret2 = chkAdbDevice(v.ANDROID_SERIAL_NUM)
@@ -4948,7 +4949,7 @@ class AP_RELAY_CLEAR_CHAN(TestCase):
         api.setWifi(self.dut, self.__name__, **option5g)
 
         api.setDisableLanAp(self.dut, self.__name__)
-
+        v.HOST = self.tmpHOST
         self.dut.close()
 
     def assoc_clear_sta_2g(self):
@@ -4985,6 +4986,7 @@ class AP_RELAY_CLEAR_CHAN(TestCase):
 class AP_RELAY_CLEAR_LOW(TestCase):
     @classmethod
     def setUpClass(self):
+        self.tmpHOST = v.HOST
         self.dut = api.HttpClient()
         ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
         ret2 = chkAdbDevice(v.ANDROID_SERIAL_NUM)
@@ -5026,7 +5028,7 @@ class AP_RELAY_CLEAR_LOW(TestCase):
         api.setWifi(self.dut, self.__name__, **option5g)
 
         api.setDisableLanAp(self.dut, self.__name__)
-
+        v.HOST = self.tmpHOST
         self.dut.close()
 
     def assoc_clear_sta_2g(self):
@@ -5063,6 +5065,7 @@ class AP_RELAY_CLEAR_LOW(TestCase):
 class AP_RELAY_CLEAR_MID(TestCase):
     @classmethod
     def setUpClass(self):
+        self.tmpHOST = v.HOST
         self.dut = api.HttpClient()
         ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
         ret2 = chkAdbDevice(v.ANDROID_SERIAL_NUM)
@@ -5102,6 +5105,7 @@ class AP_RELAY_CLEAR_MID(TestCase):
         api.setWifi(self.dut, self.__name__, **option5g)
 
         api.setDisableLanAp(self.dut, self.__name__)
+        v.HOST = self.tmpHOST
 
         self.dut.close()
 
@@ -5139,6 +5143,7 @@ class AP_RELAY_CLEAR_MID(TestCase):
 class AP_RELAY_CLEAR_HIGH(TestCase):
     @classmethod
     def setUpClass(self):
+        self.tmpHOST = v.HOST
         self.dut = api.HttpClient()
         ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
         ret2 = chkAdbDevice(v.ANDROID_SERIAL_NUM)
@@ -5180,6 +5185,7 @@ class AP_RELAY_CLEAR_HIGH(TestCase):
         api.setWifi(self.dut, self.__name__, **option5g)
 
         api.setDisableLanAp(self.dut, self.__name__)
+        v.HOST = self.tmpHOST
 
         self.dut.close()
 
@@ -5217,6 +5223,7 @@ class AP_RELAY_CLEAR_HIGH(TestCase):
 class AP_RELAY_CLEAR_LOW_TXPOWER(TestCase):
     @classmethod
     def setUpClass(self):
+        self.tmpHOST = v.HOST
 
         self.dut2 = api.HttpClient()
         ret2 = self.dut2.connect(host=v.HOST, password=v.WEB_PWD)
@@ -5638,6 +5645,7 @@ class AP_RELAY_CLEAR_LOW_TXPOWER(TestCase):
 class AP_RELAY_CLEAR_MID_TXPOWER(TestCase):
     @classmethod
     def setUpClass(self):
+        self.tmpHOST = v.HOST
 
         self.dut2 = api.HttpClient()
         ret2 = self.dut2.connect(host=v.HOST, password=v.WEB_PWD)
@@ -6066,6 +6074,7 @@ class AP_RELAY_CLEAR_MID_TXPOWER(TestCase):
 class AP_RELAY_CLEAR_HIGH_TXPOWER(TestCase):
     @classmethod
     def setUpClass(self):
+        self.tmpHOST = v.HOST
 
         self.dut2 = api.HttpClient()
         ret2 = self.dut2.connect(host=v.HOST, password=v.WEB_PWD)
@@ -6488,6 +6497,7 @@ class AP_RELAY_CLEAR_HIGH_TXPOWER(TestCase):
 class AP_RELAY_CLEAR_CHANSELECTION(TestCase):
     @classmethod
     def setUpClass(self):
+        self.tmpHOST = v.HOST
 
         self.dut = api.HttpClient()
         ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
@@ -6510,6 +6520,7 @@ class AP_RELAY_CLEAR_CHANSELECTION(TestCase):
         api.setWifi(self.dut, self.__name__, **option5g)
 
         api.setDisableLanAp(self.dut, self.__name__)
+        v.HOST = self.tmpHOST
 
         self.dut.close()
 
@@ -6549,6 +6560,7 @@ class AP_RELAY_CLEAR_CHANSELECTION(TestCase):
 class AP_RELAY_PSK2(TestCase):
     @classmethod
     def setUpClass(self):
+        self.tmpHOST = v.HOST
         self.dut = api.HttpClient()
         ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
         ret2 = chkAdbDevice(v.ANDROID_SERIAL_NUM)
@@ -6591,6 +6603,7 @@ class AP_RELAY_PSK2(TestCase):
         api.setWifi(self.dut, self.__name__, **option5g)
 
         api.setDisableLanAp(self.dut, self.__name__)
+        v.HOST = self.tmpHOST
 
         self.dut.close()
 
@@ -6628,6 +6641,7 @@ class AP_RELAY_PSK2(TestCase):
 class AP_RELAY_MIXEDPSK(TestCase):
     @classmethod
     def setUpClass(self):
+        self.tmpHOST = v.HOST
         self.dut = api.HttpClient()
         ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
         ret2 = chkAdbDevice(v.ANDROID_SERIAL_NUM)
@@ -6660,6 +6674,7 @@ class AP_RELAY_MIXEDPSK(TestCase):
     def tearDownClass(self):
 
         api.setDisableLanAp(self.dut, self.__name__)
+        v.HOST = self.tmpHOST
 
         option2g = {
             'wifiIndex': 1,
@@ -6798,6 +6813,7 @@ class AP_RELAY_MIXEDPSK(TestCase):
 class AP_RELAY_MIXEDPSK_CHAN_BW80(TestCase):
     @classmethod
     def setUpClass(self):
+        self.tmpHOST = v.HOST
         self.dut = api.HttpClient()
         ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
         ret2 = chkAdbDevice(v.ANDROID_SERIAL_NUM)
@@ -6825,6 +6841,7 @@ class AP_RELAY_MIXEDPSK_CHAN_BW80(TestCase):
     def tearDownClass(self):
 
         api.setDisableLanAp(self.dut, self.__name__)
+        v.HOST = self.tmpHOST
 
         option5g = {
             'wifiIndex': 2,
@@ -6898,6 +6915,7 @@ class AP_RELAY_MIXEDPSK_CHAN_BW80(TestCase):
 class AP_RELAY_MIXEDPSK_CHAN_BW40(TestCase):
     @classmethod
     def setUpClass(self):
+        self.tmpHOST = v.HOST
         self.dut = api.HttpClient()
         ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
         ret2 = chkAdbDevice(v.ANDROID_SERIAL_NUM)
@@ -6934,6 +6952,7 @@ class AP_RELAY_MIXEDPSK_CHAN_BW40(TestCase):
     def tearDownClass(self):
 
         api.setDisableLanAp(self.dut, self.__name__)
+        v.HOST = self.tmpHOST
 
         option2g = {
             'wifiIndex': 1,
@@ -7072,6 +7091,7 @@ class AP_RELAY_MIXEDPSK_CHAN_BW40(TestCase):
 class AP_RELAY_MIXEDPSK_CHAN_BW20(TestCase):
     @classmethod
     def setUpClass(self):
+        self.tmpHOST = v.HOST
         self.dut = api.HttpClient()
         ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
         ret2 = chkAdbDevice(v.ANDROID_SERIAL_NUM)
@@ -7108,6 +7128,7 @@ class AP_RELAY_MIXEDPSK_CHAN_BW20(TestCase):
     def tearDownClass(self):
 
         api.setDisableLanAp(self.dut, self.__name__)
+        v.HOST = self.tmpHOST
 
         option2g = {
             'wifiIndex': 1,
@@ -7246,6 +7267,7 @@ class AP_RELAY_MIXEDPSK_CHAN_BW20(TestCase):
 class AP_RELAY_MIXEDPSK_SSIDSPEC(TestCase):
     @classmethod
     def setUpClass(self):
+        self.tmpHOST = v.HOST
 
         self.dut = api.HttpClient()
         ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
@@ -7279,6 +7301,7 @@ class AP_RELAY_MIXEDPSK_SSIDSPEC(TestCase):
     def tearDownClass(self):
 
         api.setDisableLanAp(self.dut, self.__name__)
+        v.HOST = self.tmpHOST
 
         option2g = {
             'wifiIndex': 1,
@@ -7414,6 +7437,7 @@ class AP_RELAY_MIXEDPSK_SSIDSPEC(TestCase):
 class AP_RELAY_MIXEDPSK_KEYSPEC(TestCase):
     @classmethod
     def setUpClass(self):
+        self.tmpHOST = v.HOST
 
         self.dut = api.HttpClient()
         ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
@@ -7447,6 +7471,7 @@ class AP_RELAY_MIXEDPSK_KEYSPEC(TestCase):
     def tearDownClass(self):
 
         api.setDisableLanAp(self.dut, self.__name__)
+        v.HOST = self.tmpHOST
 
         option2g = {
             'wifiIndex': 1,
@@ -7585,6 +7610,7 @@ class AP_RELAY_MIXEDPSK_KEYSPEC(TestCase):
 class AP_RELAY_MIXEDPSK_SSIDCHINESE(TestCase):
     @classmethod
     def setUpClass(self):
+        self.tmpHOST = v.HOST
 
         self.dut = api.HttpClient()
         ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
@@ -7618,6 +7644,7 @@ class AP_RELAY_MIXEDPSK_SSIDCHINESE(TestCase):
     def tearDownClass(self):
 
         api.setDisableLanAp(self.dut, self.__name__)
+        v.HOST = self.tmpHOST
 
         option2g = {
             'wifiIndex': 1,
@@ -7753,6 +7780,7 @@ class AP_RELAY_MIXEDPSK_SSIDCHINESE(TestCase):
 class AP_RELAY_MIXEDPSK_BSD(TestCase):
     @classmethod
     def setUpClass(self):
+        self.tmpHOST = v.HOST
         self.dut = api.HttpClient()
         ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
         ret2 = chkAdbDevice(v.ANDROID_SERIAL_NUM)
@@ -7777,6 +7805,7 @@ class AP_RELAY_MIXEDPSK_BSD(TestCase):
     def tearDownClass(self):
 
         api.setDisableLanAp(self.dut, self.__name__)
+        v.HOST = self.tmpHOST
 
         api.setAllWifi(self.dut, self.__name__)
         option2g = {
@@ -7871,6 +7900,7 @@ class AP_RELAY_MIXEDPSK_BSD(TestCase):
 class AP_RELAY_MIXEDPSK_BSD_SSIDHIDE(TestCase):
     @classmethod
     def setUpClass(self):
+        self.tmpHOST = v.HOST
         self.dut = api.HttpClient()
         ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
         ret2 = chkAdbDevice(v.ANDROID_SERIAL_NUM)
@@ -7896,6 +7926,7 @@ class AP_RELAY_MIXEDPSK_BSD_SSIDHIDE(TestCase):
     def tearDownClass(self):
 
         api.setDisableLanAp(self.dut, self.__name__)
+        v.HOST = self.tmpHOST
 
         api.setAllWifi(self.dut, self.__name__)
         option2g = {
@@ -7990,6 +8021,7 @@ class AP_RELAY_MIXEDPSK_BSD_SSIDHIDE(TestCase):
 class AP_RELAY_SSIDHIDE(TestCase):
     @classmethod
     def setUpClass(self):
+        self.tmpHOST = v.HOST
 
         self.dut = api.HttpClient()
         ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
@@ -8007,6 +8039,7 @@ class AP_RELAY_SSIDHIDE(TestCase):
     def tearDownClass(self):
 
         api.setDisableLanAp(self.dut, self.__name__)
+        v.HOST = self.tmpHOST
 
         self.dut.close()
 
@@ -8140,6 +8173,7 @@ class AP_RELAY_SSIDHIDE(TestCase):
 class AP_RELAY_MIXEDPSK_SSIDHIDE(TestCase):
     @classmethod
     def setUpClass(self):
+        self.tmpHOST = v.HOST
         self.dut = api.HttpClient()
         ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
         ret2 = chkAdbDevice(v.ANDROID_SERIAL_NUM)
@@ -8174,6 +8208,7 @@ class AP_RELAY_MIXEDPSK_SSIDHIDE(TestCase):
     def tearDownClass(self):
 
         api.setDisableLanAp(self.dut, self.__name__)
+        v.HOST = self.tmpHOST
 
         option2g = {
             'wifiIndex': 1,
@@ -8312,6 +8347,7 @@ class AP_RELAY_MIXEDPSK_SSIDHIDE(TestCase):
 class AP_RELAY_BSD_SSIDHIDE(TestCase):
     @classmethod
     def setUpClass(self):
+        self.tmpHOST = v.HOST
 
         self.dut = api.HttpClient()
         ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
@@ -8329,6 +8365,7 @@ class AP_RELAY_BSD_SSIDHIDE(TestCase):
     def tearDownClass(self):
 
         api.setDisableLanAp(self.dut, self.__name__)
+        v.HOST = self.tmpHOST
 
         self.dut.close()
 
@@ -8386,6 +8423,7 @@ class AP_RELAY_BSD_SSIDHIDE(TestCase):
 class AP_RELAY_CONFIG_CHECK(TestCase):
     @classmethod
     def setUpClass(self):
+        self.tmpHOST = v.HOST
         self.dut = api.HttpClient()
         ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
 
@@ -8431,6 +8469,7 @@ class AP_RELAY_CONFIG_CHECK(TestCase):
     @classmethod
     def tearDownClass(self):
         api.setDisableLanAp(self.dut, self.__name__)
+        v.HOST = self.tmpHOST
         option2g = {
             'wifiIndex': 1,
             'on': 0,

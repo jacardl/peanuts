@@ -11408,15 +11408,6 @@ class AP_WIRELESS_RELAY_SCAN(TestCase):
 
         api.setDisableAp(self.dut, self.__class__.__name__)
 
-        option2g = {
-            'wifiIndex': 1,
-            'ssid': v.SSID,
-            'encryption': 'mixed-psk',
-            'pwd': v.KEY
-        }
-
-        api.setWifi(self.dut, self.__class__.__name__, **option2g)
-
 
 class AP_MIXEDPSK_WEB_ACCESS(TestCase):
     @classmethod

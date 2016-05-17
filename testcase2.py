@@ -8437,10 +8437,20 @@ class AP_RELAY_CONFIG_CHECK(TestCase):
         api.setWifi(self.dut, self.__name__, **self.optionGuest)
         api.setLanAp(self.dut, self.__name__)
 
-    @classmethod
-    def tearDownClass(self):
+        self.relay2g = api.getWifiDetailDic(self.dut, self.__name__, "2g")
+        self.relay5g = api.getWifiDetailDic(self.dut, self.__name__, "5g")
+        self.relayGuest = api.getWifiDetailDic(self.dut, self.__name__, "guest")
+
         api.setDisableLanAp(self.dut, self.__name__)
         v.HOST = v.HOST_ORIGINAL
+
+        self.router2g = api.getWifiDetailDic(self.dut, self.__name__, "2g")
+        self.router5g = api.getWifiDetailDic(self.dut, self.__name__, "5g")
+        self.routerGuest = api.getWifiDetailDic(self.dut, self.__name__, "guest")
+
+    @classmethod
+    def tearDownClass(self):
+
         option2g = {
             'wifiIndex': 1,
             'on': 0,
@@ -8455,46 +8465,25 @@ class AP_RELAY_CONFIG_CHECK(TestCase):
         self.dut.close()
 
     def config_check_2g(self):
-        relay2g = api.getWifiDetailDic(self.dut, self.__class__.__name__, "2g")
 
-        api.setDisableLanAp(self.dut, self.__class__.__name__)
-
-        router2g = api.getWifiDetailDic(self.dut, self.__class__.__name__, "2g")
-
-        api.setLanAp(self.dut, self.__class__.__name__)
-
-        self.assertDictEqual(relay2g, self.option2g,
+        self.assertDictEqual(self.relay2g, self.option2g,
                              msg="Normal router module switch over to wire relay module, wifi config should not be changed.")
-        self.assertDictEqual(router2g, self.option2g,
+        self.assertDictEqual(self.router2g, self.option2g,
                              msg="Wire relay module switch back to normal router module, wifi config should not be changed.")
 
     def config_check_5g(self):
-        relay5g = api.getWifiDetailDic(self.dut, self.__class__.__name__, "5g")
 
-        api.setDisableLanAp(self.dut, self.__class__.__name__)
-
-        router5g = api.getWifiDetailDic(self.dut, self.__class__.__name__, "5g")
-
-        api.setLanAp(self.dut, self.__class__.__name__)
-
-        self.assertDictEqual(relay5g, self.option5g,
+        self.assertDictEqual(self.relay5g, self.option5g,
                              msg="Normal router module switch over to wire relay module, wifi config should not be changed.")
-        self.assertDictEqual(router5g, self.option5g,
+        self.assertDictEqual(self.router5g, self.option5g,
                              msg="Wire relay module switch back to normal router module, wifi config should not be changed.")
 
     def config_check_guest(self):
-        relayGuest = api.getWifiDetailDic(self.dut, self.__class__.__name__, "guest")
-
-        api.setDisableLanAp(self.dut, self.__class__.__name__)
-
-        routerGuest = api.getWifiDetailDic(self.dut, self.__class__.__name__, "guest")
-
-        api.setLanAp(self.dut, self.__class__.__name__)
 
         # when wire relay module switch back to normal router module, guest wifi is turned off
         self.optionGuest["on"] = "0"
-        self.assertDictEqual(relayGuest, {}, msg="Wire relay module should not support guest wifi")
-        self.assertDictEqual(routerGuest, self.optionGuest,
+        self.assertDictEqual(self.relayGuest, {}, msg="Wire relay module should not support guest wifi")
+        self.assertDictEqual(self.routerGuest, self.optionGuest,
                              msg="Wire relay switch back to normal router module, guest wifi should be turned off.")
 
 

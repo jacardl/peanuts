@@ -491,12 +491,14 @@ class GetTestModule(threading.Thread):
         self.logPath = v.TEST_SUITE_LOG_PATH
         self.moduleDict = {
             'treeBasicApi': '基础功能',
+            'guestWifiAPi': '访客网络',
             'treeBSDApi': '双频合一',
             'treeWireRelayApi':'有线中继',
             'treeWirelessRelayApi':'无线中继',
             'treeAccessControlApi':'接入控制',
             'treeQosApi':'智能限速',
-            'treeThroughputApi':'WiFi吞吐',
+            'treeThroughputDUTApi':'WiFi 2 DUT吞吐',
+            'treeThroughputLANApi':'WiFi 2 LAN吞吐',
             'treeStressApi':'压力测试',
             'treeOthersApi':'其他',
         }

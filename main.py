@@ -306,6 +306,7 @@ class GeneralPage(wx.Panel):
         self.saveBtn.Enable(False)
         if v.DUT_MODULE is not None:
             v.HOST = self.ip.GetValue()
+            v.HOST_ORIGINAL = self.ip.GetValue()
             v.USR = self.shellUsr.GetValue()
             v.PASSWD = self.shellPasswd.GetValue()
             v.WEB_PWD = self.webPasswd.GetValue()
@@ -638,7 +639,7 @@ class TestSuitePage(wx.Panel):
             if not os.path.exists(v.REPORT_NAME):
                 os.rename(v.TEST_SUITE_LOG_PATH, v.REPORT_NAME)
             else:
-                os.rename(v.TEST_SUITE_LOG_PATH, v.REPORT_FILE_NAME + "_" + str(random.randint(1, 9999)))
+                os.rename(v.TEST_SUITE_LOG_PATH, v.REPORT_NAME + "_" + str(random.randint(1, 9999)))
 
         if testKeepGoing is False: # click cancel
             os.system("taskkill /F /IM python.exe | taskkill /F /T /IM adb.exe")

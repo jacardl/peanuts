@@ -331,7 +331,7 @@ def getThroughputLogVerbose(logfile):
 
 
 def drawThroughput2g(data, picname):
-    bar_width = 0.2
+    bar_width = 0.4
     opacity = 0.4
     index = np.arange(2)
     ret = data
@@ -382,7 +382,7 @@ def drawThroughput2g(data, picname):
 
 
 def drawThroughput5g(data, picname):
-    bar_width = 0.2
+    bar_width = 0.4
     opacity = 0.4
     index = np.arange(3)
     ret = data

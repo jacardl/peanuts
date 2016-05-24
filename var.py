@@ -1,7 +1,7 @@
 # -*- coding: utf8 -*-
 from common import *
 
-VER = '3.5.3'
+VER = '3.5.4'
 
 TOOL_LIST = ["General", "Memory Tracking", "Test Suite"]
 
@@ -11,6 +11,7 @@ SAVE_BTN_FLAG = False  # represent save button pressed or not
 
 DUT_MODULE = 'R1D'
 HOST = "192.168.31.1"
+HOST_ORIGINAL = ""
 USR = "root"
 PASSWD = "admin"
 

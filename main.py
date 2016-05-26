@@ -491,7 +491,7 @@ class TestSuitePage(wx.Panel):
 
         self.sel2gCheck = wx.CheckBox(self, -1, "2.4G")
         self.sel5gCheck = wx.CheckBox(self, -1, "5G")
-        self.selGuestCheck = wx.CheckBox(self, -1, "Guest wifi")
+        self.selGuestCheck = wx.CheckBox(self, -1, "Guest WiFi")
         self.selUploadLog = wx.CheckBox(self, -1, 'Upload Log')
         self.selUploadLog.SetValue(True)
         self.selSendMail = wx.CheckBox(self, -1, 'Send Mail')

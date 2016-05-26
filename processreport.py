@@ -493,14 +493,14 @@ class GetTestModule(threading.Thread):
             'treeBasicApi': '基础功能',
             'guestWifiApi': '访客网络',
             'treeBSDApi': '双频合一',
-            'treeWireRelayApi':'有线中继',
-            'treeWirelessRelayApi':'无线中继',
-            'treeAccessControlApi':'接入控制',
-            'treeQosApi':'智能限速',
-            'treeThroughputDUTApi':'WiFi2DUT吞吐',
-            'treeThroughputLANApi':'WiFi2LAN吞吐',
-            'treeStressApi':'压力测试',
-            'treeOthersApi':'其他',
+            'treeWireRelayApi': '有线中继',
+            'treeWirelessRelayApi': '无线中继',
+            'treeAccessControlApi': '接入控制',
+            'treeQosApi': '智能限速',
+            'treeThroughputDUTApi': 'WiFi2DUT吞吐',
+            'treeThroughputLANApi': 'WiFi2LAN吞吐',
+            'treeStressApi': '压力测试',
+            'treeOthersApi': '其他',
         }
         self.result = list()
 

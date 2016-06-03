@@ -1,7 +1,7 @@
 # -*- coding: utf8 -*-
 from common import *
 
-VER = '3.5.5'
+VER = '3.5.6'
 
 TOOL_LIST = ["General", "Memory Tracking", "Test Suite"]
 

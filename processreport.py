@@ -491,14 +491,16 @@ class GetTestModule(threading.Thread):
         self.logPath = v.TEST_SUITE_LOG_PATH
         self.moduleDict = {
             'treeBasicApi': '基础功能',
+            'treeGuestWifiApi': '访客网络',
             'treeBSDApi': '双频合一',
-            'treeWireRelayApi':'有线中继',
-            'treeWirelessRelayApi':'无线中继',
-            'treeAccessControlApi':'接入控制',
-            'treeQosApi':'智能限速',
-            'treeThroughputApi':'WiFi吞吐',
-            'treeStressApi':'压力测试',
-            'treeOthersApi':'其他',
+            'treeWireRelayApi': '有线中继',
+            'treeWirelessRelayApi': '无线中继',
+            'treeAccessControlApi': '接入控制',
+            'treeQosApi': '智能限速',
+            'treeThroughputDUTApi': 'WiFi2DUT吞吐',
+            'treeThroughputLANApi': 'WiFi2LAN吞吐',
+            'treeStressApi': '压力测试',
+            'treeOthersApi': '其他',
         }
         self.result = list()
 
@@ -541,7 +543,10 @@ if __name__ == '__main__':
     # info = GetThroughputLog("report.log".decode("utf8").encode("gbk"))
     # info.start()
     # info.join()
-    print getThroughputLogVerbose('ttt.log'.decode("utf8").encode("gbk"))
+    t = GetTestModule("R1CM 开发版 2.11.13.log".decode('utf8').encode('gbk'))
+    t.start()
+    l = t.result
+    print l
     # f = open('test.log')
     # ret = f.readlines()
     # f.close()

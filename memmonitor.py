@@ -736,8 +736,8 @@ def memDiffCalc(filename, sheetname):
     # ws = wb.active
     for sheet in sheetname:
         ws = wb[sheet]
-        maxRow = ws.get_highest_row()
-        maxCol = ws.get_highest_column()
+        maxRow = ws.max_row
+        maxCol = ws.max_column
 
         for col in range(2, maxCol + 1):
             rowStart = None
@@ -781,8 +781,8 @@ if __name__ == '__main__':
     # v.WEB_PWD = '12345678'
     # webclient = api.HttpClient()
     # webclient.connect(host=v.HOST, password=v.WEB_PWD)
-    memMon = MemMonitorXlsx(2, count=5, file='a.xlsx')
-    memMon.start()
+    # memMon = MemMonitorXlsx(2, count=5, file='a.xlsx')
+    # memMon.start()
     # t.sleep(20)
     # memMon.stop()
-    # memDiffCalc('memory_tracking.xlsx', ['User Mem Tracking', 'Kernel Mem Tracking'])
+    memDiffCalc('memory_tracking.xlsx', ['User Mem Tracking', 'Kernel Mem Tracking'])

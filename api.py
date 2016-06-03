@@ -849,13 +849,25 @@ def getWifiDetailDic(terminal, logname, intf):
         "guest": "ret['info'][-1]",
     }
     ret = getWifiDetailAll(terminal, logname)
+    # ret = "{'bsd': 0, 'info': [{'status': '1', 'bandwidth': '20', 'device': 'mt7628.network1', " \
+    #       "'password': 'KcspMCST1ArbQ4evRO9gXN0f7u-Gl_UhidwB8ELmPnx3JHY5DVjFa6ozkWyqIZ2', 'hidden': '0'," \
+    #       " 'txpwr': 'max', 'ssid': 'KTv7bmX5Lk0nyYPNtDS4-dicg93pCRj', 'encryption': 'mixed-psk'," \
+    #       " 'channelInfo': {'bandwidth': '20', 'bandList': ['20', '40'], 'channel': 11}, 'mode': 'Master'," \
+    #       " 'ifname': 'wl1', 'signal': -256, 'channel': '11'}], 'code': 0}"
+    # ret = eval(ret)
     if ret is not None:
-        resultDic = eval(commandDic.get(intf))
+        try:
+            resultDic = eval(commandDic.get(intf))
+        except Exception, e:
+            resultDic = {}
         for key, value in resultDic.items():
             if key is 'wifiIndex':
                 continue
             resultDic[key] = str(value)
-        infoDicIntf = eval(infoDic.get(intf))
+        try:
+            infoDicIntf = eval(infoDic.get(intf))
+        except Exception, e:
+            infoDicIntf = {}
         if "password"  in infoDicIntf.keys():
             resultDic["pwd"] = infoDicIntf.get("password")
         if intf == "guest":
@@ -1180,10 +1192,9 @@ if __name__ == '__main__':
     option = {
         'ssid': 'MI-MAC',
     }
-    v.HOST = '192.168.15.111'
+    v.HOST = '192.168.150.1'
     v.WEB_PWD = '12345678'
     webclient = HttpClient()
     webclient.connect(host=v.HOST, password=v.WEB_PWD)
-    # setWifiAp(webclient, "a")
-    setDisableAp(webclient, 'a')
+    print getWifiDetailDic(webclient, "a", "guest")
     webclient.close()

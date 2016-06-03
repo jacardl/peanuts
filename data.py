@@ -145,25 +145,6 @@ treeBasicApi = [
         'assoc_tkippsk2_sta_ssidchinese_5g',
         'assoc_tkippsk_sta_ssidchinese_5g',
     ],
-
-    'AP_GUEST_CLEAR',
-    [
-        'assoc_clear_sta_guest',
-    ],
-
-    'AP_GUEST_PSK2',
-    [
-        'assoc_psk2_sta_guest',
-    ],
-
-    'AP_GUEST_MIXEDPSK',
-    [
-        'assoc_psk2_sta_guest',
-        'assoc_psk_sta_guest',
-        'assoc_tkippsk2_sta_guest',
-        'assoc_tkippsk_sta_guest',
-    ],
-
     'AP_SSIDHIDE',
     [
         'ap_clear_ssidhide_2g',
@@ -185,6 +166,26 @@ treeBasicApi = [
         'assoc_tkippsk_sta_5g',
     ],
 
+]
+
+treeGuestWifiApi = [
+    'AP_GUEST_CLEAR',
+    [
+        'assoc_clear_sta_guest',
+    ],
+
+    'AP_GUEST_PSK2',
+    [
+        'assoc_psk2_sta_guest',
+    ],
+
+    'AP_GUEST_MIXEDPSK',
+    [
+        'assoc_psk2_sta_guest',
+        'assoc_psk_sta_guest',
+        'assoc_tkippsk2_sta_guest',
+        'assoc_tkippsk_sta_guest',
+    ],
 ]
 
 
@@ -667,8 +668,7 @@ treeQosApi = [
     ]
 ]
 
-
-treeThroughputApi = [
+treeThroughputDUTApi = [
     "AP_CLEAR_CHAN1_BW20_DUT_THROUGHPUT",
     [
         "assoc_sta_throughput_2g",
@@ -837,6 +837,9 @@ treeThroughputApi = [
     [
         "assoc_sta_throughput_5g",
     ],
+]
+
+treeThroughputLANApi = [
     "AP_CLEAR_CHAN1_BW20_LAN_THROUGHPUT",
     [
         "assoc_sta_throughput_2g",

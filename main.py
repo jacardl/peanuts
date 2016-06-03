@@ -189,7 +189,8 @@ class GeneralPage(wx.Panel):
         staSerialNumList = co.getAdbDevices()
         self.staSerialNum = wx.Choice(self, -1, choices=staSerialNumList)
         self.staSerialNum.SetSelection(0)
-        v.ANDROID_SERIAL_NUM = staSerialNumList[0]
+        if len(staSerialNumList) is not 0:
+            v.ANDROID_SERIAL_NUM = staSerialNumList[0]
         self.Bind(wx.EVT_CHOICE, self.EvtChoice2, self.staSerialNum)
 
         self.staModel = wx.StaticText(self, -1, '')
@@ -458,12 +459,14 @@ class TestSuitePage(wx.Panel):
 
         self.root = self.tree.AddRoot('Test Cases', ct_type=1)
         self.rootBasic = self.tree.AppendItem(self.root, 'Basic', ct_type=1)
+        self.rootGuestWifi = self.tree.AppendItem(self.root, 'Guest Wifi', ct_type=1)
         self.rootBSD = self.tree.AppendItem(self.root, 'BSD', ct_type=1)
         self.rootQosApi = self.tree.AppendItem(self.root, 'QoS', ct_type=1)
         self.rootAccessControlApi = self.tree.AppendItem(self.root, 'Access Control', ct_type=1)
         self.rootWireRelay = self.tree.AppendItem(self.root, 'Wire Relay', ct_type=1)
         self.rootWirelessRelay = self.tree.AppendItem(self.root, 'Wireless Relay', ct_type=1)
-        self.rootThrough = self.tree.AppendItem(self.root, 'Throughput', ct_type=1)
+        self.rootThroughDUT = self.tree.AppendItem(self.root, 'Throughput DUT', ct_type=1)
+        self.rootThroughLAN = self.tree.AppendItem(self.root, 'Throughput LAN', ct_type=1)
         self.rootStress = self.tree.AppendItem(self.root, 'Stress', ct_type=1)
         self.rootOthers = self.tree.AppendItem(self.root, 'Others', ct_type=1)
 
@@ -473,12 +476,14 @@ class TestSuitePage(wx.Panel):
         # self.AddTreeNodes(self.rootCheck, data.treeCheck)
 
         self.AddTreeNodes(self.rootBasic, data.treeBasicApi)
+        self.AddTreeNodes(self.rootGuestWifi, data.treeGuestWifiApi)
         self.AddTreeNodes(self.rootBSD, data.treeBSDApi)
         self.AddTreeNodes(self.rootQosApi, data.treeQosApi)
         self.AddTreeNodes(self.rootAccessControlApi, data.treeAccessControlApi)
         self.AddTreeNodes(self.rootWireRelay, data.treeWireRelayApi)
         self.AddTreeNodes(self.rootWirelessRelay, data.treeWirelessRelayApi)
-        self.AddTreeNodes(self.rootThrough, data.treeThroughputApi)
+        self.AddTreeNodes(self.rootThroughDUT, data.treeThroughputDUTApi)
+        self.AddTreeNodes(self.rootThroughLAN, data.treeThroughputLANApi)
         self.AddTreeNodes(self.rootStress, data.treeStressApi)
         self.AddTreeNodes(self.rootOthers, data.treeOthersApi)
         self.tree.Expand(self.root)
@@ -486,7 +491,7 @@ class TestSuitePage(wx.Panel):
 
         self.sel2gCheck = wx.CheckBox(self, -1, "2.4G")
         self.sel5gCheck = wx.CheckBox(self, -1, "5G")
-        self.selGuestCheck = wx.CheckBox(self, -1, "Guest wifi")
+        self.selGuestCheck = wx.CheckBox(self, -1, "Guest WiFi")
         self.selUploadLog = wx.CheckBox(self, -1, 'Upload Log')
         self.selUploadLog.SetValue(True)
         self.selSendMail = wx.CheckBox(self, -1, 'Send Mail')

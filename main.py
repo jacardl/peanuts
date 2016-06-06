@@ -821,6 +821,7 @@ class TestSuitePage(wx.Panel):
         else:
             v.SEND_MAIL = 0
 
+
 class Frame(wx.Frame):
     def __init__(self):
         wx.Frame.__init__(self, None, title="Peanuts " + v.VER, pos=(300, 200), size=(610, 530), style=

@@ -608,7 +608,8 @@ def setDisableLanAp(terminal, logname):
     result = setGet(terminal, logname, api)
     t.sleep(60)
     if result is not None:
-        v.HOST = result['ip']
+        # v.HOST = result['ip']
+        v.HOST = v.HOST_ORIGINAL
         terminal.connect(host=v.HOST, password=v.WEB_PWD)
         return result
     return result
@@ -649,7 +650,8 @@ def setDisableAp(terminal, logname):
     result = setGet(terminal, logname, api)
     t.sleep(60)
     if result is not None:
-        v.HOST = result['lanip']
+        # v.HOST = result['lanip']
+        v.HOST = v.HOST_ORIGINAL
         terminal.connect(host=v.HOST, password=v.WEB_PWD)
         return result
     return result

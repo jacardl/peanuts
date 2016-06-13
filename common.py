@@ -1815,6 +1815,7 @@ def chkAdbShellUrlAccess(device, url, logname):
             return True
         elif line.find('403 Not Found') is not -1:
             return False
+    return False
 
 
 def chkAdbScanSsidNoExist(device, ssid, logname):

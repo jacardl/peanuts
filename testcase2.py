@@ -11463,7 +11463,7 @@ class AP_MIXEDPSK_WEB_ACCESS(TestCase):
     def assoc_psk2_sta_access_web_2g(self):
         res2gConn = setAdbPsk2Sta(v.ANDROID_SERIAL_NUM, v.SSID, v.KEY, "2g", self.__class__.__name__)
         if res2gConn:
-            ret1 = chkAdbShellUrlAccess(v.ANDROID_SERIAL_NUM, v.CHECK_ACCESS_URL, self.__class__.__name__)
+            ret1 = chkAdbBrowserWebsite(v.ANDROID_SERIAL_NUM, v.CHECK_ACCESS_URL, self.__class__.__name__)
 
             option = {
                 'open': 1,
@@ -11473,7 +11473,7 @@ class AP_MIXEDPSK_WEB_ACCESS(TestCase):
 
             api.setWebAccessOpt(self.dut, self.__class__.__name__, **option)
 
-            ret2 = chkAdbShellUrlAccess(v.ANDROID_SERIAL_NUM, v.CHECK_ACCESS_URL, self.__class__.__name__)
+            ret2 = chkAdbBrowserWebsite(v.ANDROID_SERIAL_NUM, v.CHECK_ACCESS_URL, self.__class__.__name__)
 
             option = {
                 'open': 1,
@@ -11491,7 +11491,7 @@ class AP_MIXEDPSK_WEB_ACCESS(TestCase):
     def assoc_psk_sta_access_web_2g(self):
         res2gConn = setAdbPskSta(v.ANDROID_SERIAL_NUM, v.SSID, v.KEY, "2g", self.__class__.__name__)
         if res2gConn:
-            ret1 = chkAdbShellUrlAccess(v.ANDROID_SERIAL_NUM, v.CHECK_ACCESS_URL, self.__class__.__name__)
+            ret1 = chkAdbBrowserWebsite(v.ANDROID_SERIAL_NUM, v.CHECK_ACCESS_URL, self.__class__.__name__)
 
             option = {
                 'open': 1,
@@ -11501,7 +11501,7 @@ class AP_MIXEDPSK_WEB_ACCESS(TestCase):
 
             api.setWebAccessOpt(self.dut, self.__class__.__name__, **option)
 
-            ret2 = chkAdbShellUrlAccess(v.ANDROID_SERIAL_NUM, v.CHECK_ACCESS_URL, self.__class__.__name__)
+            ret2 = chkAdbBrowserWebsite(v.ANDROID_SERIAL_NUM, v.CHECK_ACCESS_URL, self.__class__.__name__)
 
             option = {
                 'open': 1,
@@ -11519,7 +11519,7 @@ class AP_MIXEDPSK_WEB_ACCESS(TestCase):
     def assoc_tkippsk2_sta_access_web_2g(self):
         res2gConn = setAdbTkipPsk2Sta(v.ANDROID_SERIAL_NUM, v.SSID, v.KEY, "2g", self.__class__.__name__)
         if res2gConn:
-            ret1 = chkAdbShellUrlAccess(v.ANDROID_SERIAL_NUM, v.CHECK_ACCESS_URL, self.__class__.__name__)
+            ret1 = chkAdbBrowserWebsite(v.ANDROID_SERIAL_NUM, v.CHECK_ACCESS_URL, self.__class__.__name__)
 
             option = {
                 'open': 1,
@@ -11529,7 +11529,7 @@ class AP_MIXEDPSK_WEB_ACCESS(TestCase):
 
             api.setWebAccessOpt(self.dut, self.__class__.__name__, **option)
 
-            ret2 = chkAdbShellUrlAccess(v.ANDROID_SERIAL_NUM, v.CHECK_ACCESS_URL, self.__class__.__name__)
+            ret2 = chkAdbBrowserWebsite(v.ANDROID_SERIAL_NUM, v.CHECK_ACCESS_URL, self.__class__.__name__)
 
             option = {
                 'open': 1,
@@ -11547,7 +11547,7 @@ class AP_MIXEDPSK_WEB_ACCESS(TestCase):
     def assoc_tkippsk_sta_access_web_2g(self):
         res2gConn = setAdbTkipPskSta(v.ANDROID_SERIAL_NUM, v.SSID, v.KEY, "2g", self.__class__.__name__)
         if res2gConn:
-            ret1 = chkAdbShellUrlAccess(v.ANDROID_SERIAL_NUM, v.CHECK_ACCESS_URL, self.__class__.__name__)
+            ret1 = chkAdbBrowserWebsite(v.ANDROID_SERIAL_NUM, v.CHECK_ACCESS_URL, self.__class__.__name__)
 
             option = {
                 'open': 1,
@@ -11557,7 +11557,7 @@ class AP_MIXEDPSK_WEB_ACCESS(TestCase):
 
             api.setWebAccessOpt(self.dut, self.__class__.__name__, **option)
 
-            ret2 = chkAdbShellUrlAccess(v.ANDROID_SERIAL_NUM, v.CHECK_ACCESS_URL, self.__class__.__name__)
+            ret2 = chkAdbBrowserWebsite(v.ANDROID_SERIAL_NUM, v.CHECK_ACCESS_URL, self.__class__.__name__)
 
             option = {
                 'open': 1,
@@ -11575,7 +11575,7 @@ class AP_MIXEDPSK_WEB_ACCESS(TestCase):
     def assoc_psk2_sta_access_web_5g(self):
         res5gConn = setAdbPsk2Sta(v.ANDROID_SERIAL_NUM, v.SSID_5G, v.KEY, "5g", self.__class__.__name__)
         if res5gConn:
-            ret1 = chkAdbShellUrlAccess(v.ANDROID_SERIAL_NUM, v.CHECK_ACCESS_URL, self.__class__.__name__)
+            ret1 = chkAdbBrowserWebsite(v.ANDROID_SERIAL_NUM, v.CHECK_ACCESS_URL, self.__class__.__name__)
 
             option = {
                 'open': 1,
@@ -11585,7 +11585,7 @@ class AP_MIXEDPSK_WEB_ACCESS(TestCase):
 
             api.setWebAccessOpt(self.dut, self.__class__.__name__, **option)
 
-            ret2 = chkAdbShellUrlAccess(v.ANDROID_SERIAL_NUM, v.CHECK_ACCESS_URL, self.__class__.__name__)
+            ret2 = chkAdbBrowserWebsite(v.ANDROID_SERIAL_NUM, v.CHECK_ACCESS_URL, self.__class__.__name__)
 
             option = {
                 'open': 1,
@@ -11603,7 +11603,7 @@ class AP_MIXEDPSK_WEB_ACCESS(TestCase):
     def assoc_psk_sta_access_web_5g(self):
         res5gConn = setAdbPskSta(v.ANDROID_SERIAL_NUM, v.SSID_5G, v.KEY, "5g", self.__class__.__name__)
         if res5gConn:
-            ret1 = chkAdbShellUrlAccess(v.ANDROID_SERIAL_NUM, v.CHECK_ACCESS_URL, self.__class__.__name__)
+            ret1 = chkAdbBrowserWebsite(v.ANDROID_SERIAL_NUM, v.CHECK_ACCESS_URL, self.__class__.__name__)
 
             option = {
                 'open': 1,
@@ -11613,7 +11613,7 @@ class AP_MIXEDPSK_WEB_ACCESS(TestCase):
 
             api.setWebAccessOpt(self.dut, self.__class__.__name__, **option)
 
-            ret2 = chkAdbShellUrlAccess(v.ANDROID_SERIAL_NUM, v.CHECK_ACCESS_URL, self.__class__.__name__)
+            ret2 = chkAdbBrowserWebsite(v.ANDROID_SERIAL_NUM, v.CHECK_ACCESS_URL, self.__class__.__name__)
 
             option = {
                 'open': 1,
@@ -11631,7 +11631,7 @@ class AP_MIXEDPSK_WEB_ACCESS(TestCase):
     def assoc_tkippsk2_sta_access_web_5g(self):
         res5gConn = setAdbTkipPsk2Sta(v.ANDROID_SERIAL_NUM, v.SSID_5G, v.KEY, "5g", self.__class__.__name__)
         if res5gConn:
-            ret1 = chkAdbShellUrlAccess(v.ANDROID_SERIAL_NUM, v.CHECK_ACCESS_URL, self.__class__.__name__)
+            ret1 = chkAdbBrowserWebsite(v.ANDROID_SERIAL_NUM, v.CHECK_ACCESS_URL, self.__class__.__name__)
 
             option = {
                 'open': 1,
@@ -11641,7 +11641,7 @@ class AP_MIXEDPSK_WEB_ACCESS(TestCase):
 
             api.setWebAccessOpt(self.dut, self.__class__.__name__, **option)
 
-            ret2 = chkAdbShellUrlAccess(v.ANDROID_SERIAL_NUM, v.CHECK_ACCESS_URL, self.__class__.__name__)
+            ret2 = chkAdbBrowserWebsite(v.ANDROID_SERIAL_NUM, v.CHECK_ACCESS_URL, self.__class__.__name__)
 
             option = {
                 'open': 1,
@@ -11659,7 +11659,7 @@ class AP_MIXEDPSK_WEB_ACCESS(TestCase):
     def assoc_tkippsk_sta_access_web_5g(self):
         res5gConn = setAdbTkipPskSta(v.ANDROID_SERIAL_NUM, v.SSID_5G, v.KEY, "5g", self.__class__.__name__)
         if res5gConn:
-            ret1 = chkAdbShellUrlAccess(v.ANDROID_SERIAL_NUM, v.CHECK_ACCESS_URL, self.__class__.__name__)
+            ret1 = chkAdbBrowserWebsite(v.ANDROID_SERIAL_NUM, v.CHECK_ACCESS_URL, self.__class__.__name__)
 
             option = {
                 'open': 1,
@@ -11669,7 +11669,7 @@ class AP_MIXEDPSK_WEB_ACCESS(TestCase):
 
             api.setWebAccessOpt(self.dut, self.__class__.__name__, **option)
 
-            ret2 = chkAdbShellUrlAccess(v.ANDROID_SERIAL_NUM, v.CHECK_ACCESS_URL, self.__class__.__name__)
+            ret2 = chkAdbBrowserWebsite(v.ANDROID_SERIAL_NUM, v.CHECK_ACCESS_URL, self.__class__.__name__)
 
             option = {
                 'open': 1,

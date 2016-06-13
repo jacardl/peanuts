@@ -8,7 +8,7 @@ import matplotlib.pyplot as plt
 from openpyxl import Workbook, load_workbook
 from openpyxl.cell import column_index_from_string
 
-import var as v
+from var import *
 import data
 
 class ProcessReport(mp.Process):
@@ -132,7 +132,7 @@ class GetThroughputLog(threading.Thread):
     def __init__(self, report):
         threading.Thread.__init__(self)
         self.reportName = report
-        self.logPath = v.TEST_SUITE_LOG_PATH
+        self.logPath = TEST_SUITE_LOG_PATH
         self.dut2g = {
             '20tx': [],
             '20rx': [],
@@ -225,7 +225,7 @@ class GetThroughputLog(threading.Thread):
         report.close()
         if len(indexList) is not 0:
             try:
-                wb = load_workbook(v.MAIL_THROUGHPUT_XLSX_ORIGINAL)
+                wb = load_workbook(MAIL_THROUGHPUT_XLSX_ORIGINAL)
             except:
                 print "specified file no exists!"
                 return
@@ -256,9 +256,17 @@ class GetThroughputLog(threading.Thread):
                         y += 2
                         wb[tu[3]].cell(row=x, column=y).value = speedDict['rx']
                         break
-            wb.save(v.MAIL_THROUGHPUT_XLSX)
+            wb.save(MAIL_THROUGHPUT_XLSX)
 
             for key, value in self.dut2g.iteritems():
+                i = 0
+                count = len(value)
+                while i < count:
+                    if not isfloat(value[i]):
+                        value.pop(i)
+                        count = len(value)
+                    else:
+                        i += 1
                 if len(value) is not 0:
                     ave = round(float(reduce(lambda i, j: float(i)+float(j), value))/len(value), 2)
                     self.dut2g[key] = ave
@@ -266,6 +274,14 @@ class GetThroughputLog(threading.Thread):
                     self.dut2g[key] = 0
 
             for key, value in self.dut5g.iteritems():
+                i = 0
+                count = len(value)
+                while i < count:
+                    if not isfloat(value[i]):
+                        value.pop(i)
+                        count = len(value)
+                    else:
+                        i += 1
                 if len(value) is not 0:
                     ave = round(float(reduce(lambda i, j: float(i)+float(j), value))/len(value), 2)
                     self.dut5g[key] = ave
@@ -275,14 +291,22 @@ class GetThroughputLog(threading.Thread):
             # draw chart
             for value in self.dut2g.values():
                 if isinstance(value, float):
-                    drawThroughput2g(self.dut2g, v.MAIL_PIC2)
+                    drawThroughput2g(self.dut2g, MAIL_PIC2)
                     break
             for value in self.dut5g.values():
                 if isinstance(value, float):
-                    drawThroughput5g(self.dut5g, v.MAIL_PIC3)
+                    drawThroughput5g(self.dut5g, MAIL_PIC3)
                     break
 
             for key, value in self.lan2g.iteritems():
+                i = 0
+                count = len(value)
+                while i < count:
+                    if not isfloat(value[i]):
+                        value.pop(i)
+                        count = len(value)
+                    else:
+                        i += 1
                 if len(value) is not 0:
                     ave = round(float(reduce(lambda i, j: float(i)+float(j), value))/len(value), 2)
                     self.lan2g[key] = ave
@@ -290,6 +314,14 @@ class GetThroughputLog(threading.Thread):
                     self.lan2g[key] = 0
 
             for key, value in self.lan5g.iteritems():
+                i = 0
+                count = len(value)
+                while i < count:
+                    if not isfloat(value[i]):
+                        value.pop(i)
+                        count = len(value)
+                    else:
+                        i += 1
                 if len(value) is not 0:
                     ave = round(float(reduce(lambda i, j: float(i)+float(j), value))/len(value), 2)
                     self.lan5g[key] = ave
@@ -299,11 +331,11 @@ class GetThroughputLog(threading.Thread):
             # draw chart
             for value in self.lan2g.values():
                 if isinstance(value, float):
-                    drawThroughput2g(self.lan2g, v.MAIL_PIC5)
+                    drawThroughput2g(self.lan2g, MAIL_PIC5)
                     break
             for value in self.lan5g.values():
                 if isinstance(value, float):
-                    drawThroughput5g(self.lan5g, v.MAIL_PIC6)
+                    drawThroughput5g(self.lan5g, MAIL_PIC6)
                     break
 
 
@@ -316,7 +348,7 @@ def getThroughputLogVerbose(logfile):
         log = open(logfile)
         for line in log:
             if not line.isspace():
-                m = re.search('0\.0-\d{1,4}.*\s(\d{1,3}\.?\d{1,2})?\sMbits/sec', line)
+                m = re.search('0\.0-\d{1,4}.*\s(\d{1,}\.?\d{1,})?\sMbits/sec', line)
                 if m:
                     if result['tx'] is 0:
                         result['tx'] = m.group(1)
@@ -327,6 +359,15 @@ def getThroughputLogVerbose(logfile):
         log.close()
     except IOError as e:
         raise e
+    if float(result['tx']) >= WIFI_MAX_THROUGHPUT:
+        result['tx'] = 'BREAK'
+    elif float(result['tx']) == 0:
+        result['tx'] = 'ERROR'
+    if float(result['rx']) >= WIFI_MAX_THROUGHPUT:
+        result['rx'] = 'BREAK'
+    elif float(result['rx']) == 0:
+        result['rx'] = 'ERROR'
+
     return result
 
 
@@ -439,7 +480,7 @@ class GetOnlineLog(threading.Thread):
         threading.Thread.__init__(self)
         self.running = False
         self.reportName = report
-        self.logPath = v.TEST_SUITE_LOG_PATH
+        self.logPath = TEST_SUITE_LOG_PATH
         self.result = {
             "pass": 0,
             "fail": 0,
@@ -488,7 +529,7 @@ class GetTestModule(threading.Thread):
         threading.Thread.__init__(self)
         self.running = False
         self.reportName = report
-        self.logPath = v.TEST_SUITE_LOG_PATH
+        self.logPath = TEST_SUITE_LOG_PATH
         self.moduleDict = {
             'treeBasicApi': '基础功能',
             'treeGuestWifiApi': '访客网络',
@@ -534,28 +575,23 @@ def chkTestCaseModule(tcName, module):
     return False
 
 
+def isfloat(value):
+  try:
+    float(value)
+    return True
+  except ValueError:
+    return False
+
+
 if __name__ == '__main__':
-    # t.start()
-    # while t.isAlive():
-    #     print time.time()
-    # print getFlowLogVerbose("E:\peanuts\AP_MIXEDPSK_CHAN1_36_FLOW.log")
+    # print getThroughputLogVerbose("D:\Python\peanuts\AP_CLEAR_CHAN36_BW20_LAN_THROUGHPUT.log")
     # print getChannelFlowLogVerbose("E:\peanuts\AP_MIXEDPSK_CHAN1_36_FLOW.log")
-    # info = GetThroughputLog("report.log".decode("utf8").encode("gbk"))
-    # info.start()
+    info = GetThroughputLog("R1D 稳定版 2.14.5.log".decode("utf8").encode("gbk"))
+    info.start()
     # info.join()
-    t = GetTestModule("R1CM 开发版 2.11.13.log".decode('utf8').encode('gbk'))
-    t.start()
-    l = t.result
-    print l
-    # f = open('test.log')
-    # ret = f.readlines()
-    # f.close()
-    # f2 = open('ttt.log', 'a')
-    # for l in xrange(len(ret)):
-    #     ret[l] = re.sub('\r', '\n', ret[l])
-    # a = ret
-    # f2.writelines(ret)
-    # f2.close()
+    # t = GetTestModule("R1CM 开发版 2.11.13.log".decode('utf8').encode('gbk'))
+    # t.start()
+
 
 
 

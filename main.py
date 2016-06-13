@@ -422,7 +422,7 @@ class MemoryTrackPage(wx.Panel):
                 # (keepGoing, skip) = self.dlg.Update(memMon.curr_count, str(memMon.curr_count) + '/' + str(v.COUNT))
                 # t.sleep(1)
                 wx.Yield()  # refresh progress
-                (testKeepGoing, skip) = self.dlg.Pulse()
+                (keepGoing, skip) = self.dlg.Pulse()
                 t.sleep(0.1)
 
             self.dlg.Destroy()
@@ -820,6 +820,7 @@ class TestSuitePage(wx.Panel):
             v.SEND_MAIL = 1
         else:
             v.SEND_MAIL = 0
+
 
 class Frame(wx.Frame):
     def __init__(self):

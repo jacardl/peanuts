@@ -1,7 +1,8 @@
 # -*- coding: utf8 -*-
-from common import *
+from common2 import *
+import os
 
-VER = '3.5.5'
+VER = '3.5.6'
 
 TOOL_LIST = ["General", "Memory Tracking", "Test Suite"]
 
@@ -93,8 +94,6 @@ BSSID_5G = ''
 STA_MAC = ''
 STA_MAC_5G = ''
 
-FAIL_RETRY = 3
-
 CHANNEL1 = '1'
 CHANNEL6 = '6'
 CHANNEL11 = '11'
@@ -114,7 +113,30 @@ IPERF_TIME = "60"
 # IPERF_INTERVAL = "1"
 # IPERF_TIME = "5"
 
+QOS_MAXUP = 800
+QOS_MAXDOWN = 500
+
+ROOT_AP_SSID = "peanuts_automatic_test_root_ap_"
+ROOT_AP_PWD = "12345678"
+ROOT_AP_CHANNEL = 11
+
 UPLOAD_LOG = 1
+FAIL_RETRY = 3
+MEM_MONITOR_INTERVAL = 300
+
+# -------------api------------------#
+WEB_USERNAME = 'admin'
+WEB_PWD = '12345678'
+WEB_KEY = 'a2ffa5c9be07488bbb04a3a47d3c5f6a'
+IV = '64175472480004614961023454661220'
+# uci export account
+ACCOUNT_DEFAULT_PWD = 'b3a4190199d9ee7fe73ef9a4942a69fece39a771'
+
+# -------------process report------------------#
+WIFI_MAX_THROUGHPUT = 300
+
+
+# -------------mail------------------#
 SEND_MAIL = 1
 MAILTO_LIST = ['miwifi-test-wifi@xiaomi.com']
 MAIL_HOST = "mail.srv"  #设置服务器
@@ -133,21 +155,3 @@ MAIL_PIC6 = TEST_SUITE_LOG_PATH + "lan_to_5g.png"
 MAIL_XLSX = TEST_SUITE_LOG_PATH + "memory_tracking.xlsx"
 MAIL_THROUGHPUT_XLSX_ORIGINAL = "throughput.xlsx"
 MAIL_THROUGHPUT_XLSX = TEST_SUITE_LOG_PATH + MAIL_THROUGHPUT_XLSX_ORIGINAL
-
-MEM_MONITOR_INTERVAL = 300
-
-QOS_MAXUP = 800
-QOS_MAXDOWN = 500
-
-ROOT_AP_SSID = "peanuts_automatic_test_root_ap_"
-ROOT_AP_PWD = "12345678"
-ROOT_AP_CHANNEL = 11
-
-# -------------api test------------------#
-WEB_USERNAME = 'admin'
-WEB_PWD = '12345678'
-WEB_KEY = 'a2ffa5c9be07488bbb04a3a47d3c5f6a'
-IV = '64175472480004614961023454661220'
-# uci export account
-ACCOUNT_DEFAULT_PWD = 'b3a4190199d9ee7fe73ef9a4942a69fece39a771'
-

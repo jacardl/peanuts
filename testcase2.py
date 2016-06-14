@@ -6805,13 +6805,13 @@ class AP_RELAY_MIXEDPSK_CHAN_BW80(TestCase):
         ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
         ret2 = chkAdbDevice(v.ANDROID_SERIAL_NUM)
 
-        api.setLanAp(self.dut, self.__name__)
-
         if ret1 is False:
             raise Exception("Http connection is failed. please check your remote settings.")
 
         if ret2 is False:
             raise Exception("Device %s is not ready!" % v.ANDROID_SERIAL_NUM)
+
+        api.setLanAp(self.dut, self.__name__)
 
         option5g = {
             'wifiIndex': 2,
@@ -7081,13 +7081,13 @@ class AP_RELAY_MIXEDPSK_CHAN_BW20(TestCase):
         ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
         ret2 = chkAdbDevice(v.ANDROID_SERIAL_NUM)
 
-        api.setLanAp(self.dut, self.__name__)
-
         if ret1 is False:
             raise Exception("Http connection is failed. please check your remote settings.")
 
         if ret2 is False:
             raise Exception("Device %s is not ready!" % v.ANDROID_SERIAL_NUM)
+
+        api.setLanAp(self.dut, self.__name__)
 
         option2g = {
             'wifiIndex': 1,
@@ -7256,13 +7256,13 @@ class AP_RELAY_MIXEDPSK_SSIDSPEC(TestCase):
         ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
         ret2 = chkAdbDevice(v.ANDROID_SERIAL_NUM)
 
-        api.setLanAp(self.dut, self.__name__)
-
         if ret1 is False:
             raise Exception("Http connection is failed. please check your remote settings.")
 
         if ret2 is False:
             raise Exception("Device %s is not ready!" % v.ANDROID_SERIAL_NUM)
+
+        api.setLanAp(self.dut, self.__name__)
 
         option2g = {
             'wifiIndex': 1,
@@ -7424,13 +7424,13 @@ class AP_RELAY_MIXEDPSK_KEYSPEC(TestCase):
         ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
         ret2 = chkAdbDevice(v.ANDROID_SERIAL_NUM)
 
-        api.setLanAp(self.dut, self.__name__)
-
         if ret1 is False:
             raise Exception("Http connection is failed. please check your remote settings.")
 
         if ret2 is False:
             raise Exception("Device %s is not ready!" % v.ANDROID_SERIAL_NUM)
+
+        api.setLanAp(self.dut, self.__name__)
 
         option2g = {
             'wifiIndex': 1,
@@ -7595,13 +7595,13 @@ class AP_RELAY_MIXEDPSK_SSIDCHINESE(TestCase):
         ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
         ret2 = chkAdbDevice(v.ANDROID_SERIAL_NUM)
 
-        api.setLanAp(self.dut, self.__name__)
-
         if ret1 is False:
             raise Exception("Http connection is failed. please check your remote settings.")
 
         if ret2 is False:
             raise Exception("Device %s is not ready!" % v.ANDROID_SERIAL_NUM)
+
+        api.setLanAp(self.dut, self.__name__)
 
         option2g = {
             'wifiIndex': 1,
@@ -7763,13 +7763,13 @@ class AP_RELAY_MIXEDPSK_BSD(TestCase):
         ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
         ret2 = chkAdbDevice(v.ANDROID_SERIAL_NUM)
 
-        api.setLanAp(self.dut, self.__name__)
-
         if ret1 is False:
             raise Exception("Http connection is failed. please check your remote settings.")
 
         if ret2 is False:
             raise Exception("Device %s is not ready!" % v.ANDROID_SERIAL_NUM)
+
+        api.setLanAp(self.dut, self.__name__)
 
         option = {
             'bsd': 1,
@@ -7882,13 +7882,13 @@ class AP_RELAY_MIXEDPSK_BSD_SSIDHIDE(TestCase):
         ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
         ret2 = chkAdbDevice(v.ANDROID_SERIAL_NUM)
 
-        api.setLanAp(self.dut, self.__name__)
-
         if ret1 is False:
             raise Exception("Http connection is failed. please check your remote settings.")
 
         if ret2 is False:
             raise Exception("Device %s is not ready!" % v.ANDROID_SERIAL_NUM)
+
+        api.setLanAp(self.dut, self.__name__)
 
         option = {
             'bsd': 1,
@@ -8152,13 +8152,13 @@ class AP_RELAY_MIXEDPSK_SSIDHIDE(TestCase):
         ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
         ret2 = chkAdbDevice(v.ANDROID_SERIAL_NUM)
 
-        api.setLanAp(self.dut, self.__name__)
-
         if ret1 is False:
             raise Exception("Http connection is failed. please check your remote settings.")
 
         if ret2 is False:
             raise Exception("Device %s is not ready!" % v.ANDROID_SERIAL_NUM)
+
+        api.setLanAp(self.dut, self.__name__)
 
         option2g = {
             'wifiIndex': 1,

@@ -8542,7 +8542,7 @@ class AP_QOS_MIXEDPSK(TestCase):
             if result['ip'] == '':
                 self.fail(msg='no ip address got.')
             else:
-                speedTestRes = getAdbSpeedTestResult(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
+                speedTestRes = getAdbOoklaSpeedTestResult(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
                 self.assertLessEqual(speedTestRes['down'], v.QOS_MAXDOWN * 1.1,
                                      "Downlink rate %s KB/s exceed maxdown %s KB/s" % (
                                          speedTestRes['down'], v.QOS_MAXDOWN))
@@ -8559,7 +8559,7 @@ class AP_QOS_MIXEDPSK(TestCase):
             if result['ip'] == '':
                 self.fail(msg='no ip address got.')
             else:
-                speedTestRes = getAdbSpeedTestResult(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
+                speedTestRes = getAdbOoklaSpeedTestResult(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
                 self.assertLessEqual(speedTestRes['down'], v.QOS_MAXDOWN * 1.1,
                                      "Downlink rate %s KB/s exceed maxdown %s KB/s" % (
                                          speedTestRes['down'], v.QOS_MAXDOWN))
@@ -8576,7 +8576,7 @@ class AP_QOS_MIXEDPSK(TestCase):
             if result['ip'] == '':
                 self.fail(msg='no ip address got.')
             else:
-                speedTestRes = getAdbSpeedTestResult(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
+                speedTestRes = getAdbOoklaSpeedTestResult(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
                 self.assertLessEqual(speedTestRes['down'], v.QOS_MAXDOWN * 1.1,
                                      "Downlink rate %s KB/s exceed maxdown %s KB/s" % (
                                          speedTestRes['down'], v.QOS_MAXDOWN))
@@ -8593,7 +8593,7 @@ class AP_QOS_MIXEDPSK(TestCase):
             if result['ip'] == '':
                 self.fail(msg='no ip address got.')
             else:
-                speedTestRes = getAdbSpeedTestResult(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
+                speedTestRes = getAdbOoklaSpeedTestResult(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
                 self.assertLessEqual(speedTestRes['down'], v.QOS_MAXDOWN * 1.1,
                                      "Downlink rate %s KB/s exceed maxdown %s KB/s" % (
                                          speedTestRes['down'], v.QOS_MAXDOWN))
@@ -8610,7 +8610,7 @@ class AP_QOS_MIXEDPSK(TestCase):
             if result['ip'] == '':
                 self.fail(msg='no ip address got.')
             else:
-                speedTestRes = getAdbSpeedTestResult(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
+                speedTestRes = getAdbOoklaSpeedTestResult(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
                 self.assertLessEqual(speedTestRes['down'], v.QOS_MAXDOWN * 1.1,
                                      "Downlink rate %s KB/s exceed maxdown %s KB/s" % (
                                          speedTestRes['down'], v.QOS_MAXDOWN))
@@ -8627,7 +8627,7 @@ class AP_QOS_MIXEDPSK(TestCase):
             if result['ip'] == '':
                 self.fail(msg='no ip address got.')
             else:
-                speedTestRes = getAdbSpeedTestResult(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
+                speedTestRes = getAdbOoklaSpeedTestResult(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
                 self.assertLessEqual(speedTestRes['down'], v.QOS_MAXDOWN * 1.1,
                                      "Downlink rate %s KB/s exceed maxdown %s KB/s" % (
                                          speedTestRes['down'], v.QOS_MAXDOWN))
@@ -8644,7 +8644,7 @@ class AP_QOS_MIXEDPSK(TestCase):
             if result['ip'] == '':
                 self.fail(msg='no ip address got.')
             else:
-                speedTestRes = getAdbSpeedTestResult(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
+                speedTestRes = getAdbOoklaSpeedTestResult(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
                 self.assertLessEqual(speedTestRes['down'], v.QOS_MAXDOWN * 1.1,
                                      "Downlink rate %s KB/s exceed maxdown %s KB/s" % (
                                          speedTestRes['down'], v.QOS_MAXDOWN))
@@ -8661,7 +8661,7 @@ class AP_QOS_MIXEDPSK(TestCase):
             if result['ip'] == '':
                 self.fail(msg='no ip address got.')
             else:
-                speedTestRes = getAdbSpeedTestResult(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
+                speedTestRes = getAdbOoklaSpeedTestResult(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
                 self.assertLessEqual(speedTestRes['down'], v.QOS_MAXDOWN * 1.1,
                                      "Downlink rate %s KB/s exceed maxdown %s KB/s" % (
                                          speedTestRes['down'], v.QOS_MAXDOWN))
@@ -8745,7 +8745,7 @@ class AP_QOS_CLEAR(TestCase):
             if result['ip'] == '':
                 self.fail(msg='no ip address got.')
             else:
-                speedTestRes = getAdbSpeedTestResult(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
+                speedTestRes = getAdbOoklaSpeedTestResult(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
                 self.assertLessEqual(speedTestRes['down'], v.QOS_MAXDOWN * 1.1,
                                      "Downlink rate %s KB/s exceed maxdown %s KB/s" % (
                                          speedTestRes['down'], v.QOS_MAXDOWN))
@@ -8762,7 +8762,7 @@ class AP_QOS_CLEAR(TestCase):
             if result['ip'] == '':
                 self.fail(msg='no ip address got.')
             else:
-                speedTestRes = getAdbSpeedTestResult(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
+                speedTestRes = getAdbOoklaSpeedTestResult(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
                 self.assertLessEqual(speedTestRes['down'], v.QOS_MAXDOWN * 1.1,
                                      "Downlink rate %s KB/s exceed maxdown %s KB/s" % (
                                          speedTestRes['down'], v.QOS_MAXDOWN))
@@ -8848,7 +8848,7 @@ class AP_QOS_PSK2(TestCase):
             if result['ip'] == '':
                 self.fail(msg='no ip address got.')
             else:
-                speedTestRes = getAdbSpeedTestResult(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
+                speedTestRes = getAdbOoklaSpeedTestResult(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
                 self.assertLessEqual(speedTestRes['down'], v.QOS_MAXDOWN * 1.1,
                                      "Downlink rate %s KB/s exceed maxdown %s KB/s" % (
                                          speedTestRes['down'], v.QOS_MAXDOWN))
@@ -8865,7 +8865,7 @@ class AP_QOS_PSK2(TestCase):
             if result['ip'] == '':
                 self.fail(msg='no ip address got.')
             else:
-                speedTestRes = getAdbSpeedTestResult(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
+                speedTestRes = getAdbOoklaSpeedTestResult(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
                 self.assertLessEqual(speedTestRes['down'], v.QOS_MAXDOWN * 1.1,
                                      "Downlink rate %s KB/s exceed maxdown %s KB/s" % (
                                          speedTestRes['down'], v.QOS_MAXDOWN))
@@ -8927,7 +8927,7 @@ class AP_QOS_GUEST_MIXEDPSK(TestCase):
             if result['ip'] == '':
                 self.fail(msg='no ip address got.')
             else:
-                speedTestRes = getAdbSpeedTestResult(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
+                speedTestRes = getAdbOoklaSpeedTestResult(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
                 self.assertLessEqual(speedTestRes['down'], self.guestQos['guest']['down'] * 1.1,
                                      "Downlink rate %s KB/s exceed maxdown %s KB/s" % (
                                          speedTestRes['down'], self.guestQos['guest']['down']))
@@ -8945,7 +8945,7 @@ class AP_QOS_GUEST_MIXEDPSK(TestCase):
             if result['ip'] == '':
                 self.fail(msg='no ip address got.')
             else:
-                speedTestRes = getAdbSpeedTestResult(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
+                speedTestRes = getAdbOoklaSpeedTestResult(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
                 self.assertLessEqual(speedTestRes['down'], self.guestQos['guest']['down'] * 1.1,
                                      "Downlink rate %s KB/s exceed maxdown %s KB/s" % (
                                          speedTestRes['down'], self.guestQos['guest']['down']))
@@ -8963,7 +8963,7 @@ class AP_QOS_GUEST_MIXEDPSK(TestCase):
             if result['ip'] == '':
                 self.fail(msg='no ip address got.')
             else:
-                speedTestRes = getAdbSpeedTestResult(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
+                speedTestRes = getAdbOoklaSpeedTestResult(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
                 self.assertLessEqual(speedTestRes['down'], self.guestQos['guest']['down'] * 1.1,
                                      "Downlink rate %s KB/s exceed maxdown %s KB/s" % (
                                          speedTestRes['down'], self.guestQos['guest']['down']))
@@ -8981,7 +8981,7 @@ class AP_QOS_GUEST_MIXEDPSK(TestCase):
             if result['ip'] == '':
                 self.fail(msg='no ip address got.')
             else:
-                speedTestRes = getAdbSpeedTestResult(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
+                speedTestRes = getAdbOoklaSpeedTestResult(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
                 self.assertLessEqual(speedTestRes['down'], self.guestQos['guest']['down'] * 1.1,
                                      "Downlink rate %s KB/s exceed maxdown %s KB/s" % (
                                          speedTestRes['down'], self.guestQos['guest']['down']))

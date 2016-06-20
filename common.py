@@ -1803,6 +1803,37 @@ def getAdbOoklaSpeedTestShot(device, filename, logname):
     return False
 
 
+def getAdbOoklaSpeedTestResult(device, logname):
+    """
+    com.testookla.TestOokla:
+    Failure in test_ookla_speedtest_result:
+    junit.framework.AssertionFailedError: downlink rate: 19.40 Mbps, uplink rate: 18.64 Mbps
+    at com.testookla.TestOokla.test_ookla_speedtest_result(TestOokla.java:70)
+    at android.test.InstrumentationTestCase.runMethod(InstrumentationTestCase.java:214)
+    at android.test.InstrumentationTestCase.runTest(InstrumentationTestCase.java:199)
+    at android.test.ActivityInstrumentationTestCase2.runTest(ActivityInstrumentationTestCase2.java:192)
+    at android.test.AndroidTestRunner.runTest(AndroidTestRunner.java:191)
+    at android.test.AndroidTestRunner.runTest(AndroidTestRunner.java:176)
+    at android.test.InstrumentationTestRunner.onStart(InstrumentationTestRunner.java:555)
+    at android.app.Instrumentation$InstrumentationThread.run(Instrumentation.java:1853)
+    """
+    command = "am instrument -e class com.testookla.TestOokla#test_ookla_speedtest_result " \
+              "-w com.testookla/android.test.InstrumentationTestRunner"
+    result = {
+        'up': "",
+        'down': "",
+    }
+    ret = setAdbShell(device, command, logname)
+    for line in ret:
+        m = re.search('downlink rate: (.*) Mbps, uplink rate: (.*) Mbps', line)
+        if m:
+            # change units from Mbps to KB/s
+            result['down'] = float(m.group(1)) * 1024/8
+            result['up'] = float(m.group(2)) * 1024/8
+            return result
+    return result
+
+
 def getAdbSpeedTestResult(device, logname):
     """
     Running tests
@@ -1916,5 +1947,5 @@ def chkAdbBrowserWebsite(device, url, logname):
 
 if __name__ == '__main__':
     device = getAdbDevices()
-    print getAdbFile(device[0], 'normal.jpg', "a")
+    print getAdbOoklaSpeedTestResult(device[0], "a")
 

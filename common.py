@@ -1758,6 +1758,10 @@ def getAdbPingStatus(terminal, target, count, logname):
     return result
 
 
+def getAdbOoklaSpeedTestShot(device, shotname, logname):
+    pass
+
+
 def getAdbSpeedTestResult(device, logname):
     """
     Running tests

@@ -79,6 +79,7 @@ SPECIAL_KEY = generateRandomString(SPEC_RANGE, 63)
 REPORT_NAME = ""
 REPORT_FILE_NAME = ""
 TEST_SUITE_LOG_PATH = os.getcwd() + os.sep + "TEST_SUITE_LOG" + os.sep
+OOKLA_SHOT_PATH = TEST_SUITE_LOG_PATH + "OOKLA" + os.sep
 IPERF_PATH = os.getcwd() + os.sep + "iperf" + os.sep
 DEFAULT_PATH = os.getcwd() + os.sep
 SSH_LOG_PATH = DEFAULT_PATH + "ssh_connection.log"
@@ -118,7 +119,7 @@ QOS_MAXDOWN = 500
 
 ROOT_AP_SSID = "peanuts_automatic_test_root_ap_"
 ROOT_AP_PWD = "12345678"
-ROOT_AP_CHANNEL = 11
+# ROOT_AP_CHANNEL = 11
 
 UPLOAD_LOG = 1
 FAIL_RETRY = 3

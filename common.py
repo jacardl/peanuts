@@ -1759,16 +1759,24 @@ def getAdbPingStatus(terminal, target, count, logname):
 
 
 def getAdbFile(device, filename, logname):
-    pass
+    command = 'pull /sdcard/Robotium-Screenshots/ookla.png ' + filename
+    ret = setAdbShell(device, command, logname)
+    for line in ret:
+        m = re.search('bytes in')
+        if m:
+            return True
+    return False
 
 
-def getAdbOoklaSpeedTestShot(device, shotname, logname):
+def getAdbOoklaSpeedTestShot(device, filename, logname):
     command = "am instrument -e class com.speedtest_test.TestOokla#test_Ookla_speedtest -w com.speedtest_test/com.xxxx"
     ret = setAdbShell(device, command, logname)
+    result = getAdbFile(device, filename, logname)
     for line in ret:
         m = re.search('OK', line)
         if m:
-            return True
+            if result is True:
+                return True
     return False
 
 
@@ -1870,6 +1878,7 @@ def chkAdb5gFreq(device, logname):
         if m is not None:
             return True
     return False
+
 
 def chkAdbBrowserWebsite(device, url, logname):
     command = "am instrument -e url %s -e class com.peanutswifi.ApplicationTest#test_browser_website " \

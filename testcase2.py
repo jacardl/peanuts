@@ -4948,7 +4948,6 @@ class AP_RELAY_CLEAR_CHAN(TestCase):
         api.setWifi(self.dut, self.__name__, **option5g)
 
         api.setDisableLanAp(self.dut, self.__name__)
-        v.HOST = v.HOST_ORIGINAL
         self.dut.close()
 
     def assoc_clear_sta_2g(self):
@@ -5026,7 +5025,6 @@ class AP_RELAY_CLEAR_LOW(TestCase):
         api.setWifi(self.dut, self.__name__, **option5g)
 
         api.setDisableLanAp(self.dut, self.__name__)
-        v.HOST = v.HOST_ORIGINAL
         self.dut.close()
 
     def assoc_clear_sta_2g(self):
@@ -5102,7 +5100,6 @@ class AP_RELAY_CLEAR_MID(TestCase):
         api.setWifi(self.dut, self.__name__, **option5g)
 
         api.setDisableLanAp(self.dut, self.__name__)
-        v.HOST = v.HOST_ORIGINAL
 
         self.dut.close()
 
@@ -5181,7 +5178,6 @@ class AP_RELAY_CLEAR_HIGH(TestCase):
         api.setWifi(self.dut, self.__name__, **option5g)
 
         api.setDisableLanAp(self.dut, self.__name__)
-        v.HOST = v.HOST_ORIGINAL
 
         self.dut.close()
 
@@ -5245,7 +5241,6 @@ class AP_RELAY_CLEAR_LOW_TXPOWER(TestCase):
         api.setWifi(self.dut2, self.__name__, **option5g)
 
         api.setDisableLanAp(self.dut2, self.__name__)
-        v.HOST = v.HOST_ORIGINAL
 
         self.dut.close()
         self.dut2.close()
@@ -5666,7 +5661,7 @@ class AP_RELAY_CLEAR_MID_TXPOWER(TestCase):
         api.setWifi(self.dut2, self.__name__, **option5g)
 
         api.setDisableLanAp(self.dut2, self.__name__)
-        v.HOST = v.HOST_ORIGINAL
+        
         self.dut.close()
         self.dut2.close()
 
@@ -6093,7 +6088,6 @@ class AP_RELAY_CLEAR_HIGH_TXPOWER(TestCase):
         api.setWifi(self.dut2, self.__name__, **option5g)
 
         api.setDisableLanAp(self.dut2, self.__name__)
-        v.HOST = v.HOST_ORIGINAL
 
         self.dut.close()
         self.dut2.close()
@@ -6510,7 +6504,6 @@ class AP_RELAY_CLEAR_CHANSELECTION(TestCase):
         api.setWifi(self.dut, self.__name__, **option5g)
 
         api.setDisableLanAp(self.dut, self.__name__)
-        v.HOST = v.HOST_ORIGINAL
 
         self.dut.close()
 
@@ -6592,7 +6585,6 @@ class AP_RELAY_PSK2(TestCase):
         api.setWifi(self.dut, self.__name__, **option5g)
 
         api.setDisableLanAp(self.dut, self.__name__)
-        v.HOST = v.HOST_ORIGINAL
 
         self.dut.close()
 
@@ -6662,7 +6654,6 @@ class AP_RELAY_MIXEDPSK(TestCase):
     def tearDownClass(self):
 
         api.setDisableLanAp(self.dut, self.__name__)
-        v.HOST = v.HOST_ORIGINAL
 
         option2g = {
             'wifiIndex': 1,
@@ -6805,13 +6796,13 @@ class AP_RELAY_MIXEDPSK_CHAN_BW80(TestCase):
         ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
         ret2 = chkAdbDevice(v.ANDROID_SERIAL_NUM)
 
-        api.setLanAp(self.dut, self.__name__)
-
         if ret1 is False:
             raise Exception("Http connection is failed. please check your remote settings.")
 
         if ret2 is False:
             raise Exception("Device %s is not ready!" % v.ANDROID_SERIAL_NUM)
+
+        api.setLanAp(self.dut, self.__name__)
 
         option5g = {
             'wifiIndex': 2,
@@ -6828,7 +6819,6 @@ class AP_RELAY_MIXEDPSK_CHAN_BW80(TestCase):
     def tearDownClass(self):
 
         api.setDisableLanAp(self.dut, self.__name__)
-        v.HOST = v.HOST_ORIGINAL
 
         option5g = {
             'wifiIndex': 2,
@@ -6938,7 +6928,6 @@ class AP_RELAY_MIXEDPSK_CHAN_BW40(TestCase):
     def tearDownClass(self):
 
         api.setDisableLanAp(self.dut, self.__name__)
-        v.HOST = v.HOST_ORIGINAL
 
         option2g = {
             'wifiIndex': 1,
@@ -7081,13 +7070,13 @@ class AP_RELAY_MIXEDPSK_CHAN_BW20(TestCase):
         ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
         ret2 = chkAdbDevice(v.ANDROID_SERIAL_NUM)
 
-        api.setLanAp(self.dut, self.__name__)
-
         if ret1 is False:
             raise Exception("Http connection is failed. please check your remote settings.")
 
         if ret2 is False:
             raise Exception("Device %s is not ready!" % v.ANDROID_SERIAL_NUM)
+
+        api.setLanAp(self.dut, self.__name__)
 
         option2g = {
             'wifiIndex': 1,
@@ -7113,7 +7102,6 @@ class AP_RELAY_MIXEDPSK_CHAN_BW20(TestCase):
     def tearDownClass(self):
 
         api.setDisableLanAp(self.dut, self.__name__)
-        v.HOST = v.HOST_ORIGINAL
 
         option2g = {
             'wifiIndex': 1,
@@ -7256,13 +7244,13 @@ class AP_RELAY_MIXEDPSK_SSIDSPEC(TestCase):
         ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
         ret2 = chkAdbDevice(v.ANDROID_SERIAL_NUM)
 
-        api.setLanAp(self.dut, self.__name__)
-
         if ret1 is False:
             raise Exception("Http connection is failed. please check your remote settings.")
 
         if ret2 is False:
             raise Exception("Device %s is not ready!" % v.ANDROID_SERIAL_NUM)
+
+        api.setLanAp(self.dut, self.__name__)
 
         option2g = {
             'wifiIndex': 1,
@@ -7284,7 +7272,6 @@ class AP_RELAY_MIXEDPSK_SSIDSPEC(TestCase):
     def tearDownClass(self):
 
         api.setDisableLanAp(self.dut, self.__name__)
-        v.HOST = v.HOST_ORIGINAL
 
         option2g = {
             'wifiIndex': 1,
@@ -7424,13 +7411,13 @@ class AP_RELAY_MIXEDPSK_KEYSPEC(TestCase):
         ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
         ret2 = chkAdbDevice(v.ANDROID_SERIAL_NUM)
 
-        api.setLanAp(self.dut, self.__name__)
-
         if ret1 is False:
             raise Exception("Http connection is failed. please check your remote settings.")
 
         if ret2 is False:
             raise Exception("Device %s is not ready!" % v.ANDROID_SERIAL_NUM)
+
+        api.setLanAp(self.dut, self.__name__)
 
         option2g = {
             'wifiIndex': 1,
@@ -7452,7 +7439,6 @@ class AP_RELAY_MIXEDPSK_KEYSPEC(TestCase):
     def tearDownClass(self):
 
         api.setDisableLanAp(self.dut, self.__name__)
-        v.HOST = v.HOST_ORIGINAL
 
         option2g = {
             'wifiIndex': 1,
@@ -7595,13 +7581,13 @@ class AP_RELAY_MIXEDPSK_SSIDCHINESE(TestCase):
         ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
         ret2 = chkAdbDevice(v.ANDROID_SERIAL_NUM)
 
-        api.setLanAp(self.dut, self.__name__)
-
         if ret1 is False:
             raise Exception("Http connection is failed. please check your remote settings.")
 
         if ret2 is False:
             raise Exception("Device %s is not ready!" % v.ANDROID_SERIAL_NUM)
+
+        api.setLanAp(self.dut, self.__name__)
 
         option2g = {
             'wifiIndex': 1,
@@ -7623,7 +7609,6 @@ class AP_RELAY_MIXEDPSK_SSIDCHINESE(TestCase):
     def tearDownClass(self):
 
         api.setDisableLanAp(self.dut, self.__name__)
-        v.HOST = v.HOST_ORIGINAL
 
         option2g = {
             'wifiIndex': 1,
@@ -7763,13 +7748,13 @@ class AP_RELAY_MIXEDPSK_BSD(TestCase):
         ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
         ret2 = chkAdbDevice(v.ANDROID_SERIAL_NUM)
 
-        api.setLanAp(self.dut, self.__name__)
-
         if ret1 is False:
             raise Exception("Http connection is failed. please check your remote settings.")
 
         if ret2 is False:
             raise Exception("Device %s is not ready!" % v.ANDROID_SERIAL_NUM)
+
+        api.setLanAp(self.dut, self.__name__)
 
         option = {
             'bsd': 1,
@@ -7783,7 +7768,6 @@ class AP_RELAY_MIXEDPSK_BSD(TestCase):
     def tearDownClass(self):
 
         api.setDisableLanAp(self.dut, self.__name__)
-        v.HOST = v.HOST_ORIGINAL
 
         api.setAllWifi(self.dut, self.__name__)
         option2g = {
@@ -7882,13 +7866,13 @@ class AP_RELAY_MIXEDPSK_BSD_SSIDHIDE(TestCase):
         ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
         ret2 = chkAdbDevice(v.ANDROID_SERIAL_NUM)
 
-        api.setLanAp(self.dut, self.__name__)
-
         if ret1 is False:
             raise Exception("Http connection is failed. please check your remote settings.")
 
         if ret2 is False:
             raise Exception("Device %s is not ready!" % v.ANDROID_SERIAL_NUM)
+
+        api.setLanAp(self.dut, self.__name__)
 
         option = {
             'bsd': 1,
@@ -7903,7 +7887,6 @@ class AP_RELAY_MIXEDPSK_BSD_SSIDHIDE(TestCase):
     def tearDownClass(self):
 
         api.setDisableLanAp(self.dut, self.__name__)
-        v.HOST = v.HOST_ORIGINAL
 
         api.setAllWifi(self.dut, self.__name__)
         option2g = {
@@ -8014,7 +7997,6 @@ class AP_RELAY_SSIDHIDE(TestCase):
     def tearDownClass(self):
 
         api.setDisableLanAp(self.dut, self.__name__)
-        v.HOST = v.HOST_ORIGINAL
 
         self.dut.close()
 
@@ -8152,13 +8134,13 @@ class AP_RELAY_MIXEDPSK_SSIDHIDE(TestCase):
         ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
         ret2 = chkAdbDevice(v.ANDROID_SERIAL_NUM)
 
-        api.setLanAp(self.dut, self.__name__)
-
         if ret1 is False:
             raise Exception("Http connection is failed. please check your remote settings.")
 
         if ret2 is False:
             raise Exception("Device %s is not ready!" % v.ANDROID_SERIAL_NUM)
+
+        api.setLanAp(self.dut, self.__name__)
 
         option2g = {
             'wifiIndex': 1,
@@ -8182,7 +8164,6 @@ class AP_RELAY_MIXEDPSK_SSIDHIDE(TestCase):
     def tearDownClass(self):
 
         api.setDisableLanAp(self.dut, self.__name__)
-        v.HOST = v.HOST_ORIGINAL
 
         option2g = {
             'wifiIndex': 1,
@@ -8337,7 +8318,6 @@ class AP_RELAY_BSD_SSIDHIDE(TestCase):
     def tearDownClass(self):
 
         api.setDisableLanAp(self.dut, self.__name__)
-        v.HOST = v.HOST_ORIGINAL
 
         self.dut.close()
 
@@ -8442,7 +8422,6 @@ class AP_RELAY_CONFIG_CHECK(TestCase):
         self.relayGuest = api.getWifiDetailDic(self.dut, self.__name__, "guest")
 
         api.setDisableLanAp(self.dut, self.__name__)
-        v.HOST = v.HOST_ORIGINAL
 
         self.router2g = api.getWifiDetailDic(self.dut, self.__name__, "2g")
         self.router5g = api.getWifiDetailDic(self.dut, self.__name__, "5g")
@@ -9056,7 +9035,7 @@ class AP_WIRELESS_RELAY_CLEAR_CHAN(TestCase):
     def tearDownClass(self):
 
         api.setDisableAp(self.dut, self.__name__)
-        v.HOST = v.HOST_ORIGINAL
+        
         self.dut.close()
 
     def assoc_clear_sta_2g(self):
@@ -9120,7 +9099,6 @@ class AP_WIRELESS_RELAY_PSK2(TestCase):
     def tearDownClass(self):
 
         api.setDisableAp(self.dut, self.__name__)
-        v.HOST = v.HOST_ORIGINAL
 
         self.dut.close()
 
@@ -9185,7 +9163,6 @@ class AP_WIRELESS_RELAY_MIXEDPSK(TestCase):
     def tearDownClass(self):
 
         api.setDisableAp(self.dut, self.__name__)
-        v.HOST = v.HOST_ORIGINAL
 
         self.dut.close()
 
@@ -9360,7 +9337,6 @@ class AP_WIRELESS_RELAY_MIXEDPSK_SSIDHIDE(TestCase):
     def tearDownClass(self):
 
         api.setDisableAp(self.dut, self.__name__)
-        v.HOST = v.HOST_ORIGINAL
 
         self.dut.close()
 
@@ -9515,7 +9491,6 @@ class AP_WIRELESS_RELAY_MIXEDPSK_SSIDSPEC(TestCase):
     def tearDownClass(self):
 
         api.setDisableAp(self.dut, self.__name__)
-        v.HOST = v.HOST_ORIGINAL
 
         self.dut.close()
 
@@ -9675,7 +9650,6 @@ class AP_WIRELESS_RELAY_MIXEDPSK_KEYSPEC(TestCase):
     def tearDownClass(self):
 
         api.setDisableAp(self.dut, self.__name__)
-        v.HOST = v.HOST_ORIGINAL
 
         self.dut.close()
 
@@ -9838,7 +9812,6 @@ class AP_WIRELESS_RELAY_MIXEDPSK_SSIDCHINESE(TestCase):
     def tearDownClass(self):
 
         api.setDisableAp(self.dut, self.__name__)
-        v.HOST = v.HOST_ORIGINAL
 
         self.dut.close()
 
@@ -10013,7 +9986,6 @@ class AP_WIRELESS_RELAY_CLEAR_LOW(TestCase):
     def tearDownClass(self):
 
         api.setDisableAp(self.dut, self.__name__)
-        v.HOST = v.HOST_ORIGINAL
 
         self.dut.close()
 
@@ -10091,7 +10063,6 @@ class AP_WIRELESS_RELAY_CLEAR_MID(TestCase):
     def tearDownClass(self):
 
         api.setDisableAp(self.dut, self.__name__)
-        v.HOST = v.HOST_ORIGINAL
 
         self.dut.close()
 
@@ -10171,7 +10142,6 @@ class AP_WIRELESS_RELAY_CLEAR_HIGH(TestCase):
     def tearDownClass(self):
 
         api.setDisableAp(self.dut, self.__name__)
-        v.HOST = v.HOST_ORIGINAL
 
         self.dut.close()
 
@@ -10231,7 +10201,6 @@ class AP_WIRELESS_RELAY_CLEAR_CHANSELECTION(TestCase):
     def tearDownClass(self):
 
         api.setDisableAp(self.dut, self.__name__)
-        v.HOST = v.HOST_ORIGINAL
 
         self.dut.close()
 
@@ -10309,7 +10278,6 @@ class AP_WIRELESS_RELAY_MIXEDPSK_CHAN_BW80(TestCase):
     def tearDownClass(self):
 
         api.setDisableAp(self.dut, self.__name__)
-        v.HOST = v.HOST_ORIGINAL
 
         self.dut.close()
 
@@ -10423,7 +10391,7 @@ class AP_WIRELESS_RELAY_MIXEDPSK_CHAN_BW40(TestCase):
     def tearDownClass(self):
 
         api.setDisableAp(self.dut, self.__name__)
-        v.HOST = v.HOST_ORIGINAL
+        
         self.dut.close()
 
     def assoc_psk2_sta_5g(self):
@@ -10596,7 +10564,6 @@ class AP_WIRELESS_RELAY_MIXEDPSK_CHAN_BW20(TestCase):
     def tearDownClass(self):
 
         api.setDisableAp(self.dut, self.__name__)
-        v.HOST = v.HOST_ORIGINAL
 
         self.dut.close()
 
@@ -10759,7 +10726,6 @@ class AP_WIRELESS_RELAY_MIXEDPSK_BSD(TestCase):
     def tearDownClass(self):
 
         api.setDisableAp(self.dut, self.__name__)
-        v.HOST = v.HOST_ORIGINAL
 
         api.setAllWifi(self.dut, self.__name__)
         option2g = {
@@ -10890,7 +10856,6 @@ class AP_WIRELESS_RELAY_MIXEDPSK_BSD_SSIDHIDE(TestCase):
     def tearDownClass(self):
 
         api.setDisableAp(self.dut, self.__name__)
-        v.HOST = v.HOST_ORIGINAL
 
         api.setAllWifi(self.dut, self.__name__)
         option2g = {
@@ -11012,7 +10977,6 @@ class AP_WIRELESS_RELAY_SSIDHIDE(TestCase):
     def tearDownClass(self):
 
         api.setDisableAp(self.dut, self.__name__)
-        v.HOST = v.HOST_ORIGINAL
 
         self.dut.close()
 
@@ -11173,7 +11137,6 @@ class AP_WIRELESS_RELAY_BSD_SSIDHIDE(TestCase):
     def tearDownClass(self):
 
         api.setDisableAp(self.dut, self.__name__)
-        v.HOST = v.HOST_ORIGINAL
 
         self.dut.close()
 
@@ -11288,7 +11251,6 @@ class AP_WIRELESS_RELAY_CONFIG_CHECK(TestCase):
         self.relayConfGuest = api.getWifiDetailDic(self.dut, self.__name__, "guest")
 
         api.setDisableAp(self.dut, self.__name__)
-        v.HOST = v.HOST_ORIGINAL
 
     @classmethod
     def tearDownClass(self):
@@ -11338,7 +11300,7 @@ class AP_WIRELESS_RELAY_SCAN(TestCase):
     def tearDownClass(self):
 
         self.dut.close()
-        v.HOST = v.HOST_ORIGINAL
+        
 
     def scan_radio_on_2g(self):
 
@@ -11463,7 +11425,7 @@ class AP_MIXEDPSK_WEB_ACCESS(TestCase):
     def assoc_psk2_sta_access_web_2g(self):
         res2gConn = setAdbPsk2Sta(v.ANDROID_SERIAL_NUM, v.SSID, v.KEY, "2g", self.__class__.__name__)
         if res2gConn:
-            ret1 = chkAdbShellUrlAccess(v.ANDROID_SERIAL_NUM, v.CHECK_ACCESS_URL, self.__class__.__name__)
+            ret1 = chkAdbBrowserWebsite(v.ANDROID_SERIAL_NUM, v.CHECK_ACCESS_URL, self.__class__.__name__)
 
             option = {
                 'open': 1,
@@ -11473,7 +11435,7 @@ class AP_MIXEDPSK_WEB_ACCESS(TestCase):
 
             api.setWebAccessOpt(self.dut, self.__class__.__name__, **option)
 
-            ret2 = chkAdbShellUrlAccess(v.ANDROID_SERIAL_NUM, v.CHECK_ACCESS_URL, self.__class__.__name__)
+            ret2 = chkAdbBrowserWebsite(v.ANDROID_SERIAL_NUM, v.CHECK_ACCESS_URL, self.__class__.__name__)
 
             option = {
                 'open': 1,
@@ -11491,7 +11453,7 @@ class AP_MIXEDPSK_WEB_ACCESS(TestCase):
     def assoc_psk_sta_access_web_2g(self):
         res2gConn = setAdbPskSta(v.ANDROID_SERIAL_NUM, v.SSID, v.KEY, "2g", self.__class__.__name__)
         if res2gConn:
-            ret1 = chkAdbShellUrlAccess(v.ANDROID_SERIAL_NUM, v.CHECK_ACCESS_URL, self.__class__.__name__)
+            ret1 = chkAdbBrowserWebsite(v.ANDROID_SERIAL_NUM, v.CHECK_ACCESS_URL, self.__class__.__name__)
 
             option = {
                 'open': 1,
@@ -11501,7 +11463,7 @@ class AP_MIXEDPSK_WEB_ACCESS(TestCase):
 
             api.setWebAccessOpt(self.dut, self.__class__.__name__, **option)
 
-            ret2 = chkAdbShellUrlAccess(v.ANDROID_SERIAL_NUM, v.CHECK_ACCESS_URL, self.__class__.__name__)
+            ret2 = chkAdbBrowserWebsite(v.ANDROID_SERIAL_NUM, v.CHECK_ACCESS_URL, self.__class__.__name__)
 
             option = {
                 'open': 1,
@@ -11519,7 +11481,7 @@ class AP_MIXEDPSK_WEB_ACCESS(TestCase):
     def assoc_tkippsk2_sta_access_web_2g(self):
         res2gConn = setAdbTkipPsk2Sta(v.ANDROID_SERIAL_NUM, v.SSID, v.KEY, "2g", self.__class__.__name__)
         if res2gConn:
-            ret1 = chkAdbShellUrlAccess(v.ANDROID_SERIAL_NUM, v.CHECK_ACCESS_URL, self.__class__.__name__)
+            ret1 = chkAdbBrowserWebsite(v.ANDROID_SERIAL_NUM, v.CHECK_ACCESS_URL, self.__class__.__name__)
 
             option = {
                 'open': 1,
@@ -11529,7 +11491,7 @@ class AP_MIXEDPSK_WEB_ACCESS(TestCase):
 
             api.setWebAccessOpt(self.dut, self.__class__.__name__, **option)
 
-            ret2 = chkAdbShellUrlAccess(v.ANDROID_SERIAL_NUM, v.CHECK_ACCESS_URL, self.__class__.__name__)
+            ret2 = chkAdbBrowserWebsite(v.ANDROID_SERIAL_NUM, v.CHECK_ACCESS_URL, self.__class__.__name__)
 
             option = {
                 'open': 1,
@@ -11547,7 +11509,7 @@ class AP_MIXEDPSK_WEB_ACCESS(TestCase):
     def assoc_tkippsk_sta_access_web_2g(self):
         res2gConn = setAdbTkipPskSta(v.ANDROID_SERIAL_NUM, v.SSID, v.KEY, "2g", self.__class__.__name__)
         if res2gConn:
-            ret1 = chkAdbShellUrlAccess(v.ANDROID_SERIAL_NUM, v.CHECK_ACCESS_URL, self.__class__.__name__)
+            ret1 = chkAdbBrowserWebsite(v.ANDROID_SERIAL_NUM, v.CHECK_ACCESS_URL, self.__class__.__name__)
 
             option = {
                 'open': 1,
@@ -11557,7 +11519,7 @@ class AP_MIXEDPSK_WEB_ACCESS(TestCase):
 
             api.setWebAccessOpt(self.dut, self.__class__.__name__, **option)
 
-            ret2 = chkAdbShellUrlAccess(v.ANDROID_SERIAL_NUM, v.CHECK_ACCESS_URL, self.__class__.__name__)
+            ret2 = chkAdbBrowserWebsite(v.ANDROID_SERIAL_NUM, v.CHECK_ACCESS_URL, self.__class__.__name__)
 
             option = {
                 'open': 1,
@@ -11575,7 +11537,7 @@ class AP_MIXEDPSK_WEB_ACCESS(TestCase):
     def assoc_psk2_sta_access_web_5g(self):
         res5gConn = setAdbPsk2Sta(v.ANDROID_SERIAL_NUM, v.SSID_5G, v.KEY, "5g", self.__class__.__name__)
         if res5gConn:
-            ret1 = chkAdbShellUrlAccess(v.ANDROID_SERIAL_NUM, v.CHECK_ACCESS_URL, self.__class__.__name__)
+            ret1 = chkAdbBrowserWebsite(v.ANDROID_SERIAL_NUM, v.CHECK_ACCESS_URL, self.__class__.__name__)
 
             option = {
                 'open': 1,
@@ -11585,7 +11547,7 @@ class AP_MIXEDPSK_WEB_ACCESS(TestCase):
 
             api.setWebAccessOpt(self.dut, self.__class__.__name__, **option)
 
-            ret2 = chkAdbShellUrlAccess(v.ANDROID_SERIAL_NUM, v.CHECK_ACCESS_URL, self.__class__.__name__)
+            ret2 = chkAdbBrowserWebsite(v.ANDROID_SERIAL_NUM, v.CHECK_ACCESS_URL, self.__class__.__name__)
 
             option = {
                 'open': 1,
@@ -11603,7 +11565,7 @@ class AP_MIXEDPSK_WEB_ACCESS(TestCase):
     def assoc_psk_sta_access_web_5g(self):
         res5gConn = setAdbPskSta(v.ANDROID_SERIAL_NUM, v.SSID_5G, v.KEY, "5g", self.__class__.__name__)
         if res5gConn:
-            ret1 = chkAdbShellUrlAccess(v.ANDROID_SERIAL_NUM, v.CHECK_ACCESS_URL, self.__class__.__name__)
+            ret1 = chkAdbBrowserWebsite(v.ANDROID_SERIAL_NUM, v.CHECK_ACCESS_URL, self.__class__.__name__)
 
             option = {
                 'open': 1,
@@ -11613,7 +11575,7 @@ class AP_MIXEDPSK_WEB_ACCESS(TestCase):
 
             api.setWebAccessOpt(self.dut, self.__class__.__name__, **option)
 
-            ret2 = chkAdbShellUrlAccess(v.ANDROID_SERIAL_NUM, v.CHECK_ACCESS_URL, self.__class__.__name__)
+            ret2 = chkAdbBrowserWebsite(v.ANDROID_SERIAL_NUM, v.CHECK_ACCESS_URL, self.__class__.__name__)
 
             option = {
                 'open': 1,
@@ -11631,7 +11593,7 @@ class AP_MIXEDPSK_WEB_ACCESS(TestCase):
     def assoc_tkippsk2_sta_access_web_5g(self):
         res5gConn = setAdbTkipPsk2Sta(v.ANDROID_SERIAL_NUM, v.SSID_5G, v.KEY, "5g", self.__class__.__name__)
         if res5gConn:
-            ret1 = chkAdbShellUrlAccess(v.ANDROID_SERIAL_NUM, v.CHECK_ACCESS_URL, self.__class__.__name__)
+            ret1 = chkAdbBrowserWebsite(v.ANDROID_SERIAL_NUM, v.CHECK_ACCESS_URL, self.__class__.__name__)
 
             option = {
                 'open': 1,
@@ -11641,7 +11603,7 @@ class AP_MIXEDPSK_WEB_ACCESS(TestCase):
 
             api.setWebAccessOpt(self.dut, self.__class__.__name__, **option)
 
-            ret2 = chkAdbShellUrlAccess(v.ANDROID_SERIAL_NUM, v.CHECK_ACCESS_URL, self.__class__.__name__)
+            ret2 = chkAdbBrowserWebsite(v.ANDROID_SERIAL_NUM, v.CHECK_ACCESS_URL, self.__class__.__name__)
 
             option = {
                 'open': 1,
@@ -11659,7 +11621,7 @@ class AP_MIXEDPSK_WEB_ACCESS(TestCase):
     def assoc_tkippsk_sta_access_web_5g(self):
         res5gConn = setAdbTkipPskSta(v.ANDROID_SERIAL_NUM, v.SSID_5G, v.KEY, "5g", self.__class__.__name__)
         if res5gConn:
-            ret1 = chkAdbShellUrlAccess(v.ANDROID_SERIAL_NUM, v.CHECK_ACCESS_URL, self.__class__.__name__)
+            ret1 = chkAdbBrowserWebsite(v.ANDROID_SERIAL_NUM, v.CHECK_ACCESS_URL, self.__class__.__name__)
 
             option = {
                 'open': 1,
@@ -11669,7 +11631,7 @@ class AP_MIXEDPSK_WEB_ACCESS(TestCase):
 
             api.setWebAccessOpt(self.dut, self.__class__.__name__, **option)
 
-            ret2 = chkAdbShellUrlAccess(v.ANDROID_SERIAL_NUM, v.CHECK_ACCESS_URL, self.__class__.__name__)
+            ret2 = chkAdbBrowserWebsite(v.ANDROID_SERIAL_NUM, v.CHECK_ACCESS_URL, self.__class__.__name__)
 
             option = {
                 'open': 1,

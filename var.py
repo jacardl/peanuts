@@ -2,7 +2,7 @@
 from common2 import *
 import os
 
-VER = '3.5.6'
+VER = '3.6.1'
 
 TOOL_LIST = ["General", "Memory Tracking", "Test Suite"]
 

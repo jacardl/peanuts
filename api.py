@@ -624,11 +624,11 @@ def setDisableLanAp(terminal, logname):
 def setWifiAp(terminal, logname, **kwargs):
     option = {
         'ssid': v.ROOT_AP_SSID,
-        'encryption': 'WPA2PSK',
-        'enctype': 'TKIPAES',
+        # 'encryption': 'WPA2PSK',
+        # 'enctype': 'TKIPAES',
         'password': v.ROOT_AP_PWD,
-        'channel': v.ROOT_AP_CHANNEL,
-        'bandwidth': '20',
+        # 'channel': v.ROOT_AP_CHANNEL,
+        # 'bandwidth': '20',
         'nssid': v.ROOT_AP_SSID,
         'nencryption': 'none',
     }
@@ -1171,6 +1171,24 @@ def getDeviceSystemInfo(terminal, logname):
 
 
 def chkWifiInfo(terminal, logname, **kwargs):
+    """
+    wifilist
+    {
+      "list":[
+         {
+            "mac":"66:09:80:73:75:75",
+            "bandwidth":20,
+            "ssid":"Xiaomi_7572_VIP",
+            "channel":"6",
+            "xm":"",
+            "enctype":"NONE",
+            "encryption":"NONE",
+            "signal":"100"
+         },
+         ],
+      "code":0
+    }
+    """
     option = {
         "mac":"", # 8C:BE:BE:10:05:B0
         "bandwidth":20,

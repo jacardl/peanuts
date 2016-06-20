@@ -396,6 +396,34 @@ def setAdbShell(device, command, logname):
         f.close()
 
 
+def setAdb(device, command, logname):
+    if not os.path.exists(v.TEST_SUITE_LOG_PATH):
+        os.makedirs(v.TEST_SUITE_LOG_PATH)
+    if device != "":
+        adb = "adb " + "-s " + device + " "
+    else:
+        adb = "adb  "
+    command = adb + command
+    try:
+        curTime = t.strftime('%Y.%m.%d %H:%M:%S', t.localtime())
+        ret = os.popen(command).readlines()
+        f = open(v.TEST_SUITE_LOG_PATH + logname + '.log', 'a')
+        f.write(curTime + '~#ADB#')
+        f.write(command + '\n')
+        f.writelines(ret)
+        f.write('\n')
+        f.close()
+        return ret
+    except Exception, e:
+        curTime = t.strftime('%Y.%m.%d %H:%M:%S', t.localtime())
+        f = open(v.TEST_SUITE_LOG_PATH + logname + '.log', 'a')
+        f.write(curTime + '~#ADB failed#')
+        f.write(command + '\n')
+        f.writelines(str(e))
+        f.write('\n')
+        f.close()
+
+
 def setOSShell(command, cwd=None, timeout=30, logname=None):
     if not os.path.exists(v.TEST_SUITE_LOG_PATH):
         os.makedirs(v.TEST_SUITE_LOG_PATH)
@@ -1758,8 +1786,21 @@ def getAdbPingStatus(terminal, target, count, logname):
     return result
 
 
-def getAdbOoklaSpeedTestShot(device, shotname, logname):
-    pass
+def getAdbFile(device, filename, logname):
+    command = 'pull /sdcard/Robotium-Screenshots/ookla.jpg ' + v.OOKLA_SHOT_PATH + filename
+    setAdb(device, command, logname)
+
+
+def getAdbOoklaSpeedTestShot(device, filename, logname):
+    command = "am instrument -e class com.testookla.TestOokla#test_ookla_speedtest_shot " \
+              "-w com.testookla/android.test.InstrumentationTestRunner"
+    ret = setAdbShell(device, command, logname)
+    getAdbFile(device, filename, logname)
+    for line in ret:
+        m = re.search('OK', line)
+        if m:
+            return True
+    return False
 
 
 def getAdbSpeedTestResult(device, logname):
@@ -1861,6 +1902,7 @@ def chkAdb5gFreq(device, logname):
             return True
     return False
 
+
 def chkAdbBrowserWebsite(device, url, logname):
     command = "am instrument -e url %s -e class com.peanutswifi.ApplicationTest#test_browser_website " \
               "-w com.peanutswifi.test/com.peanutswifi.MyTestRunner"%url
@@ -1874,5 +1916,5 @@ def chkAdbBrowserWebsite(device, url, logname):
 
 if __name__ == '__main__':
     device = getAdbDevices()
-    print chkAdbBrowserWebsite(device[0], v.CHECK_ACCESS_URL, "a")
+    print getAdbFile(device[0], 'normal.jpg', "a")
 

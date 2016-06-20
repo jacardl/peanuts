@@ -1758,8 +1758,18 @@ def getAdbPingStatus(terminal, target, count, logname):
     return result
 
 
-def getAdbOoklaSpeedTestShot(device, shotname, logname):
+def getAdbFile(device, filename, logname):
     pass
+
+
+def getAdbOoklaSpeedTestShot(device, shotname, logname):
+    command = "am instrument -e class com.speedtest_test.TestOokla#test_Ookla_speedtest -w com.speedtest_test/com.xxxx"
+    ret = setAdbShell(device, command, logname)
+    for line in ret:
+        m = re.search('OK', line)
+        if m:
+            return True
+    return False
 
 
 def getAdbSpeedTestResult(device, logname):

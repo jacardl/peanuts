@@ -201,7 +201,7 @@ def setGet(terminal, logname, apipath, **kwargs):
                 f.write('token timeout, renew token.\n\n')
                 f.close()
                 terminal.getToken(password=v.WEB_PWD)
-                setGet(terminal, logname, apipath, **kwargs)
+                ret = setGet(terminal, logname, apipath, **kwargs)
             f.close()
             return ret
         except Exception, e:

@@ -15973,7 +15973,7 @@ class AP_GUEST_MIXEDPSK_OOKLA(TestCase):
             if result['ip'] == '':
                 self.fail(msg='no ip address got.')
             else:
-                speed = getAdbOoklaSpeedTestShot(v.ANDROID_SERIAL_NUM, "router_psk2_guest.jpg", self.__class__.__name__)
+                speed = getAdbOoklaSpeedTestShot(v.ANDROID_SERIAL_NUM, "psk2_guest.jpg", self.__class__.__name__)
                 self.assertTrue(speed, "Ookla speedtest run for wrong.")
         else:
             self.assertTrue(res2gConn, "Association wasnot successful.")
@@ -16014,7 +16014,7 @@ class AP_GUEST_CLEAR_OOKLA(TestCase):
             if result['ip'] == '':
                 self.fail(msg='no ip address got.')
             else:
-                speed = getAdbOoklaSpeedTestShot(v.ANDROID_SERIAL_NUM, "router_clear_guest.jpg", self.__class__.__name__)
+                speed = getAdbOoklaSpeedTestShot(v.ANDROID_SERIAL_NUM, "clear_guest.jpg", self.__class__.__name__)
                 self.assertTrue(speed, "Ookla speedtest run for wrong.")
         else:
             self.assertTrue(res2gConn, "Association wasnot successful.")

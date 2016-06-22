@@ -119,7 +119,7 @@ QOS_MAXDOWN = 500
 
 ROOT_AP_SSID = "peanuts_automatic_test_root_ap_"
 ROOT_AP_PWD = "12345678"
-# ROOT_AP_CHANNEL = 11
+ROOT_AP_CHANNEL = 11
 
 UPLOAD_LOG = 1
 FAIL_RETRY = 3

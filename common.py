@@ -1792,12 +1792,28 @@ def getAdbFile(device, filename, logname):
 
 
 def getAdbOoklaSpeedTestShot(device, filename, logname):
+    """
+    com.testookla.TestOokla:
+    Failure in test_ookla_speedtest_result:
+    junit.framework.AssertionFailedError: downlink rate: 19.40 Mbps, uplink rate: 18.64 Mbps
+    at com.testookla.TestOokla.test_ookla_speedtest_result(TestOokla.java:70)
+    at android.test.InstrumentationTestCase.runMethod(InstrumentationTestCase.java:214)
+    at android.test.InstrumentationTestCase.runTest(InstrumentationTestCase.java:199)
+    at android.test.ActivityInstrumentationTestCase2.runTest(ActivityInstrumentationTestCase2.java:192)
+    at android.test.AndroidTestRunner.runTest(AndroidTestRunner.java:191)
+    at android.test.AndroidTestRunner.runTest(AndroidTestRunner.java:176)
+    at android.test.InstrumentationTestRunner.onStart(InstrumentationTestRunner.java:555)
+    at android.app.Instrumentation$InstrumentationThread.run(Instrumentation.java:1853)
+
+    save ookla.jpg
+    """
+
     command = "am instrument -e class com.testookla.TestOokla#test_ookla_speedtest_shot " \
               "-w com.testookla/android.test.InstrumentationTestRunner"
     ret = setAdbShell(device, command, logname)
     getAdbFile(device, filename, logname)
     for line in ret:
-        m = re.search('OK', line)
+        m = re.search('downlink rate: (.*) Mbps, uplink rate: (.*) Mbps', line)
         if m:
             return True
     return False
@@ -1947,5 +1963,5 @@ def chkAdbBrowserWebsite(device, url, logname):
 
 if __name__ == '__main__':
     device = getAdbDevices()
-    print getAdbOoklaSpeedTestResult(device[0], "a")
+    print getAdbOoklaSpeedTestShot(device[0], "router.jpg", "a")
 

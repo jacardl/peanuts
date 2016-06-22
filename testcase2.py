@@ -15805,6 +15805,463 @@ class AP_PSK2_CHAN149_BW80_LAN_THROUGHPUT(TestCase):
             self.assertTrue(res5gConn, "Connecting wifi is failed.")
 
 
+class AP_MIXEDPSK_OOKLA(TestCase):
+    @classmethod
+    def setUpClass(self):
+        self.dut = api.HttpClient()
+        ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
+        ret2 = chkAdbDevice(v.ANDROID_SERIAL_NUM)
+        if ret1 is False:
+            raise Exception("Http connection is failed. please check your remote settings.")
+
+        if ret2 is False:
+            raise Exception("Device %s is not ready!" % v.ANDROID_SERIAL_NUM)
+
+        option2g = {
+            'wifiIndex': 1,
+            'ssid': v.SSID,
+            'encryption': 'mixed-psk',
+            'pwd': v.KEY
+        }
+        option5g = {
+            'wifiIndex': 2,
+            'ssid': v.SSID_5G,
+            'encryption': 'mixed-psk',
+            'pwd': v.KEY
+        }
+
+        api.setWifi(self.dut, self.__name__, **option2g)
+        api.setWifi(self.dut, self.__name__, **option5g)
+
+    @classmethod
+    def tearDownClass(self):
+        option2g = {
+            'wifiIndex': 1,
+            'on': 0,
+        }
+        option5g = {
+            'wifiIndex': 2,
+            'on': 0
+        }
+        api.setWifi(self.dut, self.__name__, **option2g)
+        api.setWifi(self.dut, self.__name__, **option5g)
+        self.dut.close()
+
+    def assoc_psk2_sta_speedtest_2g(self):
+        res2gConn = setAdbPsk2Sta(v.ANDROID_SERIAL_NUM, v.SSID, v.KEY, "2g", self.__class__.__name__)
+        if res2gConn:
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
+            if result['ip'] == '':
+                self.fail(msg='no ip address got.')
+            else:
+                speed = getAdbOoklaSpeedTestShot(v.ANDROID_SERIAL_NUM, "psk2_2g.jpg", self.__class__.__name__)
+                self.assertTrue(speed, "Ookla speedtest run for wrong.")
+        else:
+            self.assertTrue(res2gConn, "Association wasnot successful.")
+
+    def assoc_psk2_sta_speedtest_5g(self):
+        res2gConn = setAdbPsk2Sta(v.ANDROID_SERIAL_NUM, v.SSID_5G, v.KEY, "5g", self.__class__.__name__)
+        if res2gConn:
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
+            if result['ip'] == '':
+                self.fail(msg='no ip address got.')
+            else:
+                speed = getAdbOoklaSpeedTestShot(v.ANDROID_SERIAL_NUM, "psk2_5g.jpg", self.__class__.__name__)
+                self.assertTrue(speed, "Ookla speedtest run for wrong.")
+        else:
+            self.assertTrue(res2gConn, "Association wasnot successful.")
+
+
+class AP_CLEAR_OOKLA(TestCase):
+    @classmethod
+    def setUpClass(self):
+        self.dut = api.HttpClient()
+        ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
+        ret2 = chkAdbDevice(v.ANDROID_SERIAL_NUM)
+        if ret1 is False:
+            raise Exception("Http connection is failed. please check your remote settings.")
+
+        if ret2 is False:
+            raise Exception("Device %s is not ready!" % v.ANDROID_SERIAL_NUM)
+
+        option2g = {
+            'wifiIndex': 1,
+            'ssid': v.SSID,
+            'encryption': 'none',
+        }
+        option5g = {
+            'wifiIndex': 2,
+            'ssid': v.SSID_5G,
+            'encryption': 'none',
+        }
+
+        api.setWifi(self.dut, self.__name__, **option2g)
+        api.setWifi(self.dut, self.__name__, **option5g)
+
+    @classmethod
+    def tearDownClass(self):
+        option2g = {
+            'wifiIndex': 1,
+            'on': 0,
+        }
+        option5g = {
+            'wifiIndex': 2,
+            'on': 0
+        }
+        api.setWifi(self.dut, self.__name__, **option2g)
+        api.setWifi(self.dut, self.__name__, **option5g)
+        self.dut.close()
+
+    def assoc_clear_sta_speedtest_2g(self):
+        res2gConn = setAdbClearSta(v.ANDROID_SERIAL_NUM, v.SSID, "2g", self.__class__.__name__)
+        if res2gConn:
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
+            if result['ip'] == '':
+                self.fail(msg='no ip address got.')
+            else:
+                speed = getAdbOoklaSpeedTestShot(v.ANDROID_SERIAL_NUM, "clear_2g.jpg", self.__class__.__name__)
+                self.assertTrue(speed, "Ookla speedtest run for wrong.")
+        else:
+            self.assertTrue(res2gConn, "Association wasnot successful.")
+
+    def assoc_clear_sta_speedtest_5g(self):
+        res2gConn = setAdbClearSta(v.ANDROID_SERIAL_NUM, v.SSID_5G, "5g", self.__class__.__name__)
+        if res2gConn:
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
+            if result['ip'] == '':
+                self.fail(msg='no ip address got.')
+            else:
+                speed = getAdbOoklaSpeedTestShot(v.ANDROID_SERIAL_NUM, "clear_5g.jpg", self.__class__.__name__)
+                self.assertTrue(speed, "Ookla speedtest run for wrong.")
+        else:
+            self.assertTrue(res2gConn, "Association wasnot successful.")
+
+
+class AP_GUEST_MIXEDPSK_OOKLA(TestCase):
+    @classmethod
+    def setUpClass(self):
+        self.dut = api.HttpClient()
+        ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
+        ret2 = chkAdbDevice(v.ANDROID_SERIAL_NUM)
+        if ret1 is False:
+            raise Exception("Http connection is failed. please check your remote settings.")
+
+        if ret2 is False:
+            raise Exception("Device %s is not ready!" % v.ANDROID_SERIAL_NUM)
+
+        optionGuest = {
+            'wifiIndex': 3,
+            'ssid': v.GUEST_SSID,
+            'encryption': 'mixed-psk',
+            'pwd': v.KEY
+        }
+        api.setWifi(self.dut, self.__name__, **optionGuest)
+
+    @classmethod
+    def tearDownClass(self):
+        option2g = {
+            'wifiIndex': 1,
+            'on': 0,
+        }
+        api.setWifi(self.dut, self.__name__, **option2g)
+        self.dut.close()
+
+    def assoc_psk2_sta_speedtest_guest(self):
+        res2gConn = setAdbPsk2Sta(v.ANDROID_SERIAL_NUM, v.GUEST_SSID, v.KEY, "guest", self.__class__.__name__)
+        if res2gConn:
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
+            if result['ip'] == '':
+                self.fail(msg='no ip address got.')
+            else:
+                speed = getAdbOoklaSpeedTestShot(v.ANDROID_SERIAL_NUM, "router_psk2_guest.jpg", self.__class__.__name__)
+                self.assertTrue(speed, "Ookla speedtest run for wrong.")
+        else:
+            self.assertTrue(res2gConn, "Association wasnot successful.")
+
+
+class AP_GUEST_CLEAR_OOKLA(TestCase):
+    @classmethod
+    def setUpClass(self):
+        self.dut = api.HttpClient()
+        ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
+        ret2 = chkAdbDevice(v.ANDROID_SERIAL_NUM)
+        if ret1 is False:
+            raise Exception("Http connection is failed. please check your remote settings.")
+
+        if ret2 is False:
+            raise Exception("Device %s is not ready!" % v.ANDROID_SERIAL_NUM)
+
+        optionGuest = {
+            'wifiIndex': 3,
+            'ssid': v.GUEST_SSID,
+            'encryption': 'none',
+        }
+        api.setWifi(self.dut, self.__name__, **optionGuest)
+
+    @classmethod
+    def tearDownClass(self):
+        option2g = {
+            'wifiIndex': 1,
+            'on': 0,
+        }
+        api.setWifi(self.dut, self.__name__, **option2g)
+        self.dut.close()
+
+    def assoc_clear_sta_speedtest_guest(self):
+        res2gConn = setAdbClearSta(v.ANDROID_SERIAL_NUM, v.GUEST_SSID, "guest", self.__class__.__name__)
+        if res2gConn:
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
+            if result['ip'] == '':
+                self.fail(msg='no ip address got.')
+            else:
+                speed = getAdbOoklaSpeedTestShot(v.ANDROID_SERIAL_NUM, "router_clear_guest.jpg", self.__class__.__name__)
+                self.assertTrue(speed, "Ookla speedtest run for wrong.")
+        else:
+            self.assertTrue(res2gConn, "Association wasnot successful.")
+
+
+class AP_RELAY_MIXEDPSK_OOKLA(TestCase):
+    @classmethod
+    def setUpClass(self):
+        self.dut = api.HttpClient()
+        ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
+        ret2 = chkAdbDevice(v.ANDROID_SERIAL_NUM)
+        if ret1 is False:
+            raise Exception("Http connection is failed. please check your remote settings.")
+
+        if ret2 is False:
+            raise Exception("Device %s is not ready!" % v.ANDROID_SERIAL_NUM)
+
+        api.setLanAp(self.dut, self.__name__)
+
+        option2g = {
+            'wifiIndex': 1,
+            'ssid': v.SSID,
+            'encryption': 'mixed-psk',
+            'pwd': v.KEY
+        }
+        option5g = {
+            'wifiIndex': 2,
+            'ssid': v.SSID_5G,
+            'encryption': 'mixed-psk',
+            'pwd': v.KEY
+        }
+
+        api.setWifi(self.dut, self.__name__, **option2g)
+        api.setWifi(self.dut, self.__name__, **option5g)
+
+    @classmethod
+    def tearDownClass(self):
+        option2g = {
+            'wifiIndex': 1,
+            'on': 0,
+        }
+        option5g = {
+            'wifiIndex': 2,
+            'on': 0
+        }
+        api.setWifi(self.dut, self.__name__, **option2g)
+        api.setWifi(self.dut, self.__name__, **option5g)
+        api.setDisableLanAp(self.dut, self.__name__)
+        self.dut.close()
+
+    def assoc_psk2_sta_speedtest_2g(self):
+        res2gConn = setAdbPsk2Sta(v.ANDROID_SERIAL_NUM, v.SSID, v.KEY, "2g", self.__class__.__name__)
+        if res2gConn:
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
+            if result['ip'] == '':
+                self.fail(msg='no ip address got.')
+            else:
+                speed = getAdbOoklaSpeedTestShot(v.ANDROID_SERIAL_NUM, "relay_psk2_2g.jpg", self.__class__.__name__)
+                self.assertTrue(speed, "Ookla speedtest run for wrong.")
+        else:
+            self.assertTrue(res2gConn, "Association wasnot successful.")
+
+    def assoc_psk2_sta_speedtest_5g(self):
+        res2gConn = setAdbPsk2Sta(v.ANDROID_SERIAL_NUM, v.SSID_5G, v.KEY, "5g", self.__class__.__name__)
+        if res2gConn:
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
+            if result['ip'] == '':
+                self.fail(msg='no ip address got.')
+            else:
+                speed = getAdbOoklaSpeedTestShot(v.ANDROID_SERIAL_NUM, "relay_psk2_5g.jpg", self.__class__.__name__)
+                self.assertTrue(speed, "Ookla speedtest run for wrong.")
+        else:
+            self.assertTrue(res2gConn, "Association wasnot successful.")
+
+
+class AP_RELAY_CLEAR_OOKLA(TestCase):
+    @classmethod
+    def setUpClass(self):
+        self.dut = api.HttpClient()
+        ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
+        ret2 = chkAdbDevice(v.ANDROID_SERIAL_NUM)
+        if ret1 is False:
+            raise Exception("Http connection is failed. please check your remote settings.")
+
+        if ret2 is False:
+            raise Exception("Device %s is not ready!" % v.ANDROID_SERIAL_NUM)
+
+        api.setLanAp(self.dut, self.__name__)
+
+        option2g = {
+            'wifiIndex': 1,
+            'ssid': v.SSID,
+            'encryption': 'none',
+        }
+        option5g = {
+            'wifiIndex': 2,
+            'ssid': v.SSID_5G,
+            'encryption': 'none',
+        }
+
+        api.setWifi(self.dut, self.__name__, **option2g)
+        api.setWifi(self.dut, self.__name__, **option5g)
+
+    @classmethod
+    def tearDownClass(self):
+        option2g = {
+            'wifiIndex': 1,
+            'on': 0,
+        }
+        option5g = {
+            'wifiIndex': 2,
+            'on': 0
+        }
+        api.setWifi(self.dut, self.__name__, **option2g)
+        api.setWifi(self.dut, self.__name__, **option5g)
+
+        api.setDisableLanAp(self.dut, self.__name__)
+        self.dut.close()
+
+    def assoc_clear_sta_speedtest_2g(self):
+        res2gConn = setAdbClearSta(v.ANDROID_SERIAL_NUM, v.SSID, "2g", self.__class__.__name__)
+        if res2gConn:
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
+            if result['ip'] == '':
+                self.fail(msg='no ip address got.')
+            else:
+                speed = getAdbOoklaSpeedTestShot(v.ANDROID_SERIAL_NUM, "relay_clear_2g.jpg", self.__class__.__name__)
+                self.assertTrue(speed, "Ookla speedtest run for wrong.")
+        else:
+            self.assertTrue(res2gConn, "Association wasnot successful.")
+
+    def assoc_clear_sta_speedtest_5g(self):
+        res2gConn = setAdbClearSta(v.ANDROID_SERIAL_NUM, v.SSID_5G, "5g", self.__class__.__name__)
+        if res2gConn:
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
+            if result['ip'] == '':
+                self.fail(msg='no ip address got.')
+            else:
+                speed = getAdbOoklaSpeedTestShot(v.ANDROID_SERIAL_NUM, "relay_clear_5g.jpg", self.__class__.__name__)
+                self.assertTrue(speed, "Ookla speedtest run for wrong.")
+        else:
+            self.assertTrue(res2gConn, "Association wasnot successful.")
+
+
+class AP_WIRELESS_RELAY_MIXEDPSK_OOKLA(TestCase):
+    @classmethod
+    def setUpClass(self):
+        self.dut = api.HttpClient()
+        ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
+        ret2 = chkAdbDevice(v.ANDROID_SERIAL_NUM)
+        if ret1 is False:
+            raise Exception("Http connection is failed. please check your remote settings.")
+
+        if ret2 is False:
+            raise Exception("Device %s is not ready!" % v.ANDROID_SERIAL_NUM)
+
+        option = {
+            'ssid': v.ROOT_AP_SSID,
+            'password': v.ROOT_AP_PWD,
+            'channel': v.ROOT_AP_CHANNEL,
+            'nssid': v.WIRELESS_RELAY_SSID,
+            'nencryption': 'psk2',
+            'npassword': v.KEY,
+        }
+        api.setWifiAp(self.dut, self.__name__, **option)
+
+    @classmethod
+    def tearDownClass(self):
+        api.setDisableAp(self.dut, self.__name__)
+        self.dut.close()
+
+    def assoc_psk2_sta_speedtest_2g(self):
+        res2gConn = setAdbPsk2Sta(v.ANDROID_SERIAL_NUM, v.WIRELESS_RELAY_SSID, v.KEY, "2g", self.__class__.__name__)
+        if res2gConn:
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
+            if result['ip'] == '':
+                self.fail(msg='no ip address got.')
+            else:
+                speed = getAdbOoklaSpeedTestShot(v.ANDROID_SERIAL_NUM, "wireless_relay_psk2_2g.jpg", self.__class__.__name__)
+                self.assertTrue(speed, "Ookla speedtest run for wrong.")
+        else:
+            self.assertTrue(res2gConn, "Association wasnot successful.")
+
+    def assoc_psk2_sta_speedtest_5g(self):
+        res2gConn = setAdbPsk2Sta(v.ANDROID_SERIAL_NUM, v.WIRELESS_RELAY_SSID_5G, v.KEY, "5g", self.__class__.__name__)
+        if res2gConn:
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
+            if result['ip'] == '':
+                self.fail(msg='no ip address got.')
+            else:
+                speed = getAdbOoklaSpeedTestShot(v.ANDROID_SERIAL_NUM, "wireless_relay_psk2_5g.jpg", self.__class__.__name__)
+                self.assertTrue(speed, "Ookla speedtest run for wrong.")
+        else:
+            self.assertTrue(res2gConn, "Association wasnot successful.")
+
+
+class AP_WIRELESS_RELAY_CLEAR_OOKLA(TestCase):
+    @classmethod
+    def setUpClass(self):
+        self.dut = api.HttpClient()
+        ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
+        ret2 = chkAdbDevice(v.ANDROID_SERIAL_NUM)
+        if ret1 is False:
+            raise Exception("Http connection is failed. please check your remote settings.")
+
+        if ret2 is False:
+            raise Exception("Device %s is not ready!" % v.ANDROID_SERIAL_NUM)
+
+        option = {
+            'ssid': v.ROOT_AP_SSID,
+            'password': v.ROOT_AP_PWD,
+            'channel': v.ROOT_AP_CHANNEL,
+            'nssid': v.WIRELESS_RELAY_SSID,
+            'nencryption': 'none',
+        }
+        api.setWifiAp(self.dut, self.__name__, **option)
+
+    @classmethod
+    def tearDownClass(self):
+        api.setDisableAp(self.dut, self.__name__)
+        self.dut.close()
+
+    def assoc_clear_sta_speedtest_2g(self):
+        res2gConn = setAdbClearSta(v.ANDROID_SERIAL_NUM, v.WIRELESS_RELAY_SSID, "2g", self.__class__.__name__)
+        if res2gConn:
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
+            if result['ip'] == '':
+                self.fail(msg='no ip address got.')
+            else:
+                speed = getAdbOoklaSpeedTestShot(v.ANDROID_SERIAL_NUM, "wireless_relay_clear_2g.jpg", self.__class__.__name__)
+                self.assertTrue(speed, "Ookla speedtest run for wrong.")
+        else:
+            self.assertTrue(res2gConn, "Association wasnot successful.")
+
+    def assoc_clear_sta_speedtest_5g(self):
+        res2gConn = setAdbClearSta(v.ANDROID_SERIAL_NUM, v.WIRELESS_RELAY_SSID_5G, "5g", self.__class__.__name__)
+        if res2gConn:
+            result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
+            if result['ip'] == '':
+                self.fail(msg='no ip address got.')
+            else:
+                speed = getAdbOoklaSpeedTestShot(v.ANDROID_SERIAL_NUM, "wireless_relay_clear_5g.jpg", self.__class__.__name__)
+                self.assertTrue(speed, "Ookla speedtest run for wrong.")
+        else:
+            self.assertTrue(res2gConn, "Association wasnot successful.")
+
+
 class AP_CHECK(TestCase):
     @classmethod
     def setUpClass(self):

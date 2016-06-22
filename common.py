@@ -960,10 +960,11 @@ def setIperfFlow(target, interval, time, logname):
 
     command += " -r -w 2m -f m"
     ret = setOSShell(command, cwd=v.IPERF_PATH, timeout=3*int(time), logname=logname)
-    # os.chdir(v.DEFAULT_PATH)
-    if len(ret) == 0:
-        return False
-    return True
+    for line in ret:
+        m = re.search('0\.0-\d{1,4}.*\s(\d{1,}\.?\d{1,})?\sMbits/sec', line)
+        if m:
+            return True
+    return False
 
 
 def setIperfFlow2(terminal, target, interval, time, logname):
@@ -974,9 +975,11 @@ def setIperfFlow2(terminal, target, interval, time, logname):
         command = command + " -t " + time
     command += " -r -w 2m -f m"
     ret = setGet(terminal, command, logname)
-    if len(ret) == 0:
-        return False
-    return True
+    for line in ret:
+        m = re.search('0\.0-\d{1,4}.*\s(\d{1,}\.?\d{1,})?\sMbits/sec', line)
+        if m:
+            return True
+    return False
 
 
 def setAdbClearStaConn(device, ssid, radio, logname):
@@ -1962,6 +1965,7 @@ def chkAdbBrowserWebsite(device, url, logname):
     return False
 
 if __name__ == '__main__':
-    device = getAdbDevices()
-    print getAdbOoklaSpeedTestShot(device[0], "router.jpg", "a")
+    # device = getAdbDevices()
+    # print getAdbOoklaSpeedTestShot(device[0], "router.jpg", "a")
+    print setIperfFlow("192.168.31.190", "", "10", "a")
 

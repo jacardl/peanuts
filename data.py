@@ -1010,33 +1010,13 @@ treeThroughputLANApi = [
     ],
 ]
 
-treeThroughputLANApi = [
+treeThroughputWANApi = [
     'AP_MIXEDPSK_OOKLA',
     [
         'assoc_psk2_sta_speedtest_2g',
         'assoc_psk2_sta_speedtest_5g',
     ],
-    'AP_RELAY_MIXEDPSK_OOKLA',
-    [
-        'assoc_psk2_sta_speedtest_2g',
-        'assoc_psk2_sta_speedtest_5g',
-    ],
-    'AP_WIRELESS_RELAY_MIXEDPSK_OOKLA',
-    [
-        'assoc_psk2_sta_speedtest_2g',
-        'assoc_psk2_sta_speedtest_5g',
-    ],
     'AP_CLEAR_OOKLA',
-    [
-        'assoc_clear_sta_speedtest_2g',
-        'assoc_clear_sta_speedtest_5g',
-    ],
-    'AP_RELAY_CLEAR_OOKLA',
-    [
-        'assoc_clear_sta_speedtest_2g',
-        'assoc_clear_sta_speedtest_5g',
-    ],
-    'AP_WIRELESS_RELAY_CLEAR_OOKLA',
     [
         'assoc_clear_sta_speedtest_2g',
         'assoc_clear_sta_speedtest_5g',
@@ -1048,6 +1028,26 @@ treeThroughputLANApi = [
     'AP_GUEST_CLEAR_OOKLA',
     [
         'assoc_clear_sta_speedtest_guest',
+    ],
+    'AP_RELAY_MIXEDPSK_OOKLA',
+    [
+        'assoc_psk2_sta_speedtest_2g',
+        'assoc_psk2_sta_speedtest_5g',
+    ],
+    'AP_RELAY_CLEAR_OOKLA',
+    [
+        'assoc_clear_sta_speedtest_2g',
+        'assoc_clear_sta_speedtest_5g',
+    ],
+    'AP_WIRELESS_RELAY_MIXEDPSK_OOKLA',
+    [
+        'assoc_psk2_sta_speedtest_2g',
+        'assoc_psk2_sta_speedtest_5g',
+    ],
+    'AP_WIRELESS_RELAY_CLEAR_OOKLA',
+    [
+        'assoc_clear_sta_speedtest_2g',
+        'assoc_clear_sta_speedtest_5g',
     ],
 ]
 

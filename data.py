@@ -1011,6 +1011,10 @@ treeThroughputLANApi = [
 ]
 
 treeThroughputWANApi = [
+    'AP_WAN_BANDWIDTH',
+    [
+        'test_wan_bandwidth',
+    ],
     'AP_PSK2_CHAN11_OOKLA',
     [
         'assoc_psk2_sta_speedtest_2g',

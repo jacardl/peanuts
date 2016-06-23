@@ -16391,6 +16391,22 @@ class AP_WIRELESS_RELAY_CLEAR_CHAN149_OOKLA(TestCase):
             self.assertTrue(res2gConn, "Association wasnot successful.")
 
 
+class AP_WAN_BANDWIDTH(TestCase):
+    @classmethod
+    def setUpClass(self):
+        self.dut = api.HttpClient()
+        ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
+        if ret1 is False:
+            raise Exception("Http connection is failed. please check your remote settings.")
+
+    def tearDownClass(self):
+        self.dut.close()
+
+    def test_wan_bandwidth(self):
+        ret, speedDict= api.getWanBandwidth(self.dut, self.__class__.__name__)
+        self.assertTrue(ret, "WAN port bandwidth test run for wrong.")
+
+
 class AP_CHECK(TestCase):
     @classmethod
     def setUpClass(self):

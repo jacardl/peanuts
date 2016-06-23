@@ -87,10 +87,6 @@ def generateMail(maillist, title, queue=None, attach1=None, attach2=None, attach
         共用时 %(time)0.2f 小时。无线终端尝试上线 %(onlinesum)d 次，成功上线 %(onlinepass)d 次，上线率 %(onlinepercent)0.2f%%</p>
         """ % argsdic
 
-    content4 = """
-        <p>路由器外网下载带宽 %(wandownload)d Mbps， 上传带宽 %(wanupload)d Mbps</p>
-        """ % argsdic
-
     content5 = """
         <img src="cid:%s" alt="%s" />
         """ % (v.MAIL_PIC2.split('\\')[-1], v.MAIL_PIC2.split('\\')[-1])
@@ -114,20 +110,45 @@ def generateMail(maillist, title, queue=None, attach1=None, attach2=None, attach
         """ % (v.MAIL_PIC1.split('\\')[-1], v.MAIL_PIC1.split('\\')[-1], v.MAIL_PIC4.split('\\')[-1],
                v.MAIL_PIC4.split('\\')[-1])
 
+    content10 = """
+        <img src="cid:%s" alt="%s" />
+        """% (v.MAIL_PIC7.split('\\')[-1], v.MAIL_PIC7.split('\\')[-1])
+
+    content11 = """
+        <img src="cid:%s" alt="%s" />
+        """% (v.MAIL_PIC8.split('\\')[-1], v.MAIL_PIC8.split('\\')[-1])
+
     piclist = list()
-    contents = content1 + content2 + content3
+    if argsdic.get("wandownload") is not None and argsdic.get("wanupload") is not None:
+        content4 = """
+            <p>路由器外网下载带宽 %(wandownload)d Mbps， 上传带宽 %(wanupload)d Mbps</p>
+            """ % argsdic
+        contents = content1 + content2 + content3 + content4
+    else:
+        contents = content1 + content2 + content3
+    # 2.4g throughput chart
+    if os.path.isfile(v.MAIL_PIC7):
+        piclist.append(v.MAIL_PIC7)
+        contents += content10
     if os.path.isfile(v.MAIL_PIC2):
         piclist.append(v.MAIL_PIC2)
         contents += content5
     if os.path.isfile(v.MAIL_PIC5):
         piclist.append(v.MAIL_PIC5)
         contents += content6
+
+    # 5g throughput chart
+    if os.path.isfile(v.MAIL_PIC8):
+        piclist.append(v.MAIL_PIC8)
+        contents += content11
     if os.path.isfile(v.MAIL_PIC3):
         piclist.append(v.MAIL_PIC3)
         contents += content7
     if os.path.isfile(v.MAIL_PIC6):
         piclist.append(v.MAIL_PIC6)
         contents += content8
+
+    # cpu and memory chart
     if os.path.isfile(v.MAIL_PIC1) and os.path.isfile(v.MAIL_PIC4):
         piclist.append(v.MAIL_PIC1)
         piclist.append(v.MAIL_PIC4)

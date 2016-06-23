@@ -26,15 +26,13 @@ class ProcessReport(mp.Process):
         throughput = GetThroughputLog(self.report)
         online = GetOnlineLog(self.report)
         module = GetTestModule(self.report)
-        wanBW = GetWanBandwidth(DEVICE_STATUS_LOG)
         time.start()
         test.start()
         throughput.start()
         online.start()
         module.start()
-        wanBW.start()
         while time.is_alive() or test.is_alive() or throughput.is_alive() \
-                or online.is_alive() or module.is_alive() or wanBW.start().is_alive():
+                or online.is_alive() or module.is_alive():
             pass
         self.result.update(error=test.result['error'])
         self.result.update(ranpass=test.result["ranpass"])
@@ -52,8 +50,9 @@ class ProcessReport(mp.Process):
         else:
             self.result.update(onlinepercent=online.result["pass"]/float(onlineSum)*100)
         self.result.update(module=module.result)
-        self.result.update(wandownload=wanBW.result['wandownload'])
-        self.result.update(wanupload=wanBW.result['wanupload'])
+        if len(throughput.wanBWResult) is not 0:
+            self.result.update(wandownload=throughput.wanBWResult['wandownload'])
+            self.result.update(wanupload=throughput.wanBWResult['wanupload'])
         self.qu.put(self.result)
         self.stop()
 
@@ -137,6 +136,7 @@ class GetThroughputLog(threading.Thread):
         threading.Thread.__init__(self)
         self.reportName = report
         self.logPath = TEST_SUITE_LOG_PATH
+        self.wanBWResult = dict()
         self.dut2g = {
             '20tx': [],
             '20rx': [],
@@ -250,6 +250,7 @@ class GetThroughputLog(threading.Thread):
                 oPattern = re.compile(r'AP_RELAY_([A-Z11-9]*)_CHAN(\d{1,3})_OOKLA')
                 pPattern = re.compile(r'AP_WIRELESS_RELAY_([A-Z1-9]*)_CHAN(\d{1,3})_OOKLA')
                 qPattern = re.compile(r'AP_([A-Z1-9]*)_CHAN(\d{1,3})_OOKLA')
+                rPattern = re.compile(r'AP_WAN_BANDWIDTH')
 
                 m = mPattern.search(line)
                 if m:
@@ -303,6 +304,15 @@ class GetThroughputLog(threading.Thread):
                     infoTuple = (logFile, rf + module, encrypto, 'WAN')
                     if infoTuple not in indexList:
                         indexList.append(infoTuple)
+                    continue
+
+                r = rPattern.search(line)
+                if r:
+                    logFile = self.logPath + r.group(0) + '.log'
+                    wanBW = GetWanBandwidth(logFile)
+                    wanBW.start()
+                    wanBW.join()
+                    self.wanBWResult = wanBW.result
                     continue
 
         report.close()
@@ -669,10 +679,6 @@ class GetThroughputLog(threading.Thread):
                 break
 
 
-# class GetWanBandwidth(threading.Thread):
-#     # TODO
-
-
 class GetOnlineLog(threading.Thread):
     def __init__(self, report):
         threading.Thread.__init__(self)
@@ -772,6 +778,32 @@ class GetTestModule(threading.Thread):
                 if tcName == i:
                     return True
         return False
+
+
+class GetWanBandwidth(threading.Thread):
+    def __init__(self, report):
+        threading.Thread.__init__(self)
+        self.running = False
+        self.reportName = report
+        self.logPath = TEST_SUITE_LOG_PATH
+        self.result = {
+            "wandownload": 0,
+            "wanupload": 0,
+        }
+
+    def run(self):
+        self.running = True
+        f = open(self.reportName)
+        mPattern = re.compile('\"bandwidth2\":(\d{1,3}\.\d{1,3})') # bandwidth2 means upload
+        nPattern = re.compile('\"bandwidth\":(\d{1,3}\.\d{1,3})') # bandwidth means download
+        for line in f:
+            if not line.isspace():
+                m = mPattern.search(line)
+                n = nPattern.search(line)
+                if m and n:
+                    self.result['wandownload'] = n.group(1)
+                    self.result['wanupload'] = m.group(1)
+                    break
 
 
 if __name__ == '__main__':

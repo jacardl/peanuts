@@ -83,12 +83,13 @@ def generateMail(maillist, title, queue=None, attach1=None, attach2=None, attach
         """ % "".join(module)
 
     content3 = """
-        <p>本次自动化成功执行用例 %(sum)d 个，通过%(ranpass)d 个，通过率 %(percent)0.2f%%。有%(error)d个脚本执行错误，共用时 %(time)0.2f 小时。无线终端尝试上线 %(onlinesum)d 次，成功上线 %(onlinepass)d 次，上线率 %(onlinepercent)0.2f%%</p>
+        <p>本次自动化成功执行用例 %(ransum)d 个，通过%(ranpass)d 个，通过率 %(percent)0.2f%%。有%(error)d个脚本执行错误，
+        共用时 %(time)0.2f 小时。无线终端尝试上线 %(onlinesum)d 次，成功上线 %(onlinepass)d 次，上线率 %(onlinepercent)0.2f%%</p>
         """ % argsdic
 
     content4 = """
-        <p>WiFi 吞吐测试概览如下，详细数据查看附件：</p>
-        """
+        <p>路由器外网下载带宽 %(wandownload)d Mbps， 上传带宽 %(wanupload)d Mbps</p>
+        """ % argsdic
 
     content5 = """
         <img src="cid:%s" alt="%s" />
@@ -138,7 +139,7 @@ def generateMail(maillist, title, queue=None, attach1=None, attach2=None, attach
 if __name__ == '__main__':
     import multiprocessing as mp
     v.ANDROID_MODEL = "Mi4 LTE"
-    report = "R2D 开发版 2.13.16.log".decode("utf8").encode("gbk")
+    report = "R1CM 开发版 2.11.25.log".decode("utf8").encode("gbk")
     q = mp.Queue() # tranlate test result to generateMail
     ret = pr.ProcessReport(report, q)
     ret.start()

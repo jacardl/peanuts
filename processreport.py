@@ -26,21 +26,23 @@ class ProcessReport(mp.Process):
         throughput = GetThroughputLog(self.report)
         online = GetOnlineLog(self.report)
         module = GetTestModule(self.report)
+        wanBW = GetWanBandwidth(DEVICE_STATUS_LOG)
         time.start()
         test.start()
         throughput.start()
         online.start()
         module.start()
+        wanBW.start()
         while time.is_alive() or test.is_alive() or throughput.is_alive() \
-                or online.is_alive() or module.is_alive():
+                or online.is_alive() or module.is_alive() or wanBW.start().is_alive():
             pass
         self.result.update(error=test.result['error'])
         self.result.update(ranpass=test.result["ranpass"])
-        self.result.update(sum=test.result["ransum"])
-        if self.result['sum'] == 0:
+        self.result.update(ransum=test.result["ransum"])
+        if self.result['ransum'] == 0:
             self.result.update(percent=0)
         else:
-            self.result.update(percent=self.result["ranpass"]/float(self.result['sum'])*100)
+            self.result.update(percent=self.result["ranpass"]/float(self.result['ransum'])*100)
         self.result.update(time=time.timeUsed)
         self.result.update(onlinesum=online.result["pass"]+online.result["fail"])
         self.result.update(onlinepass=online.result["pass"])
@@ -50,6 +52,8 @@ class ProcessReport(mp.Process):
         else:
             self.result.update(onlinepercent=online.result["pass"]/float(onlineSum)*100)
         self.result.update(module=module.result)
+        self.result.update(wandownload=wanBW.result['wandownload'])
+        self.result.update(wanupload=wanBW.result['wanupload'])
         self.qu.put(self.result)
         self.stop()
 
@@ -311,13 +315,13 @@ class GetThroughputLog(threading.Thread):
             for tu in indexList:
                 # collect draw chart data
                 if tu[3] == "DUT":
-                    speedDict = getIperfThroughputLogVerbose(tu[0])
+                    speedDict = self.getIperfThroughputLogVerbose(tu[0])
                     eval(self.dut.get(tu[1]))
                 elif tu[3] == "LAN":
-                    speedDict = getIperfThroughputLogVerbose(tu[0])
+                    speedDict = self.getIperfThroughputLogVerbose(tu[0])
                     eval(self.lan.get(tu[1]))
                 elif tu[3] == "WAN":
-                    speedDict = getOoklaThroughputLogVerbose(tu[0])
+                    speedDict = self.getOoklaThroughputLogVerbose(tu[0])
                     eval(self.wan.get(tu[1]))
 
                 for cell in wb[tu[3]].get_cell_collection():
@@ -356,307 +360,317 @@ class GetThroughputLog(threading.Thread):
             #     else:
             #         self.dut2g[key] = 0
 
-            self.dut2g = getAveSpeed(self.dut2g)
-            self.dut5g = getAveSpeed(self.dut5g)
-            self.lan2g = getAveSpeed(self.lan2g)
-            self.lan5g = getAveSpeed(self.lan5g)
-            self.wan2g = getAveSpeed(self.wan2g)
-            self.wan5g = getAveSpeed(self.wan5g)
+            self.dut2g = self.getAveSpeed(self.dut2g)
+            self.dut5g = self.getAveSpeed(self.dut5g)
+            self.lan2g = self.getAveSpeed(self.lan2g)
+            self.lan5g = self.getAveSpeed(self.lan5g)
+            self.wan2g = self.getAveSpeed(self.wan2g)
+            self.wan5g = self.getAveSpeed(self.wan5g)
 
             # draw chart
-            drawThroughput2g(self.dut2g, MAIL_PIC2)
-            drawThroughput5g(self.dut5g, MAIL_PIC3)
-            drawThroughput2g(self.lan2g, MAIL_PIC5)
-            drawThroughput5g(self.lan5g, MAIL_PIC6)
-            drawOoklaThroughput2g(self.wan2g, MAIL_PIC7)
-            drawOoklaThroughput5g(self.wan5g, MAIL_PIC8)
+            self.drawThroughput2g(self.dut2g, MAIL_PIC2)
+            self.drawThroughput5g(self.dut5g, MAIL_PIC3)
+            self.drawThroughput2g(self.lan2g, MAIL_PIC5)
+            self.drawThroughput5g(self.lan5g, MAIL_PIC6)
+            self.drawOoklaThroughput2g(self.wan2g, MAIL_PIC7)
+            self.drawOoklaThroughput5g(self.wan5g, MAIL_PIC8)
 
 
-def getAveSpeed(speeddict):
-    for key, value in speeddict.iteritems():
-        i = 0
-        count = len(value)
-        while i < count:
-            if not isfloat(value[i]):
-                value.pop(i)
-                count = len(value)
+    def getAveSpeed(self, speeddict):
+        for key, value in speeddict.iteritems():
+            i = 0
+            count = len(value)
+            while i < count:
+                if not self.isfloat(value[i]):
+                    value.pop(i)
+                    count = len(value)
+                else:
+                    i += 1
+            if len(value) is not 0:
+                ave = round(float(reduce(lambda i, j: float(i)+float(j), value))/len(value), 2)
+                speeddict[key] = ave
             else:
-                i += 1
-        if len(value) is not 0:
-            ave = round(float(reduce(lambda i, j: float(i)+float(j), value))/len(value), 2)
-            speeddict[key] = ave
-        else:
-            speeddict[key] = 0
-    return speeddict
+                speeddict[key] = 0
+        return speeddict
 
+    def isfloat(self, value):
+      try:
+        float(value)
+        return True
+      except ValueError:
+        return False
 
-def getOoklaThroughputLogVerbose(logfile):
-    result = {
-        'tx': 0,
-        'rx': 0,
-    }
-    try:
-        log = open(logfile)
-        for line in log:
-            if not line.isspace():
-                mPattern = re.compile('downlink rate: (.*) Mbps, uplink rate: (.*) Mbps')
-                m = mPattern.search(line)
-                if m:
-                    result['tx'] = m.group(1)
-                    result['rx'] = m.group(2)
-                    break
-        log.close()
-    except IOError as e:
-        raise  e
-    return result
-
-
-def getIperfThroughputLogVerbose(logfile):
-    result = {
-        'tx': 0,
-        'rx': 0,
-    }
-    try:
-        log = open(logfile)
-        for line in log:
-            if not line.isspace():
-                m = re.search('0\.0-\d{1,4}.*\s(\d{1,}\.?\d{1,})?\sMbits/sec', line)
-                if m:
-                    if result['tx'] is 0:
+    def getOoklaThroughputLogVerbose(self, logfile):
+        result = {
+            'tx': 0,
+            'rx': 0,
+        }
+        try:
+            log = open(logfile)
+            for line in log:
+                if not line.isspace():
+                    mPattern = re.compile('downlink rate: (.*) Mbps, uplink rate: (.*) Mbps')
+                    m = mPattern.search(line)
+                    if m:
                         result['tx'] = m.group(1)
-                        continue
-                    else:
-                        result['rx'] = m.group(1)
+                        result['rx'] = m.group(2)
                         break
-        log.close()
-    except IOError as e:
-        raise e
-    if float(result['tx']) >= WIFI_MAX_THROUGHPUT:
-        result['tx'] = 'BREAK'
-    elif float(result['tx']) == 0:
-        result['tx'] = 'ERROR'
-    if float(result['rx']) >= WIFI_MAX_THROUGHPUT:
-        result['rx'] = 'BREAK'
-    elif float(result['rx']) == 0:
-        result['rx'] = 'ERROR'
-
-    return result
+            log.close()
+        except IOError as e:
+            raise  e
+        return result
 
 
-def drawThroughput2g(data, picname):
-    ret = data
-    for value in ret.values():
-        if isinstance(value, float):
-            bar_width = 0.4
-            opacity = 0.4
-            index = np.arange(2)
-            tx = list()
-            rx = list()
-            tx.append(ret.get("20tx"))
-            tx.append(ret.get("40tx"))
-            rx.append(ret.get("20rx"))
-            rx.append(ret.get("40rx"))
+    def getIperfThroughputLogVerbose(self, logfile):
+        result = {
+            'tx': 0,
+            'rx': 0,
+        }
+        try:
+            log = open(logfile)
+            for line in log:
+                if not line.isspace():
+                    m = re.search('0\.0-\d{1,4}.*\s(\d{1,}\.?\d{1,})?\sMbits/sec', line)
+                    if m:
+                        if result['tx'] is 0:
+                            result['tx'] = m.group(1)
+                            continue
+                        else:
+                            result['rx'] = m.group(1)
+                            break
+            log.close()
+        except IOError as e:
+            raise e
+        if float(result['tx']) >= WIFI_MAX_THROUGHPUT:
+            result['tx'] = 'BREAK'
+        elif float(result['tx']) == 0:
+            result['tx'] = 'ERROR'
+        if float(result['rx']) >= WIFI_MAX_THROUGHPUT:
+            result['rx'] = 'BREAK'
+        elif float(result['rx']) == 0:
+            result['rx'] = 'ERROR'
 
-            fig, ax = plt.subplots(figsize=(6, 4))
-            print "draw %s chart" % picname
-            # plt.subplots_adjust(left=0.08, right=0.95)
-            rects1 = plt.bar(index, tx, bar_width,
-                             alpha=opacity,
-                             color='b',
-                             label='Tx',
-                             )
-
-            rects2 = plt.bar(index + bar_width, rx, bar_width,
-                             alpha=opacity,
-                             color='r',
-                             label='Rx',
-                             )
-
-            def autolabel(rects):
-                # attach some text labels
-                for rect in rects:
-                    height = rect.get_height()
-                    ax.text(rect.get_x()+rect.get_width()/2., 0.75*height, '%.1f'%float(height),
-                            ha='center', va='bottom', fontsize=10)
-
-            autolabel(rects1)
-            autolabel(rects2)
-
-            # plt.xlabel('Bandwidth', fontsize=10)
-            plt.ylabel('Mbps', fontsize=10)
-            plt.suptitle(picname.split(".")[0].split('\\')[-1].title(), fontsize=10)
-            plt.xticks(index + bar_width, ('20MHz', '40MHz',), fontsize=10)
-            plt.yticks(fontsize=10)
-            plt.legend(prop={'size': 10})
-
-            # plt.show()
-            plt.savefig(picname)
-            plt.close()
-            break
+        return result
 
 
-def drawThroughput5g(data, picname):
-    ret = data
-    for value in ret.values():
-        if isinstance(value, float):
-            bar_width = 0.4
-            opacity = 0.4
-            index = np.arange(3)
-            tx = list()
-            rx = list()
-            tx.append(ret.get("20tx"))
-            tx.append(ret.get("40tx"))
-            tx.append(ret.get("80tx"))
-            rx.append(ret.get("20rx"))
-            rx.append(ret.get("40rx"))
-            rx.append(ret.get("80rx"))
+    def drawThroughput2g(self, data, picname):
+        ret = data
+        for value in ret.values():
+            if isinstance(value, float):
+                bar_width = 0.4
+                opacity = 0.4
+                index = np.arange(2)
+                tx = list()
+                rx = list()
+                tx.append(ret.get("20tx"))
+                tx.append(ret.get("40tx"))
+                rx.append(ret.get("20rx"))
+                rx.append(ret.get("40rx"))
 
-            fig, ax = plt.subplots(figsize=(6, 4))
-            print "draw %s chart" % picname
-            # plt.subplots_adjust(left=0.08, right=0.95)
-            rects1 = plt.bar(index, tx, bar_width,
-                             alpha=opacity,
-                             color='b',
-                             label='Tx'
-                             )
+                fig, ax = plt.subplots(figsize=(6, 4))
+                print "draw %s chart" % picname
+                # plt.subplots_adjust(left=0.08, right=0.95)
+                rects1 = plt.bar(index, tx, bar_width,
+                                 alpha=opacity,
+                                 color='b',
+                                 label='Tx',
+                                 )
 
-            rects2 = plt.bar(index + bar_width, rx, bar_width,
-                             alpha=opacity,
-                             color='r',
-                             label='Rx'
-                             )
+                rects2 = plt.bar(index + bar_width, rx, bar_width,
+                                 alpha=opacity,
+                                 color='r',
+                                 label='Rx',
+                                 )
 
-            def autolabel(rects):
-                # attach some text labels
-                for rect in rects:
-                    height = rect.get_height()
-                    ax.text(rect.get_x()+rect.get_width()/2., 0.75*height, '%.1f'%float(height),
-                            ha='center', va='bottom', fontsize=10)
+                def autolabel(rects):
+                    # attach some text labels
+                    for rect in rects:
+                        height = rect.get_height()
+                        ax.text(rect.get_x()+rect.get_width()/2., 0.75*height, '%.1f'%float(height),
+                                ha='center', va='bottom', fontsize=10)
 
-            autolabel(rects1)
-            autolabel(rects2)
+                autolabel(rects1)
+                autolabel(rects2)
 
-            # plt.xlabel('Bandwidth', fontsize=10)
-            plt.ylabel('Mbps', fontsize=10)
-            plt.suptitle(picname.split(".")[0].split('\\')[-1].title(), fontsize=10)
-            plt.xticks(index + bar_width, ('20MHz', '40MHz', '80MHz'), fontsize=10)
-            plt.yticks(fontsize=10)
-            plt.legend(prop={'size': 10})
+                # plt.xlabel('Bandwidth', fontsize=10)
+                plt.ylabel('Mbps', fontsize=10)
+                plt.suptitle(picname.split(".")[0].split('\\')[-1].title(), fontsize=10)
+                plt.xticks(index + bar_width, ('20MHz', '40MHz',), fontsize=10)
+                plt.yticks(fontsize=10)
+                plt.legend(prop={'size': 10})
 
-            # plt.show()
-            plt.savefig(picname)
-            plt.close()
-            break
+                # plt.show()
+                plt.savefig(picname)
+                plt.close()
+                break
 
 
-def drawOoklaThroughput2g(data, picname):
-    ret = data
-    for value in ret.values():
-        if isinstance(value, float):
-            bar_width = 0.4
-            opacity = 0.4
-            index = np.arange(4)
-            tx = list()
-            rx = list()
-            tx.append(ret.get("tx"))
-            tx.append(ret.get("guesttx"))
-            tx.append(ret.get("wrelaytx"))
-            tx.append(ret.get("relaytx"))
+    def drawThroughput5g(self, data, picname):
+        ret = data
+        for value in ret.values():
+            if isinstance(value, float):
+                bar_width = 0.4
+                opacity = 0.4
+                index = np.arange(3)
+                tx = list()
+                rx = list()
+                tx.append(ret.get("20tx"))
+                tx.append(ret.get("40tx"))
+                tx.append(ret.get("80tx"))
+                rx.append(ret.get("20rx"))
+                rx.append(ret.get("40rx"))
+                rx.append(ret.get("80rx"))
 
-            rx.append(ret.get("rx"))
-            rx.append(ret.get("guestrx"))
-            rx.append(ret.get("wrelayrx"))
-            rx.append(ret.get("relayrx"))
-            fig, ax = plt.subplots(figsize=(6, 4))
-            print "draw %s chart" % picname
-            # plt.subplots_adjust(left=0.08, right=0.95)
-            rects1 = plt.bar(index, tx, bar_width,
-                             alpha=opacity,
-                             color='b',
-                             label='Tx'
-                             )
+                fig, ax = plt.subplots(figsize=(6, 4))
+                print "draw %s chart" % picname
+                # plt.subplots_adjust(left=0.08, right=0.95)
+                rects1 = plt.bar(index, tx, bar_width,
+                                 alpha=opacity,
+                                 color='b',
+                                 label='Tx'
+                                 )
 
-            rects2 = plt.bar(index + bar_width, rx, bar_width,
-                             alpha=opacity,
-                             color='r',
-                             label='Rx'
-                             )
+                rects2 = plt.bar(index + bar_width, rx, bar_width,
+                                 alpha=opacity,
+                                 color='r',
+                                 label='Rx'
+                                 )
 
-            def autolabel(rects):
-                # attach some text labels
-                for rect in rects:
-                    height = rect.get_height()
-                    ax.text(rect.get_x()+rect.get_width()/2., 0.75*height, '%.1f'%float(height),
-                            ha='center', va='bottom', fontsize=10)
+                def autolabel(rects):
+                    # attach some text labels
+                    for rect in rects:
+                        height = rect.get_height()
+                        ax.text(rect.get_x()+rect.get_width()/2., 0.75*height, '%.1f'%float(height),
+                                ha='center', va='bottom', fontsize=10)
 
-            autolabel(rects1)
-            autolabel(rects2)
+                autolabel(rects1)
+                autolabel(rects2)
 
-            # plt.xlabel('Bandwidth', fontsize=10)
-            plt.ylabel('Mbps', fontsize=10)
-            plt.suptitle(picname.split(".")[0].split('\\')[-1].title(), fontsize=10)
-            plt.xticks(index + bar_width, ('Normal', 'Guest', 'Wireless-Relay', 'Relay'), fontsize=10)
-            plt.yticks(fontsize=10)
-            plt.legend(prop={'size': 10})
+                # plt.xlabel('Bandwidth', fontsize=10)
+                plt.ylabel('Mbps', fontsize=10)
+                plt.suptitle(picname.split(".")[0].split('\\')[-1].title(), fontsize=10)
+                plt.xticks(index + bar_width, ('20MHz', '40MHz', '80MHz'), fontsize=10)
+                plt.yticks(fontsize=10)
+                plt.legend(prop={'size': 10})
 
-            # plt.show()
-            plt.savefig(picname)
-            plt.close()
-            break
+                # plt.show()
+                plt.savefig(picname)
+                plt.close()
+                break
 
 
-def drawOoklaThroughput5g(data, picname):
-    ret = data
-    for value in ret.values():
-        if isinstance(value, float):
-            bar_width = 0.4
-            opacity = 0.4
-            index = np.arange(3)
-            tx = list()
-            rx = list()
-            tx.append(ret.get("tx"))
-            tx.append(ret.get("wrelaytx"))
-            tx.append(ret.get("relaytx"))
+    def drawOoklaThroughput2g(self, data, picname):
+        ret = data
+        for value in ret.values():
+            if isinstance(value, float):
+                bar_width = 0.4
+                opacity = 0.4
+                index = np.arange(4)
+                tx = list()
+                rx = list()
+                tx.append(ret.get("tx"))
+                tx.append(ret.get("guesttx"))
+                tx.append(ret.get("wrelaytx"))
+                tx.append(ret.get("relaytx"))
 
-            rx.append(ret.get("rx"))
-            rx.append(ret.get("wrelayrx"))
-            rx.append(ret.get("relayrx"))
-            fig, ax = plt.subplots(figsize=(6, 4))
-            print "draw %s chart" % picname
-            # plt.subplots_adjust(left=0.08, right=0.95)
-            rects1 = plt.bar(index, tx, bar_width,
-                             alpha=opacity,
-                             color='b',
-                             label='Tx'
-                             )
+                rx.append(ret.get("rx"))
+                rx.append(ret.get("guestrx"))
+                rx.append(ret.get("wrelayrx"))
+                rx.append(ret.get("relayrx"))
+                fig, ax = plt.subplots(figsize=(6, 4))
+                print "draw %s chart" % picname
+                # plt.subplots_adjust(left=0.08, right=0.95)
+                rects1 = plt.bar(index, tx, bar_width,
+                                 alpha=opacity,
+                                 color='b',
+                                 label='Tx'
+                                 )
 
-            rects2 = plt.bar(index + bar_width, rx, bar_width,
-                             alpha=opacity,
-                             color='r',
-                             label='Rx'
-                             )
+                rects2 = plt.bar(index + bar_width, rx, bar_width,
+                                 alpha=opacity,
+                                 color='r',
+                                 label='Rx'
+                                 )
 
-            def autolabel(rects):
-                # attach some text labels
-                for rect in rects:
-                    height = rect.get_height()
-                    ax.text(rect.get_x()+rect.get_width()/2., 0.75*height, '%.1f'%float(height),
-                            ha='center', va='bottom', fontsize=10)
+                def autolabel(rects):
+                    # attach some text labels
+                    for rect in rects:
+                        height = rect.get_height()
+                        ax.text(rect.get_x()+rect.get_width()/2., 0.75*height, '%.1f'%float(height),
+                                ha='center', va='bottom', fontsize=10)
 
-            autolabel(rects1)
-            autolabel(rects2)
+                autolabel(rects1)
+                autolabel(rects2)
 
-            # plt.xlabel('Bandwidth', fontsize=10)
-            plt.ylabel('Mbps', fontsize=10)
-            plt.suptitle(picname.split(".")[0].split('\\')[-1].title(), fontsize=10)
-            plt.xticks(index + bar_width, ('Normal', 'Wireless-Relay', 'Relay'), fontsize=10)
-            plt.yticks(fontsize=10)
-            plt.legend(prop={'size': 10})
+                # plt.xlabel('Bandwidth', fontsize=10)
+                plt.ylabel('Mbps', fontsize=10)
+                plt.suptitle(picname.split(".")[0].split('\\')[-1].title(), fontsize=10)
+                plt.xticks(index + bar_width, ('Normal', 'Guest', 'Wireless-Relay', 'Relay'), fontsize=10)
+                plt.yticks(fontsize=10)
+                plt.legend(prop={'size': 10})
 
-            # plt.show()
-            plt.savefig(picname)
-            plt.close()
-            break
+                # plt.show()
+                plt.savefig(picname)
+                plt.close()
+                break
+
+
+    def drawOoklaThroughput5g(self, data, picname):
+        ret = data
+        for value in ret.values():
+            if isinstance(value, float):
+                bar_width = 0.4
+                opacity = 0.4
+                index = np.arange(3)
+                tx = list()
+                rx = list()
+                tx.append(ret.get("tx"))
+                tx.append(ret.get("wrelaytx"))
+                tx.append(ret.get("relaytx"))
+
+                rx.append(ret.get("rx"))
+                rx.append(ret.get("wrelayrx"))
+                rx.append(ret.get("relayrx"))
+                fig, ax = plt.subplots(figsize=(6, 4))
+                print "draw %s chart" % picname
+                # plt.subplots_adjust(left=0.08, right=0.95)
+                rects1 = plt.bar(index, tx, bar_width,
+                                 alpha=opacity,
+                                 color='b',
+                                 label='Tx'
+                                 )
+
+                rects2 = plt.bar(index + bar_width, rx, bar_width,
+                                 alpha=opacity,
+                                 color='r',
+                                 label='Rx'
+                                 )
+
+                def autolabel(rects):
+                    # attach some text labels
+                    for rect in rects:
+                        height = rect.get_height()
+                        ax.text(rect.get_x()+rect.get_width()/2., 0.75*height, '%.1f'%float(height),
+                                ha='center', va='bottom', fontsize=10)
+
+                autolabel(rects1)
+                autolabel(rects2)
+
+                # plt.xlabel('Bandwidth', fontsize=10)
+                plt.ylabel('Mbps', fontsize=10)
+                plt.suptitle(picname.split(".")[0].split('\\')[-1].title(), fontsize=10)
+                plt.xticks(index + bar_width, ('Normal', 'Wireless-Relay', 'Relay'), fontsize=10)
+                plt.yticks(fontsize=10)
+                plt.legend(prop={'size': 10})
+
+                # plt.show()
+                plt.savefig(picname)
+                plt.close()
+                break
+
+
+# class GetWanBandwidth(threading.Thread):
+#     # TODO
 
 
 class GetOnlineLog(threading.Thread):
@@ -739,7 +753,7 @@ class GetTestModule(threading.Thread):
                 if m:
                     testCase = m.group(1)
                     for module in self.moduleDict.iterkeys():
-                        if chkTestCaseModule(testCase, module):
+                        if self.chkTestCaseModule(testCase, module):
                             if self.moduleDict.get(module) not in self.result:
                                 self.result.append(self.moduleDict.get(module))
                                 self.result.append('，')
@@ -752,20 +766,12 @@ class GetTestModule(threading.Thread):
         self.running = False
 
 
-def chkTestCaseModule(tcName, module):
-    for i in getattr(data, module):
-        if isinstance(i, str):
-            if tcName == i:
-                return True
-    return False
-
-
-def isfloat(value):
-  try:
-    float(value)
-    return True
-  except ValueError:
-    return False
+    def chkTestCaseModule(self, tcName, module):
+        for i in getattr(data, module):
+            if isinstance(i, str):
+                if tcName == i:
+                    return True
+        return False
 
 
 if __name__ == '__main__':

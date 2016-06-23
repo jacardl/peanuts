@@ -1179,7 +1179,7 @@ def getWanBandwidth(terminal, logname):
         'upload': 0,
     }
     command = '/cgi-bin/luci/;stok=token/api/misystem/bandwidth_test'
-    ret = setGet(terminal, command, logname)
+    ret = setGet(terminal, logname, command)
     if ret is not None:
         if ret['code'] is 0:
             result['download'] = float(ret.get('bandwidth'))

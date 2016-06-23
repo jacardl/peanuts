@@ -1789,8 +1789,8 @@ def getAdbPingStatus(terminal, target, count, logname):
     return result
 
 
-def getAdbFile(device, filename, logname):
-    command = 'pull /sdcard/Robotium-Screenshots/ookla.jpg ' + v.OOKLA_SHOT_PATH + filename
+def getAdbOoklaJpg(device, filename, logname):
+    command = 'pull /sdcard/Robotium-Screenshots/ookla.jpg ' + v.OOKLA_SHOT_PATH + filename + ".jpg"
     setAdb(device, command, logname)
 
 
@@ -1814,7 +1814,7 @@ def getAdbOoklaSpeedTestShot(device, filename, logname):
     command = "am instrument -e class com.testookla.TestOokla#test_ookla_speedtest_shot " \
               "-w com.testookla/android.test.InstrumentationTestRunner"
     ret = setAdbShell(device, command, logname)
-    getAdbFile(device, filename, logname)
+    getAdbOoklaJpg(device, filename, logname)
     for line in ret:
         m = re.search('downlink rate: (.*) Mbps, uplink rate: (.*) Mbps', line)
         if m:

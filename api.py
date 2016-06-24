@@ -1174,12 +1174,15 @@ def getWanBandwidth(terminal, logname):
     """
     {"bandwidth2":18.06,"code":0,"upload":2311.34,"download":2395.77,"bandwidth":18.72}
     """
+    option = {
+        'new': 1,
+    }
     result = {
         'download': 0,
         'upload': 0,
     }
     command = '/cgi-bin/luci/;stok=token/api/misystem/bandwidth_test'
-    ret = setGet(terminal, logname, command)
+    ret = setGet(terminal, logname, command, **option)
     if ret is not None:
         if ret['code'] is 0:
             result['download'] = float(ret.get('bandwidth'))
@@ -1230,9 +1233,9 @@ if __name__ == '__main__':
     option = {
         'ssid': 'MI-MAC',
     }
-    v.HOST = '192.168.150.1'
+    v.HOST = '192.168.130.1'
     v.WEB_PWD = '12345678'
     webclient = HttpClient()
     webclient.connect(host=v.HOST, password=v.WEB_PWD)
-    print getWifiDetailDic(webclient, "a", "guest")
+    print getWanBandwidth(webclient, "a")
     webclient.close()

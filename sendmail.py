@@ -121,7 +121,7 @@ def generateMail(maillist, title, queue=None, attach1=None, attach2=None, attach
     piclist = list()
     if argsdic.get("wandownload") is not None and argsdic.get("wanupload") is not None:
         content4 = """
-            <p>路由器外网下载带宽 %(wandownload)d Mbps， 上传带宽 %(wanupload)d Mbps</p>
+            <p>路由器外网下载带宽 %(wandownload)s Mbps， 上传带宽 %(wanupload)s Mbps</p>
             """ % argsdic
         contents = content1 + content2 + content3 + content4
     else:
@@ -160,7 +160,7 @@ def generateMail(maillist, title, queue=None, attach1=None, attach2=None, attach
 if __name__ == '__main__':
     import multiprocessing as mp
     v.ANDROID_MODEL = "Mi4 LTE"
-    report = "R1D 稳定版 2.14.5.log".decode("utf8").encode("gbk")
+    report = "R1CM 稳定版 2.10.12.log".decode("utf8").encode("gbk")
     q = mp.Queue() # tranlate test result to generateMail
     ret = pr.ProcessReport(report, q)
     ret.start()

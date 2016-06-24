@@ -16411,6 +16411,7 @@ class AP_WAN_BANDWIDTH(TestCase):
         if ret1 is False:
             raise Exception("Http connection is failed. please check your remote settings.")
 
+    @classmethod
     def tearDownClass(self):
         self.dut.close()
 

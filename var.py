@@ -114,7 +114,7 @@ IPERF_TIME = "60"
 # IPERF_INTERVAL = "1"
 # IPERF_TIME = "5"
 
-QOS_MAXUP = 800
+QOS_MAXUP = 500
 QOS_MAXDOWN = 500
 
 ROOT_AP_SSID = "peanuts_automatic_test_root_ap_"

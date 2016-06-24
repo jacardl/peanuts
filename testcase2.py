@@ -10703,11 +10703,11 @@ class AP_WIRELESS_RELAY_MIXEDPSK_BSD(TestCase):
 
         option = {
             'ssid': v.ROOT_AP_SSID,
-            # 'encryption': 'WPA2PSK',
-            # 'enctype': 'TKIPAES',
+            'encryption': 'WPA2PSK',
+            'enctype': 'TKIPAES',
             'password': v.ROOT_AP_PWD,
             'channel': v.ROOT_AP_CHANNEL,
-            # 'bandwidth': '20',
+            'bandwidth': '20',
             'nssid': v.SSID,
             'nencryption': 'WPA2PSK',
             'npassword': v.ROOT_AP_PWD,
@@ -10832,11 +10832,11 @@ class AP_WIRELESS_RELAY_MIXEDPSK_BSD_SSIDHIDE(TestCase):
 
         option = {
             'ssid': v.ROOT_AP_SSID,
-            # 'encryption': 'WPA2PSK',
-            # 'enctype': 'TKIPAES',
+            'encryption': 'WPA2PSK',
+            'enctype': 'TKIPAES',
             'password': v.ROOT_AP_PWD,
             'channel': v.ROOT_AP_CHANNEL,
-            # 'bandwidth': '20',
+            'bandwidth': '20',
             'nssid': v.SSID,
             'nencryption': 'WPA2PSK',
             'npassword': v.ROOT_AP_PWD,
@@ -11122,11 +11122,11 @@ class AP_WIRELESS_RELAY_BSD_SSIDHIDE(TestCase):
 
         option = {
             'ssid': v.ROOT_AP_SSID,
-            # 'encryption': 'WPA2PSK',
-            # 'enctype': 'TKIPAES',
+            'encryption': 'WPA2PSK',
+            'enctype': 'TKIPAES',
             'password': v.ROOT_AP_PWD,
             'channel': v.ROOT_AP_CHANNEL,
-            # 'bandwidth': '20',
+            'bandwidth': '20',
             'nssid': v.SSID,
             'nencryption': 'WPA2PSK',
             'npassword': v.ROOT_AP_PWD,
@@ -16247,8 +16247,11 @@ class AP_WIRELESS_RELAY_PSK2_CHAN11_OOKLA(TestCase):
 
         option = {
             'ssid': v.ROOT_AP_SSID,
+            'encryption': 'WPA2PSK',
+            'enctype': 'TKIPAES',
             'password': v.ROOT_AP_PWD,
             'channel': v.ROOT_AP_CHANNEL,
+            'bandwidth': '20',
             'nssid': v.WIRELESS_RELAY_SSID,
             'nencryption': 'psk2',
             'npassword': v.KEY,
@@ -16287,8 +16290,11 @@ class AP_WIRELESS_RELAY_CLEAR_CHAN11_OOKLA(TestCase):
 
         option = {
             'ssid': v.ROOT_AP_SSID,
+            'encryption': 'WPA2PSK',
+            'enctype': 'TKIPAES',
             'password': v.ROOT_AP_PWD,
             'channel': v.ROOT_AP_CHANNEL,
+            'bandwidth': '20',
             'nssid': v.WIRELESS_RELAY_SSID,
             'nencryption': 'none',
         }
@@ -16326,8 +16332,11 @@ class AP_WIRELESS_RELAY_PSK2_CHAN149_OOKLA(TestCase):
 
         option = {
             'ssid': v.ROOT_AP_SSID,
+            'encryption': 'WPA2PSK',
+            'enctype': 'TKIPAES',
             'password': v.ROOT_AP_PWD,
             'channel': v.ROOT_AP_CHANNEL,
+            'bandwidth': '20',
             'nssid': v.WIRELESS_RELAY_SSID,
             'nencryption': 'psk2',
             'npassword': v.KEY,
@@ -16366,8 +16375,11 @@ class AP_WIRELESS_RELAY_CLEAR_CHAN149_OOKLA(TestCase):
 
         option = {
             'ssid': v.ROOT_AP_SSID,
+            'encryption': 'WPA2PSK',
+            'enctype': 'TKIPAES',
             'password': v.ROOT_AP_PWD,
             'channel': v.ROOT_AP_CHANNEL,
+            'bandwidth': '20',
             'nssid': v.WIRELESS_RELAY_SSID,
             'nencryption': 'none',
         }

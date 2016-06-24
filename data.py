@@ -1047,7 +1047,7 @@ treeThroughputWANApi = [
     [
         'assoc_clear_sta_speedtest_2g',
     ],
-    'AP_RELAY_PSK2CHAN149_OOKLA',
+    'AP_RELAY_PSK2_CHAN149_OOKLA',
     [
         'assoc_psk2_sta_speedtest_5g',
     ],

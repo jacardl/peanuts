@@ -678,12 +678,15 @@ class TestSuitePage(wx.Panel):
                 t.sleep(1)
 
             if v.SEND_MAIL == 1:
-                if os.path.exists(v.MAIL_THROUGHPUT_XLSX):
-                    # add Queue to communicate with processreport process
-                    sm.generateMail(v.MAILTO_LIST, v.MAIL_TITLE, q, v.REPORT_FILE_NAME,
-                                    v.MAIL_XLSX, v.MAIL_THROUGHPUT_XLSX)
-                else:
-                    sm.generateMail(v.MAILTO_LIST, v.MAIL_TITLE, q, v.REPORT_FILE_NAME, v.MAIL_XLSX)
+                # if os.path.exists(v.MAIL_THROUGHPUT_XLSX):
+                #     # add Queue to communicate with processreport process
+                #     sm.generateMail(v.MAILTO_LIST, v.MAIL_TITLE, q, v.REPORT_FILE_NAME,
+                #                     v.MAIL_XLSX, v.MAIL_THROUGHPUT_XLSX)
+                # else:
+                #     sm.generateMail(v.MAILTO_LIST, v.MAIL_TITLE, q, v.REPORT_FILE_NAME, v.MAIL_XLSX)
+                zipFile = v.REPORT_FILE_NAME + '.zip'
+                if os.path.exists(v.REPORT_FILE_NAME+'.zip'):
+                    sm.generateMail(v.MAILTO_LIST, v.MAIL_TITLE, q, v.REPORT_FILE_NAME, zipFile)
             self.runFlag = False
 
         except Exception, e:

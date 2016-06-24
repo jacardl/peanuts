@@ -1,9 +1,6 @@
 # -*- coding: utf8 -*-
-import serial
-import serial.tools.list_ports_windows
+import shutil
+import var
 
 if __name__ == '__main__':
-
-    for port in sorted(serial.tools.list_ports_windows.comports()):
-        print port[0]
-
+    shutil.make_archive("a", 'zip', var.TEST_SUITE_LOG_PATH)

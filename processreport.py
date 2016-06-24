@@ -794,8 +794,8 @@ class GetWanBandwidth(threading.Thread):
     def run(self):
         self.running = True
         f = open(self.reportName)
-        mPattern = re.compile('\"bandwidth2\":(\d{1,3}\.\d{1,3})') # bandwidth2 means upload
-        nPattern = re.compile('\"bandwidth\":(\d{1,3}\.\d{1,3})') # bandwidth means download
+        mPattern = re.compile("'bandwidth2': (\d{1,3}\.\d{1,3})")  # bandwidth2 means upload
+        nPattern = re.compile("'bandwidth': (\d{1,3}\.\d{1,3})")  # bandwidth means download
         for line in f:
             if not line.isspace():
                 m = mPattern.search(line)
@@ -809,11 +809,15 @@ class GetWanBandwidth(threading.Thread):
 if __name__ == '__main__':
     # print getThroughputLogVerbose("D:\Python\peanuts\AP_CLEAR_CHAN36_BW20_LAN_THROUGHPUT.log")
     # print getChannelFlowLogVerbose("E:\peanuts\AP_MIXEDPSK_CHAN1_36_FLOW.log")
-    info = GetThroughputLog("R1CM 开发版 2.11.25.log".decode("utf8").encode("gbk"))
-    info.start()
+    # info = GetThroughputLog("R1CM 开发版 2.11.25.log".decode("utf8").encode("gbk"))
+    # info.start()
     # info.join()
     # t = GetTestModule("R1CM 开发版 2.11.13.log".decode('utf8').encode('gbk'))
     # t.start()
+    wanBW = GetWanBandwidth("E:\peanuts\R1CM 稳定版 2.10.12\AP_WAN_BANDWIDTH.log".decode("utf8").encode("gbk"))
+    wanBW.start()
+    wanBW.join()
+    print wanBW.result
 
 
 

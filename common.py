@@ -960,10 +960,11 @@ def setIperfFlow(target, interval, time, logname):
 
     command += " -r -w 2m -f m"
     ret = setOSShell(command, cwd=v.IPERF_PATH, timeout=3*int(time), logname=logname)
-    # os.chdir(v.DEFAULT_PATH)
-    if len(ret) == 0:
-        return False
-    return True
+    for line in ret:
+        m = re.search('0\.0-\d{1,4}.*\s(\d{1,}\.?\d{1,})?\sMbits/sec', line)
+        if m:
+            return True
+    return False
 
 
 def setIperfFlow2(terminal, target, interval, time, logname):
@@ -974,9 +975,11 @@ def setIperfFlow2(terminal, target, interval, time, logname):
         command = command + " -t " + time
     command += " -r -w 2m -f m"
     ret = setGet(terminal, command, logname)
-    if len(ret) == 0:
-        return False
-    return True
+    for line in ret:
+        m = re.search('0\.0-\d{1,4}.*\s(\d{1,}\.?\d{1,})?\sMbits/sec', line)
+        if m:
+            return True
+    return False
 
 
 def setAdbClearStaConn(device, ssid, radio, logname):
@@ -1786,18 +1789,34 @@ def getAdbPingStatus(terminal, target, count, logname):
     return result
 
 
-def getAdbFile(device, filename, logname):
-    command = 'pull /sdcard/Robotium-Screenshots/ookla.jpg ' + v.OOKLA_SHOT_PATH + filename
+def getAdbOoklaJpg(device, filename, logname):
+    command = 'pull /sdcard/Robotium-Screenshots/ookla.jpg ' + v.OOKLA_SHOT_PATH + filename + ".jpg"
     setAdb(device, command, logname)
 
 
 def getAdbOoklaSpeedTestShot(device, filename, logname):
+    """
+    com.testookla.TestOokla:
+    Failure in test_ookla_speedtest_result:
+    junit.framework.AssertionFailedError: downlink rate: 19.40 Mbps, uplink rate: 18.64 Mbps
+    at com.testookla.TestOokla.test_ookla_speedtest_result(TestOokla.java:70)
+    at android.test.InstrumentationTestCase.runMethod(InstrumentationTestCase.java:214)
+    at android.test.InstrumentationTestCase.runTest(InstrumentationTestCase.java:199)
+    at android.test.ActivityInstrumentationTestCase2.runTest(ActivityInstrumentationTestCase2.java:192)
+    at android.test.AndroidTestRunner.runTest(AndroidTestRunner.java:191)
+    at android.test.AndroidTestRunner.runTest(AndroidTestRunner.java:176)
+    at android.test.InstrumentationTestRunner.onStart(InstrumentationTestRunner.java:555)
+    at android.app.Instrumentation$InstrumentationThread.run(Instrumentation.java:1853)
+
+    save ookla.jpg
+    """
+
     command = "am instrument -e class com.testookla.TestOokla#test_ookla_speedtest_shot " \
               "-w com.testookla/android.test.InstrumentationTestRunner"
     ret = setAdbShell(device, command, logname)
-    getAdbFile(device, filename, logname)
+    getAdbOoklaJpg(device, filename, logname)
     for line in ret:
-        m = re.search('OK', line)
+        m = re.search('downlink rate: (.*) Mbps, uplink rate: (.*) Mbps', line)
         if m:
             return True
     return False
@@ -1946,6 +1965,7 @@ def chkAdbBrowserWebsite(device, url, logname):
     return False
 
 if __name__ == '__main__':
-    device = getAdbDevices()
-    print getAdbOoklaSpeedTestResult(device[0], "a")
+    # device = getAdbDevices()
+    # print getAdbOoklaSpeedTestShot(device[0], "router.jpg", "a")
+    print setIperfFlow("192.168.31.190", "", "10", "a")
 

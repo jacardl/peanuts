@@ -83,12 +83,9 @@ def generateMail(maillist, title, queue=None, attach1=None, attach2=None, attach
         """ % "".join(module)
 
     content3 = """
-        <p>本次自动化成功执行用例 %(sum)d 个，通过%(ranpass)d 个，通过率 %(percent)0.2f%%。有%(error)d个脚本执行错误，共用时 %(time)0.2f 小时。无线终端尝试上线 %(onlinesum)d 次，成功上线 %(onlinepass)d 次，上线率 %(onlinepercent)0.2f%%</p>
+        <p>本次自动化成功执行用例 %(ransum)d 个，通过%(ranpass)d 个，通过率 %(percent)0.2f%%。有%(error)d个脚本执行错误，
+        共用时 %(time)0.2f 小时。无线终端尝试上线 %(onlinesum)d 次，成功上线 %(onlinepass)d 次，上线率 %(onlinepercent)0.2f%%</p>
         """ % argsdic
-
-    content4 = """
-        <p>WiFi 吞吐测试概览如下，详细数据查看附件：</p>
-        """
 
     content5 = """
         <img src="cid:%s" alt="%s" />
@@ -113,20 +110,45 @@ def generateMail(maillist, title, queue=None, attach1=None, attach2=None, attach
         """ % (v.MAIL_PIC1.split('\\')[-1], v.MAIL_PIC1.split('\\')[-1], v.MAIL_PIC4.split('\\')[-1],
                v.MAIL_PIC4.split('\\')[-1])
 
+    content10 = """
+        <img src="cid:%s" alt="%s" />
+        """% (v.MAIL_PIC7.split('\\')[-1], v.MAIL_PIC7.split('\\')[-1])
+
+    content11 = """
+        <img src="cid:%s" alt="%s" />
+        """% (v.MAIL_PIC8.split('\\')[-1], v.MAIL_PIC8.split('\\')[-1])
+
     piclist = list()
-    contents = content1 + content2 + content3
+    if argsdic.get("wandownload") is not None and argsdic.get("wanupload") is not None:
+        content4 = """
+            <p>路由器外网下载带宽 %(wandownload)d Mbps， 上传带宽 %(wanupload)d Mbps</p>
+            """ % argsdic
+        contents = content1 + content2 + content3 + content4
+    else:
+        contents = content1 + content2 + content3
+    # 2.4g throughput chart
+    if os.path.isfile(v.MAIL_PIC7):
+        piclist.append(v.MAIL_PIC7)
+        contents += content10
     if os.path.isfile(v.MAIL_PIC2):
         piclist.append(v.MAIL_PIC2)
         contents += content5
     if os.path.isfile(v.MAIL_PIC5):
         piclist.append(v.MAIL_PIC5)
         contents += content6
+
+    # 5g throughput chart
+    if os.path.isfile(v.MAIL_PIC8):
+        piclist.append(v.MAIL_PIC8)
+        contents += content11
     if os.path.isfile(v.MAIL_PIC3):
         piclist.append(v.MAIL_PIC3)
         contents += content7
     if os.path.isfile(v.MAIL_PIC6):
         piclist.append(v.MAIL_PIC6)
         contents += content8
+
+    # cpu and memory chart
     if os.path.isfile(v.MAIL_PIC1) and os.path.isfile(v.MAIL_PIC4):
         piclist.append(v.MAIL_PIC1)
         piclist.append(v.MAIL_PIC4)
@@ -138,7 +160,7 @@ def generateMail(maillist, title, queue=None, attach1=None, attach2=None, attach
 if __name__ == '__main__':
     import multiprocessing as mp
     v.ANDROID_MODEL = "Mi4 LTE"
-    report = "R2D 开发版 2.13.16.log".decode("utf8").encode("gbk")
+    report = "R1CM 开发版 2.11.25.log".decode("utf8").encode("gbk")
     q = mp.Queue() # tranlate test result to generateMail
     ret = pr.ProcessReport(report, q)
     ret.start()

@@ -1170,6 +1170,24 @@ def getDeviceSystemInfo(terminal, logname):
         return result
 
 
+def getWanBandwidth(terminal, logname):
+    """
+    {"bandwidth2":18.06,"code":0,"upload":2311.34,"download":2395.77,"bandwidth":18.72}
+    """
+    result = {
+        'download': 0,
+        'upload': 0,
+    }
+    command = '/cgi-bin/luci/;stok=token/api/misystem/bandwidth_test'
+    ret = setGet(terminal, logname, command)
+    if ret is not None:
+        if ret['code'] is 0:
+            result['download'] = float(ret.get('bandwidth'))
+            result['upload'] = float(ret.get('bandwidth2'))
+            return True, result
+    return False, result
+
+
 def chkWifiInfo(terminal, logname, **kwargs):
     """
     wifilist

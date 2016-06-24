@@ -2,7 +2,7 @@
 from common2 import *
 import os
 
-VER = '3.6.2'
+VER = '3.7.2'
 
 TOOL_LIST = ["General", "Memory Tracking", "Test Suite"]
 
@@ -119,7 +119,7 @@ QOS_MAXDOWN = 500
 
 ROOT_AP_SSID = "peanuts_automatic_test_root_ap_"
 ROOT_AP_PWD = "12345678"
-# ROOT_AP_CHANNEL = 11
+ROOT_AP_CHANNEL = 11
 
 UPLOAD_LOG = 1
 FAIL_RETRY = 3
@@ -153,6 +153,8 @@ MAIL_PIC3 = TEST_SUITE_LOG_PATH + "dut_to_5g.png"
 MAIL_PIC4 = TEST_SUITE_LOG_PATH + "current_cpu_load.png"
 MAIL_PIC5 = TEST_SUITE_LOG_PATH + "lan_to_2g.png"
 MAIL_PIC6 = TEST_SUITE_LOG_PATH + "lan_to_5g.png"
+MAIL_PIC7 = TEST_SUITE_LOG_PATH + "wan_to_2g.png"
+MAIL_PIC8 = TEST_SUITE_LOG_PATH + "wan_to_5g.png"
 MAIL_XLSX = TEST_SUITE_LOG_PATH + "memory_tracking.xlsx"
 MAIL_THROUGHPUT_XLSX_ORIGINAL = "throughput.xlsx"
 MAIL_THROUGHPUT_XLSX = TEST_SUITE_LOG_PATH + MAIL_THROUGHPUT_XLSX_ORIGINAL

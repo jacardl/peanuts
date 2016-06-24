@@ -26,9 +26,9 @@ def sendMail(to_list, sub, content, attach1=None, attach2=None, attach3=None, pi
         msg.attach(att1)
 
     if attach2 is not None:
-        # xlsx类型附件
+        # zip类型附件
         att2 = MIMEApplication(open(attach2, 'rb').read())
-        att2.add_header('Content-Disposition', 'attachment', filename="Memory Tracking.xlsx")
+        att2.add_header('Content-Disposition', 'attachment', filename="Test log.zip")
         msg.attach(att2)
 
     if attach3 is not None:
@@ -160,13 +160,13 @@ def generateMail(maillist, title, queue=None, attach1=None, attach2=None, attach
 if __name__ == '__main__':
     import multiprocessing as mp
     v.ANDROID_MODEL = "Mi4 LTE"
-    report = "R1CM 开发版 2.11.25.log".decode("utf8").encode("gbk")
+    report = "R1D 稳定版 2.14.5.log".decode("utf8").encode("gbk")
     q = mp.Queue() # tranlate test result to generateMail
     ret = pr.ProcessReport(report, q)
     ret.start()
     ret.join()
 
-    if generateMail(["liujia5@xiaomi.com"], "test", q, report, v.MAIL_XLSX, v.MAIL_THROUGHPUT_XLSX):
+    if generateMail(["liujia5@xiaomi.com"], "test", q, report, report + ".zip"):
         print "successful"
     else:
         print "failed"

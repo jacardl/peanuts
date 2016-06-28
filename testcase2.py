@@ -15820,6 +15820,7 @@ class AP_PSK2_CHAN11_OOKLA(TestCase):
         option2g = {
             'wifiIndex': 1,
             'ssid': v.SSID,
+            'channel': v.CHANNEL11,
             'encryption': 'psk2',
             'pwd': v.KEY
         }
@@ -15863,6 +15864,7 @@ class AP_CLEAR_CHAN11_OOKLA(TestCase):
         option2g = {
             'wifiIndex': 1,
             'ssid': v.SSID,
+            'channel': v.CHANNEL11,
             'encryption': 'none',
         }
         api.setWifi(self.dut, self.__name__, **option2g)
@@ -15904,6 +15906,7 @@ class AP_PSK2_CHAN149_OOKLA(TestCase):
         option5g = {
             'wifiIndex': 2,
             'ssid': v.SSID_5G,
+            'channel': v.CHANNEL149,
             'encryption': 'psk2',
             'pwd': v.KEY
         }
@@ -15946,6 +15949,7 @@ class AP_CLEAR_CHAN149_OOKLA(TestCase):
         option5g = {
             'wifiIndex': 2,
             'ssid': v.SSID_5G,
+            'channel': v.CHANNEL149,
             'encryption': 'none',
         }
         api.setWifi(self.dut, self.__name__, **option5g)
@@ -16072,6 +16076,7 @@ class AP_RELAY_PSK2_CHAN11_OOKLA(TestCase):
         option2g = {
             'wifiIndex': 1,
             'ssid': v.SSID,
+            'channel': v.CHANNEL11,
             'encryption': 'psk2',
             'pwd': v.KEY
         }
@@ -16117,6 +16122,7 @@ class AP_RELAY_CLEAR_CHAN11_OOKLA(TestCase):
         option2g = {
             'wifiIndex': 1,
             'ssid': v.SSID,
+            'channel': v.CHANNEL11,
             'encryption': 'none',
         }
         api.setWifi(self.dut, self.__name__, **option2g)
@@ -16161,6 +16167,7 @@ class AP_RELAY_PSK2_CHAN149_OOKLA(TestCase):
         option5g = {
             'wifiIndex': 2,
             'ssid': v.SSID_5G,
+            'channel': v.CHANNEL149,
             'encryption': 'psk2',
             'pwd': v.KEY
         }
@@ -16206,6 +16213,7 @@ class AP_RELAY_CLEAR_CHAN149_OOKLA(TestCase):
         option5g = {
             'wifiIndex': 2,
             'ssid': v.SSID_5G,
+            'channel': v.CHANNEL149,
             'encryption': 'none',
         }
         api.setWifi(self.dut, self.__name__, **option5g)

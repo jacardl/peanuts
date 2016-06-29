@@ -16436,13 +16436,13 @@ class AP_MIXEDPSK_NET_WHITELIST(TestCase):
             'wifiIndex': 1,
             'ssid': v.SSID,
             'encryption': 'mixed-psk',
-            'key': v.KEY,
+            'pwd': v.KEY,
         }
         option5g = {
             'wifiIndex': 2,
             'ssid': v.SSID_5G,
             'encryption': 'mixed-psk',
-            'key': v.KEY,
+            'pwd': v.KEY,
         }
         api.setWifi(self.dut, self.__name__, **option2g)
         api.setWifi(self.dut, self.__name__, **option5g)
@@ -16729,13 +16729,13 @@ class AP_MIXEDPSK_NET_BLACKLIST(TestCase):
             'wifiIndex': 1,
             'ssid': v.SSID,
             'encryption': 'mixed-psk',
-            'key': v.KEY,
+            'pwd': v.KEY,
         }
         option5g = {
             'wifiIndex': 2,
             'ssid': v.SSID_5G,
             'encryption': 'mixed-psk',
-            'key': v.KEY,
+            'pwd': v.KEY,
         }
         api.setWifi(self.dut, self.__name__, **option2g)
         api.setWifi(self.dut, self.__name__, **option5g)
@@ -17024,13 +17024,13 @@ class AP_MIXEDPSK_NET_CUTOFF_LIMITED(TestCase):
             'wifiIndex': 1,
             'ssid': v.SSID,
             'encryption': 'mixed-psk',
-            'key': v.KEY,
+            'pwd': v.KEY,
         }
         option5g = {
             'wifiIndex': 2,
             'ssid': v.SSID_5G,
             'encryption': 'mixed-psk',
-            'key': v.KEY,
+            'pwd': v.KEY,
         }
         api.setWifi(self.dut, self.__name__, **option2g)
         api.setWifi(self.dut, self.__name__, **option5g)

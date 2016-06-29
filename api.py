@@ -795,7 +795,7 @@ def setParentCtrlFilter(terminal, logname, **kwargs):
     }
     """
     option = {
-        'mac ': '',
+        'mac': '',
         'mode': 'none'
     }
     api = '/cgi-bin/luci/;stok=token/api/misystem/parctl_set_filter'

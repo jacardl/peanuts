@@ -3,4 +3,5 @@ import shutil
 import var
 
 if __name__ == '__main__':
-    shutil.make_archive("a", 'zip', var.TEST_SUITE_LOG_PATH)
+    for url in iter(("a", "b", 3, "d")):
+        print url

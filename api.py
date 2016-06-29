@@ -759,6 +759,73 @@ def setWebAccessOpt(terminal, logname, **kwargs):
     return setCheck(terminal, logname, api, **option)
 
 
+def setNetAccessCtrl(terminal, logname, **kwargs):
+    """
+    mac
+    mode //当前的工作模式 none/limited/time 正常/立即断网/定时断网
+    enable
+    return:
+     {
+       "status": {
+           "enable": 1,        //开关状态
+           "mode": "none"   //当前的工作模式  none/limited/time 正常/立即断网/定时断网
+       },
+       "code": 0
+    }
+    """
+    option = {
+        'mac': '',
+        'mode': 'none',
+        'enable': '1',
+    }
+    api = '/cgi-bin/luci/;stok=token/api/misystem/netacctl_set'
+    option.update(kwargs)
+    return setCheck(terminal, logname, api, **option)
+
+
+def setParentCtrlFilter(terminal, logname, **kwargs):
+    """
+    mac
+    mode: none/black/white
+    return:
+     {
+      "code":0,
+      "mode":"black",
+      "count":1
+    }
+    """
+    option = {
+        'mac ': '',
+        'mode': 'none'
+    }
+    api = '/cgi-bin/luci/;stok=token/api/misystem/parctl_set_filter'
+    option.update(kwargs)
+    return setCheck(terminal, logname, api, **option)
+
+
+def setParentCtrlUrl(terminal, logname, **kwargs):
+    """
+    mac
+    mode: black/white
+    opt: 0/1/2 添加/删除/更新
+    url: 当opt==1时 url支持批量 “domain1,domain2...” 其他模式不支持，当opt==2时 该字段传旧的url(也就是修改前的url)
+    newurl: 当opt==2时需要传该字段，表示更新值
+    :return:
+    {
+      "code":0
+    }
+    """
+    api = '/cgi-bin/luci/;stok=token/api/misystem/parctl_set_url'
+    option = {
+        'mac': '',
+        'mode': 'black',
+        'opt': '0',
+        'url': '',
+    }
+    option.update(kwargs)
+    return setCheck(terminal, logname, api, **option)
+
+
 def setUploadLog(terminal, logname):
     api = '/cgi-bin/luci/;stok=token/api/xqsystem/upload_log'
     return setCheck(terminal, logname, api)
@@ -1228,11 +1295,19 @@ def chkWifiInfo(terminal, logname, **kwargs):
 
 if __name__ == '__main__':
     option = {
-        'ssid': 'MI-MAC',
+        'mac': '10:F6:D8:32:8B:F4',
+        'mode': 'white'
     }
-    v.HOST = '192.168.150.1'
+    option2 = {
+        'mac': '10:F6:D8:32:8B:F4',
+        'mode': 'white',
+        'opt': '0',
+        'url': 'sina.com.cn',
+    }
+    v.HOST = '192.168.130.1'
     v.WEB_PWD = '12345678'
     webclient = HttpClient()
     webclient.connect(host=v.HOST, password=v.WEB_PWD)
-    print getWifiDetailDic(webclient, "a", "guest")
+    print setParentCtrlFilter(webclient, "a", **option)
+    print setParentCtrlUrl(webclient, "a", **option2)
     webclient.close()

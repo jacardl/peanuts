@@ -743,6 +743,7 @@ class GetTestModule(threading.Thread):
             'treeWireRelayApi': '有线中继',
             'treeWirelessRelayApi': '无线中继',
             'treeAccessControlApi': '接入控制',
+            'treeInternetAccessApi': '上网控制',
             'treeQosApi': '智能限速',
             'treeThroughputDUTApi': 'DUT2WiFi吞吐',
             'treeThroughputLANApi': 'LAN2WiFi吞吐',

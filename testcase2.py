@@ -16821,7 +16821,7 @@ class AP_MIXEDPSK_NET_BLACKLIST(TestCase):
 
                 option = {
                     'mac': self.staMac,
-                    'mode': 'white',
+                    'mode': 'black',
                     'opt': '1',
                     'url': v.CHECK_ACCESS_URL2.split("//")[1],
                 }
@@ -17097,14 +17097,15 @@ class AP_MIXEDPSK_NET_CUTOFF_LIMITED(TestCase):
 
                 for url in iter((v.CHECK_ACCESS_URL2, v.CHECK_ACCESS_URL3, v.CHECK_ACCESS_URL4)):
                     ret = chkAdbBrowserWebsite(v.ANDROID_SERIAL_NUM, url, self.__class__.__name__)
-                    self.assertTrue(ret, msg='STA should browser website when net control off.')
-
+                    if ret is False:
+                        break
                 option = {
                     'mac': self.staMac,
                     'mode': 'limited',
                     'enable': '1',
                 }
                 api.setNetAccessCtrl(self.dut, self.__class__.__name__, **option)
+                self.assertTrue(ret, msg='STA should browser website when net control off.')
             else:
                 self.fail("STA should get IP address.")
         else:
@@ -17140,14 +17141,15 @@ class AP_MIXEDPSK_NET_CUTOFF_LIMITED(TestCase):
 
                 for url in iter((v.CHECK_ACCESS_URL2, v.CHECK_ACCESS_URL3, v.CHECK_ACCESS_URL4)):
                     ret = chkAdbBrowserWebsite(v.ANDROID_SERIAL_NUM, url, self.__class__.__name__)
-                    self.assertTrue(ret, msg='STA should not browser website when net control off.')
-
+                    if ret is False:
+                        break
                 option = {
                     'mac': self.staMac,
                     'mode': 'limited',
                     'enable': '1',
                 }
                 api.setNetAccessCtrl(self.dut, self.__class__.__name__, **option)
+                self.assertTrue(ret, msg='STA should browser website when net control off.')
             else:
                 self.fail("STA should get IP address.")
         else:
@@ -17241,14 +17243,15 @@ class AP_CLEAR_NET_CUTOFF_LIMITED(TestCase):
 
                 for url in iter((v.CHECK_ACCESS_URL2, v.CHECK_ACCESS_URL3, v.CHECK_ACCESS_URL4)):
                     ret = chkAdbBrowserWebsite(v.ANDROID_SERIAL_NUM, url, self.__class__.__name__)
-                    self.assertTrue(ret, msg='STA should browser website when net control off.')
-
+                    if ret is False:
+                        break
                 option = {
                     'mac': self.staMac,
                     'mode': 'limited',
                     'enable': '1',
                 }
                 api.setNetAccessCtrl(self.dut, self.__class__.__name__, **option)
+                self.assertTrue(ret, msg='STA should browser website when net control off.')
             else:
                 self.fail("STA should get IP address.")
         else:
@@ -17284,14 +17287,15 @@ class AP_CLEAR_NET_CUTOFF_LIMITED(TestCase):
 
                 for url in iter((v.CHECK_ACCESS_URL2, v.CHECK_ACCESS_URL3, v.CHECK_ACCESS_URL4)):
                     ret = chkAdbBrowserWebsite(v.ANDROID_SERIAL_NUM, url, self.__class__.__name__)
-                    self.assertTrue(ret, msg='STA should not browser website when net control off.')
-
+                    if ret is False:
+                        break
                 option = {
                     'mac': self.staMac,
                     'mode': 'limited',
                     'enable': '1',
                 }
                 api.setNetAccessCtrl(self.dut, self.__class__.__name__, **option)
+                self.assertTrue(ret, msg='STA should browser website when net control off.')
             else:
                 self.fail("STA should get IP address.")
         else:

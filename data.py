@@ -456,6 +456,53 @@ treeWireRelayApi = [
 
 ]
 
+
+treeInternetAccessApi = [
+    'AP_MIXEDPSK_NET_WHITELIST',
+    [
+        'assoc_psk2_sta_in_whitelist_5g',
+        'assoc_psk2_sta_outof_whitelist_5g',
+        'assoc_psk2_sta_in_whitelist_2g',
+        'assoc_psk2_sta_outof_whitelist_2g',
+    ],
+    'AP_MIXEDPSK_NET_BLACKLIST',
+    [
+        'assoc_psk2_sta_in_blacklist_5g',
+        'assoc_psk2_sta_outof_blacklist_5g',
+        'assoc_psk2_sta_in_blacklist_2g',
+        'assoc_psk2_sta_outof_blacklist_2g',
+    ],
+    'AP_MIXEDPSK_NET_CUTOFF_LIMITED',
+    [
+        'assoc_psk2_sta_5g',
+        'assoc_psk2_sta_2g',
+        'assoc_psk2_sta_ctrloff_5g',
+        'assoc_psk2_sta_ctrloff_2g',
+    ],
+    'AP_CLEAR_NET_WHITELIST',
+    [
+        'assoc_clear_sta_in_whitelist_5g',
+        'assoc_clear_sta_outof_whitelist_5g',
+        'assoc_clear_sta_in_whitelist_2g',
+        'assoc_clear_sta_outof_whitelist_2g',
+    ],
+    'AP_CLEAR_NET_BLACKLIST',
+    [
+        'assoc_clear_sta_in_blacklist_5g',
+        'assoc_clear_sta_outof_blacklist_5g',
+        'assoc_clear_sta_in_blacklist_2g',
+        'assoc_clear_sta_outof_blacklist_2g',
+    ],
+    'AP_CLEAR_NET_CUTOFF_LIMITED',
+    [
+        'assoc_clear_sta_5g',
+        'assoc_clear_sta_2g',
+        'assoc_clear_sta_ctrloff_5g',
+        'assoc_clear_sta_ctrloff_2g',
+    ],
+]
+
+
 treeAccessControlApi = [
     'AP_CLEAR_CHAN_WHITELIST',
     [

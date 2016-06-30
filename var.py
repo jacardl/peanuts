@@ -2,7 +2,7 @@
 from common2 import *
 import os
 
-VER = '3.7.3'
+VER = '3.8.1'
 
 TOOL_LIST = ["General", "Memory Tracking", "Test Suite"]
 
@@ -89,6 +89,9 @@ PING_PERCENT_PASS = 100
 PING_COUNT = 5
 PING_TARGET = 'www.baidu.com'
 CHECK_ACCESS_URL = "http://miwifi.com/cgi-bin/luci/web"
+CHECK_ACCESS_URL2 = "http://m.baidu.com"
+CHECK_ACCESS_URL3 = "http://www.sohu.com"
+CHECK_ACCESS_URL4 = "http://m.jd.com"
 
 BSSID = ''
 BSSID_5G = ''

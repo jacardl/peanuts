@@ -91,7 +91,9 @@ PING_TARGET = 'www.baidu.com'
 CHECK_ACCESS_URL = "http://miwifi.com/cgi-bin/luci/web"
 CHECK_ACCESS_URL2 = "http://m.baidu.com"
 CHECK_ACCESS_URL3 = "http://www.sohu.com"
-CHECK_ACCESS_URL4 = "http://m.jd.com"
+CHECK_ACCESS_URL4 = "http://m.taobao.com"
+CHECK_ACCESS_URL5 = "http://m.jd.com"
+CHECK_ACCESS_URL5 = "http://m.sina.cn"
 
 BSSID = ''
 BSSID_5G = ''

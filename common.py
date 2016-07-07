@@ -1894,7 +1894,7 @@ def getAdbShellCurl(device, url, logname):
 def chkAdbShellUrlAccess(device, url, logname):
     ret = getAdbShellCurl(device, url, logname)
     for line in ret:
-        if line.find('200 OK') is not -1:
+        if line.find('200 OK') is not -1 or line.find('302 Found') is not -1:
             return True
         elif line.find('403 Not Found') is not -1:
             return False

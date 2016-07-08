@@ -8898,7 +8898,7 @@ class AP_QOS_GUEST_MIXEDPSK(TestCase):
         api.setQosSwitch(self.dut, self.__name__)
 
         optionGuest = {
-            'percent': 0.3
+            'percent': 0.1
         }
 
         self.guestQos = api.setQosGuest(self.dut, self.__name__, **optionGuest)

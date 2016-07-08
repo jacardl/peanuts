@@ -471,7 +471,7 @@ class GetThroughputLog(threading.Thread):
             if isinstance(value, float):
                 bar_width = 0.4
                 opacity = 0.4
-                index = np.arange(2)
+                index = np.arange(len(ret))
                 tx = list()
                 rx = list()
                 tx.append(ret.get("20tx"))
@@ -523,7 +523,7 @@ class GetThroughputLog(threading.Thread):
             if isinstance(value, float):
                 bar_width = 0.4
                 opacity = 0.4
-                index = np.arange(3)
+                index = np.arange(len(ret))
                 tx = list()
                 rx = list()
                 tx.append(ret.get("20tx"))
@@ -577,7 +577,7 @@ class GetThroughputLog(threading.Thread):
             if isinstance(value, float):
                 bar_width = 0.4
                 opacity = 0.4
-                index = np.arange(4)
+                index = np.arange(len(ret))
                 tx = list()
                 rx = list()
                 tx.append(ret.get("tx"))
@@ -633,7 +633,7 @@ class GetThroughputLog(threading.Thread):
             if isinstance(value, float):
                 bar_width = 0.4
                 opacity = 0.4
-                index = np.arange(3)
+                index = np.arange(len(ret))
                 tx = list()
                 rx = list()
                 tx.append(ret.get("tx"))

@@ -17355,7 +17355,7 @@ class AP_PSK2_CHAN157_BW40_WAN_THROUGHPUT(TestCase):
             self.assertTrue(res5gConn, "Connecting wifi is failed.")
 
 
-class AP_PSK2_CHAN36_BW80_WLAN_THROUGHPUT(TestCase):
+class AP_PSK2_CHAN36_BW80_WAN_THROUGHPUT(TestCase):
     @classmethod
     def setUpClass(self):
 

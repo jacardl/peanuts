@@ -817,6 +817,22 @@ def setIperfFlow2(terminal, target, interval, time, logname):
     return False
 
 
+def setIperfFlow3(terminal, target, interval, time, logname):
+    command = "iperf -c " + target
+    if interval != "":
+        command = command + " -i " + interval
+    if time != "":
+        command = command + " -t " + time
+    command += " -r -w 2m -f m"
+    setGet(terminal, 'taskkill /F /IM iperf', logname)
+    ret = setGet(terminal, command, logname)
+    for line in ret:
+        m = re.search('0\.0-\s?\d{1,4}.*\s(\d{1,}\.?\d{1,})?\sMbits/sec', line)
+        if m:
+            return True
+    return False
+
+
 def setAdbClearStaConn(device, ssid, radio, logname):
     if radio is "2g":
         if ssid is "normal":

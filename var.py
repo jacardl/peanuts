@@ -21,6 +21,7 @@ PASSWD = "admin"
 connection_type = 1 represent ssh
                   2 represent telnet
                   3 serial
+                  4 pc telnet
 """
 CONNECTION_TYPE = 1
 
@@ -30,6 +31,12 @@ BAUDRATE = 115200
 ANDROID_SERIAL_NUM = ''
 ANDROID_MODEL = ''
 STA_COUNT = "1"
+
+# -------------pc telnet------------------#
+PC_USERNAME = 'telnet'
+PC_PWD = 'telnet'
+PC_HOST = '10.237.143.13'
+IPERF_PORT = 5001
 
 # ----------------Memory Tracking-----------------
 
@@ -94,7 +101,7 @@ CHECK_ACCESS_URL2 = "http://m.baidu.com"
 CHECK_ACCESS_URL3 = "http://www.sohu.com"
 CHECK_ACCESS_URL4 = "http://m.taobao.com"
 CHECK_ACCESS_URL5 = "http://m.jd.com"
-CHECK_ACCESS_URL5 = "http://m.sina.cn"
+CHECK_ACCESS_URL6 = "http://m.sina.cn"
 
 BSSID = ''
 BSSID_5G = ''

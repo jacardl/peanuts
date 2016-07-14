@@ -690,6 +690,25 @@ def setQosLimits(terminal, logname, **kwargs):
     return setCheck(terminal, logname, api, **option)
 
 
+def setQosLimits2(terminal, logname, **kwargs):
+    """
+    data [
+    {"mac":"A0:86:C6:FE:B8:28","maxup":"3","maxdown":"3"},
+    {"mac":"08:57:00:C8:6D:BD","maxup":"2","maxdown":"2"}
+    ]
+    mode为1时，maxup/maxdown 1/2/3 优先级低中高
+    mode为2时，maxup/maxdown xxxKB/s
+    """
+    option = {
+        'data': [
+            {'mac': '', 'maxup': '', 'maxdown': ''},
+        ]
+    }
+    option.update(kwargs)
+    api = '/cgi-bin/luci/;stok=token/api/misystem/qos_limits'
+    return setCheck(terminal, logname, api, **option)
+
+
 def setQosLimit(terminal, logname, **kwargs):
     """
     mac
@@ -705,6 +724,22 @@ def setQosLimit(terminal, logname, **kwargs):
     }
     option.update(kwargs)
     api = '/cgi-bin/luci/;stok=token/api/misystem/qos_limit'
+    return setCheck(terminal, logname, api, **option)
+
+
+def setMACQoSInfo(terminal, logname, **kwargs):
+    """
+    mac
+    upload (取值 xx KB/s)
+    download (取值 xx KB/s)
+    """
+    option = {
+        'mac': '',
+        'upload': '',
+        'download': '',
+    }
+    option.update(kwargs)
+    api = '/cgi-bin/luci/;stok=token/api/misystem/qos_set_dev_info'
     return setCheck(terminal, logname, api, **option)
 
 
@@ -1298,19 +1333,13 @@ def chkWifiInfo(terminal, logname, **kwargs):
 
 if __name__ == '__main__':
     option = {
-        'mac': '10:F6:D8:32:8B:F4',
-        'mode': 'white'
+        'mac': '78:D7:5F:8A:82:08',
+        'upload': '0',
+        'download': '0',
     }
-    option2 = {
-        'mac': '10:F6:D8:32:8B:F4',
-        'mode': 'white',
-        'opt': '0',
-        'url': 'sina.com.cn',
-    }
-    v.HOST = '192.168.130.1'
+    v.HOST = '192.168.110.1'
     v.WEB_PWD = '12345678'
     webclient = HttpClient()
     webclient.connect(host=v.HOST, password=v.WEB_PWD)
-    print setParentCtrlFilter(webclient, "a", **option)
-    print setParentCtrlUrl(webclient, "a", **option2)
+    print setMACQoSInfo(webclient, "a", **option)
     webclient.close()

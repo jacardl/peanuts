@@ -67,17 +67,17 @@ class ShellClient(object):
             self.password = password.encode("utf-8")
             try:
                 # connect to telnet server
-                self.tn = telnetlib.Telnet(self.hostname, port=23, timeout=10)
+                self.pc = telnetlib.Telnet(self.hostname, port=23, timeout=10)
                 # self.tn.set_debuglevel(2)
 
                 # login
                 if self.username != "":
-                    self.tn.read_until("login: ", 10)
-                    self.tn.write(self.username + "\r\n")
-                    self.tn.read_until("password: ", 10)
-                    self.tn.write(self.password + "\r\n")
+                    self.pc.read_until("login: ", 10)
+                    self.pc.write(self.username + "\r\n")
+                    self.pc.read_until("password: ", 10)
+                    self.pc.write(self.password + "\r\n")
 
-                self.tn.read_until("telnet>", 10)
+                self.pc.read_until("telnet>", 10)
                 return True
 
             except Exception, e:
@@ -187,6 +187,9 @@ class ShellClient(object):
             # turn on debug, quote cmd must use ' '
             self.command('echo 7 > /proc/sys/kernel/printk')
             self.ser.close()
+        elif self.connectionType == 4:
+            self.command('taskkill /F /IM cmd')
+            self.pc.close()
 
 
 class ShellCommand(ShellClient):

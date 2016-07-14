@@ -3,6 +3,7 @@ from unittest import *
 
 import api
 from common import *
+import data
 
 
 class AP_CLEAR_CHAN(TestCase):
@@ -331,36 +332,14 @@ class AP_CLEAR_LOW_TXPOWER(TestCase):
         }
         api.setWifi(self.dut2, self.__class__.__name__, **option2g)
         power = getWlanTxPower(self.dut, "2g", self.__class__.__name__)
-        loop = 0
-        while power == 0 and loop < 5:
-            t.sleep(2)
-            power = getWlanTxPower(self.dut, "2g", self.__class__.__name__)
-            loop += 1
-        if v.DUT_MODULE == "R1D" or v.DUT_MODULE == "R2D":
-            """
-            exactly 19.75
-            """
-            if 19.55 <= power <= 19.95:
-                pass
-            else:
-                self.fail("R1D/R2D txpower isnot correct.")
 
-        elif v.DUT_MODULE == "R1CM" or v.DUT_MODULE == "R3":
-            """
-            exactly 13
-            """
-            if 12.8 <= power <= 13.2:
-                pass
-            else:
-                self.fail("R1CM/R3 txpower isnot correct.")
-        elif v.DUT_MODULE == "R1CL" or v.DUT_MODULE == "R3L":
-            """
-            exactly 14
-            """
-            if 13.8 <= power <= 14.2:
-                pass
-            else:
-                self.fail("R1CL/R3L txpower isnot correct")
+        minPower = data.txPower2G.get(v.DUT_MODULE)[0] * 0.985
+        maxPower = data.txPower2G.get(v.DUT_MODULE)[0] * 1.015
+
+        if minPower <= power <= maxPower:
+            pass
+        else:
+            self.fail("Txpower isnot correct.")
 
     def autochan_txpower_5g(self):
 
@@ -373,28 +352,14 @@ class AP_CLEAR_LOW_TXPOWER(TestCase):
 
         api.setWifi(self.dut2, self.__class__.__name__, **option5g)
         power = getWlanTxPower(self.dut, "5g", self.__class__.__name__)
-        loop = 0
-        while power == 0 and loop < 5:
-            t.sleep(2)
-            power = getWlanTxPower(self.dut, "5g", self.__class__.__name__)
-            loop += 1
-        if v.DUT_MODULE == "R1D" or v.DUT_MODULE == "R2D":
-            """
-            exactly 16.25
-            """
-            if 16.0 <= power <= 16.45:
-                pass
-            else:
-                self.fail("R1D/R2D txpower isnot correct.")
 
-        elif v.DUT_MODULE == "R1CM" or v.DUT_MODULE == "R3":
-            """
-            exactly 13
-            """
-            if 12.8 <= power <= 13.2:
-                pass
-            else:
-                self.fail("R1CM/R3 txpower isnot correct.")
+        minPower = data.txPower5GH.get(v.DUT_MODULE)[0] * 0.985
+        maxPower = data.txPower5GH.get(v.DUT_MODULE)[0] * 1.015
+
+        if minPower <= power <= maxPower:
+            pass
+        else:
+            self.fail("Txpower isnot correct.")
 
     def chan1_txpower_2g(self):
 
@@ -407,37 +372,14 @@ class AP_CLEAR_LOW_TXPOWER(TestCase):
         }
         api.setWifi(self.dut2, self.__class__.__name__, **option2g)
         power = getWlanTxPower(self.dut, "2g", self.__class__.__name__)
-        loop = 0
-        while power == 0 and loop < 5:
-            t.sleep(2)
-            power = getWlanTxPower(self.dut, "2g", self.__class__.__name__)
-            loop += 1
-        if v.DUT_MODULE == "R1D" or v.DUT_MODULE == "R2D":
-            """
-            exactly 19.75
-            """
-            if 19.55 <= power <= 19.95:
-                pass
-            else:
-                self.fail("R1D/R2D txpower isnot correct.")
 
-        elif v.DUT_MODULE == "R1CM" or v.DUT_MODULE == "R3":
-            """
-            exactly 13
-            """
-            if 12.8 <= power <= 13.2:
-                pass
-            else:
-                self.fail("R1CM/R3 txpower isnot correct.")
+        minPower = data.txPower2G.get(v.DUT_MODULE)[0] * 0.985
+        maxPower = data.txPower2G.get(v.DUT_MODULE)[0] * 1.015
 
-        elif v.DUT_MODULE == "R1CL" or v.DUT_MODULE == "R3L":
-            """
-            exactly 14
-            """
-            if 13.8 <= power <= 14.2:
-                pass
-            else:
-                self.fail("R1CL/R3L txpower isnot correct")
+        if minPower <= power <= maxPower:
+            pass
+        else:
+            self.fail("Txpower isnot correct.")
 
     def chan6_txpower_2g(self):
 
@@ -449,39 +391,15 @@ class AP_CLEAR_LOW_TXPOWER(TestCase):
             'txpwr': 'min',
         }
         api.setWifi(self.dut2, self.__class__.__name__, **option2g)
-
         power = getWlanTxPower(self.dut, "2g", self.__class__.__name__)
-        loop = 0
-        while power == 0 and loop < 5:
-            t.sleep(2)
-            power = getWlanTxPower(self.dut, "2g", self.__class__.__name__)
-            loop += 1
-        if v.DUT_MODULE == "R1D" or v.DUT_MODULE == "R2D":
-            """
-            exactly 19.75
-            """
-            if 19.55 <= power <= 19.95:
-                pass
-            else:
-                self.fail("R1D/R2D txpower isnot correct.")
 
-        elif v.DUT_MODULE == "R1CM" or v.DUT_MODULE == "R3":
-            """
-            exactly 13
-            """
-            if 12.8 <= power <= 13.2:
-                pass
-            else:
-                self.fail("R1CM/R3 txpower isnot correct.")
+        minPower = data.txPower2G.get(v.DUT_MODULE)[0] * 0.985
+        maxPower = data.txPower2G.get(v.DUT_MODULE)[0] * 1.015
 
-        elif v.DUT_MODULE == "R1CL" or v.DUT_MODULE == "R3L":
-            """
-            exactly 14
-            """
-            if 13.8 <= power <= 14.2:
-                pass
-            else:
-                self.fail("R1CL/R3L txpower isnot correct")
+        if minPower <= power <= maxPower:
+            pass
+        else:
+            self.fail("Txpower isnot correct.")
 
     def chan11_txpower_2g(self):
 
@@ -493,39 +411,15 @@ class AP_CLEAR_LOW_TXPOWER(TestCase):
             'txpwr': 'min',
         }
         api.setWifi(self.dut2, self.__class__.__name__, **option2g)
-
         power = getWlanTxPower(self.dut, "2g", self.__class__.__name__)
-        loop = 0
-        while power == 0 and loop < 5:
-            t.sleep(2)
-            power = getWlanTxPower(self.dut, "2g", self.__class__.__name__)
-            loop += 1
-        if v.DUT_MODULE == "R1D" or v.DUT_MODULE == "R2D":
-            """
-            exactly 19.75
-            """
-            if 19.55 <= power <= 19.95:
-                pass
-            else:
-                self.fail("R1D/R2D txpower isnot correct.")
 
-        elif v.DUT_MODULE == "R1CM" or v.DUT_MODULE == "R3":
-            """
-            exactly 13
-            """
-            if 12.8 <= power <= 13.2:
-                pass
-            else:
-                self.fail("R1CM/R3 txpower isnot correct.")
+        minPower = data.txPower2G.get(v.DUT_MODULE)[0] * 0.985
+        maxPower = data.txPower2G.get(v.DUT_MODULE)[0] * 1.015
 
-        elif v.DUT_MODULE == "R1CL" or v.DUT_MODULE == "R3L":
-            """
-            exactly 14
-            """
-            if 13.8 <= power <= 14.2:
-                pass
-            else:
-                self.fail("R1CL/R3L txpower isnot correct")
+        if minPower <= power <= maxPower:
+            pass
+        else:
+            self.fail("Txpower isnot correct.")
 
     def chan13_txpower_2g(self):
 
@@ -537,39 +431,15 @@ class AP_CLEAR_LOW_TXPOWER(TestCase):
             'txpwr': 'min',
         }
         api.setWifi(self.dut2, self.__class__.__name__, **option2g)
-
         power = getWlanTxPower(self.dut, "2g", self.__class__.__name__)
-        loop = 0
-        while power == 0 and loop < 5:
-            t.sleep(2)
-            power = getWlanTxPower(self.dut, "2g", self.__class__.__name__)
-            loop += 1
-        if v.DUT_MODULE == "R1D" or v.DUT_MODULE == "R2D":
-            """
-            exactly 19.75
-            """
-            if 19.55 <= power <= 19.95:
-                pass
-            else:
-                self.fail("R1D/R2D txpower isnot correct.")
 
-        elif v.DUT_MODULE == "R1CM" or v.DUT_MODULE == "R3":
-            """
-            exactly 13
-            """
-            if 12.8 <= power <= 13.2:
-                pass
-            else:
-                self.fail("R1CM/R3 txpower isnot correct.")
+        minPower = data.txPower2G.get(v.DUT_MODULE)[0] * 0.985
+        maxPower = data.txPower2G.get(v.DUT_MODULE)[0] * 1.015
 
-        elif v.DUT_MODULE == "R1CL" or v.DUT_MODULE == "R3L":
-            """
-            exactly 14
-            """
-            if 13.8 <= power <= 14.2:
-                pass
-            else:
-                self.fail("R1CL/R3L txpower isnot correct")
+        if minPower <= power <= maxPower:
+            pass
+        else:
+            self.fail("Txpower isnot correct.")
 
     def chan36_txpower_5g(self):
 
@@ -582,28 +452,14 @@ class AP_CLEAR_LOW_TXPOWER(TestCase):
         }
         api.setWifi(self.dut2, self.__class__.__name__, **option5g)
         power = getWlanTxPower(self.dut, "5g", self.__class__.__name__)
-        loop = 0
-        while power == 0 and loop < 5:
-            t.sleep(2)
-            power = getWlanTxPower(self.dut, "5g", self.__class__.__name__)
-            loop += 1
-        if v.DUT_MODULE == "R1D" or v.DUT_MODULE == "R2D":
-            """
-            exactly 15.5
-            """
-            if 15.3 <= power <= 15.7:
-                pass
-            else:
-                self.fail("R1D/R2D txpower isnot correct.")
 
-        elif v.DUT_MODULE == "R1CM" or v.DUT_MODULE == "R3":
-            """
-            exactly 13
-            """
-            if 12.8 <= power <= 13.2:
-                pass
-            else:
-                self.fail("R1CM/R3 txpower isnot correct.")
+        minPower = data.txPower5GL.get(v.DUT_MODULE)[0] * 0.985
+        maxPower = data.txPower5GL.get(v.DUT_MODULE)[0] * 1.015
+
+        if minPower <= power <= maxPower:
+            pass
+        else:
+            self.fail("Txpower isnot correct.")
 
     def chan52_txpower_5g(self):
 
@@ -616,28 +472,14 @@ class AP_CLEAR_LOW_TXPOWER(TestCase):
         }
         api.setWifi(self.dut2, self.__class__.__name__, **option5g)
         power = getWlanTxPower(self.dut, "5g", self.__class__.__name__)
-        loop = 0
-        while power == 0 and loop < 5:
-            t.sleep(2)
-            power = getWlanTxPower(self.dut, "5g", self.__class__.__name__)
-            loop += 1
-        if v.DUT_MODULE == "R1D" or v.DUT_MODULE == "R2D":
-            """
-            exactly 15.5
-            """
-            if 15.3 <= power <= 15.7:
-                pass
-            else:
-                self.fail("R1D/R2D txpower isnot correct.")
 
-        elif v.DUT_MODULE == "R1CM" or v.DUT_MODULE == "R3":
-            """
-            exactly 13
-            """
-            if 12.8 <= power <= 13.2:
-                pass
-            else:
-                self.fail("R1CM/R3 txpower isnot correct.")
+        minPower = data.txPower5GL.get(v.DUT_MODULE)[0] * 0.985
+        maxPower = data.txPower5GL.get(v.DUT_MODULE)[0] * 1.015
+
+        if minPower <= power <= maxPower:
+            pass
+        else:
+            self.fail("Txpower isnot correct.")
 
     def chan149_txpower_5g(self):
 
@@ -650,28 +492,14 @@ class AP_CLEAR_LOW_TXPOWER(TestCase):
         }
         api.setWifi(self.dut2, self.__class__.__name__, **option5g)
         power = getWlanTxPower(self.dut, "5g", self.__class__.__name__)
-        loop = 0
-        while power == 0 and loop < 5:
-            t.sleep(2)
-            power = getWlanTxPower(self.dut, "5g", self.__class__.__name__)
-            loop += 1
-        if v.DUT_MODULE == "R1D" or v.DUT_MODULE == "R2D":
-            """
-            exactly 16.25
-            """
-            if 16.0 <= power <= 16.45:
-                pass
-            else:
-                self.fail("R1D/R2D txpower isnot correct.")
 
-        elif v.DUT_MODULE == "R1CM" or v.DUT_MODULE == "R3":
-            """
-            exactly 13
-            """
-            if 12.8 <= power <= 13.2:
-                pass
-            else:
-                self.fail("R1CM/R3 txpower isnot correct.")
+        minPower = data.txPower5GH.get(v.DUT_MODULE)[0] * 0.985
+        maxPower = data.txPower5GH.get(v.DUT_MODULE)[0] * 1.015
+
+        if minPower <= power <= maxPower:
+            pass
+        else:
+            self.fail("Txpower isnot correct.")
 
     def chan165_txpower_5g(self):
 
@@ -684,28 +512,14 @@ class AP_CLEAR_LOW_TXPOWER(TestCase):
         }
         api.setWifi(self.dut2, self.__class__.__name__, **option5g)
         power = getWlanTxPower(self.dut, "5g", self.__class__.__name__)
-        loop = 0
-        while power == 0 and loop < 5:
-            t.sleep(2)
-            power = getWlanTxPower(self.dut, "5g", self.__class__.__name__)
-            loop += 1
-        if v.DUT_MODULE == "R1D" or v.DUT_MODULE == "R2D":
-            """
-            exactly 16.25
-            """
-            if 16.0 <= power <= 16.45:
-                pass
-            else:
-                self.fail("R1D/R2D txpower isnot correct.")
 
-        elif v.DUT_MODULE == "R1CM" or v.DUT_MODULE == "R3":
-            """
-            exactly 13
-            """
-            if 12.8 <= power <= 13.2:
-                pass
-            else:
-                self.fail("R1CM/R3 txpower isnot correct.")
+        minPower = data.txPower5GH.get(v.DUT_MODULE)[0] * 0.985
+        maxPower = data.txPower5GH.get(v.DUT_MODULE)[0] * 1.015
+
+        if minPower <= power <= maxPower:
+            pass
+        else:
+            self.fail("Txpower isnot correct.")
 
 
 class AP_CLEAR_MID_TXPOWER(TestCase):
@@ -743,40 +557,15 @@ class AP_CLEAR_MID_TXPOWER(TestCase):
             'txpwr': 'mid',
         }
         api.setWifi(self.dut2, self.__class__.__name__, **option2g)
-
         power = getWlanTxPower(self.dut, "2g", self.__class__.__name__)
-        loop = 0
-        while power == 0 and loop < 5:
-            t.sleep(2)
-            power = getWlanTxPower(self.dut, "2g", self.__class__.__name__)
-            loop += 1
 
-        if v.DUT_MODULE == "R1D" or v.DUT_MODULE == "R2D":
-            """
-            exactly 23.25
-            """
-            if 23.0 <= power <= 23.45:
-                pass
-            else:
-                self.fail("R1D/R2D txpower isnot correct.")
+        minPower = data.txPower2G.get(v.DUT_MODULE)[1] * 0.985
+        maxPower = data.txPower2G.get(v.DUT_MODULE)[1] * 1.015
 
-        elif v.DUT_MODULE == "R1CM" or v.DUT_MODULE == "R3":
-            """
-            exactly 15
-            """
-            if 14.8 <= power <= 15.2:
-                pass
-            else:
-                self.fail("R1CM/R3 txpower isnot correct.")
-
-        elif v.DUT_MODULE == "R1CL" or v.DUT_MODULE == "R3L":
-            """
-            exactly 16
-            """
-            if 15.8 <= power <= 16.2:
-                pass
-            else:
-                self.fail("R1CL/R3L txpower isnot correct")
+        if minPower <= power <= maxPower:
+            pass
+        else:
+            self.fail("Txpower isnot correct.")
 
     def autochan_txpower_5g(self):
 
@@ -788,31 +577,15 @@ class AP_CLEAR_MID_TXPOWER(TestCase):
         }
 
         api.setWifi(self.dut2, self.__class__.__name__, **option5g)
-
         power = getWlanTxPower(self.dut, "5g", self.__class__.__name__)
-        loop = 0
-        while power == 0 and loop < 5:
-            t.sleep(2)
-            power = getWlanTxPower(self.dut, "5g", self.__class__.__name__)
-            loop += 1
 
-        if v.DUT_MODULE == "R1D" or v.DUT_MODULE == "R2D":
-            """
-            exactly 19
-            """
-            if 18.8 <= power <= 19.2:
-                pass
-            else:
-                self.fail("R1D/R2D txpower isnot correct.")
+        minPower = data.txPower5GH.get(v.DUT_MODULE)[1] * 0.985
+        maxPower = data.txPower5GH.get(v.DUT_MODULE)[1] * 1.015
 
-        elif v.DUT_MODULE == "R1CM" or v.DUT_MODULE == "R3":
-            """
-            exactly 15
-            """
-            if 14.8 <= power <= 15.2:
-                pass
-            else:
-                self.fail("R1CM/R3 txpower isnot correct.")
+        if minPower <= power <= maxPower:
+            pass
+        else:
+            self.fail("Txpower isnot correct.")
 
     def chan1_txpower_2g(self):
 
@@ -824,39 +597,15 @@ class AP_CLEAR_MID_TXPOWER(TestCase):
             'txpwr': 'mid',
         }
         api.setWifi(self.dut2, self.__class__.__name__, **option2g)
-
         power = getWlanTxPower(self.dut, "2g", self.__class__.__name__)
-        loop = 0
-        while power == 0 and loop < 5:
-            t.sleep(2)
-            power = getWlanTxPower(self.dut, "2g", self.__class__.__name__)
-            loop += 1
-        if v.DUT_MODULE == "R1D" or v.DUT_MODULE == "R2D":
-            """
-            exactly 23.25
-            """
-            if 23.0 <= power <= 23.45:
-                pass
-            else:
-                self.fail("R1D/R2D txpower isnot correct.")
 
-        elif v.DUT_MODULE == "R1CM" or v.DUT_MODULE == "R3":
-            """
-            exactly 15
-            """
-            if 14.8 <= power <= 15.2:
-                pass
-            else:
-                self.fail("R1CM/R3 txpower isnot correct.")
+        minPower = data.txPower2G.get(v.DUT_MODULE)[1] * 0.985
+        maxPower = data.txPower2G.get(v.DUT_MODULE)[1] * 1.015
 
-        elif v.DUT_MODULE == "R1CL" or v.DUT_MODULE == "R3L":
-            """
-            exactly 16
-            """
-            if 15.8 <= power <= 16.2:
-                pass
-            else:
-                self.fail("R1CL/R3L txpower isnot correct")
+        if minPower <= power <= maxPower:
+            pass
+        else:
+            self.fail("Txpower isnot correct.")
 
     def chan6_txpower_2g(self):
 
@@ -868,39 +617,15 @@ class AP_CLEAR_MID_TXPOWER(TestCase):
             'txpwr': 'mid',
         }
         api.setWifi(self.dut2, self.__class__.__name__, **option2g)
-
         power = getWlanTxPower(self.dut, "2g", self.__class__.__name__)
-        loop = 0
-        while power == 0 and loop < 5:
-            t.sleep(2)
-            power = getWlanTxPower(self.dut, "2g", self.__class__.__name__)
-            loop += 1
-        if v.DUT_MODULE == "R1D" or v.DUT_MODULE == "R2D":
-            """
-            exactly 23.25
-            """
-            if 23.0 <= power <= 23.45:
-                pass
-            else:
-                self.fail("R1D/R2D txpower isnot correct.")
 
-        elif v.DUT_MODULE == "R1CM" or v.DUT_MODULE == "R3":
-            """
-            exactly 15
-            """
-            if 14.8 <= power <= 15.2:
-                pass
-            else:
-                self.fail("R1CM/R3 txpower isnot correct.")
+        minPower = data.txPower2G.get(v.DUT_MODULE)[1] * 0.985
+        maxPower = data.txPower2G.get(v.DUT_MODULE)[1] * 1.015
 
-        elif v.DUT_MODULE == "R1CL" or v.DUT_MODULE == "R3L":
-            """
-            exactly 16
-            """
-            if 15.8 <= power <= 16.2:
-                pass
-            else:
-                self.fail("R1CL/R3L txpower isnot correct")
+        if minPower <= power <= maxPower:
+            pass
+        else:
+            self.fail("Txpower isnot correct.")
 
     def chan11_txpower_2g(self):
 
@@ -913,37 +638,14 @@ class AP_CLEAR_MID_TXPOWER(TestCase):
         }
         api.setWifi(self.dut2, self.__class__.__name__, **option2g)
         power = getWlanTxPower(self.dut, "2g", self.__class__.__name__)
-        loop = 0
-        while power == 0 and loop < 5:
-            t.sleep(2)
-            power = getWlanTxPower(self.dut, "2g", self.__class__.__name__)
-            loop += 1
-        if v.DUT_MODULE == "R1D" or v.DUT_MODULE == "R2D":
-            """
-            exactly 23.25
-            """
-            if 23.0 <= power <= 23.45:
-                pass
-            else:
-                self.fail("R1D/R2D txpower isnot correct.")
 
-        elif v.DUT_MODULE == "R1CM" or v.DUT_MODULE == "R3":
-            """
-            exactly 15
-            """
-            if 14.8 <= power <= 15.2:
-                pass
-            else:
-                self.fail("R1CM/R3 txpower isnot correct.")
+        minPower = data.txPower2G.get(v.DUT_MODULE)[1] * 0.985
+        maxPower = data.txPower2G.get(v.DUT_MODULE)[1] * 1.015
 
-        elif v.DUT_MODULE == "R1CL" or v.DUT_MODULE == "R3L":
-            """
-            exactly 16
-            """
-            if 15.8 <= power <= 16.2:
-                pass
-            else:
-                self.fail("R1CL/R3L txpower isnot correct")
+        if minPower <= power <= maxPower:
+            pass
+        else:
+            self.fail("Txpower isnot correct.")
 
     def chan13_txpower_2g(self):
 
@@ -955,39 +657,15 @@ class AP_CLEAR_MID_TXPOWER(TestCase):
             'txpwr': 'mid',
         }
         api.setWifi(self.dut2, self.__class__.__name__, **option2g)
-
         power = getWlanTxPower(self.dut, "2g", self.__class__.__name__)
-        loop = 0
-        while power == 0 and loop < 5:
-            t.sleep(2)
-            power = getWlanTxPower(self.dut, "2g", self.__class__.__name__)
-            loop += 1
-        if v.DUT_MODULE == "R1D" or v.DUT_MODULE == "R2D":
-            """
-            exactly 23.25
-            """
-            if 23.0 <= power <= 23.45:
-                pass
-            else:
-                self.fail("R1D/R2D txpower isnot correct.")
 
-        elif v.DUT_MODULE == "R1CM" or v.DUT_MODULE == "R3":
-            """
-            exactly 15
-            """
-            if 14.8 <= power <= 15.2:
-                pass
-            else:
-                self.fail("R1CM/R3 txpower isnot correct.")
+        minPower = data.txPower2G.get(v.DUT_MODULE)[1] * 0.985
+        maxPower = data.txPower2G.get(v.DUT_MODULE)[1] * 1.015
 
-        elif v.DUT_MODULE == "R1CL" or v.DUT_MODULE == "R3L":
-            """
-            exactly 16
-            """
-            if 15.8 <= power <= 16.2:
-                pass
-            else:
-                self.fail("R1CL/R3L txpower isnot correct")
+        if minPower <= power <= maxPower:
+            pass
+        else:
+            self.fail("Txpower isnot correct.")
 
     def chan36_txpower_5g(self):
 
@@ -1000,28 +678,14 @@ class AP_CLEAR_MID_TXPOWER(TestCase):
         }
         api.setWifi(self.dut2, self.__class__.__name__, **option5g)
         power = getWlanTxPower(self.dut, "5g", self.__class__.__name__)
-        loop = 0
-        while power == 0 and loop < 5:
-            t.sleep(2)
-            power = getWlanTxPower(self.dut, "5g", self.__class__.__name__)
-            loop += 1
-        if v.DUT_MODULE == "R1D" or v.DUT_MODULE == "R2D":
-            """
-            exactly 18.25
-            """
-            if 18 <= power <= 18.45:
-                pass
-            else:
-                self.fail("R1D/R2D txpower isnot correct.")
 
-        elif v.DUT_MODULE == "R1CM" or v.DUT_MODULE == "R3":
-            """
-            exactly 15
-            """
-            if 14.8 <= power <= 15.2:
-                pass
-            else:
-                self.fail("R1CM/R3 txpower isnot correct.")
+        minPower = data.txPower5GL.get(v.DUT_MODULE)[1] * 0.985
+        maxPower = data.txPower5GL.get(v.DUT_MODULE)[1] * 1.015
+
+        if minPower <= power <= maxPower:
+            pass
+        else:
+            self.fail("Txpower isnot correct.")
 
     def chan52_txpower_5g(self):
 
@@ -1033,30 +697,15 @@ class AP_CLEAR_MID_TXPOWER(TestCase):
             'txpwr': 'mid',
         }
         api.setWifi(self.dut2, self.__class__.__name__, **option5g)
-
         power = getWlanTxPower(self.dut, "5g", self.__class__.__name__)
-        loop = 0
-        while power == 0 and loop < 5:
-            t.sleep(2)
-            power = getWlanTxPower(self.dut, "5g", self.__class__.__name__)
-            loop += 1
-        if v.DUT_MODULE == "R1D" or v.DUT_MODULE == "R2D":
-            """
-            exactly 18.25
-            """
-            if 18 <= power <= 18.45:
-                pass
-            else:
-                self.fail("R1D/R2D txpower isnot correct.")
 
-        elif v.DUT_MODULE == "R1CM" or v.DUT_MODULE == "R3":
-            """
-            exactly 15
-            """
-            if 14.8 <= power <= 15.2:
-                pass
-            else:
-                self.fail("R1CM/R3 txpower isnot correct.")
+        minPower = data.txPower5GL.get(v.DUT_MODULE)[1] * 0.985
+        maxPower = data.txPower5GL.get(v.DUT_MODULE)[1] * 1.015
+
+        if minPower <= power <= maxPower:
+            pass
+        else:
+            self.fail("Txpower isnot correct.")
 
     def chan149_txpower_5g(self):
 
@@ -1069,28 +718,14 @@ class AP_CLEAR_MID_TXPOWER(TestCase):
         }
         api.setWifi(self.dut2, self.__class__.__name__, **option5g)
         power = getWlanTxPower(self.dut, "5g", self.__class__.__name__)
-        loop = 0
-        while power == 0 and loop < 5:
-            t.sleep(2)
-            power = getWlanTxPower(self.dut, "5g", self.__class__.__name__)
-            loop += 1
-        if v.DUT_MODULE == "R1D" or v.DUT_MODULE == "R2D":
-            """
-            exactly 19
-            """
-            if 18.8 <= power <= 19.2:
-                pass
-            else:
-                self.fail("R1D/R2D txpower isnot correct.")
 
-        elif v.DUT_MODULE == "R1CM" or v.DUT_MODULE == "R3":
-            """
-            exactly 15
-            """
-            if 14.8 <= power <= 15.2:
-                pass
-            else:
-                self.fail("R1CM/R3 txpower isnot correct.")
+        minPower = data.txPower5GH.get(v.DUT_MODULE)[1] * 0.985
+        maxPower = data.txPower5GH.get(v.DUT_MODULE)[1] * 1.015
+
+        if minPower <= power <= maxPower:
+            pass
+        else:
+            self.fail("Txpower isnot correct.")
 
     def chan165_txpower_5g(self):
 
@@ -1102,30 +737,15 @@ class AP_CLEAR_MID_TXPOWER(TestCase):
             'txpwr': 'mid',
         }
         api.setWifi(self.dut2, self.__class__.__name__, **option5g)
-
         power = getWlanTxPower(self.dut, "5g", self.__class__.__name__)
-        loop = 0
-        while power == 0 and loop < 5:
-            t.sleep(2)
-            power = getWlanTxPower(self.dut, "5g", self.__class__.__name__)
-            loop += 1
-        if v.DUT_MODULE == "R1D" or v.DUT_MODULE == "R2D":
-            """
-            exactly 19
-            """
-            if 18.8 <= power <= 19.2:
-                pass
-            else:
-                self.fail("R1D/R2D txpower isnot correct.")
 
-        elif v.DUT_MODULE == "R1CM" or v.DUT_MODULE == "R3":
-            """
-            exactly 15
-            """
-            if 14.8 <= power <= 15.2:
-                pass
-            else:
-                self.fail("R1CM/R3 txpower isnot correct.")
+        minPower = data.txPower5GH.get(v.DUT_MODULE)[1] * 0.985
+        maxPower = data.txPower5GH.get(v.DUT_MODULE)[1] * 1.015
+
+        if minPower <= power <= maxPower:
+            pass
+        else:
+            self.fail("Txpower isnot correct.")
 
 
 class AP_CLEAR_HIGH_TXPOWER(TestCase):
@@ -1163,38 +783,15 @@ class AP_CLEAR_HIGH_TXPOWER(TestCase):
             'txpwr': 'max',
         }
         api.setWifi(self.dut2, self.__class__.__name__, **option2g)
-
         power = getWlanTxPower(self.dut, "2g", self.__class__.__name__)
-        loop = 0
-        while power == 0 and loop < 5:
-            t.sleep(2)
-            power = getWlanTxPower(self.dut, "2g", self.__class__.__name__)
-            loop += 1
-        if v.DUT_MODULE == "R1D" or v.DUT_MODULE == "R2D":
-            """
-            exactly 27
-            """
-            if 26.8 <= power <= 27.2:
-                pass
-            else:
-                self.fail("R1D/R2D txpower isnot correct.")
 
-        elif v.DUT_MODULE == "R1CM" or v.DUT_MODULE == "R3":
-            """
-            exactly 16
-            """
-            if 15.8 <= power <= 16.2:
-                pass
-            else:
-                self.fail("R1CM/R3 txpower isnot correct.")
-        elif v.DUT_MODULE == "R1CL" or v.DUT_MODULE == "R3L":
-            """
-            exactly 17
-            """
-            if 16.8 <= power <= 17.2:
-                pass
-            else:
-                self.fail("R1CL/R3L txpower isnot correct")
+        minPower = data.txPower2G.get(v.DUT_MODULE)[2] * 0.985
+        maxPower = data.txPower2G.get(v.DUT_MODULE)[2] * 1.015
+
+        if minPower <= power <= maxPower:
+            pass
+        else:
+            self.fail("Txpower isnot correct.")
 
     def autochan_txpower_5g(self):
 
@@ -1206,30 +803,15 @@ class AP_CLEAR_HIGH_TXPOWER(TestCase):
         }
 
         api.setWifi(self.dut2, self.__class__.__name__, **option5g)
-
         power = getWlanTxPower(self.dut, "5g", self.__class__.__name__)
-        loop = 0
-        while power == 0 and loop < 5:
-            t.sleep(2)
-            power = getWlanTxPower(self.dut, "5g", self.__class__.__name__)
-            loop += 1
-        if v.DUT_MODULE == "R1D" or v.DUT_MODULE == "R2D":
-            """
-            exactly 22
-            """
-            if 21.8 <= power <= 22.2:
-                pass
-            else:
-                self.fail("R1D/R2D txpower isnot correct.")
 
-        elif v.DUT_MODULE == "R1CM" or v.DUT_MODULE == "R3":
-            """
-            exactly 16
-            """
-            if 15.8 <= power <= 16.2:
-                pass
-            else:
-                self.fail("R1CM/R3 txpower isnot correct.")
+        minPower = data.txPower5GH.get(v.DUT_MODULE)[2] * 0.985
+        maxPower = data.txPower5GH.get(v.DUT_MODULE)[2] * 1.015
+
+        if minPower <= power <= maxPower:
+            pass
+        else:
+            self.fail("Txpower isnot correct.")
 
     def chan1_txpower_2g(self):
 
@@ -1241,38 +823,15 @@ class AP_CLEAR_HIGH_TXPOWER(TestCase):
             'txpwr': 'max',
         }
         api.setWifi(self.dut2, self.__class__.__name__, **option2g)
-
         power = getWlanTxPower(self.dut, "2g", self.__class__.__name__)
-        loop = 0
-        while power == 0 and loop < 5:
-            t.sleep(2)
-            power = getWlanTxPower(self.dut, "2g", self.__class__.__name__)
-            loop += 1
-        if v.DUT_MODULE == "R1D" or v.DUT_MODULE == "R2D":
-            """
-            exactly 27
-            """
-            if 26.8 <= power <= 27.2:
-                pass
-            else:
-                self.fail("R1D/R2D txpower isnot correct.")
 
-        elif v.DUT_MODULE == "R1CM" or v.DUT_MODULE == "R3":
-            """
-            exactly 16
-            """
-            if 15.8 <= power <= 16.2:
-                pass
-            else:
-                self.fail("R1CM/R3 txpower isnot correct.")
-        elif v.DUT_MODULE == "R1CL" or v.DUT_MODULE == "R3L":
-            """
-            exactly 17
-            """
-            if 16.8 <= power <= 17.2:
-                pass
-            else:
-                self.fail("R1CL/R3L txpower isnot correct")
+        minPower = data.txPower2G.get(v.DUT_MODULE)[2] * 0.985
+        maxPower = data.txPower2G.get(v.DUT_MODULE)[2] * 1.015
+
+        if minPower <= power <= maxPower:
+            pass
+        else:
+            self.fail("Txpower isnot correct.")
 
     def chan6_txpower_2g(self):
 
@@ -1284,38 +843,15 @@ class AP_CLEAR_HIGH_TXPOWER(TestCase):
             'txpwr': 'max',
         }
         api.setWifi(self.dut2, self.__class__.__name__, **option2g)
-
         power = getWlanTxPower(self.dut, "2g", self.__class__.__name__)
-        loop = 0
-        while power == 0 and loop < 5:
-            t.sleep(2)
-            power = getWlanTxPower(self.dut, "2g", self.__class__.__name__)
-            loop += 1
-        if v.DUT_MODULE == "R1D" or v.DUT_MODULE == "R2D":
-            """
-            exactly 27
-            """
-            if 26.8 <= power <= 27.2:
-                pass
-            else:
-                self.fail("R1D/R2D txpower isnot correct.")
 
-        elif v.DUT_MODULE == "R1CM" or v.DUT_MODULE == "R3":
-            """
-            exactly 16
-            """
-            if 15.8 <= power <= 16.2:
-                pass
-            else:
-                self.fail("R1CM/R3 txpower isnot correct.")
-        elif v.DUT_MODULE == "R1CL" or v.DUT_MODULE == "R3L":
-            """
-            exactly 17
-            """
-            if 16.8 <= power <= 17.2:
-                pass
-            else:
-                self.fail("R1CL/R3L txpower isnot correct")
+        minPower = data.txPower2G.get(v.DUT_MODULE)[2] * 0.985
+        maxPower = data.txPower2G.get(v.DUT_MODULE)[2] * 1.015
+
+        if minPower <= power <= maxPower:
+            pass
+        else:
+            self.fail("Txpower isnot correct.")
 
     def chan11_txpower_2g(self):
 
@@ -1327,38 +863,15 @@ class AP_CLEAR_HIGH_TXPOWER(TestCase):
             'txpwr': 'max',
         }
         api.setWifi(self.dut2, self.__class__.__name__, **option2g)
-
         power = getWlanTxPower(self.dut, "2g", self.__class__.__name__)
-        loop = 0
-        while power == 0 and loop < 5:
-            t.sleep(2)
-            power = getWlanTxPower(self.dut, "2g", self.__class__.__name__)
-            loop += 1
-        if v.DUT_MODULE == "R1D" or v.DUT_MODULE == "R2D":
-            """
-            exactly 27
-            """
-            if 26.8 <= power <= 27.2:
-                pass
-            else:
-                self.fail("R1D/R2D txpower isnot correct.")
 
-        elif v.DUT_MODULE == "R1CM" or v.DUT_MODULE == "R3":
-            """
-            exactly 16
-            """
-            if 15.8 <= power <= 16.2:
-                pass
-            else:
-                self.fail("R1CM/R3 txpower isnot correct.")
-        elif v.DUT_MODULE == "R1CL" or v.DUT_MODULE == "R3L":
-            """
-            exactly 17
-            """
-            if 16.8 <= power <= 17.2:
-                pass
-            else:
-                self.fail("R1CL/R3L txpower isnot correct")
+        minPower = data.txPower2G.get(v.DUT_MODULE)[2] * 0.985
+        maxPower = data.txPower2G.get(v.DUT_MODULE)[2] * 1.015
+
+        if minPower <= power <= maxPower:
+            pass
+        else:
+            self.fail("Txpower isnot correct.")
 
     def chan13_txpower_2g(self):
 
@@ -1370,38 +883,15 @@ class AP_CLEAR_HIGH_TXPOWER(TestCase):
             'txpwr': 'max',
         }
         api.setWifi(self.dut2, self.__class__.__name__, **option2g)
-
         power = getWlanTxPower(self.dut, "2g", self.__class__.__name__)
-        loop = 0
-        while power == 0 and loop < 5:
-            t.sleep(2)
-            power = getWlanTxPower(self.dut, "2g", self.__class__.__name__)
-            loop += 1
-        if v.DUT_MODULE == "R1D" or v.DUT_MODULE == "R2D":
-            """
-            exactly 27
-            """
-            if 26.8 <= power <= 27.2:
-                pass
-            else:
-                self.fail("R1D/R2D txpower isnot correct.")
 
-        elif v.DUT_MODULE == "R1CM" or v.DUT_MODULE == "R3":
-            """
-            exactly 16
-            """
-            if 15.8 <= power <= 16.2:
-                pass
-            else:
-                self.fail("R1CM/R3 txpower isnot correct.")
-        elif v.DUT_MODULE == "R1CL" or v.DUT_MODULE == "R3L":
-            """
-            exactly 17
-            """
-            if 16.8 <= power <= 17.2:
-                pass
-            else:
-                self.fail("R1CL/R3L txpower isnot correct")
+        minPower = data.txPower2G.get(v.DUT_MODULE)[2] * 0.985
+        maxPower = data.txPower2G.get(v.DUT_MODULE)[2] * 1.015
+
+        if minPower <= power <= maxPower:
+            pass
+        else:
+            self.fail("Txpower isnot correct.")
 
     def chan36_txpower_5g(self):
 
@@ -1413,30 +903,15 @@ class AP_CLEAR_HIGH_TXPOWER(TestCase):
             'txpwr': 'max',
         }
         api.setWifi(self.dut2, self.__class__.__name__, **option5g)
-
         power = getWlanTxPower(self.dut, "5g", self.__class__.__name__)
-        loop = 0
-        while power == 0 and loop < 5:
-            t.sleep(2)
-            power = getWlanTxPower(self.dut, "5g", self.__class__.__name__)
-            loop += 1
-        if v.DUT_MODULE == "R1D" or v.DUT_MODULE == "R2D":
-            """
-            exactly 21
-            """
-            if 20.8 <= power <= 21.2:
-                pass
-            else:
-                self.fail("R1D/R2D txpower isnot correct.")
 
-        elif v.DUT_MODULE == "R1CM" or v.DUT_MODULE == "R3":
-            """
-            exactly 16
-            """
-            if 15.8 <= power <= 16.2:
-                pass
-            else:
-                self.fail("R1CM/R3 txpower isnot correct.")
+        minPower = data.txPower5GL.get(v.DUT_MODULE)[2] * 0.985
+        maxPower = data.txPower5GL.get(v.DUT_MODULE)[2] * 1.015
+
+        if minPower <= power <= maxPower:
+            pass
+        else:
+            self.fail("Txpower isnot correct.")
 
     def chan52_txpower_5g(self):
 
@@ -1448,30 +923,15 @@ class AP_CLEAR_HIGH_TXPOWER(TestCase):
             'txpwr': 'max',
         }
         api.setWifi(self.dut2, self.__class__.__name__, **option5g)
-
         power = getWlanTxPower(self.dut, "5g", self.__class__.__name__)
-        loop = 0
-        while power == 0 and loop < 5:
-            t.sleep(2)
-            power = getWlanTxPower(self.dut, "5g", self.__class__.__name__)
-            loop += 1
-        if v.DUT_MODULE == "R1D" or v.DUT_MODULE == "R2D":
-            """
-            exactly 21
-            """
-            if 20.8 <= power <= 21.2:
-                pass
-            else:
-                self.fail("R1D/R2D txpower isnot correct.")
 
-        elif v.DUT_MODULE == "R1CM" or v.DUT_MODULE == "R3":
-            """
-            exactly 16
-            """
-            if 15.8 <= power <= 16.2:
-                pass
-            else:
-                self.fail("R1CM/R3 txpower isnot correct.")
+        minPower = data.txPower5GL.get(v.DUT_MODULE)[2] * 0.985
+        maxPower = data.txPower5GL.get(v.DUT_MODULE)[2] * 1.015
+
+        if minPower <= power <= maxPower:
+            pass
+        else:
+            self.fail("Txpower isnot correct.")
 
     def chan149_txpower_5g(self):
 
@@ -1484,28 +944,14 @@ class AP_CLEAR_HIGH_TXPOWER(TestCase):
         }
         api.setWifi(self.dut2, self.__class__.__name__, **option5g)
         power = getWlanTxPower(self.dut, "5g", self.__class__.__name__)
-        loop = 0
-        while power == 0 and loop < 5:
-            t.sleep(2)
-            power = getWlanTxPower(self.dut, "5g", self.__class__.__name__)
-            loop += 1
-        if v.DUT_MODULE == "R1D" or v.DUT_MODULE == "R2D":
-            """
-            exactly 22
-            """
-            if 21.8 <= power <= 22.2:
-                pass
-            else:
-                self.fail("R1D/R2D txpower isnot correct.")
 
-        elif v.DUT_MODULE == "R1CM" or v.DUT_MODULE == "R3":
-            """
-            exactly 16
-            """
-            if 15.8 <= power <= 16.2:
-                pass
-            else:
-                self.fail("R1CM/R3 txpower isnot correct.")
+        minPower = data.txPower5GH.get(v.DUT_MODULE)[2] * 0.985
+        maxPower = data.txPower5GH.get(v.DUT_MODULE)[2] * 1.015
+
+        if minPower <= power <= maxPower:
+            pass
+        else:
+            self.fail("Txpower isnot correct.")
 
     def chan165_txpower_5g(self):
 
@@ -1518,28 +964,14 @@ class AP_CLEAR_HIGH_TXPOWER(TestCase):
         }
         api.setWifi(self.dut2, self.__class__.__name__, **option5g)
         power = getWlanTxPower(self.dut, "5g", self.__class__.__name__)
-        loop = 0
-        while power == 0 and loop < 5:
-            t.sleep(2)
-            power = getWlanTxPower(self.dut, "5g", self.__class__.__name__)
-            loop += 1
-        if v.DUT_MODULE == "R1D" or v.DUT_MODULE == "R2D":
-            """
-            exactly 22
-            """
-            if 21.8 <= power <= 22.2:
-                pass
-            else:
-                self.fail("R1D/R2D txpower isnot correct.")
 
-        elif v.DUT_MODULE == "R1CM" or v.DUT_MODULE == "R3":
-            """
-            exactly 16
-            """
-            if 15.8 <= power <= 16.2:
-                pass
-            else:
-                self.fail("R1CM/R3 txpower isnot correct.")
+        minPower = data.txPower5GH.get(v.DUT_MODULE)[2] * 0.985
+        maxPower = data.txPower5GH.get(v.DUT_MODULE)[2] * 1.015
+
+        if minPower <= power <= maxPower:
+            pass
+        else:
+            self.fail("Txpower isnot correct.")
 
 
 class AP_CLEAR_CHANSELECTION(TestCase):
@@ -5255,36 +4687,14 @@ class AP_RELAY_CLEAR_LOW_TXPOWER(TestCase):
         }
         api.setWifi(self.dut2, self.__class__.__name__, **option2g)
         power = getWlanTxPower(self.dut, "2g", self.__class__.__name__)
-        loop = 0
-        while power == 0 and loop < 5:
-            t.sleep(2)
-            power = getWlanTxPower(self.dut, "2g", self.__class__.__name__)
-            loop += 1
-        if v.DUT_MODULE == "R1D" or v.DUT_MODULE == "R2D":
-            """
-            exactly 19.75
-            """
-            if 19.55 <= power <= 19.95:
-                pass
-            else:
-                self.fail("R1D/R2D txpower isnot correct.")
 
-        elif v.DUT_MODULE == "R1CM" or v.DUT_MODULE == "R3":
-            """
-            exactly 13
-            """
-            if 12.8 <= power <= 13.2:
-                pass
-            else:
-                self.fail("R1CM/R3 txpower isnot correct.")
-        elif v.DUT_MODULE == "R1CL" or v.DUT_MODULE == "R3L":
-            """
-            exactly 14
-            """
-            if 13.8 <= power <= 14.2:
-                pass
-            else:
-                self.fail("R1CL/R3L txpower isnot correct")
+        minPower = data.txPower2G.get(v.DUT_MODULE)[0] * 0.985
+        maxPower = data.txPower2G.get(v.DUT_MODULE)[0] * 1.015
+
+        if minPower <= power <= maxPower:
+            pass
+        else:
+            self.fail("Txpower isnot correct.")
 
     def autochan_txpower_5g(self):
 
@@ -5297,28 +4707,14 @@ class AP_RELAY_CLEAR_LOW_TXPOWER(TestCase):
 
         api.setWifi(self.dut2, self.__class__.__name__, **option5g)
         power = getWlanTxPower(self.dut, "5g", self.__class__.__name__)
-        loop = 0
-        while power == 0 and loop < 5:
-            t.sleep(2)
-            power = getWlanTxPower(self.dut, "5g", self.__class__.__name__)
-            loop += 1
-        if v.DUT_MODULE == "R1D" or v.DUT_MODULE == "R2D":
-            """
-            exactly 16.25
-            """
-            if 16.0 <= power <= 16.45:
-                pass
-            else:
-                self.fail("R1D/R2D txpower isnot correct.")
 
-        elif v.DUT_MODULE == "R1CM" or v.DUT_MODULE == "R3":
-            """
-            exactly 13
-            """
-            if 12.8 <= power <= 13.2:
-                pass
-            else:
-                self.fail("R1CM/R3 txpower isnot correct.")
+        minPower = data.txPower5GH.get(v.DUT_MODULE)[0] * 0.985
+        maxPower = data.txPower5GH.get(v.DUT_MODULE)[0] * 1.015
+
+        if minPower <= power <= maxPower:
+            pass
+        else:
+            self.fail("Txpower isnot correct.")
 
     def chan1_txpower_2g(self):
 
@@ -5331,37 +4727,14 @@ class AP_RELAY_CLEAR_LOW_TXPOWER(TestCase):
         }
         api.setWifi(self.dut2, self.__class__.__name__, **option2g)
         power = getWlanTxPower(self.dut, "2g", self.__class__.__name__)
-        loop = 0
-        while power == 0 and loop < 5:
-            t.sleep(2)
-            power = getWlanTxPower(self.dut, "2g", self.__class__.__name__)
-            loop += 1
-        if v.DUT_MODULE == "R1D" or v.DUT_MODULE == "R2D":
-            """
-            exactly 19.75
-            """
-            if 19.55 <= power <= 19.95:
-                pass
-            else:
-                self.fail("R1D/R2D txpower isnot correct.")
 
-        elif v.DUT_MODULE == "R1CM" or v.DUT_MODULE == "R3":
-            """
-            exactly 13
-            """
-            if 12.8 <= power <= 13.2:
-                pass
-            else:
-                self.fail("R1CM/R3 txpower isnot correct.")
+        minPower = data.txPower2G.get(v.DUT_MODULE)[0] * 0.985
+        maxPower = data.txPower2G.get(v.DUT_MODULE)[0] * 1.015
 
-        elif v.DUT_MODULE == "R1CL" or v.DUT_MODULE == "R3L":
-            """
-            exactly 14
-            """
-            if 13.8 <= power <= 14.2:
-                pass
-            else:
-                self.fail("R1CL/R3L txpower isnot correct")
+        if minPower <= power <= maxPower:
+            pass
+        else:
+            self.fail("Txpower isnot correct.")
 
     def chan6_txpower_2g(self):
 
@@ -5373,39 +4746,15 @@ class AP_RELAY_CLEAR_LOW_TXPOWER(TestCase):
             'txpwr': 'min',
         }
         api.setWifi(self.dut2, self.__class__.__name__, **option2g)
-
         power = getWlanTxPower(self.dut, "2g", self.__class__.__name__)
-        loop = 0
-        while power == 0 and loop < 5:
-            t.sleep(2)
-            power = getWlanTxPower(self.dut, "2g", self.__class__.__name__)
-            loop += 1
-        if v.DUT_MODULE == "R1D" or v.DUT_MODULE == "R2D":
-            """
-            exactly 19.75
-            """
-            if 19.55 <= power <= 19.95:
-                pass
-            else:
-                self.fail("R1D/R2D txpower isnot correct.")
 
-        elif v.DUT_MODULE == "R1CM" or v.DUT_MODULE == "R3":
-            """
-            exactly 13
-            """
-            if 12.8 <= power <= 13.2:
-                pass
-            else:
-                self.fail("R1CM/R3 txpower isnot correct.")
+        minPower = data.txPower2G.get(v.DUT_MODULE)[0] * 0.985
+        maxPower = data.txPower2G.get(v.DUT_MODULE)[0] * 1.015
 
-        elif v.DUT_MODULE == "R1CL" or v.DUT_MODULE == "R3L":
-            """
-            exactly 14
-            """
-            if 13.8 <= power <= 14.2:
-                pass
-            else:
-                self.fail("R1CL/R3L txpower isnot correct")
+        if minPower <= power <= maxPower:
+            pass
+        else:
+            self.fail("Txpower isnot correct.")
 
     def chan11_txpower_2g(self):
 
@@ -5417,39 +4766,15 @@ class AP_RELAY_CLEAR_LOW_TXPOWER(TestCase):
             'txpwr': 'min',
         }
         api.setWifi(self.dut2, self.__class__.__name__, **option2g)
-
         power = getWlanTxPower(self.dut, "2g", self.__class__.__name__)
-        loop = 0
-        while power == 0 and loop < 5:
-            t.sleep(2)
-            power = getWlanTxPower(self.dut, "2g", self.__class__.__name__)
-            loop += 1
-        if v.DUT_MODULE == "R1D" or v.DUT_MODULE == "R2D":
-            """
-            exactly 19.75
-            """
-            if 19.55 <= power <= 19.95:
-                pass
-            else:
-                self.fail("R1D/R2D txpower isnot correct.")
 
-        elif v.DUT_MODULE == "R1CM" or v.DUT_MODULE == "R3":
-            """
-            exactly 13
-            """
-            if 12.8 <= power <= 13.2:
-                pass
-            else:
-                self.fail("R1CM/R3 txpower isnot correct.")
+        minPower = data.txPower2G.get(v.DUT_MODULE)[0] * 0.985
+        maxPower = data.txPower2G.get(v.DUT_MODULE)[0] * 1.015
 
-        elif v.DUT_MODULE == "R1CL" or v.DUT_MODULE == "R3L":
-            """
-            exactly 14
-            """
-            if 13.8 <= power <= 14.2:
-                pass
-            else:
-                self.fail("R1CL/R3L txpower isnot correct")
+        if minPower <= power <= maxPower:
+            pass
+        else:
+            self.fail("Txpower isnot correct.")
 
     def chan13_txpower_2g(self):
 
@@ -5461,39 +4786,15 @@ class AP_RELAY_CLEAR_LOW_TXPOWER(TestCase):
             'txpwr': 'min',
         }
         api.setWifi(self.dut2, self.__class__.__name__, **option2g)
-
         power = getWlanTxPower(self.dut, "2g", self.__class__.__name__)
-        loop = 0
-        while power == 0 and loop < 5:
-            t.sleep(2)
-            power = getWlanTxPower(self.dut, "2g", self.__class__.__name__)
-            loop += 1
-        if v.DUT_MODULE == "R1D" or v.DUT_MODULE == "R2D":
-            """
-            exactly 19.75
-            """
-            if 19.55 <= power <= 19.95:
-                pass
-            else:
-                self.fail("R1D/R2D txpower isnot correct.")
 
-        elif v.DUT_MODULE == "R1CM" or v.DUT_MODULE == "R3":
-            """
-            exactly 13
-            """
-            if 12.8 <= power <= 13.2:
-                pass
-            else:
-                self.fail("R1CM/R3 txpower isnot correct.")
+        minPower = data.txPower2G.get(v.DUT_MODULE)[0] * 0.985
+        maxPower = data.txPower2G.get(v.DUT_MODULE)[0] * 1.015
 
-        elif v.DUT_MODULE == "R1CL" or v.DUT_MODULE == "R3L":
-            """
-            exactly 14
-            """
-            if 13.8 <= power <= 14.2:
-                pass
-            else:
-                self.fail("R1CL/R3L txpower isnot correct")
+        if minPower <= power <= maxPower:
+            pass
+        else:
+            self.fail("Txpower isnot correct.")
 
     def chan36_txpower_5g(self):
 
@@ -5506,28 +4807,14 @@ class AP_RELAY_CLEAR_LOW_TXPOWER(TestCase):
         }
         api.setWifi(self.dut2, self.__class__.__name__, **option5g)
         power = getWlanTxPower(self.dut, "5g", self.__class__.__name__)
-        loop = 0
-        while power == 0 and loop < 5:
-            t.sleep(2)
-            power = getWlanTxPower(self.dut, "5g", self.__class__.__name__)
-            loop += 1
-        if v.DUT_MODULE == "R1D" or v.DUT_MODULE == "R2D":
-            """
-            exactly 15.5
-            """
-            if 15.3 <= power <= 15.7:
-                pass
-            else:
-                self.fail("R1D/R2D txpower isnot correct.")
 
-        elif v.DUT_MODULE == "R1CM" or v.DUT_MODULE == "R3":
-            """
-            exactly 13
-            """
-            if 12.8 <= power <= 13.2:
-                pass
-            else:
-                self.fail("R1CM/R3 txpower isnot correct.")
+        minPower = data.txPower5GL.get(v.DUT_MODULE)[0] * 0.985
+        maxPower = data.txPower5GL.get(v.DUT_MODULE)[0] * 1.015
+
+        if minPower <= power <= maxPower:
+            pass
+        else:
+            self.fail("Txpower isnot correct.")
 
     def chan52_txpower_5g(self):
 
@@ -5540,28 +4827,14 @@ class AP_RELAY_CLEAR_LOW_TXPOWER(TestCase):
         }
         api.setWifi(self.dut2, self.__class__.__name__, **option5g)
         power = getWlanTxPower(self.dut, "5g", self.__class__.__name__)
-        loop = 0
-        while power == 0 and loop < 5:
-            t.sleep(2)
-            power = getWlanTxPower(self.dut, "5g", self.__class__.__name__)
-            loop += 1
-        if v.DUT_MODULE == "R1D" or v.DUT_MODULE == "R2D":
-            """
-            exactly 15.5
-            """
-            if 15.3 <= power <= 15.7:
-                pass
-            else:
-                self.fail("R1D/R2D txpower isnot correct.")
 
-        elif v.DUT_MODULE == "R1CM" or v.DUT_MODULE == "R3":
-            """
-            exactly 13
-            """
-            if 12.8 <= power <= 13.2:
-                pass
-            else:
-                self.fail("R1CM/R3 txpower isnot correct.")
+        minPower = data.txPower5GL.get(v.DUT_MODULE)[0] * 0.985
+        maxPower = data.txPower5GL.get(v.DUT_MODULE)[0] * 1.015
+
+        if minPower <= power <= maxPower:
+            pass
+        else:
+            self.fail("Txpower isnot correct.")
 
     def chan149_txpower_5g(self):
 
@@ -5574,28 +4847,14 @@ class AP_RELAY_CLEAR_LOW_TXPOWER(TestCase):
         }
         api.setWifi(self.dut2, self.__class__.__name__, **option5g)
         power = getWlanTxPower(self.dut, "5g", self.__class__.__name__)
-        loop = 0
-        while power == 0 and loop < 5:
-            t.sleep(2)
-            power = getWlanTxPower(self.dut, "5g", self.__class__.__name__)
-            loop += 1
-        if v.DUT_MODULE == "R1D" or v.DUT_MODULE == "R2D":
-            """
-            exactly 16.25
-            """
-            if 16.0 <= power <= 16.45:
-                pass
-            else:
-                self.fail("R1D/R2D txpower isnot correct.")
 
-        elif v.DUT_MODULE == "R1CM" or v.DUT_MODULE == "R3":
-            """
-            exactly 13
-            """
-            if 12.8 <= power <= 13.2:
-                pass
-            else:
-                self.fail("R1CM/R3 txpower isnot correct.")
+        minPower = data.txPower5GH.get(v.DUT_MODULE)[0] * 0.985
+        maxPower = data.txPower5GH.get(v.DUT_MODULE)[0] * 1.015
+
+        if minPower <= power <= maxPower:
+            pass
+        else:
+            self.fail("Txpower isnot correct.")
 
     def chan165_txpower_5g(self):
 
@@ -5608,28 +4867,14 @@ class AP_RELAY_CLEAR_LOW_TXPOWER(TestCase):
         }
         api.setWifi(self.dut2, self.__class__.__name__, **option5g)
         power = getWlanTxPower(self.dut, "5g", self.__class__.__name__)
-        loop = 0
-        while power == 0 and loop < 5:
-            t.sleep(2)
-            power = getWlanTxPower(self.dut, "5g", self.__class__.__name__)
-            loop += 1
-        if v.DUT_MODULE == "R1D" or v.DUT_MODULE == "R2D":
-            """
-            exactly 16.25
-            """
-            if 16.0 <= power <= 16.45:
-                pass
-            else:
-                self.fail("R1D/R2D txpower isnot correct.")
 
-        elif v.DUT_MODULE == "R1CM" or v.DUT_MODULE == "R3":
-            """
-            exactly 13
-            """
-            if 12.8 <= power <= 13.2:
-                pass
-            else:
-                self.fail("R1CM/R3 txpower isnot correct.")
+        minPower = data.txPower5GH.get(v.DUT_MODULE)[0] * 0.985
+        maxPower = data.txPower5GH.get(v.DUT_MODULE)[0] * 1.015
+
+        if minPower <= power <= maxPower:
+            pass
+        else:
+            self.fail("Txpower isnot correct.")
 
 
 class AP_RELAY_CLEAR_MID_TXPOWER(TestCase):
@@ -5674,40 +4919,15 @@ class AP_RELAY_CLEAR_MID_TXPOWER(TestCase):
             'txpwr': 'mid',
         }
         api.setWifi(self.dut2, self.__class__.__name__, **option2g)
-
         power = getWlanTxPower(self.dut, "2g", self.__class__.__name__)
-        loop = 0
-        while power == 0 and loop < 5:
-            t.sleep(2)
-            power = getWlanTxPower(self.dut, "2g", self.__class__.__name__)
-            loop += 1
 
-        if v.DUT_MODULE == "R1D" or v.DUT_MODULE == "R2D":
-            """
-            exactly 23.25
-            """
-            if 23.0 <= power <= 23.45:
-                pass
-            else:
-                self.fail("R1D/R2D txpower isnot correct.")
+        minPower = data.txPower2G.get(v.DUT_MODULE)[1] * 0.985
+        maxPower = data.txPower2G.get(v.DUT_MODULE)[1] * 1.015
 
-        elif v.DUT_MODULE == "R1CM" or v.DUT_MODULE == "R3":
-            """
-            exactly 15
-            """
-            if 14.8 <= power <= 15.2:
-                pass
-            else:
-                self.fail("R1CM/R3 txpower isnot correct.")
-
-        elif v.DUT_MODULE == "R1CL" or v.DUT_MODULE == "R3L":
-            """
-            exactly 16
-            """
-            if 15.8 <= power <= 16.2:
-                pass
-            else:
-                self.fail("R1CL/R3L txpower isnot correct")
+        if minPower <= power <= maxPower:
+            pass
+        else:
+            self.fail("Txpower isnot correct.")
 
     def autochan_txpower_5g(self):
 
@@ -5719,31 +4939,15 @@ class AP_RELAY_CLEAR_MID_TXPOWER(TestCase):
         }
 
         api.setWifi(self.dut2, self.__class__.__name__, **option5g)
-
         power = getWlanTxPower(self.dut, "5g", self.__class__.__name__)
-        loop = 0
-        while power == 0 and loop < 5:
-            t.sleep(2)
-            power = getWlanTxPower(self.dut, "5g", self.__class__.__name__)
-            loop += 1
 
-        if v.DUT_MODULE == "R1D" or v.DUT_MODULE == "R2D":
-            """
-            exactly 19
-            """
-            if 18.8 <= power <= 19.2:
-                pass
-            else:
-                self.fail("R1D/R2D txpower isnot correct.")
+        minPower = data.txPower5GH.get(v.DUT_MODULE)[1] * 0.985
+        maxPower = data.txPower5GH.get(v.DUT_MODULE)[1] * 1.015
 
-        elif v.DUT_MODULE == "R1CM" or v.DUT_MODULE == "R3":
-            """
-            exactly 15
-            """
-            if 14.8 <= power <= 15.2:
-                pass
-            else:
-                self.fail("R1CM/R3 txpower isnot correct.")
+        if minPower <= power <= maxPower:
+            pass
+        else:
+            self.fail("Txpower isnot correct.")
 
     def chan1_txpower_2g(self):
 
@@ -5755,39 +4959,15 @@ class AP_RELAY_CLEAR_MID_TXPOWER(TestCase):
             'txpwr': 'mid',
         }
         api.setWifi(self.dut2, self.__class__.__name__, **option2g)
-
         power = getWlanTxPower(self.dut, "2g", self.__class__.__name__)
-        loop = 0
-        while power == 0 and loop < 5:
-            t.sleep(2)
-            power = getWlanTxPower(self.dut, "2g", self.__class__.__name__)
-            loop += 1
-        if v.DUT_MODULE == "R1D" or v.DUT_MODULE == "R2D":
-            """
-            exactly 23.25
-            """
-            if 23.0 <= power <= 23.45:
-                pass
-            else:
-                self.fail("R1D/R2D txpower isnot correct.")
 
-        elif v.DUT_MODULE == "R1CM" or v.DUT_MODULE == "R3":
-            """
-            exactly 15
-            """
-            if 14.8 <= power <= 15.2:
-                pass
-            else:
-                self.fail("R1CM/R3 txpower isnot correct.")
+        minPower = data.txPower2G.get(v.DUT_MODULE)[1] * 0.985
+        maxPower = data.txPower2G.get(v.DUT_MODULE)[1] * 1.015
 
-        elif v.DUT_MODULE == "R1CL" or v.DUT_MODULE == "R3L":
-            """
-            exactly 16
-            """
-            if 15.8 <= power <= 16.2:
-                pass
-            else:
-                self.fail("R1CL/R3L txpower isnot correct")
+        if minPower <= power <= maxPower:
+            pass
+        else:
+            self.fail("Txpower isnot correct.")
 
     def chan6_txpower_2g(self):
 
@@ -5799,39 +4979,15 @@ class AP_RELAY_CLEAR_MID_TXPOWER(TestCase):
             'txpwr': 'mid',
         }
         api.setWifi(self.dut2, self.__class__.__name__, **option2g)
-
         power = getWlanTxPower(self.dut, "2g", self.__class__.__name__)
-        loop = 0
-        while power == 0 and loop < 5:
-            t.sleep(2)
-            power = getWlanTxPower(self.dut, "2g", self.__class__.__name__)
-            loop += 1
-        if v.DUT_MODULE == "R1D" or v.DUT_MODULE == "R2D":
-            """
-            exactly 23.25
-            """
-            if 23.0 <= power <= 23.45:
-                pass
-            else:
-                self.fail("R1D/R2D txpower isnot correct.")
 
-        elif v.DUT_MODULE == "R1CM" or v.DUT_MODULE == "R3":
-            """
-            exactly 15
-            """
-            if 14.8 <= power <= 15.2:
-                pass
-            else:
-                self.fail("R1CM/R3 txpower isnot correct.")
+        minPower = data.txPower2G.get(v.DUT_MODULE)[1] * 0.985
+        maxPower = data.txPower2G.get(v.DUT_MODULE)[1] * 1.015
 
-        elif v.DUT_MODULE == "R1CL" or v.DUT_MODULE == "R3L":
-            """
-            exactly 16
-            """
-            if 15.8 <= power <= 16.2:
-                pass
-            else:
-                self.fail("R1CL/R3L txpower isnot correct")
+        if minPower <= power <= maxPower:
+            pass
+        else:
+            self.fail("Txpower isnot correct.")
 
     def chan11_txpower_2g(self):
 
@@ -5844,37 +5000,14 @@ class AP_RELAY_CLEAR_MID_TXPOWER(TestCase):
         }
         api.setWifi(self.dut2, self.__class__.__name__, **option2g)
         power = getWlanTxPower(self.dut, "2g", self.__class__.__name__)
-        loop = 0
-        while power == 0 and loop < 5:
-            t.sleep(2)
-            power = getWlanTxPower(self.dut, "2g", self.__class__.__name__)
-            loop += 1
-        if v.DUT_MODULE == "R1D" or v.DUT_MODULE == "R2D":
-            """
-            exactly 23.25
-            """
-            if 23.0 <= power <= 23.45:
-                pass
-            else:
-                self.fail("R1D/R2D txpower isnot correct.")
 
-        elif v.DUT_MODULE == "R1CM" or v.DUT_MODULE == "R3":
-            """
-            exactly 15
-            """
-            if 14.8 <= power <= 15.2:
-                pass
-            else:
-                self.fail("R1CM/R3 txpower isnot correct.")
+        minPower = data.txPower2G.get(v.DUT_MODULE)[1] * 0.985
+        maxPower = data.txPower2G.get(v.DUT_MODULE)[1] * 1.015
 
-        elif v.DUT_MODULE == "R1CL" or v.DUT_MODULE == "R3L":
-            """
-            exactly 16
-            """
-            if 15.8 <= power <= 16.2:
-                pass
-            else:
-                self.fail("R1CL/R3L txpower isnot correct")
+        if minPower <= power <= maxPower:
+            pass
+        else:
+            self.fail("Txpower isnot correct.")
 
     def chan13_txpower_2g(self):
 
@@ -5886,39 +5019,15 @@ class AP_RELAY_CLEAR_MID_TXPOWER(TestCase):
             'txpwr': 'mid',
         }
         api.setWifi(self.dut2, self.__class__.__name__, **option2g)
-
         power = getWlanTxPower(self.dut, "2g", self.__class__.__name__)
-        loop = 0
-        while power == 0 and loop < 5:
-            t.sleep(2)
-            power = getWlanTxPower(self.dut, "2g", self.__class__.__name__)
-            loop += 1
-        if v.DUT_MODULE == "R1D" or v.DUT_MODULE == "R2D":
-            """
-            exactly 23.25
-            """
-            if 23.0 <= power <= 23.45:
-                pass
-            else:
-                self.fail("R1D/R2D txpower isnot correct.")
 
-        elif v.DUT_MODULE == "R1CM" or v.DUT_MODULE == "R3":
-            """
-            exactly 15
-            """
-            if 14.8 <= power <= 15.2:
-                pass
-            else:
-                self.fail("R1CM/R3 txpower isnot correct.")
+        minPower = data.txPower2G.get(v.DUT_MODULE)[1] * 0.985
+        maxPower = data.txPower2G.get(v.DUT_MODULE)[1] * 1.015
 
-        elif v.DUT_MODULE == "R1CL" or v.DUT_MODULE == "R3L":
-            """
-            exactly 16
-            """
-            if 15.8 <= power <= 16.2:
-                pass
-            else:
-                self.fail("R1CL/R3L txpower isnot correct")
+        if minPower <= power <= maxPower:
+            pass
+        else:
+            self.fail("Txpower isnot correct.")
 
     def chan36_txpower_5g(self):
 
@@ -5931,28 +5040,14 @@ class AP_RELAY_CLEAR_MID_TXPOWER(TestCase):
         }
         api.setWifi(self.dut2, self.__class__.__name__, **option5g)
         power = getWlanTxPower(self.dut, "5g", self.__class__.__name__)
-        loop = 0
-        while power == 0 and loop < 5:
-            t.sleep(2)
-            power = getWlanTxPower(self.dut, "5g", self.__class__.__name__)
-            loop += 1
-        if v.DUT_MODULE == "R1D" or v.DUT_MODULE == "R2D":
-            """
-            exactly 18.25
-            """
-            if 18 <= power <= 18.45:
-                pass
-            else:
-                self.fail("R1D/R2D txpower isnot correct.")
 
-        elif v.DUT_MODULE == "R1CM" or v.DUT_MODULE == "R3":
-            """
-            exactly 15
-            """
-            if 14.8 <= power <= 15.2:
-                pass
-            else:
-                self.fail("R1CM/R3 txpower isnot correct.")
+        minPower = data.txPower5GL.get(v.DUT_MODULE)[1] * 0.985
+        maxPower = data.txPower5GL.get(v.DUT_MODULE)[1] * 1.015
+
+        if minPower <= power <= maxPower:
+            pass
+        else:
+            self.fail("Txpower isnot correct.")
 
     def chan52_txpower_5g(self):
 
@@ -5964,30 +5059,15 @@ class AP_RELAY_CLEAR_MID_TXPOWER(TestCase):
             'txpwr': 'mid',
         }
         api.setWifi(self.dut2, self.__class__.__name__, **option5g)
-
         power = getWlanTxPower(self.dut, "5g", self.__class__.__name__)
-        loop = 0
-        while power == 0 and loop < 5:
-            t.sleep(2)
-            power = getWlanTxPower(self.dut, "5g", self.__class__.__name__)
-            loop += 1
-        if v.DUT_MODULE == "R1D" or v.DUT_MODULE == "R2D":
-            """
-            exactly 18.25
-            """
-            if 18 <= power <= 18.45:
-                pass
-            else:
-                self.fail("R1D/R2D txpower isnot correct.")
 
-        elif v.DUT_MODULE == "R1CM" or v.DUT_MODULE == "R3":
-            """
-            exactly 15
-            """
-            if 14.8 <= power <= 15.2:
-                pass
-            else:
-                self.fail("R1CM/R3 txpower isnot correct.")
+        minPower = data.txPower5GL.get(v.DUT_MODULE)[1] * 0.985
+        maxPower = data.txPower5GL.get(v.DUT_MODULE)[1] * 1.015
+
+        if minPower <= power <= maxPower:
+            pass
+        else:
+            self.fail("Txpower isnot correct.")
 
     def chan149_txpower_5g(self):
 
@@ -6000,28 +5080,14 @@ class AP_RELAY_CLEAR_MID_TXPOWER(TestCase):
         }
         api.setWifi(self.dut2, self.__class__.__name__, **option5g)
         power = getWlanTxPower(self.dut, "5g", self.__class__.__name__)
-        loop = 0
-        while power == 0 and loop < 5:
-            t.sleep(2)
-            power = getWlanTxPower(self.dut, "5g", self.__class__.__name__)
-            loop += 1
-        if v.DUT_MODULE == "R1D" or v.DUT_MODULE == "R2D":
-            """
-            exactly 19
-            """
-            if 18.8 <= power <= 19.2:
-                pass
-            else:
-                self.fail("R1D/R2D txpower isnot correct.")
 
-        elif v.DUT_MODULE == "R1CM" or v.DUT_MODULE == "R3":
-            """
-            exactly 15
-            """
-            if 14.8 <= power <= 15.2:
-                pass
-            else:
-                self.fail("R1CM/R3 txpower isnot correct.")
+        minPower = data.txPower5GH.get(v.DUT_MODULE)[1] * 0.985
+        maxPower = data.txPower5GH.get(v.DUT_MODULE)[1] * 1.015
+
+        if minPower <= power <= maxPower:
+            pass
+        else:
+            self.fail("Txpower isnot correct.")
 
     def chan165_txpower_5g(self):
 
@@ -6033,30 +5099,15 @@ class AP_RELAY_CLEAR_MID_TXPOWER(TestCase):
             'txpwr': 'mid',
         }
         api.setWifi(self.dut2, self.__class__.__name__, **option5g)
-
         power = getWlanTxPower(self.dut, "5g", self.__class__.__name__)
-        loop = 0
-        while power == 0 and loop < 5:
-            t.sleep(2)
-            power = getWlanTxPower(self.dut, "5g", self.__class__.__name__)
-            loop += 1
-        if v.DUT_MODULE == "R1D" or v.DUT_MODULE == "R2D":
-            """
-            exactly 19
-            """
-            if 18.8 <= power <= 19.2:
-                pass
-            else:
-                self.fail("R1D/R2D txpower isnot correct.")
 
-        elif v.DUT_MODULE == "R1CM" or v.DUT_MODULE == "R3":
-            """
-            exactly 15
-            """
-            if 14.8 <= power <= 15.2:
-                pass
-            else:
-                self.fail("R1CM/R3 txpower isnot correct.")
+        minPower = data.txPower5GH.get(v.DUT_MODULE)[1] * 0.985
+        maxPower = data.txPower5GH.get(v.DUT_MODULE)[1] * 1.015
+
+        if minPower <= power <= maxPower:
+            pass
+        else:
+            self.fail("Txpower isnot correct.")
 
 
 class AP_RELAY_CLEAR_HIGH_TXPOWER(TestCase):
@@ -6101,38 +5152,15 @@ class AP_RELAY_CLEAR_HIGH_TXPOWER(TestCase):
             'txpwr': 'max',
         }
         api.setWifi(self.dut2, self.__class__.__name__, **option2g)
-
         power = getWlanTxPower(self.dut, "2g", self.__class__.__name__)
-        loop = 0
-        while power == 0 and loop < 5:
-            t.sleep(2)
-            power = getWlanTxPower(self.dut, "2g", self.__class__.__name__)
-            loop += 1
-        if v.DUT_MODULE == "R1D" or v.DUT_MODULE == "R2D":
-            """
-            exactly 27
-            """
-            if 26.8 <= power <= 27.2:
-                pass
-            else:
-                self.fail("R1D/R2D txpower isnot correct.")
 
-        elif v.DUT_MODULE == "R1CM" or v.DUT_MODULE == "R3":
-            """
-            exactly 16
-            """
-            if 15.8 <= power <= 16.2:
-                pass
-            else:
-                self.fail("R1CM/R3 txpower isnot correct.")
-        elif v.DUT_MODULE == "R1CL" or v.DUT_MODULE == "R3L":
-            """
-            exactly 17
-            """
-            if 16.8 <= power <= 17.2:
-                pass
-            else:
-                self.fail("R1CL/R3L txpower isnot correct")
+        minPower = data.txPower2G.get(v.DUT_MODULE)[2] * 0.985
+        maxPower = data.txPower2G.get(v.DUT_MODULE)[2] * 1.015
+
+        if minPower <= power <= maxPower:
+            pass
+        else:
+            self.fail("Txpower isnot correct.")
 
     def autochan_txpower_5g(self):
 
@@ -6144,30 +5172,15 @@ class AP_RELAY_CLEAR_HIGH_TXPOWER(TestCase):
         }
 
         api.setWifi(self.dut2, self.__class__.__name__, **option5g)
-
         power = getWlanTxPower(self.dut, "5g", self.__class__.__name__)
-        loop = 0
-        while power == 0 and loop < 5:
-            t.sleep(2)
-            power = getWlanTxPower(self.dut, "5g", self.__class__.__name__)
-            loop += 1
-        if v.DUT_MODULE == "R1D" or v.DUT_MODULE == "R2D":
-            """
-            exactly 22
-            """
-            if 21.8 <= power <= 22.2:
-                pass
-            else:
-                self.fail("R1D/R2D txpower isnot correct.")
 
-        elif v.DUT_MODULE == "R1CM" or v.DUT_MODULE == "R3":
-            """
-            exactly 16
-            """
-            if 15.8 <= power <= 16.2:
-                pass
-            else:
-                self.fail("R1CM/R3 txpower isnot correct.")
+        minPower = data.txPower5GH.get(v.DUT_MODULE)[2] * 0.985
+        maxPower = data.txPower5GH.get(v.DUT_MODULE)[2] * 1.015
+
+        if minPower <= power <= maxPower:
+            pass
+        else:
+            self.fail("Txpower isnot correct.")
 
     def chan1_txpower_2g(self):
 
@@ -6179,38 +5192,15 @@ class AP_RELAY_CLEAR_HIGH_TXPOWER(TestCase):
             'txpwr': 'max',
         }
         api.setWifi(self.dut2, self.__class__.__name__, **option2g)
-
         power = getWlanTxPower(self.dut, "2g", self.__class__.__name__)
-        loop = 0
-        while power == 0 and loop < 5:
-            t.sleep(2)
-            power = getWlanTxPower(self.dut, "2g", self.__class__.__name__)
-            loop += 1
-        if v.DUT_MODULE == "R1D" or v.DUT_MODULE == "R2D":
-            """
-            exactly 27
-            """
-            if 26.8 <= power <= 27.2:
-                pass
-            else:
-                self.fail("R1D/R2D txpower isnot correct.")
 
-        elif v.DUT_MODULE == "R1CM" or v.DUT_MODULE == "R3":
-            """
-            exactly 16
-            """
-            if 15.8 <= power <= 16.2:
-                pass
-            else:
-                self.fail("R1CM/R3 txpower isnot correct.")
-        elif v.DUT_MODULE == "R1CL" or v.DUT_MODULE == "R3L":
-            """
-            exactly 17
-            """
-            if 16.8 <= power <= 17.2:
-                pass
-            else:
-                self.fail("R1CL/R3L txpower isnot correct")
+        minPower = data.txPower2G.get(v.DUT_MODULE)[2] * 0.985
+        maxPower = data.txPower2G.get(v.DUT_MODULE)[2] * 1.015
+
+        if minPower <= power <= maxPower:
+            pass
+        else:
+            self.fail("Txpower isnot correct.")
 
     def chan6_txpower_2g(self):
 
@@ -6222,38 +5212,15 @@ class AP_RELAY_CLEAR_HIGH_TXPOWER(TestCase):
             'txpwr': 'max',
         }
         api.setWifi(self.dut2, self.__class__.__name__, **option2g)
-
         power = getWlanTxPower(self.dut, "2g", self.__class__.__name__)
-        loop = 0
-        while power == 0 and loop < 5:
-            t.sleep(2)
-            power = getWlanTxPower(self.dut, "2g", self.__class__.__name__)
-            loop += 1
-        if v.DUT_MODULE == "R1D" or v.DUT_MODULE == "R2D":
-            """
-            exactly 27
-            """
-            if 26.8 <= power <= 27.2:
-                pass
-            else:
-                self.fail("R1D/R2D txpower isnot correct.")
 
-        elif v.DUT_MODULE == "R1CM" or v.DUT_MODULE == "R3":
-            """
-            exactly 16
-            """
-            if 15.8 <= power <= 16.2:
-                pass
-            else:
-                self.fail("R1CM/R3 txpower isnot correct.")
-        elif v.DUT_MODULE == "R1CL" or v.DUT_MODULE == "R3L":
-            """
-            exactly 17
-            """
-            if 16.8 <= power <= 17.2:
-                pass
-            else:
-                self.fail("R1CL/R3L txpower isnot correct")
+        minPower = data.txPower2G.get(v.DUT_MODULE)[2] * 0.985
+        maxPower = data.txPower2G.get(v.DUT_MODULE)[2] * 1.015
+
+        if minPower <= power <= maxPower:
+            pass
+        else:
+            self.fail("Txpower isnot correct.")
 
     def chan11_txpower_2g(self):
 
@@ -6265,38 +5232,15 @@ class AP_RELAY_CLEAR_HIGH_TXPOWER(TestCase):
             'txpwr': 'max',
         }
         api.setWifi(self.dut2, self.__class__.__name__, **option2g)
-
         power = getWlanTxPower(self.dut, "2g", self.__class__.__name__)
-        loop = 0
-        while power == 0 and loop < 5:
-            t.sleep(2)
-            power = getWlanTxPower(self.dut, "2g", self.__class__.__name__)
-            loop += 1
-        if v.DUT_MODULE == "R1D" or v.DUT_MODULE == "R2D":
-            """
-            exactly 27
-            """
-            if 26.8 <= power <= 27.2:
-                pass
-            else:
-                self.fail("R1D/R2D txpower isnot correct.")
 
-        elif v.DUT_MODULE == "R1CM" or v.DUT_MODULE == "R3":
-            """
-            exactly 16
-            """
-            if 15.8 <= power <= 16.2:
-                pass
-            else:
-                self.fail("R1CM/R3 txpower isnot correct.")
-        elif v.DUT_MODULE == "R1CL" or v.DUT_MODULE == "R3L":
-            """
-            exactly 17
-            """
-            if 16.8 <= power <= 17.2:
-                pass
-            else:
-                self.fail("R1CL/R3L txpower isnot correct")
+        minPower = data.txPower2G.get(v.DUT_MODULE)[2] * 0.985
+        maxPower = data.txPower2G.get(v.DUT_MODULE)[2] * 1.015
+
+        if minPower <= power <= maxPower:
+            pass
+        else:
+            self.fail("Txpower isnot correct.")
 
     def chan13_txpower_2g(self):
 
@@ -6308,38 +5252,15 @@ class AP_RELAY_CLEAR_HIGH_TXPOWER(TestCase):
             'txpwr': 'max',
         }
         api.setWifi(self.dut2, self.__class__.__name__, **option2g)
-
         power = getWlanTxPower(self.dut, "2g", self.__class__.__name__)
-        loop = 0
-        while power == 0 and loop < 5:
-            t.sleep(2)
-            power = getWlanTxPower(self.dut, "2g", self.__class__.__name__)
-            loop += 1
-        if v.DUT_MODULE == "R1D" or v.DUT_MODULE == "R2D":
-            """
-            exactly 27
-            """
-            if 26.8 <= power <= 27.2:
-                pass
-            else:
-                self.fail("R1D/R2D txpower isnot correct.")
 
-        elif v.DUT_MODULE == "R1CM" or v.DUT_MODULE == "R3":
-            """
-            exactly 16
-            """
-            if 15.8 <= power <= 16.2:
-                pass
-            else:
-                self.fail("R1CM/R3 txpower isnot correct.")
-        elif v.DUT_MODULE == "R1CL" or v.DUT_MODULE == "R3L":
-            """
-            exactly 17
-            """
-            if 16.8 <= power <= 17.2:
-                pass
-            else:
-                self.fail("R1CL/R3L txpower isnot correct")
+        minPower = data.txPower2G.get(v.DUT_MODULE)[2] * 0.985
+        maxPower = data.txPower2G.get(v.DUT_MODULE)[2] * 1.015
+
+        if minPower <= power <= maxPower:
+            pass
+        else:
+            self.fail("Txpower isnot correct.")
 
     def chan36_txpower_5g(self):
 
@@ -6351,30 +5272,15 @@ class AP_RELAY_CLEAR_HIGH_TXPOWER(TestCase):
             'txpwr': 'max',
         }
         api.setWifi(self.dut2, self.__class__.__name__, **option5g)
-
         power = getWlanTxPower(self.dut, "5g", self.__class__.__name__)
-        loop = 0
-        while power == 0 and loop < 5:
-            t.sleep(2)
-            power = getWlanTxPower(self.dut, "5g", self.__class__.__name__)
-            loop += 1
-        if v.DUT_MODULE == "R1D" or v.DUT_MODULE == "R2D":
-            """
-            exactly 21
-            """
-            if 20.8 <= power <= 21.2:
-                pass
-            else:
-                self.fail("R1D/R2D txpower isnot correct.")
 
-        elif v.DUT_MODULE == "R1CM" or v.DUT_MODULE == "R3":
-            """
-            exactly 16
-            """
-            if 15.8 <= power <= 16.2:
-                pass
-            else:
-                self.fail("R1CM/R3 txpower isnot correct.")
+        minPower = data.txPower5GL.get(v.DUT_MODULE)[2] * 0.985
+        maxPower = data.txPower5GL.get(v.DUT_MODULE)[2] * 1.015
+
+        if minPower <= power <= maxPower:
+            pass
+        else:
+            self.fail("Txpower isnot correct.")
 
     def chan52_txpower_5g(self):
 
@@ -6386,30 +5292,15 @@ class AP_RELAY_CLEAR_HIGH_TXPOWER(TestCase):
             'txpwr': 'max',
         }
         api.setWifi(self.dut2, self.__class__.__name__, **option5g)
-
         power = getWlanTxPower(self.dut, "5g", self.__class__.__name__)
-        loop = 0
-        while power == 0 and loop < 5:
-            t.sleep(2)
-            power = getWlanTxPower(self.dut, "5g", self.__class__.__name__)
-            loop += 1
-        if v.DUT_MODULE == "R1D" or v.DUT_MODULE == "R2D":
-            """
-            exactly 21
-            """
-            if 20.8 <= power <= 21.2:
-                pass
-            else:
-                self.fail("R1D/R2D txpower isnot correct.")
 
-        elif v.DUT_MODULE == "R1CM" or v.DUT_MODULE == "R3":
-            """
-            exactly 16
-            """
-            if 15.8 <= power <= 16.2:
-                pass
-            else:
-                self.fail("R1CM/R3 txpower isnot correct.")
+        minPower = data.txPower5GL.get(v.DUT_MODULE)[2] * 0.985
+        maxPower = data.txPower5GL.get(v.DUT_MODULE)[2] * 1.015
+
+        if minPower <= power <= maxPower:
+            pass
+        else:
+            self.fail("Txpower isnot correct.")
 
     def chan149_txpower_5g(self):
 
@@ -6422,28 +5313,14 @@ class AP_RELAY_CLEAR_HIGH_TXPOWER(TestCase):
         }
         api.setWifi(self.dut2, self.__class__.__name__, **option5g)
         power = getWlanTxPower(self.dut, "5g", self.__class__.__name__)
-        loop = 0
-        while power == 0 and loop < 5:
-            t.sleep(2)
-            power = getWlanTxPower(self.dut, "5g", self.__class__.__name__)
-            loop += 1
-        if v.DUT_MODULE == "R1D" or v.DUT_MODULE == "R2D":
-            """
-            exactly 22
-            """
-            if 21.8 <= power <= 22.2:
-                pass
-            else:
-                self.fail("R1D/R2D txpower isnot correct.")
 
-        elif v.DUT_MODULE == "R1CM" or v.DUT_MODULE == "R3":
-            """
-            exactly 16
-            """
-            if 15.8 <= power <= 16.2:
-                pass
-            else:
-                self.fail("R1CM/R3 txpower isnot correct.")
+        minPower = data.txPower5GH.get(v.DUT_MODULE)[2] * 0.985
+        maxPower = data.txPower5GH.get(v.DUT_MODULE)[2] * 1.015
+
+        if minPower <= power <= maxPower:
+            pass
+        else:
+            self.fail("Txpower isnot correct.")
 
     def chan165_txpower_5g(self):
 
@@ -6456,28 +5333,14 @@ class AP_RELAY_CLEAR_HIGH_TXPOWER(TestCase):
         }
         api.setWifi(self.dut2, self.__class__.__name__, **option5g)
         power = getWlanTxPower(self.dut, "5g", self.__class__.__name__)
-        loop = 0
-        while power == 0 and loop < 5:
-            t.sleep(2)
-            power = getWlanTxPower(self.dut, "5g", self.__class__.__name__)
-            loop += 1
-        if v.DUT_MODULE == "R1D" or v.DUT_MODULE == "R2D":
-            """
-            exactly 22
-            """
-            if 21.8 <= power <= 22.2:
-                pass
-            else:
-                self.fail("R1D/R2D txpower isnot correct.")
 
-        elif v.DUT_MODULE == "R1CM" or v.DUT_MODULE == "R3":
-            """
-            exactly 16
-            """
-            if 15.8 <= power <= 16.2:
-                pass
-            else:
-                self.fail("R1CM/R3 txpower isnot correct.")
+        minPower = data.txPower5GH.get(v.DUT_MODULE)[2] * 0.985
+        maxPower = data.txPower5GH.get(v.DUT_MODULE)[2] * 1.015
+
+        if minPower <= power <= maxPower:
+            pass
+        else:
+            self.fail("Txpower isnot correct.")
 
 
 class AP_RELAY_CLEAR_CHANSELECTION(TestCase):

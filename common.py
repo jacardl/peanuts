@@ -125,8 +125,8 @@ class ShellClient(object):
             if checkContainChinese(cmd):
                 cmd = cmd.decode("utf-8")
                 cmd = cmd.encode("utf-8")
-            self.tn.write(cmd + "\r\n")
-            self.out = self.tn.read_until("telnet>", 200)
+            self.pc.write(cmd + "\r\n")
+            self.out = self.pc.read_until("telnet>", 200)
             self.out = re.sub('\n', '\r\n', self.out)
             self.out = self.out.split("\n")
             del self.out[0]  # del command and :~#

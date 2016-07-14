@@ -22,7 +22,7 @@ class ShellClient(object):
         self.connectionType = connection
 
     def connect(self, host=None, userid=None, password=None):
-        if self.connectionType == 1:  # represent ssh
+        if self.connectionType == 1:  # represent ssh, return line contents\n
             self.hostname = host
             self.client = pm.SSHClient()
             self.client.set_missing_host_key_policy(pm.AutoAddPolicy())
@@ -39,7 +39,7 @@ class ShellClient(object):
                 print 'ssh connection is failed. please check your remote settings.'
                 return False
 
-        elif self.connectionType == 2:  # represent telnet
+        elif self.connectionType == 2:  # represent telnet, return line contents\r\n
             self.hostname = host.encode("utf-8")
             self.username = userid.encode("utf-8")
             self.password = password.encode("utf-8")
@@ -56,6 +56,28 @@ class ShellClient(object):
                     self.tn.write(self.password + "\n")
 
                 self.tn.read_until("root@XiaoQiang:", 10)
+                return True
+
+            except Exception, e:
+                print 'telnet connection is failed. please check your remote settings.'
+                return False
+        elif self.connectionType == 4:  # represent windows telnet, press enter \r\n, return line contents\n
+            self.hostname = host.encode("utf-8")
+            self.username = userid.encode("utf-8")
+            self.password = password.encode("utf-8")
+            try:
+                # connect to telnet server
+                self.tn = telnetlib.Telnet(self.hostname, port=23, timeout=10)
+                # self.tn.set_debuglevel(2)
+
+                # login
+                if self.username != "":
+                    self.tn.read_until("login: ", 10)
+                    self.tn.write(self.username + "\r\n")
+                    self.tn.read_until("password: ", 10)
+                    self.tn.write(self.password + "\r\n")
+
+                self.tn.read_until("telnet>", 10)
                 return True
 
             except Exception, e:
@@ -94,6 +116,18 @@ class ShellClient(object):
                 cmd = cmd.encode("utf-8")
             self.tn.write(cmd + "\n")
             self.out = self.tn.read_until("root@XiaoQiang:", 200)
+            self.out = self.out.split("\n")
+            del self.out[0]  # del command and :~#
+            del self.out[-1]
+            return self.out
+        elif self.connectionType == 4:
+            cmd = ";".join(args)  # input and output are utf-8
+            if checkContainChinese(cmd):
+                cmd = cmd.decode("utf-8")
+                cmd = cmd.encode("utf-8")
+            self.tn.write(cmd + "\r\n")
+            self.out = self.tn.read_until("telnet>", 200)
+            self.out = re.sub('\n', '\r\n', self.out)
             self.out = self.out.split("\n")
             del self.out[0]  # del command and :~#
             del self.out[-1]
@@ -976,7 +1010,7 @@ def setIperfFlow2(terminal, target, interval, time, logname):
     command += " -r -w 2m -f m"
     ret = setGet(terminal, command, logname)
     for line in ret:
-        m = re.search('0\.0-\d{1,4}.*\s(\d{1,}\.?\d{1,})?\sMbits/sec', line)
+        m = re.search('0\.0-\s?\d{1,4}.*\s(\d{1,}\.?\d{1,})?\sMbits/sec', line)
         if m:
             return True
     return False
@@ -1965,7 +1999,11 @@ def chkAdbBrowserWebsite(device, url, logname):
     return False
 
 if __name__ == '__main__':
-    # device = getAdbDevices()
-    # print getAdbOoklaSpeedTestShot(device[0], "router.jpg", "a")
-    print setIperfFlow("192.168.31.190", "", "10", "a")
+    client = ShellClient(4)
+    ret = client.connect("10.237.143.13", "telnet", "telnet")
+    print setIperfFlow2(client, "10.237.143.11", "", "60", "a")
+    # client = ShellClient(1)
+    # client.connect("192.168.110.1", "root", "admin")
+    # setGet(client, "ifconfig", "a")
+    client.close()
 

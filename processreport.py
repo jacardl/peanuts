@@ -168,6 +168,20 @@ class GetThroughputLog(threading.Thread):
             '80rx': [],
         }
         self.wan2g = {
+            '20tx': [],
+            '20rx': [],
+            '40tx': [],
+            '40rx': [],
+        }
+        self.wan5g = {
+            '20tx': [],
+            '40tx': [],
+            '80tx': [],
+            '20rx': [],
+            '40rx': [],
+            '80rx': [],
+        }
+        self.speedtest2g = {
             'tx':[],
             'rx':[],
             'relaytx':[],
@@ -177,7 +191,7 @@ class GetThroughputLog(threading.Thread):
             'guesttx':[],
             'guestrx':[],
         }
-        self.wan5g = {
+        self.speedtest5g = {
             'tx':[],
             'rx':[],
             'relaytx':[],
@@ -232,13 +246,36 @@ class GetThroughputLog(threading.Thread):
             'CH149 80M': "self.lan5g['80tx'].append(speedDict['tx']), self.lan5g['80rx'].append(speedDict['rx'])",
         }
         self.wan = {
-            'CH11': "self.wan2g['tx'].append(speedDict['tx']), self.wan2g['rx'].append(speedDict['rx'])",
-            'CH11 WRELAY': "self.wan2g['wrelaytx'].append(speedDict['tx']), self.wan2g['wrelayrx'].append(speedDict['rx'])",
-            'CH11 RELAY': "self.wan2g['relaytx'].append(speedDict['tx']), self.wan2g['relayrx'].append(speedDict['rx'])",
-            'GUEST': "self.wan2g['guesttx'].append(speedDict['tx']), self.wan2g['guestrx'].append(speedDict['rx'])",
-            'CH149': "self.wan5g['tx'].append(speedDict['tx']), self.wan5g['rx'].append(speedDict['rx'])",
-            'CH149 WRELAY': "self.wan5g['wrelaytx'].append(speedDict['tx']), self.wan5g['wrelayrx'].append(speedDict['rx'])",
-            'CH149 RELAY': "self.wan5g['relaytx'].append(speedDict['tx']), self.wan5g['relayrx'].append(speedDict['rx'])",
+            'CH1 20M': "self.wan2g['20tx'].append(speedDict['tx']), self.wan2g['20rx'].append(speedDict['rx'])",
+            'CH6 20M': "self.wan2g['20tx'].append(speedDict['tx']), self.wan2g['20rx'].append(speedDict['rx'])",
+            'CH11 20M': "self.wan2g['20tx'].append(speedDict['tx']), self.wan2g['20rx'].append(speedDict['rx'])",
+            'CH13 20M': "self.wan2g['20tx'].append(speedDict['tx']), self.wan2g['20rx'].append(speedDict['rx'])",
+            'CH1 40M': "self.wan2g['40tx'].append(speedDict['tx']), self.wan2g['40rx'].append(speedDict['rx'])",
+            'CH6 40M': "self.wan2g['40tx'].append(speedDict['tx']), self.wan2g['40rx'].append(speedDict['rx'])",
+            'CH11 40M': "self.wan2g['40tx'].append(speedDict['tx']), self.wan2g['40rx'].append(speedDict['rx'])",
+            'CH13 40M': "self.wan2g['40tx'].append(speedDict['tx']), self.wan2g['40rx'].append(speedDict['rx'])",
+            'CH36 20M': "self.wan5g['20tx'].append(speedDict['tx']), self.wan5g['20rx'].append(speedDict['rx'])",
+            'CH52 20M': "self.wan5g['20tx'].append(speedDict['tx']), self.wan5g['20rx'].append(speedDict['rx'])",
+            'CH149 20M': "self.wan5g['20tx'].append(speedDict['tx']), self.wan5g['20rx'].append(speedDict['rx'])",
+            'CH165 20M': "self.wan5g['20tx'].append(speedDict['tx']), self.wan5g['20rx'].append(speedDict['rx'])",
+            'CH36 40M': "self.wan5g['40tx'].append(speedDict['tx']), self.wan5g['40rx'].append(speedDict['rx'])",
+            'CH44 40M': "self.wan5g['40tx'].append(speedDict['tx']), self.wan5g['40rx'].append(speedDict['rx'])",
+            'CH52 40M': "self.wan5g['40tx'].append(speedDict['tx']), self.wan5g['40rx'].append(speedDict['rx'])",
+            'CH60 40M': "self.wan5g['40tx'].append(speedDict['tx']), self.wan5g['40rx'].append(speedDict['rx'])",
+            'CH149 40M': "self.wan5g['40tx'].append(speedDict['tx']), self.wan5g['40rx'].append(speedDict['rx'])",
+            'CH157 40M': "self.wan5g['40tx'].append(speedDict['tx']), self.wan5g['40rx'].append(speedDict['rx'])",
+            'CH36 80M': "self.wan5g['80tx'].append(speedDict['tx']), self.wan5g['80rx'].append(speedDict['rx'])",
+            'CH52 80M': "self.wan5g['80tx'].append(speedDict['tx']), self.wan5g['80rx'].append(speedDict['rx'])",
+            'CH149 80M': "self.wan5g['80tx'].append(speedDict['tx']), self.wan5g['80rx'].append(speedDict['rx'])",
+        }
+        self.speedtest = {
+            'CH11': "self.speedtest2g['tx'].append(speedDict['tx']), self.speedtest2g['rx'].append(speedDict['rx'])",
+            'CH11 WRELAY': "self.speedtest2g['wrelaytx'].append(speedDict['tx']), self.speedtest2g['wrelayrx'].append(speedDict['rx'])",
+            'CH11 RELAY': "self.speedtest2g['relaytx'].append(speedDict['tx']), self.speedtest2g['relayrx'].append(speedDict['rx'])",
+            'GUEST': "self.speedtest2g['guesttx'].append(speedDict['tx']), self.speedtest2g['guestrx'].append(speedDict['rx'])",
+            'CH149': "self.speedtest5g['tx'].append(speedDict['tx']), self.speedtest5g['rx'].append(speedDict['rx'])",
+            'CH149 WRELAY': "self.speedtest5g['wrelaytx'].append(speedDict['tx']), self.speedtest5g['wrelayrx'].append(speedDict['rx'])",
+            'CH149 RELAY': "self.speedtest5g['relaytx'].append(speedDict['tx']), self.speedtest5g['relayrx'].append(speedDict['rx'])",
         }
 
     def run(self):
@@ -247,7 +284,7 @@ class GetThroughputLog(threading.Thread):
         for line in report:
             if not line.isspace():
                 # m = re.search('AP_(.*)_CHAN(\d{1,3})_BW(\d{2})_((.*)_)?THROUGHPUT', line)
-                mPattern = re.compile('AP_(.*)_CHAN(\d{1,3})_BW(\d{2})_((.*)_)?THROUGHPUT')
+                mPattern = re.compile(r'AP_(.*)_CHAN(\d{1,3})_BW(\d{2})_((.*)_)?THROUGHPUT')
                 nPattern = re.compile(r'AP_GUEST_([A-Z1-9]*)_OOKLA')
                 oPattern = re.compile(r'AP_RELAY_([A-Z11-9]*)_CHAN(\d{1,3})_OOKLA')
                 pPattern = re.compile(r'AP_WIRELESS_RELAY_([A-Z1-9]*)_CHAN(\d{1,3})_OOKLA')
@@ -271,7 +308,7 @@ class GetThroughputLog(threading.Thread):
                     encrypto = n.group(1)
                     rf = 'GUEST'
                     module = ''
-                    infoTuple = (logFile, rf + module, encrypto, 'WAN')
+                    infoTuple = (logFile, rf + module, encrypto, 'SPEEDTEST')
                     if infoTuple not in indexList:
                         indexList.append(infoTuple)
                     continue
@@ -281,7 +318,7 @@ class GetThroughputLog(threading.Thread):
                     encrypto = o.group(1)
                     rf = 'CH' + o.group(2)
                     module = ' RELAY'
-                    infoTuple = (logFile, rf + module, encrypto, 'WAN')
+                    infoTuple = (logFile, rf + module, encrypto, 'SPEEDTEST')
                     if infoTuple not in indexList:
                         indexList.append(infoTuple)
                     continue
@@ -292,7 +329,7 @@ class GetThroughputLog(threading.Thread):
                     encrypto = p.group(1)
                     rf = 'CH' + p.group(2)
                     module = ' WRELAY'
-                    infoTuple = (logFile, rf + module, encrypto, 'WAN')
+                    infoTuple = (logFile, rf + module, encrypto, 'SPEEDTEST')
                     if infoTuple not in indexList:
                         indexList.append(infoTuple)
                     continue
@@ -303,7 +340,7 @@ class GetThroughputLog(threading.Thread):
                     encrypto = q.group(1)
                     rf = 'CH' + q.group(2)
                     module = ''
-                    infoTuple = (logFile, rf + module, encrypto, 'WAN')
+                    infoTuple = (logFile, rf + module, encrypto, 'SPEEDTEST')
                     if infoTuple not in indexList:
                         indexList.append(infoTuple)
                     continue
@@ -333,8 +370,11 @@ class GetThroughputLog(threading.Thread):
                     speedDict = self.getIperfThroughputLogVerbose(tu[0])
                     eval(self.lan.get(tu[1]))
                 elif tu[3] == "WAN":
-                    speedDict = self.getOoklaThroughputLogVerbose(tu[0])
+                    speedDict = self.getIperfThroughputLogVerbose(tu[0])
                     eval(self.wan.get(tu[1]))
+                elif tu[3] == "SPEEDTEST":
+                    speedDict = self.getOoklaThroughputLogVerbose(tu[0])
+                    eval(self.speedtest.get(tu[1]))
 
                 for cell in wb[tu[3]].get_cell_collection():
                     if tu[1] == cell.value:
@@ -378,14 +418,17 @@ class GetThroughputLog(threading.Thread):
             self.lan5g = self.getAveSpeed(self.lan5g)
             self.wan2g = self.getAveSpeed(self.wan2g)
             self.wan5g = self.getAveSpeed(self.wan5g)
-
+            self.speedtest2g = self.getAveSpeed(self.speedtest2g)
+            self.speedtest5g = self.getAveSpeed(self.speedtest5g)
             # draw chart
             self.drawThroughput2g(self.dut2g, MAIL_PIC2)
             self.drawThroughput5g(self.dut5g, MAIL_PIC3)
             self.drawThroughput2g(self.lan2g, MAIL_PIC5)
             self.drawThroughput5g(self.lan5g, MAIL_PIC6)
-            self.drawOoklaThroughput2g(self.wan2g, MAIL_PIC7)
-            self.drawOoklaThroughput5g(self.wan5g, MAIL_PIC8)
+            self.drawThroughput2g(self.wan2g, MAIL_PIC7)
+            self.drawThroughput5g(self.wan5g, MAIL_PIC8)
+            self.drawOoklaThroughput2g(self.speedtest2g, MAIL_PIC9)
+            self.drawOoklaThroughput5g(self.speedtest5g, MAIL_PIC10)
 
 
     def getAveSpeed(self, speeddict):
@@ -748,6 +791,7 @@ class GetTestModule(threading.Thread):
             'treeThroughputDUTApi': 'DUT2WiFi吞吐',
             'treeThroughputLANApi': 'LAN2WiFi吞吐',
             'treeThroughputWANApi': 'WAN2WiFi吞吐',
+            'treeSpeedtestApi': 'Ookla Speedtest',
             'treeStressApi': '压力测试',
             'treeOthersApi': '其他',
         }

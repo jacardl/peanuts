@@ -469,6 +469,7 @@ class TestSuitePage(wx.Panel):
         self.rootThroughDUT = self.tree.AppendItem(self.root, 'Throughput DUT', ct_type=1)
         self.rootThroughLAN = self.tree.AppendItem(self.root, 'Throughput LAN', ct_type=1)
         self.rootThroughWAN = self.tree.AppendItem(self.root, 'Throughput WAN', ct_type=1)
+        self.rootSpeedtest = self.tree.AppendItem(self.root, 'Ookla Speedtest', ct_type=1)
         self.rootStress = self.tree.AppendItem(self.root, 'Stress', ct_type=1)
         self.rootOthers = self.tree.AppendItem(self.root, 'Others', ct_type=1)
 
@@ -488,6 +489,7 @@ class TestSuitePage(wx.Panel):
         self.AddTreeNodes(self.rootThroughDUT, data.treeThroughputDUTApi)
         self.AddTreeNodes(self.rootThroughLAN, data.treeThroughputLANApi)
         self.AddTreeNodes(self.rootThroughWAN, data.treeThroughputWANApi)
+        self.AddTreeNodes(self.rootSpeedtest, data.treeSpeedtestApi)
         self.AddTreeNodes(self.rootStress, data.treeStressApi)
         self.AddTreeNodes(self.rootOthers, data.treeOthersApi)
         self.tree.Expand(self.root)

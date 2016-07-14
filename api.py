@@ -292,6 +292,8 @@ def setCheckFromFile(terminal, file, logname):
     apifile.close()
 
 
+# ======================abandoned==============================
+# setWifi比setWifi2增加了射频存在与否的判断，当射频不存在不执行setCheck
 def setWifi2(terminal, logname, **kwargs):
     """
     wifiIndex (1/2)
@@ -364,6 +366,7 @@ def setWifi(terminal, logname, **kwargs):
         'hidden': 0,
         'txpwr': 'mid'
     }
+    radarCh = [52,56,60,64,100,104,108,112,116,120,124,128,132,136,140]
     option.update(kwargs)
     api = '/cgi-bin/luci/;stok=token/api/xqnetwork/set_wifi'
     detailAll = getWifiDetailAll(terminal, logname)
@@ -385,6 +388,8 @@ def setWifi(terminal, logname, **kwargs):
 
     elif len(detailAll['info']) >= index and detailAll['info'][index-1].get('device') is not None:
         ret = setCheck(terminal, logname, api, **option)
+        if int(option.get("channel")) in radarCh:
+            t.sleep(60) # radar period 60s
         t.sleep(30)
         if ret:
             lastTime = int(t.time())

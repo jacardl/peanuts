@@ -99,7 +99,7 @@ class GeneralPage(wx.Panel):
 
         # DUT connection ctrl
         typeLbl = wx.StaticText(self, -1, 'Device:')
-        self.type = wx.Choice(self, -1, choices=['R1D', 'R2D', 'R1CM', "R1CL", "R3", "R3L"])
+        self.type = wx.Choice(self, -1, choices=v.DUT_MODULE_LIST)
         self.type.SetSelection(0)
         self.Bind(wx.EVT_CHOICE, self.EvtChoice, self.type)
 

@@ -539,69 +539,6 @@ def getApclii0Conn(terminal, logname):
     return result
 
 
-def getIntfHWAddr(terminal, intf, logname):
-    if v.DUT_MODULE == "R1D" or v.DUT_MODULE == "R2D":
-        commandDic = {
-            v.INTF_2G: "ifconfig wl1",
-            v.INTF_5G: "ifconfig wl0",
-            v.INTF_GUEST: "ifconfig wl1.2"
-        }
-    elif v.DUT_MODULE == "R1CM" or v.DUT_MODULE == "R1CL":
-        commandDic = {
-            v.INTF_2G: "ifconfig wl1",
-            v.INTF_5G: "ifconfig wl0",
-            v.INTF_GUEST: "ifconfig wl3"
-        }
-
-    command = commandDic.get(intf)
-    ret = setGet(terminal, command, logname)
-    result = {}
-    for line in ret:
-        m = re.search('HWaddr\s(([\da-fA-F]{2}:){5}[\da-fA-F]{2})', line)
-        if m:
-            result['mac'] = m.group(1)
-            return result
-        else:
-            result['mac'] = ''
-    return result
-
-
-def getIntfIpAddr(terminal, intf, logname):
-    """apclii0   Link encap:Ethernet  HWaddr 8E:BE:BE:40:0A:35
-              inet addr:192.168.32.125  Bcast:192.168.32.255  Mask:255.255.255.0
-              inet6 addr: fe80::8cbe:beff:fe40:a35/64 Scope:Link
-              UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1
-              RX packets:0 errors:0 dropped:0 overruns:0 frame:0
-              TX packets:0 errors:0 dropped:0 overruns:0 carrier:0
-              collisions:0 txqueuelen:1000
-              RX bytes:0 (0.0 B)  TX bytes:0 (0.0 B)"""
-
-    if v.DUT_MODULE == "R1D" or v.DUT_MODULE == "R2D":
-        commandDic = {
-            v.INTF_2G: "ifconfig wl1",
-            v.INTF_5G: "ifconfig wl0",
-            v.INTF_GUEST: "ifconfig wl1.2"
-        }
-    elif v.DUT_MODULE == "R1CM" or v.DUT_MODULE == "R1CL":
-        commandDic = {
-            v.INTF_2G: "ifconfig wl1",
-            v.INTF_5G: "ifconfig wl0",
-            v.INTF_GUEST: "ifconfig wl3"
-        }
-    command = commandDic.get(intf)
-    ret = setGet(terminal, command, logname)
-    result = {}
-    for line in ret:
-        m = re.search('inet addr:((\d{1,3}\.){3}\d{1,3})', line)
-
-        if m:
-            result['ip'] = m.group(1)
-            return result
-        else:
-            result['ip'] = ''
-    return result
-
-
 def getPingStatus(terminal, target, count, logname):
     """
     root@XiaoQiang:~# ping 192.168.31.1 -c 5
@@ -713,24 +650,6 @@ def getWlanLastEstPower(terminal, dut, intf, logname):
         return 0
 
 
-def getWlanInfo(terminal, intf, logname):
-    commandDic = {"2g": "iwinfo wl1 info",
-                  "5g": "iwinfo wl0 info",
-                  "guest": "iwinfo wl1.2 info", }
-
-    command = commandDic.get(intf)
-    ret = setGet(terminal, command, logname)
-    result = {}
-    for line in ret:
-        m = re.search('Channel: (\d+)', line)
-        if m:
-            result["channel"] = m.group(1)
-            return result
-        else:
-            result["channel"] = ""
-    return result
-
-
 def getFilePath(terminal, logname, **kargs):
     command = "find %s -name %s"%(kargs["path"], kargs["pattern"])
     ret = setGet(terminal, command, logname)
@@ -827,65 +746,6 @@ def chkStaOnline(terminal, intf, stamac, logname):
         return False
 
 
-def setUCIWirelessIntf(terminal, intf, type, name, value, logname):
-    """
-    :param intf: wl1/wl0/wl1.2
-    :param type: add/add_list/del_list_delete/set/del
-    :param name: macfilter/maclist/key/mode...etc
-    """
-    if v.DUT_MODULE == "R1D" or v.DUT_MODULE == "R2D" or v.DUT_MODULE == "R1CM":
-        commandDic = {
-            v.INTF_2G: 'uci ' + type + ' wireless.@wifi-iface[1].' + name + '=' + value,
-            v.INTF_5G: 'uci ' + type + ' wireless.@wifi-iface[0].' + name + '=' + value,
-            v.INTF_GUEST: 'uci ' + type + ' wireless.guest_2G.' + name + '=' + value
-        }
-    elif v.DUT_MODULE == "R1CL":
-        commandDic = {
-            v.INTF_2G: "uci " + type + " wireless.@wifi-iface[0]." + name + "=" + value,
-            v.INTF_GUEST: "uci " + type + " wireless.guest_2G." + name + "=" + value
-        }
-    command = commandDic.get(intf)
-    setConfig(terminal, command, logname)
-    setConfig(terminal, "uci commit wireless", logname)
-
-
-def setUCIWirelessDev(terminal, dut, intf, type, name, value, logname):
-    """
-    :param intf: 2g/5g
-    :param dut: R1D/R2D/R1CM
-    :param type: add/add_list/del_list_delete/set/del
-    :param name: txpwr/hwmode/bw/channel/autoch
-    """
-    if dut == "R1D" or dut == "R2D":
-        commandDic = {
-            "2g": 'uci ' + type + ' wireless.wl1.' + name + '=' + value,
-            "5g": 'uci ' + type + ' wireless.wl0.' + name + '=' + value,
-            }
-    elif dut == "R1CM":
-        commandDic = {
-            "2g": 'uci ' + type + ' wireless.mt7620.' + name + '=' + value,
-            "5g": 'uci ' + type + ' wireless.mt7612.' + name + '=' + value,
-            }
-    elif dut == "R1CL":
-        commandDic = {
-            "2g": "uci " + type + " wireless.mt7628." + name + "=" + value,
-            }
-
-    command = commandDic.get(intf)
-    setConfig(terminal, command, logname)
-    setConfig(terminal, "uci commit wireless", logname)
-
-
-def setWifiRestart(terminal, logname):
-    command = 'miio_notify -t 5 -u;' \
-              '/sbin/notice_tbus_device.sh; ' \
-              '/sbin/wifi >/dev/null 2>/dev/null; ' \
-              '/etc/init.d/minidlna restart; ' \
-              '/etc/init.d/samba restart; ' \
-              '/usr/bin/gettraffic flush_wl_dev >/dev/null 2>/dev/null'
-    setConfig(terminal, command, logname)
-
-
 def setIwpriv(terminal, intf, arg, value, logname):
     command = 'iwpriv ' + intf + ' set ' + arg + '=' + value
     setConfig(terminal, command, logname)
@@ -894,65 +754,6 @@ def setIwpriv(terminal, intf, arg, value, logname):
 def setWl(terminal, intf, arg, value, logname):
     command = 'wl -i ' + intf + ' ' + arg + ' ' + value
     setConfig(terminal, command, logname)
-
-
-def setWifiMacfilterModel(terminal, enable, model=0, mac='none', logname=None):
-    if enable == 0:
-        if v.DUT_MODULE == 'R1D' or v.DUT_MODULE == 'R2D':
-            setWl(terminal, 'wl0', 'mac', 'none', logname)
-            setWl(terminal, 'wl1', 'mac', 'none', logname)
-            setWl(terminal, 'wl1.2', 'mac', 'none', logname)
-            setWl(terminal, 'wl0', 'macmode', '0', logname)
-            setWl(terminal, 'wl1', 'macmode', '0', logname)
-            setWl(terminal, 'wl1.2', 'macmode', '0', logname)
-        elif v.DUT_MODULE == 'R1CM' or v.DUT_MODULE == "R1CL":
-            setIwpriv(terminal, 'wl0', 'ACLClearAll', '1', logname)
-            setIwpriv(terminal, 'wl1', 'ACLClearAll', '1', logname)
-            setIwpriv(terminal, 'wl3', 'ACLClearAll', '1', logname)
-            setIwpriv(terminal, 'wl0', 'AccessPolicy', '0', logname)
-            setIwpriv(terminal, 'wl1', 'AccessPolicy', '0', logname)
-            setIwpriv(terminal, 'wl3', 'AccessPolicy', '0', logname)
-    else:
-        if v.DUT_MODULE == 'R1D' or v.DUT_MODULE == 'R2D':
-            setWl(terminal, 'wl0', 'mac', 'none', logname)
-            setWl(terminal, 'wl1', 'mac', 'none', logname)
-            setWl(terminal, 'wl1.2', 'mac', 'none', logname)
-            setWl(terminal, 'wl0', 'mac', mac, logname)
-            setWl(terminal, 'wl1', 'mac', mac, logname)
-            setWl(terminal, 'wl1.2', 'mac', mac, logname)
-            # blacklist
-            if model == 0:
-                setWl(terminal, 'wl0', 'macmode', '1', logname)
-                setWl(terminal, 'wl1', 'macmode', '1', logname)
-                setWl(terminal, 'wl1.2', 'macmode', '1', logname)
-                setWl(terminal, 'wl0', 'deauthenticate', mac, logname)
-                setWl(terminal, 'wl1', 'deauthenticate', mac, logname)
-                setWl(terminal, 'wl1.2', 'deauthenticate', mac, logname)
-            # whitelist
-            elif model == 1:
-                setWl(terminal, 'wl0', 'macmode', '2', logname)
-                setWl(terminal, 'wl1', 'macmode', '2', logname)
-                setWl(terminal, 'wl1.2', 'macmode', '2', logname)
-        elif v.DUT_MODULE == 'R1CM' or v.DUT_MODULE == "R1CL":
-            setIwpriv(terminal, 'wl0', 'ACLClearAll', '1', logname)
-            setIwpriv(terminal, 'wl1', 'ACLClearAll', '1', logname)
-            setIwpriv(terminal, 'wl3', 'ACLClearAll', '1', logname)
-            setIwpriv(terminal, 'wl0', 'ACLAddEntry', mac, logname)
-            setIwpriv(terminal, 'wl1', 'ACLAddEntry', mac, logname)
-            setIwpriv(terminal, 'wl3', 'ACLAddEntry', mac, logname)
-            # blacklist
-            if model == 0:
-                setIwpriv(terminal, 'wl0', 'AccessPolicy', '2', logname)
-                setIwpriv(terminal, 'wl1', 'AccessPolicy', '2', logname)
-                setIwpriv(terminal, 'wl3', 'AccessPolicy', '2', logname)
-                setIwpriv(terminal, 'wl0', 'DisConnectSta', mac, logname)
-                setIwpriv(terminal, 'wl1', 'DisConnectSta', mac, logname)
-                setIwpriv(terminal, 'wl3', 'DisConnectSta', mac, logname)
-            # whitelist
-            elif model == 1:
-                setIwpriv(terminal, 'wl0', 'AccessPolicy', '1', logname)
-                setIwpriv(terminal, 'wl1', 'AccessPolicy', '1', logname)
-                setIwpriv(terminal, 'wl3', 'AccessPolicy', '1', logname)
 
 
 def setReboot(terminal, logname):

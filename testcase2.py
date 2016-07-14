@@ -8498,20 +8498,14 @@ class AP_QOS_MIXEDPSK(TestCase):
         wlanInfo = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__name__)
         self.staMac = wlanInfo["mac"].upper()
 
-        optionQosMode = {
-            'mode': 2
-        }
-
-        optionQosLimit = {
-            'mode': 2,
+        optionQos = {
             'mac': self.staMac,
             'upload': v.QOS_MAXUP,
             'download': v.QOS_MAXDOWN,
         }
 
         api.setQosSwitch(self.dut, self.__name__)
-        api.setQosMode(self.dut, self.__name__, **optionQosMode)
-        api.setQosLimit(self.dut, self.__name__, **optionQosLimit)
+        api.setMACQoSInfo(self.dut, self.__name__, **optionQos)
 
     @classmethod
     def tearDownClass(self):
@@ -8701,20 +8695,14 @@ class AP_QOS_CLEAR(TestCase):
         wlanInfo = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__name__)
         self.staMac = wlanInfo["mac"].upper()
 
-        optionQosMode = {
-            'mode': 2
-        }
-
-        optionQosLimit = {
-            'mode': 2,
+        optionQos = {
             'mac': self.staMac,
             'upload': v.QOS_MAXUP,
             'download': v.QOS_MAXDOWN,
         }
 
         api.setQosSwitch(self.dut, self.__name__)
-        api.setQosMode(self.dut, self.__name__, **optionQosMode)
-        api.setQosLimit(self.dut, self.__name__, **optionQosLimit)
+        api.setMACQoSInfo(self.dut, self.__name__, **optionQos)
 
     @classmethod
     def tearDownClass(self):
@@ -8804,20 +8792,14 @@ class AP_QOS_PSK2(TestCase):
         wlanInfo = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__name__)
         self.staMac = wlanInfo["mac"].upper()
 
-        optionQosMode = {
-            'mode': 2
-        }
-
-        optionQosLimit = {
-            'mode': 2,
+        optionQos = {
             'mac': self.staMac,
             'upload': v.QOS_MAXUP,
             'download': v.QOS_MAXDOWN,
         }
 
         api.setQosSwitch(self.dut, self.__name__)
-        api.setQosMode(self.dut, self.__name__, **optionQosMode)
-        api.setQosLimit(self.dut, self.__name__, **optionQosLimit)
+        api.setMACQoSInfo(self.dut, self.__name__, **optionQos)
 
     @classmethod
     def tearDownClass(self):
@@ -8898,10 +8880,11 @@ class AP_QOS_GUEST_MIXEDPSK(TestCase):
         api.setQosSwitch(self.dut, self.__name__)
 
         optionGuest = {
-            'percent': 0.1
+            'percent': 0.15,
+            'percent_up': 0.1,
         }
 
-        self.guestQos = api.setQosGuest(self.dut, self.__name__, **optionGuest)
+        self.guestQos = api.setQosGuest2(self.dut, self.__name__, **optionGuest)
 
     @classmethod
     def tearDownClass(self):

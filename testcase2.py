@@ -15797,6 +15797,7 @@ class AP_CLEAR_CHAN36_BW20_WAN_THROUGHPUT(TestCase):
             'bandwidth': '20'
         }
         api.setWifi(self.dut, self.__name__, **option5g)
+        self.wanStatus = api.getPppoeStatus(self.dut, self.__name__)
 
     @classmethod
     def tearDownClass(self):
@@ -15865,6 +15866,7 @@ class AP_CLEAR_CHAN52_BW20_WAN_THROUGHPUT(TestCase):
             'bandwidth': '20'
         }
         api.setWifi(self.dut, self.__name__, **option5g)
+        self.wanStatus = api.getPppoeStatus(self.dut, self.__name__)
 
     @classmethod
     def tearDownClass(self):
@@ -15933,6 +15935,7 @@ class AP_CLEAR_CHAN149_BW20_WAN_THROUGHPUT(TestCase):
             'bandwidth': '20'
         }
         api.setWifi(self.dut, self.__name__, **option5g)
+        self.wanStatus = api.getPppoeStatus(self.dut, self.__name__)
 
     @classmethod
     def tearDownClass(self):
@@ -16001,6 +16004,7 @@ class AP_CLEAR_CHAN165_BW20_WAN_THROUGHPUT(TestCase):
             'bandwidth': '20'
         }
         api.setWifi(self.dut, self.__name__, **option5g)
+        self.wanStatus = api.getPppoeStatus(self.dut, self.__name__)
 
     @classmethod
     def tearDownClass(self):
@@ -16069,6 +16073,7 @@ class AP_CLEAR_CHAN36_BW40_WAN_THROUGHPUT(TestCase):
             'bandwidth': '40'
         }
         api.setWifi(self.dut, self.__name__, **option5g)
+        self.wanStatus = api.getPppoeStatus(self.dut, self.__name__)
 
     @classmethod
     def tearDownClass(self):
@@ -16137,6 +16142,7 @@ class AP_CLEAR_CHAN44_BW40_WAN_THROUGHPUT(TestCase):
             'bandwidth': '40'
         }
         api.setWifi(self.dut, self.__name__, **option5g)
+        self.wanStatus = api.getPppoeStatus(self.dut, self.__name__)
 
     @classmethod
     def tearDownClass(self):
@@ -16205,6 +16211,7 @@ class AP_CLEAR_CHAN52_BW40_WAN_THROUGHPUT(TestCase):
             'bandwidth': '40'
         }
         api.setWifi(self.dut, self.__name__, **option5g)
+        self.wanStatus = api.getPppoeStatus(self.dut, self.__name__)
 
     @classmethod
     def tearDownClass(self):
@@ -16273,6 +16280,7 @@ class AP_CLEAR_CHAN60_BW40_WAN_THROUGHPUT(TestCase):
             'bandwidth': '40'
         }
         api.setWifi(self.dut, self.__name__, **option5g)
+        self.wanStatus = api.getPppoeStatus(self.dut, self.__name__)
 
     @classmethod
     def tearDownClass(self):
@@ -16341,6 +16349,7 @@ class AP_CLEAR_CHAN149_BW40_WAN_THROUGHPUT(TestCase):
             'bandwidth': '40'
         }
         api.setWifi(self.dut, self.__name__, **option5g)
+        self.wanStatus = api.getPppoeStatus(self.dut, self.__name__)
 
     @classmethod
     def tearDownClass(self):
@@ -16409,6 +16418,7 @@ class AP_CLEAR_CHAN157_BW40_WAN_THROUGHPUT(TestCase):
             'bandwidth': '40'
         }
         api.setWifi(self.dut, self.__name__, **option5g)
+        self.wanStatus = api.getPppoeStatus(self.dut, self.__name__)
 
     @classmethod
     def tearDownClass(self):
@@ -16477,6 +16487,7 @@ class AP_CLEAR_CHAN36_BW80_WAN_THROUGHPUT(TestCase):
             'bandwidth': '80'
         }
         api.setWifi(self.dut, self.__name__, **option5g)
+        self.wanStatus = api.getPppoeStatus(self.dut, self.__name__)
 
     @classmethod
     def tearDownClass(self):
@@ -16545,6 +16556,7 @@ class AP_CLEAR_CHAN52_BW80_WAN_THROUGHPUT(TestCase):
             'bandwidth': '80'
         }
         api.setWifi(self.dut, self.__name__, **option5g)
+        self.wanStatus = api.getPppoeStatus(self.dut, self.__name__)
 
     @classmethod
     def tearDownClass(self):
@@ -16613,6 +16625,7 @@ class AP_CLEAR_CHAN149_BW80_WAN_THROUGHPUT(TestCase):
             'bandwidth': '80'
         }
         api.setWifi(self.dut, self.__name__, **option5g)
+        self.wanStatus = api.getPppoeStatus(self.dut, self.__name__)
 
     @classmethod
     def tearDownClass(self):
@@ -16683,6 +16696,7 @@ class AP_PSK2_CHAN36_BW20_WAN_THROUGHPUT(TestCase):
             'pwd': v.KEY,
         }
         api.setWifi(self.dut, self.__name__, **option5g)
+        self.wanStatus = api.getPppoeStatus(self.dut, self.__name__)
 
     @classmethod
     def tearDownClass(self):
@@ -16753,6 +16767,7 @@ class AP_PSK2_CHAN52_BW20_WAN_THROUGHPUT(TestCase):
             'pwd': v.KEY,
         }
         api.setWifi(self.dut, self.__name__, **option5g)
+        self.wanStatus = api.getPppoeStatus(self.dut, self.__name__)
 
     @classmethod
     def tearDownClass(self):
@@ -16823,6 +16838,7 @@ class AP_PSK2_CHAN149_BW20_WAN_THROUGHPUT(TestCase):
             'pwd': v.KEY,
         }
         api.setWifi(self.dut, self.__name__, **option5g)
+        self.wanStatus = api.getPppoeStatus(self.dut, self.__name__)
 
     @classmethod
     def tearDownClass(self):
@@ -16893,6 +16909,7 @@ class AP_PSK2_CHAN165_BW20_WAN_THROUGHPUT(TestCase):
             'pwd': v.KEY,
         }
         api.setWifi(self.dut, self.__name__, **option5g)
+        self.wanStatus = api.getPppoeStatus(self.dut, self.__name__)
 
     @classmethod
     def tearDownClass(self):
@@ -16963,6 +16980,7 @@ class AP_PSK2_CHAN36_BW40_WAN_THROUGHPUT(TestCase):
             'pwd': v.KEY,
         }
         api.setWifi(self.dut, self.__name__, **option5g)
+        self.wanStatus = api.getPppoeStatus(self.dut, self.__name__)
 
     @classmethod
     def tearDownClass(self):
@@ -17033,6 +17051,7 @@ class AP_PSK2_CHAN44_BW40_WAN_THROUGHPUT(TestCase):
             'pwd': v.KEY,
         }
         api.setWifi(self.dut, self.__name__, **option5g)
+        self.wanStatus = api.getPppoeStatus(self.dut, self.__name__)
 
     @classmethod
     def tearDownClass(self):
@@ -17103,6 +17122,7 @@ class AP_PSK2_CHAN52_BW40_WAN_THROUGHPUT(TestCase):
             'pwd': v.KEY,
         }
         api.setWifi(self.dut, self.__name__, **option5g)
+        self.wanStatus = api.getPppoeStatus(self.dut, self.__name__)
 
     @classmethod
     def tearDownClass(self):
@@ -17173,6 +17193,7 @@ class AP_PSK2_CHAN60_BW40_WAN_THROUGHPUT(TestCase):
             'pwd': v.KEY,
         }
         api.setWifi(self.dut, self.__name__, **option5g)
+        self.wanStatus = api.getPppoeStatus(self.dut, self.__name__)
 
     @classmethod
     def tearDownClass(self):
@@ -17243,6 +17264,7 @@ class AP_PSK2_CHAN149_BW40_WAN_THROUGHPUT(TestCase):
             'pwd': v.KEY,
         }
         api.setWifi(self.dut, self.__name__, **option5g)
+        self.wanStatus = api.getPppoeStatus(self.dut, self.__name__)
 
     @classmethod
     def tearDownClass(self):
@@ -17313,6 +17335,7 @@ class AP_PSK2_CHAN157_BW40_WAN_THROUGHPUT(TestCase):
             'pwd': v.KEY,
         }
         api.setWifi(self.dut, self.__name__, **option5g)
+        self.wanStatus = api.getPppoeStatus(self.dut, self.__name__)
 
     @classmethod
     def tearDownClass(self):
@@ -17383,6 +17406,7 @@ class AP_PSK2_CHAN36_BW80_WAN_THROUGHPUT(TestCase):
             'pwd': v.KEY,
         }
         api.setWifi(self.dut, self.__name__, **option5g)
+        self.wanStatus = api.getPppoeStatus(self.dut, self.__name__)
 
     @classmethod
     def tearDownClass(self):
@@ -17453,6 +17477,7 @@ class AP_PSK2_CHAN52_BW80_WAN_THROUGHPUT(TestCase):
             'pwd': v.KEY,
         }
         api.setWifi(self.dut, self.__name__, **option5g)
+        self.wanStatus = api.getPppoeStatus(self.dut, self.__name__)
 
     @classmethod
     def tearDownClass(self):
@@ -17523,6 +17548,7 @@ class AP_PSK2_CHAN149_BW80_WAN_THROUGHPUT(TestCase):
             'pwd': v.KEY,
         }
         api.setWifi(self.dut, self.__name__, **option5g)
+        self.wanStatus = api.getPppoeStatus(self.dut, self.__name__)
 
     @classmethod
     def tearDownClass(self):

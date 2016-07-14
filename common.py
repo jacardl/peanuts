@@ -188,7 +188,7 @@ class ShellClient(object):
             self.command('echo 7 > /proc/sys/kernel/printk')
             self.ser.close()
         elif self.connectionType == 4:
-            self.command('taskkill /F /IM cmd')
+            self.command('taskkill /F /IM cmd.exe')
             self.pc.close()
 
 
@@ -827,7 +827,7 @@ def setIperfFlow3(terminal, target, interval, time, logname):
     if time != "":
         command = command + " -t " + time
     command += " -r -w 2m -f m"
-    setGet(terminal, 'taskkill /F /IM iperf', logname)
+    setGet(terminal, 'taskkill /F /IM iperf.exe', logname)
     ret = setGet(terminal, command, logname)
     for line in ret:
         m = re.search('0\.0-\s?\d{1,4}.*\s(\d{1,}\.?\d{1,})?\sMbits/sec', line)

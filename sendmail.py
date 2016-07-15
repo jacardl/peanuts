@@ -174,7 +174,7 @@ def generateMail(maillist, title, queue=None, attach1=None, attach2=None, attach
 if __name__ == '__main__':
     import multiprocessing as mp
     v.ANDROID_MODEL = "Mi4 LTE"
-    report = "R1CM 稳定版 2.10.12.log".decode("utf8").encode("gbk")
+    report = "R2D 开发版 2.15.41.log".decode("utf8").encode("gbk")
     q = mp.Queue() # tranlate test result to generateMail
     ret = pr.ProcessReport(report, q)
     ret.start()

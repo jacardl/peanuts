@@ -430,7 +430,6 @@ class GetThroughputLog(threading.Thread):
             self.drawOoklaThroughput2g(self.speedtest2g, MAIL_PIC9)
             self.drawOoklaThroughput5g(self.speedtest5g, MAIL_PIC10)
 
-
     def getAveSpeed(self, speeddict):
         for key, value in speeddict.iteritems():
             i = 0
@@ -475,7 +474,6 @@ class GetThroughputLog(threading.Thread):
             raise  e
         return result
 
-
     def getIperfThroughputLogVerbose(self, logfile):
         result = {
             'tx': 0,
@@ -507,14 +505,13 @@ class GetThroughputLog(threading.Thread):
 
         return result
 
-
     def drawThroughput2g(self, data, picname):
         ret = data
         for value in ret.values():
             if isinstance(value, float):
                 bar_width = 0.4
                 opacity = 0.4
-                index = np.arange(len(ret))
+                index = np.arange(len(ret)/2)
                 tx = list()
                 rx = list()
                 tx.append(ret.get("20tx"))
@@ -549,7 +546,7 @@ class GetThroughputLog(threading.Thread):
 
                 # plt.xlabel('Bandwidth', fontsize=10)
                 plt.ylabel('Mbps', fontsize=10)
-                plt.suptitle(picname.split(".")[0].split('\\')[-1].title(), fontsize=10)
+                plt.suptitle(picname.split(".")[0].split('\\')[-1].replace('_', ' '), fontsize=12, style='oblique', va='top')
                 plt.xticks(index + bar_width, ('20MHz', '40MHz',), fontsize=10)
                 plt.yticks(fontsize=10)
                 plt.legend(prop={'size': 10})
@@ -559,14 +556,13 @@ class GetThroughputLog(threading.Thread):
                 plt.close()
                 break
 
-
     def drawThroughput5g(self, data, picname):
         ret = data
         for value in ret.values():
             if isinstance(value, float):
                 bar_width = 0.4
                 opacity = 0.4
-                index = np.arange(len(ret))
+                index = np.arange(len(ret)/2)
                 tx = list()
                 rx = list()
                 tx.append(ret.get("20tx"))
@@ -603,7 +599,7 @@ class GetThroughputLog(threading.Thread):
 
                 # plt.xlabel('Bandwidth', fontsize=10)
                 plt.ylabel('Mbps', fontsize=10)
-                plt.suptitle(picname.split(".")[0].split('\\')[-1].title(), fontsize=10)
+                plt.suptitle(picname.split(".")[0].split('\\')[-1].replace('_', ' '), fontsize=12, style='oblique', va='top')
                 plt.xticks(index + bar_width, ('20MHz', '40MHz', '80MHz'), fontsize=10)
                 plt.yticks(fontsize=10)
                 plt.legend(prop={'size': 10})
@@ -612,7 +608,6 @@ class GetThroughputLog(threading.Thread):
                 plt.savefig(picname)
                 plt.close()
                 break
-
 
     def drawOoklaThroughput2g(self, data, picname):
         ret = data
@@ -659,8 +654,7 @@ class GetThroughputLog(threading.Thread):
 
                 # plt.xlabel('Bandwidth', fontsize=10)
                 plt.ylabel('Mbps', fontsize=10)
-                plt.suptitle(picname.split(".")[0].split('\\')[-1].title(), fontsize=10)
-                plt.xticks(index + bar_width, ('Normal', 'Guest', 'Wireless-Relay', 'Relay'), fontsize=10)
+                plt.suptitle(picname.split(".")[0].split('\\')[-1].replace('_', ' '), fontsize=12, style='oblique', va='top')
                 plt.yticks(fontsize=10)
                 plt.legend(prop={'size': 10})
 
@@ -668,7 +662,6 @@ class GetThroughputLog(threading.Thread):
                 plt.savefig(picname)
                 plt.close()
                 break
-
 
     def drawOoklaThroughput5g(self, data, picname):
         ret = data
@@ -713,7 +706,7 @@ class GetThroughputLog(threading.Thread):
 
                 # plt.xlabel('Bandwidth', fontsize=10)
                 plt.ylabel('Mbps', fontsize=10)
-                plt.suptitle(picname.split(".")[0].split('\\')[-1].title(), fontsize=10)
+                plt.suptitle(picname.split(".")[0].split('\\')[-1].replace('_', ' '), fontsize=12, style='oblique', va='top')
                 plt.xticks(index + bar_width, ('Normal', 'Wireless-Relay', 'Relay'), fontsize=10)
                 plt.yticks(fontsize=10)
                 plt.legend(prop={'size': 10})
@@ -788,9 +781,9 @@ class GetTestModule(threading.Thread):
             'treeAccessControlApi': '接入控制',
             'treeInternetAccessApi': '上网控制',
             'treeQosApi': '智能限速',
-            'treeThroughputDUTApi': 'DUT2WiFi吞吐',
-            'treeThroughputLANApi': 'LAN2WiFi吞吐',
-            'treeThroughputWANApi': 'WAN2WiFi吞吐',
+            'treeThroughputDUTApi': 'DUT 2 Wi-Fi吞吐',
+            'treeThroughputLANApi': 'LAN 2 Wi-Fi吞吐',
+            'treeThroughputWANApi': 'WAN 2 Wi-Fi吞吐',
             'treeSpeedtestApi': 'Ookla Speedtest',
             'treeStressApi': '压力测试',
             'treeOthersApi': '其他',
@@ -817,7 +810,6 @@ class GetTestModule(threading.Thread):
 
     def stop(self):
         self.running = False
-
 
     def chkTestCaseModule(self, tcName, module):
         for i in getattr(data, module):
@@ -856,7 +848,7 @@ class GetWanBandwidth(threading.Thread):
 if __name__ == '__main__':
     # print getThroughputLogVerbose("D:\Python\peanuts\AP_CLEAR_CHAN36_BW20_LAN_THROUGHPUT.log")
     # print getChannelFlowLogVerbose("E:\peanuts\AP_MIXEDPSK_CHAN1_36_FLOW.log")
-    info = GetThroughputLog("R1CM 开发版 2.11.25.log".decode("utf8").encode("gbk"))
+    info = GetThroughputLog("R2D 开发版 2.15.41.log".decode("utf8").encode("gbk"))
     info.start()
     info.join()
     # t = GetTestModule("R1CM 开发版 2.11.13.log".decode('utf8').encode('gbk'))

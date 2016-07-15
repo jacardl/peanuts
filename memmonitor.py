@@ -174,34 +174,6 @@ class HttpMemCPUMonitor(threading.Thread):
         self.running = False
 
 
-def drawCPU(data):
-    # draw a chart
-    fig, ax = plt.subplots(figsize=(12, 6))
-    print "draw CPU chart"
-    ax.plot(xrange(len(data)), data)
-    # ax.set_title('Total Memory Used')
-    plt.suptitle("Current CPU Load")
-    # plt.xlabel('Counts')
-    plt.ylabel('Percent%')
-    # plt.show()
-    plt.savefig(v.MAIL_PIC4)
-    plt.close()
-
-
-def drawMem(data):
-    # draw a chart
-    fig, ax = plt.subplots(figsize=(12, 6))
-    print "draw memory chart"
-    ax.plot(xrange(len(data)), data)
-    # ax.set_title('Total Memory Used')
-    plt.suptitle("Total Memory Used")
-    # plt.xlabel('Counts')
-    plt.ylabel('KB')
-    # plt.show()
-    plt.savefig(v.MAIL_PIC1)
-    plt.close()
-
-
 class MemMonitorXlsx(threading.Thread):
     def __init__(self, interval, count=0, file="temp.xlsx"):
         threading.Thread.__init__(self)
@@ -380,6 +352,37 @@ class MemMonitorXlsx(threading.Thread):
     def stop(self):
         self.running = False
         self.terminal.close()
+
+
+def drawCPU(data):
+    # draw a chart
+    fig, ax = plt.subplots(figsize=(12, 6))
+    print "draw CPU chart"
+    ax.plot(xrange(len(data)), data)
+    # ax.set_title('Total Memory Used')
+    plt.suptitle(v.MAIL_PIC4.split(".")[0].split('\\')[-1].replace('_', ' '), fontsize=12, style='oblique',
+                 va='top')
+    # plt.xlabel('Counts')
+    plt.ylabel('Percent%')
+    # plt.show()
+    plt.savefig(v.MAIL_PIC4)
+    plt.close()
+
+
+def drawMem(data):
+    # draw a chart
+    fig, ax = plt.subplots(figsize=(12, 6))
+    print "draw memory chart"
+    ax.plot(xrange(len(data)), data)
+    # ax.set_title('Total Memory Used')
+    plt.suptitle("Total Memory Used")
+    plt.suptitle(v.MAIL_PIC1.split(".")[0].split('\\')[-1].replace('_', ' '), fontsize=12, style='oblique',
+                 va='top')
+    # plt.xlabel('Counts')
+    plt.ylabel('KB')
+    # plt.show()
+    plt.savefig(v.MAIL_PIC1)
+    plt.close()
 
 
 def daemonMonitor(terminal, interval, count, filename, sheetname):

@@ -615,7 +615,7 @@ class GetThroughputLog(threading.Thread):
             if isinstance(value, float):
                 bar_width = 0.4
                 opacity = 0.4
-                index = np.arange(len(ret))
+                index = np.arange(len(ret)/2)
                 tx = list()
                 rx = list()
                 tx.append(ret.get("tx"))
@@ -669,7 +669,7 @@ class GetThroughputLog(threading.Thread):
             if isinstance(value, float):
                 bar_width = 0.4
                 opacity = 0.4
-                index = np.arange(len(ret))
+                index = np.arange(len(ret)/2)
                 tx = list()
                 rx = list()
                 tx.append(ret.get("tx"))

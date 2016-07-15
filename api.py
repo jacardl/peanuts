@@ -470,6 +470,7 @@ def setAllWifi(terminal, logname, **kwargs):
             curTime = int(t.time())
     return ret
 
+
 def setEditDevice(terminal, logname, **kwargs):
     """
     model : (0/1 黑名单/白名单)
@@ -495,7 +496,7 @@ def setEditDevice(terminal, logname, **kwargs):
     option.update(kwargs)
     api = '/cgi-bin/luci/;stok=token/api/xqnetwork/edit_device'
     ret = setCheck(terminal, logname, api, **option)
-    t.sleep(5)
+    t.sleep(10)
     return ret
 
 

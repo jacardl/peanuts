@@ -147,7 +147,7 @@ IV = '64175472480004614961023454661220'
 ACCOUNT_DEFAULT_PWD = 'b3a4190199d9ee7fe73ef9a4942a69fece39a771'
 
 # -------------process report------------------#
-WIFI_MAX_THROUGHPUT = 300
+WIFI_MAX_THROUGHPUT = 600
 
 
 # -------------mail------------------#

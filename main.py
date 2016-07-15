@@ -220,10 +220,47 @@ class GeneralPage(wx.Panel):
         staConnSizer.Add(staConnSizer3, 0, wx.LEFT, 2)
         staConnSizer.Add(self.staModel, 0, wx.LEFT | wx.TOP, 2 | 4)
 
+        # PC connection ctrl
+        pcIPLbl = wx.StaticText(self, -1, 'Host:')
+        self.pcIP = wx.TextCtrl(self, -1, '')
+        self.pcIP.SetValue(v.PC_HOST)
+
+        pcUsrLbl = wx.StaticText(self, -1, 'User:')
+        self.pcUsr = wx.TextCtrl(self, -1, '')
+        self.pcUsr.SetValue(v.PC_USERNAME)
+
+        pcPasswdLbl = wx.StaticText(self, -1, 'Password:')
+        self.pcPasswd = wx.TextCtrl(self, -1, '')
+        self.pcPasswd.SetValue(v.PC_PWD)
+
+        # PC connection box
+        pcConnBox = wx.StaticBox(self, -1, 'PC', size=(580, -1))
+        pcConnSizer = wx.StaticBoxSizer(pcConnBox, wx.HORIZONTAL)
+
+        pcConnSizer2 = wx.BoxSizer(wx.VERTICAL)
+        pcConnSizer2.Add(pcIPLbl, 0,
+                       wx.ALIGN_RIGHT | wx.TOP | wx.LEFT, 10)
+        pcConnSizer2.Add(pcUsrLbl, 0,
+                       wx.ALIGN_RIGHT | wx.TOP | wx.LEFT, 10)
+        pcConnSizer2.Add(pcPasswdLbl, 0,
+                       wx.ALIGN_RIGHT | wx.TOP | wx.LEFT | wx.BOTTOM, 10)
+
+        pcConnSizer3 = wx.BoxSizer(wx.VERTICAL)
+        pcConnSizer3.Add(self.pcIP, 0,
+                       wx.ALIGN_LEFT | wx.TOP | wx.LEFT, 4)
+        pcConnSizer3.Add(self.pcUsr, 0,
+                       wx.ALIGN_LEFT | wx.TOP | wx.LEFT, 4)
+        pcConnSizer3.Add(self.pcPasswd, 0,
+                       wx.ALIGN_LEFT | wx.TOP | wx.LEFT, 4)
+
+        pcConnSizer.Add(pcConnSizer2, 0, wx.LEFT, 5)
+        pcConnSizer.Add(pcConnSizer3, 0, wx.LEFT, 2)
+
         mainSizer = wx.BoxSizer(wx.VERTICAL)
         mainSizer.Add(connSizer, 0, wx.ALL, 10)
-        mainSizer.Add(staConnSizer, 0, wx.ALL, 10)
-        mainSizer.Add(btnSizer, 0, wx.TOP, 104)
+        mainSizer.Add(staConnSizer, 0, wx.LEFT | wx.BOTTOM, 10)
+        mainSizer.Add(pcConnSizer, 0, wx.LEFT, 10)
+        mainSizer.Add(btnSizer, 0, wx.TOP, 93)
 
         self.SetSizer(mainSizer)
         mainSizer.Fit(self)
@@ -374,7 +411,7 @@ class MemoryTrackPage(wx.Panel):
 
         mainSizer = wx.BoxSizer(wx.VERTICAL)
         mainSizer.Add(optionalSizer, 0, wx.ALL, 10)
-        mainSizer.Add(btnSizer, 0, wx.TOP, 265)
+        mainSizer.Add(btnSizer, 0, wx.TOP, 365)
 
         self.SetSizer(mainSizer)
         mainSizer.Fit(self)
@@ -833,7 +870,7 @@ class TestSuitePage(wx.Panel):
 
 class Frame(wx.Frame):
     def __init__(self):
-        wx.Frame.__init__(self, None, title="Peanuts " + v.VER, pos=(300, 200), size=(610, 530), style=
+        wx.Frame.__init__(self, None, title="Peanuts " + v.VER, pos=(300, 200), size=(610, 630), style=
         wx.CAPTION
         | wx.CLOSE_BOX
         | wx.MINIMIZE_BOX

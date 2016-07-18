@@ -118,6 +118,14 @@ def generateMail(maillist, title, queue=None, attach1=None, attach2=None, attach
         <img src="cid:%s" alt="%s" />
         """% (v.MAIL_PIC8.split('\\')[-1], v.MAIL_PIC8.split('\\')[-1])
 
+    content12 = """
+        <img src="cid:%s" alt="%s" />
+        """% (v.MAIL_PIC9.split('\\')[-1], v.MAIL_PIC9.split('\\')[-1])
+
+    content13 = """
+        <img src="cid:%s" alt="%s" />
+        """% (v.MAIL_PIC10.split('\\')[-1], v.MAIL_PIC10.split('\\')[-1])
+
     piclist = list()
     if argsdic.get("wandownload") is not None and argsdic.get("wanupload") is not None:
         content4 = """
@@ -127,26 +135,32 @@ def generateMail(maillist, title, queue=None, attach1=None, attach2=None, attach
     else:
         contents = content1 + content2 + content3
     # 2.4g throughput chart
-    if os.path.isfile(v.MAIL_PIC7):
-        piclist.append(v.MAIL_PIC7)
-        contents += content10
     if os.path.isfile(v.MAIL_PIC2):
         piclist.append(v.MAIL_PIC2)
         contents += content5
     if os.path.isfile(v.MAIL_PIC5):
         piclist.append(v.MAIL_PIC5)
         contents += content6
+    if os.path.isfile(v.MAIL_PIC7):
+        piclist.append(v.MAIL_PIC7)
+        contents += content10
+    if os.path.isfile(v.MAIL_PIC9):
+        piclist.append(v.MAIL_PIC9)
+        contents += content12
 
     # 5g throughput chart
-    if os.path.isfile(v.MAIL_PIC8):
-        piclist.append(v.MAIL_PIC8)
-        contents += content11
     if os.path.isfile(v.MAIL_PIC3):
         piclist.append(v.MAIL_PIC3)
         contents += content7
     if os.path.isfile(v.MAIL_PIC6):
         piclist.append(v.MAIL_PIC6)
         contents += content8
+    if os.path.isfile(v.MAIL_PIC8):
+        piclist.append(v.MAIL_PIC8)
+        contents += content11
+    if os.path.isfile(v.MAIL_PIC10):
+        piclist.append(v.MAIL_PIC10)
+        contents += content13
 
     # cpu and memory chart
     if os.path.isfile(v.MAIL_PIC1) and os.path.isfile(v.MAIL_PIC4):
@@ -160,7 +174,7 @@ def generateMail(maillist, title, queue=None, attach1=None, attach2=None, attach
 if __name__ == '__main__':
     import multiprocessing as mp
     v.ANDROID_MODEL = "Mi4 LTE"
-    report = "R1CM 稳定版 2.10.12.log".decode("utf8").encode("gbk")
+    report = "R2D 开发版 2.15.41.log".decode("utf8").encode("gbk")
     q = mp.Queue() # tranlate test result to generateMail
     ret = pr.ProcessReport(report, q)
     ret.start()

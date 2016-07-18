@@ -937,6 +937,33 @@ class SetUploadLog2(threading.Thread):
         t.sleep(2)
 
 
+def setAddRedirect(terminal, logname, **kwargs):
+    option = {
+        "name": "iperf",
+        "proto": 1,
+        "sport": "",
+        "ip": "",
+        "dport": "",
+    }
+    option.update(kwargs)
+    api = '/cgi-bin/luci/;stok=token/api/xqnetwork/add_redirect'
+    return setCheck(terminal, logname, api, **option)
+
+
+def setDelRedirect(terminal, logname, **kwargs):
+    option = {
+        'port': ""
+    }
+    option.update(kwargs)
+    api = '/cgi-bin/luci/;stok=token/api/xqnetwork/delete_redirect'
+    return setCheck(terminal, logname, api, **option)
+
+
+def setRedirectApply(terminal, logname):
+    api = '/cgi-bin/luci/;stok=token/api/xqnetwork/redirect_apply'
+    return setCheck(terminal, logname, api)
+
+
 def getWifiDetailAll(terminal, logname):
 
     api = '/cgi-bin/luci/;stok=token/api/xqnetwork/wifi_detail_all'
@@ -1321,6 +1348,24 @@ def getWanBandwidth(terminal, logname):
     return False, result
 
 
+def getPppoeStatus(terminal, logname):
+    result = {
+        'proto': '',
+        'dns': '',
+        'gw': '',
+        'ip': '',
+    }
+    api = '/cgi-bin/luci/;stok=token/api/xqnetwork/pppoe_status'
+    ret = setGet(terminal, logname, api)
+    if ret is not None:
+        if ret['code'] is 0:
+            result.update({'proto': ret.get('proto')})
+            result.update({'dns': ret.get('dns')})
+            result.update({'gw': ret.get('gw')})
+            result.update({'ip': ret.get('ip').get('address')})
+    return result
+
+
 def chkWifiInfo(terminal, logname, **kwargs):
     """
     wifilist
@@ -1364,9 +1409,9 @@ if __name__ == '__main__':
             'percent': 0.1,
             'percent_up': 0.1,
         }
-    v.HOST = '192.168.110.1'
+    v.HOST = '192.168.31.1'
     v.WEB_PWD = '12345678'
     webclient = HttpClient()
     webclient.connect(host=v.HOST, password=v.WEB_PWD)
-    print setQosGuest2(webclient, "a", **optionGuest)
+    print getPppoeStatus(webclient, "a")
     webclient.close()

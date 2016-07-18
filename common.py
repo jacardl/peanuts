@@ -67,17 +67,17 @@ class ShellClient(object):
             self.password = password.encode("utf-8")
             try:
                 # connect to telnet server
-                self.tn = telnetlib.Telnet(self.hostname, port=23, timeout=10)
+                self.pc = telnetlib.Telnet(self.hostname, port=23, timeout=10)
                 # self.tn.set_debuglevel(2)
 
                 # login
                 if self.username != "":
-                    self.tn.read_until("login: ", 10)
-                    self.tn.write(self.username + "\r\n")
-                    self.tn.read_until("password: ", 10)
-                    self.tn.write(self.password + "\r\n")
+                    self.pc.read_until("login: ", 10)
+                    self.pc.write(self.username + "\r\n")
+                    self.pc.read_until("password: ", 10)
+                    self.pc.write(self.password + "\r\n")
 
-                self.tn.read_until("telnet>", 10)
+                self.pc.read_until("telnet>", 10)
                 return True
 
             except Exception, e:
@@ -125,8 +125,8 @@ class ShellClient(object):
             if checkContainChinese(cmd):
                 cmd = cmd.decode("utf-8")
                 cmd = cmd.encode("utf-8")
-            self.tn.write(cmd + "\r\n")
-            self.out = self.tn.read_until("telnet>", 200)
+            self.pc.write(cmd + "\r\n")
+            self.out = self.pc.read_until("telnet>", 200)
             self.out = re.sub('\n', '\r\n', self.out)
             self.out = self.out.split("\n")
             del self.out[0]  # del command and :~#
@@ -187,6 +187,9 @@ class ShellClient(object):
             # turn on debug, quote cmd must use ' '
             self.command('echo 7 > /proc/sys/kernel/printk')
             self.ser.close()
+        elif self.connectionType == 4:
+            self.command('taskkill /F /IM cmd.exe')
+            self.pc.close()
 
 
 class ShellCommand(ShellClient):
@@ -326,6 +329,19 @@ def connectionCheck(connectiontype, ip=None, port=None, user=None, password=None
         return result, reportName
     elif result is False:
         return result, ""
+
+
+def pcTelnetCheck(ip=None, user=None, password=None):
+    pingResult = chkOSPingAvailable(ip, "1", logname=v.DEVICE_STATUS_LOG)
+    if not pingResult:
+        return False
+    else:
+        client = ShellClient(4)
+        result = client.connect(ip, user, password)
+        if result:
+            return True
+        else:
+            return False
 
 
 def convertStrToBashStr(string):
@@ -540,19 +556,19 @@ def getApclii0Conn(terminal, logname):
 
 
 def getPingStatus(terminal, target, count, logname):
-    """
-    root@XiaoQiang:~# ping 192.168.31.1 -c 5
-    PING 192.168.31.1 (192.168.31.1) 56(84) bytes of data.
-    64 bytes from 192.168.31.1: icmp_req=1 ttl=64 time=0.197 ms
-    64 bytes from 192.168.31.1: icmp_req=2 ttl=64 time=0.097 ms
-    64 bytes from 192.168.31.1: icmp_req=3 ttl=64 time=0.104 ms
-    64 bytes from 192.168.31.1: icmp_req=4 ttl=64 time=0.111 ms
-    64 bytes from 192.168.31.1: icmp_req=5 ttl=64 time=0.106 ms
-
-    --- 192.168.31.1 ping statistics ---
-    5 packets transmitted, 5 received, 0% packet loss, time 3997ms
-    rtt min/avg/max/mdev = 0.097/0.123/0.197/0.037 ms
-    """
+    # """
+    # root@XiaoQiang:~# ping 192.168.31.1 -c 5
+    # PING 192.168.31.1 (192.168.31.1) 56(84) bytes of data.
+    # 64 bytes from 192.168.31.1: icmp_req=1 ttl=64 time=0.197 ms
+    # 64 bytes from 192.168.31.1: icmp_req=2 ttl=64 time=0.097 ms
+    # 64 bytes from 192.168.31.1: icmp_req=3 ttl=64 time=0.104 ms
+    # 64 bytes from 192.168.31.1: icmp_req=4 ttl=64 time=0.111 ms
+    # 64 bytes from 192.168.31.1: icmp_req=5 ttl=64 time=0.106 ms
+    #
+    # --- 192.168.31.1 ping statistics ---
+    # 5 packets transmitted, 5 received, 0% packet loss, time 3997ms
+    # rtt min/avg/max/mdev = 0.097/0.123/0.197/0.037 ms
+    # """
     command = 'ping -c ' + str(count) + ' ' + target
     ret = setGet(terminal, command, logname)
     result = {}
@@ -746,6 +762,28 @@ def chkStaOnline(terminal, intf, stamac, logname):
         return False
 
 
+def chkOSPingAvailable(target, count, logname):
+    #     C:\Users\xiaomi>ping -n 3 127.0.0.1
+    #
+    #     正在 Ping 127.0.0.1 具有 32 字节的数据:
+    #     来自 127.0.0.1 的回复: 字节=32 时间<1ms TTL=64
+    #     来自 127.0.0.1 的回复: 字节=32 时间<1ms TTL=64
+    #     来自 127.0.0.1 的回复: 字节=32 时间<1ms TTL=64
+    #
+    #     127.0.0.1 的 Ping 统计信息:
+    #         数据包: 已发送 = 3，已接收 = 3，丢失 = 0 (0% 丢失)，
+    #     往返行程的估计时间(以毫秒为单位):
+    #         最短 = 0ms，最长 = 0ms，平均 = 0ms
+    command = 'ping -n ' + str(count) + ' ' + target
+    ret = setOSShell(command=command, logname=logname)
+    for line in ret:
+        # m = re.search('(.* = \d{1,}ms, ){2}.* = \d{1,}ms', line)
+        m = re.search('(.* = \d{1,}ms){3}', line)
+        if m:
+            return True
+    return False
+
+
 def setIwpriv(terminal, intf, arg, value, logname):
     command = 'iwpriv ' + intf + ' set ' + arg + '=' + value
     setConfig(terminal, command, logname)
@@ -809,6 +847,22 @@ def setIperfFlow2(terminal, target, interval, time, logname):
     if time != "":
         command = command + " -t " + time
     command += " -r -w 2m -f m"
+    ret = setGet(terminal, command, logname)
+    for line in ret:
+        m = re.search('0\.0-\s?\d{1,4}.*\s(\d{1,}\.?\d{1,})?\sMbits/sec', line)
+        if m:
+            return True
+    return False
+
+
+def setIperfFlow3(terminal, target, interval, time, logname):
+    command = "iperf -c " + target
+    if interval != "":
+        command = command + " -i " + interval
+    if time != "":
+        command = command + " -t " + time
+    command += " -r -w 2m -f m"
+    setGet(terminal, 'taskkill /F /IM iperf.exe', logname)
     ret = setGet(terminal, command, logname)
     for line in ret:
         m = re.search('0\.0-\s?\d{1,4}.*\s(\d{1,}\.?\d{1,})?\sMbits/sec', line)
@@ -1800,11 +1854,10 @@ def chkAdbBrowserWebsite(device, url, logname):
     return False
 
 if __name__ == '__main__':
-    client = ShellClient(4)
-    ret = client.connect("10.237.143.13", "telnet", "telnet")
-    print setIperfFlow2(client, "10.237.143.11", "", "60", "a")
-    # client = ShellClient(1)
-    # client.connect("192.168.110.1", "root", "admin")
-    # setGet(client, "ifconfig", "a")
-    client.close()
+    # client = ShellClient(4)
+    # ret = client.connect("10.237.143.13", "telnet", "telnet")
+    # print setIperfFlow2(client, "10.237.143.11", "", "60", "a")
+    # client.close()
+    print chkOSPingAvailable("10.237.143.131", "1", "a")
+    pass
 

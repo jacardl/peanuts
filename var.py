@@ -2,7 +2,7 @@
 from common2 import *
 import os
 
-VER = '3.8.3'
+VER = '3.9.1'
 
 TOOL_LIST = ["General", "Memory Tracking", "Test Suite"]
 
@@ -21,6 +21,7 @@ PASSWD = "admin"
 connection_type = 1 represent ssh
                   2 represent telnet
                   3 serial
+                  4 pc telnet
 """
 CONNECTION_TYPE = 1
 
@@ -30,6 +31,12 @@ BAUDRATE = 115200
 ANDROID_SERIAL_NUM = ''
 ANDROID_MODEL = ''
 STA_COUNT = "1"
+
+# -------------pc telnet------------------#
+PC_USERNAME = 'telnet'
+PC_PWD = 'telnet'
+PC_HOST = '10.237.143.13'
+IPERF_PORT = 5001
 
 # ----------------Memory Tracking-----------------
 
@@ -94,7 +101,7 @@ CHECK_ACCESS_URL2 = "http://m.baidu.com"
 CHECK_ACCESS_URL3 = "http://www.sohu.com"
 CHECK_ACCESS_URL4 = "http://m.taobao.com"
 CHECK_ACCESS_URL5 = "http://m.jd.com"
-CHECK_ACCESS_URL5 = "http://m.sina.cn"
+CHECK_ACCESS_URL6 = "http://m.sina.cn"
 
 BSSID = ''
 BSSID_5G = ''
@@ -140,7 +147,7 @@ IV = '64175472480004614961023454661220'
 ACCOUNT_DEFAULT_PWD = 'b3a4190199d9ee7fe73ef9a4942a69fece39a771'
 
 # -------------process report------------------#
-WIFI_MAX_THROUGHPUT = 300
+WIFI_MAX_THROUGHPUT = 600
 
 
 # -------------mail------------------#
@@ -153,14 +160,16 @@ MAIL_POSTFIX="xiaomi.com"  #发件箱的后缀
 MAILFROM_LIST = "robot@xiaomi.com"
 MAIL_TITLE = ""
 
-MAIL_PIC1 = TEST_SUITE_LOG_PATH + "total_memory_used.png"
-MAIL_PIC2 = TEST_SUITE_LOG_PATH + "dut_to_2g.png"
-MAIL_PIC3 = TEST_SUITE_LOG_PATH + "dut_to_5g.png"
-MAIL_PIC4 = TEST_SUITE_LOG_PATH + "current_cpu_load.png"
-MAIL_PIC5 = TEST_SUITE_LOG_PATH + "lan_to_2g.png"
-MAIL_PIC6 = TEST_SUITE_LOG_PATH + "lan_to_5g.png"
-MAIL_PIC7 = TEST_SUITE_LOG_PATH + "wan_to_2g.png"
-MAIL_PIC8 = TEST_SUITE_LOG_PATH + "wan_to_5g.png"
-MAIL_XLSX = TEST_SUITE_LOG_PATH + "memory_tracking.xlsx"
+MAIL_PIC1 = TEST_SUITE_LOG_PATH + "Total_Memory_Used.png"
+MAIL_PIC2 = TEST_SUITE_LOG_PATH + "DUT_to_2GHz.png"
+MAIL_PIC3 = TEST_SUITE_LOG_PATH + "DUT_to_5GHz.png"
+MAIL_PIC4 = TEST_SUITE_LOG_PATH + "Current_CPU_Load.png"
+MAIL_PIC5 = TEST_SUITE_LOG_PATH + "LAN_to_2GHz.png"
+MAIL_PIC6 = TEST_SUITE_LOG_PATH + "LAN_to_5GHz.png"
+MAIL_PIC7 = TEST_SUITE_LOG_PATH + "WAN_to_2GHz.png"
+MAIL_PIC8 = TEST_SUITE_LOG_PATH + "WAN_to_5GHz.png"
+MAIL_PIC9 = TEST_SUITE_LOG_PATH + "Ookla_Speedtest_2GHz.png"
+MAIL_PIC10 = TEST_SUITE_LOG_PATH + "Ookla_Speedtest_5GHz.png"
+MAIL_XLSX = TEST_SUITE_LOG_PATH + "Memory_Tracking.xlsx"
 MAIL_THROUGHPUT_XLSX_ORIGINAL = "throughput.xlsx"
 MAIL_THROUGHPUT_XLSX = TEST_SUITE_LOG_PATH + MAIL_THROUGHPUT_XLSX_ORIGINAL

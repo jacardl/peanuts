@@ -14651,6 +14651,2946 @@ class AP_PSK2_CHAN149_BW80_LAN_THROUGHPUT(TestCase):
             self.assertTrue(res5gConn, "Connecting wifi is failed.")
 
 
+class AP_CLEAR_CHAN1_BW20_WAN_THROUGHPUT(TestCase):
+    @classmethod
+    def setUpClass(self):
+
+        self.dut = api.HttpClient()
+        ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
+        ret2 = chkAdbDevice(v.ANDROID_SERIAL_NUM)
+        self.pc = ShellClient(4)
+        ret3 = self.pc.connect(host=v.PC_HOST, userid=v.PC_USERNAME, password=v.PC_PWD)
+
+        if ret3 is False:
+            raise Exception("PC telnet connection is failed, please check network.")
+
+        if ret1 is False:
+            raise Exception("Http connection is failed. please check your remote settings.")
+
+        if ret2 is False:
+            raise Exception("Device %s is not ready!" % v.ANDROID_SERIAL_NUM)
+
+        option2g = {
+            'wifiIndex': 1,
+            'ssid': v.SSID,
+            'channel': v.CHANNEL1,
+            'bandwidth': '20'
+        }
+        api.setWifi(self.dut, self.__name__, **option2g)
+        self.wanStatus = api.getPppoeStatus(self.dut, self.__name__)
+
+    @classmethod
+    def tearDownClass(self):
+        option2g = {
+            'wifiIndex': 1,
+            'on': 0,
+        }
+        api.setWifi(self.dut, self.__name__, **option2g)
+        self.dut.close()
+        self.pc.close()
+
+    def assoc_sta_throughput_2g(self):
+        res2gConn = setAdbClearSta(v.ANDROID_SERIAL_NUM, v.SSID, "2g", self.__class__.__name__)
+
+        if res2gConn is True:
+            staStatus = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
+            optionRedirect = {
+                "name": "iperf",
+                "proto": 1,
+                "sport": v.IPERF_PORT,
+                "ip": staStatus.get('ip'),
+                "dport": v.IPERF_PORT,
+            }
+            api.setAddRedirect(self.dut, self.__class__.__name__, **optionRedirect)
+            api.setRedirectApply(self.dut, self.__class__.__name__)
+
+            iperfOn = SetAdbIperfOn(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
+            iperfOn.start()
+            t.sleep(3.0)
+            ret = setIperfFlow3(self.pc, self.wanStatus.get('ip'), v.IPERF_INTERVAL, v.IPERF_TIME, self.__class__.__name__)
+
+            optionRedirect = {
+                'port': v.IPERF_PORT
+            }
+            api.setDelRedirect(self.dut, self.__class__.__name__, **optionRedirect)
+            api.setRedirectApply(self.dut, self.__class__.__name__)
+
+            self.assertTrue(ret, "Excute iperf flow error, connection refused.")
+        else:
+            self.assertTrue(res2gConn, "Connecting wifi is failed.")
+
+
+class AP_CLEAR_CHAN6_BW20_WAN_THROUGHPUT(TestCase):
+    @classmethod
+    def setUpClass(self):
+
+        self.dut = api.HttpClient()
+        ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
+        ret2 = chkAdbDevice(v.ANDROID_SERIAL_NUM)
+        self.pc = ShellClient(4)
+        ret3 = self.pc.connect(host=v.PC_HOST, userid=v.PC_USERNAME, password=v.PC_PWD)
+
+        if ret3 is False:
+            raise Exception("PC telnet connection is failed, please check network.")
+
+        if ret1 is False:
+            raise Exception("Http connection is failed. please check your remote settings.")
+
+        if ret2 is False:
+            raise Exception("Device %s is not ready!" % v.ANDROID_SERIAL_NUM)
+
+        option2g = {
+            'wifiIndex': 1,
+            'ssid': v.SSID,
+            'channel': v.CHANNEL6,
+            'bandwidth': '20'
+        }
+        api.setWifi(self.dut, self.__name__, **option2g)
+        self.wanStatus = api.getPppoeStatus(self.dut, self.__name__)
+
+    @classmethod
+    def tearDownClass(self):
+        option2g = {
+            'wifiIndex': 1,
+            'on': 0,
+        }
+        api.setWifi(self.dut, self.__name__, **option2g)
+        self.dut.close()
+        self.pc.close()
+
+    def assoc_sta_throughput_2g(self):
+        res2gConn = setAdbClearSta(v.ANDROID_SERIAL_NUM, v.SSID, "2g", self.__class__.__name__)
+
+        if res2gConn is True:
+            staStatus = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
+            optionRedirect = {
+                "name": "iperf",
+                "proto": 1,
+                "sport": v.IPERF_PORT,
+                "ip": staStatus.get('ip'),
+                "dport": v.IPERF_PORT,
+            }
+            api.setAddRedirect(self.dut, self.__class__.__name__, **optionRedirect)
+            api.setRedirectApply(self.dut, self.__class__.__name__)
+
+            iperfOn = SetAdbIperfOn(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
+            iperfOn.start()
+            t.sleep(3.0)
+            ret = setIperfFlow3(self.pc, self.wanStatus.get('ip'), v.IPERF_INTERVAL, v.IPERF_TIME, self.__class__.__name__)
+
+            optionRedirect = {
+                'port': v.IPERF_PORT
+            }
+            api.setDelRedirect(self.dut, self.__class__.__name__, **optionRedirect)
+            api.setRedirectApply(self.dut, self.__class__.__name__)
+
+            self.assertTrue(ret, "Excute iperf flow error, connection refused.")
+        else:
+            self.assertTrue(res2gConn, "Connecting wifi is failed.")
+
+
+class AP_CLEAR_CHAN11_BW20_WAN_THROUGHPUT(TestCase):
+    @classmethod
+    def setUpClass(self):
+
+        self.dut = api.HttpClient()
+        ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
+        ret2 = chkAdbDevice(v.ANDROID_SERIAL_NUM)
+        self.pc = ShellClient(4)
+        ret3 = self.pc.connect(host=v.PC_HOST, userid=v.PC_USERNAME, password=v.PC_PWD)
+
+        if ret3 is False:
+            raise Exception("PC telnet connection is failed, please check network.")
+
+        if ret1 is False:
+            raise Exception("Http connection is failed. please check your remote settings.")
+
+        if ret2 is False:
+            raise Exception("Device %s is not ready!" % v.ANDROID_SERIAL_NUM)
+
+        option2g = {
+            'wifiIndex': 1,
+            'ssid': v.SSID,
+            'channel': v.CHANNEL11,
+            'bandwidth': '20'
+        }
+        api.setWifi(self.dut, self.__name__, **option2g)
+        self.wanStatus = api.getPppoeStatus(self.dut, self.__name__)
+
+    @classmethod
+    def tearDownClass(self):
+        option2g = {
+            'wifiIndex': 1,
+            'on': 0,
+        }
+        api.setWifi(self.dut, self.__name__, **option2g)
+        self.dut.close()
+        self.pc.close()
+
+    def assoc_sta_throughput_2g(self):
+        res2gConn = setAdbClearSta(v.ANDROID_SERIAL_NUM, v.SSID, "2g", self.__class__.__name__)
+
+        if res2gConn is True:
+            staStatus = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
+            optionRedirect = {
+                "name": "iperf",
+                "proto": 1,
+                "sport": v.IPERF_PORT,
+                "ip": staStatus.get('ip'),
+                "dport": v.IPERF_PORT,
+            }
+            api.setAddRedirect(self.dut, self.__class__.__name__, **optionRedirect)
+            api.setRedirectApply(self.dut, self.__class__.__name__)
+
+            iperfOn = SetAdbIperfOn(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
+            iperfOn.start()
+            t.sleep(3.0)
+            ret = setIperfFlow3(self.pc, self.wanStatus.get('ip'), v.IPERF_INTERVAL, v.IPERF_TIME, self.__class__.__name__)
+
+            optionRedirect = {
+                'port': v.IPERF_PORT
+            }
+            api.setDelRedirect(self.dut, self.__class__.__name__, **optionRedirect)
+            api.setRedirectApply(self.dut, self.__class__.__name__)
+
+            self.assertTrue(ret, "Excute iperf flow error, connection refused.")
+        else:
+            self.assertTrue(res2gConn, "Connecting wifi is failed.")
+
+
+class AP_CLEAR_CHAN13_BW20_WAN_THROUGHPUT(TestCase):
+    @classmethod
+    def setUpClass(self):
+
+        self.dut = api.HttpClient()
+        ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
+        ret2 = chkAdbDevice(v.ANDROID_SERIAL_NUM)
+        self.pc = ShellClient(4)
+        ret3 = self.pc.connect(host=v.PC_HOST, userid=v.PC_USERNAME, password=v.PC_PWD)
+
+        if ret3 is False:
+            raise Exception("PC telnet connection is failed, please check network.")
+
+        if ret1 is False:
+            raise Exception("Http connection is failed. please check your remote settings.")
+
+        if ret2 is False:
+            raise Exception("Device %s is not ready!" % v.ANDROID_SERIAL_NUM)
+
+        option2g = {
+            'wifiIndex': 1,
+            'ssid': v.SSID,
+            'channel': v.CHANNEL13,
+            'bandwidth': '20'
+        }
+        api.setWifi(self.dut, self.__name__, **option2g)
+        self.wanStatus = api.getPppoeStatus(self.dut, self.__name__)
+
+    @classmethod
+    def tearDownClass(self):
+        option2g = {
+            'wifiIndex': 1,
+            'on': 0,
+        }
+        api.setWifi(self.dut, self.__name__, **option2g)
+        self.dut.close()
+        self.pc.close()
+
+    def assoc_sta_throughput_2g(self):
+        res2gConn = setAdbClearSta(v.ANDROID_SERIAL_NUM, v.SSID, "2g", self.__class__.__name__)
+
+        if res2gConn is True:
+            staStatus = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
+            optionRedirect = {
+                "name": "iperf",
+                "proto": 1,
+                "sport": v.IPERF_PORT,
+                "ip": staStatus.get('ip'),
+                "dport": v.IPERF_PORT,
+            }
+            api.setAddRedirect(self.dut, self.__class__.__name__, **optionRedirect)
+            api.setRedirectApply(self.dut, self.__class__.__name__)
+
+            iperfOn = SetAdbIperfOn(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
+            iperfOn.start()
+            t.sleep(3.0)
+            ret = setIperfFlow3(self.pc, self.wanStatus.get('ip'), v.IPERF_INTERVAL, v.IPERF_TIME, self.__class__.__name__)
+
+            optionRedirect = {
+                'port': v.IPERF_PORT
+            }
+            api.setDelRedirect(self.dut, self.__class__.__name__, **optionRedirect)
+            api.setRedirectApply(self.dut, self.__class__.__name__)
+
+            self.assertTrue(ret, "Excute iperf flow error, connection refused.")
+        else:
+            self.assertTrue(res2gConn, "Connecting wifi is failed.")
+
+
+class AP_CLEAR_CHAN1_BW40_WAN_THROUGHPUT(TestCase):
+    @classmethod
+    def setUpClass(self):
+
+        self.dut = api.HttpClient()
+        ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
+        ret2 = chkAdbDevice(v.ANDROID_SERIAL_NUM)
+        self.pc = ShellClient(4)
+        ret3 = self.pc.connect(host=v.PC_HOST, userid=v.PC_USERNAME, password=v.PC_PWD)
+
+        if ret3 is False:
+            raise Exception("PC telnet connection is failed, please check network.")
+
+        if ret1 is False:
+            raise Exception("Http connection is failed. please check your remote settings.")
+
+        if ret2 is False:
+            raise Exception("Device %s is not ready!" % v.ANDROID_SERIAL_NUM)
+
+        option2g = {
+            'wifiIndex': 1,
+            'ssid': v.SSID,
+            'channel': v.CHANNEL1,
+            'bandwidth': '40'
+        }
+        api.setWifi(self.dut, self.__name__, **option2g)
+        self.wanStatus = api.getPppoeStatus(self.dut, self.__name__)
+
+    @classmethod
+    def tearDownClass(self):
+        option2g = {
+            'wifiIndex': 1,
+            'on': 0,
+        }
+        api.setWifi(self.dut, self.__name__, **option2g)
+        self.dut.close()
+        self.pc.close()
+
+    def assoc_sta_throughput_2g(self):
+        res2gConn = setAdbClearSta(v.ANDROID_SERIAL_NUM, v.SSID, "2g", self.__class__.__name__)
+
+        if res2gConn is True:
+            staStatus = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
+            optionRedirect = {
+                "name": "iperf",
+                "proto": 1,
+                "sport": v.IPERF_PORT,
+                "ip": staStatus.get('ip'),
+                "dport": v.IPERF_PORT,
+            }
+            api.setAddRedirect(self.dut, self.__class__.__name__, **optionRedirect)
+            api.setRedirectApply(self.dut, self.__class__.__name__)
+
+            iperfOn = SetAdbIperfOn(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
+            iperfOn.start()
+            t.sleep(3.0)
+            ret = setIperfFlow3(self.pc, self.wanStatus.get('ip'), v.IPERF_INTERVAL, v.IPERF_TIME, self.__class__.__name__)
+
+            optionRedirect = {
+                'port': v.IPERF_PORT
+            }
+            api.setDelRedirect(self.dut, self.__class__.__name__, **optionRedirect)
+            api.setRedirectApply(self.dut, self.__class__.__name__)
+
+            self.assertTrue(ret, "Excute iperf flow error, connection refused.")
+        else:
+            self.assertTrue(res2gConn, "Connecting wifi is failed.")
+
+
+class AP_CLEAR_CHAN6_BW40_WAN_THROUGHPUT(TestCase):
+    @classmethod
+    def setUpClass(self):
+
+        self.dut = api.HttpClient()
+        ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
+        ret2 = chkAdbDevice(v.ANDROID_SERIAL_NUM)
+        self.pc = ShellClient(4)
+        ret3 = self.pc.connect(host=v.PC_HOST, userid=v.PC_USERNAME, password=v.PC_PWD)
+
+        if ret3 is False:
+            raise Exception("PC telnet connection is failed, please check network.")
+
+        if ret1 is False:
+            raise Exception("Http connection is failed. please check your remote settings.")
+
+        if ret2 is False:
+            raise Exception("Device %s is not ready!" % v.ANDROID_SERIAL_NUM)
+
+        option2g = {
+            'wifiIndex': 1,
+            'ssid': v.SSID,
+            'channel': v.CHANNEL6,
+            'bandwidth': '40'
+        }
+        api.setWifi(self.dut, self.__name__, **option2g)
+        self.wanStatus = api.getPppoeStatus(self.dut, self.__name__)
+
+    @classmethod
+    def tearDownClass(self):
+        option2g = {
+            'wifiIndex': 1,
+            'on': 0,
+        }
+        api.setWifi(self.dut, self.__name__, **option2g)
+        self.dut.close()
+        self.pc.close()
+
+    def assoc_sta_throughput_2g(self):
+        res2gConn = setAdbClearSta(v.ANDROID_SERIAL_NUM, v.SSID, "2g", self.__class__.__name__)
+
+        if res2gConn is True:
+            staStatus = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
+            optionRedirect = {
+                "name": "iperf",
+                "proto": 1,
+                "sport": v.IPERF_PORT,
+                "ip": staStatus.get('ip'),
+                "dport": v.IPERF_PORT,
+            }
+            api.setAddRedirect(self.dut, self.__class__.__name__, **optionRedirect)
+            api.setRedirectApply(self.dut, self.__class__.__name__)
+
+            iperfOn = SetAdbIperfOn(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
+            iperfOn.start()
+            t.sleep(3.0)
+            ret = setIperfFlow3(self.pc, self.wanStatus.get('ip'), v.IPERF_INTERVAL, v.IPERF_TIME, self.__class__.__name__)
+
+            optionRedirect = {
+                'port': v.IPERF_PORT
+            }
+            api.setDelRedirect(self.dut, self.__class__.__name__, **optionRedirect)
+            api.setRedirectApply(self.dut, self.__class__.__name__)
+
+            self.assertTrue(ret, "Excute iperf flow error, connection refused.")
+        else:
+            self.assertTrue(res2gConn, "Connecting wifi is failed.")
+
+
+class AP_CLEAR_CHAN11_BW40_WAN_THROUGHPUT(TestCase):
+    @classmethod
+    def setUpClass(self):
+
+        self.dut = api.HttpClient()
+        ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
+        ret2 = chkAdbDevice(v.ANDROID_SERIAL_NUM)
+        self.pc = ShellClient(4)
+        ret3 = self.pc.connect(host=v.PC_HOST, userid=v.PC_USERNAME, password=v.PC_PWD)
+
+        if ret3 is False:
+            raise Exception("PC telnet connection is failed, please check network.")
+
+        if ret1 is False:
+            raise Exception("Http connection is failed. please check your remote settings.")
+
+        if ret2 is False:
+            raise Exception("Device %s is not ready!" % v.ANDROID_SERIAL_NUM)
+
+        option2g = {
+            'wifiIndex': 1,
+            'ssid': v.SSID,
+            'channel': v.CHANNEL11,
+            'bandwidth': '40'
+        }
+        api.setWifi(self.dut, self.__name__, **option2g)
+        self.wanStatus = api.getPppoeStatus(self.dut, self.__name__)
+
+    @classmethod
+    def tearDownClass(self):
+        option2g = {
+            'wifiIndex': 1,
+            'on': 0,
+        }
+        api.setWifi(self.dut, self.__name__, **option2g)
+        self.dut.close()
+        self.pc.close()
+
+    def assoc_sta_throughput_2g(self):
+        res2gConn = setAdbClearSta(v.ANDROID_SERIAL_NUM, v.SSID, "2g", self.__class__.__name__)
+
+        if res2gConn is True:
+            staStatus = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
+            optionRedirect = {
+                "name": "iperf",
+                "proto": 1,
+                "sport": v.IPERF_PORT,
+                "ip": staStatus.get('ip'),
+                "dport": v.IPERF_PORT,
+            }
+            api.setAddRedirect(self.dut, self.__class__.__name__, **optionRedirect)
+            api.setRedirectApply(self.dut, self.__class__.__name__)
+
+            iperfOn = SetAdbIperfOn(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
+            iperfOn.start()
+            t.sleep(3.0)
+            ret = setIperfFlow3(self.pc, self.wanStatus.get('ip'), v.IPERF_INTERVAL, v.IPERF_TIME, self.__class__.__name__)
+
+            optionRedirect = {
+                'port': v.IPERF_PORT
+            }
+            api.setDelRedirect(self.dut, self.__class__.__name__, **optionRedirect)
+            api.setRedirectApply(self.dut, self.__class__.__name__)
+
+            self.assertTrue(ret, "Excute iperf flow error, connection refused.")
+        else:
+            self.assertTrue(res2gConn, "Connecting wifi is failed.")
+
+
+class AP_CLEAR_CHAN13_BW40_WAN_THROUGHPUT(TestCase):
+    @classmethod
+    def setUpClass(self):
+
+        self.dut = api.HttpClient()
+        ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
+        ret2 = chkAdbDevice(v.ANDROID_SERIAL_NUM)
+        self.pc = ShellClient(4)
+        ret3 = self.pc.connect(host=v.PC_HOST, userid=v.PC_USERNAME, password=v.PC_PWD)
+
+        if ret3 is False:
+            raise Exception("PC telnet connection is failed, please check network.")
+
+        if ret1 is False:
+            raise Exception("Http connection is failed. please check your remote settings.")
+
+        if ret2 is False:
+            raise Exception("Device %s is not ready!" % v.ANDROID_SERIAL_NUM)
+
+        option2g = {
+            'wifiIndex': 1,
+            'ssid': v.SSID,
+            'channel': v.CHANNEL13,
+            'bandwidth': '40'
+        }
+        api.setWifi(self.dut, self.__name__, **option2g)
+        self.wanStatus = api.getPppoeStatus(self.dut, self.__name__)
+
+    @classmethod
+    def tearDownClass(self):
+        option2g = {
+            'wifiIndex': 1,
+            'on': 0,
+        }
+        api.setWifi(self.dut, self.__name__, **option2g)
+        self.dut.close()
+        self.pc.close()
+
+    def assoc_sta_throughput_2g(self):
+        res2gConn = setAdbClearSta(v.ANDROID_SERIAL_NUM, v.SSID, "2g", self.__class__.__name__)
+
+        if res2gConn is True:
+            staStatus = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
+            optionRedirect = {
+                "name": "iperf",
+                "proto": 1,
+                "sport": v.IPERF_PORT,
+                "ip": staStatus.get('ip'),
+                "dport": v.IPERF_PORT,
+            }
+            api.setAddRedirect(self.dut, self.__class__.__name__, **optionRedirect)
+            api.setRedirectApply(self.dut, self.__class__.__name__)
+
+            iperfOn = SetAdbIperfOn(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
+            iperfOn.start()
+            t.sleep(3.0)
+            ret = setIperfFlow3(self.pc, self.wanStatus.get('ip'), v.IPERF_INTERVAL, v.IPERF_TIME, self.__class__.__name__)
+
+            optionRedirect = {
+                'port': v.IPERF_PORT
+            }
+            api.setDelRedirect(self.dut, self.__class__.__name__, **optionRedirect)
+            api.setRedirectApply(self.dut, self.__class__.__name__)
+
+            self.assertTrue(ret, "Excute iperf flow error, connection refused.")
+        else:
+            self.assertTrue(res2gConn, "Connecting wifi is failed.")
+
+
+class AP_PSK2_CHAN1_BW20_WAN_THROUGHPUT(TestCase):
+    @classmethod
+    def setUpClass(self):
+
+        self.dut = api.HttpClient()
+        ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
+        ret2 = chkAdbDevice(v.ANDROID_SERIAL_NUM)
+        self.pc = ShellClient(4)
+        ret3 = self.pc.connect(host=v.PC_HOST, userid=v.PC_USERNAME, password=v.PC_PWD)
+
+        if ret3 is False:
+            raise Exception("PC telnet connection is failed, please check network.")
+
+        if ret1 is False:
+            raise Exception("Http connection is failed. please check your remote settings.")
+
+        if ret2 is False:
+            raise Exception("Device %s is not ready!" % v.ANDROID_SERIAL_NUM)
+
+        option2g = {
+            'wifiIndex': 1,
+            'ssid': v.SSID,
+            'channel': v.CHANNEL1,
+            'bandwidth': '20',
+            'encryption': 'psk2',
+            'pwd': v.KEY,
+        }
+        api.setWifi(self.dut, self.__name__, **option2g)
+        self.wanStatus = api.getPppoeStatus(self.dut, self.__name__)
+
+    @classmethod
+    def tearDownClass(self):
+        option2g = {
+            'wifiIndex': 1,
+            'on': 0,
+        }
+        api.setWifi(self.dut, self.__name__, **option2g)
+        self.dut.close()
+        self.pc.close()
+
+    def assoc_sta_throughput_2g(self):
+        res2gConn = setAdbPsk2Sta(v.ANDROID_SERIAL_NUM, v.SSID, v.KEY, "2g", self.__class__.__name__)
+
+        if res2gConn is True:
+            staStatus = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
+            optionRedirect = {
+                "name": "iperf",
+                "proto": 1,
+                "sport": v.IPERF_PORT,
+                "ip": staStatus.get('ip'),
+                "dport": v.IPERF_PORT,
+            }
+            api.setAddRedirect(self.dut, self.__class__.__name__, **optionRedirect)
+            api.setRedirectApply(self.dut, self.__class__.__name__)
+
+            iperfOn = SetAdbIperfOn(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
+            iperfOn.start()
+            t.sleep(3.0)
+            ret = setIperfFlow3(self.pc, self.wanStatus.get('ip'), v.IPERF_INTERVAL, v.IPERF_TIME, self.__class__.__name__)
+
+            optionRedirect = {
+                'port': v.IPERF_PORT
+            }
+            api.setDelRedirect(self.dut, self.__class__.__name__, **optionRedirect)
+            api.setRedirectApply(self.dut, self.__class__.__name__)
+
+            self.assertTrue(ret, "Excute iperf flow error, connection refused.")
+        else:
+            self.assertTrue(res2gConn, "Connecting wifi is failed.")
+
+
+class AP_PSK2_CHAN6_BW20_WAN_THROUGHPUT(TestCase):
+    @classmethod
+    def setUpClass(self):
+
+        self.dut = api.HttpClient()
+        ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
+        ret2 = chkAdbDevice(v.ANDROID_SERIAL_NUM)
+        self.pc = ShellClient(4)
+        ret3 = self.pc.connect(host=v.PC_HOST, userid=v.PC_USERNAME, password=v.PC_PWD)
+
+        if ret3 is False:
+            raise Exception("PC telnet connection is failed, please check network.")
+
+        if ret1 is False:
+            raise Exception("Http connection is failed. please check your remote settings.")
+
+        if ret2 is False:
+            raise Exception("Device %s is not ready!" % v.ANDROID_SERIAL_NUM)
+
+        option2g = {
+            'wifiIndex': 1,
+            'ssid': v.SSID,
+            'channel': v.CHANNEL6,
+            'bandwidth': '20',
+            'encryption': 'psk2',
+            'pwd': v.KEY,
+        }
+        api.setWifi(self.dut, self.__name__, **option2g)
+        self.wanStatus = api.getPppoeStatus(self.dut, self.__name__)
+
+    @classmethod
+    def tearDownClass(self):
+        option2g = {
+            'wifiIndex': 1,
+            'on': 0,
+        }
+        api.setWifi(self.dut, self.__name__, **option2g)
+        self.dut.close()
+        self.pc.close()
+
+    def assoc_sta_throughput_2g(self):
+        res2gConn = setAdbPsk2Sta(v.ANDROID_SERIAL_NUM, v.SSID, v.KEY, "2g", self.__class__.__name__)
+
+        if res2gConn is True:
+            staStatus = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
+            optionRedirect = {
+                "name": "iperf",
+                "proto": 1,
+                "sport": v.IPERF_PORT,
+                "ip": staStatus.get('ip'),
+                "dport": v.IPERF_PORT,
+            }
+            api.setAddRedirect(self.dut, self.__class__.__name__, **optionRedirect)
+            api.setRedirectApply(self.dut, self.__class__.__name__)
+
+            iperfOn = SetAdbIperfOn(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
+            iperfOn.start()
+            t.sleep(3.0)
+            ret = setIperfFlow3(self.pc, self.wanStatus.get('ip'), v.IPERF_INTERVAL, v.IPERF_TIME, self.__class__.__name__)
+
+            optionRedirect = {
+                'port': v.IPERF_PORT
+            }
+            api.setDelRedirect(self.dut, self.__class__.__name__, **optionRedirect)
+            api.setRedirectApply(self.dut, self.__class__.__name__)
+
+            self.assertTrue(ret, "Excute iperf flow error, connection refused.")
+        else:
+            self.assertTrue(res2gConn, "Connecting wifi is failed.")
+
+
+class AP_PSK2_CHAN11_BW20_WAN_THROUGHPUT(TestCase):
+    @classmethod
+    def setUpClass(self):
+
+        self.dut = api.HttpClient()
+        ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
+        ret2 = chkAdbDevice(v.ANDROID_SERIAL_NUM)
+        self.pc = ShellClient(4)
+        ret3 = self.pc.connect(host=v.PC_HOST, userid=v.PC_USERNAME, password=v.PC_PWD)
+
+        if ret3 is False:
+            raise Exception("PC telnet connection is failed, please check network.")
+
+        if ret1 is False:
+            raise Exception("Http connection is failed. please check your remote settings.")
+
+        if ret2 is False:
+            raise Exception("Device %s is not ready!" % v.ANDROID_SERIAL_NUM)
+
+        option2g = {
+            'wifiIndex': 1,
+            'ssid': v.SSID,
+            'channel': v.CHANNEL11,
+            'bandwidth': '20',
+            'encryption': 'psk2',
+            'pwd': v.KEY,
+        }
+        api.setWifi(self.dut, self.__name__, **option2g)
+        self.wanStatus = api.getPppoeStatus(self.dut, self.__name__)
+
+    @classmethod
+    def tearDownClass(self):
+        option2g = {
+            'wifiIndex': 1,
+            'on': 0,
+        }
+        api.setWifi(self.dut, self.__name__, **option2g)
+        self.dut.close()
+        self.pc.close()
+
+    def assoc_sta_throughput_2g(self):
+        res2gConn = setAdbPsk2Sta(v.ANDROID_SERIAL_NUM, v.SSID, v.KEY, "2g", self.__class__.__name__)
+
+        if res2gConn is True:
+            staStatus = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
+            optionRedirect = {
+                "name": "iperf",
+                "proto": 1,
+                "sport": v.IPERF_PORT,
+                "ip": staStatus.get('ip'),
+                "dport": v.IPERF_PORT,
+            }
+            api.setAddRedirect(self.dut, self.__class__.__name__, **optionRedirect)
+            api.setRedirectApply(self.dut, self.__class__.__name__)
+
+            iperfOn = SetAdbIperfOn(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
+            iperfOn.start()
+            t.sleep(3.0)
+            ret = setIperfFlow3(self.pc, self.wanStatus.get('ip'), v.IPERF_INTERVAL, v.IPERF_TIME, self.__class__.__name__)
+
+            optionRedirect = {
+                'port': v.IPERF_PORT
+            }
+            api.setDelRedirect(self.dut, self.__class__.__name__, **optionRedirect)
+            api.setRedirectApply(self.dut, self.__class__.__name__)
+
+            self.assertTrue(ret, "Excute iperf flow error, connection refused.")
+        else:
+            self.assertTrue(res2gConn, "Connecting wifi is failed.")
+
+
+class AP_PSK2_CHAN13_BW20_WAN_THROUGHPUT(TestCase):
+    @classmethod
+    def setUpClass(self):
+
+        self.dut = api.HttpClient()
+        ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
+        ret2 = chkAdbDevice(v.ANDROID_SERIAL_NUM)
+        self.pc = ShellClient(4)
+        ret3 = self.pc.connect(host=v.PC_HOST, userid=v.PC_USERNAME, password=v.PC_PWD)
+
+        if ret3 is False:
+            raise Exception("PC telnet connection is failed, please check network.")
+
+        if ret1 is False:
+            raise Exception("Http connection is failed. please check your remote settings.")
+
+        if ret2 is False:
+            raise Exception("Device %s is not ready!" % v.ANDROID_SERIAL_NUM)
+
+        option2g = {
+            'wifiIndex': 1,
+            'ssid': v.SSID,
+            'channel': v.CHANNEL13,
+            'bandwidth': '20',
+            'encryption': 'psk2',
+            'pwd': v.KEY,
+        }
+        api.setWifi(self.dut, self.__name__, **option2g)
+        self.wanStatus = api.getPppoeStatus(self.dut, self.__name__)
+
+    @classmethod
+    def tearDownClass(self):
+        option2g = {
+            'wifiIndex': 1,
+            'on': 0,
+        }
+        api.setWifi(self.dut, self.__name__, **option2g)
+        self.dut.close()
+        self.pc.close()
+
+    def assoc_sta_throughput_2g(self):
+        res2gConn = setAdbPsk2Sta(v.ANDROID_SERIAL_NUM, v.SSID, v.KEY, "2g", self.__class__.__name__)
+
+        if res2gConn is True:
+            staStatus = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
+            optionRedirect = {
+                "name": "iperf",
+                "proto": 1,
+                "sport": v.IPERF_PORT,
+                "ip": staStatus.get('ip'),
+                "dport": v.IPERF_PORT,
+            }
+            api.setAddRedirect(self.dut, self.__class__.__name__, **optionRedirect)
+            api.setRedirectApply(self.dut, self.__class__.__name__)
+
+            iperfOn = SetAdbIperfOn(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
+            iperfOn.start()
+            t.sleep(3.0)
+            ret = setIperfFlow3(self.pc, self.wanStatus.get('ip'), v.IPERF_INTERVAL, v.IPERF_TIME, self.__class__.__name__)
+
+            optionRedirect = {
+                'port': v.IPERF_PORT
+            }
+            api.setDelRedirect(self.dut, self.__class__.__name__, **optionRedirect)
+            api.setRedirectApply(self.dut, self.__class__.__name__)
+
+            self.assertTrue(ret, "Excute iperf flow error, connection refused.")
+        else:
+            self.assertTrue(res2gConn, "Connecting wifi is failed.")
+
+
+class AP_PSK2_CHAN1_BW40_WAN_THROUGHPUT(TestCase):
+    @classmethod
+    def setUpClass(self):
+
+        self.dut = api.HttpClient()
+        ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
+        ret2 = chkAdbDevice(v.ANDROID_SERIAL_NUM)
+        self.pc = ShellClient(4)
+        ret3 = self.pc.connect(host=v.PC_HOST, userid=v.PC_USERNAME, password=v.PC_PWD)
+
+        if ret3 is False:
+            raise Exception("PC telnet connection is failed, please check network.")
+
+        if ret1 is False:
+            raise Exception("Http connection is failed. please check your remote settings.")
+
+        if ret2 is False:
+            raise Exception("Device %s is not ready!" % v.ANDROID_SERIAL_NUM)
+
+        option2g = {
+            'wifiIndex': 1,
+            'ssid': v.SSID,
+            'channel': v.CHANNEL1,
+            'bandwidth': '40',
+            'encryption': 'psk2',
+            'pwd': v.KEY,
+        }
+        api.setWifi(self.dut, self.__name__, **option2g)
+        self.wanStatus = api.getPppoeStatus(self.dut, self.__name__)
+
+    @classmethod
+    def tearDownClass(self):
+        option2g = {
+            'wifiIndex': 1,
+            'on': 0,
+        }
+        api.setWifi(self.dut, self.__name__, **option2g)
+        self.dut.close()
+        self.pc.close()
+
+    def assoc_sta_throughput_2g(self):
+        res2gConn = setAdbPsk2Sta(v.ANDROID_SERIAL_NUM, v.SSID, v.KEY, "2g", self.__class__.__name__)
+
+        if res2gConn is True:
+            staStatus = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
+            optionRedirect = {
+                "name": "iperf",
+                "proto": 1,
+                "sport": v.IPERF_PORT,
+                "ip": staStatus.get('ip'),
+                "dport": v.IPERF_PORT,
+            }
+            api.setAddRedirect(self.dut, self.__class__.__name__, **optionRedirect)
+            api.setRedirectApply(self.dut, self.__class__.__name__)
+
+            iperfOn = SetAdbIperfOn(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
+            iperfOn.start()
+            t.sleep(3.0)
+            ret = setIperfFlow3(self.pc, self.wanStatus.get('ip'), v.IPERF_INTERVAL, v.IPERF_TIME, self.__class__.__name__)
+
+            optionRedirect = {
+                'port': v.IPERF_PORT
+            }
+            api.setDelRedirect(self.dut, self.__class__.__name__, **optionRedirect)
+            api.setRedirectApply(self.dut, self.__class__.__name__)
+
+            self.assertTrue(ret, "Excute iperf flow error, connection refused.")
+        else:
+            self.assertTrue(res2gConn, "Connecting wifi is failed.")
+
+
+class AP_PSK2_CHAN6_BW40_WAN_THROUGHPUT(TestCase):
+    @classmethod
+    def setUpClass(self):
+
+        self.dut = api.HttpClient()
+        ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
+        ret2 = chkAdbDevice(v.ANDROID_SERIAL_NUM)
+        self.pc = ShellClient(4)
+        ret3 = self.pc.connect(host=v.PC_HOST, userid=v.PC_USERNAME, password=v.PC_PWD)
+
+        if ret3 is False:
+            raise Exception("PC telnet connection is failed, please check network.")
+
+        if ret1 is False:
+            raise Exception("Http connection is failed. please check your remote settings.")
+
+        if ret2 is False:
+            raise Exception("Device %s is not ready!" % v.ANDROID_SERIAL_NUM)
+
+        option2g = {
+            'wifiIndex': 1,
+            'ssid': v.SSID,
+            'channel': v.CHANNEL6,
+            'bandwidth': '40',
+            'encryption': 'psk2',
+            'pwd': v.KEY,
+        }
+        api.setWifi(self.dut, self.__name__, **option2g)
+        self.wanStatus = api.getPppoeStatus(self.dut, self.__name__)
+
+    @classmethod
+    def tearDownClass(self):
+        option2g = {
+            'wifiIndex': 1,
+            'on': 0,
+        }
+        api.setWifi(self.dut, self.__name__, **option2g)
+        self.dut.close()
+        self.pc.close()
+
+    def assoc_sta_throughput_2g(self):
+        res2gConn = setAdbPsk2Sta(v.ANDROID_SERIAL_NUM, v.SSID, v.KEY, "2g", self.__class__.__name__)
+
+        if res2gConn is True:
+            staStatus = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
+            optionRedirect = {
+                "name": "iperf",
+                "proto": 1,
+                "sport": v.IPERF_PORT,
+                "ip": staStatus.get('ip'),
+                "dport": v.IPERF_PORT,
+            }
+            api.setAddRedirect(self.dut, self.__class__.__name__, **optionRedirect)
+            api.setRedirectApply(self.dut, self.__class__.__name__)
+
+            iperfOn = SetAdbIperfOn(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
+            iperfOn.start()
+            t.sleep(3.0)
+            ret = setIperfFlow3(self.pc, self.wanStatus.get('ip'), v.IPERF_INTERVAL, v.IPERF_TIME, self.__class__.__name__)
+
+            optionRedirect = {
+                'port': v.IPERF_PORT
+            }
+            api.setDelRedirect(self.dut, self.__class__.__name__, **optionRedirect)
+            api.setRedirectApply(self.dut, self.__class__.__name__)
+
+            self.assertTrue(ret, "Excute iperf flow error, connection refused.")
+        else:
+            self.assertTrue(res2gConn, "Connecting wifi is failed.")
+
+
+class AP_PSK2_CHAN11_BW40_WAN_THROUGHPUT(TestCase):
+    @classmethod
+    def setUpClass(self):
+
+        self.dut = api.HttpClient()
+        ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
+        ret2 = chkAdbDevice(v.ANDROID_SERIAL_NUM)
+        self.pc = ShellClient(4)
+        ret3 = self.pc.connect(host=v.PC_HOST, userid=v.PC_USERNAME, password=v.PC_PWD)
+
+        if ret3 is False:
+            raise Exception("PC telnet connection is failed, please check network.")
+
+        if ret1 is False:
+            raise Exception("Http connection is failed. please check your remote settings.")
+
+        if ret2 is False:
+            raise Exception("Device %s is not ready!" % v.ANDROID_SERIAL_NUM)
+
+        option2g = {
+            'wifiIndex': 1,
+            'ssid': v.SSID,
+            'channel': v.CHANNEL11,
+            'bandwidth': '40',
+            'encryption': 'psk2',
+            'pwd': v.KEY,
+        }
+        api.setWifi(self.dut, self.__name__, **option2g)
+        self.wanStatus = api.getPppoeStatus(self.dut, self.__name__)
+
+    @classmethod
+    def tearDownClass(self):
+        option2g = {
+            'wifiIndex': 1,
+            'on': 0,
+        }
+        api.setWifi(self.dut, self.__name__, **option2g)
+        self.dut.close()
+        self.pc.close()
+
+    def assoc_sta_throughput_2g(self):
+        res2gConn = setAdbPsk2Sta(v.ANDROID_SERIAL_NUM, v.SSID, v.KEY, "2g", self.__class__.__name__)
+
+        if res2gConn is True:
+            staStatus = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
+            optionRedirect = {
+                "name": "iperf",
+                "proto": 1,
+                "sport": v.IPERF_PORT,
+                "ip": staStatus.get('ip'),
+                "dport": v.IPERF_PORT,
+            }
+            api.setAddRedirect(self.dut, self.__class__.__name__, **optionRedirect)
+            api.setRedirectApply(self.dut, self.__class__.__name__)
+
+            iperfOn = SetAdbIperfOn(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
+            iperfOn.start()
+            t.sleep(3.0)
+            ret = setIperfFlow3(self.pc, self.wanStatus.get('ip'), v.IPERF_INTERVAL, v.IPERF_TIME, self.__class__.__name__)
+
+            optionRedirect = {
+                'port': v.IPERF_PORT
+            }
+            api.setDelRedirect(self.dut, self.__class__.__name__, **optionRedirect)
+            api.setRedirectApply(self.dut, self.__class__.__name__)
+
+            self.assertTrue(ret, "Excute iperf flow error, connection refused.")
+        else:
+            self.assertTrue(res2gConn, "Connecting wifi is failed.")
+
+
+class AP_PSK2_CHAN13_BW40_WAN_THROUGHPUT(TestCase):
+    @classmethod
+    def setUpClass(self):
+
+        self.dut = api.HttpClient()
+        ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
+        ret2 = chkAdbDevice(v.ANDROID_SERIAL_NUM)
+        self.pc = ShellClient(4)
+        ret3 = self.pc.connect(host=v.PC_HOST, userid=v.PC_USERNAME, password=v.PC_PWD)
+
+        if ret3 is False:
+            raise Exception("PC telnet connection is failed, please check network.")
+
+        if ret1 is False:
+            raise Exception("Http connection is failed. please check your remote settings.")
+
+        if ret2 is False:
+            raise Exception("Device %s is not ready!" % v.ANDROID_SERIAL_NUM)
+
+        option2g = {
+            'wifiIndex': 1,
+            'ssid': v.SSID,
+            'channel': v.CHANNEL13,
+            'bandwidth': '40',
+            'encryption': 'psk2',
+            'pwd': v.KEY,
+        }
+        api.setWifi(self.dut, self.__name__, **option2g)
+        self.wanStatus = api.getPppoeStatus(self.dut, self.__name__)
+
+    @classmethod
+    def tearDownClass(self):
+        option2g = {
+            'wifiIndex': 1,
+            'on': 0,
+        }
+        api.setWifi(self.dut, self.__name__, **option2g)
+        self.dut.close()
+        self.pc.close()
+
+    def assoc_sta_throughput_2g(self):
+        res2gConn = setAdbPsk2Sta(v.ANDROID_SERIAL_NUM, v.SSID, v.KEY, "2g", self.__class__.__name__)
+
+        if res2gConn is True:
+            staStatus = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
+            optionRedirect = {
+                "name": "iperf",
+                "proto": 1,
+                "sport": v.IPERF_PORT,
+                "ip": staStatus.get('ip'),
+                "dport": v.IPERF_PORT,
+            }
+            api.setAddRedirect(self.dut, self.__class__.__name__, **optionRedirect)
+            api.setRedirectApply(self.dut, self.__class__.__name__)
+
+            iperfOn = SetAdbIperfOn(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
+            iperfOn.start()
+            t.sleep(3.0)
+            ret = setIperfFlow3(self.pc, self.wanStatus.get('ip'), v.IPERF_INTERVAL, v.IPERF_TIME, self.__class__.__name__)
+
+            optionRedirect = {
+                'port': v.IPERF_PORT
+            }
+            api.setDelRedirect(self.dut, self.__class__.__name__, **optionRedirect)
+            api.setRedirectApply(self.dut, self.__class__.__name__)
+
+            self.assertTrue(ret, "Excute iperf flow error, connection refused.")
+        else:
+            self.assertTrue(res2gConn, "Connecting wifi is failed.")
+
+
+class AP_CLEAR_CHAN36_BW20_WAN_THROUGHPUT(TestCase):
+    @classmethod
+    def setUpClass(self):
+
+        self.dut = api.HttpClient()
+        ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
+        ret2 = chkAdbDevice(v.ANDROID_SERIAL_NUM)
+        self.pc = ShellClient(4)
+        ret3 = self.pc.connect(host=v.PC_HOST, userid=v.PC_USERNAME, password=v.PC_PWD)
+
+        if ret3 is False:
+            raise Exception("PC telnet connection is failed, please check network.")
+
+        if ret1 is False:
+            raise Exception("Http connection is failed. please check your remote settings.")
+
+        if ret2 is False:
+            raise Exception("Device %s is not ready!" % v.ANDROID_SERIAL_NUM)
+
+        option5g = {
+            'wifiIndex': 2,
+            'ssid': v.SSID_5G,
+            'channel': v.CHANNEL36,
+            'bandwidth': '20'
+        }
+        api.setWifi(self.dut, self.__name__, **option5g)
+        self.wanStatus = api.getPppoeStatus(self.dut, self.__name__)
+
+    @classmethod
+    def tearDownClass(self):
+        option5g = {
+            'wifiIndex': 2,
+            'on': 0,
+        }
+        api.setWifi(self.dut, self.__name__, **option5g)
+        self.dut.close()
+        self.pc.close()
+
+    def assoc_sta_throughput_5g(self):
+        res5gConn = setAdbClearSta(v.ANDROID_SERIAL_NUM, v.SSID_5G, "5g", self.__class__.__name__)
+
+        if res5gConn is True:
+            staStatus = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
+            optionRedirect = {
+                "name": "iperf",
+                "proto": 1,
+                "sport": v.IPERF_PORT,
+                "ip": staStatus.get('ip'),
+                "dport": v.IPERF_PORT,
+            }
+            api.setAddRedirect(self.dut, self.__class__.__name__, **optionRedirect)
+            api.setRedirectApply(self.dut, self.__class__.__name__)
+
+            iperfOn = SetAdbIperfOn(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
+            iperfOn.start()
+            t.sleep(3.0)
+            ret = setIperfFlow3(self.pc, self.wanStatus.get('ip'), v.IPERF_INTERVAL, v.IPERF_TIME, self.__class__.__name__)
+
+            optionRedirect = {
+                'port': v.IPERF_PORT
+            }
+            api.setDelRedirect(self.dut, self.__class__.__name__, **optionRedirect)
+            api.setRedirectApply(self.dut, self.__class__.__name__)
+
+            self.assertTrue(ret, "Excute iperf flow error, connection refused.")
+        else:
+            self.assertTrue(res5gConn, "Connecting wifi is failed.")
+
+
+class AP_CLEAR_CHAN52_BW20_WAN_THROUGHPUT(TestCase):
+    @classmethod
+    def setUpClass(self):
+
+        self.dut = api.HttpClient()
+        ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
+        ret2 = chkAdbDevice(v.ANDROID_SERIAL_NUM)
+        self.pc = ShellClient(4)
+        ret3 = self.pc.connect(host=v.PC_HOST, userid=v.PC_USERNAME, password=v.PC_PWD)
+
+        if ret3 is False:
+            raise Exception("PC telnet connection is failed, please check network.")
+
+        if ret1 is False:
+            raise Exception("Http connection is failed. please check your remote settings.")
+
+        if ret2 is False:
+            raise Exception("Device %s is not ready!" % v.ANDROID_SERIAL_NUM)
+
+        option5g = {
+            'wifiIndex': 2,
+            'ssid': v.SSID_5G,
+            'channel': v.CHANNEL52,
+            'bandwidth': '20'
+        }
+        api.setWifi(self.dut, self.__name__, **option5g)
+        self.wanStatus = api.getPppoeStatus(self.dut, self.__name__)
+
+    @classmethod
+    def tearDownClass(self):
+        option5g = {
+            'wifiIndex': 2,
+            'on': 0,
+        }
+        api.setWifi(self.dut, self.__name__, **option5g)
+        self.dut.close()
+        self.pc.close()
+
+    def assoc_sta_throughput_5g(self):
+        res5gConn = setAdbClearSta(v.ANDROID_SERIAL_NUM, v.SSID_5G, "5g", self.__class__.__name__)
+
+        if res5gConn is True:
+            staStatus = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
+            optionRedirect = {
+                "name": "iperf",
+                "proto": 1,
+                "sport": v.IPERF_PORT,
+                "ip": staStatus.get('ip'),
+                "dport": v.IPERF_PORT,
+            }
+            api.setAddRedirect(self.dut, self.__class__.__name__, **optionRedirect)
+            api.setRedirectApply(self.dut, self.__class__.__name__)
+
+            iperfOn = SetAdbIperfOn(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
+            iperfOn.start()
+            t.sleep(3.0)
+            ret = setIperfFlow3(self.pc, self.wanStatus.get('ip'), v.IPERF_INTERVAL, v.IPERF_TIME, self.__class__.__name__)
+
+            optionRedirect = {
+                'port': v.IPERF_PORT
+            }
+            api.setDelRedirect(self.dut, self.__class__.__name__, **optionRedirect)
+            api.setRedirectApply(self.dut, self.__class__.__name__)
+
+            self.assertTrue(ret, "Excute iperf flow error, connection refused.")
+        else:
+            self.assertTrue(res5gConn, "Connecting wifi is failed.")
+
+
+class AP_CLEAR_CHAN149_BW20_WAN_THROUGHPUT(TestCase):
+    @classmethod
+    def setUpClass(self):
+
+        self.dut = api.HttpClient()
+        ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
+        ret2 = chkAdbDevice(v.ANDROID_SERIAL_NUM)
+        self.pc = ShellClient(4)
+        ret3 = self.pc.connect(host=v.PC_HOST, userid=v.PC_USERNAME, password=v.PC_PWD)
+
+        if ret3 is False:
+            raise Exception("PC telnet connection is failed, please check network.")
+
+        if ret1 is False:
+            raise Exception("Http connection is failed. please check your remote settings.")
+
+        if ret2 is False:
+            raise Exception("Device %s is not ready!" % v.ANDROID_SERIAL_NUM)
+
+        option5g = {
+            'wifiIndex': 2,
+            'ssid': v.SSID_5G,
+            'channel': v.CHANNEL149,
+            'bandwidth': '20'
+        }
+        api.setWifi(self.dut, self.__name__, **option5g)
+        self.wanStatus = api.getPppoeStatus(self.dut, self.__name__)
+
+    @classmethod
+    def tearDownClass(self):
+        option5g = {
+            'wifiIndex': 2,
+            'on': 0,
+        }
+        api.setWifi(self.dut, self.__name__, **option5g)
+        self.dut.close()
+        self.pc.close()
+
+    def assoc_sta_throughput_5g(self):
+        res5gConn = setAdbClearSta(v.ANDROID_SERIAL_NUM, v.SSID_5G, "5g", self.__class__.__name__)
+
+        if res5gConn is True:
+            staStatus = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
+            optionRedirect = {
+                "name": "iperf",
+                "proto": 1,
+                "sport": v.IPERF_PORT,
+                "ip": staStatus.get('ip'),
+                "dport": v.IPERF_PORT,
+            }
+            api.setAddRedirect(self.dut, self.__class__.__name__, **optionRedirect)
+            api.setRedirectApply(self.dut, self.__class__.__name__)
+
+            iperfOn = SetAdbIperfOn(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
+            iperfOn.start()
+            t.sleep(3.0)
+            ret = setIperfFlow3(self.pc, self.wanStatus.get('ip'), v.IPERF_INTERVAL, v.IPERF_TIME, self.__class__.__name__)
+
+            optionRedirect = {
+                'port': v.IPERF_PORT
+            }
+            api.setDelRedirect(self.dut, self.__class__.__name__, **optionRedirect)
+            api.setRedirectApply(self.dut, self.__class__.__name__)
+
+            self.assertTrue(ret, "Excute iperf flow error, connection refused.")
+        else:
+            self.assertTrue(res5gConn, "Connecting wifi is failed.")
+
+
+class AP_CLEAR_CHAN165_BW20_WAN_THROUGHPUT(TestCase):
+    @classmethod
+    def setUpClass(self):
+
+        self.dut = api.HttpClient()
+        ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
+        ret2 = chkAdbDevice(v.ANDROID_SERIAL_NUM)
+        self.pc = ShellClient(4)
+        ret3 = self.pc.connect(host=v.PC_HOST, userid=v.PC_USERNAME, password=v.PC_PWD)
+
+        if ret3 is False:
+            raise Exception("PC telnet connection is failed, please check network.")
+
+        if ret1 is False:
+            raise Exception("Http connection is failed. please check your remote settings.")
+
+        if ret2 is False:
+            raise Exception("Device %s is not ready!" % v.ANDROID_SERIAL_NUM)
+
+        option5g = {
+            'wifiIndex': 2,
+            'ssid': v.SSID_5G,
+            'channel': v.CHANNEL165,
+            'bandwidth': '20'
+        }
+        api.setWifi(self.dut, self.__name__, **option5g)
+        self.wanStatus = api.getPppoeStatus(self.dut, self.__name__)
+
+    @classmethod
+    def tearDownClass(self):
+        option5g = {
+            'wifiIndex': 2,
+            'on': 0,
+        }
+        api.setWifi(self.dut, self.__name__, **option5g)
+        self.dut.close()
+        self.pc.close()
+
+    def assoc_sta_throughput_5g(self):
+        res5gConn = setAdbClearSta(v.ANDROID_SERIAL_NUM, v.SSID_5G, "5g", self.__class__.__name__)
+
+        if res5gConn is True:
+            staStatus = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
+            optionRedirect = {
+                "name": "iperf",
+                "proto": 1,
+                "sport": v.IPERF_PORT,
+                "ip": staStatus.get('ip'),
+                "dport": v.IPERF_PORT,
+            }
+            api.setAddRedirect(self.dut, self.__class__.__name__, **optionRedirect)
+            api.setRedirectApply(self.dut, self.__class__.__name__)
+
+            iperfOn = SetAdbIperfOn(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
+            iperfOn.start()
+            t.sleep(3.0)
+            ret = setIperfFlow3(self.pc, self.wanStatus.get('ip'), v.IPERF_INTERVAL, v.IPERF_TIME, self.__class__.__name__)
+
+            optionRedirect = {
+                'port': v.IPERF_PORT
+            }
+            api.setDelRedirect(self.dut, self.__class__.__name__, **optionRedirect)
+            api.setRedirectApply(self.dut, self.__class__.__name__)
+
+            self.assertTrue(ret, "Excute iperf flow error, connection refused.")
+        else:
+            self.assertTrue(res5gConn, "Connecting wifi is failed.")
+
+
+class AP_CLEAR_CHAN36_BW40_WAN_THROUGHPUT(TestCase):
+    @classmethod
+    def setUpClass(self):
+
+        self.dut = api.HttpClient()
+        ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
+        ret2 = chkAdbDevice(v.ANDROID_SERIAL_NUM)
+        self.pc = ShellClient(4)
+        ret3 = self.pc.connect(host=v.PC_HOST, userid=v.PC_USERNAME, password=v.PC_PWD)
+
+        if ret3 is False:
+            raise Exception("PC telnet connection is failed, please check network.")
+
+        if ret1 is False:
+            raise Exception("Http connection is failed. please check your remote settings.")
+
+        if ret2 is False:
+            raise Exception("Device %s is not ready!" % v.ANDROID_SERIAL_NUM)
+
+        option5g = {
+            'wifiIndex': 2,
+            'ssid': v.SSID_5G,
+            'channel': v.CHANNEL36,
+            'bandwidth': '40'
+        }
+        api.setWifi(self.dut, self.__name__, **option5g)
+        self.wanStatus = api.getPppoeStatus(self.dut, self.__name__)
+
+    @classmethod
+    def tearDownClass(self):
+        option5g = {
+            'wifiIndex': 2,
+            'on': 0,
+        }
+        api.setWifi(self.dut, self.__name__, **option5g)
+        self.dut.close()
+        self.pc.close()
+
+    def assoc_sta_throughput_5g(self):
+        res5gConn = setAdbClearSta(v.ANDROID_SERIAL_NUM, v.SSID_5G, "5g", self.__class__.__name__)
+
+        if res5gConn is True:
+            staStatus = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
+            optionRedirect = {
+                "name": "iperf",
+                "proto": 1,
+                "sport": v.IPERF_PORT,
+                "ip": staStatus.get('ip'),
+                "dport": v.IPERF_PORT,
+            }
+            api.setAddRedirect(self.dut, self.__class__.__name__, **optionRedirect)
+            api.setRedirectApply(self.dut, self.__class__.__name__)
+
+            iperfOn = SetAdbIperfOn(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
+            iperfOn.start()
+            t.sleep(3.0)
+            ret = setIperfFlow3(self.pc, self.wanStatus.get('ip'), v.IPERF_INTERVAL, v.IPERF_TIME, self.__class__.__name__)
+
+            optionRedirect = {
+                'port': v.IPERF_PORT
+            }
+            api.setDelRedirect(self.dut, self.__class__.__name__, **optionRedirect)
+            api.setRedirectApply(self.dut, self.__class__.__name__)
+
+            self.assertTrue(ret, "Excute iperf flow error, connection refused.")
+        else:
+            self.assertTrue(res5gConn, "Connecting wifi is failed.")
+
+
+class AP_CLEAR_CHAN44_BW40_WAN_THROUGHPUT(TestCase):
+    @classmethod
+    def setUpClass(self):
+
+        self.dut = api.HttpClient()
+        ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
+        ret2 = chkAdbDevice(v.ANDROID_SERIAL_NUM)
+        self.pc = ShellClient(4)
+        ret3 = self.pc.connect(host=v.PC_HOST, userid=v.PC_USERNAME, password=v.PC_PWD)
+
+        if ret3 is False:
+            raise Exception("PC telnet connection is failed, please check network.")
+
+        if ret1 is False:
+            raise Exception("Http connection is failed. please check your remote settings.")
+
+        if ret2 is False:
+            raise Exception("Device %s is not ready!" % v.ANDROID_SERIAL_NUM)
+
+        option5g = {
+            'wifiIndex': 2,
+            'ssid': v.SSID_5G,
+            'channel': v.CHANNEL44,
+            'bandwidth': '40'
+        }
+        api.setWifi(self.dut, self.__name__, **option5g)
+        self.wanStatus = api.getPppoeStatus(self.dut, self.__name__)
+
+    @classmethod
+    def tearDownClass(self):
+        option5g = {
+            'wifiIndex': 2,
+            'on': 0,
+        }
+        api.setWifi(self.dut, self.__name__, **option5g)
+        self.dut.close()
+        self.pc.close()
+
+    def assoc_sta_throughput_5g(self):
+        res5gConn = setAdbClearSta(v.ANDROID_SERIAL_NUM, v.SSID_5G, "5g", self.__class__.__name__)
+
+        if res5gConn is True:
+            staStatus = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
+            optionRedirect = {
+                "name": "iperf",
+                "proto": 1,
+                "sport": v.IPERF_PORT,
+                "ip": staStatus.get('ip'),
+                "dport": v.IPERF_PORT,
+            }
+            api.setAddRedirect(self.dut, self.__class__.__name__, **optionRedirect)
+            api.setRedirectApply(self.dut, self.__class__.__name__)
+
+            iperfOn = SetAdbIperfOn(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
+            iperfOn.start()
+            t.sleep(3.0)
+            ret = setIperfFlow3(self.pc, self.wanStatus.get('ip'), v.IPERF_INTERVAL, v.IPERF_TIME, self.__class__.__name__)
+
+            optionRedirect = {
+                'port': v.IPERF_PORT
+            }
+            api.setDelRedirect(self.dut, self.__class__.__name__, **optionRedirect)
+            api.setRedirectApply(self.dut, self.__class__.__name__)
+
+            self.assertTrue(ret, "Excute iperf flow error, connection refused.")
+        else:
+            self.assertTrue(res5gConn, "Connecting wifi is failed.")
+
+
+class AP_CLEAR_CHAN52_BW40_WAN_THROUGHPUT(TestCase):
+    @classmethod
+    def setUpClass(self):
+
+        self.dut = api.HttpClient()
+        ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
+        ret2 = chkAdbDevice(v.ANDROID_SERIAL_NUM)
+        self.pc = ShellClient(4)
+        ret3 = self.pc.connect(host=v.PC_HOST, userid=v.PC_USERNAME, password=v.PC_PWD)
+
+        if ret3 is False:
+            raise Exception("PC telnet connection is failed, please check network.")
+
+        if ret1 is False:
+            raise Exception("Http connection is failed. please check your remote settings.")
+
+        if ret2 is False:
+            raise Exception("Device %s is not ready!" % v.ANDROID_SERIAL_NUM)
+
+        option5g = {
+            'wifiIndex': 2,
+            'ssid': v.SSID_5G,
+            'channel': v.CHANNEL52,
+            'bandwidth': '40'
+        }
+        api.setWifi(self.dut, self.__name__, **option5g)
+        self.wanStatus = api.getPppoeStatus(self.dut, self.__name__)
+
+    @classmethod
+    def tearDownClass(self):
+        option5g = {
+            'wifiIndex': 2,
+            'on': 0,
+        }
+        api.setWifi(self.dut, self.__name__, **option5g)
+        self.dut.close()
+        self.pc.close()
+
+    def assoc_sta_throughput_5g(self):
+        res5gConn = setAdbClearSta(v.ANDROID_SERIAL_NUM, v.SSID_5G, "5g", self.__class__.__name__)
+
+        if res5gConn is True:
+            staStatus = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
+            optionRedirect = {
+                "name": "iperf",
+                "proto": 1,
+                "sport": v.IPERF_PORT,
+                "ip": staStatus.get('ip'),
+                "dport": v.IPERF_PORT,
+            }
+            api.setAddRedirect(self.dut, self.__class__.__name__, **optionRedirect)
+            api.setRedirectApply(self.dut, self.__class__.__name__)
+
+            iperfOn = SetAdbIperfOn(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
+            iperfOn.start()
+            t.sleep(3.0)
+            ret = setIperfFlow3(self.pc, self.wanStatus.get('ip'), v.IPERF_INTERVAL, v.IPERF_TIME, self.__class__.__name__)
+
+            optionRedirect = {
+                'port': v.IPERF_PORT
+            }
+            api.setDelRedirect(self.dut, self.__class__.__name__, **optionRedirect)
+            api.setRedirectApply(self.dut, self.__class__.__name__)
+
+            self.assertTrue(ret, "Excute iperf flow error, connection refused.")
+        else:
+            self.assertTrue(res5gConn, "Connecting wifi is failed.")
+
+
+class AP_CLEAR_CHAN60_BW40_WAN_THROUGHPUT(TestCase):
+    @classmethod
+    def setUpClass(self):
+
+        self.dut = api.HttpClient()
+        ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
+        ret2 = chkAdbDevice(v.ANDROID_SERIAL_NUM)
+        self.pc = ShellClient(4)
+        ret3 = self.pc.connect(host=v.PC_HOST, userid=v.PC_USERNAME, password=v.PC_PWD)
+
+        if ret3 is False:
+            raise Exception("PC telnet connection is failed, please check network.")
+
+        if ret1 is False:
+            raise Exception("Http connection is failed. please check your remote settings.")
+
+        if ret2 is False:
+            raise Exception("Device %s is not ready!" % v.ANDROID_SERIAL_NUM)
+
+        option5g = {
+            'wifiIndex': 2,
+            'ssid': v.SSID_5G,
+            'channel': v.CHANNEL60,
+            'bandwidth': '40'
+        }
+        api.setWifi(self.dut, self.__name__, **option5g)
+        self.wanStatus = api.getPppoeStatus(self.dut, self.__name__)
+
+    @classmethod
+    def tearDownClass(self):
+        option5g = {
+            'wifiIndex': 2,
+            'on': 0,
+        }
+        api.setWifi(self.dut, self.__name__, **option5g)
+        self.dut.close()
+        self.pc.close()
+
+    def assoc_sta_throughput_5g(self):
+        res5gConn = setAdbClearSta(v.ANDROID_SERIAL_NUM, v.SSID_5G, "5g", self.__class__.__name__)
+
+        if res5gConn is True:
+            staStatus = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
+            optionRedirect = {
+                "name": "iperf",
+                "proto": 1,
+                "sport": v.IPERF_PORT,
+                "ip": staStatus.get('ip'),
+                "dport": v.IPERF_PORT,
+            }
+            api.setAddRedirect(self.dut, self.__class__.__name__, **optionRedirect)
+            api.setRedirectApply(self.dut, self.__class__.__name__)
+
+            iperfOn = SetAdbIperfOn(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
+            iperfOn.start()
+            t.sleep(3.0)
+            ret = setIperfFlow3(self.pc, self.wanStatus.get('ip'), v.IPERF_INTERVAL, v.IPERF_TIME, self.__class__.__name__)
+
+            optionRedirect = {
+                'port': v.IPERF_PORT
+            }
+            api.setDelRedirect(self.dut, self.__class__.__name__, **optionRedirect)
+            api.setRedirectApply(self.dut, self.__class__.__name__)
+
+            self.assertTrue(ret, "Excute iperf flow error, connection refused.")
+        else:
+            self.assertTrue(res5gConn, "Connecting wifi is failed.")
+
+
+class AP_CLEAR_CHAN149_BW40_WAN_THROUGHPUT(TestCase):
+    @classmethod
+    def setUpClass(self):
+
+        self.dut = api.HttpClient()
+        ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
+        ret2 = chkAdbDevice(v.ANDROID_SERIAL_NUM)
+        self.pc = ShellClient(4)
+        ret3 = self.pc.connect(host=v.PC_HOST, userid=v.PC_USERNAME, password=v.PC_PWD)
+
+        if ret3 is False:
+            raise Exception("PC telnet connection is failed, please check network.")
+
+        if ret1 is False:
+            raise Exception("Http connection is failed. please check your remote settings.")
+
+        if ret2 is False:
+            raise Exception("Device %s is not ready!" % v.ANDROID_SERIAL_NUM)
+
+        option5g = {
+            'wifiIndex': 2,
+            'ssid': v.SSID_5G,
+            'channel': v.CHANNEL149,
+            'bandwidth': '40'
+        }
+        api.setWifi(self.dut, self.__name__, **option5g)
+        self.wanStatus = api.getPppoeStatus(self.dut, self.__name__)
+
+    @classmethod
+    def tearDownClass(self):
+        option5g = {
+            'wifiIndex': 2,
+            'on': 0,
+        }
+        api.setWifi(self.dut, self.__name__, **option5g)
+        self.dut.close()
+        self.pc.close()
+
+    def assoc_sta_throughput_5g(self):
+        res5gConn = setAdbClearSta(v.ANDROID_SERIAL_NUM, v.SSID_5G, "5g", self.__class__.__name__)
+
+        if res5gConn is True:
+            staStatus = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
+            optionRedirect = {
+                "name": "iperf",
+                "proto": 1,
+                "sport": v.IPERF_PORT,
+                "ip": staStatus.get('ip'),
+                "dport": v.IPERF_PORT,
+            }
+            api.setAddRedirect(self.dut, self.__class__.__name__, **optionRedirect)
+            api.setRedirectApply(self.dut, self.__class__.__name__)
+
+            iperfOn = SetAdbIperfOn(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
+            iperfOn.start()
+            t.sleep(3.0)
+            ret = setIperfFlow3(self.pc, self.wanStatus.get('ip'), v.IPERF_INTERVAL, v.IPERF_TIME, self.__class__.__name__)
+
+            optionRedirect = {
+                'port': v.IPERF_PORT
+            }
+            api.setDelRedirect(self.dut, self.__class__.__name__, **optionRedirect)
+            api.setRedirectApply(self.dut, self.__class__.__name__)
+
+            self.assertTrue(ret, "Excute iperf flow error, connection refused.")
+        else:
+            self.assertTrue(res5gConn, "Connecting wifi is failed.")
+
+
+class AP_CLEAR_CHAN157_BW40_WAN_THROUGHPUT(TestCase):
+    @classmethod
+    def setUpClass(self):
+
+        self.dut = api.HttpClient()
+        ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
+        ret2 = chkAdbDevice(v.ANDROID_SERIAL_NUM)
+        self.pc = ShellClient(4)
+        ret3 = self.pc.connect(host=v.PC_HOST, userid=v.PC_USERNAME, password=v.PC_PWD)
+
+        if ret3 is False:
+            raise Exception("PC telnet connection is failed, please check network.")
+
+        if ret1 is False:
+            raise Exception("Http connection is failed. please check your remote settings.")
+
+        if ret2 is False:
+            raise Exception("Device %s is not ready!" % v.ANDROID_SERIAL_NUM)
+
+        option5g = {
+            'wifiIndex': 2,
+            'ssid': v.SSID_5G,
+            'channel': v.CHANNEL157,
+            'bandwidth': '40'
+        }
+        api.setWifi(self.dut, self.__name__, **option5g)
+        self.wanStatus = api.getPppoeStatus(self.dut, self.__name__)
+
+    @classmethod
+    def tearDownClass(self):
+        option5g = {
+            'wifiIndex': 2,
+            'on': 0,
+        }
+        api.setWifi(self.dut, self.__name__, **option5g)
+        self.dut.close()
+        self.pc.close()
+
+    def assoc_sta_throughput_5g(self):
+        res5gConn = setAdbClearSta(v.ANDROID_SERIAL_NUM, v.SSID_5G, "5g", self.__class__.__name__)
+
+        if res5gConn is True:
+            staStatus = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
+            optionRedirect = {
+                "name": "iperf",
+                "proto": 1,
+                "sport": v.IPERF_PORT,
+                "ip": staStatus.get('ip'),
+                "dport": v.IPERF_PORT,
+            }
+            api.setAddRedirect(self.dut, self.__class__.__name__, **optionRedirect)
+            api.setRedirectApply(self.dut, self.__class__.__name__)
+
+            iperfOn = SetAdbIperfOn(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
+            iperfOn.start()
+            t.sleep(3.0)
+            ret = setIperfFlow3(self.pc, self.wanStatus.get('ip'), v.IPERF_INTERVAL, v.IPERF_TIME, self.__class__.__name__)
+
+            optionRedirect = {
+                'port': v.IPERF_PORT
+            }
+            api.setDelRedirect(self.dut, self.__class__.__name__, **optionRedirect)
+            api.setRedirectApply(self.dut, self.__class__.__name__)
+
+            self.assertTrue(ret, "Excute iperf flow error, connection refused.")
+        else:
+            self.assertTrue(res5gConn, "Connecting wifi is failed.")
+
+
+class AP_CLEAR_CHAN36_BW80_WAN_THROUGHPUT(TestCase):
+    @classmethod
+    def setUpClass(self):
+
+        self.dut = api.HttpClient()
+        ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
+        ret2 = chkAdbDevice(v.ANDROID_SERIAL_NUM)
+        self.pc = ShellClient(4)
+        ret3 = self.pc.connect(host=v.PC_HOST, userid=v.PC_USERNAME, password=v.PC_PWD)
+
+        if ret3 is False:
+            raise Exception("PC telnet connection is failed, please check network.")
+
+        if ret1 is False:
+            raise Exception("Http connection is failed. please check your remote settings.")
+
+        if ret2 is False:
+            raise Exception("Device %s is not ready!" % v.ANDROID_SERIAL_NUM)
+
+        option5g = {
+            'wifiIndex': 2,
+            'ssid': v.SSID_5G,
+            'channel': v.CHANNEL36,
+            'bandwidth': '80'
+        }
+        api.setWifi(self.dut, self.__name__, **option5g)
+        self.wanStatus = api.getPppoeStatus(self.dut, self.__name__)
+
+    @classmethod
+    def tearDownClass(self):
+        option5g = {
+            'wifiIndex': 2,
+            'on': 0,
+        }
+        api.setWifi(self.dut, self.__name__, **option5g)
+        self.dut.close()
+        self.pc.close()
+
+    def assoc_sta_throughput_5g(self):
+        res5gConn = setAdbClearSta(v.ANDROID_SERIAL_NUM, v.SSID_5G, "5g", self.__class__.__name__)
+
+        if res5gConn is True:
+            staStatus = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
+            optionRedirect = {
+                "name": "iperf",
+                "proto": 1,
+                "sport": v.IPERF_PORT,
+                "ip": staStatus.get('ip'),
+                "dport": v.IPERF_PORT,
+            }
+            api.setAddRedirect(self.dut, self.__class__.__name__, **optionRedirect)
+            api.setRedirectApply(self.dut, self.__class__.__name__)
+
+            iperfOn = SetAdbIperfOn(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
+            iperfOn.start()
+            t.sleep(3.0)
+            ret = setIperfFlow3(self.pc, self.wanStatus.get('ip'), v.IPERF_INTERVAL, v.IPERF_TIME, self.__class__.__name__)
+
+            optionRedirect = {
+                'port': v.IPERF_PORT
+            }
+            api.setDelRedirect(self.dut, self.__class__.__name__, **optionRedirect)
+            api.setRedirectApply(self.dut, self.__class__.__name__)
+
+            self.assertTrue(ret, "Excute iperf flow error, connection refused.")
+        else:
+            self.assertTrue(res5gConn, "Connecting wifi is failed.")
+
+
+class AP_CLEAR_CHAN52_BW80_WAN_THROUGHPUT(TestCase):
+    @classmethod
+    def setUpClass(self):
+
+        self.dut = api.HttpClient()
+        ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
+        ret2 = chkAdbDevice(v.ANDROID_SERIAL_NUM)
+        self.pc = ShellClient(4)
+        ret3 = self.pc.connect(host=v.PC_HOST, userid=v.PC_USERNAME, password=v.PC_PWD)
+
+        if ret3 is False:
+            raise Exception("PC telnet connection is failed, please check network.")
+
+        if ret1 is False:
+            raise Exception("Http connection is failed. please check your remote settings.")
+
+        if ret2 is False:
+            raise Exception("Device %s is not ready!" % v.ANDROID_SERIAL_NUM)
+
+        option5g = {
+            'wifiIndex': 2,
+            'ssid': v.SSID_5G,
+            'channel': v.CHANNEL52,
+            'bandwidth': '80'
+        }
+        api.setWifi(self.dut, self.__name__, **option5g)
+        self.wanStatus = api.getPppoeStatus(self.dut, self.__name__)
+
+    @classmethod
+    def tearDownClass(self):
+        option5g = {
+            'wifiIndex': 2,
+            'on': 0,
+        }
+        api.setWifi(self.dut, self.__name__, **option5g)
+        self.dut.close()
+        self.pc.close()
+
+    def assoc_sta_throughput_5g(self):
+        res5gConn = setAdbClearSta(v.ANDROID_SERIAL_NUM, v.SSID_5G, "5g", self.__class__.__name__)
+
+        if res5gConn is True:
+            staStatus = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
+            optionRedirect = {
+                "name": "iperf",
+                "proto": 1,
+                "sport": v.IPERF_PORT,
+                "ip": staStatus.get('ip'),
+                "dport": v.IPERF_PORT,
+            }
+            api.setAddRedirect(self.dut, self.__class__.__name__, **optionRedirect)
+            api.setRedirectApply(self.dut, self.__class__.__name__)
+
+            iperfOn = SetAdbIperfOn(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
+            iperfOn.start()
+            t.sleep(3.0)
+            ret = setIperfFlow3(self.pc, self.wanStatus.get('ip'), v.IPERF_INTERVAL, v.IPERF_TIME, self.__class__.__name__)
+
+            optionRedirect = {
+                'port': v.IPERF_PORT
+            }
+            api.setDelRedirect(self.dut, self.__class__.__name__, **optionRedirect)
+            api.setRedirectApply(self.dut, self.__class__.__name__)
+
+            self.assertTrue(ret, "Excute iperf flow error, connection refused.")
+        else:
+            self.assertTrue(res5gConn, "Connecting wifi is failed.")
+
+
+class AP_CLEAR_CHAN149_BW80_WAN_THROUGHPUT(TestCase):
+    @classmethod
+    def setUpClass(self):
+
+        self.dut = api.HttpClient()
+        ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
+        ret2 = chkAdbDevice(v.ANDROID_SERIAL_NUM)
+        self.pc = ShellClient(4)
+        ret3 = self.pc.connect(host=v.PC_HOST, userid=v.PC_USERNAME, password=v.PC_PWD)
+
+        if ret3 is False:
+            raise Exception("PC telnet connection is failed, please check network.")
+
+        if ret1 is False:
+            raise Exception("Http connection is failed. please check your remote settings.")
+
+        if ret2 is False:
+            raise Exception("Device %s is not ready!" % v.ANDROID_SERIAL_NUM)
+
+        option5g = {
+            'wifiIndex': 2,
+            'ssid': v.SSID_5G,
+            'channel': v.CHANNEL149,
+            'bandwidth': '80'
+        }
+        api.setWifi(self.dut, self.__name__, **option5g)
+        self.wanStatus = api.getPppoeStatus(self.dut, self.__name__)
+
+    @classmethod
+    def tearDownClass(self):
+        option5g = {
+            'wifiIndex': 2,
+            'on': 0,
+        }
+        api.setWifi(self.dut, self.__name__, **option5g)
+        self.dut.close()
+        self.pc.close()
+
+    def assoc_sta_throughput_5g(self):
+        res5gConn = setAdbClearSta(v.ANDROID_SERIAL_NUM, v.SSID_5G, "5g", self.__class__.__name__)
+
+        if res5gConn is True:
+            staStatus = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
+            optionRedirect = {
+                "name": "iperf",
+                "proto": 1,
+                "sport": v.IPERF_PORT,
+                "ip": staStatus.get('ip'),
+                "dport": v.IPERF_PORT,
+            }
+            api.setAddRedirect(self.dut, self.__class__.__name__, **optionRedirect)
+            api.setRedirectApply(self.dut, self.__class__.__name__)
+
+            iperfOn = SetAdbIperfOn(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
+            iperfOn.start()
+            t.sleep(3.0)
+            ret = setIperfFlow3(self.pc, self.wanStatus.get('ip'), v.IPERF_INTERVAL, v.IPERF_TIME, self.__class__.__name__)
+
+            optionRedirect = {
+                'port': v.IPERF_PORT
+            }
+            api.setDelRedirect(self.dut, self.__class__.__name__, **optionRedirect)
+            api.setRedirectApply(self.dut, self.__class__.__name__)
+
+            self.assertTrue(ret, "Excute iperf flow error, connection refused.")
+        else:
+            self.assertTrue(res5gConn, "Connecting wifi is failed.")
+
+
+class AP_PSK2_CHAN36_BW20_WAN_THROUGHPUT(TestCase):
+    @classmethod
+    def setUpClass(self):
+
+        self.dut = api.HttpClient()
+        ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
+        ret2 = chkAdbDevice(v.ANDROID_SERIAL_NUM)
+        self.pc = ShellClient(4)
+        ret3 = self.pc.connect(host=v.PC_HOST, userid=v.PC_USERNAME, password=v.PC_PWD)
+
+        if ret3 is False:
+            raise Exception("PC telnet connection is failed, please check network.")
+
+        if ret1 is False:
+            raise Exception("Http connection is failed. please check your remote settings.")
+
+        if ret2 is False:
+            raise Exception("Device %s is not ready!" % v.ANDROID_SERIAL_NUM)
+
+        option5g = {
+            'wifiIndex': 2,
+            'ssid': v.SSID_5G,
+            'channel': v.CHANNEL36,
+            'bandwidth': '20',
+            'encryption': 'psk2',
+            'pwd': v.KEY,
+        }
+        api.setWifi(self.dut, self.__name__, **option5g)
+        self.wanStatus = api.getPppoeStatus(self.dut, self.__name__)
+
+    @classmethod
+    def tearDownClass(self):
+        option5g = {
+            'wifiIndex': 2,
+            'on': 0,
+        }
+        api.setWifi(self.dut, self.__name__, **option5g)
+        self.dut.close()
+        self.pc.close()
+
+    def assoc_sta_throughput_5g(self):
+        res5gConn = setAdbPsk2Sta(v.ANDROID_SERIAL_NUM, v.SSID_5G, v.KEY, "5g", self.__class__.__name__)
+
+        if res5gConn is True:
+            staStatus = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
+            optionRedirect = {
+                "name": "iperf",
+                "proto": 1,
+                "sport": v.IPERF_PORT,
+                "ip": staStatus.get('ip'),
+                "dport": v.IPERF_PORT,
+            }
+            api.setAddRedirect(self.dut, self.__class__.__name__, **optionRedirect)
+            api.setRedirectApply(self.dut, self.__class__.__name__)
+
+            iperfOn = SetAdbIperfOn(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
+            iperfOn.start()
+            t.sleep(3.0)
+            ret = setIperfFlow3(self.pc, self.wanStatus.get('ip'), v.IPERF_INTERVAL, v.IPERF_TIME, self.__class__.__name__)
+
+            optionRedirect = {
+                'port': v.IPERF_PORT
+            }
+            api.setDelRedirect(self.dut, self.__class__.__name__, **optionRedirect)
+            api.setRedirectApply(self.dut, self.__class__.__name__)
+
+            self.assertTrue(ret, "Excute iperf flow error, connection refused.")
+        else:
+            self.assertTrue(res5gConn, "Connecting wifi is failed.")
+
+
+class AP_PSK2_CHAN52_BW20_WAN_THROUGHPUT(TestCase):
+    @classmethod
+    def setUpClass(self):
+
+        self.dut = api.HttpClient()
+        ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
+        ret2 = chkAdbDevice(v.ANDROID_SERIAL_NUM)
+        self.pc = ShellClient(4)
+        ret3 = self.pc.connect(host=v.PC_HOST, userid=v.PC_USERNAME, password=v.PC_PWD)
+
+        if ret3 is False:
+            raise Exception("PC telnet connection is failed, please check network.")
+
+        if ret1 is False:
+            raise Exception("Http connection is failed. please check your remote settings.")
+
+        if ret2 is False:
+            raise Exception("Device %s is not ready!" % v.ANDROID_SERIAL_NUM)
+
+        option5g = {
+            'wifiIndex': 2,
+            'ssid': v.SSID_5G,
+            'channel': v.CHANNEL52,
+            'bandwidth': '20',
+            'encryption': 'psk2',
+            'pwd': v.KEY,
+        }
+        api.setWifi(self.dut, self.__name__, **option5g)
+        self.wanStatus = api.getPppoeStatus(self.dut, self.__name__)
+
+    @classmethod
+    def tearDownClass(self):
+        option5g = {
+            'wifiIndex': 2,
+            'on': 0,
+        }
+        api.setWifi(self.dut, self.__name__, **option5g)
+        self.dut.close()
+        self.pc.close()
+
+    def assoc_sta_throughput_5g(self):
+        res5gConn = setAdbPsk2Sta(v.ANDROID_SERIAL_NUM, v.SSID_5G, v.KEY, "5g", self.__class__.__name__)
+
+        if res5gConn is True:
+            staStatus = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
+            optionRedirect = {
+                "name": "iperf",
+                "proto": 1,
+                "sport": v.IPERF_PORT,
+                "ip": staStatus.get('ip'),
+                "dport": v.IPERF_PORT,
+            }
+            api.setAddRedirect(self.dut, self.__class__.__name__, **optionRedirect)
+            api.setRedirectApply(self.dut, self.__class__.__name__)
+
+            iperfOn = SetAdbIperfOn(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
+            iperfOn.start()
+            t.sleep(3.0)
+            ret = setIperfFlow3(self.pc, self.wanStatus.get('ip'), v.IPERF_INTERVAL, v.IPERF_TIME, self.__class__.__name__)
+
+            optionRedirect = {
+                'port': v.IPERF_PORT
+            }
+            api.setDelRedirect(self.dut, self.__class__.__name__, **optionRedirect)
+            api.setRedirectApply(self.dut, self.__class__.__name__)
+
+            self.assertTrue(ret, "Excute iperf flow error, connection refused.")
+        else:
+            self.assertTrue(res5gConn, "Connecting wifi is failed.")
+
+
+class AP_PSK2_CHAN149_BW20_WAN_THROUGHPUT(TestCase):
+    @classmethod
+    def setUpClass(self):
+
+        self.dut = api.HttpClient()
+        ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
+        ret2 = chkAdbDevice(v.ANDROID_SERIAL_NUM)
+        self.pc = ShellClient(4)
+        ret3 = self.pc.connect(host=v.PC_HOST, userid=v.PC_USERNAME, password=v.PC_PWD)
+
+        if ret3 is False:
+            raise Exception("PC telnet connection is failed, please check network.")
+
+        if ret1 is False:
+            raise Exception("Http connection is failed. please check your remote settings.")
+
+        if ret2 is False:
+            raise Exception("Device %s is not ready!" % v.ANDROID_SERIAL_NUM)
+
+        option5g = {
+            'wifiIndex': 2,
+            'ssid': v.SSID_5G,
+            'channel': v.CHANNEL149,
+            'bandwidth': '20',
+            'encryption': 'psk2',
+            'pwd': v.KEY,
+        }
+        api.setWifi(self.dut, self.__name__, **option5g)
+        self.wanStatus = api.getPppoeStatus(self.dut, self.__name__)
+
+    @classmethod
+    def tearDownClass(self):
+        option5g = {
+            'wifiIndex': 2,
+            'on': 0,
+        }
+        api.setWifi(self.dut, self.__name__, **option5g)
+        self.dut.close()
+        self.pc.close()
+
+    def assoc_sta_throughput_5g(self):
+        res5gConn = setAdbPsk2Sta(v.ANDROID_SERIAL_NUM, v.SSID_5G, v.KEY, "5g", self.__class__.__name__)
+
+        if res5gConn is True:
+            staStatus = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
+            optionRedirect = {
+                "name": "iperf",
+                "proto": 1,
+                "sport": v.IPERF_PORT,
+                "ip": staStatus.get('ip'),
+                "dport": v.IPERF_PORT,
+            }
+            api.setAddRedirect(self.dut, self.__class__.__name__, **optionRedirect)
+            api.setRedirectApply(self.dut, self.__class__.__name__)
+
+            iperfOn = SetAdbIperfOn(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
+            iperfOn.start()
+            t.sleep(3.0)
+            ret = setIperfFlow3(self.pc, self.wanStatus.get('ip'), v.IPERF_INTERVAL, v.IPERF_TIME, self.__class__.__name__)
+
+            optionRedirect = {
+                'port': v.IPERF_PORT
+            }
+            api.setDelRedirect(self.dut, self.__class__.__name__, **optionRedirect)
+            api.setRedirectApply(self.dut, self.__class__.__name__)
+
+            self.assertTrue(ret, "Excute iperf flow error, connection refused.")
+        else:
+            self.assertTrue(res5gConn, "Connecting wifi is failed.")
+
+
+class AP_PSK2_CHAN165_BW20_WAN_THROUGHPUT(TestCase):
+    @classmethod
+    def setUpClass(self):
+
+        self.dut = api.HttpClient()
+        ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
+        ret2 = chkAdbDevice(v.ANDROID_SERIAL_NUM)
+        self.pc = ShellClient(4)
+        ret3 = self.pc.connect(host=v.PC_HOST, userid=v.PC_USERNAME, password=v.PC_PWD)
+
+        if ret3 is False:
+            raise Exception("PC telnet connection is failed, please check network.")
+
+        if ret1 is False:
+            raise Exception("Http connection is failed. please check your remote settings.")
+
+        if ret2 is False:
+            raise Exception("Device %s is not ready!" % v.ANDROID_SERIAL_NUM)
+
+        option5g = {
+            'wifiIndex': 2,
+            'ssid': v.SSID_5G,
+            'channel': v.CHANNEL165,
+            'bandwidth': '20',
+            'encryption': 'psk2',
+            'pwd': v.KEY,
+        }
+        api.setWifi(self.dut, self.__name__, **option5g)
+        self.wanStatus = api.getPppoeStatus(self.dut, self.__name__)
+
+    @classmethod
+    def tearDownClass(self):
+        option5g = {
+            'wifiIndex': 2,
+            'on': 0,
+        }
+        api.setWifi(self.dut, self.__name__, **option5g)
+        self.dut.close()
+        self.pc.close()
+
+    def assoc_sta_throughput_5g(self):
+        res5gConn = setAdbPsk2Sta(v.ANDROID_SERIAL_NUM, v.SSID_5G, v.KEY, "5g", self.__class__.__name__)
+
+        if res5gConn is True:
+            staStatus = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
+            optionRedirect = {
+                "name": "iperf",
+                "proto": 1,
+                "sport": v.IPERF_PORT,
+                "ip": staStatus.get('ip'),
+                "dport": v.IPERF_PORT,
+            }
+            api.setAddRedirect(self.dut, self.__class__.__name__, **optionRedirect)
+            api.setRedirectApply(self.dut, self.__class__.__name__)
+
+            iperfOn = SetAdbIperfOn(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
+            iperfOn.start()
+            t.sleep(3.0)
+            ret = setIperfFlow3(self.pc, self.wanStatus.get('ip'), v.IPERF_INTERVAL, v.IPERF_TIME, self.__class__.__name__)
+
+            optionRedirect = {
+                'port': v.IPERF_PORT
+            }
+            api.setDelRedirect(self.dut, self.__class__.__name__, **optionRedirect)
+            api.setRedirectApply(self.dut, self.__class__.__name__)
+
+            self.assertTrue(ret, "Excute iperf flow error, connection refused.")
+        else:
+            self.assertTrue(res5gConn, "Connecting wifi is failed.")
+
+
+class AP_PSK2_CHAN36_BW40_WAN_THROUGHPUT(TestCase):
+    @classmethod
+    def setUpClass(self):
+
+        self.dut = api.HttpClient()
+        ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
+        ret2 = chkAdbDevice(v.ANDROID_SERIAL_NUM)
+        self.pc = ShellClient(4)
+        ret3 = self.pc.connect(host=v.PC_HOST, userid=v.PC_USERNAME, password=v.PC_PWD)
+
+        if ret3 is False:
+            raise Exception("PC telnet connection is failed, please check network.")
+
+        if ret1 is False:
+            raise Exception("Http connection is failed. please check your remote settings.")
+
+        if ret2 is False:
+            raise Exception("Device %s is not ready!" % v.ANDROID_SERIAL_NUM)
+
+        option5g = {
+            'wifiIndex': 2,
+            'ssid': v.SSID_5G,
+            'channel': v.CHANNEL36,
+            'bandwidth': '40',
+            'encryption': 'psk2',
+            'pwd': v.KEY,
+        }
+        api.setWifi(self.dut, self.__name__, **option5g)
+        self.wanStatus = api.getPppoeStatus(self.dut, self.__name__)
+
+    @classmethod
+    def tearDownClass(self):
+        option5g = {
+            'wifiIndex': 2,
+            'on': 0,
+        }
+        api.setWifi(self.dut, self.__name__, **option5g)
+        self.dut.close()
+        self.pc.close()
+
+    def assoc_sta_throughput_5g(self):
+        res5gConn = setAdbPsk2Sta(v.ANDROID_SERIAL_NUM, v.SSID_5G, v.KEY, "5g", self.__class__.__name__)
+
+        if res5gConn is True:
+            staStatus = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
+            optionRedirect = {
+                "name": "iperf",
+                "proto": 1,
+                "sport": v.IPERF_PORT,
+                "ip": staStatus.get('ip'),
+                "dport": v.IPERF_PORT,
+            }
+            api.setAddRedirect(self.dut, self.__class__.__name__, **optionRedirect)
+            api.setRedirectApply(self.dut, self.__class__.__name__)
+
+            iperfOn = SetAdbIperfOn(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
+            iperfOn.start()
+            t.sleep(3.0)
+            ret = setIperfFlow3(self.pc, self.wanStatus.get('ip'), v.IPERF_INTERVAL, v.IPERF_TIME, self.__class__.__name__)
+
+            optionRedirect = {
+                'port': v.IPERF_PORT
+            }
+            api.setDelRedirect(self.dut, self.__class__.__name__, **optionRedirect)
+            api.setRedirectApply(self.dut, self.__class__.__name__)
+
+            self.assertTrue(ret, "Excute iperf flow error, connection refused.")
+        else:
+            self.assertTrue(res5gConn, "Connecting wifi is failed.")
+
+
+class AP_PSK2_CHAN44_BW40_WAN_THROUGHPUT(TestCase):
+    @classmethod
+    def setUpClass(self):
+
+        self.dut = api.HttpClient()
+        ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
+        ret2 = chkAdbDevice(v.ANDROID_SERIAL_NUM)
+        self.pc = ShellClient(4)
+        ret3 = self.pc.connect(host=v.PC_HOST, userid=v.PC_USERNAME, password=v.PC_PWD)
+
+        if ret3 is False:
+            raise Exception("PC telnet connection is failed, please check network.")
+
+        if ret1 is False:
+            raise Exception("Http connection is failed. please check your remote settings.")
+
+        if ret2 is False:
+            raise Exception("Device %s is not ready!" % v.ANDROID_SERIAL_NUM)
+
+        option5g = {
+            'wifiIndex': 2,
+            'ssid': v.SSID_5G,
+            'channel': v.CHANNEL44,
+            'bandwidth': '40',
+            'encryption': 'psk2',
+            'pwd': v.KEY,
+        }
+        api.setWifi(self.dut, self.__name__, **option5g)
+        self.wanStatus = api.getPppoeStatus(self.dut, self.__name__)
+
+    @classmethod
+    def tearDownClass(self):
+        option5g = {
+            'wifiIndex': 2,
+            'on': 0,
+        }
+        api.setWifi(self.dut, self.__name__, **option5g)
+        self.dut.close()
+        self.pc.close()
+
+    def assoc_sta_throughput_5g(self):
+        res5gConn = setAdbPsk2Sta(v.ANDROID_SERIAL_NUM, v.SSID_5G, v.KEY, "5g", self.__class__.__name__)
+
+        if res5gConn is True:
+            staStatus = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
+            optionRedirect = {
+                "name": "iperf",
+                "proto": 1,
+                "sport": v.IPERF_PORT,
+                "ip": staStatus.get('ip'),
+                "dport": v.IPERF_PORT,
+            }
+            api.setAddRedirect(self.dut, self.__class__.__name__, **optionRedirect)
+            api.setRedirectApply(self.dut, self.__class__.__name__)
+
+            iperfOn = SetAdbIperfOn(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
+            iperfOn.start()
+            t.sleep(3.0)
+            ret = setIperfFlow3(self.pc, self.wanStatus.get('ip'), v.IPERF_INTERVAL, v.IPERF_TIME, self.__class__.__name__)
+
+            optionRedirect = {
+                'port': v.IPERF_PORT
+            }
+            api.setDelRedirect(self.dut, self.__class__.__name__, **optionRedirect)
+            api.setRedirectApply(self.dut, self.__class__.__name__)
+
+            self.assertTrue(ret, "Excute iperf flow error, connection refused.")
+        else:
+            self.assertTrue(res5gConn, "Connecting wifi is failed.")
+
+
+class AP_PSK2_CHAN52_BW40_WAN_THROUGHPUT(TestCase):
+    @classmethod
+    def setUpClass(self):
+
+        self.dut = api.HttpClient()
+        ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
+        ret2 = chkAdbDevice(v.ANDROID_SERIAL_NUM)
+        self.pc = ShellClient(4)
+        ret3 = self.pc.connect(host=v.PC_HOST, userid=v.PC_USERNAME, password=v.PC_PWD)
+
+        if ret3 is False:
+            raise Exception("PC telnet connection is failed, please check network.")
+
+        if ret1 is False:
+            raise Exception("Http connection is failed. please check your remote settings.")
+
+        if ret2 is False:
+            raise Exception("Device %s is not ready!" % v.ANDROID_SERIAL_NUM)
+
+        option5g = {
+            'wifiIndex': 2,
+            'ssid': v.SSID_5G,
+            'channel': v.CHANNEL52,
+            'bandwidth': '40',
+            'encryption': 'psk2',
+            'pwd': v.KEY,
+        }
+        api.setWifi(self.dut, self.__name__, **option5g)
+        self.wanStatus = api.getPppoeStatus(self.dut, self.__name__)
+
+    @classmethod
+    def tearDownClass(self):
+        option5g = {
+            'wifiIndex': 2,
+            'on': 0,
+        }
+        api.setWifi(self.dut, self.__name__, **option5g)
+        self.dut.close()
+        self.pc.close()
+
+    def assoc_sta_throughput_5g(self):
+        res5gConn = setAdbPsk2Sta(v.ANDROID_SERIAL_NUM, v.SSID_5G, v.KEY, "5g", self.__class__.__name__)
+
+        if res5gConn is True:
+            staStatus = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
+            optionRedirect = {
+                "name": "iperf",
+                "proto": 1,
+                "sport": v.IPERF_PORT,
+                "ip": staStatus.get('ip'),
+                "dport": v.IPERF_PORT,
+            }
+            api.setAddRedirect(self.dut, self.__class__.__name__, **optionRedirect)
+            api.setRedirectApply(self.dut, self.__class__.__name__)
+
+            iperfOn = SetAdbIperfOn(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
+            iperfOn.start()
+            t.sleep(3.0)
+            ret = setIperfFlow3(self.pc, self.wanStatus.get('ip'), v.IPERF_INTERVAL, v.IPERF_TIME, self.__class__.__name__)
+
+            optionRedirect = {
+                'port': v.IPERF_PORT
+            }
+            api.setDelRedirect(self.dut, self.__class__.__name__, **optionRedirect)
+            api.setRedirectApply(self.dut, self.__class__.__name__)
+
+            self.assertTrue(ret, "Excute iperf flow error, connection refused.")
+        else:
+            self.assertTrue(res5gConn, "Connecting wifi is failed.")
+
+
+class AP_PSK2_CHAN60_BW40_WAN_THROUGHPUT(TestCase):
+    @classmethod
+    def setUpClass(self):
+
+        self.dut = api.HttpClient()
+        ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
+        ret2 = chkAdbDevice(v.ANDROID_SERIAL_NUM)
+        self.pc = ShellClient(4)
+        ret3 = self.pc.connect(host=v.PC_HOST, userid=v.PC_USERNAME, password=v.PC_PWD)
+
+        if ret3 is False:
+            raise Exception("PC telnet connection is failed, please check network.")
+
+        if ret1 is False:
+            raise Exception("Http connection is failed. please check your remote settings.")
+
+        if ret2 is False:
+            raise Exception("Device %s is not ready!" % v.ANDROID_SERIAL_NUM)
+
+        option5g = {
+            'wifiIndex': 2,
+            'ssid': v.SSID_5G,
+            'channel': v.CHANNEL60,
+            'bandwidth': '40',
+            'encryption': 'psk2',
+            'pwd': v.KEY,
+        }
+        api.setWifi(self.dut, self.__name__, **option5g)
+        self.wanStatus = api.getPppoeStatus(self.dut, self.__name__)
+
+    @classmethod
+    def tearDownClass(self):
+        option5g = {
+            'wifiIndex': 2,
+            'on': 0,
+        }
+        api.setWifi(self.dut, self.__name__, **option5g)
+        self.dut.close()
+        self.pc.close()
+
+    def assoc_sta_throughput_5g(self):
+        res5gConn = setAdbPsk2Sta(v.ANDROID_SERIAL_NUM, v.SSID_5G, v.KEY, "5g", self.__class__.__name__)
+
+        if res5gConn is True:
+            staStatus = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
+            optionRedirect = {
+                "name": "iperf",
+                "proto": 1,
+                "sport": v.IPERF_PORT,
+                "ip": staStatus.get('ip'),
+                "dport": v.IPERF_PORT,
+            }
+            api.setAddRedirect(self.dut, self.__class__.__name__, **optionRedirect)
+            api.setRedirectApply(self.dut, self.__class__.__name__)
+
+            iperfOn = SetAdbIperfOn(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
+            iperfOn.start()
+            t.sleep(3.0)
+            ret = setIperfFlow3(self.pc, self.wanStatus.get('ip'), v.IPERF_INTERVAL, v.IPERF_TIME, self.__class__.__name__)
+
+            optionRedirect = {
+                'port': v.IPERF_PORT
+            }
+            api.setDelRedirect(self.dut, self.__class__.__name__, **optionRedirect)
+            api.setRedirectApply(self.dut, self.__class__.__name__)
+
+            self.assertTrue(ret, "Excute iperf flow error, connection refused.")
+        else:
+            self.assertTrue(res5gConn, "Connecting wifi is failed.")
+
+
+class AP_PSK2_CHAN149_BW40_WAN_THROUGHPUT(TestCase):
+    @classmethod
+    def setUpClass(self):
+
+        self.dut = api.HttpClient()
+        ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
+        ret2 = chkAdbDevice(v.ANDROID_SERIAL_NUM)
+        self.pc = ShellClient(4)
+        ret3 = self.pc.connect(host=v.PC_HOST, userid=v.PC_USERNAME, password=v.PC_PWD)
+
+        if ret3 is False:
+            raise Exception("PC telnet connection is failed, please check network.")
+
+        if ret1 is False:
+            raise Exception("Http connection is failed. please check your remote settings.")
+
+        if ret2 is False:
+            raise Exception("Device %s is not ready!" % v.ANDROID_SERIAL_NUM)
+
+        option5g = {
+            'wifiIndex': 2,
+            'ssid': v.SSID_5G,
+            'channel': v.CHANNEL149,
+            'bandwidth': '40',
+            'encryption': 'psk2',
+            'pwd': v.KEY,
+        }
+        api.setWifi(self.dut, self.__name__, **option5g)
+        self.wanStatus = api.getPppoeStatus(self.dut, self.__name__)
+
+    @classmethod
+    def tearDownClass(self):
+        option5g = {
+            'wifiIndex': 2,
+            'on': 0,
+        }
+        api.setWifi(self.dut, self.__name__, **option5g)
+        self.dut.close()
+        self.pc.close()
+
+    def assoc_sta_throughput_5g(self):
+        res5gConn = setAdbPsk2Sta(v.ANDROID_SERIAL_NUM, v.SSID_5G, v.KEY, "5g", self.__class__.__name__)
+
+        if res5gConn is True:
+            staStatus = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
+            optionRedirect = {
+                "name": "iperf",
+                "proto": 1,
+                "sport": v.IPERF_PORT,
+                "ip": staStatus.get('ip'),
+                "dport": v.IPERF_PORT,
+            }
+            api.setAddRedirect(self.dut, self.__class__.__name__, **optionRedirect)
+            api.setRedirectApply(self.dut, self.__class__.__name__)
+
+            iperfOn = SetAdbIperfOn(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
+            iperfOn.start()
+            t.sleep(3.0)
+            ret = setIperfFlow3(self.pc, self.wanStatus.get('ip'), v.IPERF_INTERVAL, v.IPERF_TIME, self.__class__.__name__)
+
+            optionRedirect = {
+                'port': v.IPERF_PORT
+            }
+            api.setDelRedirect(self.dut, self.__class__.__name__, **optionRedirect)
+            api.setRedirectApply(self.dut, self.__class__.__name__)
+
+            self.assertTrue(ret, "Excute iperf flow error, connection refused.")
+        else:
+            self.assertTrue(res5gConn, "Connecting wifi is failed.")
+
+
+class AP_PSK2_CHAN157_BW40_WAN_THROUGHPUT(TestCase):
+    @classmethod
+    def setUpClass(self):
+
+        self.dut = api.HttpClient()
+        ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
+        ret2 = chkAdbDevice(v.ANDROID_SERIAL_NUM)
+        self.pc = ShellClient(4)
+        ret3 = self.pc.connect(host=v.PC_HOST, userid=v.PC_USERNAME, password=v.PC_PWD)
+
+        if ret3 is False:
+            raise Exception("PC telnet connection is failed, please check network.")
+
+        if ret1 is False:
+            raise Exception("Http connection is failed. please check your remote settings.")
+
+        if ret2 is False:
+            raise Exception("Device %s is not ready!" % v.ANDROID_SERIAL_NUM)
+
+        option5g = {
+            'wifiIndex': 2,
+            'ssid': v.SSID_5G,
+            'channel': v.CHANNEL157,
+            'bandwidth': '40',
+            'encryption': 'psk2',
+            'pwd': v.KEY,
+        }
+        api.setWifi(self.dut, self.__name__, **option5g)
+        self.wanStatus = api.getPppoeStatus(self.dut, self.__name__)
+
+    @classmethod
+    def tearDownClass(self):
+        option5g = {
+            'wifiIndex': 2,
+            'on': 0,
+        }
+        api.setWifi(self.dut, self.__name__, **option5g)
+        self.dut.close()
+        self.pc.close()
+
+    def assoc_sta_throughput_5g(self):
+        res5gConn = setAdbPsk2Sta(v.ANDROID_SERIAL_NUM, v.SSID_5G, v.KEY, "5g", self.__class__.__name__)
+
+        if res5gConn is True:
+            staStatus = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
+            optionRedirect = {
+                "name": "iperf",
+                "proto": 1,
+                "sport": v.IPERF_PORT,
+                "ip": staStatus.get('ip'),
+                "dport": v.IPERF_PORT,
+            }
+            api.setAddRedirect(self.dut, self.__class__.__name__, **optionRedirect)
+            api.setRedirectApply(self.dut, self.__class__.__name__)
+
+            iperfOn = SetAdbIperfOn(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
+            iperfOn.start()
+            t.sleep(3.0)
+            ret = setIperfFlow3(self.pc, self.wanStatus.get('ip'), v.IPERF_INTERVAL, v.IPERF_TIME, self.__class__.__name__)
+
+            optionRedirect = {
+                'port': v.IPERF_PORT
+            }
+            api.setDelRedirect(self.dut, self.__class__.__name__, **optionRedirect)
+            api.setRedirectApply(self.dut, self.__class__.__name__)
+
+            self.assertTrue(ret, "Excute iperf flow error, connection refused.")
+        else:
+            self.assertTrue(res5gConn, "Connecting wifi is failed.")
+
+
+class AP_PSK2_CHAN36_BW80_WAN_THROUGHPUT(TestCase):
+    @classmethod
+    def setUpClass(self):
+
+        self.dut = api.HttpClient()
+        ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
+        ret2 = chkAdbDevice(v.ANDROID_SERIAL_NUM)
+        self.pc = ShellClient(4)
+        ret3 = self.pc.connect(host=v.PC_HOST, userid=v.PC_USERNAME, password=v.PC_PWD)
+
+        if ret3 is False:
+            raise Exception("PC telnet connection is failed, please check network.")
+
+        if ret1 is False:
+            raise Exception("Http connection is failed. please check your remote settings.")
+
+        if ret2 is False:
+            raise Exception("Device %s is not ready!" % v.ANDROID_SERIAL_NUM)
+
+        option5g = {
+            'wifiIndex': 2,
+            'ssid': v.SSID_5G,
+            'channel': v.CHANNEL36,
+            'bandwidth': '80',
+            'encryption': 'psk2',
+            'pwd': v.KEY,
+        }
+        api.setWifi(self.dut, self.__name__, **option5g)
+        self.wanStatus = api.getPppoeStatus(self.dut, self.__name__)
+
+    @classmethod
+    def tearDownClass(self):
+        option5g = {
+            'wifiIndex': 2,
+            'on': 0,
+        }
+        api.setWifi(self.dut, self.__name__, **option5g)
+        self.dut.close()
+        self.pc.close()
+
+    def assoc_sta_throughput_5g(self):
+        res5gConn = setAdbPsk2Sta(v.ANDROID_SERIAL_NUM, v.SSID_5G, v.KEY, "5g", self.__class__.__name__)
+
+        if res5gConn is True:
+            staStatus = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
+            optionRedirect = {
+                "name": "iperf",
+                "proto": 1,
+                "sport": v.IPERF_PORT,
+                "ip": staStatus.get('ip'),
+                "dport": v.IPERF_PORT,
+            }
+            api.setAddRedirect(self.dut, self.__class__.__name__, **optionRedirect)
+            api.setRedirectApply(self.dut, self.__class__.__name__)
+
+            iperfOn = SetAdbIperfOn(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
+            iperfOn.start()
+            t.sleep(3.0)
+            ret = setIperfFlow3(self.pc, self.wanStatus.get('ip'), v.IPERF_INTERVAL, v.IPERF_TIME, self.__class__.__name__)
+
+            optionRedirect = {
+                'port': v.IPERF_PORT
+            }
+            api.setDelRedirect(self.dut, self.__class__.__name__, **optionRedirect)
+            api.setRedirectApply(self.dut, self.__class__.__name__)
+
+            self.assertTrue(ret, "Excute iperf flow error, connection refused.")
+        else:
+            self.assertTrue(res5gConn, "Connecting wifi is failed.")
+
+
+class AP_PSK2_CHAN52_BW80_WAN_THROUGHPUT(TestCase):
+    @classmethod
+    def setUpClass(self):
+
+        self.dut = api.HttpClient()
+        ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
+        ret2 = chkAdbDevice(v.ANDROID_SERIAL_NUM)
+        self.pc = ShellClient(4)
+        ret3 = self.pc.connect(host=v.PC_HOST, userid=v.PC_USERNAME, password=v.PC_PWD)
+
+        if ret3 is False:
+            raise Exception("PC telnet connection is failed, please check network.")
+
+        if ret1 is False:
+            raise Exception("Http connection is failed. please check your remote settings.")
+
+        if ret2 is False:
+            raise Exception("Device %s is not ready!" % v.ANDROID_SERIAL_NUM)
+
+        option5g = {
+            'wifiIndex': 2,
+            'ssid': v.SSID_5G,
+            'channel': v.CHANNEL52,
+            'bandwidth': '80',
+            'encryption': 'psk2',
+            'pwd': v.KEY,
+        }
+        api.setWifi(self.dut, self.__name__, **option5g)
+        self.wanStatus = api.getPppoeStatus(self.dut, self.__name__)
+
+    @classmethod
+    def tearDownClass(self):
+        option5g = {
+            'wifiIndex': 2,
+            'on': 0,
+        }
+        api.setWifi(self.dut, self.__name__, **option5g)
+        self.dut.close()
+        self.pc.close()
+
+    def assoc_sta_throughput_5g(self):
+        res5gConn = setAdbPsk2Sta(v.ANDROID_SERIAL_NUM, v.SSID_5G, v.KEY, "5g", self.__class__.__name__)
+
+        if res5gConn is True:
+            staStatus = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
+            optionRedirect = {
+                "name": "iperf",
+                "proto": 1,
+                "sport": v.IPERF_PORT,
+                "ip": staStatus.get('ip'),
+                "dport": v.IPERF_PORT,
+            }
+            api.setAddRedirect(self.dut, self.__class__.__name__, **optionRedirect)
+            api.setRedirectApply(self.dut, self.__class__.__name__)
+
+            iperfOn = SetAdbIperfOn(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
+            iperfOn.start()
+            t.sleep(3.0)
+            ret = setIperfFlow3(self.pc, self.wanStatus.get('ip'), v.IPERF_INTERVAL, v.IPERF_TIME, self.__class__.__name__)
+
+            optionRedirect = {
+                'port': v.IPERF_PORT
+            }
+            api.setDelRedirect(self.dut, self.__class__.__name__, **optionRedirect)
+            api.setRedirectApply(self.dut, self.__class__.__name__)
+
+            self.assertTrue(ret, "Excute iperf flow error, connection refused.")
+        else:
+            self.assertTrue(res5gConn, "Connecting wifi is failed.")
+
+
+class AP_PSK2_CHAN149_BW80_WAN_THROUGHPUT(TestCase):
+    @classmethod
+    def setUpClass(self):
+
+        self.dut = api.HttpClient()
+        ret1 = self.dut.connect(host=v.HOST, password=v.WEB_PWD)
+        ret2 = chkAdbDevice(v.ANDROID_SERIAL_NUM)
+        self.pc = ShellClient(4)
+        ret3 = self.pc.connect(host=v.PC_HOST, userid=v.PC_USERNAME, password=v.PC_PWD)
+
+        if ret3 is False:
+            raise Exception("PC telnet connection is failed, please check network.")
+
+        if ret1 is False:
+            raise Exception("Http connection is failed. please check your remote settings.")
+
+        if ret2 is False:
+            raise Exception("Device %s is not ready!" % v.ANDROID_SERIAL_NUM)
+
+        option5g = {
+            'wifiIndex': 2,
+            'ssid': v.SSID_5G,
+            'channel': v.CHANNEL149,
+            'bandwidth': '80',
+            'encryption': 'psk2',
+            'pwd': v.KEY,
+        }
+        api.setWifi(self.dut, self.__name__, **option5g)
+        self.wanStatus = api.getPppoeStatus(self.dut, self.__name__)
+
+    @classmethod
+    def tearDownClass(self):
+        option5g = {
+            'wifiIndex': 2,
+            'on': 0,
+        }
+        api.setWifi(self.dut, self.__name__, **option5g)
+        self.dut.close()
+        self.pc.close()
+
+    def assoc_sta_throughput_5g(self):
+        res5gConn = setAdbPsk2Sta(v.ANDROID_SERIAL_NUM, v.SSID_5G, v.KEY, "5g", self.__class__.__name__)
+
+        if res5gConn is True:
+            staStatus = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
+            optionRedirect = {
+                "name": "iperf",
+                "proto": 1,
+                "sport": v.IPERF_PORT,
+                "ip": staStatus.get('ip'),
+                "dport": v.IPERF_PORT,
+            }
+            api.setAddRedirect(self.dut, self.__class__.__name__, **optionRedirect)
+            api.setRedirectApply(self.dut, self.__class__.__name__)
+
+            iperfOn = SetAdbIperfOn(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
+            iperfOn.start()
+            t.sleep(3.0)
+            ret = setIperfFlow3(self.pc, self.wanStatus.get('ip'), v.IPERF_INTERVAL, v.IPERF_TIME, self.__class__.__name__)
+
+            optionRedirect = {
+                'port': v.IPERF_PORT
+            }
+            api.setDelRedirect(self.dut, self.__class__.__name__, **optionRedirect)
+            api.setRedirectApply(self.dut, self.__class__.__name__)
+
+            self.assertTrue(ret, "Excute iperf flow error, connection refused.")
+        else:
+            self.assertTrue(res5gConn, "Connecting wifi is failed.")
+
+
 class AP_PSK2_CHAN11_OOKLA(TestCase):
     @classmethod
     def setUpClass(self):
@@ -16365,11 +19305,12 @@ class AP_CHECK(TestCase):
 if __name__ == '__main__':
     v.HOST = "192.168.31.1"
     v.WEB_PWD = "12345678"
+    v.ANDROID_SERIAL_NUM = "4ea65416"
     cases = [
-        'assoc_psk2_sta_speedtest_2g',
+        'assoc_sta_throughput_2g',
     ]
 
-    suite = TestSuite(map(AP_QOS_MIXEDPSK, cases))
+    suite = TestSuite(map(AP_CLEAR_CHAN1_BW20_WAN_THROUGHPUT, cases))
     curTime = t.strftime('%Y.%m.%d %H.%M.%S', t.localtime())
     f = open(curTime + '_RESULT.log', 'a')
     runner = TextTestRunner(f, verbosity=2)

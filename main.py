@@ -216,7 +216,7 @@ class GeneralPage(wx.Panel):
         staConnSizer3.Add(self.staCount, 0,
                           wx.ALIGN_LEFT | wx.TOP | wx.LEFT, 4)
 
-        staConnSizer.Add(staConnSizer2, 0, wx.LEFT, 5)
+        staConnSizer.Add(staConnSizer2, 0, wx.LEFT, 23)
         staConnSizer.Add(staConnSizer3, 0, wx.LEFT, 2)
         staConnSizer.Add(self.staModel, 0, wx.LEFT | wx.TOP, 2 | 4)
 
@@ -311,7 +311,7 @@ class GeneralPage(wx.Panel):
 
         if result:
             v.SAVE_BTN_FLAG = True
-            dlgOk = wx.MessageDialog(self, 'Connection is OK ! \n'
+            dlgOk = wx.MessageDialog(self, 'DUT connection is OK ! \n'
                                            'DUT is %s !'%(v.REPORT_NAME.split()[0]),
                                      'Info',
                                      wx.OK | wx.ICON_INFORMATION | wx.STAY_ON_TOP
@@ -321,7 +321,7 @@ class GeneralPage(wx.Panel):
             dlgOk.Destroy()
         else:
             self.saveBtn.Enable(True)
-            dlgErr = wx.MessageDialog(self, 'Connection is failed, please check your network!',
+            dlgErr = wx.MessageDialog(self, 'DUT connection is failed, please check your network!',
                                       'Info',
                                       wx.OK | wx.ICON_INFORMATION | wx.STAY_ON_TOP
                                       )
@@ -332,13 +332,32 @@ class GeneralPage(wx.Panel):
     def adbDeviceCheckThread(self, count):
         result = co.chkAdbDevicesCount(count)
         if result is False:
-            dlgErr = wx.MessageDialog(self, 'Some Android devices are offline!',
+            dlgErr = wx.MessageDialog(self, 'Some Android STA are offline!',
                                       'Info',
                                       wx.OK | wx.ICON_INFORMATION | wx.STAY_ON_TOP
                                       )
 
             dlgErr.ShowModal()
             dlgErr.Destroy()
+
+    def pcTelnetCheckThread(self, ip=None, user=None, password=None):
+        result = co.pcTelnetCheck(ip, user, password)
+        if result is False:
+            dlgErr = wx.MessageDialog(self, 'PC telnet connection is failed, please check PC network if you need.',
+                                      'Info',
+                                      wx.OK | wx.ICON_INFORMATION | wx.STAY_ON_TOP
+                                      )
+
+            dlgErr.ShowModal()
+            dlgErr.Destroy()
+        else:
+            dlgOk = wx.MessageDialog(self, 'PC telnet connection is OK ! \n',
+                                     'Info',
+                                     wx.OK | wx.ICON_INFORMATION | wx.STAY_ON_TOP
+                                     )
+
+            dlgOk.ShowModal()
+            dlgOk.Destroy()
 
     def EvtSave(self, event):
         self.saveBtn.Enable(False)
@@ -348,6 +367,7 @@ class GeneralPage(wx.Panel):
             v.USR = self.shellUsr.GetValue()
             v.PASSWD = self.shellPasswd.GetValue()
             v.WEB_PWD = self.webPasswd.GetValue()
+            v.PC_HOST = self.pcIP.GetValue()
             dutConn = threading.Thread(target=self.connectionCheckThread, kwargs={'connectiontype': v.CONNECTION_TYPE,
                                                                                   'ip': v.HOST, 'user': v.USR,
                                                                                   'password': v.PASSWD})
@@ -360,6 +380,12 @@ class GeneralPage(wx.Panel):
             v.ANDROID_MODEL = co.getAdbDeviceModel(v.ANDROID_SERIAL_NUM)
             self.staModel.SetLabel(v.ANDROID_MODEL)
 
+        if len(v.PC_HOST) is not 0:
+            v.PC_USERNAME = self.pcUsr.GetValue()
+            v.PC_PWD = self.pcPasswd.GetValue()
+            pcConn = threading.Thread(target=self.pcTelnetCheckThread, args=(v.PC_HOST, v.PC_USERNAME, v.PC_PWD))
+            pcConn.start()
+
     def EvtTextChange(self, event):
         self.saveBtn.Enable(True)
         v.SAVE_BTN_FLAG = False
@@ -371,7 +397,7 @@ class GeneralPage(wx.Panel):
 class MemoryTrackPage(wx.Panel):
     def __init__(self, parent):
         wx.Window.__init__(self, parent, -1, style=wx.BORDER_STATIC)
-        wx.StaticText(self, -1, "Memory Tracking", wx.Point(10, 10))
+        wx.StaticText(self, -1, "Memory tracking", wx.Point(10, 10))
 
         self.applyBtn = wx.Button(self, -1, 'Apply')
         self.cancelBtn = wx.Button(self, -1, 'Cancel')
@@ -482,7 +508,7 @@ class TestSuitePage(wx.Panel):
         wx.Window.__init__(self, parent, -1, style=wx.BORDER_STATIC)
         ##        wx.StaticText(self, -1, "Test suite", wx.Point(10, 10))
         ##        self.tree = wx.TreeCtrl(self, size = (340,330))
-        self.tree = CT.CustomTreeCtrl(self, size=(540, 303),
+        self.tree = CT.CustomTreeCtrl(self, size=(540, 403),
                                       style=
                                       wx.BORDER_SIMPLE
                                       | wx.WANTS_CHARS,

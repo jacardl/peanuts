@@ -331,6 +331,19 @@ def connectionCheck(connectiontype, ip=None, port=None, user=None, password=None
         return result, ""
 
 
+def pcTelnetCheck(ip=None, user=None, password=None):
+    pingResult = chkOSPingAvailable(ip, "1", logname=v.DEVICE_STATUS_LOG)
+    if not pingResult:
+        return False
+    else:
+        client = ShellClient(4)
+        result = client.connect(ip, user, password)
+        if result:
+            return True
+        else:
+            return False
+
+
 def convertStrToBashStr(string):
     if string is not None:
         string = re.sub('`', '\`', string)
@@ -543,19 +556,19 @@ def getApclii0Conn(terminal, logname):
 
 
 def getPingStatus(terminal, target, count, logname):
-    """
-    root@XiaoQiang:~# ping 192.168.31.1 -c 5
-    PING 192.168.31.1 (192.168.31.1) 56(84) bytes of data.
-    64 bytes from 192.168.31.1: icmp_req=1 ttl=64 time=0.197 ms
-    64 bytes from 192.168.31.1: icmp_req=2 ttl=64 time=0.097 ms
-    64 bytes from 192.168.31.1: icmp_req=3 ttl=64 time=0.104 ms
-    64 bytes from 192.168.31.1: icmp_req=4 ttl=64 time=0.111 ms
-    64 bytes from 192.168.31.1: icmp_req=5 ttl=64 time=0.106 ms
-
-    --- 192.168.31.1 ping statistics ---
-    5 packets transmitted, 5 received, 0% packet loss, time 3997ms
-    rtt min/avg/max/mdev = 0.097/0.123/0.197/0.037 ms
-    """
+    # """
+    # root@XiaoQiang:~# ping 192.168.31.1 -c 5
+    # PING 192.168.31.1 (192.168.31.1) 56(84) bytes of data.
+    # 64 bytes from 192.168.31.1: icmp_req=1 ttl=64 time=0.197 ms
+    # 64 bytes from 192.168.31.1: icmp_req=2 ttl=64 time=0.097 ms
+    # 64 bytes from 192.168.31.1: icmp_req=3 ttl=64 time=0.104 ms
+    # 64 bytes from 192.168.31.1: icmp_req=4 ttl=64 time=0.111 ms
+    # 64 bytes from 192.168.31.1: icmp_req=5 ttl=64 time=0.106 ms
+    #
+    # --- 192.168.31.1 ping statistics ---
+    # 5 packets transmitted, 5 received, 0% packet loss, time 3997ms
+    # rtt min/avg/max/mdev = 0.097/0.123/0.197/0.037 ms
+    # """
     command = 'ping -c ' + str(count) + ' ' + target
     ret = setGet(terminal, command, logname)
     result = {}
@@ -747,6 +760,28 @@ def chkStaOnline(terminal, intf, stamac, logname):
         return True
     else:
         return False
+
+
+def chkOSPingAvailable(target, count, logname):
+    #     C:\Users\xiaomi>ping -n 3 127.0.0.1
+    #
+    #     正在 Ping 127.0.0.1 具有 32 字节的数据:
+    #     来自 127.0.0.1 的回复: 字节=32 时间<1ms TTL=64
+    #     来自 127.0.0.1 的回复: 字节=32 时间<1ms TTL=64
+    #     来自 127.0.0.1 的回复: 字节=32 时间<1ms TTL=64
+    #
+    #     127.0.0.1 的 Ping 统计信息:
+    #         数据包: 已发送 = 3，已接收 = 3，丢失 = 0 (0% 丢失)，
+    #     往返行程的估计时间(以毫秒为单位):
+    #         最短 = 0ms，最长 = 0ms，平均 = 0ms
+    command = 'ping -n ' + str(count) + ' ' + target
+    ret = setOSShell(command=command, logname=logname)
+    for line in ret:
+        # m = re.search('(.* = \d{1,}ms, ){2}.* = \d{1,}ms', line)
+        m = re.search('(.* = \d{1,}ms){3}', line)
+        if m:
+            return True
+    return False
 
 
 def setIwpriv(terminal, intf, arg, value, logname):
@@ -1819,11 +1854,10 @@ def chkAdbBrowserWebsite(device, url, logname):
     return False
 
 if __name__ == '__main__':
-    client = ShellClient(4)
-    ret = client.connect("10.237.143.13", "telnet", "telnet")
-    print setIperfFlow2(client, "10.237.143.11", "", "60", "a")
-    # client = ShellClient(1)
-    # client.connect("192.168.110.1", "root", "admin")
-    # setGet(client, "ifconfig", "a")
-    client.close()
+    # client = ShellClient(4)
+    # ret = client.connect("10.237.143.13", "telnet", "telnet")
+    # print setIperfFlow2(client, "10.237.143.11", "", "60", "a")
+    # client.close()
+    print chkOSPingAvailable("10.237.143.131", "1", "a")
+    pass
 

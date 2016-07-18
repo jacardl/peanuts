@@ -655,6 +655,7 @@ class GetThroughputLog(threading.Thread):
                 # plt.xlabel('Bandwidth', fontsize=10)
                 plt.ylabel('Mbps', fontsize=10)
                 plt.suptitle(picname.split(".")[0].split('\\')[-1].replace('_', ' '), fontsize=12, style='oblique', va='top')
+                plt.xticks(index + bar_width, ('Normal', 'Guest', 'Wireless-Relay', 'Relay'), fontsize=10)
                 plt.yticks(fontsize=10)
                 plt.legend(prop={'size': 10})
 

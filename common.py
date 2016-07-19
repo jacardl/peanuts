@@ -717,13 +717,23 @@ def getKernelSlab(terminal):
     cmd = 'cat /proc/slabinfo'
     ret = terminal.command(cmd)
     if len(ret) <= 2:
-        result["Total Cache"] = 0
+        result["Total Cache"] = getMemInfo(terminal, "Slab")
         return result
     for line in ret[2:]:
         cacheList = line.split()
         result[cacheList[0]] = round(float(cacheList[2]) * float(cacheList[3])/1024, 2)
     result["Total Cache"] = reduce(lambda x, y: x + y, result.itervalues())
     return result
+
+
+def getMemInfo(terminal, name):
+    cmd = 'cat /proc/meminfo'
+    ret = terminal.command(cmd)
+    mPattern = re.compile(name+':\s*(\d{1,}) kB')
+    for line in ret:
+        m = mPattern.search(line)
+        if m:
+            return m.group(1)
 
 
 def chkSiteSurvey(terminal, intf, chkbssid, logname):
@@ -1854,10 +1864,10 @@ def chkAdbBrowserWebsite(device, url, logname):
     return False
 
 if __name__ == '__main__':
-    # client = ShellClient(4)
-    # ret = client.connect("10.237.143.13", "telnet", "telnet")
+    client = ShellClient(2)
+    ret = client.connect("192.168.110.1", "root", "admin")
     # print setIperfFlow2(client, "10.237.143.11", "", "60", "a")
-    # client.close()
-    print chkOSPingAvailable("10.237.143.131", "1", "a")
+    print getMemInfo(client, "Slab")
+    client.close()
     pass
 

@@ -14707,7 +14707,7 @@ class AP_CLEAR_CHAN1_BW20_WAN_THROUGHPUT(TestCase):
             iperfOn = SetAdbIperfOn(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             iperfOn.start()
             t.sleep(3.0)
-            ret = setIperfFlow3(self.pc, self.wanStatus.get('ip'), v.IPERF_INTERVAL, v.IPERF_TIME, self.__class__.__name__)
+            ret = setIperfFlow2(self.pc, self.wanStatus.get('ip'), v.IPERF_INTERVAL, v.IPERF_TIME, self.__class__.__name__)
 
             optionRedirect = {
                 'port': v.IPERF_PORT
@@ -14776,7 +14776,7 @@ class AP_CLEAR_CHAN6_BW20_WAN_THROUGHPUT(TestCase):
             iperfOn = SetAdbIperfOn(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             iperfOn.start()
             t.sleep(3.0)
-            ret = setIperfFlow3(self.pc, self.wanStatus.get('ip'), v.IPERF_INTERVAL, v.IPERF_TIME, self.__class__.__name__)
+            ret = setIperfFlow2(self.pc, self.wanStatus.get('ip'), v.IPERF_INTERVAL, v.IPERF_TIME, self.__class__.__name__)
 
             optionRedirect = {
                 'port': v.IPERF_PORT
@@ -14845,7 +14845,7 @@ class AP_CLEAR_CHAN11_BW20_WAN_THROUGHPUT(TestCase):
             iperfOn = SetAdbIperfOn(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             iperfOn.start()
             t.sleep(3.0)
-            ret = setIperfFlow3(self.pc, self.wanStatus.get('ip'), v.IPERF_INTERVAL, v.IPERF_TIME, self.__class__.__name__)
+            ret = setIperfFlow2(self.pc, self.wanStatus.get('ip'), v.IPERF_INTERVAL, v.IPERF_TIME, self.__class__.__name__)
 
             optionRedirect = {
                 'port': v.IPERF_PORT
@@ -14914,7 +14914,7 @@ class AP_CLEAR_CHAN13_BW20_WAN_THROUGHPUT(TestCase):
             iperfOn = SetAdbIperfOn(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             iperfOn.start()
             t.sleep(3.0)
-            ret = setIperfFlow3(self.pc, self.wanStatus.get('ip'), v.IPERF_INTERVAL, v.IPERF_TIME, self.__class__.__name__)
+            ret = setIperfFlow2(self.pc, self.wanStatus.get('ip'), v.IPERF_INTERVAL, v.IPERF_TIME, self.__class__.__name__)
 
             optionRedirect = {
                 'port': v.IPERF_PORT
@@ -14983,7 +14983,7 @@ class AP_CLEAR_CHAN1_BW40_WAN_THROUGHPUT(TestCase):
             iperfOn = SetAdbIperfOn(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             iperfOn.start()
             t.sleep(3.0)
-            ret = setIperfFlow3(self.pc, self.wanStatus.get('ip'), v.IPERF_INTERVAL, v.IPERF_TIME, self.__class__.__name__)
+            ret = setIperfFlow2(self.pc, self.wanStatus.get('ip'), v.IPERF_INTERVAL, v.IPERF_TIME, self.__class__.__name__)
 
             optionRedirect = {
                 'port': v.IPERF_PORT
@@ -15052,7 +15052,7 @@ class AP_CLEAR_CHAN6_BW40_WAN_THROUGHPUT(TestCase):
             iperfOn = SetAdbIperfOn(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             iperfOn.start()
             t.sleep(3.0)
-            ret = setIperfFlow3(self.pc, self.wanStatus.get('ip'), v.IPERF_INTERVAL, v.IPERF_TIME, self.__class__.__name__)
+            ret = setIperfFlow2(self.pc, self.wanStatus.get('ip'), v.IPERF_INTERVAL, v.IPERF_TIME, self.__class__.__name__)
 
             optionRedirect = {
                 'port': v.IPERF_PORT
@@ -15121,7 +15121,7 @@ class AP_CLEAR_CHAN11_BW40_WAN_THROUGHPUT(TestCase):
             iperfOn = SetAdbIperfOn(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             iperfOn.start()
             t.sleep(3.0)
-            ret = setIperfFlow3(self.pc, self.wanStatus.get('ip'), v.IPERF_INTERVAL, v.IPERF_TIME, self.__class__.__name__)
+            ret = setIperfFlow2(self.pc, self.wanStatus.get('ip'), v.IPERF_INTERVAL, v.IPERF_TIME, self.__class__.__name__)
 
             optionRedirect = {
                 'port': v.IPERF_PORT
@@ -15190,7 +15190,7 @@ class AP_CLEAR_CHAN13_BW40_WAN_THROUGHPUT(TestCase):
             iperfOn = SetAdbIperfOn(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             iperfOn.start()
             t.sleep(3.0)
-            ret = setIperfFlow3(self.pc, self.wanStatus.get('ip'), v.IPERF_INTERVAL, v.IPERF_TIME, self.__class__.__name__)
+            ret = setIperfFlow2(self.pc, self.wanStatus.get('ip'), v.IPERF_INTERVAL, v.IPERF_TIME, self.__class__.__name__)
 
             optionRedirect = {
                 'port': v.IPERF_PORT
@@ -15261,7 +15261,7 @@ class AP_PSK2_CHAN1_BW20_WAN_THROUGHPUT(TestCase):
             iperfOn = SetAdbIperfOn(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             iperfOn.start()
             t.sleep(3.0)
-            ret = setIperfFlow3(self.pc, self.wanStatus.get('ip'), v.IPERF_INTERVAL, v.IPERF_TIME, self.__class__.__name__)
+            ret = setIperfFlow2(self.pc, self.wanStatus.get('ip'), v.IPERF_INTERVAL, v.IPERF_TIME, self.__class__.__name__)
 
             optionRedirect = {
                 'port': v.IPERF_PORT
@@ -15332,7 +15332,7 @@ class AP_PSK2_CHAN6_BW20_WAN_THROUGHPUT(TestCase):
             iperfOn = SetAdbIperfOn(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             iperfOn.start()
             t.sleep(3.0)
-            ret = setIperfFlow3(self.pc, self.wanStatus.get('ip'), v.IPERF_INTERVAL, v.IPERF_TIME, self.__class__.__name__)
+            ret = setIperfFlow2(self.pc, self.wanStatus.get('ip'), v.IPERF_INTERVAL, v.IPERF_TIME, self.__class__.__name__)
 
             optionRedirect = {
                 'port': v.IPERF_PORT
@@ -15403,7 +15403,7 @@ class AP_PSK2_CHAN11_BW20_WAN_THROUGHPUT(TestCase):
             iperfOn = SetAdbIperfOn(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             iperfOn.start()
             t.sleep(3.0)
-            ret = setIperfFlow3(self.pc, self.wanStatus.get('ip'), v.IPERF_INTERVAL, v.IPERF_TIME, self.__class__.__name__)
+            ret = setIperfFlow2(self.pc, self.wanStatus.get('ip'), v.IPERF_INTERVAL, v.IPERF_TIME, self.__class__.__name__)
 
             optionRedirect = {
                 'port': v.IPERF_PORT
@@ -15474,7 +15474,7 @@ class AP_PSK2_CHAN13_BW20_WAN_THROUGHPUT(TestCase):
             iperfOn = SetAdbIperfOn(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             iperfOn.start()
             t.sleep(3.0)
-            ret = setIperfFlow3(self.pc, self.wanStatus.get('ip'), v.IPERF_INTERVAL, v.IPERF_TIME, self.__class__.__name__)
+            ret = setIperfFlow2(self.pc, self.wanStatus.get('ip'), v.IPERF_INTERVAL, v.IPERF_TIME, self.__class__.__name__)
 
             optionRedirect = {
                 'port': v.IPERF_PORT
@@ -15545,7 +15545,7 @@ class AP_PSK2_CHAN1_BW40_WAN_THROUGHPUT(TestCase):
             iperfOn = SetAdbIperfOn(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             iperfOn.start()
             t.sleep(3.0)
-            ret = setIperfFlow3(self.pc, self.wanStatus.get('ip'), v.IPERF_INTERVAL, v.IPERF_TIME, self.__class__.__name__)
+            ret = setIperfFlow2(self.pc, self.wanStatus.get('ip'), v.IPERF_INTERVAL, v.IPERF_TIME, self.__class__.__name__)
 
             optionRedirect = {
                 'port': v.IPERF_PORT
@@ -15616,7 +15616,7 @@ class AP_PSK2_CHAN6_BW40_WAN_THROUGHPUT(TestCase):
             iperfOn = SetAdbIperfOn(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             iperfOn.start()
             t.sleep(3.0)
-            ret = setIperfFlow3(self.pc, self.wanStatus.get('ip'), v.IPERF_INTERVAL, v.IPERF_TIME, self.__class__.__name__)
+            ret = setIperfFlow2(self.pc, self.wanStatus.get('ip'), v.IPERF_INTERVAL, v.IPERF_TIME, self.__class__.__name__)
 
             optionRedirect = {
                 'port': v.IPERF_PORT
@@ -15687,7 +15687,7 @@ class AP_PSK2_CHAN11_BW40_WAN_THROUGHPUT(TestCase):
             iperfOn = SetAdbIperfOn(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             iperfOn.start()
             t.sleep(3.0)
-            ret = setIperfFlow3(self.pc, self.wanStatus.get('ip'), v.IPERF_INTERVAL, v.IPERF_TIME, self.__class__.__name__)
+            ret = setIperfFlow2(self.pc, self.wanStatus.get('ip'), v.IPERF_INTERVAL, v.IPERF_TIME, self.__class__.__name__)
 
             optionRedirect = {
                 'port': v.IPERF_PORT
@@ -15758,7 +15758,7 @@ class AP_PSK2_CHAN13_BW40_WAN_THROUGHPUT(TestCase):
             iperfOn = SetAdbIperfOn(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             iperfOn.start()
             t.sleep(3.0)
-            ret = setIperfFlow3(self.pc, self.wanStatus.get('ip'), v.IPERF_INTERVAL, v.IPERF_TIME, self.__class__.__name__)
+            ret = setIperfFlow2(self.pc, self.wanStatus.get('ip'), v.IPERF_INTERVAL, v.IPERF_TIME, self.__class__.__name__)
 
             optionRedirect = {
                 'port': v.IPERF_PORT
@@ -15827,7 +15827,7 @@ class AP_CLEAR_CHAN36_BW20_WAN_THROUGHPUT(TestCase):
             iperfOn = SetAdbIperfOn(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             iperfOn.start()
             t.sleep(3.0)
-            ret = setIperfFlow3(self.pc, self.wanStatus.get('ip'), v.IPERF_INTERVAL, v.IPERF_TIME, self.__class__.__name__)
+            ret = setIperfFlow2(self.pc, self.wanStatus.get('ip'), v.IPERF_INTERVAL, v.IPERF_TIME, self.__class__.__name__)
 
             optionRedirect = {
                 'port': v.IPERF_PORT
@@ -15896,7 +15896,7 @@ class AP_CLEAR_CHAN52_BW20_WAN_THROUGHPUT(TestCase):
             iperfOn = SetAdbIperfOn(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             iperfOn.start()
             t.sleep(3.0)
-            ret = setIperfFlow3(self.pc, self.wanStatus.get('ip'), v.IPERF_INTERVAL, v.IPERF_TIME, self.__class__.__name__)
+            ret = setIperfFlow2(self.pc, self.wanStatus.get('ip'), v.IPERF_INTERVAL, v.IPERF_TIME, self.__class__.__name__)
 
             optionRedirect = {
                 'port': v.IPERF_PORT
@@ -15965,7 +15965,7 @@ class AP_CLEAR_CHAN149_BW20_WAN_THROUGHPUT(TestCase):
             iperfOn = SetAdbIperfOn(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             iperfOn.start()
             t.sleep(3.0)
-            ret = setIperfFlow3(self.pc, self.wanStatus.get('ip'), v.IPERF_INTERVAL, v.IPERF_TIME, self.__class__.__name__)
+            ret = setIperfFlow2(self.pc, self.wanStatus.get('ip'), v.IPERF_INTERVAL, v.IPERF_TIME, self.__class__.__name__)
 
             optionRedirect = {
                 'port': v.IPERF_PORT
@@ -16034,7 +16034,7 @@ class AP_CLEAR_CHAN165_BW20_WAN_THROUGHPUT(TestCase):
             iperfOn = SetAdbIperfOn(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             iperfOn.start()
             t.sleep(3.0)
-            ret = setIperfFlow3(self.pc, self.wanStatus.get('ip'), v.IPERF_INTERVAL, v.IPERF_TIME, self.__class__.__name__)
+            ret = setIperfFlow2(self.pc, self.wanStatus.get('ip'), v.IPERF_INTERVAL, v.IPERF_TIME, self.__class__.__name__)
 
             optionRedirect = {
                 'port': v.IPERF_PORT
@@ -16103,7 +16103,7 @@ class AP_CLEAR_CHAN36_BW40_WAN_THROUGHPUT(TestCase):
             iperfOn = SetAdbIperfOn(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             iperfOn.start()
             t.sleep(3.0)
-            ret = setIperfFlow3(self.pc, self.wanStatus.get('ip'), v.IPERF_INTERVAL, v.IPERF_TIME, self.__class__.__name__)
+            ret = setIperfFlow2(self.pc, self.wanStatus.get('ip'), v.IPERF_INTERVAL, v.IPERF_TIME, self.__class__.__name__)
 
             optionRedirect = {
                 'port': v.IPERF_PORT
@@ -16172,7 +16172,7 @@ class AP_CLEAR_CHAN44_BW40_WAN_THROUGHPUT(TestCase):
             iperfOn = SetAdbIperfOn(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             iperfOn.start()
             t.sleep(3.0)
-            ret = setIperfFlow3(self.pc, self.wanStatus.get('ip'), v.IPERF_INTERVAL, v.IPERF_TIME, self.__class__.__name__)
+            ret = setIperfFlow2(self.pc, self.wanStatus.get('ip'), v.IPERF_INTERVAL, v.IPERF_TIME, self.__class__.__name__)
 
             optionRedirect = {
                 'port': v.IPERF_PORT
@@ -16241,7 +16241,7 @@ class AP_CLEAR_CHAN52_BW40_WAN_THROUGHPUT(TestCase):
             iperfOn = SetAdbIperfOn(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             iperfOn.start()
             t.sleep(3.0)
-            ret = setIperfFlow3(self.pc, self.wanStatus.get('ip'), v.IPERF_INTERVAL, v.IPERF_TIME, self.__class__.__name__)
+            ret = setIperfFlow2(self.pc, self.wanStatus.get('ip'), v.IPERF_INTERVAL, v.IPERF_TIME, self.__class__.__name__)
 
             optionRedirect = {
                 'port': v.IPERF_PORT
@@ -16310,7 +16310,7 @@ class AP_CLEAR_CHAN60_BW40_WAN_THROUGHPUT(TestCase):
             iperfOn = SetAdbIperfOn(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             iperfOn.start()
             t.sleep(3.0)
-            ret = setIperfFlow3(self.pc, self.wanStatus.get('ip'), v.IPERF_INTERVAL, v.IPERF_TIME, self.__class__.__name__)
+            ret = setIperfFlow2(self.pc, self.wanStatus.get('ip'), v.IPERF_INTERVAL, v.IPERF_TIME, self.__class__.__name__)
 
             optionRedirect = {
                 'port': v.IPERF_PORT
@@ -16379,7 +16379,7 @@ class AP_CLEAR_CHAN149_BW40_WAN_THROUGHPUT(TestCase):
             iperfOn = SetAdbIperfOn(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             iperfOn.start()
             t.sleep(3.0)
-            ret = setIperfFlow3(self.pc, self.wanStatus.get('ip'), v.IPERF_INTERVAL, v.IPERF_TIME, self.__class__.__name__)
+            ret = setIperfFlow2(self.pc, self.wanStatus.get('ip'), v.IPERF_INTERVAL, v.IPERF_TIME, self.__class__.__name__)
 
             optionRedirect = {
                 'port': v.IPERF_PORT
@@ -16448,7 +16448,7 @@ class AP_CLEAR_CHAN157_BW40_WAN_THROUGHPUT(TestCase):
             iperfOn = SetAdbIperfOn(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             iperfOn.start()
             t.sleep(3.0)
-            ret = setIperfFlow3(self.pc, self.wanStatus.get('ip'), v.IPERF_INTERVAL, v.IPERF_TIME, self.__class__.__name__)
+            ret = setIperfFlow2(self.pc, self.wanStatus.get('ip'), v.IPERF_INTERVAL, v.IPERF_TIME, self.__class__.__name__)
 
             optionRedirect = {
                 'port': v.IPERF_PORT
@@ -16517,7 +16517,7 @@ class AP_CLEAR_CHAN36_BW80_WAN_THROUGHPUT(TestCase):
             iperfOn = SetAdbIperfOn(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             iperfOn.start()
             t.sleep(3.0)
-            ret = setIperfFlow3(self.pc, self.wanStatus.get('ip'), v.IPERF_INTERVAL, v.IPERF_TIME, self.__class__.__name__)
+            ret = setIperfFlow2(self.pc, self.wanStatus.get('ip'), v.IPERF_INTERVAL, v.IPERF_TIME, self.__class__.__name__)
 
             optionRedirect = {
                 'port': v.IPERF_PORT
@@ -16586,7 +16586,7 @@ class AP_CLEAR_CHAN52_BW80_WAN_THROUGHPUT(TestCase):
             iperfOn = SetAdbIperfOn(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             iperfOn.start()
             t.sleep(3.0)
-            ret = setIperfFlow3(self.pc, self.wanStatus.get('ip'), v.IPERF_INTERVAL, v.IPERF_TIME, self.__class__.__name__)
+            ret = setIperfFlow2(self.pc, self.wanStatus.get('ip'), v.IPERF_INTERVAL, v.IPERF_TIME, self.__class__.__name__)
 
             optionRedirect = {
                 'port': v.IPERF_PORT
@@ -16655,7 +16655,7 @@ class AP_CLEAR_CHAN149_BW80_WAN_THROUGHPUT(TestCase):
             iperfOn = SetAdbIperfOn(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             iperfOn.start()
             t.sleep(3.0)
-            ret = setIperfFlow3(self.pc, self.wanStatus.get('ip'), v.IPERF_INTERVAL, v.IPERF_TIME, self.__class__.__name__)
+            ret = setIperfFlow2(self.pc, self.wanStatus.get('ip'), v.IPERF_INTERVAL, v.IPERF_TIME, self.__class__.__name__)
 
             optionRedirect = {
                 'port': v.IPERF_PORT
@@ -16726,7 +16726,7 @@ class AP_PSK2_CHAN36_BW20_WAN_THROUGHPUT(TestCase):
             iperfOn = SetAdbIperfOn(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             iperfOn.start()
             t.sleep(3.0)
-            ret = setIperfFlow3(self.pc, self.wanStatus.get('ip'), v.IPERF_INTERVAL, v.IPERF_TIME, self.__class__.__name__)
+            ret = setIperfFlow2(self.pc, self.wanStatus.get('ip'), v.IPERF_INTERVAL, v.IPERF_TIME, self.__class__.__name__)
 
             optionRedirect = {
                 'port': v.IPERF_PORT
@@ -16797,7 +16797,7 @@ class AP_PSK2_CHAN52_BW20_WAN_THROUGHPUT(TestCase):
             iperfOn = SetAdbIperfOn(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             iperfOn.start()
             t.sleep(3.0)
-            ret = setIperfFlow3(self.pc, self.wanStatus.get('ip'), v.IPERF_INTERVAL, v.IPERF_TIME, self.__class__.__name__)
+            ret = setIperfFlow2(self.pc, self.wanStatus.get('ip'), v.IPERF_INTERVAL, v.IPERF_TIME, self.__class__.__name__)
 
             optionRedirect = {
                 'port': v.IPERF_PORT
@@ -16868,7 +16868,7 @@ class AP_PSK2_CHAN149_BW20_WAN_THROUGHPUT(TestCase):
             iperfOn = SetAdbIperfOn(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             iperfOn.start()
             t.sleep(3.0)
-            ret = setIperfFlow3(self.pc, self.wanStatus.get('ip'), v.IPERF_INTERVAL, v.IPERF_TIME, self.__class__.__name__)
+            ret = setIperfFlow2(self.pc, self.wanStatus.get('ip'), v.IPERF_INTERVAL, v.IPERF_TIME, self.__class__.__name__)
 
             optionRedirect = {
                 'port': v.IPERF_PORT
@@ -16939,7 +16939,7 @@ class AP_PSK2_CHAN165_BW20_WAN_THROUGHPUT(TestCase):
             iperfOn = SetAdbIperfOn(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             iperfOn.start()
             t.sleep(3.0)
-            ret = setIperfFlow3(self.pc, self.wanStatus.get('ip'), v.IPERF_INTERVAL, v.IPERF_TIME, self.__class__.__name__)
+            ret = setIperfFlow2(self.pc, self.wanStatus.get('ip'), v.IPERF_INTERVAL, v.IPERF_TIME, self.__class__.__name__)
 
             optionRedirect = {
                 'port': v.IPERF_PORT
@@ -17010,7 +17010,7 @@ class AP_PSK2_CHAN36_BW40_WAN_THROUGHPUT(TestCase):
             iperfOn = SetAdbIperfOn(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             iperfOn.start()
             t.sleep(3.0)
-            ret = setIperfFlow3(self.pc, self.wanStatus.get('ip'), v.IPERF_INTERVAL, v.IPERF_TIME, self.__class__.__name__)
+            ret = setIperfFlow2(self.pc, self.wanStatus.get('ip'), v.IPERF_INTERVAL, v.IPERF_TIME, self.__class__.__name__)
 
             optionRedirect = {
                 'port': v.IPERF_PORT
@@ -17081,7 +17081,7 @@ class AP_PSK2_CHAN44_BW40_WAN_THROUGHPUT(TestCase):
             iperfOn = SetAdbIperfOn(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             iperfOn.start()
             t.sleep(3.0)
-            ret = setIperfFlow3(self.pc, self.wanStatus.get('ip'), v.IPERF_INTERVAL, v.IPERF_TIME, self.__class__.__name__)
+            ret = setIperfFlow2(self.pc, self.wanStatus.get('ip'), v.IPERF_INTERVAL, v.IPERF_TIME, self.__class__.__name__)
 
             optionRedirect = {
                 'port': v.IPERF_PORT
@@ -17152,7 +17152,7 @@ class AP_PSK2_CHAN52_BW40_WAN_THROUGHPUT(TestCase):
             iperfOn = SetAdbIperfOn(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             iperfOn.start()
             t.sleep(3.0)
-            ret = setIperfFlow3(self.pc, self.wanStatus.get('ip'), v.IPERF_INTERVAL, v.IPERF_TIME, self.__class__.__name__)
+            ret = setIperfFlow2(self.pc, self.wanStatus.get('ip'), v.IPERF_INTERVAL, v.IPERF_TIME, self.__class__.__name__)
 
             optionRedirect = {
                 'port': v.IPERF_PORT
@@ -17223,7 +17223,7 @@ class AP_PSK2_CHAN60_BW40_WAN_THROUGHPUT(TestCase):
             iperfOn = SetAdbIperfOn(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             iperfOn.start()
             t.sleep(3.0)
-            ret = setIperfFlow3(self.pc, self.wanStatus.get('ip'), v.IPERF_INTERVAL, v.IPERF_TIME, self.__class__.__name__)
+            ret = setIperfFlow2(self.pc, self.wanStatus.get('ip'), v.IPERF_INTERVAL, v.IPERF_TIME, self.__class__.__name__)
 
             optionRedirect = {
                 'port': v.IPERF_PORT
@@ -17294,7 +17294,7 @@ class AP_PSK2_CHAN149_BW40_WAN_THROUGHPUT(TestCase):
             iperfOn = SetAdbIperfOn(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             iperfOn.start()
             t.sleep(3.0)
-            ret = setIperfFlow3(self.pc, self.wanStatus.get('ip'), v.IPERF_INTERVAL, v.IPERF_TIME, self.__class__.__name__)
+            ret = setIperfFlow2(self.pc, self.wanStatus.get('ip'), v.IPERF_INTERVAL, v.IPERF_TIME, self.__class__.__name__)
 
             optionRedirect = {
                 'port': v.IPERF_PORT
@@ -17365,7 +17365,7 @@ class AP_PSK2_CHAN157_BW40_WAN_THROUGHPUT(TestCase):
             iperfOn = SetAdbIperfOn(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             iperfOn.start()
             t.sleep(3.0)
-            ret = setIperfFlow3(self.pc, self.wanStatus.get('ip'), v.IPERF_INTERVAL, v.IPERF_TIME, self.__class__.__name__)
+            ret = setIperfFlow2(self.pc, self.wanStatus.get('ip'), v.IPERF_INTERVAL, v.IPERF_TIME, self.__class__.__name__)
 
             optionRedirect = {
                 'port': v.IPERF_PORT
@@ -17436,7 +17436,7 @@ class AP_PSK2_CHAN36_BW80_WAN_THROUGHPUT(TestCase):
             iperfOn = SetAdbIperfOn(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             iperfOn.start()
             t.sleep(3.0)
-            ret = setIperfFlow3(self.pc, self.wanStatus.get('ip'), v.IPERF_INTERVAL, v.IPERF_TIME, self.__class__.__name__)
+            ret = setIperfFlow2(self.pc, self.wanStatus.get('ip'), v.IPERF_INTERVAL, v.IPERF_TIME, self.__class__.__name__)
 
             optionRedirect = {
                 'port': v.IPERF_PORT
@@ -17507,7 +17507,7 @@ class AP_PSK2_CHAN52_BW80_WAN_THROUGHPUT(TestCase):
             iperfOn = SetAdbIperfOn(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             iperfOn.start()
             t.sleep(3.0)
-            ret = setIperfFlow3(self.pc, self.wanStatus.get('ip'), v.IPERF_INTERVAL, v.IPERF_TIME, self.__class__.__name__)
+            ret = setIperfFlow2(self.pc, self.wanStatus.get('ip'), v.IPERF_INTERVAL, v.IPERF_TIME, self.__class__.__name__)
 
             optionRedirect = {
                 'port': v.IPERF_PORT
@@ -17578,7 +17578,7 @@ class AP_PSK2_CHAN149_BW80_WAN_THROUGHPUT(TestCase):
             iperfOn = SetAdbIperfOn(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             iperfOn.start()
             t.sleep(3.0)
-            ret = setIperfFlow3(self.pc, self.wanStatus.get('ip'), v.IPERF_INTERVAL, v.IPERF_TIME, self.__class__.__name__)
+            ret = setIperfFlow2(self.pc, self.wanStatus.get('ip'), v.IPERF_INTERVAL, v.IPERF_TIME, self.__class__.__name__)
 
             optionRedirect = {
                 'port': v.IPERF_PORT

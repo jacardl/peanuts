@@ -102,6 +102,7 @@ class ShellClient(object):
 
             stdin, stdout, stderr = self.client.exec_command(cmd)
             self.out = stdout.readlines()  # input and output are unicode
+            # self.err = stderr.readlines()
             for index in xrange(len(self.out)):
                 try:
                     self.out[index] = self.out[index].encode("utf8")
@@ -342,6 +343,15 @@ def pcTelnetCheck(ip=None, user=None, password=None):
             return True
         else:
             return False
+
+
+def pcSshCheck(ip=None, user=None, password=None):
+    client = ShellClient(1)
+    result = client.connect(ip, user, password)
+    if result:
+        return True
+    else:
+        return False
 
 
 def convertStrToBashStr(string):
@@ -1864,10 +1874,11 @@ def chkAdbBrowserWebsite(device, url, logname):
     return False
 
 if __name__ == '__main__':
-    client = ShellClient(2)
-    ret = client.connect("192.168.110.1", "root", "admin")
-    # print setIperfFlow2(client, "10.237.143.11", "", "60", "a")
-    print getMemInfo(client, "Slab")
+    client = ShellClient(1)
+    ret = client.connect("10.237.143.13", "jac-pc2", "12345678")
+    # print getPingStatus(client, "10.237.204.161", "5", "a")
+    print setIperfFlow2(client, "10.237.204.161", "", "5", "a")
+    # print client.command("iperf -c 10.237.204.161 -t 50 -r -w 2m -f m")
     client.close()
     pass
 

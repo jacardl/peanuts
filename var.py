@@ -33,8 +33,8 @@ ANDROID_MODEL = ''
 STA_COUNT = "1"
 
 # -------------pc telnet------------------#
-PC_USERNAME = 'telnet'
-PC_PWD = 'telnet'
+PC_USERNAME = 'jac-pc2'
+PC_PWD = '12345678'
 PC_HOST = '10.237.143.13'
 IPERF_PORT = 5001
 

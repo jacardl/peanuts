@@ -340,10 +340,10 @@ class GeneralPage(wx.Panel):
             dlgErr.ShowModal()
             dlgErr.Destroy()
 
-    def pcTelnetCheckThread(self, ip=None, user=None, password=None):
-        result = co.pcTelnetCheck(ip, user, password)
+    def pcSshCheckThread(self, ip=None, user=None, password=None):
+        result = co.pcSshCheck(ip, user, password)
         if result is False:
-            dlgErr = wx.MessageDialog(self, 'PC telnet connection is failed, please check PC network if you need.',
+            dlgErr = wx.MessageDialog(self, 'PC SSH connection is failed, please check PC network if you need.',
                                       'Info',
                                       wx.OK | wx.ICON_INFORMATION | wx.STAY_ON_TOP
                                       )
@@ -351,7 +351,7 @@ class GeneralPage(wx.Panel):
             dlgErr.ShowModal()
             dlgErr.Destroy()
         else:
-            dlgOk = wx.MessageDialog(self, 'PC telnet connection is OK ! \n',
+            dlgOk = wx.MessageDialog(self, 'PC SSH connection is OK ! \n',
                                      'Info',
                                      wx.OK | wx.ICON_INFORMATION | wx.STAY_ON_TOP
                                      )
@@ -383,7 +383,7 @@ class GeneralPage(wx.Panel):
         if len(v.PC_HOST) is not 0:
             v.PC_USERNAME = self.pcUsr.GetValue()
             v.PC_PWD = self.pcPasswd.GetValue()
-            pcConn = threading.Thread(target=self.pcTelnetCheckThread, args=(v.PC_HOST, v.PC_USERNAME, v.PC_PWD))
+            pcConn = threading.Thread(target=self.pcSshCheckThread, args=(v.PC_HOST, v.PC_USERNAME, v.PC_PWD))
             pcConn.start()
 
     def EvtTextChange(self, event):

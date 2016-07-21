@@ -144,9 +144,6 @@ def generateMail(maillist, title, queue=None, attach1=None, attach2=None, attach
     if os.path.isfile(v.MAIL_PIC7):
         piclist.append(v.MAIL_PIC7)
         contents += content10
-    if os.path.isfile(v.MAIL_PIC9):
-        piclist.append(v.MAIL_PIC9)
-        contents += content12
 
     # 5g throughput chart
     if os.path.isfile(v.MAIL_PIC3):
@@ -158,6 +155,11 @@ def generateMail(maillist, title, queue=None, attach1=None, attach2=None, attach
     if os.path.isfile(v.MAIL_PIC8):
         piclist.append(v.MAIL_PIC8)
         contents += content11
+
+    # 2g n 5g speedtest
+    if os.path.isfile(v.MAIL_PIC9):
+        piclist.append(v.MAIL_PIC9)
+        contents += content12
     if os.path.isfile(v.MAIL_PIC10):
         piclist.append(v.MAIL_PIC10)
         contents += content13
@@ -174,7 +176,7 @@ def generateMail(maillist, title, queue=None, attach1=None, attach2=None, attach
 if __name__ == '__main__':
     import multiprocessing as mp
     v.ANDROID_MODEL = "Mi4 LTE"
-    report = "R2D 开发版 2.15.41.log".decode("utf8").encode("gbk")
+    report = "R2D 开发版 2.15.57.log".decode("utf8").encode("gbk")
     q = mp.Queue() # tranlate test result to generateMail
     ret = pr.ProcessReport(report, q)
     ret.start()

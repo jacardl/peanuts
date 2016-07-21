@@ -519,7 +519,7 @@ class GetThroughputLog(threading.Thread):
                 rx.append(ret.get("20rx"))
                 rx.append(ret.get("40rx"))
 
-                fig, ax = plt.subplots(figsize=(6, 4))
+                fig, ax = plt.subplots(figsize=(4, 3))
                 print "draw %s chart" % picname
                 # plt.subplots_adjust(left=0.08, right=0.95)
                 rects1 = plt.bar(index, tx, bar_width,
@@ -545,10 +545,10 @@ class GetThroughputLog(threading.Thread):
                 autolabel(rects2)
 
                 # plt.xlabel('Bandwidth', fontsize=10)
-                plt.ylabel('Mbps', fontsize=10)
+                plt.ylabel('Mbps', fontsize=10, ha='left')
                 plt.suptitle(picname.split(".")[0].split('\\')[-1].replace('_', ' '), fontsize=12, style='oblique', va='top')
                 plt.xticks(index + bar_width, ('20MHz', '40MHz',), fontsize=10)
-                plt.yticks(fontsize=10)
+                plt.yticks((25, 50, 100), fontsize=10)
                 plt.legend(prop={'size': 10})
 
                 # plt.show()
@@ -572,7 +572,7 @@ class GetThroughputLog(threading.Thread):
                 rx.append(ret.get("40rx"))
                 rx.append(ret.get("80rx"))
 
-                fig, ax = plt.subplots(figsize=(6, 4))
+                fig, ax = plt.subplots(figsize=(4, 3))
                 print "draw %s chart" % picname
                 # plt.subplots_adjust(left=0.08, right=0.95)
                 rects1 = plt.bar(index, tx, bar_width,
@@ -598,10 +598,10 @@ class GetThroughputLog(threading.Thread):
                 autolabel(rects2)
 
                 # plt.xlabel('Bandwidth', fontsize=10)
-                plt.ylabel('Mbps', fontsize=10)
+                plt.ylabel('Mbps', fontsize=10, ha='left')
                 plt.suptitle(picname.split(".")[0].split('\\')[-1].replace('_', ' '), fontsize=12, style='oblique', va='top')
                 plt.xticks(index + bar_width, ('20MHz', '40MHz', '80MHz'), fontsize=10)
-                plt.yticks(fontsize=10)
+                plt.yticks((100, 200, 300), fontsize=10)
                 plt.legend(prop={'size': 10})
 
                 # plt.show()
@@ -620,14 +620,14 @@ class GetThroughputLog(threading.Thread):
                 rx = list()
                 tx.append(ret.get("tx"))
                 tx.append(ret.get("guesttx"))
-                tx.append(ret.get("wrelaytx"))
                 tx.append(ret.get("relaytx"))
+                tx.append(ret.get("wrelaytx"))
 
                 rx.append(ret.get("rx"))
                 rx.append(ret.get("guestrx"))
-                rx.append(ret.get("wrelayrx"))
                 rx.append(ret.get("relayrx"))
-                fig, ax = plt.subplots(figsize=(6, 4))
+                rx.append(ret.get("wrelayrx"))
+                fig, ax = plt.subplots(figsize=(4, 3))
                 print "draw %s chart" % picname
                 # plt.subplots_adjust(left=0.08, right=0.95)
                 rects1 = plt.bar(index, tx, bar_width,
@@ -653,10 +653,10 @@ class GetThroughputLog(threading.Thread):
                 autolabel(rects2)
 
                 # plt.xlabel('Bandwidth', fontsize=10)
-                plt.ylabel('Mbps', fontsize=10)
+                plt.ylabel('Mbps', fontsize=10, ha='left')
                 plt.suptitle(picname.split(".")[0].split('\\')[-1].replace('_', ' '), fontsize=12, style='oblique', va='top')
-                plt.xticks(index + bar_width, ('Normal', 'Guest', 'Wireless-Relay', 'Relay'), fontsize=10)
-                plt.yticks(fontsize=10)
+                plt.xticks(index + bar_width, ('Normal', 'Guest', 'Relay', 'WRelay'), fontsize=10)
+                plt.yticks((10, 20, 30), fontsize=10)
                 plt.legend(prop={'size': 10})
 
                 # plt.show()
@@ -674,13 +674,13 @@ class GetThroughputLog(threading.Thread):
                 tx = list()
                 rx = list()
                 tx.append(ret.get("tx"))
-                tx.append(ret.get("wrelaytx"))
                 tx.append(ret.get("relaytx"))
+                tx.append(ret.get("wrelaytx"))
 
                 rx.append(ret.get("rx"))
-                rx.append(ret.get("wrelayrx"))
                 rx.append(ret.get("relayrx"))
-                fig, ax = plt.subplots(figsize=(6, 4))
+                rx.append(ret.get("wrelayrx"))
+                fig, ax = plt.subplots(figsize=(4, 3))
                 print "draw %s chart" % picname
                 # plt.subplots_adjust(left=0.08, right=0.95)
                 rects1 = plt.bar(index, tx, bar_width,
@@ -706,10 +706,10 @@ class GetThroughputLog(threading.Thread):
                 autolabel(rects2)
 
                 # plt.xlabel('Bandwidth', fontsize=10)
-                plt.ylabel('Mbps', fontsize=10)
+                plt.ylabel('Mbps', fontsize=10, ha='left')
                 plt.suptitle(picname.split(".")[0].split('\\')[-1].replace('_', ' '), fontsize=12, style='oblique', va='top')
-                plt.xticks(index + bar_width, ('Normal', 'Wireless-Relay', 'Relay'), fontsize=10)
-                plt.yticks(fontsize=10)
+                plt.xticks(index + bar_width, ('Normal', 'Relay', 'WRelay'), fontsize=10)
+                plt.yticks((10, 20, 30), fontsize=10)
                 plt.legend(prop={'size': 10})
 
                 # plt.show()
@@ -849,7 +849,7 @@ class GetWanBandwidth(threading.Thread):
 if __name__ == '__main__':
     # print getThroughputLogVerbose("D:\Python\peanuts\AP_CLEAR_CHAN36_BW20_LAN_THROUGHPUT.log")
     # print getChannelFlowLogVerbose("E:\peanuts\AP_MIXEDPSK_CHAN1_36_FLOW.log")
-    info = GetThroughputLog("R2D 开发版 2.15.41.log".decode("utf8").encode("gbk"))
+    info = GetThroughputLog("R2D 开发版 2.15.57.log".decode("utf8").encode("gbk"))
     info.start()
     info.join()
     # t = GetTestModule("R1CM 开发版 2.11.13.log".decode('utf8').encode('gbk'))

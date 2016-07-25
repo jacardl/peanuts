@@ -680,7 +680,33 @@ treeWirelessRelayApi = [
         'config_check_5g',
         'config_check_guest',
     ],
-
+    'AP_WIRELESS_RELAY_PSK2_LOW_TXPOWER',
+    [
+        'client_txpower_2g',
+        'autochan_txpower_5g',
+        'chan36_txpower_5g',
+        'chan52_txpower_5g',
+        'chan149_txpower_5g',
+        'chan165_txpower_5g',
+    ],
+    'AP_WIRELESS_RELAY_PSK2_MID_TXPOWER',
+    [
+        'client_txpower_2g',
+        'autochan_txpower_5g',
+        'chan36_txpower_5g',
+        'chan52_txpower_5g',
+        'chan149_txpower_5g',
+        'chan165_txpower_5g',
+    ],
+    'AP_WIRELESS_RELAY_PSK2_HIGH_TXPOWER',
+    [
+        'client_txpower_2g',
+        'autochan_txpower_5g',
+        'chan36_txpower_5g',
+        'chan52_txpower_5g',
+        'chan149_txpower_5g',
+        'chan165_txpower_5g',
+    ],
 ]
 
 

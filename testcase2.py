@@ -19324,7 +19324,7 @@ class AP_MIXEDPSK_NET_CUTOFF_LIMITED(TestCase):
         if res2gConn:
             result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             if result['ip'] != '':
-                for url in iter((v.CHECK_ACCESS_URL2, v.CHECK_ACCESS_URL3, v.CHECK_ACCESS_URL4)):
+                for url in iter(v.CHECK_ACCESS_URL_LIST):
                     ret = chkAdbBrowserWebsite(v.ANDROID_SERIAL_NUM, url, self.__class__.__name__)
                     self.assertFalse(ret, msg='STA should not browser website when net cutoff.')
             else:
@@ -19345,7 +19345,7 @@ class AP_MIXEDPSK_NET_CUTOFF_LIMITED(TestCase):
                 }
                 api.setNetAccessCtrl(self.dut, self.__class__.__name__, **option)
 
-                for url in iter((v.CHECK_ACCESS_URL2, v.CHECK_ACCESS_URL3, v.CHECK_ACCESS_URL4)):
+                for url in iter(v.CHECK_ACCESS_URL_LIST):
                     ret = chkAdbBrowserWebsite(v.ANDROID_SERIAL_NUM, url, self.__class__.__name__)
                     if ret is False:
                         break
@@ -19368,7 +19368,7 @@ class AP_MIXEDPSK_NET_CUTOFF_LIMITED(TestCase):
         if res5gConn:
             result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             if result['ip'] != '':
-                for url in iter((v.CHECK_ACCESS_URL2, v.CHECK_ACCESS_URL3, v.CHECK_ACCESS_URL4)):
+                for url in iter(v.CHECK_ACCESS_URL_LIST):
                     ret = chkAdbBrowserWebsite(v.ANDROID_SERIAL_NUM, url, self.__class__.__name__)
                     self.assertFalse(ret, msg='STA should not browser website when net cutoff.')
             else:
@@ -19389,7 +19389,7 @@ class AP_MIXEDPSK_NET_CUTOFF_LIMITED(TestCase):
                 }
                 api.setNetAccessCtrl(self.dut, self.__class__.__name__, **option)
 
-                for url in iter((v.CHECK_ACCESS_URL2, v.CHECK_ACCESS_URL3, v.CHECK_ACCESS_URL4)):
+                for url in iter(v.CHECK_ACCESS_URL_LIST):
                     ret = chkAdbBrowserWebsite(v.ANDROID_SERIAL_NUM, url, self.__class__.__name__)
                     if ret is False:
                         break
@@ -19470,7 +19470,7 @@ class AP_CLEAR_NET_CUTOFF_LIMITED(TestCase):
         if res2gConn:
             result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             if result['ip'] != '':
-                for url in iter((v.CHECK_ACCESS_URL2, v.CHECK_ACCESS_URL3, v.CHECK_ACCESS_URL4)):
+                for url in iter(v.CHECK_ACCESS_URL_LIST):
                     ret = chkAdbBrowserWebsite(v.ANDROID_SERIAL_NUM, url, self.__class__.__name__)
                     self.assertFalse(ret, msg='STA should not browser website when net cutoff.')
             else:
@@ -19491,7 +19491,7 @@ class AP_CLEAR_NET_CUTOFF_LIMITED(TestCase):
                 }
                 api.setNetAccessCtrl(self.dut, self.__class__.__name__, **option)
 
-                for url in iter((v.CHECK_ACCESS_URL2, v.CHECK_ACCESS_URL3, v.CHECK_ACCESS_URL4)):
+                for url in iter(v.CHECK_ACCESS_URL_LIST):
                     ret = chkAdbBrowserWebsite(v.ANDROID_SERIAL_NUM, url, self.__class__.__name__)
                     if ret is False:
                         break
@@ -19514,7 +19514,7 @@ class AP_CLEAR_NET_CUTOFF_LIMITED(TestCase):
         if res5gConn:
             result = getAdbShellWlan(v.ANDROID_SERIAL_NUM, self.__class__.__name__)
             if result['ip'] != '':
-                for url in iter((v.CHECK_ACCESS_URL2, v.CHECK_ACCESS_URL3, v.CHECK_ACCESS_URL4)):
+                for url in iter(v.CHECK_ACCESS_URL_LIST):
                     ret = chkAdbBrowserWebsite(v.ANDROID_SERIAL_NUM, url, self.__class__.__name__)
                     self.assertFalse(ret, msg='STA should not browser website when net cutoff.')
             else:
@@ -19535,7 +19535,7 @@ class AP_CLEAR_NET_CUTOFF_LIMITED(TestCase):
                 }
                 api.setNetAccessCtrl(self.dut, self.__class__.__name__, **option)
 
-                for url in iter((v.CHECK_ACCESS_URL2, v.CHECK_ACCESS_URL3, v.CHECK_ACCESS_URL4)):
+                for url in iter(v.CHECK_ACCESS_URL_LIST):
                     ret = chkAdbBrowserWebsite(v.ANDROID_SERIAL_NUM, url, self.__class__.__name__)
                     if ret is False:
                         break

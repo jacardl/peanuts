@@ -10206,6 +10206,705 @@ class AP_WIRELESS_RELAY_SCAN(TestCase):
         api.setDisableAp(self.dut, self.__class__.__name__)
 
 
+class AP_WIRELESS_RELAY_CLEAR_LOW_TXPOWER(TestCase):
+    @classmethod
+    def setUpClass(self):
+        self.dut2 = api.HttpClient()
+        ret2 = self.dut2.connect(host=v.HOST, password=v.WEB_PWD)
+        if ret2 is False:
+            raise Exception('Connection is failed for httpclient. please check your remote settings.')
+
+        api.setLanAp(self.dut2, self.__name__)
+
+        self.dut = ShellClient(v.CONNECTION_TYPE)
+        ret1 = self.dut.connect(v.HOST, v.USR, v.PASSWD)
+        if ret1 is False:
+            raise Exception('Connection is failed for shell after setLanAp.')
+
+    @classmethod
+    def tearDownClass(self):
+        option2g = {
+            'wifiIndex': 1,
+            'on': 0,
+        }
+        option5g = {
+            'wifiIndex': 2,
+            'on': 0,
+        }
+        api.setWifi(self.dut2, self.__name__, **option2g)
+        api.setWifi(self.dut2, self.__name__, **option5g)
+
+        api.setDisableLanAp(self.dut2, self.__name__)
+
+        self.dut.close()
+        self.dut2.close()
+
+    def autochan_txpower_2g(self):
+
+        option2g = {
+            'wifiIndex': 1,
+            'ssid': v.SSID,
+            'encryption': 'none',
+            'txpwr': 'min',
+        }
+        api.setWifi(self.dut2, self.__class__.__name__, **option2g)
+        power = getWlanTxPower(self.dut, "2g", self.__class__.__name__)
+
+        minPower = data.txPower2G.get(v.DUT_MODULE)[0] * 0.985
+        maxPower = data.txPower2G.get(v.DUT_MODULE)[0] * 1.015
+
+        if minPower <= power <= maxPower:
+            pass
+        else:
+            self.fail("Txpower isnot correct.")
+
+    def autochan_txpower_5g(self):
+
+        option5g = {
+            'wifiIndex': 2,
+            'ssid': v.SSID_5G,
+            'encryption': 'none',
+            'txpwr': 'min',
+        }
+
+        api.setWifi(self.dut2, self.__class__.__name__, **option5g)
+        power = getWlanTxPower(self.dut, "5g", self.__class__.__name__)
+
+        minPower = data.txPower5GH.get(v.DUT_MODULE)[0] * 0.985
+        maxPower = data.txPower5GH.get(v.DUT_MODULE)[0] * 1.015
+
+        if minPower <= power <= maxPower:
+            pass
+        else:
+            self.fail("Txpower isnot correct.")
+
+    def chan1_txpower_2g(self):
+
+        option2g = {
+            'wifiIndex': 1,
+            'ssid': v.SSID,
+            'encryption': 'none',
+            'channel': v.CHANNEL1,
+            'txpwr': 'min',
+        }
+        api.setWifi(self.dut2, self.__class__.__name__, **option2g)
+        power = getWlanTxPower(self.dut, "2g", self.__class__.__name__)
+
+        minPower = data.txPower2G.get(v.DUT_MODULE)[0] * 0.985
+        maxPower = data.txPower2G.get(v.DUT_MODULE)[0] * 1.015
+
+        if minPower <= power <= maxPower:
+            pass
+        else:
+            self.fail("Txpower isnot correct.")
+
+    def chan6_txpower_2g(self):
+
+        option2g = {
+            'wifiIndex': 1,
+            'ssid': v.SSID,
+            'encryption': 'none',
+            'channel': v.CHANNEL6,
+            'txpwr': 'min',
+        }
+        api.setWifi(self.dut2, self.__class__.__name__, **option2g)
+        power = getWlanTxPower(self.dut, "2g", self.__class__.__name__)
+
+        minPower = data.txPower2G.get(v.DUT_MODULE)[0] * 0.985
+        maxPower = data.txPower2G.get(v.DUT_MODULE)[0] * 1.015
+
+        if minPower <= power <= maxPower:
+            pass
+        else:
+            self.fail("Txpower isnot correct.")
+
+    def chan11_txpower_2g(self):
+
+        option2g = {
+            'wifiIndex': 1,
+            'ssid': v.SSID,
+            'encryption': 'none',
+            'channel': v.CHANNEL11,
+            'txpwr': 'min',
+        }
+        api.setWifi(self.dut2, self.__class__.__name__, **option2g)
+        power = getWlanTxPower(self.dut, "2g", self.__class__.__name__)
+
+        minPower = data.txPower2G.get(v.DUT_MODULE)[0] * 0.985
+        maxPower = data.txPower2G.get(v.DUT_MODULE)[0] * 1.015
+
+        if minPower <= power <= maxPower:
+            pass
+        else:
+            self.fail("Txpower isnot correct.")
+
+    def chan13_txpower_2g(self):
+
+        option2g = {
+            'wifiIndex': 1,
+            'ssid': v.SSID,
+            'encryption': 'none',
+            'channel': v.CHANNEL13,
+            'txpwr': 'min',
+        }
+        api.setWifi(self.dut2, self.__class__.__name__, **option2g)
+        power = getWlanTxPower(self.dut, "2g", self.__class__.__name__)
+
+        minPower = data.txPower2G.get(v.DUT_MODULE)[0] * 0.985
+        maxPower = data.txPower2G.get(v.DUT_MODULE)[0] * 1.015
+
+        if minPower <= power <= maxPower:
+            pass
+        else:
+            self.fail("Txpower isnot correct.")
+
+    def chan36_txpower_5g(self):
+
+        option5g = {
+            'wifiIndex': 2,
+            'ssid': v.SSID_5G,
+            'encryption': 'none',
+            'channel': v.CHANNEL36,
+            'txpwr': 'min',
+        }
+        api.setWifi(self.dut2, self.__class__.__name__, **option5g)
+        power = getWlanTxPower(self.dut, "5g", self.__class__.__name__)
+
+        minPower = data.txPower5GL.get(v.DUT_MODULE)[0] * 0.985
+        maxPower = data.txPower5GL.get(v.DUT_MODULE)[0] * 1.015
+
+        if minPower <= power <= maxPower:
+            pass
+        else:
+            self.fail("Txpower isnot correct.")
+
+    def chan52_txpower_5g(self):
+
+        option5g = {
+            'wifiIndex': 2,
+            'ssid': v.SSID_5G,
+            'encryption': 'none',
+            'channel': v.CHANNEL52,
+            'txpwr': 'min',
+        }
+        api.setWifi(self.dut2, self.__class__.__name__, **option5g)
+        power = getWlanTxPower(self.dut, "5g", self.__class__.__name__)
+
+        minPower = data.txPower5GL.get(v.DUT_MODULE)[0] * 0.985
+        maxPower = data.txPower5GL.get(v.DUT_MODULE)[0] * 1.015
+
+        if minPower <= power <= maxPower:
+            pass
+        else:
+            self.fail("Txpower isnot correct.")
+
+    def chan149_txpower_5g(self):
+
+        option5g = {
+            'wifiIndex': 2,
+            'ssid': v.SSID_5G,
+            'encryption': 'none',
+            'channel': v.CHANNEL149,
+            'txpwr': 'min',
+        }
+        api.setWifi(self.dut2, self.__class__.__name__, **option5g)
+        power = getWlanTxPower(self.dut, "5g", self.__class__.__name__)
+
+        minPower = data.txPower5GH.get(v.DUT_MODULE)[0] * 0.985
+        maxPower = data.txPower5GH.get(v.DUT_MODULE)[0] * 1.015
+
+        if minPower <= power <= maxPower:
+            pass
+        else:
+            self.fail("Txpower isnot correct.")
+
+    def chan165_txpower_5g(self):
+
+        option5g = {
+            'wifiIndex': 2,
+            'ssid': v.SSID_5G,
+            'encryption': 'none',
+            'channel': v.CHANNEL165,
+            'txpwr': 'min',
+        }
+        api.setWifi(self.dut2, self.__class__.__name__, **option5g)
+        power = getWlanTxPower(self.dut, "5g", self.__class__.__name__)
+
+        minPower = data.txPower5GH.get(v.DUT_MODULE)[0] * 0.985
+        maxPower = data.txPower5GH.get(v.DUT_MODULE)[0] * 1.015
+
+        if minPower <= power <= maxPower:
+            pass
+        else:
+            self.fail("Txpower isnot correct.")
+
+
+class AP_WIRELESS_RELAY_CLEAR_MID_TXPOWER(TestCase):
+    @classmethod
+    def setUpClass(self):
+        self.dut2 = api.HttpClient()
+        ret2 = self.dut2.connect(host=v.HOST, password=v.WEB_PWD)
+        if ret2 is False:
+            raise Exception('Connection is failed for httpclient. please check your remote settings.')
+
+        api.setLanAp(self.dut2, self.__name__)
+
+        self.dut = ShellClient(v.CONNECTION_TYPE)
+        ret1 = self.dut.connect(v.HOST, v.USR, v.PASSWD)
+        if ret1 is False:
+            raise Exception('Connection is failed for shell after setLanAp.')
+
+    @classmethod
+    def tearDownClass(self):
+        option2g = {
+            'wifiIndex': 1,
+            'on': 0,
+        }
+        option5g = {
+            'wifiIndex': 2,
+            'on': 0,
+        }
+        api.setWifi(self.dut2, self.__name__, **option2g)
+        api.setWifi(self.dut2, self.__name__, **option5g)
+
+        api.setDisableLanAp(self.dut2, self.__name__)
+
+        self.dut.close()
+        self.dut2.close()
+
+    def autochan_txpower_2g(self):
+
+        option2g = {
+            'wifiIndex': 1,
+            'ssid': v.SSID,
+            'encryption': 'none',
+            'txpwr': 'mid',
+        }
+        api.setWifi(self.dut2, self.__class__.__name__, **option2g)
+        power = getWlanTxPower(self.dut, "2g", self.__class__.__name__)
+
+        minPower = data.txPower2G.get(v.DUT_MODULE)[1] * 0.985
+        maxPower = data.txPower2G.get(v.DUT_MODULE)[1] * 1.015
+
+        if minPower <= power <= maxPower:
+            pass
+        else:
+            self.fail("Txpower isnot correct.")
+
+    def autochan_txpower_5g(self):
+
+        option5g = {
+            'wifiIndex': 2,
+            'ssid': v.SSID_5G,
+            'encryption': 'none',
+            'txpwr': 'mid',
+        }
+
+        api.setWifi(self.dut2, self.__class__.__name__, **option5g)
+        power = getWlanTxPower(self.dut, "5g", self.__class__.__name__)
+
+        minPower = data.txPower5GH.get(v.DUT_MODULE)[1] * 0.985
+        maxPower = data.txPower5GH.get(v.DUT_MODULE)[1] * 1.015
+
+        if minPower <= power <= maxPower:
+            pass
+        else:
+            self.fail("Txpower isnot correct.")
+
+    def chan1_txpower_2g(self):
+
+        option2g = {
+            'wifiIndex': 1,
+            'ssid': v.SSID,
+            'encryption': 'none',
+            'channel': v.CHANNEL1,
+            'txpwr': 'mid',
+        }
+        api.setWifi(self.dut2, self.__class__.__name__, **option2g)
+        power = getWlanTxPower(self.dut, "2g", self.__class__.__name__)
+
+        minPower = data.txPower2G.get(v.DUT_MODULE)[1] * 0.985
+        maxPower = data.txPower2G.get(v.DUT_MODULE)[1] * 1.015
+
+        if minPower <= power <= maxPower:
+            pass
+        else:
+            self.fail("Txpower isnot correct.")
+
+    def chan6_txpower_2g(self):
+
+        option2g = {
+            'wifiIndex': 1,
+            'ssid': v.SSID,
+            'encryption': 'none',
+            'channel': v.CHANNEL6,
+            'txpwr': 'mid',
+        }
+        api.setWifi(self.dut2, self.__class__.__name__, **option2g)
+        power = getWlanTxPower(self.dut, "2g", self.__class__.__name__)
+
+        minPower = data.txPower2G.get(v.DUT_MODULE)[1] * 0.985
+        maxPower = data.txPower2G.get(v.DUT_MODULE)[1] * 1.015
+
+        if minPower <= power <= maxPower:
+            pass
+        else:
+            self.fail("Txpower isnot correct.")
+
+    def chan11_txpower_2g(self):
+
+        option2g = {
+            'wifiIndex': 1,
+            'ssid': v.SSID,
+            'encryption': 'none',
+            'channel': v.CHANNEL11,
+            'txpwr': 'mid',
+        }
+        api.setWifi(self.dut2, self.__class__.__name__, **option2g)
+        power = getWlanTxPower(self.dut, "2g", self.__class__.__name__)
+
+        minPower = data.txPower2G.get(v.DUT_MODULE)[1] * 0.985
+        maxPower = data.txPower2G.get(v.DUT_MODULE)[1] * 1.015
+
+        if minPower <= power <= maxPower:
+            pass
+        else:
+            self.fail("Txpower isnot correct.")
+
+    def chan13_txpower_2g(self):
+
+        option2g = {
+            'wifiIndex': 1,
+            'ssid': v.SSID,
+            'encryption': 'none',
+            'channel': v.CHANNEL13,
+            'txpwr': 'mid',
+        }
+        api.setWifi(self.dut2, self.__class__.__name__, **option2g)
+        power = getWlanTxPower(self.dut, "2g", self.__class__.__name__)
+
+        minPower = data.txPower2G.get(v.DUT_MODULE)[1] * 0.985
+        maxPower = data.txPower2G.get(v.DUT_MODULE)[1] * 1.015
+
+        if minPower <= power <= maxPower:
+            pass
+        else:
+            self.fail("Txpower isnot correct.")
+
+    def chan36_txpower_5g(self):
+
+        option5g = {
+            'wifiIndex': 2,
+            'ssid': v.SSID_5G,
+            'encryption': 'none',
+            'channel': v.CHANNEL36,
+            'txpwr': 'mid',
+        }
+        api.setWifi(self.dut2, self.__class__.__name__, **option5g)
+        power = getWlanTxPower(self.dut, "5g", self.__class__.__name__)
+
+        minPower = data.txPower5GL.get(v.DUT_MODULE)[1] * 0.985
+        maxPower = data.txPower5GL.get(v.DUT_MODULE)[1] * 1.015
+
+        if minPower <= power <= maxPower:
+            pass
+        else:
+            self.fail("Txpower isnot correct.")
+
+    def chan52_txpower_5g(self):
+
+        option5g = {
+            'wifiIndex': 2,
+            'ssid': v.SSID_5G,
+            'encryption': 'none',
+            'channel': v.CHANNEL52,
+            'txpwr': 'mid',
+        }
+        api.setWifi(self.dut2, self.__class__.__name__, **option5g)
+        power = getWlanTxPower(self.dut, "5g", self.__class__.__name__)
+
+        minPower = data.txPower5GL.get(v.DUT_MODULE)[1] * 0.985
+        maxPower = data.txPower5GL.get(v.DUT_MODULE)[1] * 1.015
+
+        if minPower <= power <= maxPower:
+            pass
+        else:
+            self.fail("Txpower isnot correct.")
+
+    def chan149_txpower_5g(self):
+
+        option5g = {
+            'wifiIndex': 2,
+            'ssid': v.SSID_5G,
+            'encryption': 'none',
+            'channel': v.CHANNEL149,
+            'txpwr': 'mid',
+        }
+        api.setWifi(self.dut2, self.__class__.__name__, **option5g)
+        power = getWlanTxPower(self.dut, "5g", self.__class__.__name__)
+
+        minPower = data.txPower5GH.get(v.DUT_MODULE)[1] * 0.985
+        maxPower = data.txPower5GH.get(v.DUT_MODULE)[1] * 1.015
+
+        if minPower <= power <= maxPower:
+            pass
+        else:
+            self.fail("Txpower isnot correct.")
+
+    def chan165_txpower_5g(self):
+
+        option5g = {
+            'wifiIndex': 2,
+            'ssid': v.SSID_5G,
+            'encryption': 'none',
+            'channel': v.CHANNEL165,
+            'txpwr': 'mid',
+        }
+        api.setWifi(self.dut2, self.__class__.__name__, **option5g)
+        power = getWlanTxPower(self.dut, "5g", self.__class__.__name__)
+
+        minPower = data.txPower5GH.get(v.DUT_MODULE)[1] * 0.985
+        maxPower = data.txPower5GH.get(v.DUT_MODULE)[1] * 1.015
+
+        if minPower <= power <= maxPower:
+            pass
+        else:
+            self.fail("Txpower isnot correct.")
+
+
+class AP_WIRELESS_RELAY_CLEAR_HIGH_TXPOWER(TestCase):
+    @classmethod
+    def setUpClass(self):
+        self.dut2 = api.HttpClient()
+        ret2 = self.dut2.connect(host=v.HOST, password=v.WEB_PWD)
+        if ret2 is False:
+            raise Exception('Connection is failed for httpclient. please check your remote settings.')
+
+        api.setLanAp(self.dut2, self.__name__)
+
+        self.dut = ShellClient(v.CONNECTION_TYPE)
+        ret1 = self.dut.connect(v.HOST, v.USR, v.PASSWD)
+        if ret1 is False:
+            raise Exception('Connection is failed for shell after setLanAp.')
+
+    @classmethod
+    def tearDownClass(self):
+        option2g = {
+            'wifiIndex': 1,
+            'on': 0,
+        }
+        option5g = {
+            'wifiIndex': 2,
+            'on': 0,
+        }
+        api.setWifi(self.dut2, self.__name__, **option2g)
+        api.setWifi(self.dut2, self.__name__, **option5g)
+
+        api.setDisableLanAp(self.dut2, self.__name__)
+
+        self.dut.close()
+        self.dut2.close()
+
+    def autochan_txpower_2g(self):
+
+        option2g = {
+            'wifiIndex': 1,
+            'ssid': v.SSID,
+            'encryption': 'none',
+            'txpwr': 'max',
+        }
+        api.setWifi(self.dut2, self.__class__.__name__, **option2g)
+        power = getWlanTxPower(self.dut, "2g", self.__class__.__name__)
+
+        minPower = data.txPower2G.get(v.DUT_MODULE)[2] * 0.985
+        maxPower = data.txPower2G.get(v.DUT_MODULE)[2] * 1.015
+
+        if minPower <= power <= maxPower:
+            pass
+        else:
+            self.fail("Txpower isnot correct.")
+
+    def autochan_txpower_5g(self):
+
+        option5g = {
+            'wifiIndex': 2,
+            'ssid': v.SSID_5G,
+            'encryption': 'none',
+            'txpwr': 'max',
+        }
+
+        api.setWifi(self.dut2, self.__class__.__name__, **option5g)
+        power = getWlanTxPower(self.dut, "5g", self.__class__.__name__)
+
+        minPower = data.txPower5GH.get(v.DUT_MODULE)[2] * 0.985
+        maxPower = data.txPower5GH.get(v.DUT_MODULE)[2] * 1.015
+
+        if minPower <= power <= maxPower:
+            pass
+        else:
+            self.fail("Txpower isnot correct.")
+
+    def chan1_txpower_2g(self):
+
+        option2g = {
+            'wifiIndex': 1,
+            'ssid': v.SSID,
+            'encryption': 'none',
+            'channel': v.CHANNEL1,
+            'txpwr': 'max',
+        }
+        api.setWifi(self.dut2, self.__class__.__name__, **option2g)
+        power = getWlanTxPower(self.dut, "2g", self.__class__.__name__)
+
+        minPower = data.txPower2G.get(v.DUT_MODULE)[2] * 0.985
+        maxPower = data.txPower2G.get(v.DUT_MODULE)[2] * 1.015
+
+        if minPower <= power <= maxPower:
+            pass
+        else:
+            self.fail("Txpower isnot correct.")
+
+    def chan6_txpower_2g(self):
+
+        option2g = {
+            'wifiIndex': 1,
+            'ssid': v.SSID,
+            'encryption': 'none',
+            'channel': v.CHANNEL6,
+            'txpwr': 'max',
+        }
+        api.setWifi(self.dut2, self.__class__.__name__, **option2g)
+        power = getWlanTxPower(self.dut, "2g", self.__class__.__name__)
+
+        minPower = data.txPower2G.get(v.DUT_MODULE)[2] * 0.985
+        maxPower = data.txPower2G.get(v.DUT_MODULE)[2] * 1.015
+
+        if minPower <= power <= maxPower:
+            pass
+        else:
+            self.fail("Txpower isnot correct.")
+
+    def chan11_txpower_2g(self):
+
+        option2g = {
+            'wifiIndex': 1,
+            'ssid': v.SSID,
+            'encryption': 'none',
+            'channel': v.CHANNEL11,
+            'txpwr': 'max',
+        }
+        api.setWifi(self.dut2, self.__class__.__name__, **option2g)
+        power = getWlanTxPower(self.dut, "2g", self.__class__.__name__)
+
+        minPower = data.txPower2G.get(v.DUT_MODULE)[2] * 0.985
+        maxPower = data.txPower2G.get(v.DUT_MODULE)[2] * 1.015
+
+        if minPower <= power <= maxPower:
+            pass
+        else:
+            self.fail("Txpower isnot correct.")
+
+    def chan13_txpower_2g(self):
+
+        option2g = {
+            'wifiIndex': 1,
+            'ssid': v.SSID,
+            'encryption': 'none',
+            'channel': v.CHANNEL13,
+            'txpwr': 'max',
+        }
+        api.setWifi(self.dut2, self.__class__.__name__, **option2g)
+        power = getWlanTxPower(self.dut, "2g", self.__class__.__name__)
+
+        minPower = data.txPower2G.get(v.DUT_MODULE)[2] * 0.985
+        maxPower = data.txPower2G.get(v.DUT_MODULE)[2] * 1.015
+
+        if minPower <= power <= maxPower:
+            pass
+        else:
+            self.fail("Txpower isnot correct.")
+
+    def chan36_txpower_5g(self):
+
+        option5g = {
+            'wifiIndex': 2,
+            'ssid': v.SSID_5G,
+            'encryption': 'none',
+            'channel': v.CHANNEL36,
+            'txpwr': 'max',
+        }
+        api.setWifi(self.dut2, self.__class__.__name__, **option5g)
+        power = getWlanTxPower(self.dut, "5g", self.__class__.__name__)
+
+        minPower = data.txPower5GL.get(v.DUT_MODULE)[2] * 0.985
+        maxPower = data.txPower5GL.get(v.DUT_MODULE)[2] * 1.015
+
+        if minPower <= power <= maxPower:
+            pass
+        else:
+            self.fail("Txpower isnot correct.")
+
+    def chan52_txpower_5g(self):
+
+        option5g = {
+            'wifiIndex': 2,
+            'ssid': v.SSID_5G,
+            'encryption': 'none',
+            'channel': v.CHANNEL52,
+            'txpwr': 'max',
+        }
+        api.setWifi(self.dut2, self.__class__.__name__, **option5g)
+        power = getWlanTxPower(self.dut, "5g", self.__class__.__name__)
+
+        minPower = data.txPower5GL.get(v.DUT_MODULE)[2] * 0.985
+        maxPower = data.txPower5GL.get(v.DUT_MODULE)[2] * 1.015
+
+        if minPower <= power <= maxPower:
+            pass
+        else:
+            self.fail("Txpower isnot correct.")
+
+    def chan149_txpower_5g(self):
+
+        option5g = {
+            'wifiIndex': 2,
+            'ssid': v.SSID_5G,
+            'encryption': 'none',
+            'channel': v.CHANNEL149,
+            'txpwr': 'max',
+        }
+        api.setWifi(self.dut2, self.__class__.__name__, **option5g)
+        power = getWlanTxPower(self.dut, "5g", self.__class__.__name__)
+
+        minPower = data.txPower5GH.get(v.DUT_MODULE)[2] * 0.985
+        maxPower = data.txPower5GH.get(v.DUT_MODULE)[2] * 1.015
+
+        if minPower <= power <= maxPower:
+            pass
+        else:
+            self.fail("Txpower isnot correct.")
+
+    def chan165_txpower_5g(self):
+
+        option5g = {
+            'wifiIndex': 2,
+            'ssid': v.SSID_5G,
+            'encryption': 'none',
+            'channel': v.CHANNEL165,
+            'txpwr': 'max',
+        }
+        api.setWifi(self.dut2, self.__class__.__name__, **option5g)
+        power = getWlanTxPower(self.dut, "5g", self.__class__.__name__)
+
+        minPower = data.txPower5GH.get(v.DUT_MODULE)[2] * 0.985
+        maxPower = data.txPower5GH.get(v.DUT_MODULE)[2] * 1.015
+
+        if minPower <= power <= maxPower:
+            pass
+        else:
+            self.fail("Txpower isnot correct.")
+
+
 class AP_MIXEDPSK_WEB_ACCESS(TestCase):
     @classmethod
     def setUpClass(self):

@@ -10225,7 +10225,7 @@ class AP_WIRELESS_RELAY_PSK2_LOW_TXPOWER(TestCase):
             'nencryption': 'WPA2PSK',
             'npassword': v.ROOT_AP_PWD,
         }
-        api.setWifiAp(self.dut, self.__name__, **option)
+        api.setWifiAp(self.dut2, self.__name__, **option)
 
         self.dut = ShellClient(v.CONNECTION_TYPE)
         ret1 = self.dut.connect(v.HOST, v.USR, v.PASSWD)
@@ -10377,7 +10377,7 @@ class AP_WIRELESS_RELAY_PSK2_MID_TXPOWER(TestCase):
             'nencryption': 'WPA2PSK',
             'npassword': v.ROOT_AP_PWD,
         }
-        api.setWifiAp(self.dut, self.__name__, **option)
+        api.setWifiAp(self.dut2, self.__name__, **option)
 
         self.dut = ShellClient(v.CONNECTION_TYPE)
         ret1 = self.dut.connect(v.HOST, v.USR, v.PASSWD)
@@ -10529,7 +10529,7 @@ class AP_WIRELESS_RELAY_PSK2_HIGH_TXPOWER(TestCase):
             'nencryption': 'WPA2PSK',
             'npassword': v.ROOT_AP_PWD,
         }
-        api.setWifiAp(self.dut, self.__name__, **option)
+        api.setWifiAp(self.dut2, self.__name__, **option)
 
         self.dut = ShellClient(v.CONNECTION_TYPE)
         ret1 = self.dut.connect(v.HOST, v.USR, v.PASSWD)
